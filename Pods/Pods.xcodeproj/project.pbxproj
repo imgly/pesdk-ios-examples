@@ -1,0 +1,860 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0A9EC226630D4CAFA49EE3DB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3CB5FEDE484B179714E2D9 /* Foundation.framework */; };
+		163DECCC73D34396A05676E7 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 1049D4EB75B94CB1A874CCB6 /* SVProgressHUD.h */; };
+		22482F583CC34224B2A7C37F /* libPods-imglyKit-SVProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7796A9165E4D484085B9B116 /* libPods-imglyKit-SVProgressHUD.a */; };
+		2FC2E2576FAF4F36AF7943AA /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 1049D4EB75B94CB1A874CCB6 /* SVProgressHUD.h */; };
+		50A897221AF64EE1B5122897 /* Pods-imglyKit-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F726A0F72A34D7A812907B7 /* Pods-imglyKit-dummy.m */; };
+		539A22639B7245F3BC81D37E /* Pods-ExampleApp-SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = DA5D2FFB60BE409B916EAA81 /* Pods-ExampleApp-SVProgressHUD-dummy.m */; };
+		7CEAFB097DC04ED69F48B2A6 /* Pods-ExampleApp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CB9EC74E55114FDA92B5AF0A /* Pods-ExampleApp-dummy.m */; };
+		A098ACC0A5D6433286680E1A /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C063F05E4341DC9B6BEC17 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-checker"; }; };
+		A74E61CAB1EE41B094733BAD /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3CB5FEDE484B179714E2D9 /* Foundation.framework */; };
+		AC9998DEB470487286821333 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3CB5FEDE484B179714E2D9 /* Foundation.framework */; };
+		B7956420BCFD4A45B185D088 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99FA45641D8403ABBE50D07 /* QuartzCore.framework */; };
+		D8F017F1204B4F7B94BA7852 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99FA45641D8403ABBE50D07 /* QuartzCore.framework */; };
+		E947CC8AAB564A4DAB6DD32D /* Pods-imglyKit-SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 117FA8EF292B40B388E0C9FA /* Pods-imglyKit-SVProgressHUD-dummy.m */; };
+		ED1D10B531F447828A2C0F29 /* libPods-ExampleApp-SVProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6E60ECAE3894C6F96D45501 /* libPods-ExampleApp-SVProgressHUD.a */; };
+		F68D5C3849E743A1BD7A4F61 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 39C063F05E4341DC9B6BEC17 /* SVProgressHUD.m */; settings = {COMPILER_FLAGS = "-fobjc-arc -DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-checker"; }; };
+		FB0C9D5EA42044A6AE9CD04E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A3CB5FEDE484B179714E2D9 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0C8E1E30A2FC434DA22CEA46 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1280BFB7DC9A49B888919F12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0EAFE4AE325444CCB3055941;
+			remoteInfo = "Pods-imglyKit-SVProgressHUD";
+		};
+		D548539C52CE4ED2976E112D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1280BFB7DC9A49B888919F12 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 80B55423E80349B9ABDBB31B;
+			remoteInfo = "Pods-ExampleApp-SVProgressHUD";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0005B895557B4E3C87CB51A5 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; };
+		0A3CB5FEDE484B179714E2D9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		0F726A0F72A34D7A812907B7 /* Pods-imglyKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-imglyKit-dummy.m"; sourceTree = "<group>"; };
+		1049D4EB75B94CB1A874CCB6 /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
+		117FA8EF292B40B388E0C9FA /* Pods-imglyKit-SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-imglyKit-SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		2ADC928594054E1CAC65DFDA /* libPods-imglyKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-imglyKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DAC956EFC1644CD81C662F8 /* Pods-imglyKit-SVProgressHUD-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-imglyKit-SVProgressHUD-Private.xcconfig"; sourceTree = "<group>"; };
+		30D72B9B4F4246F4B8D716C6 /* Pods-imglyKit-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-imglyKit-environment.h"; sourceTree = "<group>"; };
+		35EC7DB71F1D4714B8AD60D7 /* Pods-ExampleApp-SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleApp-SVProgressHUD.xcconfig"; sourceTree = "<group>"; };
+		39C063F05E4341DC9B6BEC17 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
+		3EBD7DEDBF3340EEA14836FE /* Pods-ExampleApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ExampleApp-acknowledgements.plist"; sourceTree = "<group>"; };
+		5592D0B1B1B740B1BE389FA9 /* Pods-ExampleApp-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExampleApp-environment.h"; sourceTree = "<group>"; };
+		5CB470C99B9E4F51842DB6C4 /* Pods-imglyKit-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-imglyKit-acknowledgements.plist"; sourceTree = "<group>"; };
+		5EC901BFFC234F8BB564905E /* Pods-ExampleApp-SVProgressHUD-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleApp-SVProgressHUD-Private.xcconfig"; sourceTree = "<group>"; };
+		5FC6E6C6DBF2407E80BA95DE /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		7796A9165E4D484085B9B116 /* libPods-imglyKit-SVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-imglyKit-SVProgressHUD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C8286FB5E9945AD91B76DF8 /* Pods-imglyKit-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-imglyKit-acknowledgements.markdown"; sourceTree = "<group>"; };
+		82994FC1F32B446A9B5CB417 /* Pods-imglyKit-SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-imglyKit-SVProgressHUD.xcconfig"; sourceTree = "<group>"; };
+		9CAB8F436B7341DC8CDA7134 /* Pods-ExampleApp-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ExampleApp-resources.sh"; sourceTree = "<group>"; };
+		A5FE1EB9938140BC96035B03 /* Pods-imglyKit-SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-imglyKit-SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		B771FF4A64B945A38C58B6DC /* Pods-imglyKit-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-imglyKit-resources.sh"; sourceTree = "<group>"; };
+		CB2F0FF53B9A43DD9539197A /* libPods-ExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB9EC74E55114FDA92B5AF0A /* Pods-ExampleApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ExampleApp-dummy.m"; sourceTree = "<group>"; };
+		D40005DF82954CB0AA58D4CB /* Pods-ExampleApp-SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ExampleApp-SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		DA5D2FFB60BE409B916EAA81 /* Pods-ExampleApp-SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ExampleApp-SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		E99FA45641D8403ABBE50D07 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		ED81445582834FFDBAABAD02 /* Pods-ExampleApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ExampleApp-acknowledgements.markdown"; sourceTree = "<group>"; };
+		F5BE41FF1F7943FC8DCD3AF2 /* Pods-ExampleApp.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ExampleApp.xcconfig"; sourceTree = "<group>"; };
+		F6E60ECAE3894C6F96D45501 /* libPods-ExampleApp-SVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleApp-SVProgressHUD.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC675A780F03465494F39EA1 /* Pods-imglyKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-imglyKit.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4E3B5119C69D4A13958A5F36 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC9998DEB470487286821333 /* Foundation.framework in Frameworks */,
+				B7956420BCFD4A45B185D088 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7364F8AA1F674E59A497C5B8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB0C9D5EA42044A6AE9CD04E /* Foundation.framework in Frameworks */,
+				D8F017F1204B4F7B94BA7852 /* QuartzCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		958EA3BB5BFD46C6BAA11B8A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0A9EC226630D4CAFA49EE3DB /* Foundation.framework in Frameworks */,
+				ED1D10B531F447828A2C0F29 /* libPods-ExampleApp-SVProgressHUD.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF52067282AF45BCB874F191 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A74E61CAB1EE41B094733BAD /* Foundation.framework in Frameworks */,
+				22482F583CC34224B2A7C37F /* libPods-imglyKit-SVProgressHUD.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		01397AFADE774DA38B198E0A = {
+			isa = PBXGroup;
+			children = (
+				0005B895557B4E3C87CB51A5 /* Podfile */,
+				E9BCCEB0F3F14778B2F0133A /* Frameworks */,
+				9FA532C05DCF4B07870411D3 /* Pods */,
+				89A74CE0F8764EA28097470E /* Products */,
+				9BF8CAAAD0CD44E9855A5450 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		5AAA9271C4F648679E137CB8 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				0A3CB5FEDE484B179714E2D9 /* Foundation.framework */,
+				E99FA45641D8403ABBE50D07 /* QuartzCore.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		7C50857CFE1540BCB18A7D7E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				35EC7DB71F1D4714B8AD60D7 /* Pods-ExampleApp-SVProgressHUD.xcconfig */,
+				5EC901BFFC234F8BB564905E /* Pods-ExampleApp-SVProgressHUD-Private.xcconfig */,
+				DA5D2FFB60BE409B916EAA81 /* Pods-ExampleApp-SVProgressHUD-dummy.m */,
+				D40005DF82954CB0AA58D4CB /* Pods-ExampleApp-SVProgressHUD-prefix.pch */,
+				82994FC1F32B446A9B5CB417 /* Pods-imglyKit-SVProgressHUD.xcconfig */,
+				2DAC956EFC1644CD81C662F8 /* Pods-imglyKit-SVProgressHUD-Private.xcconfig */,
+				117FA8EF292B40B388E0C9FA /* Pods-imglyKit-SVProgressHUD-dummy.m */,
+				A5FE1EB9938140BC96035B03 /* Pods-imglyKit-SVProgressHUD-prefix.pch */,
+			);
+			name = "Support Files";
+			sourceTree = SOURCE_ROOT;
+		};
+		89A74CE0F8764EA28097470E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB2F0FF53B9A43DD9539197A /* libPods-ExampleApp.a */,
+				F6E60ECAE3894C6F96D45501 /* libPods-ExampleApp-SVProgressHUD.a */,
+				2ADC928594054E1CAC65DFDA /* libPods-imglyKit.a */,
+				7796A9165E4D484085B9B116 /* libPods-imglyKit-SVProgressHUD.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		946DEA2D2C1A48A39EEA532D /* Pods-ExampleApp */ = {
+			isa = PBXGroup;
+			children = (
+				F5BE41FF1F7943FC8DCD3AF2 /* Pods-ExampleApp.xcconfig */,
+				ED81445582834FFDBAABAD02 /* Pods-ExampleApp-acknowledgements.markdown */,
+				3EBD7DEDBF3340EEA14836FE /* Pods-ExampleApp-acknowledgements.plist */,
+				CB9EC74E55114FDA92B5AF0A /* Pods-ExampleApp-dummy.m */,
+				5592D0B1B1B740B1BE389FA9 /* Pods-ExampleApp-environment.h */,
+				9CAB8F436B7341DC8CDA7134 /* Pods-ExampleApp-resources.sh */,
+			);
+			name = "Pods-ExampleApp";
+			sourceTree = "<group>";
+		};
+		9BF8CAAAD0CD44E9855A5450 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				946DEA2D2C1A48A39EEA532D /* Pods-ExampleApp */,
+				A8A4C8D796EF461EA592D731 /* Pods-imglyKit */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		9FA532C05DCF4B07870411D3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A31C5A0E077B446782358896 /* SVProgressHUD */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A31C5A0E077B446782358896 /* SVProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1049D4EB75B94CB1A874CCB6 /* SVProgressHUD.h */,
+				39C063F05E4341DC9B6BEC17 /* SVProgressHUD.m */,
+				D830CAC1F3984B3B94D587D9 /* Resources */,
+				7C50857CFE1540BCB18A7D7E /* Support Files */,
+			);
+			path = SVProgressHUD;
+			sourceTree = "<group>";
+		};
+		A8A4C8D796EF461EA592D731 /* Pods-imglyKit */ = {
+			isa = PBXGroup;
+			children = (
+				FC675A780F03465494F39EA1 /* Pods-imglyKit.xcconfig */,
+				7C8286FB5E9945AD91B76DF8 /* Pods-imglyKit-acknowledgements.markdown */,
+				5CB470C99B9E4F51842DB6C4 /* Pods-imglyKit-acknowledgements.plist */,
+				0F726A0F72A34D7A812907B7 /* Pods-imglyKit-dummy.m */,
+				30D72B9B4F4246F4B8D716C6 /* Pods-imglyKit-environment.h */,
+				B771FF4A64B945A38C58B6DC /* Pods-imglyKit-resources.sh */,
+			);
+			name = "Pods-imglyKit";
+			sourceTree = "<group>";
+		};
+		D830CAC1F3984B3B94D587D9 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5FC6E6C6DBF2407E80BA95DE /* SVProgressHUD.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		E9BCCEB0F3F14778B2F0133A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5AAA9271C4F648679E137CB8 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		46EE885358B34057B1C095E3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2FC2E2576FAF4F36AF7943AA /* SVProgressHUD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D7D26A8BCB14479FB1BF2808 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				163DECCC73D34396A05676E7 /* SVProgressHUD.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0EAFE4AE325444CCB3055941 /* Pods-imglyKit-SVProgressHUD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F20D1FF370A74793A6FF71CD /* Build configuration list for PBXNativeTarget "Pods-imglyKit-SVProgressHUD" */;
+			buildPhases = (
+				F69F7B2131C742B2BDE4A0F9 /* Sources */,
+				7364F8AA1F674E59A497C5B8 /* Frameworks */,
+				46EE885358B34057B1C095E3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-imglyKit-SVProgressHUD";
+			productName = "Pods-imglyKit-SVProgressHUD";
+			productReference = 7796A9165E4D484085B9B116 /* libPods-imglyKit-SVProgressHUD.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		6AD8304DC4D64396A1CC608D /* Pods-ExampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CF8617F98E5A477B98D761B5 /* Build configuration list for PBXNativeTarget "Pods-ExampleApp" */;
+			buildPhases = (
+				D77C912D5902491BA81658F6 /* Sources */,
+				958EA3BB5BFD46C6BAA11B8A /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0AEA2EBC4F064DB8BEA6A9FF /* PBXTargetDependency */,
+			);
+			name = "Pods-ExampleApp";
+			productName = "Pods-ExampleApp";
+			productReference = CB2F0FF53B9A43DD9539197A /* libPods-ExampleApp.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		80B55423E80349B9ABDBB31B /* Pods-ExampleApp-SVProgressHUD */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2F347B922B2C4EDF94E46BE9 /* Build configuration list for PBXNativeTarget "Pods-ExampleApp-SVProgressHUD" */;
+			buildPhases = (
+				090449043E354ED99E30575A /* Sources */,
+				4E3B5119C69D4A13958A5F36 /* Frameworks */,
+				D7D26A8BCB14479FB1BF2808 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-ExampleApp-SVProgressHUD";
+			productName = "Pods-ExampleApp-SVProgressHUD";
+			productReference = F6E60ECAE3894C6F96D45501 /* libPods-ExampleApp-SVProgressHUD.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E0D75D93D7C94D968B9A852B /* Pods-imglyKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05AA4A7F6B5841C19E811029 /* Build configuration list for PBXNativeTarget "Pods-imglyKit" */;
+			buildPhases = (
+				5DBD5D995DB74843AA01DE63 /* Sources */,
+				FF52067282AF45BCB874F191 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B064AC567EC940AC8CE5E219 /* PBXTargetDependency */,
+			);
+			name = "Pods-imglyKit";
+			productName = "Pods-imglyKit";
+			productReference = 2ADC928594054E1CAC65DFDA /* libPods-imglyKit.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1280BFB7DC9A49B888919F12 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+			};
+			buildConfigurationList = 456820F9B0E8416B89E6B140 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 01397AFADE774DA38B198E0A;
+			productRefGroup = 89A74CE0F8764EA28097470E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6AD8304DC4D64396A1CC608D /* Pods-ExampleApp */,
+				80B55423E80349B9ABDBB31B /* Pods-ExampleApp-SVProgressHUD */,
+				E0D75D93D7C94D968B9A852B /* Pods-imglyKit */,
+				0EAFE4AE325444CCB3055941 /* Pods-imglyKit-SVProgressHUD */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		090449043E354ED99E30575A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				539A22639B7245F3BC81D37E /* Pods-ExampleApp-SVProgressHUD-dummy.m in Sources */,
+				A098ACC0A5D6433286680E1A /* SVProgressHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5DBD5D995DB74843AA01DE63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50A897221AF64EE1B5122897 /* Pods-imglyKit-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D77C912D5902491BA81658F6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7CEAFB097DC04ED69F48B2A6 /* Pods-ExampleApp-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F69F7B2131C742B2BDE4A0F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E947CC8AAB564A4DAB6DD32D /* Pods-imglyKit-SVProgressHUD-dummy.m in Sources */,
+				F68D5C3849E743A1BD7A4F61 /* SVProgressHUD.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0AEA2EBC4F064DB8BEA6A9FF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 80B55423E80349B9ABDBB31B /* Pods-ExampleApp-SVProgressHUD */;
+			targetProxy = D548539C52CE4ED2976E112D /* PBXContainerItemProxy */;
+		};
+		B064AC567EC940AC8CE5E219 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0EAFE4AE325444CCB3055941 /* Pods-imglyKit-SVProgressHUD */;
+			targetProxy = 0C8E1E30A2FC434DA22CEA46 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0FC2E12185FD4E14917A6284 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5BE41FF1F7943FC8DCD3AF2 /* Pods-ExampleApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		10130DF026C74A039F73DB2D /* Enterprise */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EC901BFFC234F8BB564905E /* Pods-ExampleApp-SVProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-ExampleApp-SVProgressHUD-prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Enterprise;
+		};
+		1CB29EBCA906408EB08A4EBF /* Enterprise */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5BE41FF1F7943FC8DCD3AF2 /* Pods-ExampleApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Enterprise;
+		};
+		3C520C5FDC3642B6B7F8B6FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EC901BFFC234F8BB564905E /* Pods-ExampleApp-SVProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-ExampleApp-SVProgressHUD-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		43E2AEA2C5BF46D09FEC7B52 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DAC956EFC1644CD81C662F8 /* Pods-imglyKit-SVProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-imglyKit-SVProgressHUD-prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		54CA14F426F24CE18DDBADDE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5EC901BFFC234F8BB564905E /* Pods-ExampleApp-SVProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-ExampleApp-SVProgressHUD-prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6478015C183E30CA00B4D4C7 /* Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Pods-imglyKit";
+			};
+			name = Enterprise;
+		};
+		6478015D183E30CA00B4D4C7 /* Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "Pods-imglyKit-SVProgressHUD";
+			};
+			name = Enterprise;
+		};
+		66CCB2E8F20F45009564A334 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A42A7E7BAA74A5DA574B775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC675A780F03465494F39EA1 /* Pods-imglyKit.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		81BD105E742F445594DE86E2 /* Enterprise */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Enterprise;
+		};
+		924FE34CE490450985082F0E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DAC956EFC1644CD81C662F8 /* Pods-imglyKit-SVProgressHUD-Private.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Pods-imglyKit-SVProgressHUD-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B9856AEDAE4B42678C8F663B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Debug;
+		};
+		D0E3F004C8524DACAD82402A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FC675A780F03465494F39EA1 /* Pods-imglyKit.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DBDE734E1A504362B9A3503B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5BE41FF1F7943FC8DCD3AF2 /* Pods-ExampleApp.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/xcodeproj.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"-DNS_BLOCK_ASSERTIONS=1",
+					"$(inherited)",
+				);
+				OTHER_LDFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05AA4A7F6B5841C19E811029 /* Build configuration list for PBXNativeTarget "Pods-imglyKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0E3F004C8524DACAD82402A /* Debug */,
+				6A42A7E7BAA74A5DA574B775 /* Release */,
+				6478015C183E30CA00B4D4C7 /* Enterprise */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2F347B922B2C4EDF94E46BE9 /* Build configuration list for PBXNativeTarget "Pods-ExampleApp-SVProgressHUD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C520C5FDC3642B6B7F8B6FF /* Debug */,
+				10130DF026C74A039F73DB2D /* Enterprise */,
+				54CA14F426F24CE18DDBADDE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		456820F9B0E8416B89E6B140 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9856AEDAE4B42678C8F663B /* Debug */,
+				81BD105E742F445594DE86E2 /* Enterprise */,
+				66CCB2E8F20F45009564A334 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CF8617F98E5A477B98D761B5 /* Build configuration list for PBXNativeTarget "Pods-ExampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0FC2E12185FD4E14917A6284 /* Debug */,
+				1CB29EBCA906408EB08A4EBF /* Enterprise */,
+				DBDE734E1A504362B9A3503B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F20D1FF370A74793A6FF71CD /* Build configuration list for PBXNativeTarget "Pods-imglyKit-SVProgressHUD" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				924FE34CE490450985082F0E /* Debug */,
+				43E2AEA2C5BF46D09FEC7B52 /* Release */,
+				6478015D183E30CA00B4D4C7 /* Enterprise */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1280BFB7DC9A49B888919F12 /* Project object */;
+}

@@ -1,5 +1,10 @@
-# Xcode
+# OS X
 .DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Xcode
 */build/*
 *.pbxuser
 !default.pbxuser
@@ -13,9 +18,10 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
-.idea/
-*.hmap
-*.xccheckout
+.xccheckout
 
-#CocoaPods
-Pods
+# AppCode
+.idea/
+
+# appledoc
+Documentation/
