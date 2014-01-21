@@ -49,7 +49,9 @@
 }
 
 - (void)checkImageDimensionsForCameraImageProvider:(id<IMGLYCameraImageProvider>)imageProvider {
-    IMGLYDefaultCameraImageProvider *defaultCameraImageProvider = [[IMGLYDefaultCameraImageProvider alloc] init];
+    // Local variable may be unused, if module is compiled with NS_BLOCK_ASSERTIONS defined.
+    __unused IMGLYDefaultCameraImageProvider *defaultCameraImageProvider = [[IMGLYDefaultCameraImageProvider alloc] init];
+    
     NSAssert([self size:imageProvider.filterPreviewImage.size equals:defaultCameraImageProvider.filterPreviewImage.size] == YES, @"filterPreview image must have a size of %f x %f",defaultCameraImageProvider.filterPreviewImage.size.width, defaultCameraImageProvider.filterPreviewImage.size.height);
     NSAssert([self size:imageProvider.toggleFlashImage.size equals:defaultCameraImageProvider.toggleFlashImage.size] == YES, @"toggleFlashImage image must have a size of %f x %f",defaultCameraImageProvider.filterPreviewImage.size.width, defaultCameraImageProvider.filterPreviewImage.size.height);
     NSAssert([self size:imageProvider.swapCameraImage.size equals:defaultCameraImageProvider.swapCameraImage.size] == YES, @"filterPreview image must have a size of %f x %f",defaultCameraImageProvider.filterPreviewImage.size.width, defaultCameraImageProvider.filterPreviewImage.size.height);
@@ -98,7 +100,9 @@
 }
 
 - (void)checkImageDimensionsForEditorImageProvider:(id<IMGLYEditorImageProvider>)imageProvider {
-    IMGLYDefaultEditorImageProvider *defaultEditorImageProvider = [[IMGLYDefaultEditorImageProvider alloc] init];
+    // Local variable may be unused, if module is compiled with NS_BLOCK_ASSERTIONS defined.
+    __unused IMGLYDefaultEditorImageProvider *defaultEditorImageProvider = [[IMGLYDefaultEditorImageProvider alloc] init];
+
     NSAssert([self size:imageProvider.rotateLeftIcon.size equals:defaultEditorImageProvider.rotateLeftIcon.size] == YES, @"rotateLeftIcon image must have a size of %f x %f",defaultEditorImageProvider.rotateLeftIcon.size.width, defaultEditorImageProvider.rotateLeftIcon.size.height);
     NSAssert([self size:imageProvider.rotateRightIcon.size equals:defaultEditorImageProvider.rotateRightIcon.size] == YES, @"rotateRightIcon image must have a size of %f x %f",defaultEditorImageProvider.rotateRightIcon.size.width, defaultEditorImageProvider.rotateRightIcon.size.height);
     NSAssert([self size:imageProvider.resetButtonIcon.size equals:defaultEditorImageProvider.resetButtonIcon.size] == YES, @"resetButtonIcon image must have a size of %f x %f",defaultEditorImageProvider.resetButtonIcon.size.width, defaultEditorImageProvider.resetButtonIcon.size.height);
