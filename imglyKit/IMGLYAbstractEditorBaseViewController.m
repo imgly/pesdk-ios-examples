@@ -9,6 +9,7 @@
 #import "IMGLYAbstractEditorBaseViewController_Private.h"
 
 #import "IMGLYDefaultEditorImageProvider.h"
+#import "IMGLYDefines.h"
 #import "IMGLYProcessingJob.h"
 #import "UIImage+IMGLYKitAdditions.h"
 #import "UINavigationController+IMGLYAdditions.h"

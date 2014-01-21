@@ -7,6 +7,8 @@
 //
 
 #import "IMGLYEditorFontSelector.h"
+
+#import "IMGLYDefines.h"
 #import "NSBundle+IMGLYAdditions.h"
 
 #import <CoreText/CoreText.h>

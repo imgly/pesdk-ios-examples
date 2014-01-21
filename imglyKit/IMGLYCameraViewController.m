@@ -11,11 +11,12 @@
 #import "IMGLYCameraBottomBarView.h"
 #import "IMGLYCameraController.h"
 #import "IMGLYCameraTopBarView.h"
-#import "IMGLYDeviceDetector.h"
 #import "IMGLYDefaultCameraImageProvider.h"
+#import "IMGLYDefines.h"
+#import "IMGLYDeviceDetector.h"
 #import "IMGLYFilterSelectorView.h"
-#import "IMGLYShutterView.h"
 #import "IMGLYImageProviderChecker.h"
+#import "IMGLYShutterView.h"
 
 #import <SVProgressHUD/SVProgressHUD.h>
 

@@ -9,9 +9,10 @@
 #import "IMGLYCameraController.h"
 
 #import "IMGLYCameraViewController.h"
+#import "IMGLYDefines.h"
+#import "IMGLYDeviceDetector.h"
 #import "IMGLYFilter.h"
 #import "IMGLYLiveStreamFilterManager.h"
-#import "IMGLYDeviceDetector.h"
 
 #import <NEGPUImage/GPUImage.h>
 #import <QuartzCore/QuartzCore.h>
