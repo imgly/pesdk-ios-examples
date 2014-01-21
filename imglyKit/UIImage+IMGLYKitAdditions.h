@@ -28,16 +28,6 @@
 #pragma mark Editing the Image
 
 /**
- * Returns a copy of this image that is cropped to the given bounds.
- *
- * @param bounds The bounds within the image to crop. The bounds will be adjusted using CGRectIntegral.
- * @return The cropped image.
- *
- * @discussion This method ignores the image's imageOrientation setting.
- */
-- (UIImage *)imgly_croppedImage:(CGRect)bounds;
-
-/**
  * Returns a rescaled copy of the image, taking into account its orientation
  *
  * @param newSize The size of the rescaled image.
@@ -47,24 +37,6 @@
  * @discussion The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
  */ 
 - (UIImage *)imgly_resizedImage:(CGSize)newSize interpolationQuality:(CGInterpolationQuality)quality;
-
-/**
- * Returns a resized image according to the given content mode, taking into account the image's orientation.
- *
- * @param contentMode The content mode of the resized image.
- * @param bounds The bounds of the resized image.
- * @param quality The quality of the resized image.
- * @return The resized image.
- */
-- (UIImage *)imgly_resizedImageWithContentMode:(UIViewContentMode)contentMode
-                                        bounds:(CGSize)bounds
-                          interpolationQuality:(CGInterpolationQuality)quality;
-
-/**
- * @return The normalized image.
- */
-- (UIImage *)imgly_normalizedImage;
-
 
 - (UIImage *)imgly_rotateImageToMatchOrientation;
 

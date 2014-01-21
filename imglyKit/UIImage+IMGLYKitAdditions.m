@@ -17,13 +17,6 @@
     return [UIImage imageNamed:imageName];
 }
 
-- (UIImage *)imgly_croppedImage:(CGRect)bounds {
-    CGImageRef imageRef = CGImageCreateWithImageInRect(self.CGImage, bounds);
-    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
-    CGImageRelease(imageRef);
-    return croppedImage;
-}
-
 - (UIImage *)imgly_resizedImage:(CGSize)newSize interpolationQuality:(CGInterpolationQuality)quality {
     BOOL drawTransposed;
     switch (self.imageOrientation) {
@@ -47,54 +40,6 @@
                           transform:transform
                      drawTransposed:drawTransposed
                interpolationQuality:quality];
-}
-
-- (UIImage *)imgly_resizedImageWithContentMode:(UIViewContentMode)contentMode
-                                        bounds:(CGSize)bounds
-                          interpolationQuality:(CGInterpolationQuality)quality {
-    
-    CGFloat horizontalRatio = bounds.width / self.size.width;
-    CGFloat verticalRatio = bounds.height / self.size.height;
-    
-    CGFloat ratio;
-    switch (contentMode) {
-        case UIViewContentModeScaleAspectFill:
-            ratio = MAX(horizontalRatio, verticalRatio);
-            break;
-        case UIViewContentModeScaleAspectFit:
-            ratio = MIN(horizontalRatio, verticalRatio);
-            break;
-        default:
-            [NSException raise:NSInvalidArgumentException format:@"Unsupported content mode: %d", contentMode];
-            break;
-    }
-
-    CGSize newSize = CGSizeMake(self.size.width * ratio, self.size.height * ratio);
-
-    return [self imgly_resizedImage:newSize interpolationQuality:quality];
-}
-
-- (UIImage *)imgly_normalizedImage {
-    CGColorSpaceRef genericColorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef thumbBitmapCtxt = CGBitmapContextCreate(NULL,
-                                                         self.size.width,
-                                                         self.size.height,
-                                                         8,
-                                                         4 * self.size.width,
-                                                         genericColorSpace,
-                                                         kCGImageAlphaPremultipliedFirst);
-    CGColorSpaceRelease(genericColorSpace);
-    
-    CGContextSetInterpolationQuality(thumbBitmapCtxt, kCGInterpolationDefault);
-    CGRect destRect = CGRectMake(0.0, 0.0, self.size.width, self.size.height);
-    CGContextDrawImage(thumbBitmapCtxt, destRect, self.CGImage);
-    CGImageRef tmpThumbImage = CGBitmapContextCreateImage(thumbBitmapCtxt);
-    CGContextRelease(thumbBitmapCtxt);
-
-    UIImage *result = [UIImage imageWithCGImage:tmpThumbImage];
-    CGImageRelease(tmpThumbImage);
-
-    return result;
 }
 
 // Returns a copy of the image that has been transformed using the given affine transform and scaled to the new size
