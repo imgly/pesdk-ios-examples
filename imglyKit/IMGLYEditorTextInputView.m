@@ -105,10 +105,10 @@
     // if we dont the new frame would cause line breaks
     frame.size.width = [self.textField.text sizeWithFont:self.textField.font
                                        constrainedToSize:self.frame.size
-                                           lineBreakMode:UILineBreakModeWordWrap].width + [@"___" sizeWithFont:self.textField.font].width;
+                                           lineBreakMode:NSLineBreakByWordWrapping].width + [@"___" sizeWithFont:self.textField.font].width;
     frame.size.height = [self.textField.text sizeWithFont:self.textField.font
                                        constrainedToSize:self.frame.size
-                                           lineBreakMode:UILineBreakModeWordWrap].height + [@"___" sizeWithFont:self.textField.font].height;
+                                           lineBreakMode:NSLineBreakByWordWrapping].height + [@"___" sizeWithFont:self.textField.font].height;
     self.textField.frame = frame;
     frame = self.frame;
     frame.size = self.textField.frame.size;
@@ -119,7 +119,7 @@
     UIFont *font = [self fontWithType:self.textFont andSize:size];
     CGSize newSize =  [self.textField.text sizeWithFont:font
                                       constrainedToSize:self.frame.size
-                                          lineBreakMode:UILineBreakModeWordWrap];
+                                          lineBreakMode:NSLineBreakByWordWrapping];
     CGRect newFrame = self.frame;
     newFrame.size = newSize;
     return newFrame;

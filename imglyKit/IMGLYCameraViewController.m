@@ -219,10 +219,11 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)preparePhotoTaking {
     [self.cameraBottomBarView disableAllButtons];
     [self.shutterView closeShutter];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 300 * NSEC_PER_MSEC), dispatch_get_current_queue(), ^{
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 300 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self.shutterView openShutter];
         if (![IMGLYDeviceDetector isRunningOn4Inch]) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 200 * NSEC_PER_MSEC), dispatch_get_current_queue(), ^{
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 200 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [SVProgressHUD showWithStatus:@"Processing"];
             });
         }
@@ -310,11 +311,11 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     UIImagePickerController *pickerLibrary = [[UIImagePickerController alloc] init];
     pickerLibrary.delegate = self;
     [self.cameraController stopCameraCapture];
-    [self presentModalViewController:pickerLibrary animated:YES];
+    [self presentViewController:pickerLibrary animated:YES completion:NULL];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker {
-    [picker dismissModalViewControllerAnimated:YES];
+    [picker dismissViewControllerAnimated:YES completion:NULL];
     [self.cameraController startCameraCapture];
 }
 
@@ -322,7 +323,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
         didFinishPickingImage:(UIImage *)image
                   editingInfo:(NSDictionary *)editingInfo {
 
-    [self dismissModalViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:NO completion:NULL];
     self.HQImage = image;
     [self finishPhotoTaking];
 }
@@ -417,7 +418,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     sleep(1); // avoid waitin fence error on ios 5
     [self.cameraController startCameraCapture];
     // we need to delay this due synconisation issues with OpenGL
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_current_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self.cameraController selectFilterType:IMGLYFilterTypeNone];
     });
 }
