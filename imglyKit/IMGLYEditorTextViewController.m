@@ -95,7 +95,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
     _textLabel.alpha = 0.0;
     _textLabel.backgroundColor = [UIColor colorWithWhite:0.0 alpha:0.0];
     _textLabel.textColor = self.textColor;
-    _textLabel.textAlignment = UITextAlignmentCenter;
+    _textLabel.textAlignment = NSTextAlignmentCenter;
     _textLabel.clipsToBounds = YES;
     [_textLabelClipView addSubview:_textLabel];
     //[self.view insertSubview:_textLabel belowSubview:self.bottomImageView];
