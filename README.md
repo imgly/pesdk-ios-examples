@@ -57,3 +57,7 @@ Note that we only add one operation here, but multiple operations can be added. 
 ## License
 
 Please see [LICENSE](https://github.com/imgly/imgly-sdk-ios/blob/master/LICENSE) for licensing details.
+
+## Author
+
+9elements GmbH, [@9elements](https://twitter.com/9elements), [http://www.9elements.com](http://www.9elements.com)
