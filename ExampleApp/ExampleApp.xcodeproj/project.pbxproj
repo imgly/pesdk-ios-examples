@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6412CA47183A6DDE00C828DF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6412CA46183A6DDE00C828DF /* Images.xcassets */; };
 		646A0551183BB73D00862AEA /* libimglyKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 646A054D183BB6E600862AEA /* libimglyKit.a */; };
+		64B8460F18ABDDA300F3B683 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 64B8460E18ABDDA300F3B683 /* libz.dylib */; };
 		64F05A61183BC05B00337926 /* imglyKit.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 646A054F183BB6E600862AEA /* imglyKit.bundle */; };
 		BC190E66338E4135A3C257C8 /* libPods-ExampleApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 74CB42C78B404D3DB452624A /* libPods-ExampleApp.a */; };
 		D105BDA918169A3100C46473 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D105BDA818169A3100C46473 /* CoreImage.framework */; };
@@ -67,6 +68,8 @@
 		6412CA46183A6DDE00C828DF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		646A0550183BB71600862AEA /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; name = Podfile; path = ../Podfile; sourceTree = "<group>"; };
 		6483C029183BB14B00DE23A8 /* imglyKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imglyKit.xcodeproj; path = ../imglyKit.xcodeproj; sourceTree = "<group>"; };
+		64B8460C18ABDD3C00F3B683 /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<absolute>"; };
+		64B8460E18ABDDA300F3B683 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		74CB42C78B404D3DB452624A /* libPods-ExampleApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ExampleApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D105BDA818169A3100C46473 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		D146633717EA02570019A035 /* train.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = train.png; sourceTree = "<group>"; };
@@ -111,6 +114,7 @@
 				D1DB14DB1766139B00D30B72 /* QuartzCore.framework in Frameworks */,
 				D17E94B31762378000FCC4C5 /* UIKit.framework in Frameworks */,
 				646A0551183BB73D00862AEA /* libimglyKit.a in Frameworks */,
+				64B8460F18ABDDA300F3B683 /* libz.dylib in Frameworks */,
 				BC190E66338E4135A3C257C8 /* libPods-ExampleApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,8 +175,10 @@
 				D17E94B41762378000FCC4C5 /* Foundation.framework */,
 				6483C029183BB14B00DE23A8 /* imglyKit.xcodeproj */,
 				74CB42C78B404D3DB452624A /* libPods-ExampleApp.a */,
+				64B8460E18ABDDA300F3B683 /* libz.dylib */,
 				D1DB14D81766139100D30B72 /* OpenGLES.framework */,
 				D1DB14DA1766139B00D30B72 /* QuartzCore.framework */,
+				64B8460C18ABDD3C00F3B683 /* SparkInspector.framework */,
 				D17E94B21762378000FCC4C5 /* UIKit.framework */,
 			);
 			name = Frameworks;
@@ -412,6 +418,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Spark\\ Inspector.app/Contents/Resources/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -490,6 +500,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Spark\\ Inspector.app/Contents/Resources/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -499,6 +513,11 @@
 				);
 				INFOPLIST_FILE = "ExampleApp/ExampleApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-framework",
+					SparkInspector,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -511,6 +530,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SYSTEM_APPS_DIR)/Spark\\ Inspector.app/Contents/Resources/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ExampleApp/ExampleApp-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
