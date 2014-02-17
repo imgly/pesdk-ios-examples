@@ -16,7 +16,9 @@
 
 @property (nonatomic, strong) UIColor *color;
 
-@property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong) NSString *fontName;
+
+@property (nonatomic, assign) CGFloat fontHeightScaleFactor;
 
 @property (nonatomic, assign) CGPoint position;
 

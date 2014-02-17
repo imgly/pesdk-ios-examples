@@ -261,22 +261,19 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 
 #pragma mark - tools
 - (CGPoint)transformedTextPosition {
-    CGFloat scaleFactor = self.inputImage.size.width / self.scaledImageSize.width;
     CGPoint position = self.textLabel.frame.origin;
-    
-    position.x *= scaleFactor;
-    position.y *= scaleFactor;
-    position.x = floorf(position.x);
-    position.y = floorf(position.y);
+    position.x = position.x / self.scaledImageSize.width;
+    position.y = position.y / self.scaledImageSize.height;
     return position;
 }
 
 - (IMGLYProcessingJob *)prosessingJob {
-    CGFloat scaleFactor = self.inputImage.size.width / self.scaledImageSize.width;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYTextOperation *operation = [[IMGLYTextOperation alloc] init];
     operation.text = [self.textLabel text];
-    operation.font = [UIFont fontWithName:self.fontName size:floorf(self.currentTextSize * scaleFactor) ];
+    //operation.font = [UIFont fontWithName:self.fontName size:floorf(self.currentTextSize * scaleFactor) ];
+    operation.fontHeightScaleFactor = self.currentTextSize / self.scaledImageSize.height;
+    operation.fontName = self.fontName;
     operation.position = [self transformedTextPosition];
     operation.color = self.textLabel.textColor;
     [job addOperation:(IMGLYOperation *)operation];
