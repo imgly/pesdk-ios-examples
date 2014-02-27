@@ -15,7 +15,7 @@
 
 
 static const CGFloat kIMGLYUpperBarY = 11.0f;
-extern CGFloat kIMGLYFilterSelectorMoveDistance;
+extern CGFloat filterSelectorMoveDistance;
 
 
 @interface IMGLYCameraTopBarView ()
@@ -232,7 +232,7 @@ extern CGFloat kIMGLYFilterSelectorMoveDistance;
             return CGRectMake(self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract);
         }
         else {
-            return CGRectMake(self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + kIMGLYFilterSelectorMoveDistance);
+            return CGRectMake(self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + filterSelectorMoveDistance);
         }
     }
     else if(orientation == UIDeviceOrientationLandscapeLeft) {
@@ -240,7 +240,7 @@ extern CGFloat kIMGLYFilterSelectorMoveDistance;
             return CGRectMake(270 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract);
         }
         else {
-            return CGRectMake(270 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + kIMGLYFilterSelectorMoveDistance);
+            return CGRectMake(270 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + filterSelectorMoveDistance);
         }
     }
 

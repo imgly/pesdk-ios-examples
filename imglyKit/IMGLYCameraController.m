@@ -100,6 +100,12 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
         _streamPreviewView.transform = CGAffineTransformMakeScale(1, 1.12);
         _streamPreviewView.transform = CGAffineTransformTranslate(self.streamPreviewView.transform, 0, -41);
     }
+    else if ([IMGLYDeviceDetector isRunningOn4S]) {
+        _streamPreviewView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        _streamPreviewView.transform = CGAffineTransformTranslate(self.streamPreviewView.transform,
+                                                                  0,
+                                                                  30);
+    }
     else {
         _streamPreviewView.transform = CGAffineTransformMakeScale(1, 1);
         _streamPreviewView.transform = CGAffineTransformTranslate(self.streamPreviewView.transform,
@@ -109,6 +115,10 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
     
     if ([IMGLYDeviceDetector isRunningOn3GS]) {
         _stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetHigh
+                                                           cameraPosition:AVCaptureDevicePositionBack];
+    }
+    else if ([IMGLYDeviceDetector isRunningOn4S]) {
+        _stillCamera = [[GPUImageStillCamera alloc] initWithSessionPreset:AVCaptureSessionPresetiFrame1280x720
                                                            cameraPosition:AVCaptureDevicePositionBack];
     }
     else {

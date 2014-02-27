@@ -18,5 +18,6 @@
 
 + (BOOL) isRunningOn3GS;
 + (BOOL) isRunningOn4Inch;
++ (BOOL) isRunningOn4S;
 
 @end

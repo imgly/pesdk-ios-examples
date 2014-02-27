@@ -247,8 +247,10 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
     [SVProgressHUD showWithStatus:@"Processing"];
 
     dispatch_async(_contextQueue, ^{
+        NSInteger maximaleSideLength = [IMGLYOpenGLUtils maximumTextureSizeForThisDevice];
+        NSLog(@"maximaleSideLength %d", maximaleSideLength);
         UIImage *image = [self resizeInputImageIfNeeded:self.inputImage
-                                      maximalSideLength:[IMGLYOpenGLUtils maximumTextureSizeForThisDevice]];
+                                      maximalSideLength:maximaleSideLength];
         [IMGLYPhotoProcessor sharedPhotoProcessor].inputImage = image;
         [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:self.finalProcessingJob];
         UIImage *outputImage = [IMGLYPhotoProcessor sharedPhotoProcessor].outputImage;

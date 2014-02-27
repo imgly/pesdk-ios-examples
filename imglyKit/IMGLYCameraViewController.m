@@ -17,10 +17,13 @@
 #import "IMGLYFilterSelectorView.h"
 #import "IMGLYImageProviderChecker.h"
 #import "IMGLYShutterView.h"
+#import "IMGLYDeviceDetector.h"
+#import "IMGLYOrientationOperation.h"
+#import "UIImage+IMGLYKitAdditions.h"
 
 #import <SVProgressHUD/SVProgressHUD.h>
 
-const CGFloat kIMGLYFilterSelectorMoveDistance = -95.0f;
+ CGFloat filterSelectorMoveDistance = -95.0f;
 const CGFloat kIMGLYPreviewImageSize = 62.0f;
 extern const CGFloat kIMGLYPreviewImageDistance;
 static const CGFloat kIMGLYPreviewImageTextHeight = 22.0f;
@@ -126,6 +129,9 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     self.filterSelectorView.delegate = self;
     [self.filterSelectorView generateStaticPreviewsForImage:_imageProvider.filterPreviewImage];
     [self.view addSubview:self.filterSelectorView];
+    if (![IMGLYDeviceDetector isRunningOn4Inch]) {
+        filterSelectorMoveDistance = -84;
+    }
 }
 
 - (void)configureCameraTopBar {
@@ -201,6 +207,19 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 }
 
 #pragma mark - button tap handling
+- (UIImage *)cropImage:(UIImage *)image  width:(CGFloat)width height:(CGFloat)height {
+    CGRect bounds = CGRectMake(0,
+                               0,
+                               width,
+                               height);
+    
+    CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, bounds);
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return croppedImage;
+}
+
+
 - (void)takePhoto {
     [self deleteImages];
     [self preparePhotoTaking];
@@ -210,6 +229,18 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
             DLog(@"%@", error.description);
         }
         else {
+            
+            if (processedImage.size.width == 720 && processedImage.size.height == 1280) { // to support the
+                processedImage = [self cropImage:processedImage width:900 height:900];
+                 [processedImage imgly_rotateImageToMatchOrientation];
+                IMGLYOrientationOperation *operation = [[IMGLYOrientationOperation alloc] init ];
+                [operation rotateRight];
+                processedImage = [operation processImage:processedImage];
+            }
+            else if (processedImage.size.width == 1280 && processedImage.size.height == 720) { // to support the
+                processedImage = [self cropImage:processedImage width:900 height:900];
+            }
+
             self.HQImage = processedImage;
             [self finishPhotoTaking];
         }
@@ -222,7 +253,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 300 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self.shutterView openShutter];
-        if (![IMGLYDeviceDetector isRunningOn4Inch]) {
+        if (![IMGLYDeviceDetector isRunningOn4Inch] && ![IMGLYDeviceDetector isRunningOn4S]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 200 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
                 [SVProgressHUD showWithStatus:@"Processing"];
             });
@@ -234,7 +265,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [self shutdownCamera];
     [self.cameraBottomBarView enableAllButtons];
 
-    if (![IMGLYDeviceDetector isRunningOn4Inch])
+    if (![IMGLYDeviceDetector isRunningOn4Inch] && ![IMGLYDeviceDetector isRunningOn4S])
         [SVProgressHUD dismiss];
 
     [self completeWithResult:IMGLYCameraViewControllerResultDone
@@ -266,13 +297,13 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [UIView animateWithDuration:0.3 animations:^{
         CGRect viewBounds = self.view.bounds;
         self.filterSelectorView.alpha = 1.0f;
-        CGFloat filterSelectorViewOriginY = viewBounds.size.height + kIMGLYFilterSelectorMoveDistance;
+        CGFloat filterSelectorViewOriginY = viewBounds.size.height + filterSelectorMoveDistance;
         self.filterSelectorView.frame = CGRectMake(0.0f,
                                                    filterSelectorViewOriginY,
                                                    self.filterSelectorView.frame.size.width,
                                                    self.filterSelectorView.frame.size.height);
         CGRect bottomFrame = self.cameraBottomBarView.frame;
-        bottomFrame.origin.y += kIMGLYFilterSelectorMoveDistance;
+        bottomFrame.origin.y += filterSelectorMoveDistance;
         self.cameraBottomBarView.frame = bottomFrame;
         [self.cameraBottomBarView setAlphaForAllViews:0.7f];
         [self.cameraTopBarView relayoutForFilterSelectorStatus:!self.isFilterSelectorDown];
@@ -290,7 +321,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
                                                    self.filterSelectorView.frame.size.width,
                                                    self.filterSelectorView.frame.size.height);
         CGRect bottomFrame = self.cameraBottomBarView.frame;
-        bottomFrame.origin.y -= kIMGLYFilterSelectorMoveDistance;
+        bottomFrame.origin.y -= filterSelectorMoveDistance;
         self.cameraBottomBarView.frame = bottomFrame;
         [self.cameraBottomBarView setAlphaForAllViews:1.0f];
         [self.cameraTopBarView relayoutForFilterSelectorStatus:!self.isFilterSelectorDown];
@@ -302,7 +333,6 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 - (void)filterSelectorView:(IMGLYFilterSelectorView *)filterSelectorView
        didSelectFilterType:(IMGLYFilterType)filterType {
-
     [self.cameraController selectFilterType:filterType];
 }
 
