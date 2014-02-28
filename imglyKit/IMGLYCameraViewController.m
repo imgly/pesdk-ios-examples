@@ -251,7 +251,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [self.cameraBottomBarView disableAllButtons];
     [self.shutterView closeShutter];
 
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 300 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 500 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
         [self.shutterView openShutter];
         if (![IMGLYDeviceDetector isRunningOn4Inch] && ![IMGLYDeviceDetector isRunningOn4S]) {
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 200 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
