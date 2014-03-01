@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name                  = 'imglyKit'
-  spec.version               = '1.0.3'
+  spec.version               = '1.0.4'
   spec.license               = { :type => 'Copyright', :file => 'LICENSE' }
   spec.summary               = 'Creates stunning images with a nice selection of premium filters.'
   spec.homepage              = 'https://github.com/imgly/imgly-sdk-ios'
