@@ -255,7 +255,11 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
         [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:self.finalProcessingJob];
         UIImage *outputImage = [IMGLYPhotoProcessor sharedPhotoProcessor].outputImage;
 
-        dispatch_sync(dispatch_get_main_queue(), ^{
+        // Clean up
+        _inputImage = nil;
+        _previewImage = nil;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
             [self completeWithResult:IMGLYEditorViewControllerResultDone image:outputImage job:self.finalProcessingJob];
         });

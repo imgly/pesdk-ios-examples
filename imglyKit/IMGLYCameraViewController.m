@@ -44,7 +44,6 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 @property (nonatomic, strong) IMGLYCameraTopBarView *cameraTopBarView;
 @property (nonatomic, strong) IMGLYFilterSelectorView *filterSelectorView;
 @property (nonatomic, strong) IMGLYShutterView *shutterView;
-@property (nonatomic, strong) UIImage *HQImage;
 @property (nonatomic, assign) BOOL isFilterSelectorDown;
 @property (nonatomic, strong) id<IMGLYCameraImageProvider> imageProvider;
 @property (nonatomic, strong) NSArray *availableFilterList;
@@ -221,7 +220,6 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 
 - (void)takePhoto {
-    [self deleteImages];
     [self preparePhotoTaking];
     [self.cameraController pauseCameraCapture];
     [self.cameraController takePhotoWithCompletionHandler:^(UIImage *processedImage, NSError *error) {
@@ -241,8 +239,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
                 processedImage = [self cropImage:processedImage width:900 height:900];
             }
 
-            self.HQImage = processedImage;
-            [self finishPhotoTaking];
+            [self finishPhotoTakingWithImage:processedImage];
         }
     }];
 }
@@ -262,7 +259,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     });
 }
 
-- (void)finishPhotoTaking {
+- (void)finishPhotoTakingWithImage:(UIImage *)image {
     [self shutdownCamera];
     [self.cameraBottomBarView enableAllButtons];
 
@@ -270,7 +267,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
         [SVProgressHUD dismiss];
 
     [self completeWithResult:IMGLYCameraViewControllerResultDone
-                       image:self.HQImage
+                       image:image
                   filterType:self.cameraController.filterType];
 }
 
@@ -355,8 +352,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
                   editingInfo:(NSDictionary *)editingInfo {
 
     [self dismissViewControllerAnimated:NO completion:NULL];
-    self.HQImage = image;
-    [self finishPhotoTaking];
+    [self finishPhotoTakingWithImage:image];
 }
 
 #pragma mark - layout
@@ -398,10 +394,6 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 }
 
 #pragma mark - image preview handling
-
-- (void)deleteImages {
-    self.HQImage = nil;
-}
 
 - (void)cameraTopBarView:(IMGLYCameraTopBarView *)cameraTopBarView didSelectCameraFlashMode:(IMGLYCameraFlashMode)cameraFlashMode {
     [self.cameraController setCameraFlashMode:cameraFlashMode];
