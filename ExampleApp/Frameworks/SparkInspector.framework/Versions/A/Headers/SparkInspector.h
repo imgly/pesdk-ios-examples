@@ -18,10 +18,13 @@
     NSMutableArray              * _connections;
     NSDictionary                * _preferences;
     
-    BOOL                          _classesSwizzled;
+    BOOL                          _initialSwizzlingPerformed;
+    NSMutableDictionary         * _classesSwizzled;
     NSMutableDictionary         * _classAttributes;
     NSMutableDictionary         * _classDirtyMethods;
     NSMutableDictionary         * _shorthands;
+    
+    NSMutableDictionary         * _viewPropertiesForClass;
     
     ExplorerNotificationState   * _notificationState;
     ExplorerViewState           * _viewState;
