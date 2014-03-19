@@ -246,13 +246,15 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
 - (void)doneButtonTouchedUpInside:(UIButton *)button {
     [SVProgressHUD showWithStatus:@"Processing"];
 
+    __weak IMGLYEditorViewController *weakSelf = self;
     dispatch_async(_contextQueue, ^{
+        IMGLYEditorViewController *strongSelf = weakSelf;
         NSInteger maximaleSideLength = [IMGLYOpenGLUtils maximumTextureSizeForThisDevice];
         NSLog(@"maximaleSideLength %d", maximaleSideLength);
-        UIImage *image = [self resizeInputImageIfNeeded:self.inputImage
+        UIImage *image = [strongSelf resizeInputImageIfNeeded:strongSelf.inputImage
                                       maximalSideLength:maximaleSideLength];
         [IMGLYPhotoProcessor sharedPhotoProcessor].inputImage = image;
-        [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:self.finalProcessingJob];
+        [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:strongSelf.finalProcessingJob];
         UIImage *outputImage = [IMGLYPhotoProcessor sharedPhotoProcessor].outputImage;
 
         // Clean up
@@ -261,7 +263,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];
-            [self completeWithResult:IMGLYEditorViewControllerResultDone image:outputImage job:self.finalProcessingJob];
+            [strongSelf completeWithResult:IMGLYEditorViewControllerResultDone image:outputImage job:strongSelf.finalProcessingJob];
         });
     });
 }
@@ -313,18 +315,21 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
     if (self.enhancedImage == nil) {
         [SVProgressHUD showWithStatus:@"Processing"];
         [self hideStatusBar];
+        
+        __weak IMGLYEditorViewController *weakSelf = self;
         dispatch_async(_contextQueue, ^{
-            self.nonEnhancedImage = self.previewImage;
+            IMGLYEditorViewController *strongSelf = weakSelf;
+            strongSelf.nonEnhancedImage = strongSelf.previewImage;
             IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
             IMGLYEnhancementOperation *enhancementOperation = [[IMGLYEnhancementOperation alloc] init];
 
             [job addOperation:(IMGLYOperation *)enhancementOperation];
-            [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.nonEnhancedImage];
+            [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:strongSelf.nonEnhancedImage];
             [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job ];
-            self.enhancedImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
-            dispatch_sync(dispatch_get_main_queue(), ^{
+            strongSelf.enhancedImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
+            dispatch_async(dispatch_get_main_queue(), ^{
                 [SVProgressHUD dismiss];
-                [self toggleEnhancedImageAndPresentIt];
+                [strongSelf toggleEnhancedImageAndPresentIt];
             });
         });
     }

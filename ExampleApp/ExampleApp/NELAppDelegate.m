@@ -73,8 +73,9 @@
     if (result == IMGLYEditorViewControllerResultDone)
         UIImageWriteToSavedPhotosAlbum(image, nil, nil, NULL);
 
+    NELAppDelegate * __weak weakSelf = self;
     [self.window.rootViewController dismissViewControllerAnimated:YES completion:^{
-        IMGLYCameraViewController *cameraViewController = (IMGLYCameraViewController *)self.window.rootViewController;
+        IMGLYCameraViewController *cameraViewController = (IMGLYCameraViewController *)weakSelf.window.rootViewController;
         [cameraViewController restartCamera];
     }];
 }

@@ -222,24 +222,27 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)takePhoto {
     [self preparePhotoTaking];
     [self.cameraController pauseCameraCapture];
+    
+    __weak IMGLYCameraViewController *weakSelf = self;
     [self.cameraController takePhotoWithCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        IMGLYCameraViewController *strongSelf = weakSelf;
         if (error) {
             DLog(@"%@", error.description);
         }
         else {
             
             if (processedImage.size.width == 720 && processedImage.size.height == 1280) { // to support the
-                processedImage = [self cropImage:processedImage width:900 height:900];
+                processedImage = [strongSelf cropImage:processedImage width:900 height:900];
                  [processedImage imgly_rotateImageToMatchOrientation];
                 IMGLYOrientationOperation *operation = [[IMGLYOrientationOperation alloc] init ];
                 [operation rotateRight];
                 processedImage = [operation processImage:processedImage];
             }
             else if (processedImage.size.width == 1280 && processedImage.size.height == 720) { // to support the
-                processedImage = [self cropImage:processedImage width:900 height:900];
+                processedImage = [strongSelf cropImage:processedImage width:900 height:900];
             }
 
-            [self finishPhotoTakingWithImage:processedImage];
+            [strongSelf finishPhotoTakingWithImage:processedImage];
         }
     }];
 }
@@ -441,8 +444,10 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     sleep(1); // avoid waitin fence error on ios 5
     [self.cameraController startCameraCapture];
     // we need to delay this due synconisation issues with OpenGL
+    
+    __weak IMGLYCameraViewController *weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 100 * NSEC_PER_MSEC), dispatch_get_main_queue(), ^{
-        [self.cameraController selectFilterType:IMGLYFilterTypeNone];
+        [weakSelf.cameraController selectFilterType:IMGLYFilterTypeNone];
     });
 }
 
