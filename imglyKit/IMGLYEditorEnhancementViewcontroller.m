@@ -18,7 +18,6 @@
 
 @property (nonatomic, strong) UISwitch *toggle;
 @property (nonatomic, strong) UIImage *enhancedImage;
-@property (nonatomic, strong) NSOperation *operation;
 @property (nonatomic, strong) NSOperationQueue *queue;
 
 @end
@@ -46,6 +45,7 @@
 #pragma mark - GUI configuration
 - (void)commonInit {
     self.title = @"Magic";
+    _queue = [[NSOperationQueue alloc] init];
     [self configureSwitch];
 }
 
@@ -58,21 +58,27 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [SVProgressHUD showWithStatus:@"Preprocessing"];
+
     __weak IMGLYEditorEnhancementViewController *weakSelf = self;
-    self.operation = [NSBlockOperation blockOperationWithBlock:^{
-        [self createEnhancedImage];
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        IMGLYEditorEnhancementViewController *strongSelf = weakSelf;
+        [strongSelf createEnhancedImage];
     }];
-    self.operation.completionBlock = ^{
-        if (weakSelf == nil)
-            return;
-        if([weakSelf.operation isCancelled]) {
+
+    __weak NSBlockOperation *weakOperation = operation;
+    operation.completionBlock = ^{
+        NSBlockOperation *strongOperation = weakOperation;
+        if ([strongOperation isCancelled]) {
             return;
         }
-        [weakSelf performSelectorOnMainThread:@selector(updatePreviewImageAndDismissProgress) withObject:nil waitUntilDone:NO];
+
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            IMGLYEditorEnhancementViewController *strongSelf = weakSelf;
+            [strongSelf updatePreviewImageAndDismissProgress];
+        }];
     };
 
-    self.queue = [[NSOperationQueue alloc] init];
-    [self.queue addOperation:self.operation];
+    [self.queue addOperation:operation];
 }
 
 - (void)updatePreviewImageAndDismissProgress {

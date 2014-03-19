@@ -26,7 +26,6 @@
  CGFloat filterSelectorMoveDistance = -95.0f;
 const CGFloat kIMGLYPreviewImageSize = 62.0f;
 extern const CGFloat kIMGLYPreviewImageDistance;
-static const CGFloat kIMGLYPreviewImageTextHeight = 22.0f;
 extern const CGFloat kIMGLYExtraSpaceForScrollBar;
 const CGFloat kIMGLYHQProgressWidth = 48;
 const CGFloat kIMGLYHQProgressHeight = 58;
@@ -429,6 +428,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 #pragma mark - accept / camera mode switching
 
 -(void)shutdownCamera {
+    [self.cameraController stopCameraCapture];
     [self.cameraController hideStreamPreview];
     [self.cameraController removeCameraObservers];
     [self.cameraController removeNotifications];
@@ -443,6 +443,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [self.filterSelectorView setPreviewImagesToDefault];
     sleep(1); // avoid waitin fence error on ios 5
     [self.cameraController startCameraCapture];
+
     // we need to delay this due synconisation issues with OpenGL
     
     __weak IMGLYCameraViewController *weakSelf = self;

@@ -26,7 +26,6 @@ static const CGFloat kMenuViewHeight = 95.0;
 @property (nonatomic, strong) IMGLYEditorFocusMenu *menu;
 @property (nonatomic, assign) IMGLYTiltShiftMode tiltShiftMode;
 @property (nonatomic, strong) UIImage *blurredImage;
-@property (nonatomic, strong) NSOperation *operation;
 @property (nonatomic, strong) NSOperationQueue *queue;
 
 
@@ -53,6 +52,7 @@ static const CGFloat kMenuViewHeight = 95.0;
 
 - (void) commonInit {
     self.title = @"Focus";
+    _queue = [[NSOperationQueue alloc] init];
     [self disableZoomOnTap];
     [self configureCircleGradientView];
     [self configureBoxGradientView];
@@ -81,23 +81,29 @@ static const CGFloat kMenuViewHeight = 95.0;
     [self.view addSubview:_circleGradientView];
 }
 
-- (void) viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated {
     [SVProgressHUD showWithStatus:@"Preprocessing"];
+
     __weak IMGLYEditorFocusViewController *weakSelf = self;
-    self.operation = [NSBlockOperation blockOperationWithBlock:^{
-        [self createBlurredImage];
+    NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
+        IMGLYEditorFocusViewController *strongSelf = weakSelf;
+        [strongSelf createBlurredImage];
     }];
-    self.operation.completionBlock = ^{
-        if (weakSelf == nil)
-            return;
-        if([weakSelf.operation isCancelled]) {
+
+    __weak NSBlockOperation *weakOperation = operation;
+    operation.completionBlock = ^{
+        NSBlockOperation *strongOperation = weakOperation;
+        if([strongOperation isCancelled]) {
             return;
         }
-        [weakSelf performSelectorOnMainThread:@selector(updatePreviewImageAndDismissProgress) withObject:nil waitUntilDone:NO];
+
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            IMGLYEditorFocusViewController *strongSelf = weakSelf;
+            [strongSelf updatePreviewImageAndDismissProgress];
+        }];
     };
 
-    self.queue = [[NSOperationQueue alloc] init];
-    [self.queue addOperation:self.operation];
+    [self.queue addOperation:operation];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -153,7 +159,7 @@ static const CGFloat kMenuViewHeight = 95.0;
 }
 
 #pragma mark - processing
-- (void) createBlurredImage {
+- (void)createBlurredImage {
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYGaussOperation *operation = [[IMGLYGaussOperation alloc] init];
     
