@@ -1,20 +1,22 @@
-# img.ly SDK for iOS
+![img.ly](http://i.imgur.com/fgH1HRt.png)
+
+## img.ly SDK for iOS
 
 img.ly SDK for iOS is a Cocoa Touch framework for creating stunning images with a nice selection of premium filters.
 
-## Overview
+### Overview
 
 img.ly SDK provides tools to create photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow live preview of filters img.ly SDK provides high-resolution images. On iPhone 4 that is 2048 x 1593 pixels and on iPhone 5 full resolution (up to 4096 x 4096 pixels). It also comes with customizable view controllers for the general needs of such apps.
 
 
-## Installation
+### Installation
 
 The easiest way to install img.ly SDK for iOS is via CocoaPods. In your Podfile, add the following:
 
     pod 'imglyKit'
 
 
-## High level API
+### High level API
 
 First there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and UI controls to control the camera settings such as flash, front camera or back camera. After the user took an image the controller switches to accept mode. In that mode the user can accept (edit) the image, save it , or reject it. Also he can change the filter.
 
@@ -35,7 +37,7 @@ The `IMGLYEditorViewController` also has a parameter for the initial filter type
 To get how the high level of the img.ly SDK works, read the source code of the example app carefully.
 
 
-## Low level API
+### Low level API
 
 As low-level API the SDK comes with the `IMGLYPhotoProcessor` class. It can be used to apply filters and other operations directly from code. The `IMGLYPhotoProcessor` is a singleton. That is necessary to avoid threading issues with OpenGLES. To work with the `IMGLYPhotoProcessor` a `IMGLYProcessingJob` must be created. It holds a list of `IMGLYOperations` that we add to the job. That job then is handed over to the `IMGLYPhotoProcessor` and will be executed.
 
@@ -54,7 +56,7 @@ Note that we only add one operation here, but multiple operations can be added. 
     UIImage *outputImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
 
 
-## Attribution
+### Attribution
 
 img.ly SDK for iOS uses a private fork of [GPUImage](https://github.com/BradLarson/GPUImage), which is released under the following license:
 
@@ -68,11 +70,11 @@ img.ly SDK for iOS uses a private fork of [GPUImage](https://github.com/BradLars
     THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-## License
+### License
 
 Please see [LICENSE](https://github.com/imgly/imgly-sdk-ios/blob/master/LICENSE) for licensing details.
 
 
-## Author
+### Author
 
 9elements GmbH, [@9elements](https://twitter.com/9elements), [http://www.9elements.com](http://www.9elements.com)
