@@ -8,6 +8,7 @@ img.ly SDK for iOS is a Cocoa Touch framework for creating stunning images with 
 
 img.ly SDK provides tools to create photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow live preview of filters img.ly SDK provides high-resolution images. On iPhone 4 that is 2048 x 1593 pixels and on iPhone 5 full resolution (up to 4096 x 4096 pixels). It also comes with customizable view controllers for the general needs of such apps.
 
+![Example](http://i.imgur.com/EorDrpS.png)
 
 ### Installation
 
