@@ -2,7 +2,6 @@
 
 @class GPUImageGaussianBlurFilter;
 @class GPUImageToonFilter;
-@class GPUImageSinCityFilter;
 
 /** This uses a similar process as the GPUImageToonFilter, only it precedes the toon effect with a Gaussian blur to smooth out noise.
  */
@@ -10,7 +9,6 @@
 {
     GPUImageGaussianBlurFilter *blurFilter;
     GPUImageToonFilter *toonFilter;
-    GPUImageSinCityFilter *sinCityFilter;
 }
 
 /// The image width and height factors tweak the appearance of the edges. By default, they match the filter size in pixels
@@ -18,8 +16,8 @@
 /// The image width and height factors tweak the appearance of the edges. By default, they match the filter size in pixels
 @property(readwrite, nonatomic) CGFloat texelHeight; 
 
-/// A multiplier for the blur size, ranging from 0.0 on up, with a default of 0.5
-@property (readwrite, nonatomic) CGFloat blurSize;
+/// The radius of the underlying Gaussian blur. The default is 2.0.
+@property (readwrite, nonatomic) CGFloat blurRadiusInPixels;
 
 /// The threshold at which to apply the edges, default of 0.2
 @property(readwrite, nonatomic) CGFloat threshold; 

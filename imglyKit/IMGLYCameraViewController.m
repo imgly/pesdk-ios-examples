@@ -18,7 +18,6 @@
 #import "IMGLYImageProviderChecker.h"
 #import "IMGLYShutterView.h"
 #import "IMGLYDeviceDetector.h"
-#import "IMGLYOrientationOperation.h"
 #import "UIImage+IMGLYKitAdditions.h"
 
 #import <SVProgressHUD/SVProgressHUD.h>
@@ -220,10 +219,11 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 - (void)takePhoto {
     [self preparePhotoTaking];
-    [self.cameraController pauseCameraCapture];
     
     __weak IMGLYCameraViewController *weakSelf = self;
     [self.cameraController takePhotoWithCompletionHandler:^(UIImage *processedImage, NSError *error) {
+        [self.cameraController pauseCameraCapture];
+
         IMGLYCameraViewController *strongSelf = weakSelf;
         if (error) {
             DLog(@"%@", error.description);
@@ -232,10 +232,10 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
             
             if (processedImage.size.width == 720 && processedImage.size.height == 1280) { // to support the
                 processedImage = [strongSelf cropImage:processedImage width:900 height:900];
-                 [processedImage imgly_rotateImageToMatchOrientation];
-                IMGLYOrientationOperation *operation = [[IMGLYOrientationOperation alloc] init ];
-                [operation rotateRight];
-                processedImage = [operation processImage:processedImage];
+//                 [processedImage imgly_rotateImageToMatchOrientation];
+//                IMGLYOrientationOperation *operation = [[IMGLYOrientationOperation alloc] init ];
+//                [operation rotateRight];
+//                processedImage = [operation processImage:processedImage];
             }
             else if (processedImage.size.width == 1280 && processedImage.size.height == 720) { // to support the
                 processedImage = [strongSelf cropImage:processedImage width:900 height:900];

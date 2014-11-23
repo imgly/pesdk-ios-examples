@@ -177,20 +177,14 @@ const CGFloat kActivationDuration = 0.15f;
     _availableFilterList = @[
         @(IMGLYFilterTypeNone),
         @(IMGLYFilterType9EK1),
-        @(IMGLYFilterType9EK2),
         @(IMGLYFilterType9EK6),
         @(IMGLYFilterType9EKDynamic),
         @(IMGLYFilterTypeFridge),
-        @(IMGLYFilterTypeBreeze),
-        @(IMGLYFilterTypeOchrid),
         @(IMGLYFilterTypeChestnut),
         @(IMGLYFilterTypeFront),
         @(IMGLYFilterTypeFixie),
-        @(IMGLYFilterTypeX400),
         @(IMGLYFilterTypeBW),
         @(IMGLYFilterTypeBWHard),
-        @(IMGLYFilterTypeLenin),
-        @(IMGLYFilterTypeQouzi),
         @(IMGLYFilterType669),
         @(IMGLYFilterTypePola),
         @(IMGLYFilterTypeFood),
@@ -199,8 +193,6 @@ const CGFloat kActivationDuration = 0.15f;
         @(IMGLYFilterTypeTejas),
         @(IMGLYFilterTypeEarlyBird),
         @(IMGLYFilterTypeLomo),
-        @(IMGLYFilterTypeGobblin),
-        @(IMGLYFilterTypeSinCity),
         @(IMGLYFilterTypeSketch),
         @(IMGLYFilterTypeMellow),
         @(IMGLYFilterTypeSunny),
@@ -218,9 +210,6 @@ const CGFloat kActivationDuration = 0.15f;
             case IMGLYFilterType9EK1:
                 [self addFilterSelectButtonWithFilterName:@"K1" action:IMGLYFilterType9EK1];
                 break;
-            case IMGLYFilterType9EK2:
-                [self addFilterSelectButtonWithFilterName:@"K2" action:IMGLYFilterType9EK2];
-                break;
             case IMGLYFilterType9EK6:
                 [self addFilterSelectButtonWithFilterName:@"K6" action:IMGLYFilterType9EK6];
                 break;
@@ -229,12 +218,6 @@ const CGFloat kActivationDuration = 0.15f;
                 break;
             case IMGLYFilterTypeFridge:
                 [self addFilterSelectButtonWithFilterName:@"Fridge" action:IMGLYFilterTypeFridge];
-                break;
-            case IMGLYFilterTypeBreeze:
-                [self addFilterSelectButtonWithFilterName:@"Breeze" action:IMGLYFilterTypeBreeze];
-                break;
-            case IMGLYFilterTypeOchrid:
-                [self addFilterSelectButtonWithFilterName:@"Orchid" action:IMGLYFilterTypeOchrid];
                 break;
             case IMGLYFilterTypeChestnut:
                 [self addFilterSelectButtonWithFilterName:@"Chest" action:IMGLYFilterTypeChestnut];
@@ -245,20 +228,11 @@ const CGFloat kActivationDuration = 0.15f;
             case IMGLYFilterTypeFixie:
                 [self addFilterSelectButtonWithFilterName:@"Fixie" action:IMGLYFilterTypeFixie];
                 break;
-            case IMGLYFilterTypeX400:
-                [self addFilterSelectButtonWithFilterName:@"X400" action:IMGLYFilterTypeX400];
-                break;
             case IMGLYFilterTypeBW:
                 [self addFilterSelectButtonWithFilterName:@"B&W" action:IMGLYFilterTypeBW];
                 break;
             case IMGLYFilterTypeBWHard:
                 [self addFilterSelectButtonWithFilterName:@"1920" action:IMGLYFilterTypeBWHard];
-                break;
-            case IMGLYFilterTypeLenin:
-                [self addFilterSelectButtonWithFilterName:@"Lenin" action:IMGLYFilterTypeLenin];
-                break;
-            case IMGLYFilterTypeQouzi:
-                [self addFilterSelectButtonWithFilterName:@"Quozi" action:IMGLYFilterTypeQouzi];
                 break;
             case IMGLYFilterType669:
                 [self addFilterSelectButtonWithFilterName:@"Pola 669" action:IMGLYFilterType669];
@@ -283,12 +257,6 @@ const CGFloat kActivationDuration = 0.15f;
                 break;
             case IMGLYFilterTypeLomo:
                 [self addFilterSelectButtonWithFilterName:@"Lomo" action:IMGLYFilterTypeLomo];
-                break;
-            case IMGLYFilterTypeGobblin:
-                [self addFilterSelectButtonWithFilterName:@"Gobblin" action:IMGLYFilterTypeGobblin];
-                break;
-            case IMGLYFilterTypeSinCity:
-                [self addFilterSelectButtonWithFilterName:@"Sin" action:IMGLYFilterTypeSinCity];
                 break;
             case IMGLYFilterTypeSketch:
                 [self addFilterSelectButtonWithFilterName:@"Pencil" action:IMGLYFilterTypeSketch];

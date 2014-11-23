@@ -184,8 +184,28 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
                                            tapPoint.y - kIMGLYIndicatorSize /2.0,
                                            kIMGLYIndicatorSize,
                                            kIMGLYIndicatorSize);
+//    [self.stillCamera.inputCamera setFocusPointOfInterest:tapPoint];
     
-    [self.stillCamera setFocus:tapPoint : self.streamPreviewView.frame.size];
+    if([self.stillCamera.inputCamera isFocusPointOfInterestSupported] &&
+       [self.stillCamera.inputCamera isFocusModeSupported:AVCaptureFocusModeAutoFocus])
+    {
+        
+        if([self.stillCamera.inputCamera lockForConfiguration :nil])
+        {
+            [self.stillCamera.inputCamera setFocusPointOfInterest:tapPoint];
+            [self.stillCamera.inputCamera setFocusMode:AVCaptureFocusModeLocked];
+            
+            if([self.stillCamera.inputCamera isExposurePointOfInterestSupported])
+            {
+                [self.stillCamera.inputCamera setExposurePointOfInterest:tapPoint];
+                [self.stillCamera.inputCamera setExposureMode:AVCaptureExposureModeLocked];
+            }
+            [self.stillCamera.inputCamera unlockForConfiguration];
+        }
+    }
+
+    
+//    [self.stillCamera setFocus:tapPoint : self.streamPreviewView.frame.size];
 }
 
 // Change to continuous auto focus. The camera will constantly focus at the point choosen.
@@ -193,7 +213,9 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
                  forInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
     self.showIndicator = NO;
-    [self.stillCamera setToAutoFocusMode];
+    [self.stillCamera.inputCamera setFocusMode:AVCaptureFocusModeAutoFocus];
+
+//    [self.stillCamera setToAutoFocusMode];
 }
 
 - (void)addGestureRecogizerToStreamPreview:(UIGestureRecognizer *)gestureRecognizer {
@@ -246,7 +268,7 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
 }
 
 - (void)addCameraObservers {
-    if ([_stillCamera isAutoFocusSupported] && !_focusObserverAdded) {
+    if ([_stillCamera.inputCamera isFocusModeSupported:AVCaptureFocusModeAutoFocus] && !_focusObserverAdded) {
         [self addObserver:self
                forKeyPath:@"stillCamera.inputCamera.focusMode"
                   options:NSKeyValueObservingOptionNew
@@ -257,7 +279,8 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
 }
 
 - (void)removeCameraObservers {
-    if ([_stillCamera isAutoFocusSupported] && _focusObserverAdded) {
+    
+    if ([_stillCamera.inputCamera isFocusModeSupported:AVCaptureFocusModeAutoFocus] && _focusObserverAdded) {
         [self removeObserver:self forKeyPath:@"stillCamera.inputCamera.focusMode"];
         _focusObserverAdded = NO;
     }
@@ -306,10 +329,13 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
 
 - (void)takePhotoWithCompletionHandler:(void (^)(UIImage *processedImage, NSError *error))completionHandler  {
     [self setupFlash];
-    [self.stillCamera capturePhotoAsImageWithCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    [_liveStreamFilterManager.currentFilter useNextFrameForImageCapture];
+    [self.stillCamera capturePhotoAsImageProcessedUpToFilter:_liveStreamFilterManager.currentFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (completionHandler)
             completionHandler(processedImage, error);
     }];
+    
+   
 }
 
 - (void)setupFlash {

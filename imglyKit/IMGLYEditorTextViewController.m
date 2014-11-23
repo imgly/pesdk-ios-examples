@@ -283,6 +283,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 
 #pragma mark - cleanup
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self unregisterForKeyboardNotifications];
 }
 
