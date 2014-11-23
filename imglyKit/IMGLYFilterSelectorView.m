@@ -191,13 +191,11 @@ const CGFloat kActivationDuration = 0.15f;
         @(IMGLYFilterTypeGlam),
         @(IMGLYFilterTypeLord),
         @(IMGLYFilterTypeTejas),
-        @(IMGLYFilterTypeEarlyBird),
         @(IMGLYFilterTypeLomo),
         @(IMGLYFilterTypeSketch),
         @(IMGLYFilterTypeMellow),
         @(IMGLYFilterTypeSunny),
         @(IMGLYFilterTypeA15),
-        @(IMGLYFilterTypeSemiRed),
     ];
 
     [self buildFilterPreviewList];
@@ -252,9 +250,6 @@ const CGFloat kActivationDuration = 0.15f;
             case IMGLYFilterTypeTejas:
                 [self addFilterSelectButtonWithFilterName:@"Texas" action:IMGLYFilterTypeTejas];
                 break;
-            case IMGLYFilterTypeEarlyBird:
-                [self addFilterSelectButtonWithFilterName:@"Morning" action:IMGLYFilterTypeEarlyBird];
-                break;
             case IMGLYFilterTypeLomo:
                 [self addFilterSelectButtonWithFilterName:@"Lomo" action:IMGLYFilterTypeLomo];
                 break;
@@ -269,9 +264,6 @@ const CGFloat kActivationDuration = 0.15f;
                 break;
             case IMGLYFilterTypeA15:
                 [self addFilterSelectButtonWithFilterName:@"15" action:IMGLYFilterTypeA15];
-                break;
-            case IMGLYFilterTypeSemiRed:
-                [self addFilterSelectButtonWithFilterName:@"Semi Red" action:IMGLYFilterTypeSemiRed];
                 break;
             case IMGLYFilterTypeNone:
                 [self addFilterSelectButtonWithFilterName:@"None" action:IMGLYFilterTypeNone];
