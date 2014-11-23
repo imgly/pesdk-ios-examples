@@ -1,3 +1,6 @@
+## Fork notes:
+In this fork I just switched NEGPUImage library file to GPUImage(its still called libNEGPUImage.a), but it was compiled from the latest version of GPUImage. To be able to to this I had to drop a lot of filters and some abilities. 
+
 ![img.ly](http://i.imgur.com/fgH1HRt.png)
 
 ## img.ly SDK for iOS
