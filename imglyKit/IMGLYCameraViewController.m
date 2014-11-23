@@ -22,7 +22,7 @@
 
 #import <SVProgressHUD/SVProgressHUD.h>
 
- CGFloat filterSelectorMoveDistance = -95.0f;
+CGFloat filterSelectorMoveDistance = -95.0f;
 const CGFloat kIMGLYPreviewImageSize = 62.0f;
 extern const CGFloat kIMGLYPreviewImageDistance;
 extern const CGFloat kIMGLYExtraSpaceForScrollBar;
@@ -31,11 +31,11 @@ const CGFloat kIMGLYHQProgressHeight = 58;
 const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 @interface IMGLYCameraViewController () <UIGestureRecognizerDelegate,
-                                         IMGLYCameraBottomBarCommandDelegate,
-                                         IMGLYFilterSelectorViewDelegate,
-                                         UINavigationControllerDelegate,
-                                         UIImagePickerControllerDelegate,
-                                         IMGLYCameraTopBarViewDelegate>
+IMGLYCameraBottomBarCommandDelegate,
+IMGLYFilterSelectorViewDelegate,
+UINavigationControllerDelegate,
+UIImagePickerControllerDelegate,
+IMGLYCameraTopBarViewDelegate>
 
 @property (nonatomic, strong) IMGLYCameraBottomBarView *cameraBottomBarView;
 @property (nonatomic, strong) IMGLYCameraController *cameraController;
@@ -92,7 +92,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
         self.imageProvider = [[IMGLYDefaultCameraImageProvider alloc] init];
     }
     else {
-     [[IMGLYImageProviderChecker sharedInstance] checkCameraImageProvider:self.imageProvider];
+        [[IMGLYImageProviderChecker sharedInstance] checkCameraImageProvider:self.imageProvider];
     }
     
     self.isFilterSelectorDown = YES;
@@ -133,6 +133,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 - (void)configureCameraTopBar {
     self.cameraTopBarView = [[IMGLYCameraTopBarView alloc] initWithYPosition:29];
+    self.cameraTopBarView.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     self.cameraTopBarView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 55);
     self.cameraTopBarView.delegate = self;
     self.cameraTopBarView.userInteractionEnabled = YES;
@@ -181,7 +182,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 
 #pragma mark - notification handling
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-
+    
 }
 
 - (void)addOrientationNotification {
@@ -211,11 +212,10 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
                                height);
     
     CGImageRef imageRef = CGImageCreateWithImageInRect(image.CGImage, bounds);
-    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef];
+    UIImage *croppedImage = [UIImage imageWithCGImage:imageRef scale:1.0 orientation:image.imageOrientation];
     CGImageRelease(imageRef);
     return croppedImage;
 }
-
 
 - (void)takePhoto {
     [self preparePhotoTaking];
@@ -223,7 +223,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     __weak IMGLYCameraViewController *weakSelf = self;
     [self.cameraController takePhotoWithCompletionHandler:^(UIImage *processedImage, NSError *error) {
         [self.cameraController pauseCameraCapture];
-
+        
         IMGLYCameraViewController *strongSelf = weakSelf;
         if (error) {
             DLog(@"%@", error.description);
@@ -232,15 +232,11 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
             
             if (processedImage.size.width == 720 && processedImage.size.height == 1280) { // to support the
                 processedImage = [strongSelf cropImage:processedImage width:900 height:900];
-//                 [processedImage imgly_rotateImageToMatchOrientation];
-//                IMGLYOrientationOperation *operation = [[IMGLYOrientationOperation alloc] init ];
-//                [operation rotateRight];
-//                processedImage = [operation processImage:processedImage];
             }
             else if (processedImage.size.width == 1280 && processedImage.size.height == 720) { // to support the
                 processedImage = [strongSelf cropImage:processedImage width:900 height:900];
             }
-
+            
             [strongSelf finishPhotoTakingWithImage:processedImage];
         }
     }];
@@ -249,7 +245,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)preparePhotoTaking {
     [self.cameraBottomBarView disableAllButtons];
     [self.shutterView closeShutter];
-
+    
     NSInteger timeUntilOpen = 300;
     
     if (![IMGLYDeviceDetector isRunningOn4Inch] && ![IMGLYDeviceDetector isRunningOn4S]) {
@@ -264,10 +260,10 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)finishPhotoTakingWithImage:(UIImage *)image {
     [self shutdownCamera];
     [self.cameraBottomBarView enableAllButtons];
-
+    
     if (![IMGLYDeviceDetector isRunningOn4Inch] && ![IMGLYDeviceDetector isRunningOn4S])
         [SVProgressHUD dismiss];
-
+    
     [self completeWithResult:IMGLYCameraViewControllerResultDone
                        image:image
                   filterType:self.cameraController.filterType];
@@ -287,7 +283,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)completeWithResult:(IMGLYCameraViewControllerResult)result
                      image:(UIImage *)image
                 filterType:(IMGLYFilterType)filterType {
-
+    
     if (self.completionHandler)
         self.completionHandler(result, image, filterType);
 }
@@ -336,7 +332,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [self.cameraController selectFilterType:filterType];
 }
 
-#pragma mark - image picker handling 
+#pragma mark - image picker handling
 - (void)openImageFromCameraAndProcessIt {
     UIImagePickerController *pickerLibrary = [[UIImagePickerController alloc] init];
     pickerLibrary.delegate = self;
@@ -352,7 +348,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 - (void)imagePickerController:(UIImagePickerController *)picker
         didFinishPickingImage:(UIImage *)image
                   editingInfo:(NSDictionary *)editingInfo {
-
+    
     [self dismissViewControllerAnimated:NO completion:NULL];
     [self finishPhotoTakingWithImage:image];
 }
@@ -422,7 +418,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
             [self.cameraController setPreviewAlpha:1.0];
         }];
     }];
-
+    
 }
 
 #pragma mark - accept / camera mode switching
@@ -443,7 +439,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
     [self.filterSelectorView setPreviewImagesToDefault];
     sleep(1); // avoid waitin fence error on ios 5
     [self.cameraController startCameraCapture];
-
+    
     // we need to delay this due synconisation issues with OpenGL
     
     __weak IMGLYCameraViewController *weakSelf = self;
@@ -455,6 +451,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 #pragma mark - unload
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIDeviceOrientationDidChangeNotification

@@ -84,7 +84,8 @@
 
 - (void)configureBottomBackgroundView {
     _bottomBackgroundView = [[UIImageView alloc] initWithImage:_bottomImage];
-    _bottomBackgroundView.frame = CGRectMake(0, 0, _bottomImage.size.width , _bottomImage.size.height);
+    _bottomBackgroundView.contentMode = UIViewContentModeScaleToFill;
+    _bottomBackgroundView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width , _bottomImage.size.height);
     [self addSubview:_bottomBackgroundView];
 }
 
@@ -92,7 +93,7 @@
     _takePhotoButton = [UIButton buttonWithType:UIButtonTypeCustom];
     UIImage *cameraImage = [self.imageProvider cameraButtonImage];
     [_takePhotoButton setImage:cameraImage forState:UIControlStateNormal];
-    _takePhotoButton.frame = CGRectMake(160 - cameraImage.size.width / 2,
+    _takePhotoButton.frame = CGRectMake(([UIScreen mainScreen].bounds.size.width / 2) - cameraImage.size.width / 2,
                                         _bottomImage.size.height / 2 - cameraImage.size.height / 2,
                                         cameraImage.size.width,
                                         cameraImage.size.height);
@@ -120,7 +121,7 @@
                                     action:@selector(toggleFilterSelector)
                           forControlEvents:UIControlEventTouchUpInside];
     CGFloat height = _bottomImage.size.height / 2 - _toggleFilterSelectorButton.imageView.image.size.height / 2;
-    _toggleFilterSelectorButton.frame = CGRectMake(320 - 36 - 15, height, 40, 40);
+    _toggleFilterSelectorButton.frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 36 - 15, height, 40, 40);
     [self addSubview:_toggleFilterSelectorButton];
 }
 
@@ -132,7 +133,7 @@
                                          action:@selector(toggleFilterSelector)
                                forControlEvents:UIControlEventTouchUpInside];
     UIImage *bottomImage = [self.imageProvider bottomBarForCamera3_5InchImage];
-    CGFloat buttonHeight = bottomImage.size.width + 320 - 36 - 15;
+    CGFloat buttonHeight = bottomImage.size.width + [UIScreen mainScreen].bounds.size.width - 36 - 15;
 
     CGFloat height = _bottomImage.size.height / 2 - _rightToogleFilterSelectorButton.imageView.image.size.height / 2;
     _rightToogleFilterSelectorButton.frame = CGRectMake(buttonHeight, height, 40, 40);

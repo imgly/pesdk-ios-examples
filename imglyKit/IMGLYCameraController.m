@@ -345,8 +345,10 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
 
 - (void)takePhotoWithCompletionHandler:(void (^)(UIImage *processedImage, NSError *error))completionHandler  {
     [self setupFlash];
+
     [_liveStreamFilterManager.currentFilter useNextFrameForImageCapture];
-    [self.stillCamera capturePhotoAsImageProcessedUpToFilter:_liveStreamFilterManager.currentFilter withCompletionHandler:^(UIImage *processedImage, NSError *error) {
+    [self.stillCamera capturePhotoAsImageProcessedUpToFilter:_liveStreamFilterManager.currentFilter
+                                       withCompletionHandler:^(UIImage *processedImage, NSError *error) {
         if (completionHandler)
             completionHandler(processedImage, error);
     }];
