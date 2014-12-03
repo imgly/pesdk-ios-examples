@@ -222,12 +222,12 @@ static CGFloat const kIMGLYStreamPreviewYTranslation = -26;
         if([self.stillCamera.inputCamera lockForConfiguration :nil])
         {
             [self.stillCamera.inputCamera setFocusMode:AVCaptureFocusModeContinuousAutoFocus];
-            
-            [self.stillCamera.inputCamera unlockForConfiguration];
             if([self.stillCamera.inputCamera isExposurePointOfInterestSupported])
             {
                 [self.stillCamera.inputCamera setExposureMode:AVCaptureExposureModeContinuousAutoExposure];
             }
+            [self.stillCamera.inputCamera unlockForConfiguration];
+
         }
     }
     
