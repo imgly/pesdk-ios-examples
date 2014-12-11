@@ -9,11 +9,14 @@
 #import "IMGLYOpenGLUtils.h"
 
 #import <NEGPUImage/GPUImage.h>
+#import <OpenGLES/EAGLDrawable.h>
+#import <AVFoundation/AVFoundation.h>
 
 @implementation IMGLYOpenGLUtils
 
 + (GLint)maximumTextureSizeForThisDevice {
-    return [GPUImageOpenGLESContext maximumTextureSizeForThisDevice];
+    GLint maxTextureSize;
+    glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
+    return maxTextureSize;
 }
-
 @end

@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "GPUImageOpenGLESContext.h"
+#import "GPUImageContext.h"
 
 typedef enum {
     kGPUImageFillModeStretch,                       // Stretch to fill the full view, which may distort the image outside of its normal aspect ratio
@@ -33,5 +33,7 @@ typedef enum {
  @param alphaComponent Alpha component for background color
  */
 - (void)setBackgroundColorRed:(GLfloat)redComponent green:(GLfloat)greenComponent blue:(GLfloat)blueComponent alpha:(GLfloat)alphaComponent;
+
+- (void)setCurrentlyReceivingMonochromeInput:(BOOL)newValue;
 
 @end

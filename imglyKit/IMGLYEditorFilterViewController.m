@@ -50,6 +50,7 @@ extern CGFloat const kEditorMenuViewHeight;
 
 #pragma mark - GUI configuration
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if(_availableFilterList == nil) {
         _availableFilterList = [self getAvailableFilterListFromParent];
     }

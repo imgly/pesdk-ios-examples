@@ -4,6 +4,10 @@
 #define STRINGIZE2(x) STRINGIZE(x)
 #define SHADER_STRING(text) @ STRINGIZE2(text)
 
+#define GPUImageHashIdentifier #
+#define GPUImageWrappedLabel(x) x
+#define GPUImageEscapedHashIdentifier(a) GPUImageWrappedLabel(GPUImageHashIdentifier)a
+
 extern NSString *const kGPUImageVertexShaderString;
 extern NSString *const kGPUImagePassthroughFragmentShaderString;
 
@@ -43,27 +47,27 @@ typedef struct GPUMatrix3x3 GPUMatrix3x3;
  */
 @interface GPUImageFilter : GPUImageOutput <GPUImageInput>
 {
-    GLuint filterSourceTexture;
-
-    GLuint filterFramebuffer;
-
+    GPUImageFramebuffer *firstInputFramebuffer;
+    
     GLProgram *filterProgram;
     GLint filterPositionAttribute, filterTextureCoordinateAttribute;
     GLint filterInputTextureUniform;
     GLfloat backgroundColorRed, backgroundColorGreen, backgroundColorBlue, backgroundColorAlpha;
     
-    BOOL preparedToCaptureImage;
-    
-    CVOpenGLESTextureCacheRef filterTextureCache;
-    CVPixelBufferRef renderTarget;
-    CVOpenGLESTextureRef renderTexture;
-    
+    BOOL isEndProcessing;
+
     CGSize currentFilterSize;
     GPUImageRotationMode inputRotation;
+    
+    BOOL currentlyReceivingMonochromeInput;
+    
+    NSMutableDictionary *uniformStateRestorationBlocks;
+    dispatch_semaphore_t imageCaptureSemaphore;
 }
 
 @property(readonly) CVPixelBufferRef renderTarget;
 @property(readwrite, nonatomic) BOOL preventRendering;
+@property(readwrite, nonatomic) BOOL currentlyReceivingMonochromeInput;
 
 /// @name Initialization and teardown
 
@@ -93,23 +97,14 @@ typedef struct GPUMatrix3x3 GPUMatrix3x3;
 - (CGSize)rotatedSize:(CGSize)sizeToRotate forIndex:(NSInteger)textureIndex;
 - (CGPoint)rotatedPoint:(CGPoint)pointToRotate forRotation:(GPUImageRotationMode)rotation;
 
-- (void)recreateFilterFBO;
-
 /// @name Managing the display FBOs
 /** Size of the frame buffer object
  */
 - (CGSize)sizeOfFBO;
-- (void)createFilterFBOofSize:(CGSize)currentFBOSize;
-
-/** Destroy the current filter frame buffer object
- */
-- (void)destroyFilterFBO;
-- (void)setFilterFBO;
-- (void)setOutputFBO;
 
 /// @name Rendering
 + (const GLfloat *)textureCoordinatesForRotation:(GPUImageRotationMode)rotationMode;
-- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates sourceTexture:(GLuint)sourceTexture;
+- (void)renderToTextureWithVertices:(const GLfloat *)vertices textureCoordinates:(const GLfloat *)textureCoordinates;
 - (void)informTargetsAboutNewFrameAtTime:(CMTime)frameTime;
 - (CGSize)outputFrameSize;
 
@@ -132,5 +127,8 @@ typedef struct GPUMatrix3x3 GPUMatrix3x3;
 - (void)setVec4:(GPUVector4)vectorValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setFloatArray:(GLfloat *)arrayValue length:(GLsizei)arrayLength forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
 - (void)setInteger:(GLint)intValue forUniform:(GLint)uniform program:(GLProgram *)shaderProgram;
+
+- (void)setAndExecuteUniformStateCallbackAtIndex:(GLint)uniform forProgram:(GLProgram *)shaderProgram toBlock:(dispatch_block_t)uniformStateBlock;
+- (void)setUniformsForProgramAtIndex:(NSUInteger)programIndex;
 
 @end

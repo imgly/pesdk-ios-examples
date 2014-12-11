@@ -38,8 +38,9 @@
 - (UIImage *)processImage:(UIImage *)image withFilter:(GPUImageOutput <GPUImageInput> *)filter {
     GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
     [picture addTarget:filter];
+    [filter useNextFrameForImageCapture];
     [picture processImage];
-    return [filter imageFromCurrentlyProcessedOutputWithOrientation:image.imageOrientation];
+    return [filter imageFromCurrentFramebufferWithOrientation:image.imageOrientation];
 }
 
 @end

@@ -36,7 +36,6 @@
 		64A6B3CF1760BDC400190035 /* IMGLYPhotoProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6B3CE1760BDC400190035 /* IMGLYPhotoProcessor.m */; };
 		64A6B3D31760C4B900190035 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64A6B3D21760C4B800190035 /* UIKit.framework */; };
 		64A6B3E11760D98400190035 /* IMGLYCropOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6B3E01760D98300190035 /* IMGLYCropOperation.m */; };
-		64A6B3E41760D99300190035 /* IMGLYOrientationOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6B3E31760D99200190035 /* IMGLYOrientationOperation.m */; };
 		64A6B3E71760DE7400190035 /* IMGLYProcessingJob.m in Sources */ = {isa = PBXBuildFile; fileRef = 64A6B3E61760DE7300190035 /* IMGLYProcessingJob.m */; };
 		64D07E9F177C5F8E005BA56E /* IMGLYFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 93CAFB34E852F76878E424B3 /* IMGLYFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64D07EA0177C5FA0005BA56E /* IMGLYLordFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 93CAF798D249A902E3DB2D37 /* IMGLYLordFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,7 +48,6 @@
 		64E460601768D14000A34F9F /* IMGLYPhotoProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A6B3CD1760BDC300190035 /* IMGLYPhotoProcessor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64E460611768D14900A34F9F /* IMGLYPhotoProcessor_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A6B3D11760C3C400190035 /* IMGLYPhotoProcessor_Private.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64E460621768D15000A34F9F /* IMGLYProcessingJob.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A6B3E51760DE7300190035 /* IMGLYProcessingJob.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		64E460631768D16100A34F9F /* IMGLYOrientationOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 64A6B3E21760D99200190035 /* IMGLYOrientationOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64E460731768D46F00A34F9F /* NSBundle+IMGLYAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 64E460711768D46E00A34F9F /* NSBundle+IMGLYAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64E460741768D46F00A34F9F /* NSBundle+IMGLYAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E460721768D46E00A34F9F /* NSBundle+IMGLYAdditions.m */; };
 		64F490611769BA0F0016A7A9 /* UIImage+IMGLYKitAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 64F4905F1769BA0F0016A7A9 /* UIImage+IMGLYKitAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -123,20 +121,10 @@
 		D10C190417B27385006248C1 /* IMGLYEditorGradientViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D10C190317B27385006248C1 /* IMGLYEditorGradientViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D10C190717B28267006248C1 /* crosshair.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C190517B28267006248C1 /* crosshair.png */; };
 		D10C190817B28267006248C1 /* crosshair@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C190617B28267006248C1 /* crosshair@2x.png */; };
-		D10C190C17B3C1B6006248C1 /* IMGLYEditorFocusMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D10C190A17B3C1B6006248C1 /* IMGLYEditorFocusMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D10C190D17B3C1B6006248C1 /* IMGLYEditorFocusMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D10C190B17B3C1B6006248C1 /* IMGLYEditorFocusMenu.m */; };
 		D10C191217B3D5F9006248C1 /* icon_focus_linear.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C190E17B3D5F9006248C1 /* icon_focus_linear.png */; };
 		D10C191317B3D5F9006248C1 /* icon_focus_linear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C190F17B3D5F9006248C1 /* icon_focus_linear@2x.png */; };
 		D10C191417B3D5F9006248C1 /* icon_focus_radial.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C191017B3D5F9006248C1 /* icon_focus_radial.png */; };
 		D10C191517B3D5F9006248C1 /* icon_focus_radial@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D10C191117B3D5F9006248C1 /* icon_focus_radial@2x.png */; };
-		D11582A117AFF265003C1754 /* IMGLYEditorFocusViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D115829F17AFF265003C1754 /* IMGLYEditorFocusViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D11582A217AFF265003C1754 /* IMGLYEditorFocusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D11582A017AFF265003C1754 /* IMGLYEditorFocusViewController.m */; };
-		D11582A517AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D11582A317AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D11582A617AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D11582A417AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.m */; };
-		D11582A917AFF728003C1754 /* IMGLYBoxTiltShiftFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D11582A717AFF728003C1754 /* IMGLYBoxTiltShiftFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D11582AA17AFF728003C1754 /* IMGLYBoxTiltShiftFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D11582A817AFF728003C1754 /* IMGLYBoxTiltShiftFilter.m */; };
-		D11582AD17AFF97A003C1754 /* IMGLYTiltShiftOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = D11582AB17AFF97A003C1754 /* IMGLYTiltShiftOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D11582AE17AFF97A003C1754 /* IMGLYTiltShiftOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D11582AC17AFF97A003C1754 /* IMGLYTiltShiftOperation.m */; };
 		D119721517AAA604009AA826 /* IMGLYMainMenuEntryMetaData.h in Headers */ = {isa = PBXBuildFile; fileRef = D119721317AAA604009AA826 /* IMGLYMainMenuEntryMetaData.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D119721617AAA604009AA826 /* IMGLYMainMenuEntryMetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = D119721417AAA604009AA826 /* IMGLYMainMenuEntryMetaData.m */; };
 		D12E1BC917FEE3EF0097CD09 /* IMGLYOpenGLUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D12E1BC717FEE3EF0097CD09 /* IMGLYOpenGLUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -181,8 +169,6 @@
 		D1526E0317C677E100A074F4 /* IMGLYBWSoftFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E0117C677E000A074F4 /* IMGLYBWSoftFilter.m */; };
 		D1526E0617C678F200A074F4 /* IMGLYBWHardFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E0417C678EE00A074F4 /* IMGLYBWHardFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1526E0717C678F200A074F4 /* IMGLYBWHardFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E0517C678EF00A074F4 /* IMGLYBWHardFilter.m */; };
-		D1526E0B17C7706700A074F4 /* IMGLYSinCityFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E0917C7706300A074F4 /* IMGLYSinCityFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1526E0C17C7706700A074F4 /* IMGLYSinCityFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E0A17C7706500A074F4 /* IMGLYSinCityFilter.m */; };
 		D1526E0F17C770C500A074F4 /* IMGLYSketchFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E0D17C770C100A074F4 /* IMGLYSketchFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1526E1017C770C500A074F4 /* IMGLYSketchFIlter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E0E17C770C200A074F4 /* IMGLYSketchFIlter.m */; };
 		D1526E1317C7717100A074F4 /* IMGLY8BitFIlter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E1117C7716C00A074F4 /* IMGLY8BitFIlter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -193,12 +179,6 @@
 		D1526E1C17C771C100A074F4 /* IMGLYPolaFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E1A17C771BD00A074F4 /* IMGLYPolaFilter.m */; };
 		D1526E1F17C7720800A074F4 /* IMGLYGlamFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E1D17C7720200A074F4 /* IMGLYGlamFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1526E2017C7720800A074F4 /* IMGLYGlamFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E1E17C7720500A074F4 /* IMGLYGlamFilter.m */; };
-		D1526E2317C7731C00A074F4 /* IMGLYEarlyBirdFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E2117C7731600A074F4 /* IMGLYEarlyBirdFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1526E2417C7731C00A074F4 /* IMGLYEarlyBirdFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E2217C7731800A074F4 /* IMGLYEarlyBirdFilter.m */; };
-		D1526E2717C7736B00A074F4 /* IMGLYGobblinFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1526E2517C7736400A074F4 /* IMGLYGobblinFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1526E2817C7736B00A074F4 /* IMGLYGobblinFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1526E2617C7736700A074F4 /* IMGLYGobblinFilter.m */; };
-		D15A0EDC177A16720006432E /* IMGLYSemiRedFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D15A0EDA177A16720006432E /* IMGLYSemiRedFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D15A0EDD177A16720006432E /* IMGLYSemiRedFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D15A0EDB177A16720006432E /* IMGLYSemiRedFilter.m */; };
 		D15A0EEE177B1C2C0006432E /* icon_option_brightness.png in Resources */ = {isa = PBXBuildFile; fileRef = D15A0EE2177B1C2C0006432E /* icon_option_brightness.png */; };
 		D15A0EEF177B1C2C0006432E /* icon_option_brightness@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D15A0EE3177B1C2C0006432E /* icon_option_brightness@2x.png */; };
 		D15A0EF0177B1C2C0006432E /* icon_option_contrast.png in Resources */ = {isa = PBXBuildFile; fileRef = D15A0EE4177B1C2C0006432E /* icon_option_contrast.png */; };
@@ -219,12 +199,6 @@
 		D160BE7917F5DAED00BB5265 /* IMGLYShutterView.m in Sources */ = {isa = PBXBuildFile; fileRef = D160BE7717F5DAEC00BB5265 /* IMGLYShutterView.m */; };
 		D160BE7C17F5DD3B00BB5265 /* blade.png in Resources */ = {isa = PBXBuildFile; fileRef = D160BE7A17F5DD3B00BB5265 /* blade.png */; };
 		D160BE7D17F5DD3B00BB5265 /* blade@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D160BE7B17F5DD3B00BB5265 /* blade@2x.png */; };
-		D17E2AF617C39C7D00275FFB /* IMGLYOrientationFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D17E2AF417C39C7C00275FFB /* IMGLYOrientationFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D17E2AF717C39C7D00275FFB /* IMGLYOrientationFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D17E2AF517C39C7D00275FFB /* IMGLYOrientationFilter.m */; };
-		D17E2AFE17C3CF2A00275FFB /* IMGLYEditorOrientationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D17E2AFC17C3CF2800275FFB /* IMGLYEditorOrientationViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D17E2AFF17C3CF2A00275FFB /* IMGLYEditorOrientationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D17E2AFD17C3CF2800275FFB /* IMGLYEditorOrientationViewController.m */; };
-		D17E2B0717C5007000275FFB /* IMGLYEditorOrientationMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D17E2B0517C5006F00275FFB /* IMGLYEditorOrientationMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D17E2B0817C5007000275FFB /* IMGLYEditorOrientationMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D17E2B0617C5006F00275FFB /* IMGLYEditorOrientationMenu.m */; };
 		D17E2B1117C513CE00275FFB /* icon_orientation_flip-h.png in Resources */ = {isa = PBXBuildFile; fileRef = D17E2B0917C513CE00275FFB /* icon_orientation_flip-h.png */; };
 		D17E2B1217C513CE00275FFB /* icon_orientation_flip-h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D17E2B0A17C513CE00275FFB /* icon_orientation_flip-h@2x.png */; };
 		D17E2B1317C513CE00275FFB /* icon_orientation_flip-v.png in Resources */ = {isa = PBXBuildFile; fileRef = D17E2B0B17C513CE00275FFB /* icon_orientation_flip-v.png */; };
@@ -295,14 +269,8 @@
 		D1AD4FBD1768C9A500175876 /* bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1AD4FB51768C9A500175876 /* bar@2x.png */; };
 		D1AD4FC21768C9A500175876 /* gradient.png in Resources */ = {isa = PBXBuildFile; fileRef = D1AD4FBA1768C9A500175876 /* gradient.png */; };
 		D1AD4FC31768C9A500175876 /* gradient@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1AD4FBB1768C9A500175876 /* gradient@2x.png */; };
-		D1B62CBB17D64C4D004C4090 /* IMGLYEditorNoiseViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B62CB917D64C4D004C4090 /* IMGLYEditorNoiseViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1B62CBC17D64C4D004C4090 /* IMGLYEditorNoiseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B62CBA17D64C4D004C4090 /* IMGLYEditorNoiseViewController.m */; };
-		D1B62CBF17D6518A004C4090 /* IMGLYNoiseFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1B62CBD17D6518A004C4090 /* IMGLYNoiseFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1B62CC017D6518A004C4090 /* IMGLYNoiseFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1B62CBE17D6518A004C4090 /* IMGLYNoiseFilter.m */; };
 		D1BE6C231770827A00FD70CB /* nonePreview.png in Resources */ = {isa = PBXBuildFile; fileRef = D1BE6C091770827900FD70CB /* nonePreview.png */; };
 		D1BE6C241770827A00FD70CB /* nonePreview@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1BE6C0A1770827900FD70CB /* nonePreview@2x.png */; };
-		D1BFBA3317D77D7E006CBA94 /* IMGLYNoiseOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BFBA3117D77D7E006CBA94 /* IMGLYNoiseOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1BFBA3417D77D7E006CBA94 /* IMGLYNoiseOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBA3217D77D7E006CBA94 /* IMGLYNoiseOperation.m */; };
 		D1BFBA3617D793B9006CBA94 /* noise512.png in Resources */ = {isa = PBXBuildFile; fileRef = D1BFBA3517D793B9006CBA94 /* noise512.png */; };
 		D1BFBA3B17D8DC22006CBA94 /* IMGLYTextOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = D1BFBA3917D8DC22006CBA94 /* IMGLYTextOperation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1BFBA3C17D8DC22006CBA94 /* IMGLYTextOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = D1BFBA3A17D8DC22006CBA94 /* IMGLYTextOperation.m */; };
@@ -312,12 +280,6 @@
 		D1C460E517E8C3B7005C450E /* IMGLYFrontFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C460E317E8C3B7005C450E /* IMGLYFrontFilter.m */; };
 		D1C460E817E8C615005C450E /* IMGLYFixieFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C460E617E8C615005C450E /* IMGLYFixieFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1C460E917E8C615005C450E /* IMGLYFixieFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C460E717E8C615005C450E /* IMGLYFixieFilter.m */; };
-		D1C460EC17E8C81C005C450E /* IMGLYLeninFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C460EA17E8C81C005C450E /* IMGLYLeninFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1C460ED17E8C81C005C450E /* IMGLYLeninFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C460EB17E8C81C005C450E /* IMGLYLeninFilter.m */; };
-		D1C460F017E8CC64005C450E /* IMGLYQuoziFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C460EE17E8CC63005C450E /* IMGLYQuoziFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1C460F117E8CC64005C450E /* IMGLYQuoziFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C460EF17E8CC63005C450E /* IMGLYQuoziFilter.m */; };
-		D1C460F417E8D447005C450E /* IMGLYOrchridFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C460F217E8D446005C450E /* IMGLYOrchridFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1C460F517E8D447005C450E /* IMGLYOrchridFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C460F317E8D446005C450E /* IMGLYOrchridFilter.m */; };
 		D1C4A28C17CF4C3A0088BC3C /* IMGLYEditorTextViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C4A28A17CF4C3A0088BC3C /* IMGLYEditorTextViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1C4A28D17CF4C3A0088BC3C /* IMGLYEditorTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C4A28B17CF4C3A0088BC3C /* IMGLYEditorTextViewController.m */; };
 		D1C4A29017CF521D0088BC3C /* IMGLYEditorTextMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C4A28E17CF521D0088BC3C /* IMGLYEditorTextMenu.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -326,8 +288,6 @@
 		D1C4A2AA17D0DCE30088BC3C /* IMGLYEditorColorButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D1C4A2A817D0DCE30088BC3C /* IMGLYEditorColorButton.m */; };
 		D1CF5EDB17E868BF00C91106 /* IMGLYFridgeFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CF5ED917E868BF00C91106 /* IMGLYFridgeFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1CF5EDC17E868BF00C91106 /* IMGLYFridgeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF5EDA17E868BF00C91106 /* IMGLYFridgeFilter.m */; };
-		D1CF5EDF17E8AA5600C91106 /* IMGLYBreezeFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1CF5EDD17E8AA5500C91106 /* IMGLYBreezeFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1CF5EE017E8AA5600C91106 /* IMGLYBreezeFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1CF5EDE17E8AA5600C91106 /* IMGLYBreezeFilter.m */; };
 		D1D082E3178328D70049EA30 /* crop_nubsi.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D082E1178328D70049EA30 /* crop_nubsi.png */; };
 		D1D082E4178328D70049EA30 /* crop_nubsi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D082E2178328D70049EA30 /* crop_nubsi@2x.png */; };
 		D1D186191802EB6400295494 /* button_save.png in Resources */ = {isa = PBXBuildFile; fileRef = D1D186151802EB6400295494 /* button_save.png */; };
@@ -348,12 +308,8 @@
 		D1D18643180C3FD500295494 /* IMGLYDefaultCameraImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D18641180C3FD500295494 /* IMGLYDefaultCameraImageProvider.m */; };
 		D1D3ADB917D49E7A00C478AC /* IMGLYEditorTextInputView.h in Headers */ = {isa = PBXBuildFile; fileRef = D1D3ADB717D49E7A00C478AC /* IMGLYEditorTextInputView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1D3ADBA17D49E7A00C478AC /* IMGLYEditorTextInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = D1D3ADB817D49E7A00C478AC /* IMGLYEditorTextInputView.m */; };
-		D1DAA5FD17F0EFAC005034C5 /* IMGLYX400Filter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1DAA5FB17F0EFAC005034C5 /* IMGLYX400Filter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1DAA5FE17F0EFAC005034C5 /* IMGLYX400Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1DAA5FC17F0EFAC005034C5 /* IMGLYX400Filter.m */; };
 		D1E5A4C017C7B3150076657D /* IMGLY9EK1Filter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1E5A4BE17C7B3150076657D /* IMGLY9EK1Filter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1E5A4C117C7B3150076657D /* IMGLY9EK1Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E5A4BF17C7B3150076657D /* IMGLY9EK1Filter.m */; };
-		D1E5A4C417C7B3240076657D /* IMGLY9EK2Filter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1E5A4C217C7B3240076657D /* IMGLY9EK2Filter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D1E5A4C517C7B3240076657D /* IMGLY9EK2Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E5A4C317C7B3240076657D /* IMGLY9EK2Filter.m */; };
 		D1E5A4C817C7B3480076657D /* IMGLY9EK6Filter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1E5A4C617C7B3480076657D /* IMGLY9EK6Filter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D1E5A4C917C7B3480076657D /* IMGLY9EK6Filter.m in Sources */ = {isa = PBXBuildFile; fileRef = D1E5A4C717C7B3480076657D /* IMGLY9EK6Filter.m */; };
 		D1E5A4CC17C7B3660076657D /* IMGLY9EKDynamicFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = D1E5A4CA17C7B3660076657D /* IMGLY9EKDynamicFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -402,8 +358,6 @@
 		64A6B3DC1760D95400190035 /* IMGLYOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYOperation.h; sourceTree = "<group>"; };
 		64A6B3DF1760D98300190035 /* IMGLYCropOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYCropOperation.h; sourceTree = "<group>"; };
 		64A6B3E01760D98300190035 /* IMGLYCropOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYCropOperation.m; sourceTree = "<group>"; };
-		64A6B3E21760D99200190035 /* IMGLYOrientationOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYOrientationOperation.h; sourceTree = "<group>"; };
-		64A6B3E31760D99200190035 /* IMGLYOrientationOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYOrientationOperation.m; sourceTree = "<group>"; };
 		64A6B3E51760DE7300190035 /* IMGLYProcessingJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYProcessingJob.h; sourceTree = "<group>"; };
 		64A6B3E61760DE7300190035 /* IMGLYProcessingJob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYProcessingJob.m; sourceTree = "<group>"; };
 		64D07EA3177D92A3005BA56E /* IMGLYDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYDefines.h; sourceTree = "<group>"; };
@@ -486,20 +440,10 @@
 		D10C190317B27385006248C1 /* IMGLYEditorGradientViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorGradientViewDelegate.h; sourceTree = "<group>"; };
 		D10C190517B28267006248C1 /* crosshair.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crosshair.png; sourceTree = "<group>"; };
 		D10C190617B28267006248C1 /* crosshair@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crosshair@2x.png"; sourceTree = "<group>"; };
-		D10C190A17B3C1B6006248C1 /* IMGLYEditorFocusMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorFocusMenu.h; sourceTree = "<group>"; };
-		D10C190B17B3C1B6006248C1 /* IMGLYEditorFocusMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorFocusMenu.m; sourceTree = "<group>"; };
 		D10C190E17B3D5F9006248C1 /* icon_focus_linear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_focus_linear.png; sourceTree = "<group>"; };
 		D10C190F17B3D5F9006248C1 /* icon_focus_linear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_focus_linear@2x.png"; sourceTree = "<group>"; };
 		D10C191017B3D5F9006248C1 /* icon_focus_radial.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_focus_radial.png; sourceTree = "<group>"; };
 		D10C191117B3D5F9006248C1 /* icon_focus_radial@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_focus_radial@2x.png"; sourceTree = "<group>"; };
-		D115829F17AFF265003C1754 /* IMGLYEditorFocusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorFocusViewController.h; sourceTree = "<group>"; };
-		D11582A017AFF265003C1754 /* IMGLYEditorFocusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorFocusViewController.m; sourceTree = "<group>"; };
-		D11582A317AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYRadialTiltShiftFilter.h; sourceTree = "<group>"; };
-		D11582A417AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYRadialTiltShiftFilter.m; sourceTree = "<group>"; };
-		D11582A717AFF728003C1754 /* IMGLYBoxTiltShiftFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYBoxTiltShiftFilter.h; sourceTree = "<group>"; };
-		D11582A817AFF728003C1754 /* IMGLYBoxTiltShiftFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYBoxTiltShiftFilter.m; sourceTree = "<group>"; };
-		D11582AB17AFF97A003C1754 /* IMGLYTiltShiftOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYTiltShiftOperation.h; sourceTree = "<group>"; };
-		D11582AC17AFF97A003C1754 /* IMGLYTiltShiftOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYTiltShiftOperation.m; sourceTree = "<group>"; };
 		D119721317AAA604009AA826 /* IMGLYMainMenuEntryMetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYMainMenuEntryMetaData.h; sourceTree = "<group>"; };
 		D119721417AAA604009AA826 /* IMGLYMainMenuEntryMetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYMainMenuEntryMetaData.m; sourceTree = "<group>"; };
 		D12E1BC717FEE3EF0097CD09 /* IMGLYOpenGLUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYOpenGLUtils.h; sourceTree = "<group>"; };
@@ -544,8 +488,6 @@
 		D1526E0117C677E000A074F4 /* IMGLYBWSoftFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYBWSoftFilter.m; sourceTree = "<group>"; };
 		D1526E0417C678EE00A074F4 /* IMGLYBWHardFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYBWHardFilter.h; sourceTree = "<group>"; };
 		D1526E0517C678EF00A074F4 /* IMGLYBWHardFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYBWHardFilter.m; sourceTree = "<group>"; };
-		D1526E0917C7706300A074F4 /* IMGLYSinCityFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYSinCityFilter.h; sourceTree = "<group>"; };
-		D1526E0A17C7706500A074F4 /* IMGLYSinCityFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYSinCityFilter.m; sourceTree = "<group>"; };
 		D1526E0D17C770C100A074F4 /* IMGLYSketchFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYSketchFilter.h; sourceTree = "<group>"; };
 		D1526E0E17C770C200A074F4 /* IMGLYSketchFIlter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYSketchFIlter.m; sourceTree = "<group>"; };
 		D1526E1117C7716C00A074F4 /* IMGLY8BitFIlter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLY8BitFIlter.h; sourceTree = "<group>"; };
@@ -556,12 +498,6 @@
 		D1526E1A17C771BD00A074F4 /* IMGLYPolaFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYPolaFilter.m; sourceTree = "<group>"; };
 		D1526E1D17C7720200A074F4 /* IMGLYGlamFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYGlamFilter.h; sourceTree = "<group>"; };
 		D1526E1E17C7720500A074F4 /* IMGLYGlamFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYGlamFilter.m; sourceTree = "<group>"; };
-		D1526E2117C7731600A074F4 /* IMGLYEarlyBirdFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEarlyBirdFilter.h; sourceTree = "<group>"; };
-		D1526E2217C7731800A074F4 /* IMGLYEarlyBirdFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEarlyBirdFilter.m; sourceTree = "<group>"; };
-		D1526E2517C7736400A074F4 /* IMGLYGobblinFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYGobblinFilter.h; sourceTree = "<group>"; };
-		D1526E2617C7736700A074F4 /* IMGLYGobblinFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYGobblinFilter.m; sourceTree = "<group>"; };
-		D15A0EDA177A16720006432E /* IMGLYSemiRedFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYSemiRedFilter.h; sourceTree = "<group>"; };
-		D15A0EDB177A16720006432E /* IMGLYSemiRedFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYSemiRedFilter.m; sourceTree = "<group>"; };
 		D15A0EE2177B1C2C0006432E /* icon_option_brightness.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_option_brightness.png; sourceTree = "<group>"; };
 		D15A0EE3177B1C2C0006432E /* icon_option_brightness@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_option_brightness@2x.png"; sourceTree = "<group>"; };
 		D15A0EE4177B1C2C0006432E /* icon_option_contrast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_option_contrast.png; sourceTree = "<group>"; };
@@ -580,12 +516,6 @@
 		D160BE7717F5DAEC00BB5265 /* IMGLYShutterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYShutterView.m; sourceTree = "<group>"; };
 		D160BE7A17F5DD3B00BB5265 /* blade.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blade.png; sourceTree = "<group>"; };
 		D160BE7B17F5DD3B00BB5265 /* blade@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blade@2x.png"; sourceTree = "<group>"; };
-		D17E2AF417C39C7C00275FFB /* IMGLYOrientationFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYOrientationFilter.h; sourceTree = "<group>"; };
-		D17E2AF517C39C7D00275FFB /* IMGLYOrientationFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYOrientationFilter.m; sourceTree = "<group>"; };
-		D17E2AFC17C3CF2800275FFB /* IMGLYEditorOrientationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorOrientationViewController.h; sourceTree = "<group>"; };
-		D17E2AFD17C3CF2800275FFB /* IMGLYEditorOrientationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorOrientationViewController.m; sourceTree = "<group>"; };
-		D17E2B0517C5006F00275FFB /* IMGLYEditorOrientationMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorOrientationMenu.h; sourceTree = "<group>"; };
-		D17E2B0617C5006F00275FFB /* IMGLYEditorOrientationMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorOrientationMenu.m; sourceTree = "<group>"; };
 		D17E2B0917C513CE00275FFB /* icon_orientation_flip-h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_orientation_flip-h.png"; sourceTree = "<group>"; };
 		D17E2B0A17C513CE00275FFB /* icon_orientation_flip-h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_orientation_flip-h@2x.png"; sourceTree = "<group>"; };
 		D17E2B0B17C513CE00275FFB /* icon_orientation_flip-v.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_orientation_flip-v.png"; sourceTree = "<group>"; };
@@ -658,14 +588,8 @@
 		D1AD4FB51768C9A500175876 /* bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bar@2x.png"; sourceTree = "<group>"; };
 		D1AD4FBA1768C9A500175876 /* gradient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gradient.png; sourceTree = "<group>"; };
 		D1AD4FBB1768C9A500175876 /* gradient@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gradient@2x.png"; sourceTree = "<group>"; };
-		D1B62CB917D64C4D004C4090 /* IMGLYEditorNoiseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorNoiseViewController.h; sourceTree = "<group>"; };
-		D1B62CBA17D64C4D004C4090 /* IMGLYEditorNoiseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorNoiseViewController.m; sourceTree = "<group>"; };
-		D1B62CBD17D6518A004C4090 /* IMGLYNoiseFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYNoiseFilter.h; sourceTree = "<group>"; };
-		D1B62CBE17D6518A004C4090 /* IMGLYNoiseFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYNoiseFilter.m; sourceTree = "<group>"; };
 		D1BE6C091770827900FD70CB /* nonePreview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nonePreview.png; sourceTree = "<group>"; };
 		D1BE6C0A1770827900FD70CB /* nonePreview@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nonePreview@2x.png"; sourceTree = "<group>"; };
-		D1BFBA3117D77D7E006CBA94 /* IMGLYNoiseOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYNoiseOperation.h; sourceTree = "<group>"; };
-		D1BFBA3217D77D7E006CBA94 /* IMGLYNoiseOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYNoiseOperation.m; sourceTree = "<group>"; };
 		D1BFBA3517D793B9006CBA94 /* noise512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noise512.png; sourceTree = "<group>"; };
 		D1BFBA3917D8DC22006CBA94 /* IMGLYTextOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYTextOperation.h; sourceTree = "<group>"; };
 		D1BFBA3A17D8DC22006CBA94 /* IMGLYTextOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYTextOperation.m; sourceTree = "<group>"; };
@@ -675,12 +599,6 @@
 		D1C460E317E8C3B7005C450E /* IMGLYFrontFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYFrontFilter.m; sourceTree = "<group>"; };
 		D1C460E617E8C615005C450E /* IMGLYFixieFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYFixieFilter.h; sourceTree = "<group>"; };
 		D1C460E717E8C615005C450E /* IMGLYFixieFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYFixieFilter.m; sourceTree = "<group>"; };
-		D1C460EA17E8C81C005C450E /* IMGLYLeninFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYLeninFilter.h; sourceTree = "<group>"; };
-		D1C460EB17E8C81C005C450E /* IMGLYLeninFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYLeninFilter.m; sourceTree = "<group>"; };
-		D1C460EE17E8CC63005C450E /* IMGLYQuoziFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYQuoziFilter.h; sourceTree = "<group>"; };
-		D1C460EF17E8CC63005C450E /* IMGLYQuoziFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYQuoziFilter.m; sourceTree = "<group>"; };
-		D1C460F217E8D446005C450E /* IMGLYOrchridFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYOrchridFilter.h; sourceTree = "<group>"; };
-		D1C460F317E8D446005C450E /* IMGLYOrchridFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYOrchridFilter.m; sourceTree = "<group>"; };
 		D1C4A28A17CF4C3A0088BC3C /* IMGLYEditorTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorTextViewController.h; sourceTree = "<group>"; };
 		D1C4A28B17CF4C3A0088BC3C /* IMGLYEditorTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorTextViewController.m; sourceTree = "<group>"; };
 		D1C4A28E17CF521D0088BC3C /* IMGLYEditorTextMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorTextMenu.h; sourceTree = "<group>"; };
@@ -689,8 +607,6 @@
 		D1C4A2A817D0DCE30088BC3C /* IMGLYEditorColorButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorColorButton.m; sourceTree = "<group>"; };
 		D1CF5ED917E868BF00C91106 /* IMGLYFridgeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYFridgeFilter.h; sourceTree = "<group>"; };
 		D1CF5EDA17E868BF00C91106 /* IMGLYFridgeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYFridgeFilter.m; sourceTree = "<group>"; };
-		D1CF5EDD17E8AA5500C91106 /* IMGLYBreezeFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYBreezeFilter.h; sourceTree = "<group>"; };
-		D1CF5EDE17E8AA5600C91106 /* IMGLYBreezeFilter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYBreezeFilter.m; sourceTree = "<group>"; };
 		D1D082E1178328D70049EA30 /* crop_nubsi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crop_nubsi.png; sourceTree = "<group>"; };
 		D1D082E2178328D70049EA30 /* crop_nubsi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crop_nubsi@2x.png"; sourceTree = "<group>"; };
 		D1D186151802EB6400295494 /* button_save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button_save.png; sourceTree = "<group>"; };
@@ -711,12 +627,8 @@
 		D1D18641180C3FD500295494 /* IMGLYDefaultCameraImageProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYDefaultCameraImageProvider.m; sourceTree = "<group>"; };
 		D1D3ADB717D49E7A00C478AC /* IMGLYEditorTextInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYEditorTextInputView.h; sourceTree = "<group>"; };
 		D1D3ADB817D49E7A00C478AC /* IMGLYEditorTextInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYEditorTextInputView.m; sourceTree = "<group>"; };
-		D1DAA5FB17F0EFAC005034C5 /* IMGLYX400Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLYX400Filter.h; sourceTree = "<group>"; };
-		D1DAA5FC17F0EFAC005034C5 /* IMGLYX400Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLYX400Filter.m; sourceTree = "<group>"; };
 		D1E5A4BE17C7B3150076657D /* IMGLY9EK1Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLY9EK1Filter.h; sourceTree = "<group>"; };
 		D1E5A4BF17C7B3150076657D /* IMGLY9EK1Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLY9EK1Filter.m; sourceTree = "<group>"; };
-		D1E5A4C217C7B3240076657D /* IMGLY9EK2Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLY9EK2Filter.h; sourceTree = "<group>"; };
-		D1E5A4C317C7B3240076657D /* IMGLY9EK2Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLY9EK2Filter.m; sourceTree = "<group>"; };
 		D1E5A4C617C7B3480076657D /* IMGLY9EK6Filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLY9EK6Filter.h; sourceTree = "<group>"; };
 		D1E5A4C717C7B3480076657D /* IMGLY9EK6Filter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMGLY9EK6Filter.m; sourceTree = "<group>"; };
 		D1E5A4CA17C7B3660076657D /* IMGLY9EKDynamicFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMGLY9EKDynamicFilter.h; sourceTree = "<group>"; };
@@ -833,15 +745,11 @@
 				D1C4A2A817D0DCE30088BC3C /* IMGLYEditorColorButton.m */,
 				93CAF40490C707EC51E5EA16 /* IMGLYEditorCropMenu.h */,
 				93CAFE0871C2688FBF337ED2 /* IMGLYEditorCropMenu.m */,
-				D10C190A17B3C1B6006248C1 /* IMGLYEditorFocusMenu.h */,
-				D10C190B17B3C1B6006248C1 /* IMGLYEditorFocusMenu.m */,
 				D185BB2E17EB3818007A2B49 /* IMGLYEditorFontSelector.h */,
 				D185BB2F17EB3818007A2B49 /* IMGLYEditorFontSelector.m */,
 				D10C190317B27385006248C1 /* IMGLYEditorGradientViewDelegate.h */,
 				93CAF3555D1A744572BD7AC7 /* IMGLYEditorMainMenuView.h */,
 				93CAFE3F341F5202C197E321 /* IMGLYEditorMainMenuView.m */,
-				D17E2B0517C5006F00275FFB /* IMGLYEditorOrientationMenu.h */,
-				D17E2B0617C5006F00275FFB /* IMGLYEditorOrientationMenu.m */,
 				D1D3ADB717D49E7A00C478AC /* IMGLYEditorTextInputView.h */,
 				D1D3ADB817D49E7A00C478AC /* IMGLYEditorTextInputView.m */,
 				D1C4A28E17CF521D0088BC3C /* IMGLYEditorTextMenu.h */,
@@ -869,12 +777,6 @@
 				93CAF86DF0531AB9DB607746 /* IMGLYEditorEnhancementViewController.m */,
 				93CAF4F3581DF45AD7BC4F93 /* IMGLYEditorFilterViewController.h */,
 				93CAFC7938122805A2856375 /* IMGLYEditorFilterViewController.m */,
-				D115829F17AFF265003C1754 /* IMGLYEditorFocusViewController.h */,
-				D11582A017AFF265003C1754 /* IMGLYEditorFocusViewController.m */,
-				D1B62CB917D64C4D004C4090 /* IMGLYEditorNoiseViewController.h */,
-				D1B62CBA17D64C4D004C4090 /* IMGLYEditorNoiseViewController.m */,
-				D17E2AFC17C3CF2800275FFB /* IMGLYEditorOrientationViewController.h */,
-				D17E2AFD17C3CF2800275FFB /* IMGLYEditorOrientationViewController.m */,
 				93CAF3319EC141E6B2B2F06D /* IMGLYEditorResetViewController.h */,
 				93CAF4F28A210AE37870C0F3 /* IMGLYEditorResetViewController.m */,
 				D1A79C2817A80F7000B92A49 /* IMGLYEditorSaturationViewController.h */,
@@ -894,10 +796,6 @@
 				D1A79C0117A6A23D00B92A49 /* IMGLYBrightnessFilter.m */,
 				D1A79C1A17A7F45800B92A49 /* IMGLYContrastFilter.h */,
 				D1A79C1B17A7F45800B92A49 /* IMGLYContrastFilter.m */,
-				D1B62CBD17D6518A004C4090 /* IMGLYNoiseFilter.h */,
-				D1B62CBE17D6518A004C4090 /* IMGLYNoiseFilter.m */,
-				D17E2AF417C39C7C00275FFB /* IMGLYOrientationFilter.h */,
-				D17E2AF517C39C7D00275FFB /* IMGLYOrientationFilter.m */,
 				D1A79C2C17A8156C00B92A49 /* IMGLYSaturationFilter.h */,
 				D1A79C2D17A8156C00B92A49 /* IMGLYSaturationFilter.m */,
 			);
@@ -915,8 +813,6 @@
 				D1526E0117C677E000A074F4 /* IMGLYBWSoftFilter.m */,
 				D1526E1D17C7720200A074F4 /* IMGLYGlamFilter.h */,
 				D1526E1E17C7720500A074F4 /* IMGLYGlamFilter.m */,
-				D1DAA5FB17F0EFAC005034C5 /* IMGLYX400Filter.h */,
-				D1DAA5FC17F0EFAC005034C5 /* IMGLYX400Filter.m */,
 			);
 			name = Monochrom;
 			sourceTree = "<group>";
@@ -952,17 +848,11 @@
 				D1526DD417C6543100A074F4 /* IMGLYFilterOperation.m */,
 				D186AB3117BA5EA000DC3999 /* IMGLYGaussOperation.h */,
 				D186AB3217BA5EA000DC3999 /* IMGLYGaussOperation.m */,
-				D1BFBA3117D77D7E006CBA94 /* IMGLYNoiseOperation.h */,
-				D1BFBA3217D77D7E006CBA94 /* IMGLYNoiseOperation.m */,
 				64A6B3DC1760D95400190035 /* IMGLYOperation.h */,
-				64A6B3E21760D99200190035 /* IMGLYOrientationOperation.h */,
-				64A6B3E31760D99200190035 /* IMGLYOrientationOperation.m */,
 				D1A79C3017A8163300B92A49 /* IMGLYSaturationOperation.h */,
 				D1A79C3117A8163300B92A49 /* IMGLYSaturationOperation.m */,
 				D1BFBA3917D8DC22006CBA94 /* IMGLYTextOperation.h */,
 				D1BFBA3A17D8DC22006CBA94 /* IMGLYTextOperation.m */,
-				D11582AB17AFF97A003C1754 /* IMGLYTiltShiftOperation.h */,
-				D11582AC17AFF97A003C1754 /* IMGLYTiltShiftOperation.m */,
 			);
 			name = Operations;
 			sourceTree = "<group>";
@@ -1185,12 +1075,8 @@
 		D1E5A4BB17C795730076657D /* Blur */ = {
 			isa = PBXGroup;
 			children = (
-				D11582A717AFF728003C1754 /* IMGLYBoxTiltShiftFilter.h */,
-				D11582A817AFF728003C1754 /* IMGLYBoxTiltShiftFilter.m */,
 				D186AB3517BA5F9600DC3999 /* IMGLYGaussFilter.h */,
 				D186AB3617BA5F9600DC3999 /* IMGLYGaussFilter.m */,
-				D11582A317AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.h */,
-				D11582A417AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.m */,
 			);
 			name = Blur;
 			sourceTree = "<group>";
@@ -1202,10 +1088,6 @@
 				D1526E1217C7716E00A074F4 /* IMGLY8BitFIlter.m */,
 				D1526DF017C6724200A074F4 /* IMGLYA15Filter.h */,
 				D1526DF117C6724300A074F4 /* IMGLYA15Filter.m */,
-				D1526E2117C7731600A074F4 /* IMGLYEarlyBirdFilter.h */,
-				D1526E2217C7731800A074F4 /* IMGLYEarlyBirdFilter.m */,
-				D1526E2517C7736400A074F4 /* IMGLYGobblinFilter.h */,
-				D1526E2617C7736700A074F4 /* IMGLYGobblinFilter.m */,
 				D1526DE017C6689800A074F4 /* IMGLYHippieFilter.h */,
 				D1526DE117C6689800A074F4 /* IMGLYHippieFilter.m */,
 				D1526DF817C6738300A074F4 /* IMGLYLomoFilter.h */,
@@ -1216,10 +1098,6 @@
 				D1526DED17C66C7F00A074F4 /* IMGLYMellowFilter.m */,
 				D1526DD717C664BB00A074F4 /* IMGLYPaleFilter.h */,
 				D1526DD817C664BB00A074F4 /* IMGLYPaleFilter.m */,
-				D15A0EDA177A16720006432E /* IMGLYSemiRedFilter.h */,
-				D15A0EDB177A16720006432E /* IMGLYSemiRedFilter.m */,
-				D1526E0917C7706300A074F4 /* IMGLYSinCityFilter.h */,
-				D1526E0A17C7706500A074F4 /* IMGLYSinCityFilter.m */,
 				D1526E0D17C770C100A074F4 /* IMGLYSketchFilter.h */,
 				D1526E0E17C770C200A074F4 /* IMGLYSketchFIlter.m */,
 				D1526DE817C66BCE00A074F4 /* IMGLYSunnyFilter.h */,
@@ -1237,14 +1115,10 @@
 				D1526E1617C7719400A074F4 /* IMGLY669Filter.m */,
 				D1E5A4BE17C7B3150076657D /* IMGLY9EK1Filter.h */,
 				D1E5A4BF17C7B3150076657D /* IMGLY9EK1Filter.m */,
-				D1E5A4C217C7B3240076657D /* IMGLY9EK2Filter.h */,
-				D1E5A4C317C7B3240076657D /* IMGLY9EK2Filter.m */,
 				D1E5A4C617C7B3480076657D /* IMGLY9EK6Filter.h */,
 				D1E5A4C717C7B3480076657D /* IMGLY9EK6Filter.m */,
 				D1E5A4CA17C7B3660076657D /* IMGLY9EKDynamicFilter.h */,
 				D1E5A4CB17C7B3660076657D /* IMGLY9EKDynamicFilter.m */,
-				D1CF5EDD17E8AA5500C91106 /* IMGLYBreezeFilter.h */,
-				D1CF5EDE17E8AA5600C91106 /* IMGLYBreezeFilter.m */,
 				D1C460DE17E8C188005C450E /* IMGLYChestNutFilter.h */,
 				D1C460DF17E8C188005C450E /* IMGLYChestNutFilter.m */,
 				D1C460E617E8C615005C450E /* IMGLYFixieFilter.h */,
@@ -1255,14 +1129,8 @@
 				D1CF5EDA17E868BF00C91106 /* IMGLYFridgeFilter.m */,
 				D1C460E217E8C3B7005C450E /* IMGLYFrontFilter.h */,
 				D1C460E317E8C3B7005C450E /* IMGLYFrontFilter.m */,
-				D1C460EA17E8C81C005C450E /* IMGLYLeninFilter.h */,
-				D1C460EB17E8C81C005C450E /* IMGLYLeninFilter.m */,
-				D1C460F217E8D446005C450E /* IMGLYOrchridFilter.h */,
-				D1C460F317E8D446005C450E /* IMGLYOrchridFilter.m */,
 				D1526E1917C771BA00A074F4 /* IMGLYPolaFilter.h */,
 				D1526E1A17C771BD00A074F4 /* IMGLYPolaFilter.m */,
-				D1C460EE17E8CC63005C450E /* IMGLYQuoziFilter.h */,
-				D1C460EF17E8CC63005C450E /* IMGLYQuoziFilter.m */,
 			);
 			name = "Light filters";
 			sourceTree = "<group>";
@@ -1296,14 +1164,12 @@
 				64E460601768D14000A34F9F /* IMGLYPhotoProcessor.h in Headers */,
 				64E460621768D15000A34F9F /* IMGLYProcessingJob.h in Headers */,
 				93CAFA7CD70BFDDEF2EF13C6 /* IMGLYEditorCropViewController.h in Headers */,
-				64E460631768D16100A34F9F /* IMGLYOrientationOperation.h in Headers */,
 				64E460611768D14900A34F9F /* IMGLYPhotoProcessor_Private.h in Headers */,
 				64E460731768D46F00A34F9F /* NSBundle+IMGLYAdditions.h in Headers */,
 				64F490611769BA0F0016A7A9 /* UIImage+IMGLYKitAdditions.h in Headers */,
 				D188B3BB176B42FF0085A7CB /* IMGLYFilterSelectorView.h in Headers */,
 				D188B3C0176B51700085A7CB /* IMGLYFilterSelectorButtonMetadata.h in Headers */,
 				D15EE9161779DBA600379CBA /* IMGLYNoneFilter.h in Headers */,
-				D15A0EDC177A16720006432E /* IMGLYSemiRedFilter.h in Headers */,
 				93CAF8A39766D8077EA649C6 /* IMGLYCameraController.h in Headers */,
 				93CAFDD360D0E26D6B02F03B /* IMGLYCameraTopBarView.h in Headers */,
 				93CAFDD7B752E167DA1DDF71 /* IMGLYCameraBottomBarView.h in Headers */,
@@ -1324,19 +1190,11 @@
 				D1A79C2E17A8156C00B92A49 /* IMGLYSaturationFilter.h in Headers */,
 				D1A79C3217A8163300B92A49 /* IMGLYSaturationOperation.h in Headers */,
 				D119721517AAA604009AA826 /* IMGLYMainMenuEntryMetaData.h in Headers */,
-				D11582A117AFF265003C1754 /* IMGLYEditorFocusViewController.h in Headers */,
-				D11582A517AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.h in Headers */,
-				D11582A917AFF728003C1754 /* IMGLYBoxTiltShiftFilter.h in Headers */,
-				D11582AD17AFF97A003C1754 /* IMGLYTiltShiftOperation.h in Headers */,
 				D10C18FC17B109E3006248C1 /* IMGLYEditorBoxGradientView.h in Headers */,
 				D10C190117B272F2006248C1 /* IMGLYEditorCircleGradientView.h in Headers */,
 				D10C190417B27385006248C1 /* IMGLYEditorGradientViewDelegate.h in Headers */,
-				D10C190C17B3C1B6006248C1 /* IMGLYEditorFocusMenu.h in Headers */,
 				D186AB3317BA5EA000DC3999 /* IMGLYGaussOperation.h in Headers */,
 				D186AB3717BA5F9600DC3999 /* IMGLYGaussFilter.h in Headers */,
-				D17E2AF617C39C7D00275FFB /* IMGLYOrientationFilter.h in Headers */,
-				D17E2AFE17C3CF2A00275FFB /* IMGLYEditorOrientationViewController.h in Headers */,
-				D17E2B0717C5007000275FFB /* IMGLYEditorOrientationMenu.h in Headers */,
 				D1526DD517C6543100A074F4 /* IMGLYFilterOperation.h in Headers */,
 				D1526DD917C664BB00A074F4 /* IMGLYPaleFilter.h in Headers */,
 				D1526DE217C6689900A074F4 /* IMGLYHippieFilter.h in Headers */,
@@ -1349,36 +1207,24 @@
 				D1526DFE17C675E300A074F4 /* IMGLYBWFilter.h in Headers */,
 				D1526E0217C677E100A074F4 /* IMGLYBWSoftFilter.h in Headers */,
 				D1526E0617C678F200A074F4 /* IMGLYBWHardFilter.h in Headers */,
-				D1526E0B17C7706700A074F4 /* IMGLYSinCityFilter.h in Headers */,
 				D1526E0F17C770C500A074F4 /* IMGLYSketchFilter.h in Headers */,
 				D1526E1317C7717100A074F4 /* IMGLY8BitFIlter.h in Headers */,
 				D1526E1717C7719600A074F4 /* IMGLY669Filter.h in Headers */,
 				D1526E1B17C771C100A074F4 /* IMGLYPolaFilter.h in Headers */,
 				D1526E1F17C7720800A074F4 /* IMGLYGlamFilter.h in Headers */,
-				D1526E2317C7731C00A074F4 /* IMGLYEarlyBirdFilter.h in Headers */,
-				D1526E2717C7736B00A074F4 /* IMGLYGobblinFilter.h in Headers */,
 				D1E5A4C017C7B3150076657D /* IMGLY9EK1Filter.h in Headers */,
-				D1E5A4C417C7B3240076657D /* IMGLY9EK2Filter.h in Headers */,
 				D1E5A4C817C7B3480076657D /* IMGLY9EK6Filter.h in Headers */,
 				D1E5A4CC17C7B3660076657D /* IMGLY9EKDynamicFilter.h in Headers */,
 				D1C4A28C17CF4C3A0088BC3C /* IMGLYEditorTextViewController.h in Headers */,
 				D1C4A29017CF521D0088BC3C /* IMGLYEditorTextMenu.h in Headers */,
 				D1C4A2A917D0DCE30088BC3C /* IMGLYEditorColorButton.h in Headers */,
 				D1D3ADB917D49E7A00C478AC /* IMGLYEditorTextInputView.h in Headers */,
-				D1B62CBB17D64C4D004C4090 /* IMGLYEditorNoiseViewController.h in Headers */,
-				D1B62CBF17D6518A004C4090 /* IMGLYNoiseFilter.h in Headers */,
-				D1BFBA3317D77D7E006CBA94 /* IMGLYNoiseOperation.h in Headers */,
 				D1BFBA3B17D8DC22006CBA94 /* IMGLYTextOperation.h in Headers */,
 				D1CF5EDB17E868BF00C91106 /* IMGLYFridgeFilter.h in Headers */,
-				D1CF5EDF17E8AA5600C91106 /* IMGLYBreezeFilter.h in Headers */,
 				D1C460E017E8C188005C450E /* IMGLYChestNutFilter.h in Headers */,
 				D1C460E417E8C3B7005C450E /* IMGLYFrontFilter.h in Headers */,
 				D1C460E817E8C615005C450E /* IMGLYFixieFilter.h in Headers */,
-				D1C460EC17E8C81C005C450E /* IMGLYLeninFilter.h in Headers */,
-				D1C460F017E8CC64005C450E /* IMGLYQuoziFilter.h in Headers */,
-				D1C460F417E8D447005C450E /* IMGLYOrchridFilter.h in Headers */,
 				D185BB3017EB3818007A2B49 /* IMGLYEditorFontSelector.h in Headers */,
-				D1DAA5FD17F0EFAC005034C5 /* IMGLYX400Filter.h in Headers */,
 				D14D8E7617F1CB98008D2C0F /* UINavigationController+IMGLYAdditions.h in Headers */,
 				D160BE7817F5DAED00BB5265 /* IMGLYShutterView.h in Headers */,
 				D1AA2CF717FADA7F00FC31E1 /* IMGLYDeviceDetector.h in Headers */,
@@ -1671,7 +1517,6 @@
 				64A6B3CC1760BCE000190035 /* IMGLYEditorViewController.m in Sources */,
 				64A6B3CF1760BDC400190035 /* IMGLYPhotoProcessor.m in Sources */,
 				64A6B3E11760D98400190035 /* IMGLYCropOperation.m in Sources */,
-				64A6B3E41760D99300190035 /* IMGLYOrientationOperation.m in Sources */,
 				64A6B3E71760DE7400190035 /* IMGLYProcessingJob.m in Sources */,
 				64E460741768D46F00A34F9F /* NSBundle+IMGLYAdditions.m in Sources */,
 				64F490621769BA0F0016A7A9 /* UIImage+IMGLYKitAdditions.m in Sources */,
@@ -1681,7 +1526,6 @@
 				93CAF4D2C09C04B2A497C3FB /* IMGLYFilter.m in Sources */,
 				D15EE9131779D80C00379CBA /* IMGLYLordFilter.m in Sources */,
 				D15EE9171779DBA600379CBA /* IMGLYNoneFilter.m in Sources */,
-				D15A0EDD177A16720006432E /* IMGLYSemiRedFilter.m in Sources */,
 				93CAF92C2A376EEA44ECCC59 /* IMGLYCameraBottomBarView.m in Sources */,
 				93CAF95440E5F28A0B40DF4E /* IMGLYCameraController.m in Sources */,
 				93CAF332991524AC225CC73E /* IMGLYCameraTopBarView.m in Sources */,
@@ -1701,18 +1545,10 @@
 				D1A79C2F17A8156C00B92A49 /* IMGLYSaturationFilter.m in Sources */,
 				D1A79C3317A8163300B92A49 /* IMGLYSaturationOperation.m in Sources */,
 				D119721617AAA604009AA826 /* IMGLYMainMenuEntryMetaData.m in Sources */,
-				D11582A217AFF265003C1754 /* IMGLYEditorFocusViewController.m in Sources */,
-				D11582A617AFF70C003C1754 /* IMGLYRadialTiltShiftFilter.m in Sources */,
-				D11582AA17AFF728003C1754 /* IMGLYBoxTiltShiftFilter.m in Sources */,
-				D11582AE17AFF97A003C1754 /* IMGLYTiltShiftOperation.m in Sources */,
 				D10C18FD17B109E3006248C1 /* IMGLYEditorBoxGradientView.m in Sources */,
 				D10C190217B272F2006248C1 /* IMGLYEditorCircleGradientView.m in Sources */,
-				D10C190D17B3C1B6006248C1 /* IMGLYEditorFocusMenu.m in Sources */,
 				D186AB3417BA5EA000DC3999 /* IMGLYGaussOperation.m in Sources */,
 				D186AB3817BA5F9600DC3999 /* IMGLYGaussFilter.m in Sources */,
-				D17E2AF717C39C7D00275FFB /* IMGLYOrientationFilter.m in Sources */,
-				D17E2AFF17C3CF2A00275FFB /* IMGLYEditorOrientationViewController.m in Sources */,
-				D17E2B0817C5007000275FFB /* IMGLYEditorOrientationMenu.m in Sources */,
 				D1526DD617C6543100A074F4 /* IMGLYFilterOperation.m in Sources */,
 				D1526DDA17C664BB00A074F4 /* IMGLYPaleFilter.m in Sources */,
 				D1526DE317C6689900A074F4 /* IMGLYHippieFilter.m in Sources */,
@@ -1725,36 +1561,24 @@
 				D1526DFF17C675E300A074F4 /* IMGLYBWFilter.m in Sources */,
 				D1526E0317C677E100A074F4 /* IMGLYBWSoftFilter.m in Sources */,
 				D1526E0717C678F200A074F4 /* IMGLYBWHardFilter.m in Sources */,
-				D1526E0C17C7706700A074F4 /* IMGLYSinCityFilter.m in Sources */,
 				D1526E1017C770C500A074F4 /* IMGLYSketchFIlter.m in Sources */,
 				D1526E1417C7717100A074F4 /* IMGLY8BitFIlter.m in Sources */,
 				D1526E1817C7719600A074F4 /* IMGLY669Filter.m in Sources */,
 				D1526E1C17C771C100A074F4 /* IMGLYPolaFilter.m in Sources */,
 				D1526E2017C7720800A074F4 /* IMGLYGlamFilter.m in Sources */,
-				D1526E2417C7731C00A074F4 /* IMGLYEarlyBirdFilter.m in Sources */,
-				D1526E2817C7736B00A074F4 /* IMGLYGobblinFilter.m in Sources */,
 				D1E5A4C117C7B3150076657D /* IMGLY9EK1Filter.m in Sources */,
-				D1E5A4C517C7B3240076657D /* IMGLY9EK2Filter.m in Sources */,
 				D1E5A4C917C7B3480076657D /* IMGLY9EK6Filter.m in Sources */,
 				D1E5A4CD17C7B3660076657D /* IMGLY9EKDynamicFilter.m in Sources */,
 				D1C4A28D17CF4C3A0088BC3C /* IMGLYEditorTextViewController.m in Sources */,
 				D1C4A29117CF521D0088BC3C /* IMGLYEditorTextMenu.m in Sources */,
 				D1C4A2AA17D0DCE30088BC3C /* IMGLYEditorColorButton.m in Sources */,
 				D1D3ADBA17D49E7A00C478AC /* IMGLYEditorTextInputView.m in Sources */,
-				D1B62CBC17D64C4D004C4090 /* IMGLYEditorNoiseViewController.m in Sources */,
-				D1B62CC017D6518A004C4090 /* IMGLYNoiseFilter.m in Sources */,
-				D1BFBA3417D77D7E006CBA94 /* IMGLYNoiseOperation.m in Sources */,
 				D1BFBA3C17D8DC22006CBA94 /* IMGLYTextOperation.m in Sources */,
 				D1CF5EDC17E868BF00C91106 /* IMGLYFridgeFilter.m in Sources */,
-				D1CF5EE017E8AA5600C91106 /* IMGLYBreezeFilter.m in Sources */,
 				D1C460E117E8C188005C450E /* IMGLYChestNutFilter.m in Sources */,
 				D1C460E517E8C3B7005C450E /* IMGLYFrontFilter.m in Sources */,
 				D1C460E917E8C615005C450E /* IMGLYFixieFilter.m in Sources */,
-				D1C460ED17E8C81C005C450E /* IMGLYLeninFilter.m in Sources */,
-				D1C460F117E8CC64005C450E /* IMGLYQuoziFilter.m in Sources */,
-				D1C460F517E8D447005C450E /* IMGLYOrchridFilter.m in Sources */,
 				D185BB3117EB3818007A2B49 /* IMGLYEditorFontSelector.m in Sources */,
-				D1DAA5FE17F0EFAC005034C5 /* IMGLYX400Filter.m in Sources */,
 				D14D8E7717F1CB98008D2C0F /* UINavigationController+IMGLYAdditions.m in Sources */,
 				D160BE7917F5DAED00BB5265 /* IMGLYShutterView.m in Sources */,
 				D1AA2CF817FADA7F00FC31E1 /* IMGLYDeviceDetector.m in Sources */,

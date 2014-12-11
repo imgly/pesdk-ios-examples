@@ -14,9 +14,6 @@
 #import "IMGLYEditorCropViewController.h"
 #import "IMGLYEditorEnhancementViewController.h"
 #import "IMGLYEditorFilterViewController.h"
-#import "IMGLYEditorFocusViewController.h"
-#import "IMGLYEditorNoiseViewController.h"
-#import "IMGLYEditorOrientationViewController.h"
 #import "IMGLYEditorResetViewController.h"
 #import "IMGLYEditorSaturationViewController.h"
 #import "IMGLYEditorTextViewController.h"
@@ -85,12 +82,6 @@ static const CGFloat kLabelYPosition = 42;
                       [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Filters"
                                                                  image:[_imageProvider filterIcon]
                                                    viewControllerClass:[IMGLYEditorFilterViewController class] ],
-                      [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Orientation"
-                                                             image:[_imageProvider orientationIcon]
-                                                   viewControllerClass:[IMGLYEditorOrientationViewController class] ],
-                      [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Focus"
-                                                             image:[_imageProvider focusIcon]
-                                                   viewControllerClass:[IMGLYEditorFocusViewController class] ],
                       [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Crop"
                                                              image:[_imageProvider cropIcon]
                                                    viewControllerClass:[IMGLYEditorCropViewController class] ],
@@ -103,9 +94,6 @@ static const CGFloat kLabelYPosition = 42;
                       [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Saturation"
                                                              image:[_imageProvider saturationIcon]
                                                    viewControllerClass:[IMGLYEditorSaturationViewController class] ],
-                      [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Noise"
-                                                             image:[_imageProvider noiseIcon]
-                                                   viewControllerClass:[IMGLYEditorNoiseViewController class] ],
                       [[IMGLYMainMenuEntryMetaData alloc] initWithText:@"Text"
                                                              image:[_imageProvider textIcon]
                                                    viewControllerClass:[IMGLYEditorTextViewController class] ],

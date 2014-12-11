@@ -57,6 +57,7 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [SVProgressHUD showWithStatus:@"Preprocessing"];
 
     __weak IMGLYEditorEnhancementViewController *weakSelf = self;
@@ -87,6 +88,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self.queue cancelAllOperations];
     if([SVProgressHUD isVisible]) {
         [SVProgressHUD dismiss];

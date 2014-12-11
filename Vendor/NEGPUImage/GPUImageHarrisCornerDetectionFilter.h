@@ -3,8 +3,8 @@
 @class GPUImageGaussianBlurFilter;
 @class GPUImageXYDerivativeFilter;
 @class GPUImageGrayscaleFilter;
-@class GPUImageFastBlurFilter;
-@class GPUImageNonMaximumSuppressionFilter;
+@class GPUImageGaussianBlurFilter;
+@class GPUImageThresholdedNonMaximumSuppressionFilter;
 @class GPUImageColorPackingFilter;
 
 //#define DEBUGFEATUREDETECTION
@@ -13,7 +13,7 @@
  
  First pass: reduce to luminance and take the derivative of the luminance texture (GPUImageXYDerivativeFilter)
  
- Second pass: blur the derivative (GPUImageFastBlurFilter)
+ Second pass: blur the derivative (GPUImageGaussianBlurFilter)
  
  Third pass: apply the Harris corner detection calculation
  
@@ -23,19 +23,17 @@
 @interface GPUImageHarrisCornerDetectionFilter : GPUImageFilterGroup
 {
     GPUImageXYDerivativeFilter *derivativeFilter;
-//    GPUImageGaussianBlurFilter *blurFilter;
-    GPUImageFastBlurFilter *preblurFilter, *blurFilter;
+    GPUImageGaussianBlurFilter *blurFilter;
     GPUImageFilter *harrisCornerDetectionFilter;
-    GPUImageNonMaximumSuppressionFilter *nonMaximumSuppressionFilter;
-    GPUImageFilter *simpleThresholdFilter;
+    GPUImageThresholdedNonMaximumSuppressionFilter *nonMaximumSuppressionFilter;
     GPUImageColorPackingFilter *colorPackingFilter;
     GLfloat *cornersArray;
     GLubyte *rawImagePixels;
 }
 
-/** A multiplier for the underlying blur size, ranging from 0.0 on up, with a default of 1.0
+/** The radius of the underlying Gaussian blur. The default is 2.0.
  */
-@property(readwrite, nonatomic) CGFloat blurSize;
+@property(readwrite, nonatomic) CGFloat blurRadiusInPixels;
 
 // This changes the dynamic range of the Harris corner detector by amplifying small cornerness values. Default is 5.0.
 @property(readwrite, nonatomic) CGFloat sensitivity;

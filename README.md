@@ -1,4 +1,5 @@
-![img.ly](http://i.imgur.com/fgH1HRt.png)
+## Fork notes:
+In this fork I just switched NEGPUImage library file to GPUImage(its still called libNEGPUImage.a), but it was compiled from the latest version of GPUImage. To be able to to this I had to drop a lot of filters and some abilities. 
 
 ## img.ly SDK for iOS
 
@@ -14,7 +15,7 @@ img.ly SDK provides tools to create photo applications for iOS with a big variet
 
 The easiest way to install img.ly SDK for iOS is via CocoaPods. In your Podfile, add the following:
 
-    pod 'imglyKit'
+    pod 'imglyKit', :git => 'https://github.com/hexrain/imgly-sdk-ios.git'
 
 
 ### High level API
@@ -59,7 +60,7 @@ Note that we only add one operation here, but multiple operations can be added. 
 
 ### Attribution
 
-img.ly SDK for iOS uses a private fork of [GPUImage](https://github.com/BradLarson/GPUImage), which is released under the following license:
+This fork of img.ly SDK for iOS uses [GPUImage](https://github.com/BradLarson/GPUImage), which is released under the following license:
 
     Copyright (c) 2012, Brad Larson, Ben Cochran, Hugues Lismonde, Keitaroh Kobayashi, Alaric Cole, Matthew Clark, Jacob Gundersen, Chris Williams. All rights reserved.
 

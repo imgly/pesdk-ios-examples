@@ -124,8 +124,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
 }
 
 #pragma mark - system events
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)setupView {
     [self configureBackground];
     [self configurePreview];
     [self configureBottomBackgoundView];
@@ -134,6 +133,17 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
     [self configureBackButton];
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupView];
+}
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.navigationController setNavigationBarHidden:YES];
+
+    [self.navigationController setNavigationBarHidden:NO];
+
+}
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [self hideStatusBar];
@@ -258,8 +268,8 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
         UIImage *outputImage = [IMGLYPhotoProcessor sharedPhotoProcessor].outputImage;
 
         // Clean up
-        _inputImage = nil;
-        _previewImage = nil;
+//        _inputImage = nil;
+//        _previewImage = nil;
 
         dispatch_async(dispatch_get_main_queue(), ^{
             [SVProgressHUD dismiss];

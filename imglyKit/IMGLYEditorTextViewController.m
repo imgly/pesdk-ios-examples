@@ -87,7 +87,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
     _textLabelClipView.frame = CGRectMake(0, 0, 100, 100);
     _textLabelClipView.clipsToBounds = YES;
     [self.view addSubview: _textLabelClipView];
-   
+    
 }
 
 - (void)configureTextLabel {
@@ -173,15 +173,15 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 - (void)layoutFontSelector {
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"7.0")) {
         self.fontSelector.frame = CGRectMake(self.view.frame.origin.x,
-                0.0,
-                self.view.frame.size.width,
-                self.view.frame.size.height -  kMenuViewHeight);
+                                             0.0,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height -  kMenuViewHeight);
     }
     else {
         self.fontSelector.frame = CGRectMake(self.view.frame.origin.x,
-                self.view.frame.origin.y,
-                self.view.frame.size.width,
-                self.view.frame.size.height -  kMenuViewHeight);
+                                             self.view.frame.origin.y,
+                                             self.view.frame.size.width,
+                                             self.view.frame.size.height -  kMenuViewHeight);
     }
 }
 
@@ -216,7 +216,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 
 /*
  Well this is some hardcore thinking going on.
- In this method, we calculate the distance we moved, 
+ In this method, we calculate the distance we moved,
  check if the rendred text fits on the screen,
  and if not we correct the actual view rect acording to the differences
  */
@@ -283,6 +283,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 
 #pragma mark - cleanup
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self unregisterForKeyboardNotifications];
 }
 
@@ -292,9 +293,14 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextView *)textView {
+    if(self.textInput.text == nil || self.textInput.text.length == 0) {
+        [[[UIAlertView alloc]initWithTitle:@"Sorry" message:@"Text must not be empty" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil] show];
+        return NO;
+    }
     [self.textInput resignFirstResponder];
     [self hideTextInput];
     self.textLabel.text = self.textInput.text;
+    
     [self setInitialTextLabelSize];
     [self showTextLabel];
     [self showDoneButton];
@@ -349,7 +355,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
         self.textLabel.font = [UIFont fontWithName:self.fontName size:self.maximumFontSize];
         size = [self.textLabel.text sizeWithFont:self.textLabel.font];
     }
-    while (size.width < (self.view.frame.size.width));    
+    while (size.width < (self.view.frame.size.width));
 }
 
 - (void)setInitialTextLabelSize {
@@ -375,7 +381,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
     self.textLabel.frame = frame;
 }
 
-#pragma mark - font selector handling 
+#pragma mark - font selector handling
 - (void)selectedFontWithName:(NSString *)fontName {
     self.fontName = fontName;
     [UIView animateWithDuration:0.3 animations:^{
@@ -387,7 +393,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
     }];
 }
 
-#pragma mark - color selection handling 
+#pragma mark - color selection handling
 - (void)selectedColor:(UIColor *)color {
     self.textColor = color;
     self.textLabel.textColor = color;

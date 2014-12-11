@@ -4,8 +4,14 @@
 //  I've extended this to be able to take programs as NSStrings in addition to files, for baked-in shaders
 
 #import <Foundation/Foundation.h>
+
+#if TARGET_IPHONE_SIMULATOR || TARGET_OS_IPHONE
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
+#else
+#import <OpenGL/OpenGL.h>
+#import <OpenGL/gl.h>
+#endif
 
 @interface GLProgram : NSObject 
 {
@@ -15,6 +21,9 @@
 	vertShader, 
 	fragShader;	
 }
+
+@property(readwrite, nonatomic) BOOL initialized;
+
 - (id)initWithVertexShaderString:(NSString *)vShaderString 
             fragmentShaderString:(NSString *)fShaderString;
 - (id)initWithVertexShaderString:(NSString *)vShaderString 

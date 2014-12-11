@@ -66,7 +66,7 @@ extern CGFloat filterSelectorMoveDistance;
 }
 
 - (void)configureSwitchCameraButton {
-    CGRect frame = CGRectMake(320.0f - 68.0f - 10.0f, self.yPosition, 70.0f, 35.0f);
+    CGRect frame = CGRectMake([UIScreen mainScreen].bounds.size.width - 68.0f - 10.0f, self.yPosition, 70.0f, 35.0f);
     _toggleCameraButton = [self addButtonWithImageToViewWithImage:[self.imageProvider swapCameraImage]
                                                         withFrame:frame
                                                            action:@selector(toggleCameraButtonTouchedUpInside:)
@@ -213,7 +213,7 @@ extern CGFloat filterSelectorMoveDistance;
 
     if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait) {
         CGRect toggleCameraButtonFrame = self.toggleCameraButton.frame;
-        toggleCameraButtonFrame.origin.x = 242;
+        toggleCameraButtonFrame.origin.x = [UIScreen mainScreen].bounds.size.width - 68.0f - 10.0f;
         self.toggleCameraButton.frame = toggleCameraButtonFrame;
     }
 }
@@ -237,14 +237,13 @@ extern CGFloat filterSelectorMoveDistance;
     }
     else if(orientation == UIDeviceOrientationLandscapeLeft) {
         if (isFilterSelectorDown) {
-            return CGRectMake(270 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract);
+            return CGRectMake([UIScreen mainScreen].bounds.size.width - 60 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract);
         }
         else {
-            return CGRectMake(270 - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + filterSelectorMoveDistance);
+            return CGRectMake([UIScreen mainScreen].bounds.size.width - 60  - self.yPosition, 20, 55, mainScreenBounds.size.height - heightSubstract + filterSelectorMoveDistance);
         }
     }
 
     return CGRectMake(0, self.yPosition, mainScreenBounds.size.width, 55);
 }
-
 @end
