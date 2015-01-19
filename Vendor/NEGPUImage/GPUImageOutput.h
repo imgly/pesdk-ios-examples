@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-#import "GPUImageOpenGLESContext.h"
+#import "GPUImageContext.h"
 
 void runOnMainQueueWithoutDeadlocking(void (^block)(void));
 void runSynchronouslyOnVideoProcessingQueue(void (^block)(void));

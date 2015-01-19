@@ -1,5 +1,5 @@
 #import <UIKit/UIKit.h>
-#import "GPUImageOpenGLESContext.h"
+#import "GPUImageContext.h"
 
 typedef enum {
     kGPUImageFillModeStretch,                       // Stretch to fill the full view, which may distort the image outside of its normal aspect ratio

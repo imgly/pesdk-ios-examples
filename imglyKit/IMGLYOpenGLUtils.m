@@ -13,7 +13,7 @@
 @implementation IMGLYOpenGLUtils
 
 + (GLint)maximumTextureSizeForThisDevice {
-    return 1024; //[GPUImageOpenGLESContext maximumTextureSizeForThisDevice];
+    return [GPUImageContext maximumTextureSizeForThisDevice];
 }
 
 @end
