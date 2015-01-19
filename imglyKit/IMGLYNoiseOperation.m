@@ -50,16 +50,20 @@
     IMGLYCropOperation *cropOperation = [[IMGLYCropOperation alloc] initWithRect:CGRectMake(
             0.0,
             0.0,
-            image.size.width / self.noiseImage.size.width,
-            image.size.height / self.noiseImage.size.height
+            self.noiseImage.size.width / image.size.width ,
+            self.noiseImage.size.height / image.size.height
     )];
 
-    UIImage *cropedNoiseImage = [cropOperation processImage:self.noiseImage];
+    UIImage *cropedNoiseImage = [cropOperation processImage:image];
 
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
-    [picture addTarget:filter];
-    [picture processImage];
-    return [[IMGLYPhotoProcessor sharedPhotoProcessor] processImage:cropedNoiseImage withFilter:filter];
+    UIImage *inputImage = [UIImage imageWithCGImage:[cropedNoiseImage CGImage]];
+    
+    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [stillImageSource processImage];
+    [stillImageSource addTarget:filter];
+    
+    return [filter imageByFilteringImage:self.noiseImage];
+
 }
 
 - (id)copy {

@@ -64,7 +64,7 @@ const static CGFloat kMaximumNoiseValue = 0.25;
 }
 
 - (void)configureNoiseImage {
-    _noiseImage = [UIImage imgly_imageNamed:@"noise512.png"];
+//    _noiseImage = [UIImage imgly_imageNamed:@"noise512.png"];
 }
 
 - (void)configureSlider {

@@ -36,10 +36,13 @@
 }
 
 - (UIImage *)processImage:(UIImage *)image withFilter:(GPUImageOutput <GPUImageInput> *)filter {
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:image];
-    [picture addTarget:filter];
-    [picture processImage];
-    return [filter imageFromCurrentlyProcessedOutputWithOrientation:image.imageOrientation];
+    UIImage *inputImage = [UIImage imageWithCGImage:[image CGImage]];
+    
+    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:inputImage];
+    
+    [stillImageSource processImage];
+    [stillImageSource addTarget:filter];
+    return [filter imageByFilteringImage:image];
 }
 
 @end

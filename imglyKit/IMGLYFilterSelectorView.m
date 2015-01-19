@@ -325,7 +325,7 @@ const CGFloat kActivationDuration = 0.15f;
     filterSelectorButtonMetadata.filterType = filterType;
     filterSelectorButtonMetadata.filterName = filterName;
 
-    NSString *key = [NSString stringWithFormat:@"%i", filterType];
+    NSString *key = [NSString stringWithFormat:@"%li", filterType];
     _dictionary[key] = filterSelectorButtonMetadata;
     
     [_scrollView addSubview:button];
@@ -456,7 +456,7 @@ const CGFloat kActivationDuration = 0.15f;
         
         for (NSUInteger index = 0; index < [self.scrollView.subviews count] - 2; index += 2) {
             UIButton *button = self.scrollView.subviews[index];
-            NSString *key = [NSString stringWithFormat:@"%i", button.tag];
+            NSString *key = [NSString stringWithFormat:@"%li", (long)button.tag];
             IMGLYFilterSelectorButtonMetadata *filterSelectorButtonMetadata = self.dictionary[key];
             IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
             IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
@@ -478,7 +478,7 @@ const CGFloat kActivationDuration = 0.15f;
 
     for (NSUInteger index = 0; index < [self.scrollView.subviews count] - 2; index += 2) {
         UIButton *button = self.scrollView.subviews[index];
-        NSString *key = [NSString stringWithFormat:@"%i", button.tag];
+        NSString *key = [NSString stringWithFormat:@"%li", (long)button.tag];
         IMGLYFilterSelectorButtonMetadata *filterSelectorButtonMetadata = self.dictionary[key];
         IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
         IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
@@ -496,7 +496,7 @@ const CGFloat kActivationDuration = 0.15f;
 - (void)setPreviewImagesToDefault {
     for (NSUInteger index = 0; index < [self.scrollView.subviews count] - 2; index += 2) {
         UIButton *button = self.scrollView.subviews[index];
-        NSString *key = [NSString stringWithFormat:@"%i", button.tag];
+        NSString *key = [NSString stringWithFormat:@"%li", (long)button.tag];
         IMGLYFilterSelectorButtonMetadata *filterSelectorButtonMetadata = self.dictionary[key];
         [button setImage:filterSelectorButtonMetadata.staticPreviewImage forState:UIControlStateNormal];
     }
@@ -597,7 +597,7 @@ const CGFloat kActivationDuration = 0.15f;
 }
 
 - (NSString *)getSelectedFilterNameForType:(IMGLYFilterType)filterType {
-    NSString *key = [NSString stringWithFormat:@"%i", filterType];
+    NSString *key = [NSString stringWithFormat:@"%li", filterType];
     IMGLYFilterSelectorButtonMetadata *filterSelectorButtonMetadata = self.dictionary[key];
     return filterSelectorButtonMetadata.filterName;
 }

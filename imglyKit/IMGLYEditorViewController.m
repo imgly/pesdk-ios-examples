@@ -250,7 +250,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
     dispatch_async(_contextQueue, ^{
         IMGLYEditorViewController *strongSelf = weakSelf;
         NSInteger maximaleSideLength = [IMGLYOpenGLUtils maximumTextureSizeForThisDevice];
-        NSLog(@"maximaleSideLength %d", maximaleSideLength);
+        NSLog(@"maximaleSideLength %ld", (long)maximaleSideLength);
         UIImage *image = [strongSelf resizeInputImageIfNeeded:strongSelf.inputImage
                                       maximalSideLength:maximaleSideLength];
         [IMGLYPhotoProcessor sharedPhotoProcessor].inputImage = image;

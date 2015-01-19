@@ -66,10 +66,13 @@
 }
 
 - (UIImage *)processImageWithFilter:(GPUImageOutput <GPUImageInput> *)filter {
-    GPUImagePicture *picture = [[GPUImagePicture alloc] initWithImage:self.blurredImage];
-    [picture addTarget:filter];
-    [picture processImage];
-    return [[IMGLYPhotoProcessor sharedPhotoProcessor] processImage:self.image withFilter:filter];
+    UIImage *inputImage = [UIImage imageWithCGImage:[self.blurredImage CGImage]];
+    
+    GPUImagePicture *stillImageSource = [[GPUImagePicture alloc] initWithImage:inputImage];
+    [stillImageSource processImage];
+    [stillImageSource addTarget:filter];
+    
+    return [filter imageByFilteringImage:self.image];
 }
 
 

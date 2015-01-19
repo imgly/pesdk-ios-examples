@@ -43,7 +43,7 @@
     // OK Button tapped ?
     if(buttonIndex == 1) {
         // get the index of the visible VC on the stack
-        int currentVCIndex = [self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
+        int currentVCIndex = (int)[self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
         // get a reference to the previous VC
         id prevVC = [self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
 
