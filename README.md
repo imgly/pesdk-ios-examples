@@ -58,8 +58,8 @@ Note that we only add one operation here, but multiple operations can be added. 
 
 ### 64-Bit Version
 
-We just added a version with a 64-Bit lib. Please note that this version won't run on the simulator.
-To get the camera working you need an iOS device anyways. 
+We just added a version with a 64-Bit lib. Please note that this version won't run on the 64-Bit simulator yet.
+32-Bit simulators are supported tho. To get the camera working you need an iOS device. 
 
 
 ### Attribution
