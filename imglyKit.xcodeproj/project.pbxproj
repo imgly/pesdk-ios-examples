@@ -23,6 +23,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0996F50F1A6E85CD0019A93C /* libNEGPUImageSimulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0996F50E1A6E85CD0019A93C /* libNEGPUImageSimulator.a */; };
 		644C8D2B1862183700CF1B3F /* slider_plus@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 644C8D271862183700CF1B3F /* slider_plus@2x.png */; };
 		644C8D2C1862183700CF1B3F /* slider_minus.png in Resources */ = {isa = PBXBuildFile; fileRef = 644C8D281862183700CF1B3F /* slider_minus.png */; };
 		644C8D2D1862183700CF1B3F /* slider_plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 644C8D291862183700CF1B3F /* slider_plus.png */; };
@@ -378,6 +379,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0996F50E1A6E85CD0019A93C /* libNEGPUImageSimulator.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libNEGPUImageSimulator.a; path = Vendor/NEGPUImage/libNEGPUImageSimulator.a; sourceTree = "<group>"; };
 		3FE3D39AD928431F97ED3E83 /* Pods-imglyKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-imglyKit.xcconfig"; path = "Pods/Pods-imglyKit.xcconfig"; sourceTree = "<group>"; };
 		4C285348F1A04A44B1FD17AD /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		644C8D271862183700CF1B3F /* slider_plus@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider_plus@2x.png"; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 				64A6B3951760827900190035 /* Foundation.framework in Frameworks */,
 				64A6B3D31760C4B900190035 /* UIKit.framework in Frameworks */,
 				6489B758182AABDA00CC41D2 /* libNEGPUImage.a in Frameworks */,
+				0996F50F1A6E85CD0019A93C /* libNEGPUImageSimulator.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -762,6 +765,7 @@
 		64A6B3931760827900190035 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0996F50E1A6E85CD0019A93C /* libNEGPUImageSimulator.a */,
 				D105BDA61815956E00C46473 /* CoreImage.framework */,
 				D185BB3817ECC5F5007A2B49 /* CoreText.framework */,
 				64A6B3941760827900190035 /* Foundation.framework */,
@@ -1888,6 +1892,7 @@
 					"$(inherited)",
 					"${SRCROOT}/NEGPUImage",
 					"${SRCROOT}/Vendor/NEGPUImage",
+					"$(PROJECT_DIR)/Vendor/NEGPUImage",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
@@ -1916,6 +1921,7 @@
 					"$(inherited)",
 					"${SRCROOT}/NEGPUImage",
 					"${SRCROOT}/Vendor/NEGPUImage",
+					"$(PROJECT_DIR)/Vendor/NEGPUImage",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "$(PROJECT_NAME)Headers";
