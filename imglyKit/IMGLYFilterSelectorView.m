@@ -325,7 +325,7 @@ const CGFloat kActivationDuration = 0.15f;
     filterSelectorButtonMetadata.filterType = filterType;
     filterSelectorButtonMetadata.filterName = filterName;
 
-    NSString *key = [NSString stringWithFormat:@"%li", filterType];
+    NSString *key = [NSString stringWithFormat:@"%ld", (long)filterType];
     _dictionary[key] = filterSelectorButtonMetadata;
     
     [_scrollView addSubview:button];
@@ -597,7 +597,7 @@ const CGFloat kActivationDuration = 0.15f;
 }
 
 - (NSString *)getSelectedFilterNameForType:(IMGLYFilterType)filterType {
-    NSString *key = [NSString stringWithFormat:@"%li", filterType];
+    NSString *key = [NSString stringWithFormat:@"%lu", (long)filterType];
     IMGLYFilterSelectorButtonMetadata *filterSelectorButtonMetadata = self.dictionary[key];
     return filterSelectorButtonMetadata.filterName;
 }

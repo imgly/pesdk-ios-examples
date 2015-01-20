@@ -13,7 +13,6 @@
 #import <QuartzCore/QuartzCore.h>
 
 static const CGFloat kButtonYPosition = 22;
-static const CGFloat kMenuHeight = 95;
 static const CGFloat kButtonXPositionOffset = 5;
 static const CGFloat kButtonDisance = 10;
 static const CGFloat kButtonSideLength = 50;

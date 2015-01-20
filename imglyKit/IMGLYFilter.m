@@ -117,7 +117,7 @@ static NSMutableDictionary *__registeredFilterClasses;
 + (GPUImageOutput <GPUImageInput> *)filterWithType:(IMGLYFilterType)filterType {
     NSString *className = __registeredFilterClasses[@(filterType)];
     Class class = NSClassFromString(className);
-    NSAssert(class != nil, @"No class for filter type %ld", filterType);
+    NSAssert(class != nil, @"No class for filter type %ld", (long)filterType);
     return [[class alloc] init];
 }
 

@@ -455,6 +455,7 @@ const CGFloat kIMGLYHQProgressMarginRight = 10;
 #pragma mark - unload
 
 - (void)viewDidUnload {
+    [super viewDidUnload];
     [[UIDevice currentDevice] endGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIDeviceOrientationDidChangeNotification

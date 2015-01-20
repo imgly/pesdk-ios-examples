@@ -50,6 +50,7 @@ extern CGFloat const kEditorMenuViewHeight;
 
 #pragma mark - GUI configuration
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if(_availableFilterList == nil) {
         _availableFilterList = [self getAvailableFilterListFromParent];
     }
@@ -138,7 +139,7 @@ extern CGFloat const kEditorMenuViewHeight;
 - (NSArray *)getAvailableFilterListFromParent {
     NSArray *list = nil;
     // get the index of the visible VC on the stack
-    int currentVCIndex = [self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
+    int currentVCIndex = (int)[self.navigationController.viewControllers indexOfObject:self.navigationController.topViewController];
     // get a reference to the previous VC
     id prevVC = [self.navigationController.viewControllers objectAtIndex:currentVCIndex - 1];
 

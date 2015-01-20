@@ -30,6 +30,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Confirm"
                                                     message:@"Are you sure ? Reset will discard all changes."
                                                    delegate:self

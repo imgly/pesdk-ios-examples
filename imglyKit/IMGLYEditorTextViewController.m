@@ -18,10 +18,7 @@
 #import "UINavigationController+IMGLYAdditions.h"
 
 static const CGFloat kMenuViewHeight = 95.0;
-static const CGFloat kCropNavbarHeight = 44.0;
 static const CGFloat kMinimumFontSize = 12.0;
-static const CGFloat kTextMarginLeft = 8.0;
-static const CGFloat kKeyBoardHeight = 432.0;
 static const CGFloat kTextInputHeight = 40.0;
 static const CGFloat kFontSizeInTextInput = 20.0;
 static const CGFloat kTextLabelInitialMargin = 40.0;
@@ -283,6 +280,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
 
 #pragma mark - cleanup
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self unregisterForKeyboardNotifications];
 }
 

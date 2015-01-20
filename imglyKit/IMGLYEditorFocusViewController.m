@@ -82,6 +82,7 @@ static const CGFloat kMenuViewHeight = 95.0;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     [SVProgressHUD showWithStatus:@"Preprocessing"];
 
     __weak IMGLYEditorFocusViewController *weakSelf = self;
@@ -107,6 +108,7 @@ static const CGFloat kMenuViewHeight = 95.0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     [self.queue cancelAllOperations];
     if([SVProgressHUD isVisible]) {
         [SVProgressHUD dismiss];

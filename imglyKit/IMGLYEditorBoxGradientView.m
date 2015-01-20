@@ -18,7 +18,6 @@ struct IMGLYLine {
 typedef struct IMGLYLine IMGLYLine;
 
 static const CGFloat kCrossSize = 3.0;
-static const CGFloat kTouchZoneSize = 44;
 
 @interface IMGLYEditorBoxGradientView()
 
