@@ -104,7 +104,6 @@
     return job;
 }
 
-
 - (void)createEnhancedImage {
     [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:[self processingJob] ];
