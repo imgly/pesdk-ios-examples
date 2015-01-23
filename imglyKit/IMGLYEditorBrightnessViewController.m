@@ -81,7 +81,7 @@ const CGFloat kSliderXMargin = 10.0;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYBrightnessOperation *operation = [[IMGLYBrightnessOperation alloc] init];
     operation.brightness = self.slider.value;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     
     [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
@@ -95,7 +95,7 @@ const CGFloat kSliderXMargin = 10.0;
 	    IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
         IMGLYBrightnessOperation *operation = [[IMGLYBrightnessOperation alloc] init];
         operation.brightness = self.slider.value;
-        [job addOperation:(IMGLYOperation *)operation];
+        [job addOperation:operation];
         self.completionHandler(IMGLYEditorViewControllerResultDone,self.imagePreview.image, job);
     }
 }

@@ -100,7 +100,7 @@
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYEnhancementOperation *enhancementOperation = [[IMGLYEnhancementOperation alloc] init];
 
-    [job addOperation:(IMGLYOperation *)enhancementOperation];
+    [job addOperation:enhancementOperation];
     return job;
 }
 

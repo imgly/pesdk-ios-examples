@@ -80,7 +80,7 @@ extern CGFloat kSliderXMargin;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYContrastOperation *operation = [[IMGLYContrastOperation alloc] init];
     operation.contrast = self.slider.value;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
     self.imagePreview.image = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
@@ -93,7 +93,7 @@ extern CGFloat kSliderXMargin;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYContrastOperation *operation = [[IMGLYContrastOperation alloc] init];
     operation.contrast = self.slider.value;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     self.completionHandler(IMGLYEditorViewControllerResultDone,self.imagePreview.image, job);
 }
 @end

@@ -461,7 +461,7 @@ const CGFloat kActivationDuration = 0.15f;
             IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
             IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
             operation.filterType = filterSelectorButtonMetadata.filterType;
-            [job addOperation:(IMGLYOperation *)operation];
+            [job addOperation:operation];
             [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
             UIImage *filtredImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
             dispatch_sync(dispatch_get_main_queue(), ^{
@@ -483,7 +483,7 @@ const CGFloat kActivationDuration = 0.15f;
         IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
         IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
         operation.filterType = filterSelectorButtonMetadata.filterType;
-        [job addOperation:(IMGLYOperation *)operation];
+        [job addOperation:operation];
         [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
         UIImage *filtredImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
         filterSelectorButtonMetadata.staticPreviewImage = filtredImage;

@@ -28,7 +28,7 @@
     return self;
 }
 
-- (void)addOperation:(IMGLYOperation *)operation {
+- (void)addOperation:(id<IMGLYOperation>)operation {
     [self.internalOperations addObject:operation];
 }
 
