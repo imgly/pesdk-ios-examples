@@ -63,7 +63,7 @@ static const CGFloat kMenuViewHeight = 95.0;
 
 - (IMGLYProcessingJob *) processingJob {
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
-    [job addOperation:(IMGLYOperation *)self.operation];
+    [job addOperation:self.operation];
     return job;
 }
 

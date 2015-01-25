@@ -124,7 +124,7 @@ const static CGFloat kMaximumNoiseValue = 0.5;
     IMGLYNoiseOperation *operation = [[IMGLYNoiseOperation alloc] init];
     operation.intensity = value;
     operation.noiseImage = self.noiseImage;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     return job;
 }
 
@@ -133,7 +133,7 @@ const static CGFloat kMaximumNoiseValue = 0.5;
     IMGLYNoiseOperation *operation = [[IMGLYNoiseOperation alloc] init];
     operation.intensity = value;
     operation.noiseImage = nil;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     return job;
 }
 

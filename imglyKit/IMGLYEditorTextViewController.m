@@ -273,7 +273,7 @@ static const CGFloat kTextLabelInitialMargin = 40.0;
     operation.fontName = self.fontName;
     operation.position = [self transformedTextPosition];
     operation.color = self.textLabel.textColor;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     return job;
 }
 

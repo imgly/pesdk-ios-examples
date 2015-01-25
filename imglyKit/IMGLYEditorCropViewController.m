@@ -712,7 +712,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
         IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
         IMGLYCropOperation *operation = [[IMGLYCropOperation alloc] init];
         operation.rect = [self normalizedCropRect];
-        [job addOperation:(IMGLYOperation *)operation];
+        [job addOperation:operation];
         [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
         [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
         self.completionHandler(IMGLYEditorViewControllerResultDone,

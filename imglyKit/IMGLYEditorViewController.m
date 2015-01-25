@@ -204,7 +204,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
 - (void)addJobForInitialFilterType:(IMGLYFilterType)filterType {
     IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
     operation.filterType = filterType;
-    [_finalProcessingJob addOperation:(IMGLYOperation *)operation];
+    [_finalProcessingJob addOperation:operation];
 }
 
 - (void)resetAllChanges {
@@ -237,7 +237,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
         self.imagePreview.image = self.previewImage;
     }
     
-    for (IMGLYOperation *operation in job.operations) {
+    for (id<IMGLYOperation>operation in job.operations) {
         [self.finalProcessingJob addOperation:operation];
     }
 }
@@ -323,7 +323,7 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
             IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
             IMGLYEnhancementOperation *enhancementOperation = [[IMGLYEnhancementOperation alloc] init];
 
-            [job addOperation:(IMGLYOperation *)enhancementOperation];
+            [job addOperation:enhancementOperation];
             [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:strongSelf.nonEnhancedImage];
             [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job ];
             strongSelf.enhancedImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];

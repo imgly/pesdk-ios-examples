@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class IMGLYOperation;
+@protocol IMGLYOperation;
 
 /**
  A processing job encapsulates operations that an IMGLYPhotoProcessor can process.
@@ -17,6 +17,6 @@
 
 @property (nonatomic, strong, readonly) NSArray *operations;
 
-- (void)addOperation:(IMGLYOperation *)operation;
+- (void)addOperation:(id <IMGLYOperation>)operation;
 
 @end

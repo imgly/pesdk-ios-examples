@@ -78,7 +78,7 @@ extern CGFloat kSliderXMargin;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYSaturationOperation *operation = [[IMGLYSaturationOperation alloc] init];
     operation.saturation  = self.slider.value;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
     self.imagePreview.image = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
@@ -91,7 +91,7 @@ extern CGFloat kSliderXMargin;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYSaturationOperation *operation = [[IMGLYSaturationOperation alloc] init];
     operation.saturation = self.slider.value;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     self.completionHandler(IMGLYEditorViewControllerResultDone,self.imagePreview.image, job);
 }
 

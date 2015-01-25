@@ -165,7 +165,7 @@ static const CGFloat kMenuViewHeight = 95.0;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYGaussOperation *operation = [[IMGLYGaussOperation alloc] init];
     
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     
     [[IMGLYPhotoProcessor sharedPhotoProcessor] setInputImage:self.inputImage];
     [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
@@ -194,7 +194,7 @@ static const CGFloat kMenuViewHeight = 95.0;
         operation.scaleVector = CGPointMake(1.0, self.imagePreview.image.size.height / self.imagePreview.image.size.width);
     }
     
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     return job;
 }
 

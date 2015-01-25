@@ -105,7 +105,7 @@ extern CGFloat const kEditorMenuViewHeight;
     IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
     IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
     operation.filterType = self.currentFilterType;
-    [job addOperation:(IMGLYOperation *)operation];
+    [job addOperation:operation];
     return job;
 }
 
