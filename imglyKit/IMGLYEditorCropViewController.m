@@ -398,7 +398,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     CGFloat sizeY = fabsf( self.bottomRightAnchorView.center.y - location.y );
 
     [self applyMinimumAreaRuleToWidth:&sizeX height:&sizeY];
-    [self reCalulateSizeForTopLeftAnchor:&sizeX height:&sizeY];
+    [self reCalculateSizeForTopLeftAnchor:&sizeX height:&sizeY];
 
     CGPoint center = self.topLeftAnchorView.center;
     center.x += self.cropRect.size.width - sizeX;
@@ -408,7 +408,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     [self layoutViewsForCropRect];
 }
 
-- (void)reCalulateSizeForTopLeftAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
+- (void)reCalculateSizeForTopLeftAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
     if(self.selectionMode != IMGLYSelectionModeFree) {
         *sizeY = *sizeY * self.selectionRatio;
         if (*sizeY > *sizeX) {
@@ -441,7 +441,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     CGFloat sizeY = fabsf( self.topLeftAnchorView.center.y - location.y );
 
     [self applyMinimumAreaRuleToWidth:&sizeX height:&sizeY];
-    [self reCalulateSizeForBottomRightAnchor:&sizeX height:&sizeY];
+    [self reCalculateSizeForBottomRightAnchor:&sizeX height:&sizeY];
 
     CGPoint center = self.bottomRightAnchorView.center;
     center.x -= self.cropRect.size.width - sizeX;
@@ -451,7 +451,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     [self layoutViewsForCropRect];
 }
 
-- (void)reCalulateSizeForBottomRightAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
+- (void)reCalculateSizeForBottomRightAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
     if(self.selectionMode != IMGLYSelectionModeFree) {
         *sizeY = *sizeY * self.selectionRatio;
         if (*sizeY > *sizeX) {
@@ -482,7 +482,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     CGFloat sizeY = fabsf( self.bottomLeftAnchorView.center.y - location.y );
 
     [self applyMinimumAreaRuleToWidth:&sizeX height:&sizeY];
-    [self reCalulateSizeForTopRightAnchor:&sizeX height:&sizeY];
+    [self reCalculateSizeForTopRightAnchor:&sizeX height:&sizeY];
 
     CGPoint center = self.topRightAnchorView.center;
     center.x = self.bottomLeftAnchorView.center.x + sizeX;
@@ -492,7 +492,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     [self layoutViewsForCropRect];
 }
 
-- (void)reCalulateSizeForTopRightAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
+- (void)reCalculateSizeForTopRightAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
     if(self.selectionMode != IMGLYSelectionModeFree) {
         *sizeY = *sizeY * self.selectionRatio;
         if (*sizeY > *sizeX) {
@@ -523,7 +523,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     CGFloat sizeY = fabsf( self.topRightAnchorView.center.y - location.y );
 
     [self applyMinimumAreaRuleToWidth:&sizeX height:&sizeY];
-    [self reCalulateSizeForBottomLeftAnchor:&sizeX height:&sizeY];
+    [self reCalculateSizeForBottomLeftAnchor:&sizeX height:&sizeY];
 
     CGPoint center = self.bottomLeftAnchorView.center;
     center.x = self.topRightAnchorView.center.x - sizeX;
@@ -533,7 +533,7 @@ static const CGFloat kBackgroundGrayValue =  34.0 / 255.0;
     [self layoutViewsForCropRect];
 }
 
-- (void)reCalulateSizeForBottomLeftAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
+- (void)reCalculateSizeForBottomLeftAnchor:(CGFloat *)sizeX height:(CGFloat *)sizeY {
     if(self.selectionMode != IMGLYSelectionModeFree) {
         *sizeY = *sizeY * self.selectionRatio;
         if (*sizeY > *sizeX) {
