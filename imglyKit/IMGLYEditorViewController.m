@@ -222,14 +222,14 @@ static const CGFloat kEditorMainMenuViewHeight = 95;
         IMGLYAbstractEditorBaseViewController *viewController = [[viewControllerClass alloc] initWithImageProvider:self.imageProvider];
         viewController.inputImage = self.previewImage;
         viewController.completionHandler=^(IMGLYEditorViewControllerResult result, UIImage *outputImage, IMGLYProcessingJob *job){
-            [self completedEditigWithResult:result outputImage:outputImage job:job];
+            [self completedEditingWithResult:result outputImage:outputImage job:job];
         };
         [self.navigationController imgly_pushFadeViewController:viewController];
     }
 }
 
 #pragma mark - sub-editor completion handler
-- (void)completedEditigWithResult:(IMGLYEditorViewControllerResult)result outputImage:(UIImage *)outputImage job:(IMGLYProcessingJob *)job {
+- (void)completedEditingWithResult:(IMGLYEditorViewControllerResult)result outputImage:(UIImage *)outputImage job:(IMGLYProcessingJob *)job {
     [self hideStatusBar];
     if (outputImage) {
         self.enhancedImage = nil;
