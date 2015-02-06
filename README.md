@@ -61,6 +61,11 @@ Note that we only add one operation here, but multiple operations can be added. 
 We just added a version with a 64-Bit lib. Please note that this version won't run on the 64-Bit simulator yet.
 32-Bit simulators are supported tho. To get the camera working you need an iOS device. 
 
+### Full-Source branch 
+
+We lately decided to provide the full source code in a seperate branch.
+Please note that this branch won't be distributed via cocoa-pods since its uncertain if it will 
+work out well :D
 
 ### Attribution
 
