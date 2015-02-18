@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
 
   spec.requires_arc          = true
   spec.platform              = :ios
-  spec.ios.deployment_target = '6.0'
+  spec.ios.deployment_target = '6.1'
   spec.frameworks            = 'Foundation', 'UIKit', 'CoreImage', 'CoreText'
 
   spec.vendored_libraries    = 'Vendor/NEGPUImage/libNEGPUImage.a'
