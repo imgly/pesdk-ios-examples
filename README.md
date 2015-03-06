@@ -16,7 +16,11 @@ The easiest way to install img.ly SDK for iOS is via CocoaPods. In your Podfile,
 
     pod 'imglyKit'
 
+Please note, if you trying the full source version, you still need to run:
 
+    pod install
+
+please run pod install, if you encounter any linker issues, and open the imglyKit.xcworkspace file. 
 ### High level API
 
 First there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and UI controls to control the camera settings such as flash, front camera or back camera. After the user took an image the controller switches to accept mode. In that mode the user can accept (edit) the image, save it , or reject it. Also he can change the filter.
