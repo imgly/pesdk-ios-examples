@@ -1,0 +1,923 @@
+CIFilterExtension.swift
+	public func imageInputAttributeKeys() -> [String]
+	public func imageInputCount() -> Int
+	public func isUsableFilter() -> Bool
+	public var displayName: String?
+IMGLYA15Filter.swift
+	public class IMGLYA15Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYAD1920Filter.swift
+	public class IMGLYAD1920Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYAncientFilter.swift
+	public class IMGLYAncientFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBWFilter.swift
+	public class IMGLYBWFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBleachedBlueFilter.swift
+	public class IMGLYBleachedBlueFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBleachedFilter.swift
+	public class IMGLYBleachedFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBlissfulBlueFilter.swift
+	public class IMGLYBlissfulBlueFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBlueShadowsFilter.swift
+	public class IMGLYBlueShadowsFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBluesFilter.swift
+	public class IMGLYBluesFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBoxGradientView.swift
+	public struct IMGLYLine
+	public var start:CGPoint
+	public var end:CGPoint
+	public init(start:CGPoint, end:CGPoint)
+	public class IMGLYBoxGradientView : UIView
+	public var centerPoint = CGPointZero
+	public var gradientViewDelegate:IMGLYGradientViewDelegate?
+	public var controllPoint1 = CGPointZero
+	public var controllPoint2:CGPoint
+	public var normalizedControlPoint1:CGPoint
+	public var normalizedControlPoint2:CGPoint
+	override public init(frame:CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func commonInit()
+	public func configureControlPoints()
+	public func configureCrossImageView()
+	public func configurePanGestureRecognizer()
+	public func configurePinchGestureRecognizer()
+	public func diagonalLengthOfFrame() -> CGFloat
+	public func normalizedOrtogonalVector() -> CGPoint
+	public func distanceBetweenControlPoints() -> CGFloat
+	public func lineForControlPoint(controlPoint:CGPoint) -> IMGLYLine
+	public func addLineForControlPoint1ToPath(path:UIBezierPath)
+	public func addLineForControlPoint2ToPath(path:UIBezierPath)
+	override public func drawRect(rect: CGRect)
+	public func calculateCenterPointFromOtherControlPoints()
+	public func informDeletageAboutRecognizerStates(#recognizer:UIGestureRecognizer)
+	public func handlePanGesture(recognizer:UIPanGestureRecognizer)
+	public func handlePinchGesture(recognizer:UIPinchGestureRecognizer)
+	public func isPoint(point:CGPoint, inRect rect:CGRect) -> Bool
+	override public func layoutSubviews()
+	public func layoutCrosshair()
+	public func centerGUIElements()
+IMGLYBreezeFilter.swift
+	public class IMGLYBreezeFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYBrightnessDialogViewController.swift
+	public class IMGLYBrightnessDialogViewController: IMGLYCBSBaseViewController, IMGLYCBSBaseViewControllerDelegate
+	override public func viewDidLoad()
+	public var caption:String
+	public var minValue:Float
+	public var maxValue:Float
+	public var initialValue:Float
+	public func setValue(value:Float)
+IMGLYCBSBaseViewController.swift
+	public  protocol IMGLYCBSBaseViewControllerDelegate
+	var caption:String
+	var minValue:Float
+	var maxValue:Float
+	var initialValue:Float
+	func setValue(value:Float)
+	public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewControllerProtocol, IMGLYSliderDialogViewDelegate
+	public var filterDialogView_:IMGLYOneSliderDialogView?
+	public var filtredImage_:UIImage? = nil
+	public var value_:Float = 0.0
+	public var oldValue_:Float = 0.0
+	public var delegate:IMGLYCBSBaseViewControllerDelegate?
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack_:IMGLYFixedFitlerStack?
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var dialogView:UIView?
+	public func setup()
+	public var previewImage:UIImage?
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func sliderValueChanged(newValue: Float)
+	public func updatePreviewImage()
+IMGLYCameraController.swift
+	public protocol IMGLYCameraControllerDelegate
+	func captureSessionStarted()
+	func captureSessionStopped()
+	func willToggleCamera()
+	func didToggleCamera()
+	func didSetFlashMode(flashMode:AVCaptureFlashMode)
+	public var delegate: IMGLYCameraControllerDelegate?
+	public struct Statics
+	public static var sDeviceRgbColorSpace : CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()
+	public init(previewView: UIView)
+	public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!)
+IMGLYCameraView.swift
+	@objc public protocol IMGLYCameraViewDelegate
+	func takePhotoButtonPressed()
+	func toggleFilterButtonPressed()
+	func selectFromRollButtonPressed()
+	func toggleCameraButtonPressed()
+	func flashModeButtonPressed()
+	public class IMGLYCameraView: UIView
+	@IBOutlet public weak var streamPreview_: UIView!
+	@IBOutlet public weak var bottomSpaceConstraint: NSLayoutConstraint!
+	@IBOutlet public weak var filterSelectorView_: IMGLYFilterSelectorView!
+	@IBOutlet public weak var selectFromCameraRollButton: UIButton!
+	@IBOutlet public weak var flashModeButton: UIButton!
+	@IBOutlet public weak var toggleCameraButton: UIButton!
+	@IBOutlet public weak var takePhotoButton: UIButton!
+	@IBOutlet public weak var toggleFilterSelectorButton: UIButton!
+	public var filterSelectorHidden:Bool = true
+	public var delegate:IMGLYCameraViewDelegate?
+	public var streamPreview:UIView
+	public var filterSelectorView:IMGLYFilterSelectorView
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	@IBOutlet public var contentView: UIView!
+	public func setup()
+	public func setupTakePhotoButton ()
+	@IBAction public func takePhotoButtonPressed(sender: AnyObject)
+	@IBAction public func toggleFilterSelectorButtonPressed(sender: AnyObject)
+	@IBAction public func selectImageFromCameraRollButtonPressed(sender: AnyObject)
+	@IBAction public func toggleCameraButtonPressed(sender: AnyObject)
+	@IBAction public func flashModeButtonPressed(sender: AnyObject)
+	public func setLastImageFromRollAsPreview()
+	public func enableButtons()
+	public func disableButtons()
+	public func setFlashMode(flashMode:AVCaptureFlashMode)
+IMGLYCameraViewController.swift
+	public class IMGLYCameraViewController: UIViewController, IMGLYCameraViewDelegate, IMGFilterSelectorViewDelegate,
+UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraControllerDelegate
+	public var completionBlock:IMGLYCameraCompletionBlock? = nil
+	required public init(coder aDecoder: NSCoder)
+	override public func supportedInterfaceOrientations() -> Int
+	override public func shouldAutorotate() -> Bool
+	override public func viewDidLoad()
+	override public func viewDidAppear(animated: Bool)
+	public func setupCameraView()
+	public func takePhotoButtonPressed()
+	public func toggleFilterButtonPressed()
+	public func toggleCameraButtonPressed()
+	public func flashModeButtonPressed()
+	public func selectFromRollButtonPressed()
+	public func selectImageFromCameraRoll()
+	public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject])
+	public func imagePickerControllerDidCancel(picker: UIImagePickerController)
+	public func didSelectFilter(filter:IMGLYFilterType)
+	override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	public func captureSessionStarted()
+	public func captureSessionStopped()
+	public func willToggleCamera()
+	public func didToggleCamera()
+	public func didSetFlashMode(flashMode:AVCaptureFlashMode)
+	public func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?)
+	public func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>)
+IMGLYCelsiusFilter.swift
+	public class IMGLYCelsiusFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYChestFilter.swift
+	public class IMGLYChestFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYCircleGradientView.swift
+	public class IMGLYCircleGradientView : UIView
+	public var centerPoint = CGPointZero
+	public var gradientViewDelegate:IMGLYGradientViewDelegate?
+	public var controllPoint1 = CGPointZero
+	public var controllPoint2:CGPoint
+	public var normalizedControlPoint1:CGPoint
+	public var normalizedControlPoint2:CGPoint
+	override public init(frame:CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func commonInit()
+	public func configureControlPoints()
+	public func configureCrossImageView()
+	public func configurePanGestureRecognizer()
+	public func configurePinchGestureRecognizer()
+	public func diagonalLengthOfFrame() -> CGFloat
+	override public func drawRect(rect:CGRect)
+	public func distanceBetweenControlPoints() -> CGFloat
+	public func calculateCenterPointFromOtherControlPoints()
+	public func informDeletageAboutRecognizerStates(#recognizer:UIGestureRecognizer)
+	public func handlePanGesture(recognizer:UIPanGestureRecognizer)
+	public func handlePinchGesture(recognizer:UIPinchGestureRecognizer)
+	override public func layoutSubviews()
+	public func layoutCrosshair()
+	public func centerGUIElements()
+IMGLYClassicFilter.swift
+	public class IMGLYClassicFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYColorButton.swift
+	public class IMGLYColorButton : UIButton
+	public var hasFrame:Bool
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+IMGLYColorfulFilter.swift
+	public class IMGLYColorfulFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYContainerViewHelper.swift
+	public class IMGLYContainerViewHelper
+	public func loadXib(name:String, view:UIView)
+	public func addContentViewAndSetupConstraints(#hostView:UIView, contentView:UIView)
+	public func setupContraintsForContentView(contentView:UIView, hostView:UIView)
+IMGLYContrastBrightnessSaturationFilter.swift
+	public class IMGLYContrastBrightnessSaturationFilter : CIFilter
+	public var contrast:Float = 1.0
+	public var brightness:Float = 0.0
+	public var saturation:Float = 1.0
+IMGLYContrastDialogViewController.swift
+	public class IMGLYContrastDialogViewController: IMGLYCBSBaseViewController, IMGLYCBSBaseViewControllerDelegate
+	override public func viewDidLoad()
+	public var caption:String
+	public var minValue:Float
+	public var maxValue:Float
+	public var initialValue:Float
+	public func setValue(value:Float)
+IMGLYCoolFilter.swift
+	public class IMGLYCoolFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYCottonCandyFilter.swift
+	public class IMGLYCottonCandyFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYCreamyFilter.swift
+	public class IMGLYCreamyFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYCropDialogView.swift
+	public protocol IMGLYCropDialogViewDelegate
+	func doneButtonPressed()
+	func backButtonPressed()
+	func ratio1to1ButtonPressed()
+	func ratio4to3ButtonPressed()
+	func ratio16to9ButtonPressed()
+	func ratioFreeButtonPressed()
+	public class IMGLYCropDialogView: UIView
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	@IBOutlet public weak var transperentRectView: UIView!
+	@IBOutlet public weak var customRatioHighlight: UIView!
+	@IBOutlet public weak var oneToOneRatioHighlight: UIView!
+	@IBOutlet public weak var fourToThreeRatioHighlight: UIView!
+	@IBOutlet public weak var sixteenToNineRatioHighlight: UIView!
+	public var delegate:IMGLYCropDialogViewDelegate?
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func setup()
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func ratio16to9ButtonPressed(sender: AnyObject)
+	@IBAction public func ratio4to3ButtonPressed(sender: AnyObject)
+	@IBAction public func ratio1to1ButtonPressed(sender: AnyObject)
+	@IBAction public func ratioFreeButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+IMGLYCropDialogViewController.swift
+	public enum IMGLYSelectionMode
+	public class IMGLYCropDialogViewController: UIViewController, UIGestureRecognizerDelegate,
+IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate
+	public let kMinimumCropSize:CGFloat = 50.0
+	public var selectionMode_:IMGLYSelectionMode = IMGLYSelectionMode.Free
+	public var selectionRatio_:CGFloat = 1.0
+	public var previewImage:UIImage?
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var dialogView:UIView?
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?)
+	override public func viewDidLoad()
+	override public func viewDidAppear(animated: Bool)
+	public func handlePan(recognizer:UIPanGestureRecognizer)
+	public func handlePanOnTopLeft(recognizer:UIPanGestureRecognizer)
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func ratio1to1ButtonPressed()
+	public func ratio4to3ButtonPressed()
+	public func ratio16to9ButtonPressed()
+	public func ratioFreeButtonPressed()
+	public func updatePreviewImage()
+IMGLYCropFilter.swift
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+IMGLYCropRectComponent.swift
+	public class IMGLYCropRectComponent
+	public var cropRect = CGRectZero
+	public var topLeftAnchor_:UIImageView?
+	public var topRightAnchor_:UIImageView?
+	public var bottomLeftAnchor_:UIImageView?
+	public var bottomRightAnchor_:UIImageView?
+	public func setup(transparentView:UIView, parentView:UIView, showAnchors:Bool)
+	public func present()
+	public func layoutViewsForCropRect()
+	public func showViews()
+IMGLYEditorMainDialogView.swift
+	public enum IMGLYMainMenuButtonType
+	public protocol IMGLYEditorMainDialogViewDelegate
+	func menuButtonPressed(buttonType:IMGLYMainMenuButtonType)
+	func doneButtonPressed()
+	func backButtonPressed()
+	public class IMGLYEditorMainDialogView: UIView
+	public var delegate:IMGLYEditorMainDialogViewDelegate?
+	@IBOutlet public weak var scrollView_: UIScrollView!
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var bottomSpaceConstraint: NSLayoutConstraint!
+	@IBOutlet public weak var magicButton_: UIButton!
+	@IBOutlet public weak var orientationButton_: UIButton!
+	@IBOutlet public weak var focusButton_: UIButton!
+	@IBOutlet public weak var cropButton_: UIButton!
+	@IBOutlet public weak var brightnessButton_: UIButton!
+	@IBOutlet public weak var contrastButton_: UIButton!
+	@IBOutlet public weak var saturationButton_: UIButton!
+	@IBOutlet public weak var textButton_: UIButton!
+	@IBOutlet public weak var filterButton_: UIButton!
+	@IBOutlet public weak var imagePreview: UIImageView!
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func setup()
+	public func setupButtonMap()
+	public func addEdgeConstraint(edge:NSLayoutAttribute, superview:UIView, subview:UIView)
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+	@IBAction public func menuButtonPressed(sender: AnyObject)
+IMGLYEditorMainDialogViewController.swift
+	public enum IMGLYEditorResult
+	public protocol IMGLYSubEditorViewControllerProtocol
+	var previewImage:UIImage?
+	var completionHandler:IMGLYSubEditorCompletionBlock!
+	var fixedFilterStack:IMGLYFixedFitlerStack?
+	var dialogView:UIView?
+	func viewDidLoad()
+	public protocol IMGLYEditorMainDialogViewControllerProtocol
+	var hiResImage:UIImage?
+	var intialFilterType:IMGLYFilterType
+	var completionBlock:IMGLYEditorCompletionBlock?
+	public class IMGLYEditorMainDialogViewController: UIViewController, UIViewControllerTransitioningDelegate,
+        IMGLYEditorMainDialogViewDelegate, IMGLYEditorMainDialogViewControllerProtocol
+	public let maximalLoResSideLength:CGFloat! = 800
+	public var intialFilterType = IMGLYFilterType.None
+	public var completionBlock:IMGLYEditorCompletionBlock? = nil
+	public var hiResImage:UIImage?
+	override public func viewDidLoad()
+	public func menuButtonPressed(buttonType:IMGLYMainMenuButtonType)
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func subEditorCompletionBlock(result:IMGLYEditorResult, image:UIImage?)
+	public func generateLoResVersion()
+	override public func supportedInterfaceOrientations() -> Int
+	override public func shouldAutorotate() -> Bool
+IMGLYEightiesFilter.swift
+	public class IMGLYEightiesFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYElderFilter.swift
+	public class IMGLYElderFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYEnhancementFilter.swift
+	public func reset()
+IMGLYEppHighContrastFilter.swift
+	public class IMGLYHighContrastFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYEveningFilter.swift
+	public class IMGLYEveningFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYFallFilter.swift
+	public class IMGLYFallFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYFilterDialogView.swift
+	public protocol IMGLYFilterDialogViewDelegate
+	func doneButtonPressed()
+	func backButtonPressed()
+	public protocol IMGLYSliderDialogViewDelegate : IMGLYFilterDialogViewDelegate
+	func sliderValueChanged(newValue:Float)
+	public class IMGLYFilterDialogView: UIView
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	@IBOutlet public weak var filterSelectorView: IMGLYFilterSelectorView!
+	public var activeFilterType:IMGLYFilterType
+	public var delegate:IMGLYFilterDialogViewDelegate?
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func setup()
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+IMGLYFilterDialogViewController.swift
+	public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorViewControllerProtocol,
+    IMGFilterSelectorViewDelegate, IMGLYFilterDialogViewDelegate
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var previewImage:UIImage?
+	public var dialogView:UIView?
+	override public func viewDidLoad()
+	override public func viewDidAppear(animated: Bool)
+	public func didSelectFilter(filter:IMGLYFilterType)
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	override public func supportedInterfaceOrientations() -> Int
+	override public func shouldAutorotate() -> Bool
+IMGLYFilterSelectorView.swift
+	public protocol IMGFilterSelectorViewDelegate
+	func didSelectFilter(filter:IMGLYFilterType)
+	public class IMGLYFilterSelectorView: UIView
+	public let kIMGLYPreviewImageOffsetY = CGFloat(20.0)
+	public let kIMGLYPreviewImageDistance = CGFloat(10.0)
+	public let kIMGLYPreviewImageTextHeight = CGFloat(18.0)
+	public let kIMGLYPreviewButtonSize = CGFloat(56.5)
+	public let kActivationDuration:Double = 0.15
+	public var delegate:IMGFilterSelectorViewDelegate?
+	public var activeFilterType_:IMGLYFilterType = IMGLYFilterType.None
+	public var activeFilterType:IMGLYFilterType
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func commonInit()
+	public func filterButtonTouchedUpInside(button:UIButton)
+IMGLYFixedFitlerStack.swift
+	public var sourceFilter:IMGLYSourcePhotoFilter?
+	public var enhancementFilter:IMGLYEnhancementFilter?
+	public var orientationCropFilter:IMGLYOrientationCropFilter?
+	public var effectFilter:IMGLYResponseFilter?
+	public var brightnessFitler:IMGLYContrastBrightnessSaturationFilter?
+	public var tiltShiftFilter:IMGLYTiltshiftFilter?
+	public var textFilter:IMGLYTextFilter?
+	var activeFilters_:[CIFilter] = []
+	public var activeFilters:[CIFilter]
+	public init()
+	public func setEffectFilter(filter:CIFilter)
+IMGLYFixieFilter.swift
+	public class IMGLYFixieFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYFocusDialogView.swift
+	public protocol IMGLYFocusDialogViewDelegate
+	func linearButtonPressed()
+	func radialButtonPressed()
+	func doneButtonPressed()
+	func backButtonPressed()
+	func offButtonPressed()
+	public class IMGLYFocusDialogView:UIView
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	public var delegate:IMGLYFocusDialogViewDelegate? = nil
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func commonInit()
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+	@IBAction public func linearButtonPressed(sender: AnyObject)
+	@IBAction public func radialButtonPressed(sender: AnyObject)
+	@IBAction public func offButtonPressed(sender: AnyObject)
+IMGLYFocusDialogViewController.swift
+	public class IMGLYFocusDialogViewController: UIViewController, IMGLYSubEditorViewControllerProtocol,
+ IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var dialogView:UIView?
+	public var previewImage:UIImage?
+	override public func viewDidLoad()
+	override public func viewDidAppear(animated: Bool)
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func linearButtonPressed()
+	public func radialButtonPressed()
+	public func offButtonPressed()
+	public func userInteractionStarted()
+	public func userInteractionEnded()
+	public func controlPointChanged()
+IMGLYFontSelector.swift
+	public protocol IMGLYFontSelectorDelegate
+	func selectedFontWithName(fontName:String)
+	public class IMGLYFontSelector: UIScrollView
+	public var selectorDelegate:IMGLYFontSelectorDelegate? = nil
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	override public func layoutSubviews()
+	public func buttonTouchedUpInside(button:UIButton)
+IMGLYFoodFilter.swift
+	public class IMGLYFoodFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYFridgeFilter.swift
+	public class IMGLYFridgeFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYFrontFilter.swift
+	public class IMGLYFrontFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYGlamFilter.swift
+	public class IMGLYGlamFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYGobblinFilter.swift
+	public class IMGLYGobblinFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYGradientViewDelegate.swift
+	public protocol IMGLYGradientViewDelegate
+	func userInteractionStarted()
+	func userInteractionEnded()
+	func controlPointChanged()
+IMGLYHighcarbFilter.swift
+	public class IMGLYHighcarbFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYInstanceFactory.swift
+	public class var sharedInstance : IMGLYInstanceFactory
+	struct Static
+	static let instance : IMGLYInstanceFactory = IMGLYInstanceFactory()
+	public func photoProcessor() -> IMGLYPhotoProcessor
+	public func filterDialogViewController() -> IMGLYFilterDialogViewController
+	public func orientationDialogViewController() -> IMGLYOrientationDialogViewController
+	public func cropDialogViewController() -> IMGLYCropDialogViewController
+	public func brightnessDialogViewController() -> IMGLYBrightnessDialogViewController
+	public func contrastDialogViewController() -> IMGLYContrastDialogViewController
+	public func saturationDialogViewController() -> IMGLYSaturationDialogViewController
+	public func textDialogViewController() -> IMGLYTextDialogViewController
+	public func focusDialogViewController() -> IMGLYFocusDialogViewController
+	public func filterDialogView() -> IMGLYFilterDialogView
+	public func focusDialogView() -> IMGLYFocusDialogView
+	public func oneSliderDialogView() -> IMGLYOneSliderDialogView
+	public func cropDialogView() -> IMGLYCropDialogView
+	public func textDialogView() -> IMGLYTextDialogView
+	public func orientationDialogView() -> IMGLYOrientationDialogView
+	public func circleGradientView() -> IMGLYCircleGradientView
+	public func boxGradientView() -> IMGLYBoxGradientView
+	public func fontImporter() -> IMGLYFontImporter
+	public func containerViewHelper() -> IMGLYContainerViewHelper
+	public func cropRectComponent() -> IMGLYCropRectComponent
+IMGLYK1Filter.swift
+	public class IMGLYK1Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYK2Filter.swift
+	public class IMGLYK2Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYK6Filter.swift
+	public class IMGLYK6Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYKDynamicFilter.swift
+	public class IMGLYKDynamicFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYKeenFilter.swift
+	public class IMGLYKeenFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYLeninFilter.swift
+	public class IMGLYLeninFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYLithoFilter.swift
+	public class IMGLYLithoFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYLomo100Filter.swift
+	public class IMGLYLomo100Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYLomoFilter.swift
+	public class IMGLYLomoFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYLucidFilter.swift
+	public class IMGLYLucidFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYMellowFilter.swift
+	public class IMGLYMellowFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYMono3200Filter.swift
+	public class IMGLYMono3200Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYNeatFilter.swift
+	public class IMGLYNeatFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYNepalFilter.swift
+	public class IMGLYNepalFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYNoGreenFilter.swift
+	public class IMGLYNoGreenFilter: IMGLYResponseFilter
+	override init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYNoneFilter.swift
+	required public init(coder aDecoder: NSCoder)
+	override public init()
+IMGLYOneSliderDialogView.swift
+	public class IMGLYOneSliderDialogView: UIView
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	@IBOutlet public weak var slider_: UISlider!
+	@IBOutlet public weak var navigationItem:UINavigationItem!
+	public var delegate:IMGLYSliderDialogViewDelegate?
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func setup()
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+	@IBAction public func sliderValueChanged(sender: AnyObject)
+	public func notifyDelegateAndDeleteTimer(notification: NSNotification)
+IMGLYOrchidFilter.swift
+	public class IMGLYOrchidFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYOrientationCropFilter.swift
+	public var cropRect = CGRectMake(0, 0, 1, 1)
+	public var rotationAngle:IMGLYRotationAngle = IMGLYRotationAngle._0
+	required public init(coder aDecoder: NSCoder)
+	override public init()
+IMGLYOrientationDialogView.swift
+	public protocol IMGLYOrientationDialogViewDelegate
+	func rotateLeftButtonPressed()
+	func rotateRightButtonPressed()
+	func flipHorizontalButtonPressed()
+	func flipVerticalButtonPressed()
+	func doneButtonPressed()
+	func backButtonPressed()
+	public class IMGLYOrientationDialogView: UIView
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	@IBOutlet public weak var transperentRectView: UIView!
+	public var delegate:IMGLYOrientationDialogViewDelegate?
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	public func setup()
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+	@IBAction public func rotateLeftButtonPressed(sender: AnyObject)
+	@IBAction public func rotateRightButtonPressed(sender: AnyObject)
+	@IBAction public func flipHorizontalButtonPressed(sender: AnyObject)
+	@IBAction public func flipVerticalButtonPressed(sender: AnyObject)
+IMGLYOrientationDialogViewController.swift
+	public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEditorViewControllerProtocol,
+    IMGLYOrientationDialogViewDelegate
+	public var dialogView_:IMGLYOrientationDialogView?
+	public var filtredImage_:UIImage? = nil
+	public var filter = IMGLYOrientationCropFilter()
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var dialogView:UIView?
+	override public func viewDidLoad()
+	override public func viewDidAppear(animated: Bool)
+	public func setup()
+	public var previewImage:UIImage?
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func updatePreviewImage()
+	public func rotateLeftButtonPressed()
+	public func rotateRightButtonPressed()
+	public func flipHorizontalButtonPressed()
+	public func flipVerticalButtonPressed()
+IMGLYPaleFilter.swift
+	public class IMGLYPaleFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPhotoProcessor.swift
+	public class IMGLYPhotoProcessor
+	public func process(#image:CIImage, filters:[CIFilter]) -> CIImage?
+	public func process(#image:UIImage, filters:[CIFilter]) -> UIImage?
+IMGLYPitchedFilter.swift
+	public class IMGLYPitchedFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPlateFilter.swift
+	public class IMGLYPlateFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPola669Filter.swift
+	public class IMGLYPola669Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPolaSXFIlter.swift
+	public class IMGLYPolaSXFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPreludeFilter.swift
+	public class IMGLYPreludeFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYPro400Filter.swift
+	public class IMGLYPro400Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYQuoziFilter.swift
+	public class IMGLYQuoziFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYResponseFilter.swift
+	public protocol IMGLYFilterTypeProtocol
+	var filterType:IMGLYFilterType
+	public var responseName: NSString
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var outputImage: CIImage!
+IMGLYSaturationDialogViewController.swift
+	public class IMGLYSaturationDialogViewController: IMGLYCBSBaseViewController, IMGLYCBSBaseViewControllerDelegate
+	override public func viewDidLoad()
+	public var caption:String
+	public var minValue:Float
+	public var maxValue:Float
+	public var initialValue:Float
+	public func setValue(value:Float)
+IMGLYSepiaHighFilter.swift
+	public class IMGLYSepiaHighFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSettledFilter.swift
+	public class IMGLYSettledFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSeventiesFilter.swift
+	public class IMGLYSeventiesFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSinFilter.swift
+	public class IMGLYSinFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSoftFilter.swift
+	public class IMGLYSoftFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSourceFilters.swift
+	required public init(coder aDecoder: NSCoder)
+	override public init()
+	override public var outputImage: CIImage!
+	public func customAttributes() -> [String:AnyObject]
+	public func customAttributes() -> [String:AnyObject]
+IMGLYSteelFilter.swift
+	public class IMGLYSteelFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSummerFilter.swift
+	public class IMGLYSummerFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSunnyFilter.swift
+	public class IMGLYSunnyFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYSunsetFilter.swift
+	public class IMGLYSunsetFilter: IMGLYResponseFilter
+	override init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYTenderFilter.swift
+	public class IMGLYTenderFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYTexasFilter.swift
+	public class IMGLYTexasFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYTextColorSelectorView.swift
+	public protocol IMGLYTextColorSelectorViewDelegate
+	func selectedColor(color:UIColor)
+	public class IMGLYTextColorSelectorView: UIScrollView
+	public var menuDelegate:IMGLYTextColorSelectorViewDelegate? = nil
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	override public func layoutSubviews()
+	public func colorButtonTouchedUpInside(button:UIButton)
+IMGLYTextDialogView.swift
+	public protocol IMGLYTextDialogViewDelegate
+	func doneButtonPressed()
+	func backButtonPressed()
+	func selectedColor(color:UIColor)
+	public class IMGLYTextDialogView: UIView, IMGLYTextColorSelectorViewDelegate
+	@IBOutlet public var contentView: UIView!
+	@IBOutlet public weak var previewImageView: UIImageView!
+	@IBOutlet public weak var colorSelectorView: IMGLYTextColorSelectorView!
+	public var delegate:IMGLYTextDialogViewDelegate?
+	override public init(frame: CGRect)
+	required public init(coder aDecoder: NSCoder)
+	@IBAction public func doneButtonPressed(sender: AnyObject)
+	@IBAction public func backButtonPressed(sender: AnyObject)
+	public func selectedColor(color:UIColor)
+IMGLYTextDialogViewController.swift
+	public class IMGLYTextDialogViewController: UIViewController, IMGLYSubEditorViewControllerProtocol,
+IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIGestureRecognizerDelegate
+	public var completionHandler:IMGLYSubEditorCompletionBlock!
+	public var fixedFilterStack:IMGLYFixedFitlerStack?
+	public var previewImage:UIImage?
+	public var dialogView:UIView?
+	override public func viewDidLoad()
+	deinit
+	func keyboardWasShown(aNotification:NSNotification)
+	public func doneButtonPressed()
+	public func backButtonPressed()
+	public func selectedColor(color:UIColor)
+	override public func supportedInterfaceOrientations() -> Int
+	override public func shouldAutorotate() -> Bool
+	public func selectedFontWithName(fontName:String)
+	override public func viewWillLayoutSubviews()
+	public func handleTextInputPan(recognizer:UIPanGestureRecognizer)
+	public func handlePinchGesture(recognizer:UIPinchGestureRecognizer)
+	public func textFieldShouldBeginEditing(textField: UITextField) -> Bool
+	public func textFieldShouldEndEditing(textField: UITextField) -> Bool
+	public func textFieldShouldReturn(textField: UITextField) -> Bool
+	public func updatePreviewImage()
+IMGLYTextFilter.swift
+	public class IMGLYTextFilter : CIFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+IMGLYTiltshiftFilter.swift
+	public enum IMGLYTiltshiftType
+IMGLYTwilightFilter.swift
+	public class IMGLYTwilightFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYWinterFilter.swift
+	public class IMGLYWinterFilter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType
+IMGLYX400Filter.swift
+	public class IMGLYX400Filter: IMGLYResponseFilter
+	override public init()
+	required public init(coder aDecoder: NSCoder)
+	override public var filterType:IMGLYFilterType

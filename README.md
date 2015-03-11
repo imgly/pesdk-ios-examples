@@ -6,84 +6,169 @@ img.ly SDK for iOS is a Cocoa Touch framework for creating stunning images with 
 
 ### Overview
 
-img.ly SDK provides tools to create photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow live preview of filters img.ly SDK provides high-resolution images. On iPhone 4 that is 2048 x 1593 pixels and on iPhone 5 full resolution (up to 4096 x 4096 pixels). It also comes with customizable view controllers for the general needs of such apps.
+img.ly SDK provides tools to create photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow live preview of filters, img.ly SDK provides high-resolution images. With version two we were able to remove any resolution limits. Above that it's easy to customize the look of the app using Xcode's interface builder.
+
+### Features
+
+* 40 stuning build-in filters to choose from.
+* Open-source, need anything? Want to change anything? Go ahead, we provide the full source-code.
+* Native code. Our backend is core-image based, therefore we dodge all the nasty OpenGL problems other frameworks face. Also its easier to add new filters. Just derive from `CIFilter` override the `outputImage` property and you are good to go.
+* Design dialogs directly in Xcode's interface builder. In version two user dont have to dig into code to change colors, icons and what not, just open the nib and change what you want.
+* iPad support. Since version two uses auto-layout, its easy to compile your app for iPhone and iPad. No more ugly nested iPhone app on your iPad.
+* Design filters in photoshop! Before you had to tweak values in code or copy past them from photoshop or your favorite image editor. With our response technology that belongs to the past. Design your filter in photoshop, once you are done apply it onto the provided identity-image. That will 'record' the filter response. Save it, add it as new filter, done !
+* Swift. Keeping up with time, we used Swift to code the img.ly SDK, leading to leaner easier code.
+* Live-preview, as with version one, filters can be previewed during the camera preview.
+* Low memory footprint, with version two we were able to reduce the memory footprint massively.
+* Non-destructive. Don't like what u did ? No problem, just redo, or even discard it.
 
 ![Example](http://i.imgur.com/EorDrpS.png)
 
-### Installation
+## Installation
 
-The easiest way to install img.ly SDK for iOS is via CocoaPods. In your Podfile, add the following:
+> **Embedded frameworks require a minimum deployment target of iOS 8.**
 
-    pod 'imglyKit'
+### CocoaPods
 
-Please note, if you trying the full source version, you still need to run:
+[CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
-    pod install
+CocoaPods 0.36 adds supports for Swift and embedded frameworks (more information about this is available [here](http://blog.cocoapods.org/CocoaPods-0.36/)). You can install it with the following command:
 
-please run pod install, if you encounter any linker issues, and open the imglyKit.xcworkspace file. 
-### High level API
+```bash
+$ gem install cocoapods
+```
 
-First there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and UI controls to control the camera settings such as flash, front camera or back camera. After the user took an image the controller switches to accept mode. In that mode the user can accept (edit) the image, save it , or reject it. Also he can change the filter.
+To integrate imglyKit into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
-The other of the two public view controllers is the `IMGLYEditorViewController`. That controller allows the user to edit an image. The options are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, noise, text. Also there is a reset / undo option that lets the user start over. Each of the view controllers provides a completion block, that returns the final high resolution image.
+```ruby
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+use_frameworks!
 
-The img.ly SDK comes with an example app that shows different setups to demonstrate the simplicity and power of the SDK. Starting from the `didFinishLaunchingWithOptions` method, `startupWithCamera`, `startupWithEditor` or `startupWithImageSelector` can be called to setup the app in the chosen mode.
+pod 'imglyKit', '~> 2.0'
+```
 
-For example, `startupWithCamera` will start the app with the `IMGLYCameraViewController`. The method also set a `IMGLYCameraViewControllerCompletionHandler`. That is used to initiate an `IMGLYEditorViewController` when the user chose 'edit'. The new `IMGLYEditorViewController` will be pushed to the `UINavigationController`. After that view controller is dismissed the `IMGLYCameraViewController` will become active again. SwitchToCameraMode is called to set the controller back to photo-taking mode.
+Then, run the following command:
 
-Both view controllers provide multiple init functions, with combinations of different parameters. Those parameters are: `id<IMGLYCameraImageProvider>imageProvider`. The imageProvider can be used to give the UI a different look. It must implement the `IMGLYCameraImageProvider` protocol. That protocol consists of getters for the individual images. Such as the camera button, or the background images. When no image provider is set, the SDK will use the default images. Also, the preview image for the filters, during live stream, is set via that protocol. See `IMGLYDefaultCameraImageProvider` class for more infos on that matter.
+```bash
+$ pod install
+```
 
-The `IMGLYEditorImageProvider` is the equivalent protocol for the `IMGLYEditorViewController`.
+### Important
 
-Another parameter is the `availableFilterList`. That is actually a `NSArray` of integers derived from the desired filter types. In our example app the `listOfAvailableFilters` method returns such an array. If that parameter is `nil` or not set, all filters of the SDK will be added. Note that this array also controls the order of the filters.
+You need Xcode 6.3 Beta 2 to build and run this project. The reason for this is,
+that Apple released Swift 1.2. Using Swift 1.0 would cause the code to break after the next
+release of Xcode.
+The current snapshot isn't final yet. Some things aren't perfect yet. But 
+the major things are done and good to go. Future releases will add more comfort to some things.
 
-The `IMGLYEditorViewController` also has a parameter for the initial filter type. Using that parameter will add a filter to the image so its preview will look like the one in the `IMGLYCameraController`.
+## Structure
+The SDK can be subdivided in two part, front-end and back-end.
+We also provided an instance-factory that handels the object generation for you.
+Its class is called `IMGLYInstanceFactory`. It has a property called `sharedInstance` that 
+uses the singleton pattern, so it doesn't need to be created everytime.
+Besides the views and viewcontrollers, it also has methods to create the different filters, and
+the photo-processor, described below.
 
-To get how the high level of the img.ly SDK works, read the source code of the example app carefully.
+## Frontend
 
+The frontend part of the SDK contains all the views and view controllers, or generaly speaking the UI. The itself consists of two parts. Camera related UI and filter or operation related UI.
 
-### Low level API
+For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and  controls to operate the camera settings such as flash, front camera or back camera. 
+After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it performs a segue called `ModalEditorNavigationController`, that presents a new view controller.
+That view controller must implement the `IMGLYEditorMainDialogViewControllerProtocol` protocol. The provided `IMGLYEditorMainDialogViewController` does so. 
+ 
+The `IMGLYEditorMainDialogViewController` functions as main-dialog. It is connected to sub-dialogs that allow the user to edit an image. The sub-dialogs are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
+These dialogs use a lower resolution image as preview to improve the preformance.
+When the user presses the done button of the main dialog, the choosen settings are applied to the full resolution image.
+The `IMGLYEditorMainDialogViewController` can be used without the `IMGLYCameraViewController` like so:
+```
+func callEditorViewController() {
+	var editorViewController = IMGLYEditorMainDialogViewController()
+	editorViewController.hiResImage = image_!
+	editorViewController.intialFilterType = IMGLYFilterType.None
+	editorViewController.completionBlock = editorCompletionBlock
+}
+...
+func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
+ ...
+}
+```
 
-As low-level API the SDK comes with the `IMGLYPhotoProcessor` class. It can be used to apply filters and other operations directly from code. The `IMGLYPhotoProcessor` is a singleton. That is necessary to avoid threading issues with OpenGLES. To work with the `IMGLYPhotoProcessor` a `IMGLYProcessingJob` must be created. It holds a list of `IMGLYOperations` that we add to the job. That job then is handed over to the `IMGLYPhotoProcessor` and will be executed.
+Every view controller comes with a dedicated view. That is represented by a code and a xib file.
+The xib file can be altered to match your needs.
 
-Here is an example that creates a `IMGLYFilterOperation`:
+The img.ly SDK comes with an example app to demonstrate the simplicity and power of the SDK. 
 
-    IMGLYProcessingJob *job = [[IMGLYProcessingJob alloc] init];
-    IMGLYFilterOperation *operation = [[IMGLYFilterOperation alloc] init];
-    operation.filterType = IMGLYFilterType669;
-    [job addOperation:(IMGLYOperation *)operation];
+## Backend
 
-Note that we only add one operation here, but multiple operations can be added. After the job was setup we set the input image and run the job:
+The backend takes care about the actual image manipulation. The `IMGLYPhotoProcessor` is the main class, its `process` method takes an image and an array of `CIFilter` objects and applies 
+the filters to the given image sequencialy. The input image can be an `UIImage` or a `CIImage`.
 
-    UIImage *inputImage= ...;
-    [IMGLYPhotoProcessor sharedPhotoProcessor].inputImage = inputImage;
-    [[IMGLYPhotoProcessor sharedPhotoProcessor] performProcessingJob:job];
-    UIImage *outputImage = [[IMGLYPhotoProcessor sharedPhotoProcessor] outputImage];
+The following code filters an image with the steel filter.
 
-### 64-Bit Version
+```
+var filter =  IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.Steel)
+var filtredImage = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:image, filters: [filter])
+```
 
-We just added a version with a 64-Bit lib. Please note that this version won't run on the 64-Bit simulator yet.
-32-Bit simulators are supported tho. To get the camera working you need an iOS device. 
+### Source-filters 
 
-### Full-Source branch 
+When using a filter chain, the first element needs to be either an `IMGLYSourceVideoFilter` or an
+`IMGLYSourcePhotoFilter` for a video-frame or a still image. 
 
-We lately decided to provide the full source code in a seperate branch.
-Please note that this branch won't be distributed via cocoa-pods since its uncertain if it will 
-work out well :D
+### Response-filters
 
-### Attribution
+Response-filters are new in version 2. These enable you to create filters in programs such as photoshop. The main idea behind them is, to take an image that represents the identity function, for 
+the colors in an image, and apply effects on that image.
+The resulting image represents the response of the colors to the effect.
+To use the filter in you project you need to:
 
-img.ly SDK for iOS uses a private fork of [GPUImage](https://github.com/BradLarson/GPUImage), which is released under the following license:
+* Apply the desired modifications to this image <br />  <br />
+   ![identity](http://i.imgur.com/s15Q10X.png)
+     
+* Add the resulting image to the `Filter Responses` group in the project. Note: the image must be saved in PNG format.
+* Create a new class that derives from `IMGLYResponseFilter`.
+* Add a init method that sets the `responseName` property to the filename of the added image.
+* Add a new type to `IMGLYFilterType`.
+* Add a new case to the `effectFilterWithType` method in the instance factory.
+* Add the new type to the available filters list. 
 
-    Copyright (c) 2012, Brad Larson, Ben Cochran, Hugues Lismonde, Keitaroh Kobayashi, Alaric Cole, Matthew Clark, Jacob Gundersen, Chris Williams. All rights reserved.
+The framework will take care about the rest, such as preview rendering.
+Here is an example of a response-filter
 
-    Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+```
+class IMGLYSteelTypeFilter: IMGLYResponseFilter {
+    override init() {
+        super.init()
+        self.responseName = "Steel"
+        self.displayName = "steel"
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override var filterType:IMGLYFilterType {
+        get {
+            return IMGLYFilterType.Steel
+        }
+    }
+}
+```
 
-    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-    Neither the name of the GPUImage framework nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+### Fixed filter stack
 
+The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
+In order to make the process easier and non-destructive, all the editor dialogs 
+use a fixed-fitler-stack. That means that the order of the filters is imuatable and
+the user just sets the parameters for the distingt filters.
+The input is always the originaly take image, and the output image contains all the changes made.
+
+### Choose available filters
+
+As the example app demonstrates we added MANY filters to choose from.
+To select a set of filter change the `availableFilterList` method of the instance-factory.
+It simply returns an array of filter types. Those will be used inside the framework. 
 
 ### License
 

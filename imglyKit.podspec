@@ -1,25 +1,18 @@
-Pod::Spec.new do |spec|
-  spec.name                  = 'imglyKit'
-  spec.version               = '1.0.8'
-  spec.license               = { :type => 'Copyright', :file => 'LICENSE' }
-  spec.summary               = 'Creates stunning images with a nice selection of premium filters.'
-  spec.homepage              = 'https://github.com/imgly/imgly-sdk-ios'
-  spec.social_media_url      = 'https://twitter.com/9elements'
-  spec.authors               = { '9elements GmbH' => 'contact@9elements.com' }
-  spec.source                = { :git => 'https://github.com/imgly/imgly-sdk-ios.git', :tag => "#{spec.version}" }
+Pod::Spec.new do |s|
+	s.name             = "imglyKit"
+	s.version          = "2.0.0"
+	s.license          = { :type => 'Copyright', :file => 'LICENSE' }
+	s.summary          = "Creates stunning images with a nice selection of premium filters."
+	s.homepage         = "https://github.com/imgly/imgly-sdk-ios"
+	s.social_media_url = 'https://twitter.com/9elements'
+	s.authors          = { '9elements GmbH' => 'contact@9elements.com' }
+	s.source           = { :git => 'https://github.com/imgly/imgly-sdk-ios.git', :tag => s.version.to_s }
 
-  spec.requires_arc          = true
-  spec.platform              = :ios
-  spec.ios.deployment_target = '6.1'
-  spec.frameworks            = 'Foundation', 'UIKit', 'CoreImage', 'CoreText'
+	s.platform     = :ios, '8.0'
+	s.requires_arc = true
 
-  spec.vendored_libraries    = 'Vendor/NEGPUImage/libNEGPUImage.a'
-  spec.preserve_paths        = 'Vendor/NEGPUImage/libNEGPUImage.a',
-  spec.public_header_files   = 'imglyKit/*.h'
-  spec.source_files          = 'imglyKit/*.{h,m}', 'Vendor/NEGPUImage/*.h'
-  spec.resource_bundles      = { 'imglyKit' => [ 'imglyBundle/**/*' ] }
-  spec.xcconfig              = { 'HEADER_SEARCH_PATHS' => "${PODS_ROOT}/#{spec.name}/Vendor/" }
-  spec.libraries             = 'NEGPUImage'
+	s.source_files = 'Pod/Classes/**/*'
+	s.resources = ['Pod/Assets.xcassets', 'Pod/XIBs/*.xib', 'Pod/Filter Responses/*.png', 'Pod/Fonts/*']
 
-  spec.dependency 'SVProgressHUD', '~> 1.0'
+	s.frameworks = 'AssetsLibrary', 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
 end

@@ -1,0 +1,156 @@
+//
+//  IMGLYEditorMainDialogViewController.swift
+//  imglyKit
+//
+//  Created by Carsten Przyluczky on 06/02/15.
+//  Copyright (c) 2015 9elements GmbH. All rights reserved.
+//
+
+import UIKit
+
+public enum IMGLYEditorResult {
+    case Done,
+    Cancel
+}
+
+public typealias IMGLYSubEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
+public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
+
+public protocol IMGLYSubEditorViewControllerProtocol {
+    var previewImage:UIImage? {set get}
+    var completionHandler:IMGLYSubEditorCompletionBlock! {get set}
+    var fixedFilterStack:IMGLYFixedFitlerStack? {get set}
+    var dialogView:UIView? {get set}
+    func viewDidLoad()
+}
+
+public protocol IMGLYEditorMainDialogViewControllerProtocol {
+    var hiResImage:UIImage? {get set}
+    var intialFilterType:IMGLYFilterType {get set}
+    var completionBlock:IMGLYEditorCompletionBlock? {get set}
+}
+
+public class IMGLYEditorMainDialogViewController: UIViewController, UIViewControllerTransitioningDelegate,
+        IMGLYEditorMainDialogViewDelegate, IMGLYEditorMainDialogViewControllerProtocol {
+    public let maximalLoResSideLength:CGFloat! = 800
+
+    public var intialFilterType = IMGLYFilterType.None
+    public var completionBlock:IMGLYEditorCompletionBlock? = nil
+
+    private var hiResImage_:UIImage?
+    public var hiResImage:UIImage? {
+        get {
+            return hiResImage_
+        }
+        set (image) {
+            hiResImage_ = image
+            generateLoResVersion()
+        }
+    }
+    
+    private var loResImage_:UIImage? = nil
+    private var loResImageBackup_:UIImage? = nil
+    private var fixedFilterStack_:IMGLYFixedFitlerStack? = nil
+
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        var editorView = self.view as? IMGLYEditorMainDialogView
+        if editorView == nil {
+            fatalError("Editor view not set !")
+        }
+        editorView?.delegate = self
+        fixedFilterStack_ = IMGLYFixedFitlerStack()
+        fixedFilterStack_!.setEffectFilter(IMGLYInstanceFactory.sharedInstance.effectFilterWithType(intialFilterType)!)
+        updatePreviewImage()
+    }
+    
+    // MARK:-IMGLYEditorMainDialogViewDelegate
+    public func menuButtonPressed(buttonType:IMGLYMainMenuButtonType) {
+        var viewController = IMGLYInstanceFactory.sharedInstance.viewControllerForButtonType(buttonType)
+        if (buttonType == IMGLYMainMenuButtonType.Magic) {
+            fixedFilterStack_!.enhancementFilter!.enabled = !fixedFilterStack_!.enhancementFilter!.enabled
+            updatePreviewImage()
+        }
+        else {
+            var dialogView = IMGLYInstanceFactory.sharedInstance.viewForButtonType(buttonType)
+            if viewController != nil && dialogView != nil {
+                viewController!.dialogView = dialogView
+                viewController!.fixedFilterStack = fixedFilterStack_!
+                viewController!.previewImage = loResImageBackup_
+                viewController!.completionHandler = subEditorCompletionBlock
+                viewController!.viewDidLoad()
+                
+                if let viewController = viewController as? UIViewController {
+                    viewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                }
+                
+                self.presentViewController(viewController as! UIViewController, animated: true) { () -> Void in }
+            }
+        }
+    }
+    
+    public func doneButtonPressed() {
+        var photoProcessor = IMGLYInstanceFactory.sharedInstance.photoProcessor()
+        hiResImage! = hiResImage!.imgly_rotateImageToMatchOrientation()
+        var filtredHiResImage = photoProcessor.process(image:hiResImage!, filters:fixedFilterStack_!.activeFilters)
+        self.dismissViewControllerAnimated(true, completion: {
+            if self.completionBlock != nil {
+                self.completionBlock!(IMGLYEditorResult.Done, filtredHiResImage)
+            }
+        })
+    }
+    
+    public func backButtonPressed() {
+        self.dismissViewControllerAnimated(true, completion: {
+            if self.completionBlock != nil {
+                self.completionBlock!(IMGLYEditorResult.Cancel, nil)
+            }
+        })
+    }
+
+    public func subEditorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
+        if result == IMGLYEditorResult.Done {
+            self.loResImage_ = image
+            var editorView = self.view as? IMGLYEditorMainDialogView
+            editorView?.imagePreview.image = self.loResImage_
+        }
+    }
+    
+    public func generateLoResVersion() {
+        if hiResImage?.size.width > maximalLoResSideLength || hiResImage?.size.height > maximalLoResSideLength  {
+            var scale:Double = 1.0
+            if(hiResImage?.size.width > hiResImage?.size.height) {
+                scale = Double(maximalLoResSideLength) / Double(hiResImage!.size.width)
+            }
+            else {
+                scale = Double(maximalLoResSideLength) / Double(hiResImage!.size.height)
+            }
+            
+            var newWidth:CGFloat = CGFloat(roundf(Float(hiResImage!.size.width) * Float(scale)))
+            var newHeight:CGFloat = CGFloat(roundf(Float(hiResImage!.size.height) * Float(scale)))
+            loResImage_ = hiResImage?.imgly_resizedImage(CGSizeMake(newWidth, newHeight), interpolationQuality:kCGInterpolationDefault)
+            loResImageBackup_ = UIImage(CGImage: loResImage_?.CGImage)
+        } else {
+            loResImage_ = UIImage(CGImage: hiResImage!.CGImage)
+            loResImageBackup_ = UIImage(CGImage: hiResImage!.CGImage)
+        }
+    }
+    
+    private func updatePreviewImage() {
+        var editorView = self.view as? IMGLYEditorMainDialogView
+        if editorView == nil {
+            fatalError("Editor view not set !")
+        }
+        var photoProcessor = IMGLYInstanceFactory.sharedInstance.photoProcessor()
+        editorView?.imagePreview.image = photoProcessor.process(image:loResImage_!, filters:fixedFilterStack_!.activeFilters)
+    }
+    
+    // MARK:- Device rotation
+    override public func supportedInterfaceOrientations() -> Int {
+        return UIInterfaceOrientation.Portrait.rawValue;
+    }
+    
+    override public func shouldAutorotate() -> Bool {
+        return false
+    }
+}
