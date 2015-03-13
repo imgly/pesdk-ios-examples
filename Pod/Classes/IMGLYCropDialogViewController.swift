@@ -72,11 +72,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     private var oldRect_ = CGRectZero
     private var filtredImage_:UIImage?
     private let cropRectComponent = IMGLYInstanceFactory.sharedInstance.cropRectComponent()
-    
-    override public init() {
-        super.init()
-    }
-    
+
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
