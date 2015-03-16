@@ -78,7 +78,11 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     }
     
     // MARK:- framework code
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYTextDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         IMGLYInstanceFactory.sharedInstance.fontImporter().importFonts()
         dialogView_ = self.dialogView as? IMGLYTextDialogView
@@ -178,7 +182,7 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
             fixedFilterStack!.textFilter!.fontName = fontName_
             fixedFilterStack!.textFilter!.position = transformedTextPosition()
             fixedFilterStack!.textFilter!.fontScaleFactor = currentTextSize_ / scaledImageSize().height
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image: previewImage!, filters: fixedFilterStack!.activeFilters)
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
@@ -200,11 +204,11 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     }
     
     // MARK:- Devicerotation
-    override public func supportedInterfaceOrientations() -> Int {
+    public override func supportedInterfaceOrientations() -> Int {
         return UIInterfaceOrientation.Portrait.rawValue;
     }
     
-    override public func shouldAutorotate() -> Bool {
+    public override func shouldAutorotate() -> Bool {
         return false
     }
     
@@ -217,7 +221,7 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     }
     
     // MARK:- layouting
-    override public func viewWillLayoutSubviews() {
+    public override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         layoutTextInput()
         
@@ -397,7 +401,7 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             fixedFilterStack!.textFilter!.text = ""
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             dialogView_!.previewImageView.image = filtredImage_
         }
     }

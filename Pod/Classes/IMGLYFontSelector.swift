@@ -19,7 +19,7 @@ public class IMGLYFontSelector: UIScrollView {
     private let kFontSize = CGFloat(28)
     private var fontNames_:[String] = []
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -48,7 +48,7 @@ public class IMGLYFontSelector: UIScrollView {
             button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
         }
     }
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         for var index = 0; index < subviews.count; index++ {
             //var view = subviews[index]

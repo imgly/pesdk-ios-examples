@@ -47,7 +47,7 @@ public class IMGLYResponseFilter : CIFilter, IMGLYFilterTypeProtocol {
     private var colorCubeData_:AnyObject?
     private var responseName_: String = ""
     
-    override public init() {
+    public override init() {
         super.init()
         colorCubeData_ = nil
     }
@@ -56,7 +56,7 @@ public class IMGLYResponseFilter : CIFilter, IMGLYFilterTypeProtocol {
         super.init(coder: aDecoder)
     }
     
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

@@ -58,6 +58,10 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
         }
     }
     
+    public override func loadView() {
+        self.view = IMGLYOneSliderDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
     public func setup() {
         filterDialogView_ = self.view as? IMGLYOneSliderDialogView
         if filterDialogView_ != nil {
@@ -109,7 +113,7 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             delegate?.setValue(value_)
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         }
         filterDialogView_!.previewImageView.image = filtredImage_
     }

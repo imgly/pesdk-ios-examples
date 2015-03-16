@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYK6Filter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "K6"
         self.displayName = "k6"
@@ -19,7 +19,7 @@ public class IMGLYK6Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.K6
         }

@@ -23,7 +23,7 @@ public class IMGLYTextColorSelectorView: UIScrollView {
     private let kButtonDisance = CGFloat(10)
     private let kButtonSideLength = CGFloat(50)
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -64,7 +64,7 @@ public class IMGLYTextColorSelectorView: UIScrollView {
         }
     }
     
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         layoutColorButtons()
     }

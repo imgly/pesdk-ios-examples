@@ -25,12 +25,12 @@ public class IMGLYSourceFilter : CIFilter {
         self.displayName = "source"
     }
     
-    override public init() {
+    public override init() {
         super.init()
         self.displayName = "source"
     }
 
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

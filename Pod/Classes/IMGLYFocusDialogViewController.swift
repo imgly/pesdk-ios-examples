@@ -38,7 +38,11 @@
     public var previewImage:UIImage?
     
     // MARK:- Framework code
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYFocusDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         dialogView_ = self.view as? IMGLYFocusDialogView
         if dialogView_ != nil {
@@ -66,7 +70,7 @@
         dialogView_!.addSubview(boxGradientView_!)
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         layoutCircleGradientView()
         layoutBoxGradientView()
@@ -86,7 +90,7 @@
             }
             fixedFilterStack!.tiltShiftFilter!.tiltShiftType = tiltShiftType
             
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!,
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
         }
         dialogView_!.previewImageView.image = filtredImage_
@@ -94,7 +98,7 @@
     
     private func createNonBlurryImage() {
         fixedFilterStack!.tiltShiftFilter!.tiltShiftType = IMGLYTiltshiftType.Off
-        nonBlurryImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+        nonBlurryImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         fixedFilterStack!.tiltShiftFilter!.tiltShiftType = oldTiltShiftType
     }
     

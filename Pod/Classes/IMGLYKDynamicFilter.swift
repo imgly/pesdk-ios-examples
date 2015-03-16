@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYKDynamicFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "KDynamic"
         self.displayName = "dynamic"
@@ -19,7 +19,7 @@ public class IMGLYKDynamicFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.KDynamic
         }

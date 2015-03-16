@@ -18,7 +18,7 @@ public class IMGLYContrastBrightnessSaturationFilter : CIFilter {
     public var saturation:Float = 1.0
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYChestFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Chest"
         self.displayName = "chest"
@@ -19,7 +19,7 @@ public class IMGLYChestFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Chest
         }

@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYHighcarbFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Highcarb"
         self.displayName = "Carb"
@@ -19,7 +19,7 @@ public class IMGLYHighcarbFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Highcarb
         }

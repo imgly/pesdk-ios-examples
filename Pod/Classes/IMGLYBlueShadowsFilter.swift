@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "BlueShadows"
         self.displayName = "blue shade"
@@ -19,7 +19,7 @@ public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.BlueShadows
         }

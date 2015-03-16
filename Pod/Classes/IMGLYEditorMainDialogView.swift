@@ -57,7 +57,7 @@ public class IMGLYEditorMainDialogView: UIView {
     @IBOutlet public weak var filterButton_: UIButton!
     @IBOutlet public weak var imagePreview: UIImageView!
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }

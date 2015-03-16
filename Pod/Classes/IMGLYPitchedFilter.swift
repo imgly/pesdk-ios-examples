@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYPitchedFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Pitched"
         self.displayName = "pitched"
@@ -19,7 +19,7 @@ public class IMGLYPitchedFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Pitched
         }

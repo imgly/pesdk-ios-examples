@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYBreezeFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Breeze"
         self.displayName = "breeze"
@@ -19,7 +19,7 @@ public class IMGLYBreezeFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Breeze
         }

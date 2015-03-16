@@ -77,11 +77,15 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    override public init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nil, bundle: nil)
     }
     
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYCropDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         oldRect_ = fixedFilterStack!.orientationCropFilter!.cropRect
         fixedFilterStack!.orientationCropFilter!.cropRect = CGRectMake(0, 0, 1, 1)
@@ -92,7 +96,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         addGestureRecognizerToAnchors()
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
         updatePreviewImage()
         reCalculateCropRectBounds()
         setInitialCropRect()
@@ -448,7 +452,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         if self.completionHandler != nil {
             var rect = normalizedCropRect()
             fixedFilterStack!.orientationCropFilter!.cropRect = rect
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             self.completionHandler(IMGLYEditorResult.Done, filtredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
@@ -502,7 +506,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     
     // MARK:- update
     public func updatePreviewImage() {
-        filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+        filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         dialogView_!.previewImageView.image = filtredImage_
     }
     

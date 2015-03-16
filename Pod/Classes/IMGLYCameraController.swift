@@ -39,7 +39,6 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     private var videoDeviceInput_: AVCaptureDeviceInput!
     private var videoDataOutput_: AVCaptureVideoDataOutput!
     private var stillImageOutput_: AVCaptureStillImageOutput!
-    private var photoProcessor_:IMGLYPhotoProcessor?
     private var cameraPosition_: AVCaptureDevicePosition
     private var videoPreviewAdded_ = false
     //private var flashMode_ = AVCaptureFlashMode.Auto
@@ -92,7 +91,6 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             cameraPosition_ = cameraPosition
             setupVideoPreview()
             setupVideoInputsAndSession()
-            photoProcessor_ = IMGLYInstanceFactory.sharedInstance.photoProcessor()
         #endif
     }
     
@@ -423,7 +421,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let sourceImage = CIImage(CVPixelBuffer:imageBuffer as CVPixelBufferRef, options: nil)
-        let filteredImage:CIImage? = self.photoProcessor_!.process(image:sourceImage, filters:activeFilters_)
+        let filteredImage:CIImage? = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters:activeFilters_)
         let sourceExtent = sourceImage.extent()
         
         var scale = CGFloat(videoPreviewView_.drawableWidth) / CGRectGetWidth(sourceExtent)

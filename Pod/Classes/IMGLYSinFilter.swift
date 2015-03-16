@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYSinFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Sin"
         self.displayName = "sin"
@@ -19,7 +19,7 @@ public class IMGLYSinFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Sin
         }

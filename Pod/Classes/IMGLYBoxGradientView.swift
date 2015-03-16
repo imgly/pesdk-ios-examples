@@ -52,7 +52,7 @@ public class IMGLYBoxGradientView : UIView {
     
     // MARK:- setup
     
-    override public init(frame:CGRect) {
+    public override init(frame:CGRect) {
         super.init(frame:frame)
         commonInit()
     }
@@ -154,7 +154,7 @@ public class IMGLYBoxGradientView : UIView {
         path.addLineToPoint(line.end)
     }
     
-    override public func drawRect(rect: CGRect) {
+    public override func drawRect(rect: CGRect) {
         var aPath = UIBezierPath()
         UIColor(white: 0.8, alpha: 1.0).setStroke()
         addLineForControlPoint1ToPath(aPath)
@@ -216,7 +216,7 @@ public class IMGLYBoxGradientView : UIView {
         return (inRectXAxis && inRectYAxis)
     }
     
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         layoutCrosshair()
         setNeedsDisplay()

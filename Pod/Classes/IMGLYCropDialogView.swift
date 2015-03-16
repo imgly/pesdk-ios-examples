@@ -37,7 +37,7 @@ public class IMGLYCropDialogView: UIView {
         }
     }
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }

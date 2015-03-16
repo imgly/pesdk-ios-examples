@@ -22,7 +22,7 @@ public class IMGLYFocusDialogView:UIView {
     @IBOutlet public weak var previewImageView: UIImageView!
     public var delegate:IMGLYFocusDialogViewDelegate? = nil
 
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }

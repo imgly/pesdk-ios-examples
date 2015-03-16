@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYSummerFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Summer"
         self.displayName = "summer"
@@ -19,7 +19,7 @@ public class IMGLYSummerFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Summer
         }

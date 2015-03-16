@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYTenderFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Tender"
         self.displayName = "tender"
@@ -19,7 +19,7 @@ public class IMGLYTenderFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Tender
         }

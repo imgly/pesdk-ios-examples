@@ -52,12 +52,16 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
         }
     }
     
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYOrientationDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
         if oldCropRect_.origin.x != 0 || oldCropRect_.origin.y != 0 ||
             oldCropRect_.size.width != 1.0 || oldCropRect_.size.height != 1.0 {
             cropRectComponent.present()
@@ -92,7 +96,7 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     public func doneButtonPressed() {
         if self.completionHandler != nil {
             //fixedFilterStack!.orientationCropFilter!.cropRect = oldCropRect_
-            self.filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!,
+            self.filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
 
             self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
@@ -115,7 +119,7 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             fixedFilterStack!.orientationCropFilter!.cropRect = CGRectMake(0, 0, 1, 1)
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!,
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
             fixedFilterStack!.orientationCropFilter!.cropRect = cropRect_
         }

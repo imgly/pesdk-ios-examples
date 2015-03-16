@@ -40,13 +40,13 @@ public class IMGLYOrientationCropFilter : CIFilter {
         self.displayName = "OrientationCropFilter"
     }
     
-    override public init() {
+    public override init() {
         super.init()
         self.displayName = "OrientationCropFilter"
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

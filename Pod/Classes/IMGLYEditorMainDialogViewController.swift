@@ -26,7 +26,7 @@ public protocol IMGLYSubEditorViewControllerProtocol {
 
 public protocol IMGLYEditorMainDialogViewControllerProtocol {
     var hiResImage:UIImage? {get set}
-    var intialFilterType:IMGLYFilterType {get set}
+    var initialFilterType:IMGLYFilterType {get set}
     var completionBlock:IMGLYEditorCompletionBlock? {get set}
 }
 
@@ -34,7 +34,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
         IMGLYEditorMainDialogViewDelegate, IMGLYEditorMainDialogViewControllerProtocol {
     public let maximalLoResSideLength:CGFloat! = 800
 
-    public var intialFilterType = IMGLYFilterType.None
+    public var initialFilterType = IMGLYFilterType.None
     public var completionBlock:IMGLYEditorCompletionBlock? = nil
 
     private var hiResImage_:UIImage?
@@ -52,7 +52,11 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
     private var loResImageBackup_:UIImage? = nil
     private var fixedFilterStack_:IMGLYFixedFitlerStack? = nil
 
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYEditorMainDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         var editorView = self.view as? IMGLYEditorMainDialogView
         if editorView == nil {
@@ -60,7 +64,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
         }
         editorView?.delegate = self
         fixedFilterStack_ = IMGLYFixedFitlerStack()
-        fixedFilterStack_!.setEffectFilter(IMGLYInstanceFactory.sharedInstance.effectFilterWithType(intialFilterType)!)
+        fixedFilterStack_!.setEffectFilter(IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)!)
         updatePreviewImage()
     }
     
@@ -90,9 +94,8 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
     }
     
     public func doneButtonPressed() {
-        var photoProcessor = IMGLYInstanceFactory.sharedInstance.photoProcessor()
         hiResImage! = hiResImage!.imgly_rotateImageToMatchOrientation()
-        var filtredHiResImage = photoProcessor.process(image:hiResImage!, filters:fixedFilterStack_!.activeFilters)
+        var filtredHiResImage = IMGLYPhotoProcessor.processWithUIImage(hiResImage!, filters:fixedFilterStack_!.activeFilters)
         self.dismissViewControllerAnimated(true, completion: {
             if self.completionBlock != nil {
                 self.completionBlock!(IMGLYEditorResult.Done, filtredHiResImage)
@@ -141,16 +144,15 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
         if editorView == nil {
             fatalError("Editor view not set !")
         }
-        var photoProcessor = IMGLYInstanceFactory.sharedInstance.photoProcessor()
-        editorView?.imagePreview.image = photoProcessor.process(image:loResImage_!, filters:fixedFilterStack_!.activeFilters)
+        editorView?.imagePreview.image = IMGLYPhotoProcessor.processWithUIImage(loResImage_!, filters:fixedFilterStack_!.activeFilters)
     }
     
     // MARK:- Device rotation
-    override public func supportedInterfaceOrientations() -> Int {
+    public override func supportedInterfaceOrientations() -> Int {
         return UIInterfaceOrientation.Portrait.rawValue;
     }
     
-    override public func shouldAutorotate() -> Bool {
+    public override func shouldAutorotate() -> Bool {
         return false
     }
 }

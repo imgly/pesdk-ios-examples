@@ -38,7 +38,7 @@ public class IMGLYFilterSelectorView: UIView {
         }
     }
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         //      commonInit()
     }
@@ -99,7 +99,7 @@ public class IMGLYFilterSelectorView: UIView {
         dispatch_async(contextQueue_!, {
             autoreleasepool {
                 var actualFilter:CIFilter? = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(type)
-                var filtredImage:UIImage? = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:image!, filters: [actualFilter!])
+                var filtredImage:UIImage? = IMGLYPhotoProcessor.processWithUIImage(image!, filters: [actualFilter!])
                 var text = actualFilter!.displayName
                 actualFilter = nil
                 dispatch_async(dispatch_get_main_queue(), {

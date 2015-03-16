@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYNepalFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Nepal"
         self.displayName = "nepal"
@@ -19,7 +19,7 @@ public class IMGLYNepalFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Nepal
         }

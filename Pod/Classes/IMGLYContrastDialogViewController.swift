@@ -11,7 +11,7 @@ import Foundation
 public class IMGLYContrastDialogViewController: IMGLYCBSBaseViewController, IMGLYCBSBaseViewControllerDelegate {
     
     // MARK:- Framework code
-    override public func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         self.delegate = self
         setup()

@@ -9,7 +9,6 @@
 import Foundation
 import GLKit
 
-
 /**
 All types of response-filters.
 */
@@ -84,8 +83,8 @@ public enum IMGLYFilterType:Int {
     Plate
 }
 
-public class IMGLYPhotoProcessor {
-    public func process(#image:CIImage, filters:[CIFilter]) -> CIImage? {
+@objc public class IMGLYPhotoProcessor {
+    public class func processWithCIImage(image: CIImage, filters: [CIFilter]) -> CIImage? {
         if filters.count == 0 {
             return image
         }
@@ -105,9 +104,9 @@ public class IMGLYPhotoProcessor {
         return currentImage
     }
     
-    public func process(#image:UIImage, filters:[CIFilter]) -> UIImage? {
+    public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
         var imageOrientation = image.imageOrientation
-        var filtredCIImage:CIImage? = process(image:  CIImage(image: image), filters: filters)
+        var filtredCIImage:CIImage? = processWithCIImage(CIImage(image: image), filters: filters)
         var filtredCGImage = CIContext(options: nil).createCGImage(filtredCIImage!, fromRect: filtredCIImage!.extent())
         return UIImage(CGImage: filtredCGImage, scale: 1.0, orientation: imageOrientation)
     }

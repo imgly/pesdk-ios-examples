@@ -39,7 +39,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
     private var rect_ = CGRectZero
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

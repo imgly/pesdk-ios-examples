@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYGobblinFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Gobblin"
         self.displayName = "gobblin"
@@ -19,7 +19,7 @@ public class IMGLYGobblinFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Gobblin
         }

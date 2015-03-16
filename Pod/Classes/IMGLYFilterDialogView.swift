@@ -47,7 +47,7 @@ public class IMGLYFilterDialogView: UIView {
     
     private var delegate_:IMGLYFilterDialogViewDelegate? = nil
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }

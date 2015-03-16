@@ -40,7 +40,7 @@ public class IMGLYCircleGradientView : UIView {
     private var crossImageView_ = UIImageView()
     private var setup = false
     
-    override public init(frame:CGRect) {
+    public override init(frame:CGRect) {
         super.init(frame:frame)
         commonInit()
     }
@@ -92,7 +92,7 @@ public class IMGLYCircleGradientView : UIView {
             frame.size.height * frame.size.height)
     }
     
-    override public func drawRect(rect:CGRect) {
+    public override func drawRect(rect:CGRect) {
         var aPath = UIBezierPath(arcCenter: centerPoint, radius: distanceBetweenControlPoints() * 0.5, startAngle: 0,
             endAngle:CGFloat(M_PI * 2.0) , clockwise: true)
         UIColor(white: 0.8, alpha: 1.0).setStroke()
@@ -147,7 +147,7 @@ public class IMGLYCircleGradientView : UIView {
         }
     }
     
-    override public func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         layoutCrosshair()
         setNeedsDisplay()

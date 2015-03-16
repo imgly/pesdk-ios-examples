@@ -101,14 +101,13 @@ The img.ly SDK comes with an example app to demonstrate the simplicity and power
 
 ## Backend
 
-The backend takes care about the actual image manipulation. The `IMGLYPhotoProcessor` is the main class, its `process` method takes an image and an array of `CIFilter` objects and applies 
-the filters to the given image sequencialy. The input image can be an `UIImage` or a `CIImage`.
+The backend takes care about the actual image manipulation. The `IMGLYPhotoProcessor` is the main class, its `processWithCIImage` / `processWithUIImage` methods take an image and an array of `CIFilter` objects and apply the filters to the given image sequentially.
 
 The following code filters an image with the steel filter.
 
 ```
 var filter =  IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.Steel)
-var filtredImage = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:image, filters: [filter])
+var filteredImage = IMGLYPhotoProcessor.processWithUIImage(image, filters: [filter])
 ```
 
 ### Source-filters 

@@ -23,26 +23,35 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     private var image_:UIImage?
     private var currentCameraPosition_:AVCaptureDevicePosition = AVCaptureDevicePosition.Front
     
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.extendedLayoutIncludesOpaqueBars = true;
         UIApplication.sharedApplication().statusBarHidden = true;
     }
     
-    override public func supportedInterfaceOrientations() -> Int {
+    public override func supportedInterfaceOrientations() -> Int {
         return UIInterfaceOrientation.Portrait.rawValue;
     }
     
-    override public func shouldAutorotate() -> Bool {
+    public override func shouldAutorotate() -> Bool {
         return false
     }
     
-    override public func viewDidLoad() {
+    public override func loadView() {
+        self.view = IMGLYCameraView(frame: UIScreen.mainScreen().bounds)
+    }
+    
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupCameraView()
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         cameraView_!.setLastImageFromRollAsPreview()
         cameraController_!.startCaptureSession()
         cameraView_!.enableButtons()
@@ -80,7 +89,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
                 dispatch_async(dispatch_get_main_queue(), {
                     [unowned self] in
                     if self.completionBlock == nil {
-                        self.performSegueWithIdentifier("ModalEditorNavigationController", sender: self)
+                        self.showModalEditorNavigationController()
                     }
                     else {
                         self.completionBlock!(image)
@@ -129,7 +138,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         self.dismissViewControllerAnimated(true, completion: {
             UIApplication.sharedApplication().statusBarHidden = true
             if self.completionBlock == nil {
-                self.performSegueWithIdentifier("ModalEditorNavigationController", sender: self)
+                self.showModalEditorNavigationController()
             }
             else {
                 self.completionBlock!(self.image_!)
@@ -148,15 +157,14 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         cameraController_!.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filter)
     }
     
-    override public func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        var destinationViewController:AnyObject = segue.destinationViewController
-        var editorViewController = destinationViewController as? IMGLYEditorMainDialogViewControllerProtocol
-        if editorViewController != nil {
-            editorViewController!.hiResImage = image_!
-            editorViewController!.intialFilterType = cameraView_!.filterSelectorView.activeFilterType
-            editorViewController!.completionBlock = editorCompletionBlock
-        }
-        self.image_ = nil
+    private func showModalEditorNavigationController() {
+        let editorViewController = IMGLYEditorMainDialogViewController()
+        editorViewController.hiResImage = image_
+        editorViewController.initialFilterType = cameraView_!.filterSelectorView.activeFilterType
+        editorViewController.completionBlock = editorCompletionBlock
+        image_ = nil
+        
+        self.showViewController(editorViewController, sender: nil)
     }
     
     // MARK:- IMGLYCameraControllerDelegate

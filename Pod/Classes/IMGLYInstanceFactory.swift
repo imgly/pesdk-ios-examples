@@ -21,11 +21,6 @@ public class IMGLYInstanceFactory {
         return Static.instance
     }
     
-    // MARK:- filter related
-    public func photoProcessor() -> IMGLYPhotoProcessor {
-        return IMGLYPhotoProcessor()
-    }
-    
     /**
     Creates a response filter with the specified type.
     

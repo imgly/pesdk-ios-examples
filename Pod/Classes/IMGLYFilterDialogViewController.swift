@@ -56,8 +56,12 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         }
     }
     
+    public override func loadView() {
+        self.view = IMGLYFilterDialogView(frame: UIScreen.mainScreen().bounds)
+    }
+    
     // MARK:- Framework code
-    override public func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         filterDialogView_ = self.view as? IMGLYFilterDialogView
         if filterDialogView_ != nil {
@@ -69,7 +73,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         }
     }
     
-    override public func viewDidAppear(animated: Bool) {
+    public override func viewDidAppear(animated: Bool) {
         dispatch_async (dispatch_get_main_queue(), {
             self.filterDialogView_!.filterSelectorView.commonInit()
         })
@@ -85,7 +89,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         var actualFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(selectedFilterType_)
         if fixedFilterStack != nil {
             fixedFilterStack!.setEffectFilter(actualFilter!)
-            filtredImage_ = IMGLYInstanceFactory.sharedInstance.photoProcessor().process(image:previewImage!, filters: fixedFilterStack!.activeFilters)
+            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         }
         filterDialogView_!.previewImageView.image = filtredImage_
     }
@@ -110,11 +114,11 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
     }
     
     // MARK:- Devicerotation
-    override public func supportedInterfaceOrientations() -> Int {
+    public override func supportedInterfaceOrientations() -> Int {
         return UIInterfaceOrientation.Portrait.rawValue;
     }
     
-    override public func shouldAutorotate() -> Bool {
+    public override func shouldAutorotate() -> Bool {
         return false
     }
 }

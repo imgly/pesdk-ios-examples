@@ -15,7 +15,7 @@ public class IMGLYTextFilter : CIFilter {
     public var text = ""
     /// The name of the used font.
     public var fontName = "Helvetica Neue"
-    ///  This factor determins the font-size. Its a relative value that is multiplied with the image heigt
+    ///  This factor determins the font-size. Its a relative value that is multiplied with the image height
     ///  during the process.
     public var fontScaleFactor = CGFloat(1)
     /// The relative position of the text within the image.
@@ -23,7 +23,7 @@ public class IMGLYTextFilter : CIFilter {
     /// The color of the text.
     public var color = UIColor.whiteColor()
     
-    override public init() {
+    public override init() {
         super.init()
     }
     
@@ -32,7 +32,7 @@ public class IMGLYTextFilter : CIFilter {
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    override public var outputImage: CIImage! {
+    public override var outputImage: CIImage! {
         get {
             if inputImage == nil {
                 return CIImage.emptyImage()

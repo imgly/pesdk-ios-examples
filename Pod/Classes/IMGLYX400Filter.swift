@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYX400Filter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "X400"
         self.displayName = "x400"
@@ -19,7 +19,7 @@ public class IMGLYX400Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.X400
         }

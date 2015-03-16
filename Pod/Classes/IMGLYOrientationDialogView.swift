@@ -32,7 +32,7 @@ public class IMGLYOrientationDialogView: UIView {
         }
     }
     
-    override public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }

@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYPaleFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Pale"
         self.displayName = "pale"
@@ -19,7 +19,7 @@ public class IMGLYPaleFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Pale
         }

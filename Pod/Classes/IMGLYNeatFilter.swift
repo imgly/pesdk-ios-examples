@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYNeatFilter: IMGLYResponseFilter {
-    override public init() {
+    public override init() {
         super.init()
         self.responseName = "Neat"
         self.displayName = "neat"
@@ -19,7 +19,7 @@ public class IMGLYNeatFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
     
-    override public var filterType:IMGLYFilterType {
+    public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Neat
         }
