@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum IMGLYMainMenuButtonType {
+@objc public enum IMGLYMainMenuButtonType: Int {
     case Magic,
     Filter,
     Orientation,

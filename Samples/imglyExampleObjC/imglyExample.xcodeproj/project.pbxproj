@@ -12,7 +12,6 @@
 		2B709D691AB6D9E800AE9592 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B709D681AB6D9E800AE9592 /* AppDelegate.m */; };
 		2B709D711AB6D9E800AE9592 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B709D701AB6D9E800AE9592 /* Images.xcassets */; };
 		2B709D741AB6D9E800AE9592 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B709D721AB6D9E800AE9592 /* LaunchScreen.xib */; };
-		6744688A2C35CE5F59DC705F /* Pods_imglyExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37137B0AC753C9B45DE4C4C2 /* Pods_imglyExample.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,7 +23,6 @@
 		2B709D681AB6D9E800AE9592 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2B709D701AB6D9E800AE9592 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2B709D731AB6D9E800AE9592 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		37137B0AC753C9B45DE4C4C2 /* Pods_imglyExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_imglyExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,7 +30,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6744688A2C35CE5F59DC705F /* Pods_imglyExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +78,6 @@
 		4B2B724A47123E8B96F14684 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37137B0AC753C9B45DE4C4C2 /* Pods_imglyExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

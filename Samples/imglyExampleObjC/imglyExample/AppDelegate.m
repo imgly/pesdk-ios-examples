@@ -21,14 +21,14 @@
     
     // Backend example
     UIImage *image = [UIImage imageNamed:@"photo-1423439793616-f2aa4356b37e.jpeg"];
-    IMGLYSteelFilter *steelFilter = [[IMGLYSteelFilter alloc] init]; // Unfortunately the instance factory cannot be exported to Objective-C, so we allocate the filters directly
+    IMGLYLomo100Filter *lomo100Filter = (IMGLYLomo100Filter *)[[IMGLYInstanceFactory sharedInstance] effectFilterWithType:IMGLYFilterTypeLomo100];
     
-    IMGLYTextFilter *textFilter = [[IMGLYTextFilter alloc] init];
+    IMGLYTextFilter *textFilter = [[IMGLYInstanceFactory sharedInstance] textFilter];
     textFilter.text = @"ABC";
     textFilter.fontScaleFactor = 0.3;
     textFilter.color = [UIColor redColor];
     
-    __unused UIImage *processedImage = [IMGLYPhotoProcessor processWithUIImage:image filters:@[steelFilter, textFilter]];
+    __unused UIImage *processedImage = [IMGLYPhotoProcessor processWithUIImage:image filters:@[lomo100Filter, textFilter]];
     
     // Frontend example
     IMGLYCameraViewController *cameraViewController = [[IMGLYCameraViewController alloc] init];

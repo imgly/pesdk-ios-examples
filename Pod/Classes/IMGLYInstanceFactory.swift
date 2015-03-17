@@ -13,7 +13,7 @@ import GLKit
   A singleton that is out to create objects. It is used within the SDK to 
   create filters, views, viewcontrollers and such.
 */
-public class IMGLYInstanceFactory {
+@objc public class IMGLYInstanceFactory {
     public class var sharedInstance : IMGLYInstanceFactory {
         struct Static {
             static let instance : IMGLYInstanceFactory = IMGLYInstanceFactory()

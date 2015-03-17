@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-public enum IMGLYTiltshiftType {
+@objc public enum IMGLYTiltshiftType: Int {
     case Off, Box, Circle
 }
 

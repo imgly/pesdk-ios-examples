@@ -13,7 +13,7 @@ import GLKit
 /**
 Represents the angle an image should be rotated by.
 */
-public enum IMGLYRotationAngle {
+@objc public enum IMGLYRotationAngle: Int {
     case _0,
     _90,
     _180,

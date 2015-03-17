@@ -12,7 +12,7 @@ import GLKit
 /**
 All types of response-filters.
 */
-public enum IMGLYFilterType:Int {
+@objc public enum IMGLYFilterType: Int {
     case None,
     K1,
     K2,

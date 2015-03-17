@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum IMGLYEditorResult {
+@objc public enum IMGLYEditorResult: Int {
     case Done,
     Cancel
 }

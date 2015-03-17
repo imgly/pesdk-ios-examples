@@ -8,7 +8,7 @@
 
 import UIKit
 
-public enum IMGLYSelectionMode {
+@objc public enum IMGLYSelectionMode: Int {
     case Free,
     OneToOne,
     FourToThree,
