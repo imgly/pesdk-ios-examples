@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol IMGLYTextColorSelectorViewDelegate {
+public protocol IMGLYTextColorSelectorViewDelegate: class {
     func selectedColor(color:UIColor)
 }
 
 public class IMGLYTextColorSelectorView: UIScrollView {
-    public var menuDelegate:IMGLYTextColorSelectorViewDelegate? = nil
+    public weak var menuDelegate:IMGLYTextColorSelectorViewDelegate? = nil
     
     private var colorArray_:[UIColor] = []
     private var buttonArray_:[IMGLYColorButton] = []

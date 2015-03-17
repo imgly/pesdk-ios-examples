@@ -12,10 +12,10 @@
  IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate {
     
     public var completionHandler:IMGLYSubEditorCompletionBlock!
-    public var fixedFilterStack:IMGLYFixedFitlerStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack?
     
     private var dialogView_:IMGLYFocusDialogView?
-    private var filtredImage_:UIImage? = nil
+    private var filteredImage_:UIImage? = nil
     private var nonBlurryImage_:UIImage? = nil
     private var circleGradientView_:IMGLYCircleGradientView? = nil
     private var boxGradientView_:IMGLYBoxGradientView? = nil
@@ -47,7 +47,7 @@
         dialogView_ = self.view as? IMGLYFocusDialogView
         if dialogView_ != nil {
             dialogView_!.delegate = self
-            filtredImage_ = previewImage
+            filteredImage_ = previewImage
             setupCircleGradientView()
             setupBoxGradientView()
             storeOldValues()
@@ -94,10 +94,10 @@
             }
             fixedFilterStack!.tiltShiftFilter!.tiltShiftType = tiltShiftType
             
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
         }
-        dialogView_!.previewImageView.image = filtredImage_
+        dialogView_!.previewImageView.image = filteredImage_
     }
     
     private func createNonBlurryImage() {
@@ -141,7 +141,7 @@
     // MARK:- IMGLYFocusDialogViewDelegate
     public func doneButtonPressed() {
         if self.completionHandler != nil {
-            self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
+            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }

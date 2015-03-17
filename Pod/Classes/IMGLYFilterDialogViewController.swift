@@ -13,7 +13,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
     
     private var filterDialogView_:IMGLYFilterDialogView?
     private var previewImage_:UIImage? = nil
-    private var filtredImage_:UIImage? = nil
+    private var filteredImage_:UIImage? = nil
     private var selectedFilterType_:IMGLYFilterType = IMGLYFilterType.None
     private var oldSelectedFilterType_:IMGLYFilterType = IMGLYFilterType.None
     
@@ -28,8 +28,8 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFitlerStack?
-    public var fixedFilterStack:IMGLYFixedFitlerStack? {
+    private var fixedFilterStack_:IMGLYFixedFilterStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -67,7 +67,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         if filterDialogView_ != nil {
             filterDialogView_!.filterSelectorView.delegate = self
             filterDialogView_!.delegate = self
-            filtredImage_ = previewImage
+            filteredImage_ = previewImage
             selectedFilterType_ = fixedFilterStack!.effectFilter!.filterType
             updatePreviewImage()
         }
@@ -89,15 +89,15 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         var actualFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(selectedFilterType_)
         if fixedFilterStack != nil {
             fixedFilterStack!.setEffectFilter(actualFilter!)
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         }
-        filterDialogView_!.previewImageView.image = filtredImage_
+        filterDialogView_!.previewImageView.image = filteredImage_
     }
     
     // MARK:- Completion-block handling
     public func doneButtonPressed() {
         if self.completionHandler != nil {
-            self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
+            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }

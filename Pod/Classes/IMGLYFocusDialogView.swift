@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYFocusDialogViewDelegate {
+public protocol IMGLYFocusDialogViewDelegate: class {
     func linearButtonPressed()
     func radialButtonPressed()
     func doneButtonPressed()
@@ -20,7 +20,7 @@ public class IMGLYFocusDialogView:UIView {
     @IBOutlet public var contentView: UIView!
 
     @IBOutlet public weak var previewImageView: UIImageView!
-    public var delegate:IMGLYFocusDialogViewDelegate? = nil
+    public weak var delegate:IMGLYFocusDialogViewDelegate? = nil
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

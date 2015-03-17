@@ -18,7 +18,7 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     private let kFontSizeInTextInput_ = CGFloat(20.0)
     
     private var dialogView_:IMGLYTextDialogView?
-    private var filtredImage_:UIImage? = nil
+    private var filteredImage_:UIImage? = nil
     private var textInput_:UITextField? = nil
     private var textColor_:UIColor = UIColor.whiteColor()
     private var textLabelClipView_:UIView? = nil
@@ -47,8 +47,8 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFitlerStack?
-    public var fixedFilterStack:IMGLYFixedFitlerStack? {
+    private var fixedFilterStack_:IMGLYFixedFilterStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -182,8 +182,8 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
             fixedFilterStack!.textFilter!.fontName = fontName_
             fixedFilterStack!.textFilter!.position = transformedTextPosition()
             fixedFilterStack!.textFilter!.fontScaleFactor = currentTextSize_ / scaledImageSize().height
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-            self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
@@ -397,8 +397,8 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             fixedFilterStack!.textFilter!.text = ""
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-            dialogView_!.previewImageView.image = filtredImage_
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+            dialogView_!.previewImageView.image = filteredImage_
         }
     }
 }

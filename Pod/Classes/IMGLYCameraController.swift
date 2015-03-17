@@ -11,7 +11,7 @@ import OpenGLES
 import GLKit
 import AVFoundation
 
-public protocol IMGLYCameraControllerDelegate {
+public protocol IMGLYCameraControllerDelegate: class {
     func captureSessionStarted()
     func captureSessionStopped()
     func willToggleCamera()
@@ -24,7 +24,7 @@ public protocol IMGLYCameraControllerDelegate {
     It provides methods to start a capture session, toggle between cameras, or select a flash mode.
 */
 public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
-    public var delegate: IMGLYCameraControllerDelegate?
+    public weak var delegate: IMGLYCameraControllerDelegate?
     
     // MARK:- private vars
     private var previewView_:UIView?

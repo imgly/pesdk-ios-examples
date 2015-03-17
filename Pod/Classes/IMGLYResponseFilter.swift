@@ -18,7 +18,7 @@ public protocol IMGLYFilterTypeProtocol {
   map colors around, and create cool effects. These tables are handed over as image
   that contains serveral combination of r, g, and b values. Tools like photoshop can be used
   to create filters, using the identity-image and apply the desired operations onto it.
-  Afterwards the so filtred image may be used as response map, as it represents the response the
+  Afterwards the so filtered image may be used as response map, as it represents the response the
   filter should have.
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.

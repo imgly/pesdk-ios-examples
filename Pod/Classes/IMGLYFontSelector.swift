@@ -8,12 +8,12 @@
 
 import Foundation
 
-public protocol IMGLYFontSelectorDelegate {
+public protocol IMGLYFontSelectorDelegate: class {
     func selectedFontWithName(fontName:String)
 }
 
 public class IMGLYFontSelector: UIScrollView {
-    public var selectorDelegate:IMGLYFontSelectorDelegate? = nil
+    public weak var selectorDelegate:IMGLYFontSelectorDelegate? = nil
     
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)

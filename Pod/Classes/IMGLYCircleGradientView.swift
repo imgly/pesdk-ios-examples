@@ -7,7 +7,7 @@ import Foundation
 
 public class IMGLYCircleGradientView : UIView {
     public var centerPoint = CGPointZero
-    public var gradientViewDelegate:IMGLYGradientViewDelegate?
+    public weak var gradientViewDelegate:IMGLYGradientViewDelegate?
     public var controllPoint1 = CGPointZero
     private var controllPoint2_ = CGPointZero
     public var controllPoint2:CGPoint {

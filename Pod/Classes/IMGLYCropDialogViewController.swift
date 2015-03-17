@@ -49,8 +49,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFitlerStack?
-    public var fixedFilterStack:IMGLYFixedFitlerStack? {
+    private var fixedFilterStack_:IMGLYFixedFilterStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -70,7 +70,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
 
     private var dialogView_:IMGLYCropDialogView?
     private var oldRect_ = CGRectZero
-    private var filtredImage_:UIImage?
+    private var filteredImage_:UIImage?
     private let cropRectComponent = IMGLYInstanceFactory.sharedInstance.cropRectComponent()
 
     required public init(coder aDecoder: NSCoder) {
@@ -456,8 +456,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         if self.completionHandler != nil {
             var rect = normalizedCropRect()
             fixedFilterStack!.orientationCropFilter!.cropRect = rect
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-            self.completionHandler(IMGLYEditorResult.Done, filtredImage_)
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+            self.completionHandler(IMGLYEditorResult.Done, filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
@@ -510,8 +510,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     
     // MARK:- update
     public func updatePreviewImage() {
-        filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-        dialogView_!.previewImageView.image = filtredImage_
+        filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+        dialogView_!.previewImageView.image = filteredImage_
     }
     
     private func setInitialCropRect() {

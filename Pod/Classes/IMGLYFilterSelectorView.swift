@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol IMGFilterSelectorViewDelegate {
+public protocol IMGFilterSelectorViewDelegate: class {
     func didSelectFilter(filter:IMGLYFilterType)
 }
 
@@ -25,7 +25,7 @@ public class IMGLYFilterSelectorView: UIView {
     private var scrollView_:UIScrollView? = nil
     private var tickImageView_:UIImageView? = nil
     
-    public var delegate:IMGFilterSelectorViewDelegate?
+    public weak var delegate:IMGFilterSelectorViewDelegate?
     
     public var activeFilterType_:IMGLYFilterType = IMGLYFilterType.None
     public var activeFilterType:IMGLYFilterType {
@@ -99,15 +99,15 @@ public class IMGLYFilterSelectorView: UIView {
         dispatch_async(contextQueue_!, {
             autoreleasepool {
                 var actualFilter:CIFilter? = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(type)
-                var filtredImage:UIImage? = IMGLYPhotoProcessor.processWithUIImage(image!, filters: [actualFilter!])
+                var filteredImage:UIImage? = IMGLYPhotoProcessor.processWithUIImage(image!, filters: [actualFilter!])
                 var text = actualFilter!.displayName
                 actualFilter = nil
                 dispatch_async(dispatch_get_main_queue(), {
                     activity.stopAnimating()
                     activity.removeFromSuperview()
                     label.text = text
-                    button.setImage(filtredImage!, forState: UIControlState.Normal)
-                    filtredImage = nil
+                    button.setImage(filteredImage!, forState: UIControlState.Normal)
+                    filteredImage = nil
                 })
             }
         })

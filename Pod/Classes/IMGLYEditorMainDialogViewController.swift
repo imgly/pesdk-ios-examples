@@ -19,7 +19,7 @@ public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
 public protocol IMGLYSubEditorViewControllerProtocol {
     var previewImage:UIImage? {set get}
     var completionHandler:IMGLYSubEditorCompletionBlock! {get set}
-    var fixedFilterStack:IMGLYFixedFitlerStack? {get set}
+    var fixedFilterStack:IMGLYFixedFilterStack? {get set}
     var dialogView:UIView? {get set}
     func viewDidLoad()
 }
@@ -50,7 +50,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
     
     private var loResImage_:UIImage? = nil
     private var loResImageBackup_:UIImage? = nil
-    private var fixedFilterStack_:IMGLYFixedFitlerStack? = nil
+    private var fixedFilterStack_:IMGLYFixedFilterStack? = nil
 
     public override func loadView() {
         self.view = IMGLYEditorMainDialogView(frame: UIScreen.mainScreen().bounds)
@@ -63,7 +63,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
             fatalError("Editor view not set !")
         }
         editorView?.delegate = self
-        fixedFilterStack_ = IMGLYFixedFitlerStack()
+        fixedFilterStack_ = IMGLYFixedFilterStack()
         fixedFilterStack_!.setEffectFilter(IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)!)
         updatePreviewImage()
     }
@@ -95,10 +95,10 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
     
     public func doneButtonPressed() {
         hiResImage! = hiResImage!.imgly_rotateImageToMatchOrientation()
-        var filtredHiResImage = IMGLYPhotoProcessor.processWithUIImage(hiResImage!, filters:fixedFilterStack_!.activeFilters)
+        var filteredHiResImage = IMGLYPhotoProcessor.processWithUIImage(hiResImage!, filters:fixedFilterStack_!.activeFilters)
         self.dismissViewControllerAnimated(true, completion: {
             if self.completionBlock != nil {
-                self.completionBlock!(IMGLYEditorResult.Done, filtredHiResImage)
+                self.completionBlock!(IMGLYEditorResult.Done, filteredHiResImage)
             }
         })
     }

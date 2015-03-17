@@ -106,8 +106,8 @@ All types of response-filters.
     
     public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
         var imageOrientation = image.imageOrientation
-        var filtredCIImage:CIImage? = processWithCIImage(CIImage(image: image), filters: filters)
-        var filtredCGImage = CIContext(options: nil).createCGImage(filtredCIImage!, fromRect: filtredCIImage!.extent())
-        return UIImage(CGImage: filtredCGImage, scale: 1.0, orientation: imageOrientation)
+        var filteredCIImage:CIImage? = processWithCIImage(CIImage(image: image), filters: filters)
+        var filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent())
+        return UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
     }
 }

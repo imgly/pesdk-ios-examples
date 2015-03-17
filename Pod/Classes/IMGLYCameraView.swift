@@ -30,9 +30,9 @@ public class IMGLYCameraView: UIView {
     @IBOutlet public weak var toggleFilterSelectorButton: UIButton!
     
     private var autoFlashSupported_ = true
-    private var delegate_:IMGLYCameraViewDelegate?
+    private weak var delegate_:IMGLYCameraViewDelegate?
     public var filterSelectorHidden:Bool = true
-    public var delegate:IMGLYCameraViewDelegate? {
+    public weak var delegate:IMGLYCameraViewDelegate? {
         get {
             return delegate_
         }

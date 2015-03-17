@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYCropDialogViewDelegate {
+public protocol IMGLYCropDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
     func ratio1to1ButtonPressed()
@@ -27,8 +27,8 @@ public class IMGLYCropDialogView: UIView {
     @IBOutlet public weak var sixteenToNineRatioHighlight: UIView!
     
     
-    private var delegate_:IMGLYCropDialogViewDelegate? = nil
-    public var delegate:IMGLYCropDialogViewDelegate? {
+    private weak var delegate_:IMGLYCropDialogViewDelegate? = nil
+    public weak var delegate:IMGLYCropDialogViewDelegate? {
         get {
             return delegate_
         }

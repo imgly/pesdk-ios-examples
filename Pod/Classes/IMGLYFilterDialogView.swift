@@ -8,12 +8,12 @@
 
 import UIKit
 
-public protocol IMGLYFilterDialogViewDelegate {
+public protocol IMGLYFilterDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
 }
 
-public protocol IMGLYSliderDialogViewDelegate : IMGLYFilterDialogViewDelegate {
+public protocol IMGLYSliderDialogViewDelegate: IMGLYFilterDialogViewDelegate {
     func sliderValueChanged(newValue:Float)
 }
 
@@ -36,7 +36,7 @@ public class IMGLYFilterDialogView: UIView {
         }
     }
     
-    public var delegate:IMGLYFilterDialogViewDelegate? {
+    public weak var delegate:IMGLYFilterDialogViewDelegate? {
         get {
             return delegate_
         }
@@ -45,7 +45,7 @@ public class IMGLYFilterDialogView: UIView {
         }
     }
     
-    private var delegate_:IMGLYFilterDialogViewDelegate? = nil
+    private weak var delegate_:IMGLYFilterDialogViewDelegate? = nil
     
     public override init(frame: CGRect) {
         super.init(frame: frame)

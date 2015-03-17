@@ -16,8 +16,8 @@ public class IMGLYOneSliderDialogView: UIView {
     private var changeTimer: NSTimer?
     private var updateInterval: NSTimeInterval = 0.1
     
-    private var delegate_:IMGLYSliderDialogViewDelegate? = nil
-    public var delegate:IMGLYSliderDialogViewDelegate? {
+    private weak var delegate_:IMGLYSliderDialogViewDelegate? = nil
+    public weak var delegate:IMGLYSliderDialogViewDelegate? {
         get {
             return delegate_
         }

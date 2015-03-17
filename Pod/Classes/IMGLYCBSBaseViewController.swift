@@ -12,7 +12,7 @@
 
 import Foundation
 
-public  protocol IMGLYCBSBaseViewControllerDelegate {
+public  protocol IMGLYCBSBaseViewControllerDelegate: class {
     var caption:String { get }
     var minValue:Float { get }
     var maxValue:Float { get }
@@ -24,10 +24,10 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     
     public var filterDialogView_:IMGLYOneSliderDialogView?
     private var previewImage_:UIImage? = nil
-    public var filtredImage_:UIImage? = nil
+    public var filteredImage_:UIImage? = nil
     public var value_:Float = 0.0
     public var oldValue_:Float = 0.0
-    public var delegate:IMGLYCBSBaseViewControllerDelegate?
+    public weak var delegate:IMGLYCBSBaseViewControllerDelegate?
     
     private var completionHandler_:IMGLYSubEditorCompletionBlock!
     public var completionHandler:IMGLYSubEditorCompletionBlock! {
@@ -39,8 +39,8 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
         }
     }
     
-    public var fixedFilterStack_:IMGLYFixedFitlerStack?
-    public var fixedFilterStack:IMGLYFixedFitlerStack? {
+    public var fixedFilterStack_:IMGLYFixedFilterStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -70,7 +70,7 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
         filterDialogView_ = self.view as? IMGLYOneSliderDialogView
         if filterDialogView_ != nil {
             filterDialogView_!.delegate = self
-            filtredImage_ = previewImage
+            filteredImage_ = previewImage
             oldValue_ = delegate!.initialValue
             value_ = oldValue_
             filterDialogView_!.slider_.minimumValue = delegate!.minValue
@@ -96,7 +96,7 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     public func doneButtonPressed() {
         if self.completionHandler != nil {
             delegate?.setValue(value_)
-            self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
+            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
@@ -117,8 +117,8 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             delegate?.setValue(value_)
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         }
-        filterDialogView_!.previewImageView.image = filtredImage_
+        filterDialogView_!.previewImageView.image = filteredImage_
     }
 }

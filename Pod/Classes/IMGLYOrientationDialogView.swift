@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYOrientationDialogViewDelegate {
+public protocol IMGLYOrientationDialogViewDelegate: class {
     func rotateLeftButtonPressed()
     func rotateRightButtonPressed()
     func flipHorizontalButtonPressed()
@@ -22,8 +22,8 @@ public class IMGLYOrientationDialogView: UIView {
     @IBOutlet public weak var previewImageView: UIImageView!
     @IBOutlet public weak var transperentRectView: UIView!
     
-    private var delegate_:IMGLYOrientationDialogViewDelegate? = nil
-    public var delegate:IMGLYOrientationDialogViewDelegate? {
+    private weak var delegate_:IMGLYOrientationDialogViewDelegate? = nil
+    public weak var delegate:IMGLYOrientationDialogViewDelegate? {
         get {
             return delegate_
         }

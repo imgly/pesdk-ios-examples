@@ -85,7 +85,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     
     // MARK:- orientation modifier {
     /**
-        Sets internal flags so that the filtred image will be rotated counter-clock-wise around 90 degrees.
+        Sets internal flags so that the filtered image will be rotated counter-clock-wise around 90 degrees.
     */
     public func rotateLeft() {
         switch (rotationAngle) {
@@ -101,7 +101,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
         
     /**
-        Sets internal flags so that the filtred image will be rotated clock-wise around 90 degrees.
+        Sets internal flags so that the filtered image will be rotated clock-wise around 90 degrees.
     */
     public func rotateRight() {
         switch (self.rotationAngle) {
@@ -117,7 +117,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
 
     /**
-    Sets internal flags so that the filtred image will be rotated flipped along the horizontal axis.
+    Sets internal flags so that the filtered image will be rotated flipped along the horizontal axis.
     */
     public func flipHorizontal() {
         if (rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180) {
@@ -128,7 +128,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
     
     /**
-    Sets internal flags so that the filtred image will be rotated flipped along the vertical axis.
+    Sets internal flags so that the filtered image will be rotated flipped along the vertical axis.
     */
     public func flipVertical() {
         if (rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180) {

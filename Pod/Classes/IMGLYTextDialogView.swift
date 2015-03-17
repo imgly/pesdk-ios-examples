@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYTextDialogViewDelegate {
+public protocol IMGLYTextDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
     func selectedColor(color:UIColor)
@@ -19,8 +19,8 @@ public class IMGLYTextDialogView: UIView, IMGLYTextColorSelectorViewDelegate {
     @IBOutlet public weak var previewImageView: UIImageView!
     @IBOutlet public weak var colorSelectorView: IMGLYTextColorSelectorView!
     
-    private var delegate_:IMGLYTextDialogViewDelegate? = nil
-    public var delegate:IMGLYTextDialogViewDelegate? {
+    private weak var delegate_:IMGLYTextDialogViewDelegate? = nil
+    public weak var delegate:IMGLYTextDialogViewDelegate? {
         get {
             return delegate_
         }

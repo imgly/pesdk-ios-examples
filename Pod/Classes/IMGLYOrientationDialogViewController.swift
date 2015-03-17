@@ -13,7 +13,7 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     
     public var dialogView_:IMGLYOrientationDialogView?
     private var previewImage_:UIImage? = nil
-    public var filtredImage_:UIImage? = nil
+    public var filteredImage_:UIImage? = nil
     public var filter = IMGLYOrientationCropFilter()
     private var oldCropRect_ = CGRectZero
     private var cropRect_ = CGRectZero
@@ -33,8 +33,8 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFitlerStack?
-    public var fixedFilterStack:IMGLYFixedFitlerStack? {
+    private var fixedFilterStack_:IMGLYFixedFilterStack?
+    public var fixedFilterStack:IMGLYFixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -77,7 +77,7 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
         dialogView_ = self.view as? IMGLYOrientationDialogView
         if dialogView_ != nil {
             dialogView_!.delegate = self
-            filtredImage_ = previewImage
+            filteredImage_ = previewImage
             oldCropRect_ = fixedFilterStack!.orientationCropFilter!.cropRect
             cropRect_ = oldCropRect_
             updatePreviewImage()
@@ -100,10 +100,10 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     public func doneButtonPressed() {
         if self.completionHandler != nil {
             //fixedFilterStack!.orientationCropFilter!.cropRect = oldCropRect_
-            self.filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
+            self.filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
 
-            self.completionHandler(IMGLYEditorResult.Done, self.filtredImage_)
+            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
@@ -123,11 +123,11 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
             fixedFilterStack!.orientationCropFilter!.cropRect = CGRectMake(0, 0, 1, 1)
-            filtredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
+            filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
             fixedFilterStack!.orientationCropFilter!.cropRect = cropRect_
         }
-        dialogView_!.previewImageView.image = filtredImage_
+        dialogView_!.previewImageView.image = filteredImage_
     }
     
     public func rotateLeftButtonPressed() {

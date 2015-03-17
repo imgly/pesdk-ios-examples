@@ -22,7 +22,7 @@ import UIKit
     Reset
 }
     
-public protocol IMGLYEditorMainDialogViewDelegate {
+public protocol IMGLYEditorMainDialogViewDelegate: class {
     func menuButtonPressed(buttonType:IMGLYMainMenuButtonType)
     func doneButtonPressed()
     func backButtonPressed()
@@ -30,7 +30,7 @@ public protocol IMGLYEditorMainDialogViewDelegate {
 
 public class IMGLYEditorMainDialogView: UIView {
 
-    public var delegate:IMGLYEditorMainDialogViewDelegate? {
+    public weak var delegate:IMGLYEditorMainDialogViewDelegate? {
         get {
             return delegate_
         }
@@ -39,7 +39,7 @@ public class IMGLYEditorMainDialogView: UIView {
         }
     }
     
-    private var delegate_:IMGLYEditorMainDialogViewDelegate? = nil
+    private weak var delegate_:IMGLYEditorMainDialogViewDelegate? = nil
     private var buttonMap_:[UIButton:IMGLYMainMenuButtonType] = [:]
     
     @IBOutlet public weak var scrollView_: UIScrollView!
