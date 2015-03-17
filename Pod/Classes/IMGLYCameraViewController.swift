@@ -33,10 +33,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         UIApplication.sharedApplication().statusBarHidden = true;
     }
     
-    public override func supportedInterfaceOrientations() -> Int {
-        return UIInterfaceOrientation.Portrait.rawValue;
-    }
-    
     public override func shouldAutorotate() -> Bool {
         return false
     }

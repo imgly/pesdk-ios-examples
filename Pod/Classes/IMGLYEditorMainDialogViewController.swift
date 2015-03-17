@@ -147,11 +147,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
         editorView?.imagePreview.image = IMGLYPhotoProcessor.processWithUIImage(loResImage_!, filters:fixedFilterStack_!.activeFilters)
     }
     
-    // MARK:- Device rotation
-    public override func supportedInterfaceOrientations() -> Int {
-        return UIInterfaceOrientation.Portrait.rawValue;
-    }
-    
+    // MARK:- Device rotation    
     public override func shouldAutorotate() -> Bool {
         return false
     }

@@ -203,11 +203,7 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
         textInput_!.textColor = color
     }
     
-    // MARK:- Devicerotation
-    public override func supportedInterfaceOrientations() -> Int {
-        return UIInterfaceOrientation.Portrait.rawValue;
-    }
-    
+    // MARK:- Devicerotation   
     public override func shouldAutorotate() -> Bool {
         return false
     }

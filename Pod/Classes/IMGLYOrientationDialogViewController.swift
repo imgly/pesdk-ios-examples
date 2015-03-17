@@ -61,6 +61,10 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
         setup()
     }
     
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
     public override func viewDidAppear(animated: Bool) {
         if oldCropRect_.origin.x != 0 || oldCropRect_.origin.y != 0 ||
             oldCropRect_.size.width != 1.0 || oldCropRect_.size.height != 1.0 {

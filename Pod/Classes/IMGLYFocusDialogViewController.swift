@@ -54,6 +54,10 @@
         }
     }
     
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
     private func setupCircleGradientView() {
         circleGradientView_ = IMGLYInstanceFactory.sharedInstance.circleGradientView()
         circleGradientView_!.gradientViewDelegate = self

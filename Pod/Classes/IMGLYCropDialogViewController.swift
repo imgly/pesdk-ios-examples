@@ -85,6 +85,10 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         self.view = IMGLYCropDialogView(frame: UIScreen.mainScreen().bounds)
     }
     
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
     public override func viewDidLoad() {
         super.viewDidLoad()
         oldRect_ = fixedFilterStack!.orientationCropFilter!.cropRect

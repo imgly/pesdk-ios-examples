@@ -113,11 +113,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     
-    // MARK:- Devicerotation
-    public override func supportedInterfaceOrientations() -> Int {
-        return UIInterfaceOrientation.Portrait.rawValue;
-    }
-    
+    // MARK:- Devicerotation    
     public override func shouldAutorotate() -> Bool {
         return false
     }

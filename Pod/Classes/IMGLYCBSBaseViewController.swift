@@ -62,6 +62,10 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
         self.view = IMGLYOneSliderDialogView(frame: UIScreen.mainScreen().bounds)
     }
     
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
     public func setup() {
         filterDialogView_ = self.view as? IMGLYOneSliderDialogView
         if filterDialogView_ != nil {

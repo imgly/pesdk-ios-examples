@@ -55,7 +55,7 @@ $ pod install
 
 ### Important
 
-You need Xcode 6.3 Beta 2 to build and run this project. The reason for this is,
+You need Xcode 6.3 Beta 3 to build and run this project. The reason for this is,
 that Apple released Swift 1.2. Using Swift 1.0 would cause the code to break after the next
 release of Xcode.
 The current snapshot isn't final yet. Some things aren't perfect yet. But 
@@ -81,6 +81,7 @@ The `IMGLYEditorMainDialogViewController` functions as main-dialog. It is connec
 These dialogs use a lower resolution image as preview to improve the preformance.
 When the user presses the done button of the main dialog, the choosen settings are applied to the full resolution image.
 The `IMGLYEditorMainDialogViewController` can be used without the `IMGLYCameraViewController` like so:
+
 ```
 func callEditorViewController() {
 	var editorViewController = IMGLYEditorMainDialogViewController()
@@ -88,9 +89,11 @@ func callEditorViewController() {
 	editorViewController.intialFilterType = IMGLYFilterType.None
 	editorViewController.completionBlock = editorCompletionBlock
 }
+	
 ...
+
 func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
- ...
+	...
 }
 ```
 
@@ -137,21 +140,21 @@ Here is an example of a response-filter
 
 ```
 class IMGLYSteelTypeFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Steel"
-        self.displayName = "steel"
-    }
+   	override init() {
+       	super.init()
+       	self.responseName = "Steel"
+       	self.displayName = "steel"
+   	}
     
-    required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
+   	required init(coder aDecoder: NSCoder) {
+       	super.init(coder: aDecoder)
+   	}
     
-    override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Steel
-        }
-    }
+   	override var filterType:IMGLYFilterType {
+       	get {
+           	return IMGLYFilterType.Steel
+       	}
+   	}
 }
 ```
 
