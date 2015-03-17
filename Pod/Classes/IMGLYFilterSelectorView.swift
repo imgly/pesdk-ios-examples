@@ -125,12 +125,12 @@ public class IMGLYFilterSelectorView: UIView {
             
             var activity = scrollView_!.subviews[index * 3 + 2] as! UIView
             activity.frame = button.frame
-            xOffset += kIMGLYPreviewImageDistance + kIMGLYPreviewButtonSize + 2
+            xOffset += kIMGLYPreviewImageDistance + kIMGLYPreviewButtonSize
         }
     }
     
     private func recalculateScrollViewContentSize() {
-        var contentWidth:CGFloat = CGFloat(availableFilterList_.count + 1) * (kIMGLYPreviewButtonSize + kIMGLYPreviewImageDistance) + kIMGLYPreviewImageDistance + 5
+        let contentWidth = CGFloat(availableFilterList_.count) * (kIMGLYPreviewButtonSize + kIMGLYPreviewImageDistance)
         scrollView_!.contentSize = CGSizeMake(contentWidth, 1.0)
     }
     
