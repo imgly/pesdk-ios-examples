@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreGraphics
+import CoreText
 
 /**
   Provides functions to import font added as resource. It also registers them,

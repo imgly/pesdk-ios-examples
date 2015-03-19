@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
-import Foundation
+import CoreImage
 import GLKit
-
 
 /**
 Represents the angle an image should be rotated by.

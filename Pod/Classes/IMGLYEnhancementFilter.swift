@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
-import Foundation
+import CoreImage
 
 /**
   This class uses apples auto-enhancement filters to improve the overall

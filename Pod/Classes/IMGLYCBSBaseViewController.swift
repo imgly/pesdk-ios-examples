@@ -10,7 +10,7 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 @objc public protocol IMGLYCBSBaseViewControllerDelegate: class {
     var caption:String { get }

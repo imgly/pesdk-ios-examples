@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public class IMGLYOneSliderDialogView: UIView {
     @IBOutlet public var contentView: UIView!
