@@ -15,12 +15,12 @@ import GLKit
 public class IMGLYNoneFilter : IMGLYResponseFilter {
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.displayName = "none"
+        self.displayName = "None"
     }
     
-    public override init() {
+    override init() {
         super.init()
-        self.displayName = "none"
+        self.displayName = "None"
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)

@@ -16,7 +16,7 @@ import UIKit
 public typealias IMGLYSubEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
 public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
 
-public protocol IMGLYSubEditorViewControllerProtocol {
+@objc public protocol IMGLYSubEditorViewControllerProtocol {
     var previewImage:UIImage? {set get}
     var completionHandler:IMGLYSubEditorCompletionBlock! {get set}
     var fixedFilterStack:IMGLYFixedFilterStack? {get set}
@@ -24,7 +24,7 @@ public protocol IMGLYSubEditorViewControllerProtocol {
     func viewDidLoad()
 }
 
-public protocol IMGLYEditorMainDialogViewControllerProtocol {
+@objc public protocol IMGLYEditorMainDialogViewControllerProtocol {
     var hiResImage:UIImage? {get set}
     var initialFilterType:IMGLYFilterType {get set}
     var completionBlock:IMGLYEditorCompletionBlock? {get set}
@@ -64,7 +64,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
         }
         editorView?.delegate = self
         fixedFilterStack_ = IMGLYFixedFilterStack()
-        fixedFilterStack_!.setEffectFilter(IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)!)
+        fixedFilterStack_!.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType) as? IMGLYResponseFilter
         updatePreviewImage()
     }
     

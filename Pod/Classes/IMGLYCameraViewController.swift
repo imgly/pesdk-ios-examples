@@ -150,6 +150,10 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     
     // MARK:- IMGFilterSelectorViewDelegate
     public func didSelectFilter(filter:IMGLYFilterType) {
+        if let effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filter) as? IMGLYResponseFilter {
+            cameraController_!.effectFilter = effectFilter
+            cameraView_!.toggleFilterLabel.text = effectFilter.displayName
+        }
         cameraController_!.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filter)
     }
     

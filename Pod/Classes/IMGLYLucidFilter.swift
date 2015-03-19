@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYLucidFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Lucid"
-        self.displayName = "lucid"
+        self.displayName = "Lucid"
     }
     
     required public init(coder aDecoder: NSCoder) {

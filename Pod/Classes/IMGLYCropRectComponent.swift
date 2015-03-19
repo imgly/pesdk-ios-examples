@@ -8,8 +8,7 @@
 
 import Foundation
 
-public class IMGLYCropRectComponent {
-
+@objc public class IMGLYCropRectComponent {
     public var cropRect = CGRectZero
 
     private var topLineView_:UIView = UIView(frame: CGRectZero)

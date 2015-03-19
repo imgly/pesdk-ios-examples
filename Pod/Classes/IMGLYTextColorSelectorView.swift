@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYTextColorSelectorViewDelegate: class {
+@objc public protocol IMGLYTextColorSelectorViewDelegate: class {
     func selectedColor(color:UIColor)
 }
 

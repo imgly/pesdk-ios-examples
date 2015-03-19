@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYSoftFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Soft"
-        self.displayName = "soft"
+        self.displayName = "Soft"
     }
     
     required public init(coder aDecoder: NSCoder) {

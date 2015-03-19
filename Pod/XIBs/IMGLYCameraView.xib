@@ -14,6 +14,7 @@
                 <outlet property="streamPreview_" destination="vdO-8T-ZSg" id="Az4-rM-rFv"/>
                 <outlet property="takePhotoButton" destination="RyV-NS-E4Y" id="6nA-LT-9zt"/>
                 <outlet property="toggleCameraButton" destination="wsP-Fe-qzR" id="2oN-t8-Nyf"/>
+                <outlet property="toggleFilterLabel" destination="DB9-2G-hQS" id="1gB-6N-761"/>
                 <outlet property="toggleFilterSelectorButton" destination="FJ9-Eu-eD0" id="ayK-mZ-n15"/>
             </connections>
         </placeholder>
@@ -115,7 +116,7 @@
                                 <action selector="toggleFilterSelectorButtonPressed:" destination="-1" eventType="touchUpInside" id="SWL-xz-djX"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some filter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DB9-2G-hQS" userLabel="Filtername label">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick Filter" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DB9-2G-hQS" userLabel="Filtername label">
                             <rect key="frame" x="812" y="81" width="56" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="56" id="QKX-fI-UPf"/>

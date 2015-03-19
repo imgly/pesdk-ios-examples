@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYA15Filter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "A15"
-        self.displayName = "a15"
+        self.displayName = "A15"
     }
     
     required public init(coder aDecoder: NSCoder) {

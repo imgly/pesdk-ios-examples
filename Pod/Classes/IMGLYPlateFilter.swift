@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYPlateFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Plate"
-        self.displayName = "plate"
+        self.displayName = "Plate"
     }
     
     required public init(coder aDecoder: NSCoder) {

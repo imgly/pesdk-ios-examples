@@ -22,7 +22,7 @@ import UIKit
     Reset
 }
     
-public protocol IMGLYEditorMainDialogViewDelegate: class {
+@objc public protocol IMGLYEditorMainDialogViewDelegate: class {
     func menuButtonPressed(buttonType:IMGLYMainMenuButtonType)
     func doneButtonPressed()
     func backButtonPressed()

@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYSinFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Sin"
-        self.displayName = "sin"
+        self.displayName = "Sin"
     }
     
     required public init(coder aDecoder: NSCoder) {

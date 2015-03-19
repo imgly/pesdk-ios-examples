@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 /**
    Provides a filter to crop images.
 */
@@ -20,7 +19,7 @@ public class IMGLYCropFilter : CIFilter {
     /// The values are relative.
     public var cropRect = CGRectMake(0, 0, 1, 1)
     
-    public override init() {
+    override init() {
         super.init()
     }
     

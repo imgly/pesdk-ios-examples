@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol IMGFilterSelectorViewDelegate: class {
+@objc public protocol IMGFilterSelectorViewDelegate: class {
     func didSelectFilter(filter:IMGLYFilterType)
 }
 

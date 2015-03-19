@@ -9,7 +9,7 @@
 import Foundation
 import GLKit
 
-public protocol IMGLYFilterTypeProtocol {
+@objc public protocol IMGLYFilterTypeProtocol {
     var filterType:IMGLYFilterType { get }
 }
 
@@ -23,7 +23,7 @@ public protocol IMGLYFilterTypeProtocol {
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
-public class IMGLYResponseFilter : CIFilter, IMGLYFilterTypeProtocol {
+public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     /// A CIImage object that serves as input for the filter.
     public var inputImage:CIImage?
     public var responseName: NSString {
@@ -47,7 +47,7 @@ public class IMGLYResponseFilter : CIFilter, IMGLYFilterTypeProtocol {
     private var colorCubeData_:AnyObject?
     private var responseName_: String = ""
     
-    public override init() {
+    override init() {
         super.init()
         colorCubeData_ = nil
     }

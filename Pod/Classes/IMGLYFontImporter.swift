@@ -12,7 +12,7 @@ import Foundation
   Provides functions to import font added as resource. It also registers them,
   so that the application can load them like any other pre-installed font.
 */
-public class IMGLYFontImporter {
+@objc public class IMGLYFontImporter {
     private static var fontsRegistred:Bool = false
     
     /**

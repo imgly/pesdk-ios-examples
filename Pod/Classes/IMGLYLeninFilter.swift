@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYLeninFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Lenin"
-        self.displayName = "lenin"
+        self.displayName = "Lenin"
     }
     
     required public init(coder aDecoder: NSCoder) {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYContainerViewHelper {
+@objc public class IMGLYContainerViewHelper {
     // MARK: - View connection
     public func loadXib(name:String, view:UIView) {
         NSBundle(forClass: IMGLYContainerViewHelper.self).loadNibNamed(name, owner: view, options: nil)

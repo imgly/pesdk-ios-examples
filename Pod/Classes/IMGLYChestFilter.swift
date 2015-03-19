@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYChestFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Chest"
-        self.displayName = "chest"
+        self.displayName = "Chest"
     }
     
     required public init(coder aDecoder: NSCoder) {

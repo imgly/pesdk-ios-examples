@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYTextDialogViewDelegate: class {
+@objc public protocol IMGLYTextDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
     func selectedColor(color:UIColor)

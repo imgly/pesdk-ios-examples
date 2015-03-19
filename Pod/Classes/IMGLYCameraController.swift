@@ -11,7 +11,7 @@ import OpenGLES
 import GLKit
 import AVFoundation
 
-public protocol IMGLYCameraControllerDelegate: class {
+@objc public protocol IMGLYCameraControllerDelegate: class {
     func captureSessionStarted()
     func captureSessionStopped()
     func willToggleCamera()
@@ -20,8 +20,8 @@ public protocol IMGLYCameraControllerDelegate: class {
 }
 
 /**
-    The camera-controller takes care about the communication with the capture devices.
-    It provides methods to start a capture session, toggle between cameras, or select a flash mode.
+The camera-controller takes care about the communication with the capture devices.
+It provides methods to start a capture session, toggle between cameras, or select a flash mode.
 */
 public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     public weak var delegate: IMGLYCameraControllerDelegate?
@@ -106,7 +106,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         var videoSource = IMGLYSourceVideoFilter()
         activeFilters_ = [videoSource]
     }
-
+    
     private func setupVideoPreview() {
         if !videoPreviewAdded_ {
             let window = (UIApplication.sharedApplication().delegate?.window!)!
@@ -247,7 +247,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     public func isFlashPresent() -> Bool {
         #if !((arch(i386) || arch(x86_64)) && os(iOS))
             return videoDevice_!.hasFlash
-        #else
+            #else
             return true
         #endif
     }
@@ -263,7 +263,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
                 self.captureSession_!.startRunning()
                 self.delegate?.captureSessionStarted()
             }
-        #else
+            #else
             println("startCaptureSession called")
         #endif
     }
@@ -299,7 +299,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     }
     
     /**
-    Selects the next flash-mode. The order is Auto->On->Off. 
+    Selects the next flash-mode. The order is Auto->On->Off.
     If the current device does not support auto-flash, this method
     just toggles between on and off.
     */
@@ -308,7 +308,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         updateFlashMode()
     }
     
-   private func updateFlashMode() {
+    private func updateFlashMode() {
         #if !((arch(i386) || arch(x86_64)) && os(iOS))
             var error:NSError? = nil
             self.captureSession_?.beginConfiguration()
@@ -318,10 +318,10 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             self.captureSession_?.commitConfiguration()
             if supportedFlashModes_.count > 0 {
                 delegate?.didSetFlashMode(supportedFlashModes_[flashModeIndex_])
-            } 
+            }
         #endif
     }
-
+    
     private func updateSupportedFlashModeList() {
         supportedFlashModes_ = []
         if isFlashPresent() {
@@ -363,7 +363,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     /**
     Takes a photo and hands it over to the completion block.
     
-    :param: completion A completion block that has an image and an error as parameters. 
+    :param: completion A completion block that has an image and an error as parameters.
     If the image was taken sucessfuly, the error is nil.
     */
     public func takePhoto(completion:((image: UIImage?, error: NSError?) -> Void)?) {
@@ -371,7 +371,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             return
         }
         var imageOrientation = imageOrientationForDeviceOrientation(UIDevice.currentDevice().orientation)
-
+        
         dispatch_async(self.captureSessionQueue_!, {
             self.stillImageOutput_.captureStillImageAsynchronouslyFromConnection(
                 self.stillImageOutput_.connectionWithMediaType(AVMediaTypeVideo),completionHandler: {
@@ -390,7 +390,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         })
     }
     
- 
+    
     private func imageOrientationForDeviceOrientation(orientation:UIDeviceOrientation) -> UIImageOrientation {
         var result = UIImageOrientation.Right
         switch (orientation) {
@@ -411,7 +411,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         }
         return result
     }
-
+    
     
     // MARK:- AVCaptureVideoDataOutputSampleBufferDelegate
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
@@ -421,33 +421,56 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let sourceImage = CIImage(CVPixelBuffer:imageBuffer as CVPixelBufferRef, options: nil)
-        let filteredImage:CIImage? = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters:activeFilters_)
+        
+        let filteredImage: CIImage? = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: activeFilters_)
+        
+        
         let sourceExtent = sourceImage.extent()
+        let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView_.drawableWidth, height: videoPreviewView_.drawableHeight)
         
-        var scale = CGFloat(videoPreviewView_.drawableWidth) / CGRectGetWidth(sourceExtent)
-        if CGRectGetHeight(sourceExtent) * scale > CGFloat(videoPreviewView_.drawableHeight) {
-            scale = CGFloat(videoPreviewView_.drawableHeight) / CGRectGetHeight(sourceExtent)
-        }
+        let aspectFitScaledRect = fitRect(sourceExtent, intoTargetRect: targetRect, withContentMode: .ScaleAspectFit)
         
-        let scaledWidth = CGRectGetWidth(sourceExtent) * scale
-        let scaledHeight = CGRectGetHeight(sourceExtent) * scale
-        let scaledX = CGFloat(videoPreviewView_.drawableWidth) / 2 - scaledWidth / 2
-        let scaledY = CGFloat(videoPreviewView_.drawableHeight) / 2 - scaledHeight / 2;
-        
-        let scaledRect = CGRect(x: scaledX, y: scaledY, width: scaledWidth, height: scaledHeight)
-
-        videoPreviewView_.bindDrawable()
         if glContext_ != EAGLContext.currentContext() {
             EAGLContext.setCurrentContext(glContext_)
         }
-        glClearColor(0.0, 0.0, 0.0, 1.0)
+        
+        videoPreviewView_.bindDrawable()
+        
+        glClearColor(0, 0, 0, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
-        glEnable(GLenum(GL_BLEND))
-        glBlendFunc(GLenum(GL_ONE), GLenum(GL_ONE_MINUS_SRC_ALPHA))
-        if filteredImage != nil {
-            ciContext_.drawImage(filteredImage!, inRect:scaledRect, fromRect:sourceExtent)
+        
+        if let filteredImage = filteredImage {
+            ciContext_.drawImage(filteredImage, inRect: aspectFitScaledRect, fromRect: sourceExtent)
         }
+        
         videoPreviewView_.display()
     }
     
+    // MARK: - Helpers
+    
+    private func fitRect(sourceRect: CGRect, intoTargetRect targetRect: CGRect, withContentMode contentMode: UIViewContentMode) -> CGRect {
+        if !(contentMode == .ScaleAspectFit || contentMode == .ScaleAspectFill) {
+            // Not implemented
+            return CGRectZero
+        }
+        
+        var scale = CGRectGetWidth(targetRect) / CGRectGetWidth(sourceRect)
+        
+        if contentMode == .ScaleAspectFit {
+            if CGRectGetHeight(sourceRect) * scale > CGRectGetHeight(targetRect) {
+                scale = CGRectGetHeight(targetRect) / CGRectGetHeight(sourceRect)
+            }
+        } else if contentMode == .ScaleAspectFill {
+            if CGRectGetHeight(sourceRect) * scale < CGRectGetHeight(targetRect) {
+                scale = CGRectGetHeight(targetRect) / CGRectGetHeight(sourceRect)
+            }
+        }
+        
+        let scaledWidth = CGRectGetWidth(sourceRect) * scale
+        let scaledHeight = CGRectGetHeight(sourceRect) * scale
+        let scaledX = CGRectGetWidth(targetRect) / 2 - scaledWidth / 2
+        let scaledY = CGRectGetHeight(targetRect) / 2 - scaledHeight / 2
+        
+        return CGRect(x: scaledX, y: scaledY, width: scaledWidth, height: scaledHeight)
+    }
 }

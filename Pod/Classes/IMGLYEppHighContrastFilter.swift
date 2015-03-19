@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYHighContrastFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "HighContrast"
-        self.displayName = "hicon"
+        self.displayName = "Hicon"
     }
     
     required public init(coder aDecoder: NSCoder) {

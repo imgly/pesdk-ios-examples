@@ -27,6 +27,7 @@ public class IMGLYCameraView: UIView {
     @IBOutlet public weak var flashModeButton: UIButton!
     @IBOutlet public weak var toggleCameraButton: UIButton!
     @IBOutlet public weak var takePhotoButton: UIButton!
+    @IBOutlet public weak var toggleFilterLabel: UILabel!
     @IBOutlet public weak var toggleFilterSelectorButton: UIButton!
     
     private var autoFlashSupported_ = true
@@ -139,7 +140,7 @@ public class IMGLYCameraView: UIView {
         var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
         if (fetchResult.lastObject != nil) {
             var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
-            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: CGSizeMake(100, 100),  contentMode: PHImageContentMode.AspectFit, options: PHImageRequestOptions()) { (result, info) -> Void in
+            PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: CGSizeMake(100, 100), contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
                 self.selectFromCameraRollButton!.setImage(result, forState: UIControlState.Normal)
             }
         }

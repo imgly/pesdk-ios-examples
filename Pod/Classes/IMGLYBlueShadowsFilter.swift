@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "BlueShadows"
-        self.displayName = "blue shade"
+        self.displayName = "Blue Shade"
     }
     
     required public init(coder aDecoder: NSCoder) {

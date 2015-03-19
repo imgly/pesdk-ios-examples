@@ -88,7 +88,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
     private func updatePreviewImage() {
         var actualFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(selectedFilterType_)
         if fixedFilterStack != nil {
-            fixedFilterStack!.setEffectFilter(actualFilter!)
+            fixedFilterStack!.effectFilter = actualFilter as? IMGLYResponseFilter
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
         }
         filterDialogView_!.previewImageView.image = filteredImage_
@@ -106,7 +106,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
         if self.completionHandler != nil {
             var actualFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(oldSelectedFilterType_)
             if fixedFilterStack != nil {
-                fixedFilterStack!.setEffectFilter(actualFilter!)
+                fixedFilterStack!.effectFilter = actualFilter as? IMGLYResponseFilter
             }
             self.completionHandler(IMGLYEditorResult.Cancel, nil)
         }

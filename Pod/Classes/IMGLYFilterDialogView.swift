@@ -8,12 +8,12 @@
 
 import UIKit
 
-public protocol IMGLYFilterDialogViewDelegate: class {
+@objc public protocol IMGLYFilterDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
 }
 
-public protocol IMGLYSliderDialogViewDelegate: IMGLYFilterDialogViewDelegate {
+@objc public protocol IMGLYSliderDialogViewDelegate: IMGLYFilterDialogViewDelegate {
     func sliderValueChanged(newValue:Float)
 }
 

@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYPitchedFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Pitched"
-        self.displayName = "pitched"
+        self.displayName = "Pitched"
     }
     
     required public init(coder aDecoder: NSCoder) {

@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYCelsiusFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Celsius"
-        self.displayName = "celsius"
+        self.displayName = "Celsius"
     }
     
     required public init(coder aDecoder: NSCoder) {

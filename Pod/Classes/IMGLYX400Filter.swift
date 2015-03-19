@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYX400Filter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "X400"
-        self.displayName = "x400"
+        self.displayName = "X400"
     }
     
     required public init(coder aDecoder: NSCoder) {

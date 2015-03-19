@@ -12,7 +12,7 @@ public class IMGLYNoGreenFilter: IMGLYResponseFilter {
     override init() {
         super.init()         
         self.responseName = "NoGreen"
-        self.displayName = "no green"
+        self.displayName = "No Green"
     }
 
     required public init(coder aDecoder: NSCoder) {

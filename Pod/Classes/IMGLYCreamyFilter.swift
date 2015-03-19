@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYCreamyFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Creamy"
-        self.displayName = "creamy"
+        self.displayName = "Creamy"
     }
     
     required public init(coder aDecoder: NSCoder) {

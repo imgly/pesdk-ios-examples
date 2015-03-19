@@ -22,12 +22,12 @@ public class IMGLYSourceFilter : CIFilter {
     
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.displayName = "source"
+        self.displayName = "Source"
     }
     
-    public override init() {
+    override init() {
         super.init()
-        self.displayName = "source"
+        self.displayName = "Source"
     }
 
     public override var outputImage: CIImage! {

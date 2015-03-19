@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYTwilightFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Twilight"
-        self.displayName = "twilight"
+        self.displayName = "Twilight"
     }
     
     required public init(coder aDecoder: NSCoder) {

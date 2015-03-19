@@ -12,7 +12,7 @@
 
 import Foundation
 
-public  protocol IMGLYCBSBaseViewControllerDelegate: class {
+@objc public protocol IMGLYCBSBaseViewControllerDelegate: class {
     var caption:String { get }
     var minValue:Float { get }
     var maxValue:Float { get }

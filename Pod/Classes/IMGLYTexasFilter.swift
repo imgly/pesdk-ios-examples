@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYTexasFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Texas"
-        self.displayName = "texas"
+        self.displayName = "Texas"
     }
     
     required public init(coder aDecoder: NSCoder) {

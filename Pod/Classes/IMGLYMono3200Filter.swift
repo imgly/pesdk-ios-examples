@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYMono3200Filter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Mono3200"
-        self.displayName = "mono3200"
+        self.displayName = "Mono3200"
     }
     
     required public init(coder aDecoder: NSCoder) {

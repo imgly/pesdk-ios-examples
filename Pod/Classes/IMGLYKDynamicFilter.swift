@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYKDynamicFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "KDynamic"
-        self.displayName = "dynamic"
+        self.displayName = "Dynamic"
     }
     
     required public init(coder aDecoder: NSCoder) {

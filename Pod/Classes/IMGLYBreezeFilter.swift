@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYBreezeFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Breeze"
-        self.displayName = "breeze"
+        self.displayName = "Breeze"
     }
     
     required public init(coder aDecoder: NSCoder) {

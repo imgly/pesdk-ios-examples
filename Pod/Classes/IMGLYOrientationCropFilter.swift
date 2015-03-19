@@ -40,7 +40,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
         self.displayName = "OrientationCropFilter"
     }
     
-    public override init() {
+    override init() {
         super.init()
         self.displayName = "OrientationCropFilter"
     }

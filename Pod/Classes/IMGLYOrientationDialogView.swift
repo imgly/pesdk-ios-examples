@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYOrientationDialogViewDelegate: class {
+@objc public protocol IMGLYOrientationDialogViewDelegate: class {
     func rotateLeftButtonPressed()
     func rotateRightButtonPressed()
     func flipHorizontalButtonPressed()

@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYNeatFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Neat"
-        self.displayName = "neat"
+        self.displayName = "Neat"
     }
     
     required public init(coder aDecoder: NSCoder) {

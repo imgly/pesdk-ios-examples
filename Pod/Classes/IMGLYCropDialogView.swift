@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYCropDialogViewDelegate: class {
+@objc public protocol IMGLYCropDialogViewDelegate: class {
     func doneButtonPressed()
     func backButtonPressed()
     func ratio1to1ButtonPressed()

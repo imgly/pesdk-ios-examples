@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYGobblinFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Gobblin"
-        self.displayName = "gobblin"
+        self.displayName = "Gobblin"
     }
     
     required public init(coder aDecoder: NSCoder) {

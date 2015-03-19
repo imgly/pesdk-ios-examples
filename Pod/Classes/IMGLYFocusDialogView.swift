@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYFocusDialogViewDelegate: class {
+@objc public protocol IMGLYFocusDialogViewDelegate: class {
     func linearButtonPressed()
     func radialButtonPressed()
     func doneButtonPressed()

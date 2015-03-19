@@ -12,7 +12,7 @@ public class IMGLYSunsetFilter: IMGLYResponseFilter {
     override init() {
         super.init()
         self.responseName = "Sunset"
-        self.displayName = "sunset"
+        self.displayName = "Sunset"
     }
     
     required public init(coder aDecoder: NSCoder) {

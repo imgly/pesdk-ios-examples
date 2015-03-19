@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYLithoFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Litho"
-        self.displayName = "litho"
+        self.displayName = "Litho"
     }
     
     required public init(coder aDecoder: NSCoder) {

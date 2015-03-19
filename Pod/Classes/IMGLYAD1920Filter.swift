@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYAD1920Filter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "AD1920"
-        self.displayName = "ad1920"
+        self.displayName = "AD1920"
     }
     
     required public init(coder aDecoder: NSCoder) {

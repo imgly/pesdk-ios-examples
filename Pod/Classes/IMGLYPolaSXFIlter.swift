@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYPolaSXFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "PolaSX"
-        self.displayName = "sx"
+        self.displayName = "SX"
     }
     
     required public init(coder aDecoder: NSCoder) {

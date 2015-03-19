@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IMGLYFontSelectorDelegate: class {
+@objc public protocol IMGLYFontSelectorDelegate: class {
     func selectedFontWithName(fontName:String)
 }
 

@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYClassicFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Classic"
-        self.displayName = "classic"
+        self.displayName = "Classic"
     }
     
     required public init(coder aDecoder: NSCoder) {

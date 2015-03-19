@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYLomo100Filter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Lomo100"
-        self.displayName = "lomo 100"
+        self.displayName = "Lomo 100"
     }
     
     required public init(coder aDecoder: NSCoder) {

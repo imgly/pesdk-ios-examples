@@ -23,7 +23,7 @@ public class IMGLYTextFilter : CIFilter {
     /// The color of the text.
     public var color = UIColor.whiteColor()
     
-    public override init() {
+    override init() {
         super.init()
     }
     

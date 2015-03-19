@@ -9,10 +9,10 @@
 import Foundation
 
 public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "SepiaHigh"
-        self.displayName = "sepia high"
+        self.displayName = "Sepia High"
     }
     
     required public init(coder aDecoder: NSCoder) {

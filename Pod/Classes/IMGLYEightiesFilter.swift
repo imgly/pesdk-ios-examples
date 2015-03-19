@@ -9,7 +9,7 @@
 import Foundation
 
 public class IMGLYEightiesFilter: IMGLYResponseFilter {
-    public override init() {
+    override init() {
         super.init()
         self.responseName = "Eighties"
         self.displayName = "80s"
