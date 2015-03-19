@@ -51,6 +51,7 @@
                                                     <state key="normal" image="icon_option_magic">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <state key="selected" image="icon_option_magic_active"/>
                                                     <connections>
                                                         <action selector="menuButtonPressed:" destination="-1" eventType="touchUpInside" id="vmx-n0-AhQ"/>
                                                     </connections>
@@ -435,6 +436,7 @@
         <image name="icon_option_filters" width="36" height="36"/>
         <image name="icon_option_focus" width="36" height="36"/>
         <image name="icon_option_magic" width="36" height="36"/>
+        <image name="icon_option_magic_active" width="36" height="36"/>
         <image name="icon_option_orientation" width="36" height="36"/>
         <image name="icon_option_saturation" width="36" height="36"/>
         <image name="icon_option_text" width="36" height="36"/>

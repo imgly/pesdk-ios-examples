@@ -105,8 +105,14 @@ public class IMGLYEditorMainDialogView: UIView {
     }
     
     @IBAction public func menuButtonPressed(sender: AnyObject) {
+        let button = sender as! UIButton
+        let type = buttonMap_[button]
+        
+        if type == .Magic {
+            button.selected = !button.selected
+        }
+        
         if delegate != nil {
-            var type = buttonMap_[sender as! UIButton]
             delegate!.menuButtonPressed(type!)
         }
     }
