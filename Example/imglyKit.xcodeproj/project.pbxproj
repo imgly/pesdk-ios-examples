@@ -133,7 +133,7 @@
 		09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */; };
 		09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */; };
 		09D0B2721A81256B008782FB /* IMGLYSourceFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */; };
-		09D0B2741A8132F5008782FB /* IMGLYFixedFitlerStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2731A8132F5008782FB /* IMGLYFixedFitlerStack.swift */; };
+		09D0B2741A8132F5008782FB /* IMGLYFixedFilterStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */; };
 		09D0B2781A8254B6008782FB /* IMGLYFilterSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */; };
 		09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */; };
 		09D14D361A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D14D351A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m */; };
@@ -364,7 +364,7 @@
 		09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYInstanceFactory.swift; path = ../../Pod/Classes/IMGLYInstanceFactory.swift; sourceTree = "<group>"; };
 		09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYPhotoProcessor.swift; path = ../../Pod/Classes/IMGLYPhotoProcessor.swift; sourceTree = "<group>"; };
 		09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYSourceFilters.swift; path = ../../Pod/Classes/IMGLYSourceFilters.swift; sourceTree = "<group>"; };
-		09D0B2731A8132F5008782FB /* IMGLYFixedFitlerStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFixedFitlerStack.swift; path = ../../Pod/Classes/IMGLYFixedFitlerStack.swift; sourceTree = "<group>"; };
+		09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFixedFilterStack.swift; path = ../../Pod/Classes/IMGLYFixedFilterStack.swift; sourceTree = "<group>"; };
 		09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFilterSelectorView.swift; path = ../../Pod/Classes/IMGLYFilterSelectorView.swift; sourceTree = "<group>"; };
 		09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/IMGLYContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; };
 		09D14D341A8917F7006904A1 /* UIImage+IMGLYKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+IMGLYKitAdditions.h"; path = "../../Pod/Classes/UIImage+IMGLYKitAdditions.h"; sourceTree = "<group>"; };
@@ -519,7 +519,7 @@
 				09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */,
 				09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */,
 				09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */,
-				09D0B2731A8132F5008782FB /* IMGLYFixedFitlerStack.swift */,
+				09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */,
 				098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */,
 				0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */,
 				09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */,
@@ -1112,7 +1112,7 @@
 				09286C841AB0571300B4EF99 /* IMGLYFrontFilter.swift in Sources */,
 				0902D7581A9D342000952EFC /* IMGLYBleachedFilter.swift in Sources */,
 				0902D7561A9D33F500952EFC /* IMGLYTenderFilter.swift in Sources */,
-				09D0B2741A8132F5008782FB /* IMGLYFixedFitlerStack.swift in Sources */,
+				09D0B2741A8132F5008782FB /* IMGLYFixedFilterStack.swift in Sources */,
 				098BEAE81A83D5630073DB2F /* IMGLYNoneFilter.swift in Sources */,
 				09286C961AB0579500B4EF99 /* IMGLYFoodFilter.swift in Sources */,
 				0902D7501A9D339200952EFC /* IMGLYLucidFilter.swift in Sources */,
