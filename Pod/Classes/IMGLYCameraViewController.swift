@@ -18,7 +18,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     
     public var completionBlock:IMGLYCameraCompletionBlock? = nil
     
-    private var cameraView_:IMGLYCameraView?
+    public private(set) var cameraView:IMGLYCameraView?
     private var cameraController_:IMGLYCameraController?
     private var image_:UIImage?
     private var currentCameraPosition_:AVCaptureDevicePosition = AVCaptureDevicePosition.Front
@@ -48,16 +48,16 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        cameraView_!.setLastImageFromRollAsPreview()
+        cameraView!.setLastImageFromRollAsPreview()
         cameraController_!.startCaptureSession()
-        cameraView_!.enableButtons()
-        cameraView_!.setNeedsDisplay()
+        cameraView!.enableButtons()
+        cameraView!.setNeedsDisplay()
     }
     
     public func setupCameraView() {
-        if let cameraView = self.view as? IMGLYCameraView {
-            cameraView_ = self.view as? IMGLYCameraView
-            cameraController_ = IMGLYCameraController(previewView: cameraView_!.streamPreview)
+        if self.view is IMGLYCameraView {
+            cameraView = self.view as? IMGLYCameraView
+            cameraController_ = IMGLYCameraController(previewView: cameraView!.streamPreview)
             cameraController_!.delegate = self
             if cameraController_!.isCameraPresentWithPosition(AVCaptureDevicePosition.Back) {
                 cameraController_!.setupWithCameraPosition(AVCaptureDevicePosition.Back)
@@ -66,18 +66,18 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
                 cameraController_!.setupWithCameraPosition(AVCaptureDevicePosition.Front)
                 currentCameraPosition_ = AVCaptureDevicePosition.Front
             }
-            cameraView_!.filterSelectorView.commonInit()
-            cameraView_!.filterSelectorView.delegate = self
-            cameraView_!.delegate = self
-            cameraView_!.toggleCameraButton.hidden = !cameraController_!.isMoreThanOneCameraPresent()
-            cameraView_!.flashModeButton.hidden = !cameraController_!.isFlashPresent()
+            cameraView!.filterSelectorView.commonInit()
+            cameraView!.filterSelectorView.delegate = self
+            cameraView!.delegate = self
+            cameraView!.toggleCameraButton.hidden = !cameraController_!.isMoreThanOneCameraPresent()
+            cameraView!.flashModeButton.hidden = !cameraController_!.isFlashPresent()
         }
     }
     
     // MARK:- IMGLYCameraViewDelegate
     public func takePhotoButtonPressed() {
-        self.cameraView_!.disableButtons()
-        self.cameraView_!.setNeedsDisplay()
+        self.cameraView!.disableButtons()
+        self.cameraView!.setNeedsDisplay()
         cameraController_!.takePhoto { (image, error) -> Void in
             if error == nil {
                 self.cameraController_!.stopCaptureSession()
@@ -100,7 +100,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     }
     
     public func toggleCameraButtonPressed() {
-        self.cameraView_!.disableButtons()
+        self.cameraView!.disableButtons()
         self.cameraController_!.toggleCameraPosition()
     }
     
@@ -152,7 +152,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     public func didSelectFilter(filter:IMGLYFilterType) {
         if let effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filter) as? IMGLYResponseFilter {
             cameraController_!.effectFilter = effectFilter
-            cameraView_!.toggleFilterLabel.text = effectFilter.displayName
+            cameraView!.toggleFilterLabel.text = effectFilter.displayName
         }
         cameraController_!.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filter)
     }
@@ -160,7 +160,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     private func showModalEditorNavigationController() {
         let editorViewController = IMGLYEditorMainDialogViewController()
         editorViewController.hiResImage = image_
-        editorViewController.initialFilterType = cameraView_!.filterSelectorView.activeFilterType
+        editorViewController.initialFilterType = cameraView!.filterSelectorView.activeFilterType
         editorViewController.completionBlock = editorCompletionBlock
         image_ = nil
         
@@ -170,7 +170,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     // MARK:- IMGLYCameraControllerDelegate
     public func captureSessionStarted() {
         dispatch_async(dispatch_get_main_queue()) {
-            self.cameraView_!.enableButtons()
+            self.cameraView!.enableButtons()
         }
     }
     
@@ -186,29 +186,27 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         dispatch_async(dispatch_get_main_queue()) {
             if self.cameraController_!.isFlashPresent() {
                 println("flash present")
-                self.cameraView_!.flashModeButton.hidden = false
+                self.cameraView!.flashModeButton.hidden = false
             }
             else {
                 println("not present")
-                self.cameraView_!.flashModeButton.hidden = true
+                self.cameraView!.flashModeButton.hidden = true
             }
         }
     }
     
     public func didSetFlashMode(flashMode:AVCaptureFlashMode) {
-       
-            cameraView_!.setFlashMode(flashMode)
-        
+            cameraView!.setFlashMode(flashMode)
     }
     
-    // MARK:- Completion
-    public func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
+    // MARK: - Completion
+    private func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
         if result == IMGLYEditorResult.Done && image != nil {
             UIImageWriteToSavedPhotosAlbum(image, self, "imageSaved:didFinishSavingWithError:contextInfo:", nil);
         }
     }
     
-    public func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
-        cameraView_!.setLastImageFromRollAsPreview()
+    private func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
+        cameraView!.setLastImageFromRollAsPreview()
     }
 }
