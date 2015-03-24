@@ -18,8 +18,8 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
     private var oldSelectedFilterType_:IMGLYFilterType = IMGLYFilterType.None
     
     // MARK:- IMGLYSubEditorViewController
-    private var completionHandler_:IMGLYSubEditorCompletionBlock!
-    public var completionHandler:IMGLYSubEditorCompletionBlock! {
+    private var completionHandler_:IMGLYSubEditorCompletionBlock?
+    public var completionHandler:IMGLYSubEditorCompletionBlock? {
         get {
             return completionHandler_
         }
@@ -96,9 +96,7 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
     
     // MARK:- Completion-block handling
     public func doneButtonPressed() {
-        if self.completionHandler != nil {
-            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
-        }
+        completionHandler?(IMGLYEditorResult.Done, self.filteredImage_)
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     
@@ -108,7 +106,8 @@ public class IMGLYFilterDialogViewController: UIViewController, IMGLYSubEditorVi
             if fixedFilterStack != nil {
                 fixedFilterStack!.effectFilter = actualFilter as? IMGLYResponseFilter
             }
-            self.completionHandler(IMGLYEditorResult.Cancel, nil)
+            
+            completionHandler?(IMGLYEditorResult.Cancel, nil)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }

@@ -37,8 +37,8 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     private var oldColor_ = UIColor.whiteColor()
     private var oldFontScaleFactor_ = CGFloat(0)
     
-    private var completionHandler_:IMGLYSubEditorCompletionBlock!
-    public var completionHandler:IMGLYSubEditorCompletionBlock! {
+    private var completionHandler_:IMGLYSubEditorCompletionBlock?
+    public var completionHandler:IMGLYSubEditorCompletionBlock? {
         get {
             return completionHandler_
         }
@@ -176,24 +176,26 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     // MARK:- IMGLYTextDialogViewDelegate
     public func doneButtonPressed() {
         textInput_!.resignFirstResponder()
-        if self.completionHandler != nil {
+        if completionHandler != nil {
             fixedFilterStack!.textFilter!.text = textLabel_!.text!
             fixedFilterStack!.textFilter!.color = textColor_
             fixedFilterStack!.textFilter!.fontName = fontName_
             fixedFilterStack!.textFilter!.position = transformedTextPosition()
             fixedFilterStack!.textFilter!.fontScaleFactor = currentTextSize_ / scaledImageSize().height
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
+            completionHandler?(IMGLYEditorResult.Done, self.filteredImage_)
         }
+        
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     
     public func backButtonPressed() {
         textInput_!.resignFirstResponder()
-        if self.completionHandler != nil {
+        if completionHandler != nil {
             restoreValues()
-            self.completionHandler(IMGLYEditorResult.Cancel, nil)
+            completionHandler?(IMGLYEditorResult.Cancel, nil)
         }
+        
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     

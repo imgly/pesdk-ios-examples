@@ -39,8 +39,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         }
     }
     
-    private var completionHandler_:IMGLYSubEditorCompletionBlock!
-    public var completionHandler:IMGLYSubEditorCompletionBlock! {
+    private var completionHandler_:IMGLYSubEditorCompletionBlock?
+    public var completionHandler:IMGLYSubEditorCompletionBlock? {
         get {
             return completionHandler_
         }
@@ -457,7 +457,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
             var rect = normalizedCropRect()
             fixedFilterStack!.orientationCropFilter!.cropRect = rect
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-            self.completionHandler(IMGLYEditorResult.Done, filteredImage_)
+            self.completionHandler?(IMGLYEditorResult.Done, filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
@@ -465,7 +465,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     public func backButtonPressed() {
         if self.completionHandler != nil {
             fixedFilterStack!.orientationCropFilter!.cropRect  = oldRect_
-            self.completionHandler(IMGLYEditorResult.Cancel, nil)
+            self.completionHandler?(IMGLYEditorResult.Cancel, nil)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }

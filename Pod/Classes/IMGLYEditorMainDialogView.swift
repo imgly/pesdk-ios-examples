@@ -11,6 +11,7 @@ import UIKit
 @objc public enum IMGLYMainMenuButtonType: Int {
     case Magic,
     Filter,
+    Stickers,
     Orientation,
     Focus,
     Crop,
@@ -55,6 +56,7 @@ public class IMGLYEditorMainDialogView: UIView {
     @IBOutlet public weak var saturationButton_: UIButton!
     @IBOutlet public weak var textButton_: UIButton!
     @IBOutlet public weak var filterButton_: UIButton!
+    @IBOutlet public weak var stickersButton_: UIButton!
     @IBOutlet public weak var imagePreview: UIImageView!
     
     public override init(frame: CGRect) {
@@ -82,6 +84,7 @@ public class IMGLYEditorMainDialogView: UIView {
     public func setupButtonMap() {
         buttonMap_ = [magicButton_:IMGLYMainMenuButtonType.Magic,
             filterButton_:IMGLYMainMenuButtonType.Filter,
+            stickersButton_:IMGLYMainMenuButtonType.Stickers,
             orientationButton_:IMGLYMainMenuButtonType.Orientation,
             focusButton_:IMGLYMainMenuButtonType.Focus,
             cropButton_:IMGLYMainMenuButtonType.Crop,

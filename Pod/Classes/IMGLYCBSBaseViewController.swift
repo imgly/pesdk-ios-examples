@@ -29,8 +29,8 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     public var oldValue_:Float = 0.0
     public weak var delegate:IMGLYCBSBaseViewControllerDelegate?
     
-    private var completionHandler_:IMGLYSubEditorCompletionBlock!
-    public var completionHandler:IMGLYSubEditorCompletionBlock! {
+    private var completionHandler_:IMGLYSubEditorCompletionBlock?
+    public var completionHandler:IMGLYSubEditorCompletionBlock? {
         get {
             return completionHandler_
         }
@@ -94,18 +94,20 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
     
     // MARK:- Completion-block handling
     public func doneButtonPressed() {
-        if self.completionHandler != nil {
+        if completionHandler != nil {
             delegate?.setValue(value_)
-            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
+            completionHandler?(IMGLYEditorResult.Done, self.filteredImage_)
         }
+        
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     
     public func backButtonPressed() {
-        if self.completionHandler != nil {
+        if completionHandler != nil {
             delegate?.setValue(oldValue_)
-            self.completionHandler(IMGLYEditorResult.Cancel, nil)
+            completionHandler?(IMGLYEditorResult.Cancel, nil)
         }
+        
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     

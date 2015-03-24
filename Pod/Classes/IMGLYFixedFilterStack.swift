@@ -24,6 +24,7 @@ import GLKit
     public var brightnessFitler:IMGLYContrastBrightnessSaturationFilter?
     public var tiltShiftFilter:IMGLYTiltshiftFilter?
     public var textFilter:IMGLYTextFilter?
+    public var stickerFilters = [CIFilter]()
     
     var activeFilters_:[CIFilter] = []
     public var activeFilters:[CIFilter] {
@@ -62,6 +63,7 @@ import GLKit
         activeFilters_.append(effectFilter!)
         activeFilters_.append(brightnessFitler!)
         activeFilters_.append(textFilter!)
+        activeFilters_ += stickerFilters
     }
     
     private func appendFilterIfValid(#filter:CIFilter?) {

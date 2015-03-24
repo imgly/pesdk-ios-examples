@@ -23,8 +23,8 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
     private var cropRectTopBound_:CGFloat = 0.0
     private var cropRectBottomBound_:CGFloat = 0.0
     
-    private var completionHandler_:IMGLYSubEditorCompletionBlock!
-    public var completionHandler:IMGLYSubEditorCompletionBlock! {
+    private var completionHandler_:IMGLYSubEditorCompletionBlock?
+    public var completionHandler:IMGLYSubEditorCompletionBlock? {
         get {
             return completionHandler_
         }
@@ -103,16 +103,14 @@ public class IMGLYOrientationDialogViewController: UIViewController, IMGLYSubEdi
             self.filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
 
-            self.completionHandler(IMGLYEditorResult.Done, self.filteredImage_)
+            self.completionHandler?(IMGLYEditorResult.Done, self.filteredImage_)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     
     public func backButtonPressed() {
         fixedFilterStack!.orientationCropFilter!.cropRect = oldCropRect_
-        if self.completionHandler != nil {
-            self.completionHandler(IMGLYEditorResult.Cancel, nil)
-        }
+        self.completionHandler?(IMGLYEditorResult.Cancel, nil)
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
     }
     

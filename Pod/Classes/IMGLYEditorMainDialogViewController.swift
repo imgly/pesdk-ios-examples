@@ -18,7 +18,7 @@ public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
 
 @objc public protocol IMGLYSubEditorViewControllerProtocol {
     var previewImage:UIImage? {set get}
-    var completionHandler:IMGLYSubEditorCompletionBlock! {get set}
+    var completionHandler:IMGLYSubEditorCompletionBlock? {get set}
     var fixedFilterStack:IMGLYFixedFilterStack? {get set}
     var dialogView:UIView? {get set}
     func viewDidLoad()
@@ -76,13 +76,10 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
             updatePreviewImage()
         }
         else {
-            var dialogView = IMGLYInstanceFactory.sharedInstance.viewForButtonType(buttonType)
-            if viewController != nil && dialogView != nil {
-                viewController!.dialogView = dialogView
+            if viewController != nil {
                 viewController!.fixedFilterStack = fixedFilterStack_!
                 viewController!.previewImage = loResImageBackup_
                 viewController!.completionHandler = subEditorCompletionBlock
-                viewController!.viewDidLoad()
                 
                 if let viewController = viewController as? UIViewController {
                     viewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
