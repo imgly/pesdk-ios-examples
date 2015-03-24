@@ -181,6 +181,15 @@ import GLKit
     }
     
     /**
+    Creates a sticker filter.
+    
+    :returns: A sticker filter
+    */
+    public func stickerFilter() -> IMGLYStickerFilter {
+        return IMGLYStickerFilter()
+    }
+    
+    /**
     Creates a source filter for a still-image source.
     Use this as first filter within a chain of filters.
     
@@ -316,6 +325,8 @@ import GLKit
         switch (type) {
         case IMGLYMainMenuButtonType.Filter:
             return filterDialogViewController() as IMGLYSubEditorViewControllerProtocol
+        case IMGLYMainMenuButtonType.Stickers:
+            return stickersDialogViewController() as IMGLYSubEditorViewControllerProtocol
         case IMGLYMainMenuButtonType.Orientation:
             return orientationDialogViewController() as IMGLYSubEditorViewControllerProtocol
         case IMGLYMainMenuButtonType.Focus:
@@ -339,6 +350,10 @@ import GLKit
     
     public func filterDialogViewController() -> IMGLYFilterDialogViewController {
         return IMGLYFilterDialogViewController()
+    }
+    
+    public func stickersDialogViewController() -> IMGLYStickersDialogViewController {
+        return IMGLYStickersDialogViewController()
     }
     
     public func orientationDialogViewController() -> IMGLYOrientationDialogViewController {
@@ -371,7 +386,7 @@ import GLKit
     
     // Dialog-views
     /**
-    Return the view acording to the button-type.
+    Return the view according to the button-type.
     This is used by the main menu.
     
     :param: type The type of the button pressed.
@@ -383,6 +398,8 @@ import GLKit
         switch (type) {
         case IMGLYMainMenuButtonType.Filter:
             return filterDialogView() as UIView
+        case IMGLYMainMenuButtonType.Stickers:
+            return stickersDialogView() as UIView
         case IMGLYMainMenuButtonType.Orientation:
             return orientationDialogView() as UIView
         case IMGLYMainMenuButtonType.Focus:
@@ -407,6 +424,10 @@ import GLKit
     public func filterDialogView() -> IMGLYFilterDialogView {
         var dialog = IMGLYFilterDialogView(frame: CGRectZero)
         return dialog
+    }
+    
+    public func stickersDialogView() -> IMGLYStickersDialogView {
+        return IMGLYStickersDialogView(frame: CGRectZero)
     }
     
     public func focusDialogView() -> IMGLYFocusDialogView {

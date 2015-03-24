@@ -185,11 +185,9 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     public func didToggleCamera() {
         dispatch_async(dispatch_get_main_queue()) {
             if self.cameraController_!.isFlashPresent() {
-                println("flash present")
                 self.cameraView!.flashModeButton.hidden = false
             }
             else {
-                println("not present")
                 self.cameraView!.flashModeButton.hidden = true
             }
         }
@@ -206,7 +204,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         }
     }
     
-    private func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
+    func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
         cameraView!.setLastImageFromRollAsPreview()
     }
 }

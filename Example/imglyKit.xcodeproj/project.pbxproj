@@ -166,6 +166,14 @@
 		09FB557A1AAA5910005DE191 /* vevey.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55671AAA5910005DE191 /* vevey.ttf */; };
 		09FB557E1AADAEA2005DE191 /* IMGLYFontImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */; };
 		09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */; };
+		2B009C9F1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */; };
+		2B009CA11AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */; };
+		2B009CA31AC05981006B0012 /* IMGLYStickersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */; };
+		2B62BB8D1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */; };
+		2B62BB8F1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */; };
+		2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */; };
+		2B845DC41AC16ECE00806B4E /* IMGLYSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */; };
+		2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */; };
 		2B8EDA481AAF003D00AB75B5 /* CIFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */; };
 		2B8EDAD11AAF015600AB75B5 /* Soft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAA41AAF015600AB75B5 /* Soft.png */; };
 		2B8EDAD21AAF015600AB75B5 /* Blues.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAA51AAF015600AB75B5 /* Blues.png */; };
@@ -398,6 +406,14 @@
 		09FB55671AAA5910005DE191 /* vevey.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = vevey.ttf; path = ../../Pod/Fonts/vevey.ttf; sourceTree = "<group>"; };
 		09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFontImporter.swift; path = ../../Pod/Classes/IMGLYFontImporter.swift; sourceTree = "<group>"; };
 		09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYEnhancementFilter.swift; path = ../../Pod/Classes/IMGLYEnhancementFilter.swift; sourceTree = "<group>"; };
+		2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickerCollectionViewCell.swift; path = ../../Pod/Classes/IMGLYStickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickerCollectionViewCell.xib; path = ../../Pod/XIBs/IMGLYStickerCollectionViewCell.xib; sourceTree = "<group>"; };
+		2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDataSource.swift; path = ../../Pod/Classes/IMGLYStickersDataSource.swift; sourceTree = "<group>"; };
+		2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickersDialogView.xib; path = ../../Pod/XIBs/IMGLYStickersDialogView.xib; sourceTree = "<group>"; };
+		2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogView.swift; path = ../../Pod/Classes/IMGLYStickersDialogView.swift; sourceTree = "<group>"; };
+		2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogViewController.swift; path = ../../Pod/Classes/IMGLYStickersDialogViewController.swift; sourceTree = "<group>"; };
+		2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYSticker.swift; path = ../../Pod/Classes/IMGLYSticker.swift; sourceTree = "<group>"; };
+		2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickerFilter.swift; path = ../../Pod/Classes/IMGLYStickerFilter.swift; sourceTree = "<group>"; };
 		2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CIFilterExtension.swift; path = ../../Pod/Classes/CIFilterExtension.swift; sourceTree = "<group>"; };
 		2B8EDAA41AAF015600AB75B5 /* Soft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Soft.png; path = "../../Pod/Filter Responses/Soft.png"; sourceTree = "<group>"; };
 		2B8EDAA51AAF015600AB75B5 /* Blues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Blues.png; path = "../../Pod/Filter Responses/Blues.png"; sourceTree = "<group>"; };
@@ -505,6 +521,13 @@
 				2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */,
 				099406DF1A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift */,
 				097599A51A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift */,
+				2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */,
+				2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */,
+				2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */,
+				2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */,
+				2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */,
+				2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */,
+				2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */,
 				0917BB441AA8FA93002A028E /* IMGLYTextColorSelectorView.swift */,
 				0917BB3C1AA8F5F3002A028E /* IMGLYTextDialogView.swift */,
 				2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */,
@@ -524,6 +547,7 @@
 				0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */,
 				09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */,
 				09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */,
+				2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */,
 				0917BB421AA8F7B0002A028E /* IMGLYTextFilter.swift */,
 				099C31621AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift */,
 				099199691A7943F8005FD9D6 /* ResponseFilters */,
@@ -859,8 +883,9 @@
 		09A1742E1A6FC99800F22012 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = IMGLY;
 				LastUpgradeCheck = 0610;
-				ORGANIZATIONNAME = "Carsten Przyluczky";
+				ORGANIZATIONNAME = "9elements GmbH";
 				TargetAttributes = {
 					09A174351A6FC99800F22012 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -900,6 +925,7 @@
 				09286CD41AB05F9600B4EF99 /* Lenin.png in Resources */,
 				09FB55711AAA5910005DE191 /* Franchise-Bold.ttf in Resources */,
 				2B8EDAE41AAF015600AB75B5 /* BlissfulBlue.png in Resources */,
+				2B62BB8D1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib in Resources */,
 				2B8EDAF81AAF015700AB75B5 /* Classic.png in Resources */,
 				2B8EDAF31AAF015700AB75B5 /* Fall.png in Resources */,
 				2BFE55EE1AAF05DD007B8CFD /* IMGLYFocusDialogView.xib in Resources */,
@@ -979,6 +1005,7 @@
 				09286CDB1AB05F9600B4EF99 /* Sin.png in Resources */,
 				2B8EDADC1AAF015600AB75B5 /* Eighties.png in Resources */,
 				2B8EDADA1AAF015600AB75B5 /* BlueShadows.png in Resources */,
+				2B009CA11AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib in Resources */,
 				2B8EDAFB1AAF015700AB75B5 /* Neat.png in Resources */,
 				2B8EDAF51AAF015700AB75B5 /* Winter.png in Resources */,
 				09286CD31AB05F9600B4EF99 /* KDynamic.png in Resources */,
@@ -1035,6 +1062,8 @@
 				09286CA01AB057D000B4EF99 /* IMGLYGobblinFilter.swift in Sources */,
 				09286C761AB0569A00B4EF99 /* IMGLYK2Filter.swift in Sources */,
 				0902D7601A9D347800952EFC /* IMGLYSepiaHighFilter.swift in Sources */,
+				2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */,
+				2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */,
 				0917BB3D1AA8F5F3002A028E /* IMGLYTextDialogView.swift in Sources */,
 				09286C7A1AB056C500B4EF99 /* IMGLYKDynamicFilter.swift in Sources */,
 				09286C981AB057A200B4EF99 /* IMGLYGlamFilter.swift in Sources */,
@@ -1062,6 +1091,7 @@
 				09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */,
 				09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */,
 				09286C8C1AB0575700B4EF99 /* IMGLYAD1920Filter.swift in Sources */,
+				2B009CA31AC05981006B0012 /* IMGLYStickersDataSource.swift in Sources */,
 				0902D7181A9D2E2400952EFC /* IMGLYBluesFilter.swift in Sources */,
 				0902D7421A9D31F700952EFC /* IMGLYSettledFilter.swift in Sources */,
 				09FAEA1D1A8FA11000F6FF05 /* IMGLYCropDialogView.swift in Sources */,
@@ -1069,6 +1099,7 @@
 				09AD7CD41A7BF7E800728A78 /* IMGLYCameraView.swift in Sources */,
 				09D0B2721A81256B008782FB /* IMGLYSourceFilters.swift in Sources */,
 				099406DC1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift in Sources */,
+				2B62BB8F1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift in Sources */,
 				0902D7241A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift in Sources */,
 				09286C901AB0577100B4EF99 /* IMGLYQuoziFilter.swift in Sources */,
 				0902D7281A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift in Sources */,
@@ -1117,11 +1148,13 @@
 				09286C961AB0579500B4EF99 /* IMGLYFoodFilter.swift in Sources */,
 				0902D7501A9D339200952EFC /* IMGLYLucidFilter.swift in Sources */,
 				09286CA21AB057DE00B4EF99 /* IMGLYSinFilter.swift in Sources */,
+				2B009C9F1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift in Sources */,
 				09D14D361A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m in Sources */,
 				0902D73E1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift in Sources */,
 				8588683A60159E1C27DAD5D7 /* IMGLYBoxGradientView.swift in Sources */,
 				85886704BD128653D2967B9C /* IMGLYCircleGradientView.swift in Sources */,
 				85886747EE37CE0F22FEFC34 /* IMGLYGradientViewDelegate.swift in Sources */,
+				2B845DC41AC16ECE00806B4E /* IMGLYSticker.swift in Sources */,
 				09286C7E1AB056E800B4EF99 /* IMGLYBreezeFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
