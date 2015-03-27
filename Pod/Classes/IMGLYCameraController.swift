@@ -11,6 +11,8 @@ import OpenGLES
 import GLKit
 import AVFoundation
 
+private let kIMGLYIndicatorSize = CGFloat(75)
+
 @objc public protocol IMGLYCameraControllerDelegate: class {
     func captureSessionStarted()
     func captureSessionStopped()
@@ -27,13 +29,26 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     public weak var delegate: IMGLYCameraControllerDelegate?
     
     // MARK:- private vars
-    private var previewView_:UIView?
     private var glContext_ : EAGLContext!
-    private var videoPreviewView_ : GLKView!
     private var ciContext_ : CIContext!
     private var captureSession_ : AVCaptureSession?
     private var captureSessionQueue_ : dispatch_queue_t?
-    private var videoDevice_: AVCaptureDevice?
+    private var videoDevice_: AVCaptureDevice? {
+        willSet {
+            removeCameraObservers()
+        }
+        
+        didSet {
+            if videoDevice_ != nil {
+                addCameraObservers()
+            }
+        }
+    }
+    private var cameraObserversAdded = false
+    private let focusIndicatorLayer = CALayer()
+    private var previewView: UIView?
+    private var videoPreviewFrame = CGRectZero
+    private var videoPreviewView : GLKView!
     private var currentVideoDimensions_ : CMVideoDimensions?
     private var activeFilters_: [CIFilter]  = []
     private var videoDeviceInput_: AVCaptureDeviceInput!
@@ -75,9 +90,13 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     
     // MARK:- init functions
     public init(previewView: UIView) {
-        previewView_ = previewView
+        self.previewView = previewView
         cameraPosition_ = AVCaptureDevicePosition.Unspecified
         super.init()
+    }
+
+    deinit {
+        removeCameraObservers()
     }
     
     // MARK:- setup code
@@ -91,6 +110,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             cameraPosition_ = cameraPosition
             setupVideoPreview()
             setupVideoInputsAndSession()
+            setupFocusIndicator()
         #endif
     }
     
@@ -111,28 +131,45 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         if !videoPreviewAdded_ {
             let window = (UIApplication.sharedApplication().delegate?.window!)!
             glContext_ = EAGLContext(API:EAGLRenderingAPI.OpenGLES2)
-            videoPreviewView_ = GLKView(frame: CGRectZero, context: glContext_)
-            videoPreviewView_.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+            videoPreviewView = GLKView(frame: CGRectZero, context: glContext_)
+            videoPreviewView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
             
             let transformation = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            videoPreviewView_.transform = transformation;
+            videoPreviewView.transform = transformation;
             
-            if previewView_ != nil {
-                videoPreviewView_!.frame = previewView_!.bounds
-                previewView_!.addSubview(videoPreviewView_)
+            if previewView != nil {
+                videoPreviewView!.frame = previewView!.bounds
+                previewView!.addSubview(videoPreviewView)
             } else {
-                videoPreviewView_!.frame = window.bounds
-                window.addSubview(videoPreviewView_)
+                videoPreviewView!.frame = window.bounds
+                window.addSubview(videoPreviewView)
             }
             
-            // create the CIContext instance, note that this must be done after videoPreviewView_ is properly set up
+            // create the CIContext instance, note that this must be done after videoPreviewView is properly set up
             let options = [kCIContextWorkingColorSpace : NSNull()]
             ciContext_ = CIContext(EAGLContext: glContext_, options:options)
-            videoPreviewView_.bindDrawable()
+            videoPreviewView.bindDrawable()
             videoPreviewAdded_ = true
         }
     }
     
+    private func setupFocusIndicator() {
+        focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        focusIndicatorLayer.borderWidth = 1
+        focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        focusIndicatorLayer.hidden = true
+        focusIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        previewView!.layer.addSublayer(focusIndicatorLayer)
+        
+        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTapGestureRecognizer.numberOfTapsRequired = 2
+        videoPreviewView.addGestureRecognizer(doubleTapGestureRecognizer)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+        tapGestureRecognizer.requireGestureRecognizerToFail(doubleTapGestureRecognizer)
+        videoPreviewView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
     private func setupAndStartCaptureSession() {
         if (captureSessionQueue_ == nil) {
             captureSessionQueue_ = dispatch_queue_create("capture_session_queue", nil);
@@ -424,26 +461,25 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         
         let filteredImage: CIImage? = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: activeFilters_)
         
-        
         let sourceExtent = sourceImage.extent()
-        let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView_.drawableWidth, height: videoPreviewView_.drawableHeight)
+        let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView.drawableWidth, height: videoPreviewView.drawableHeight)
         
-        let aspectFitScaledRect = fitRect(sourceExtent, intoTargetRect: targetRect, withContentMode: .ScaleAspectFit)
+        videoPreviewFrame = fitRect(sourceExtent, intoTargetRect: targetRect, withContentMode: .ScaleAspectFit)
         
         if glContext_ != EAGLContext.currentContext() {
             EAGLContext.setCurrentContext(glContext_)
         }
         
-        videoPreviewView_.bindDrawable()
+        videoPreviewView.bindDrawable()
         
         glClearColor(0, 0, 0, 1.0)
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
         
         if let filteredImage = filteredImage {
-            ciContext_.drawImage(filteredImage, inRect: aspectFitScaledRect, fromRect: sourceExtent)
+            ciContext_.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
         }
         
-        videoPreviewView_.display()
+        videoPreviewView.display()
     }
     
     // MARK: - Helpers
@@ -472,5 +508,126 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         let scaledY = CGRectGetHeight(targetRect) / 2 - scaledHeight / 2
         
         return CGRect(x: scaledX, y: scaledY, width: scaledWidth, height: scaledHeight)
+    }
+    
+    private var isFocusPointSupported: Bool {
+        if let videoDevice = videoDevice_ {
+            return videoDevice.focusPointOfInterestSupported && videoDevice.isFocusModeSupported(.AutoFocus) && videoDevice.isFocusModeSupported(.ContinuousAutoFocus)
+        }
+        
+        return false
+    }
+    
+    private var isExposurePointSupported: Bool {
+        if let videoDevice = videoDevice_ {
+            return videoDevice.exposurePointOfInterestSupported && videoDevice.isExposureModeSupported(.AutoExpose) && videoDevice.isExposureModeSupported(.ContinuousAutoExposure)
+        }
+        
+        return false
+    }
+    
+    private func addCameraObservers() {
+        if cameraObserversAdded == false {
+            if isFocusPointSupported {
+                videoDevice_?.addObserver(self, forKeyPath: "focusMode", options: NSKeyValueObservingOptions.New, context: nil)
+                videoDevice_?.addObserver(self, forKeyPath: "exposureMode", options: NSKeyValueObservingOptions.New, context: nil)
+                cameraObserversAdded = true
+            }
+        }
+    }
+    
+    private func removeCameraObservers() {
+        if cameraObserversAdded == true {
+            videoDevice_?.removeObserver(self, forKeyPath: "focusMode")
+            videoDevice_?.removeObserver(self, forKeyPath: "exposureMode")
+            cameraObserversAdded = false
+        }
+    }
+    
+    private func updateFocusIndicatorLayer() {
+        if let videoDevice = videoDevice_ {
+            if focusIndicatorLayer.hidden == false {
+                if videoDevice.focusMode == .Locked && videoDevice.exposureMode == .Locked {
+                    focusIndicatorLayer.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
+                }
+            }
+        }
+    }
+    
+    private func updateFocusAndExposurePoints(pointOfInterest: CGPoint) {
+        var error:NSError? = nil
+        videoDevice_!.lockForConfiguration(&error)
+        
+        if isFocusPointSupported {
+            videoDevice_!.focusPointOfInterest = pointOfInterest
+            videoDevice_!.focusMode = .AutoFocus
+        }
+        
+        if isExposurePointSupported {
+            videoDevice_!.exposurePointOfInterest = pointOfInterest
+            videoDevice_!.exposureMode = .AutoExpose
+        }
+        
+        videoDevice_!.unlockForConfiguration()
+    }
+    
+    private func resetFocusAndExposurePoints() {
+        var error:NSError? = nil
+        videoDevice_!.lockForConfiguration(&error)
+        
+        if isFocusPointSupported {
+            videoDevice_!.focusPointOfInterest = CGPoint(x: 0.5, y: 0.5)
+            videoDevice_!.focusMode = .ContinuousAutoFocus
+        }
+        
+        if isExposurePointSupported {
+            videoDevice_!.exposurePointOfInterest = CGPoint(x: 0.5, y: 0.5)
+            videoDevice_!.exposureMode = .ContinuousAutoExposure
+        }
+        
+        videoDevice_!.unlockForConfiguration()
+    }
+    
+    private func showFocusIndicatorLayerAtLocation(location: CGPoint) {
+        CATransaction.begin()
+        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        focusIndicatorLayer.hidden = false
+        focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        focusIndicatorLayer.position = location
+        focusIndicatorLayer.transform = CATransform3DMakeScale(1.5, 1.5, 1)
+        CATransaction.commit()
+        
+        focusIndicatorLayer.transform = CATransform3DIdentity
+    }
+    
+    // MARK: - KVO
+    
+    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+        updateFocusIndicatorLayer()
+    }
+    
+    // MARK: - Gesture Handling
+    
+    func tapped(recognizer: UITapGestureRecognizer) {
+        if isFocusPointSupported || isExposurePointSupported {
+            let focusPointLocation = recognizer.locationInView(videoPreviewView)
+            let scaleFactor = videoPreviewView.contentScaleFactor
+            let videoFrame = CGRectMake(CGRectGetMinX(videoPreviewFrame) / scaleFactor, CGRectGetMinY(videoPreviewFrame) / scaleFactor, CGRectGetWidth(videoPreviewFrame) / scaleFactor, CGRectGetHeight(videoPreviewFrame) / scaleFactor)
+            
+            if CGRectContainsPoint(videoFrame, focusPointLocation) {
+                let focusIndicatorLocation = recognizer.locationInView(previewView)
+                showFocusIndicatorLayerAtLocation(focusIndicatorLocation)
+                
+                let pointOfInterest = CGPoint(x: focusPointLocation.x / CGRectGetWidth(videoFrame), y: focusPointLocation.y / CGRectGetHeight(videoFrame))
+                updateFocusAndExposurePoints(pointOfInterest)
+            }
+        }
+    }
+    
+    func doubleTapped(recognizer: UITapGestureRecognizer) {
+        if isFocusPointSupported || isExposurePointSupported {
+            focusIndicatorLayer.hidden = true
+            resetFocusAndExposurePoints()
+        }
     }
 }
