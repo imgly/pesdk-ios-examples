@@ -54,7 +54,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
         cameraView!.setNeedsDisplay()
     }
     
-    public func setupCameraView() {
+    private func setupCameraView() {
         if self.view is IMGLYCameraView {
             cameraView = self.view as? IMGLYCameraView
             cameraController_ = IMGLYCameraController(previewView: cameraView!.streamPreview)
