@@ -20,7 +20,7 @@ public class IMGLYTextColorSelectorView: UIScrollView {
     
     private let kButtonYPosition = CGFloat(22)
     private let kButtonXPositionOffset = CGFloat(5)
-    private let kButtonDisance = CGFloat(10)
+    private let kButtonDistance = CGFloat(10)
     private let kButtonSideLength = CGFloat(50)
     
     public override init(frame: CGRect) {
@@ -44,14 +44,15 @@ public class IMGLYTextColorSelectorView: UIScrollView {
     private func configureColorArray() {
         UIColor(red: 1, green: 2, blue: 2, alpha: 3)
         colorArray_ = [
-        UIColor.blackColor(),
-        UIColor(red: CGFloat(0xec / 255.0), green:CGFloat(0x37 / 255.0), blue:CGFloat(0x13 / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0xfc / 255.0), green:CGFloat(0xc0 / 255.0), blue:CGFloat(0x0b / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0xa9 / 255.0), green:CGFloat(0xe9 / 255.0), blue:CGFloat(0x0e / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0x0b / 255.0), green:CGFloat(0x6a / 255.0), blue:CGFloat(0xf9 / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0xff / 255.0), green:CGFloat(0xff / 255.0), blue:CGFloat(0x00 / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0xb5 / 255.0), green:CGFloat(0xe5 / 255.0), blue:CGFloat(0xff / 255.0), alpha:1.0),
-        UIColor(red: CGFloat(0xff / 255.0), green:CGFloat(0xb5 / 255.0), blue:CGFloat(0xe0 / 255.0), alpha:1.0)]
+            UIColor.whiteColor(),
+            UIColor.blackColor(),
+            UIColor(red: CGFloat(0xec / 255.0), green:CGFloat(0x37 / 255.0), blue:CGFloat(0x13 / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0xfc / 255.0), green:CGFloat(0xc0 / 255.0), blue:CGFloat(0x0b / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0xa9 / 255.0), green:CGFloat(0xe9 / 255.0), blue:CGFloat(0x0e / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0x0b / 255.0), green:CGFloat(0x6a / 255.0), blue:CGFloat(0xf9 / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0xff / 255.0), green:CGFloat(0xff / 255.0), blue:CGFloat(0x00 / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0xb5 / 255.0), green:CGFloat(0xe5 / 255.0), blue:CGFloat(0xff / 255.0), alpha:1.0),
+            UIColor(red: CGFloat(0xff / 255.0), green:CGFloat(0xb5 / 255.0), blue:CGFloat(0xe0 / 255.0), alpha:1.0)]
     }
     
     private func configureColorButtons() {
@@ -61,6 +62,7 @@ public class IMGLYTextColorSelectorView: UIScrollView {
             button.addTarget(self, action: "colorButtonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
             buttonArray_.append(button)
             button.backgroundColor = color
+            button.hasFrame = true
         }
     }
     
@@ -77,10 +79,10 @@ public class IMGLYTextColorSelectorView: UIScrollView {
                 kButtonYPosition,
                 kButtonSideLength,
                 kButtonSideLength)
-            xPosition += (kButtonDisance + kButtonSideLength)
+            xPosition += (kButtonDistance + kButtonSideLength)
         }
         buttonArray_[0].hasFrame = true
-        contentSize = CGSizeMake(xPosition + kButtonDisance, 0)
+        contentSize = CGSizeMake(xPosition + kButtonDistance, 0)
     }
     
     public func colorButtonTouchedUpInside(button:UIButton) {
