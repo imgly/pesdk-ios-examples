@@ -10,10 +10,10 @@ img.ly SDK provides tools to create photo applications for iOS with a big variet
 
 ### Features
 
-* 40 stuning build-in filters to choose from.
+* 40 stunning build-in filters to choose from.
 * Open-source, need anything? Want to change anything? Go ahead, we provide the full source-code.
 * Native code. Our backend is core-image based, therefore we dodge all the nasty OpenGL problems other frameworks face. Also its easier to add new filters. Just derive from `CIFilter` override the `outputImage` property and you are good to go.
-* Design dialogs directly in Xcode's interface builder. In version two user dont have to dig into code to change colors, icons and what not, just open the nib and change what you want.
+* Design dialogs directly in Xcode's interface builder. In version two user don't have to dig into code to change colors, icons and what not, just open the nib and change what you want.
 * iPad support. Since version two uses auto-layout, its easy to compile your app for iPhone and iPad. No more ugly nested iPhone app on your iPad.
 * Design filters in photoshop! Before you had to tweak values in code or copy past them from photoshop or your favorite image editor. With our response technology that belongs to the past. Design your filter in photoshop, once you are done apply it onto the provided identity-image. That will 'record' the filter response. Save it, add it as new filter, done !
 * Swift. Keeping up with time, we used Swift to code the img.ly SDK, leading to leaner easier code.
@@ -91,23 +91,23 @@ For more information about Swift and Objective-C interoperability please refer t
 
 ## Structure
 The SDK can be subdivided in two part, front-end and back-end.
-We also provided an instance-factory that handels the object generation for you.
+We also provided an instance-factory that handles the object generation for you.
 Its class is called `IMGLYInstanceFactory`. It has a property called `sharedInstance` that 
-uses the singleton pattern, so it doesn't need to be created everytime.
+uses the singleton pattern, so it doesn't need to be created every time.
 Besides the views and viewcontrollers, it also has methods to create the different filters, and
 the photo-processor, described below.
 
 ## Frontend
 
-The frontend part of the SDK contains all the views and view controllers, or generaly speaking the UI. The itself consists of two parts. Camera related UI and filter or operation related UI.
+The frontend part of the SDK contains all the views and view controllers, or generally speaking the UI. The itself consists of two parts. Camera related UI and filter or operation related UI.
 
 For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and  controls to operate the camera settings such as flash, front camera or back camera. 
 After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it performs a segue called `ModalEditorNavigationController`, that presents a new view controller.
 That view controller must implement the `IMGLYEditorMainDialogViewControllerProtocol` protocol. The provided `IMGLYEditorMainDialogViewController` does so. 
  
 The `IMGLYEditorMainDialogViewController` functions as main-dialog. It is connected to sub-dialogs that allow the user to edit an image. The sub-dialogs are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
-These dialogs use a lower resolution image as preview to improve the preformance.
-When the user presses the done button of the main dialog, the choosen settings are applied to the full resolution image.
+These dialogs use a lower resolution image as preview to improve the performance.
+When the user presses the done button of the main dialog, the chosen settings are applied to the full resolution image.
 The `IMGLYEditorMainDialogViewController` can be used without the `IMGLYCameraViewController` like so:
 
 ```
@@ -190,9 +190,9 @@ class IMGLYSteelTypeFilter: IMGLYResponseFilter {
 
 The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
 In order to make the process easier and non-destructive, all the editor dialogs 
-use a fixed-fitler-stack. That means that the order of the filters is imuatable and
-the user just sets the parameters for the distingt filters.
-The input is always the originaly take image, and the output image contains all the changes made.
+use a fixed-filter-stack. That means that the order of the filters is immutable and
+the user just sets the parameters for the distinct filters.
+The input is always the originally take image, and the output image contains all the changes made.
 
 ### Choose available filters
 
