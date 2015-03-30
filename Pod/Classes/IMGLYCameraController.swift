@@ -27,6 +27,8 @@ It provides methods to start a capture session, toggle between cameras, or selec
 */
 public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     public weak var delegate: IMGLYCameraControllerDelegate?
+    public let tapGestureRecognizer = UITapGestureRecognizer()
+    public let doubleTapGestureRecognizer = UITapGestureRecognizer()
     
     // MARK:- private vars
     private var glContext_ : EAGLContext!
@@ -161,11 +163,11 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         focusIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         previewView!.layer.addSublayer(focusIndicatorLayer)
         
-        let doubleTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "doubleTapped:")
+        doubleTapGestureRecognizer.addTarget(self, action: "doubleTapped:")
         doubleTapGestureRecognizer.numberOfTapsRequired = 2
         videoPreviewView.addGestureRecognizer(doubleTapGestureRecognizer)
         
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapped:")
+        tapGestureRecognizer.addTarget(self, action: "tapped:")
         tapGestureRecognizer.requireGestureRecognizerToFail(doubleTapGestureRecognizer)
         videoPreviewView.addGestureRecognizer(tapGestureRecognizer)
     }

@@ -8,7 +8,6 @@
 
 import UIKit
 import Photos
-import AssetsLibrary
 
 @objc public protocol IMGLYCameraViewDelegate {
     func takePhotoButtonPressed()
@@ -125,45 +124,17 @@ public class IMGLYCameraView: UIView {
     @IBAction public func flashModeButtonPressed(sender: AnyObject) {
         delegate?.flashModeButtonPressed()
     }
-
-    public func setLastImageFromRollAsPreview() {
-        if UIDevice().systemVersion.hasPrefix("7") {
-            setLatestImageFromRollAsPreviewForIOS7()
-        } else {
-            setLatestImageFromRollAsPreviewForIOS8()
-        }
-    }
     
-    private func setLatestImageFromRollAsPreviewForIOS8() {
+    public func setLastImageFromRollAsPreview() {
         var fetchOptions: PHFetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         var fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
         if (fetchResult.lastObject != nil) {
             var lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
             PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: CGSizeMake(100, 100), contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
+                self.selectFromCameraRollButton!.imageView?.contentMode = .ScaleAspectFill
                 self.selectFromCameraRollButton!.setImage(result, forState: UIControlState.Normal)
             }
-        }
-    }
-    
-    private func setLatestImageFromRollAsPreviewForIOS7() {
-        var assetLib = ALAssetsLibrary()
-        var url: NSURL = NSURL()
-        assetLib.enumerateGroupsWithTypes(ALAssetsGroupType(ALAssetsGroupSavedPhotos), usingBlock: { (group:ALAssetsGroup!, var stopEnumeration) -> Void in
-            if group != nil {
-                group!.setAssetsFilter(ALAssetsFilter.allPhotos())
-                
-                group!.enumerateAssetsWithOptions(NSEnumerationOptions.Reverse, usingBlock: { (asset:ALAsset?, index, var innerStopEnumeration) -> Void in
-                    innerStopEnumeration.memory =  ObjCBool(true)
-                    stopEnumeration.memory =  ObjCBool(true)
-                    let cgImage = asset?.thumbnail().takeUnretainedValue()
-                    
-                    if let image = UIImage(CGImage: cgImage) {
-                        self.selectFromCameraRollButton!.setImage(image, forState: UIControlState.Normal)
-                    }
-                })
-            }
-            }) { (error:NSError!) -> Void in
         }
     }
     
