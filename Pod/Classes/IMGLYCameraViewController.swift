@@ -199,12 +199,12 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     
     // MARK: - Completion
     private func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
-        if result == IMGLYEditorResult.Done && image != nil {
-            UIImageWriteToSavedPhotosAlbum(image, self, "imageSaved:didFinishSavingWithError:contextInfo:", nil);
+        if let image = image where result == IMGLYEditorResult.Done {
+            UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil);
         }
     }
     
-    func imageSaved(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
+    @objc private func image(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {
         cameraView!.setLastImageFromRollAsPreview()
     }
 }
