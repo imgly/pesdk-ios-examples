@@ -17,11 +17,10 @@ import GLKit
     care about creating the single filters.
 */
 @objc public class IMGLYFixedFilterStack {
-    public var sourceFilter:IMGLYSourcePhotoFilter?
     public var enhancementFilter:IMGLYEnhancementFilter?
     public var orientationCropFilter:IMGLYOrientationCropFilter?
     public var effectFilter:IMGLYResponseFilter?
-    public var brightnessFitler:IMGLYContrastBrightnessSaturationFilter?
+    public var brightnessFilter:IMGLYContrastBrightnessSaturationFilter?
     public var tiltShiftFilter:IMGLYTiltshiftFilter?
     public var textFilter:IMGLYTextFilter?
     public var stickerFilters = [CIFilter]()
@@ -43,25 +42,23 @@ import GLKit
     }
     
     private func setupDefaultFilterStack() {
-        sourceFilter = IMGLYSourcePhotoFilter()
         enhancementFilter = IMGLYInstanceFactory.sharedInstance.enhancementFilter()
         enhancementFilter!.enabled = false
         enhancementFilter!.storeEnhancedImage = true
         orientationCropFilter =  IMGLYInstanceFactory.sharedInstance.orientationCropFilter()
         tiltShiftFilter = IMGLYInstanceFactory.sharedInstance.tiltShiftFilter()
         effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.None) as? IMGLYResponseFilter
-        brightnessFitler = IMGLYInstanceFactory.sharedInstance.colorAdjustmentFilter()
+        brightnessFilter = IMGLYInstanceFactory.sharedInstance.colorAdjustmentFilter()
         textFilter = IMGLYInstanceFactory.sharedInstance.textFilter()
     }
     
     private func rebuildFilterStack() {
-        self.activeFilters_  = []
-        activeFilters_.append(sourceFilter!)
+        activeFilters_  = []
         activeFilters_.append(enhancementFilter!)
         activeFilters_.append(orientationCropFilter!)
         activeFilters_.append(tiltShiftFilter!)
         activeFilters_.append(effectFilter!)
-        activeFilters_.append(brightnessFitler!)
+        activeFilters_.append(brightnessFilter!)
         activeFilters_.append(textFilter!)
         activeFilters_ += stickerFilters
     }

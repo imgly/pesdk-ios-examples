@@ -61,9 +61,11 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
             if inputImage == nil {
                 return CIImage.emptyImage()
             }
+            
             if colorCubeData_ == nil {
                 return inputImage
             }
+            
             var filter = CIFilter(name: "CIColorCube")
             filter.setValue(colorCubeData_, forKey: "inputCubeData")
             filter.setValue(64, forKey: "inputCubeDimension")

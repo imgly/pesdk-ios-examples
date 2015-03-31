@@ -188,17 +188,7 @@ import GLKit
     public func stickerFilter() -> IMGLYStickerFilter {
         return IMGLYStickerFilter()
     }
-    
-    /**
-    Creates a source filter for a still-image source.
-    Use this as first filter within a chain of filters.
-    
-    :returns: A source filter
-    */
-    public func sourcePhotoFilter() -> IMGLYSourcePhotoFilter {
-        return IMGLYSourcePhotoFilter()
-    }
-    
+
     /**
     Creates a crop filter.
     

@@ -52,7 +52,6 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     private var videoPreviewFrame = CGRectZero
     private var videoPreviewView : GLKView!
     private var currentVideoDimensions_ : CMVideoDimensions?
-    private var activeFilters_: [CIFilter]  = []
     private var videoDeviceInput_: AVCaptureDeviceInput!
     private var videoDataOutput_: AVCaptureVideoDataOutput!
     private var stillImageOutput_: AVCaptureStillImageOutput!
@@ -62,33 +61,10 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     private var flashModeIndex_ = 0
     private var supportedFlashModes_:[AVCaptureFlashMode] =  []
     
-    // MARK:- computed vars
-    private var effectFilter_: CIFilter?
-    /// The response filter that is applied to the live-feed.
-    public var effectFilter: CIFilter? {
-        set(filter) {
-            effectFilter_ = filter
-            // if we set filter to nil we remove the effect filter section completly
-            if (filter == nil) {
-                if activeFilters_.count > 1 {
-                    activeFilters_.removeLast()
-                }
-            } else {
-                if activeFilters_.count > 1 {
-                    activeFilters_[1] = filter!
-                } else {
-                    activeFilters_.append(filter!)
-                }
-            }
-        }
-        get {
-            return effectFilter_;
-        }
-    }
+    // MARK: - computed vars
     
-    public struct Statics {
-        public static var sDeviceRgbColorSpace : CGColorSpaceRef = CGColorSpaceCreateDeviceRGB()
-    }
+    /// The response filter that is applied to the live-feed.
+    public var effectFilter: CIFilter?
     
     // MARK:- init functions
     public init(previewView: UIView) {
@@ -120,13 +96,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         let videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
         if videoDevices.count > 0 {
             setupAndStartCaptureSession()
-            setupFilterStack()
         }
-    }
-    
-    private func setupFilterStack() {
-        var videoSource = IMGLYSourceVideoFilter()
-        activeFilters_ = [videoSource]
     }
     
     private func setupVideoPreview() {
@@ -148,8 +118,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             }
             
             // create the CIContext instance, note that this must be done after videoPreviewView is properly set up
-            let options = [kCIContextWorkingColorSpace : NSNull()]
-            ciContext_ = CIContext(EAGLContext: glContext_, options:options)
+            ciContext_ = CIContext(EAGLContext: glContext_, options:nil)
             videoPreviewView.bindDrawable()
             videoPreviewAdded_ = true
         }
@@ -461,7 +430,12 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let sourceImage = CIImage(CVPixelBuffer:imageBuffer as CVPixelBufferRef, options: nil)
         
-        let filteredImage: CIImage? = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: activeFilters_)
+        let filteredImage: CIImage?
+        if let effectFilter = effectFilter {
+            filteredImage = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter])
+        } else {
+            filteredImage = sourceImage
+        }
         
         let sourceExtent = sourceImage.extent()
         let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView.drawableWidth, height: videoPreviewView.drawableHeight)

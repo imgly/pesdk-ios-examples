@@ -12,7 +12,7 @@ img.ly SDK provides tools to create photo applications for iOS with a big variet
 
 * 40 stunning build-in filters to choose from.
 * Open-source, need anything? Want to change anything? Go ahead, we provide the full source-code.
-* Native code. Our backend is core-image based, therefore we dodge all the nasty OpenGL problems other frameworks face. Also its easier to add new filters. Just derive from `CIFilter` override the `outputImage` property and you are good to go.
+* Native code. Our backend is Core Image based, therefore we dodge all the nasty OpenGL problems other frameworks face. Also its easier to add new filters. Just derive from `CIFilter` override the `outputImage` property and you are good to go.
 * Design dialogs directly in Xcode's interface builder. In version two user don't have to dig into code to change colors, icons and what not, just open the nib and change what you want.
 * iPad support. Since version two uses auto-layout, its easy to compile your app for iPhone and iPad. No more ugly nested iPhone app on your iPad.
 * Design filters in photoshop! Before you had to tweak values in code or copy past them from photoshop or your favorite image editor. With our response technology that belongs to the past. Design your filter in photoshop, once you are done apply it onto the provided identity-image. That will 'record' the filter response. Save it, add it as new filter, done !

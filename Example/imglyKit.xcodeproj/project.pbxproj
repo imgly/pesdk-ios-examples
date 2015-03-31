@@ -132,7 +132,6 @@
 		09CD01761A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */; };
 		09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */; };
 		09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */; };
-		09D0B2721A81256B008782FB /* IMGLYSourceFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */; };
 		09D0B2741A8132F5008782FB /* IMGLYFixedFilterStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */; };
 		09D0B2781A8254B6008782FB /* IMGLYFilterSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */; };
 		09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */; };
@@ -371,7 +370,6 @@
 		09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBrightnessDialogViewController.swift; path = ../../Pod/Classes/IMGLYBrightnessDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYInstanceFactory.swift; path = ../../Pod/Classes/IMGLYInstanceFactory.swift; sourceTree = "<group>"; };
 		09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYPhotoProcessor.swift; path = ../../Pod/Classes/IMGLYPhotoProcessor.swift; sourceTree = "<group>"; };
-		09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYSourceFilters.swift; path = ../../Pod/Classes/IMGLYSourceFilters.swift; sourceTree = "<group>"; };
 		09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFixedFilterStack.swift; path = ../../Pod/Classes/IMGLYFixedFilterStack.swift; sourceTree = "<group>"; };
 		09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFilterSelectorView.swift; path = ../../Pod/Classes/IMGLYFilterSelectorView.swift; sourceTree = "<group>"; };
 		09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/IMGLYContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; };
@@ -546,7 +544,6 @@
 				098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */,
 				0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */,
 				09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */,
-				09D0B2711A81256B008782FB /* IMGLYSourceFilters.swift */,
 				2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */,
 				0917BB421AA8F7B0002A028E /* IMGLYTextFilter.swift */,
 				099C31621AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift */,
@@ -1097,7 +1094,6 @@
 				09FAEA1D1A8FA11000F6FF05 /* IMGLYCropDialogView.swift in Sources */,
 				09286C861AB0572800B4EF99 /* IMGLYFixieFilter.swift in Sources */,
 				09AD7CD41A7BF7E800728A78 /* IMGLYCameraView.swift in Sources */,
-				09D0B2721A81256B008782FB /* IMGLYSourceFilters.swift in Sources */,
 				099406DC1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift in Sources */,
 				2B62BB8F1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift in Sources */,
 				0902D7241A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift in Sources */,
