@@ -584,7 +584,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     
     // MARK: - Gesture Handling
     
-    func tapped(recognizer: UITapGestureRecognizer) {
+    @objc private func tapped(recognizer: UITapGestureRecognizer) {
         if isFocusPointSupported || isExposurePointSupported {
             let focusPointLocation = recognizer.locationInView(videoPreviewView)
             let scaleFactor = videoPreviewView.contentScaleFactor
@@ -600,7 +600,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         }
     }
     
-    func doubleTapped(recognizer: UITapGestureRecognizer) {
+    @objc private func doubleTapped(recognizer: UITapGestureRecognizer) {
         if isFocusPointSupported || isExposurePointSupported {
             focusIndicatorLayer.hidden = true
             resetFocusAndExposurePoints()

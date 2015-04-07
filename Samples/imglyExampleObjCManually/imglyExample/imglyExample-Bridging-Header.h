@@ -7,4 +7,3 @@
 //
 
 #import "LUTToNSDataConverter.h"
-#import "UIImage+IMGLYKitAdditions.h"

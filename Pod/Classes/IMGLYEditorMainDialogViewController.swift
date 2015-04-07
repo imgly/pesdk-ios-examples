@@ -91,7 +91,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
     }
     
     public func doneButtonPressed() {
-        hiResImage! = hiResImage!.imgly_rotateImageToMatchOrientation()
+        hiResImage! = hiResImage!.imageRotatedToMatchOrientation
         var filteredHiResImage = IMGLYPhotoProcessor.processWithUIImage(hiResImage!, filters:fixedFilterStack_!.activeFilters)
         self.dismissViewControllerAnimated(true, completion: {
             self.completionBlock?(IMGLYEditorResult.Done, filteredHiResImage)
@@ -126,7 +126,7 @@ public class IMGLYEditorMainDialogViewController: UIViewController, UIViewContro
             
             var newWidth:CGFloat = CGFloat(roundf(Float(hiResImage!.size.width) * Float(scale)))
             var newHeight:CGFloat = CGFloat(roundf(Float(hiResImage!.size.height) * Float(scale)))
-            loResImage_ = hiResImage?.imgly_resizedImage(CGSizeMake(newWidth, newHeight), interpolationQuality:kCGInterpolationDefault)
+            loResImage_ = hiResImage?.imageResizedToSize(CGSize(width: newWidth, height: newHeight), withInterpolationQuality: kCGInterpolationDefault)
             loResImageBackup_ = UIImage(CGImage: loResImage_?.CGImage)
         } else {
             loResImage_ = UIImage(CGImage: hiResImage!.CGImage)

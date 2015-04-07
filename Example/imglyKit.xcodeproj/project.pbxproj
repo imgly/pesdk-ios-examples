@@ -135,7 +135,6 @@
 		09D0B2741A8132F5008782FB /* IMGLYFixedFilterStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */; };
 		09D0B2781A8254B6008782FB /* IMGLYFilterSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */; };
 		09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */; };
-		09D14D361A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D14D351A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m */; };
 		09DD0B081A8511CF0070DD59 /* IMGLYEditorMainDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DD0B071A8511CF0070DD59 /* IMGLYEditorMainDialogViewController.swift */; };
 		09E48BD71A790D8300678F8A /* IMGLYResponseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E48BD61A790D8300678F8A /* IMGLYResponseFilter.swift */; };
 		09F694741A95FF7700F16FDC /* IMGLYFocusDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F694731A95FF7700F16FDC /* IMGLYFocusDialogView.swift */; };
@@ -168,6 +167,7 @@
 		2B009C9F1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */; };
 		2B009CA11AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */; };
 		2B009CA31AC05981006B0012 /* IMGLYStickersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */; };
+		2B3565B31AD3DCE10030F197 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */; };
 		2B62BB8D1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */; };
 		2B62BB8F1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */; };
 		2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */; };
@@ -373,8 +373,6 @@
 		09D0B2731A8132F5008782FB /* IMGLYFixedFilterStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFixedFilterStack.swift; path = ../../Pod/Classes/IMGLYFixedFilterStack.swift; sourceTree = "<group>"; };
 		09D0B2771A8254B6008782FB /* IMGLYFilterSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFilterSelectorView.swift; path = ../../Pod/Classes/IMGLYFilterSelectorView.swift; sourceTree = "<group>"; };
 		09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/IMGLYContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; };
-		09D14D341A8917F7006904A1 /* UIImage+IMGLYKitAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+IMGLYKitAdditions.h"; path = "../../Pod/Classes/UIImage+IMGLYKitAdditions.h"; sourceTree = "<group>"; };
-		09D14D351A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+IMGLYKitAdditions.m"; path = "../../Pod/Classes/UIImage+IMGLYKitAdditions.m"; sourceTree = "<group>"; };
 		09DD0B071A8511CF0070DD59 /* IMGLYEditorMainDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYEditorMainDialogViewController.swift; path = ../../Pod/Classes/IMGLYEditorMainDialogViewController.swift; sourceTree = "<group>"; };
 		09E48BD61A790D8300678F8A /* IMGLYResponseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYResponseFilter.swift; path = ../../Pod/Classes/IMGLYResponseFilter.swift; sourceTree = "<group>"; };
 		09F694731A95FF7700F16FDC /* IMGLYFocusDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFocusDialogView.swift; path = ../../Pod/Classes/IMGLYFocusDialogView.swift; sourceTree = "<group>"; };
@@ -407,6 +405,7 @@
 		2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickerCollectionViewCell.swift; path = ../../Pod/Classes/IMGLYStickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickerCollectionViewCell.xib; path = ../../Pod/XIBs/IMGLYStickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDataSource.swift; path = ../../Pod/Classes/IMGLYStickersDataSource.swift; sourceTree = "<group>"; };
+		2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageExtension.swift; path = ../../Pod/Classes/UIImageExtension.swift; sourceTree = "<group>"; };
 		2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickersDialogView.xib; path = ../../Pod/XIBs/IMGLYStickersDialogView.xib; sourceTree = "<group>"; };
 		2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogView.swift; path = ../../Pod/Classes/IMGLYStickersDialogView.swift; sourceTree = "<group>"; };
 		2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogViewController.swift; path = ../../Pod/Classes/IMGLYStickersDialogViewController.swift; sourceTree = "<group>"; };
@@ -661,8 +660,6 @@
 				09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */,
 				09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */,
 				099199681A7943EB005FD9D6 /* Processing */,
-				09D14D341A8917F7006904A1 /* UIImage+IMGLYKitAdditions.h */,
-				09D14D351A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m */,
 			);
 			path = imglyKit;
 			sourceTree = "<group>";
@@ -709,6 +706,7 @@
 			isa = PBXGroup;
 			children = (
 				2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */,
+				2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1036,6 +1034,7 @@
 			files = (
 				0902D7461A9D323400952EFC /* IMGLYLithoFilter.swift in Sources */,
 				0902D7481A9D326700952EFC /* IMGLYPreludeFilter.swift in Sources */,
+				2B3565B31AD3DCE10030F197 /* UIImageExtension.swift in Sources */,
 				09286CA81AB0580700B4EF99 /* IMGLYA15Filter.swift in Sources */,
 				0902D71E1A9D2E7500952EFC /* IMGLYSunsetFilter.swift in Sources */,
 				091A4F521A7E612800F43565 /* IMGLYCameraController.swift in Sources */,
@@ -1145,7 +1144,6 @@
 				0902D7501A9D339200952EFC /* IMGLYLucidFilter.swift in Sources */,
 				09286CA21AB057DE00B4EF99 /* IMGLYSinFilter.swift in Sources */,
 				2B009C9F1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift in Sources */,
-				09D14D361A8917F7006904A1 /* UIImage+IMGLYKitAdditions.m in Sources */,
 				0902D73E1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift in Sources */,
 				8588683A60159E1C27DAD5D7 /* IMGLYBoxGradientView.swift in Sources */,
 				85886704BD128653D2967B9C /* IMGLYCircleGradientView.swift in Sources */,

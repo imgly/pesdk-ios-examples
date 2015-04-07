@@ -61,7 +61,6 @@ We strongly recommend that you use CocoaPods for installation. If you decide to 
 2. Create a bridging header (File > New > File > iOS > Source > Header File) and name it by your product module name followed by "-Bridging-Header.h" (e.g. "ExampleApp-Bridging-Header.h"). Add these lines to the header: 
 		
 		#import "LUTToNSDataConverter.h
-		#import "UIImage+IMGLYKitAdditions.h"
 		
 3. Under build settings, set the Objective-C Bridging Header (SWIFT_OBJC_BRIDGING_HEADER) build setting under "Swift Compiler - Code Generation" to the previously created bridging header.
 
@@ -137,7 +136,7 @@ The backend takes care about the actual image manipulation. The `IMGLYPhotoProce
 The following code filters an image with the steel filter.
 
 ```
-var filter =  IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.Steel)
+var filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.Steel)
 var filteredImage = IMGLYPhotoProcessor.processWithUIImage(image, filters: [filter])
 ```
 
