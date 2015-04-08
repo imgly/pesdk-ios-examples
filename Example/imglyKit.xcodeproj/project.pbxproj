@@ -168,6 +168,7 @@
 		2B009CA11AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */; };
 		2B009CA31AC05981006B0012 /* IMGLYStickersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */; };
 		2B3565B31AD3DCE10030F197 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */; };
+		2B3A52FF1AD40DB300FD4B74 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */; };
 		2B62BB8D1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */; };
 		2B62BB8F1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */; };
 		2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */; };
@@ -215,6 +216,10 @@
 		2B8EDAFB1AAF015700AB75B5 /* Neat.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDACE1AAF015600AB75B5 /* Neat.png */; };
 		2B8EDAFC1AAF015700AB75B5 /* Plate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDACF1AAF015600AB75B5 /* Plate.png */; };
 		2B8EDAFF1AAF029700AB75B5 /* IMGLYCameraView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAFE1AAF029700AB75B5 /* IMGLYCameraView.xib */; };
+		2BAF27161AD4157200DCF891 /* MainEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAF27151AD4157200DCF891 /* MainEditorViewController.swift */; };
+		2BAF27181AD427DF00DCF891 /* ButtonCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */; };
+		2BAF271A1AD434D200DCF891 /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAF27191AD434D200DCF891 /* ActionButton.swift */; };
+		2BAF271C1AD439D800DCF891 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BAF271B1AD439D800DCF891 /* Localizable.strings */; };
 		2BB189331AAEFCA60027FBB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BB189321AAEFCA60027FBB5 /* Assets.xcassets */; };
 		2BFE55EB1AAF05DD007B8CFD /* IMGLYCropDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */; };
 		2BFE55EC1AAF05DD007B8CFD /* IMGLYEditorMainDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E51AAF05DD007B8CFD /* IMGLYEditorMainDialogView.xib */; };
@@ -406,6 +411,7 @@
 		2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickerCollectionViewCell.xib; path = ../../Pod/XIBs/IMGLYStickerCollectionViewCell.xib; sourceTree = "<group>"; };
 		2B009CA21AC05981006B0012 /* IMGLYStickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDataSource.swift; path = ../../Pod/Classes/IMGLYStickersDataSource.swift; sourceTree = "<group>"; };
 		2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageExtension.swift; path = ../../Pod/Classes/UIImageExtension.swift; sourceTree = "<group>"; };
+		2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorViewController.swift; path = ../../Pod/Classes/EditorViewController.swift; sourceTree = "<group>"; };
 		2B62BB8C1AC03C1600EFBD6A /* IMGLYStickersDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYStickersDialogView.xib; path = ../../Pod/XIBs/IMGLYStickersDialogView.xib; sourceTree = "<group>"; };
 		2B62BB8E1AC03C2900EFBD6A /* IMGLYStickersDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogView.swift; path = ../../Pod/Classes/IMGLYStickersDialogView.swift; sourceTree = "<group>"; };
 		2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDialogViewController.swift; path = ../../Pod/Classes/IMGLYStickersDialogViewController.swift; sourceTree = "<group>"; };
@@ -453,6 +459,10 @@
 		2B8EDACE1AAF015600AB75B5 /* Neat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Neat.png; path = "../../Pod/Filter Responses/Neat.png"; sourceTree = "<group>"; };
 		2B8EDACF1AAF015600AB75B5 /* Plate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plate.png; path = "../../Pod/Filter Responses/Plate.png"; sourceTree = "<group>"; };
 		2B8EDAFE1AAF029700AB75B5 /* IMGLYCameraView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYCameraView.xib; path = ../../Pod/XIBs/IMGLYCameraView.xib; sourceTree = "<group>"; };
+		2BAF27151AD4157200DCF891 /* MainEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorViewController.swift; sourceTree = "<group>"; };
+		2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		2BAF27191AD434D200DCF891 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionButton.swift; path = ../../Pod/Classes/ActionButton.swift; sourceTree = "<group>"; };
+		2BAF271B1AD439D800DCF891 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../../Pod/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BB1892F1AAEF9800027FBB5 /* imglyKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = imglyKit.podspec; path = ../imglyKit.podspec; sourceTree = "<group>"; };
 		2BB189301AAEF9800027FBB5 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		2BB189311AAEF9800027FBB5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -490,6 +500,10 @@
 		093687AF1A8544A9002E1E7D /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				2BAF27191AD434D200DCF891 /* ActionButton.swift */,
+				2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */,
+				2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */,
+				2BAF27151AD4157200DCF891 /* MainEditorViewController.swift */,
 				858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */,
 				09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */,
 				097599A31A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift */,
@@ -652,6 +666,7 @@
 			isa = PBXGroup;
 			children = (
 				2BB189321AAEFCA60027FBB5 /* Assets.xcassets */,
+				2BAF271B1AD439D800DCF891 /* Localizable.strings */,
 				09A2DA8D1A84CC98004E9BA6 /* Camera */,
 				093687AF1A8544A9002E1E7D /* Editor */,
 				09CC87711A877BE70094EAC5 /* Extensions */,
@@ -878,7 +893,7 @@
 		09A1742E1A6FC99800F22012 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				CLASSPREFIX = IMGLY;
+				CLASSPREFIX = "";
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "9elements GmbH";
 				TargetAttributes = {
@@ -993,6 +1008,7 @@
 				09286CCA1AB05F9600B4EF99 /* Fixie.png in Resources */,
 				2B8EDAD41AAF015600AB75B5 /* Sunset.png in Resources */,
 				2BB189331AAEFCA60027FBB5 /* Assets.xcassets in Resources */,
+				2BAF271C1AD439D800DCF891 /* Localizable.strings in Resources */,
 				09FB55791AAA5910005DE191 /* Tommaso.ttf in Resources */,
 				09286CCD1AB05F9600B4EF99 /* Front.png in Resources */,
 				09286CDE1AB05F9600B4EF99 /* X400.png in Resources */,
@@ -1042,6 +1058,7 @@
 				09286C9A1AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift in Sources */,
 				0902D7521A9D33B200952EFC /* IMGLYCreamyFilter.swift in Sources */,
 				0902D74E1A9D336200952EFC /* IMGLYPitchedFilter.swift in Sources */,
+				2BAF271A1AD434D200DCF891 /* ActionButton.swift in Sources */,
 				0917BB471AA8FCE0002A028E /* IMGLYColorButton.swift in Sources */,
 				0902D74C1A9D334A00952EFC /* IMGLYAncientFilter.swift in Sources */,
 				097599A61A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift in Sources */,
@@ -1086,6 +1103,7 @@
 				09CD01761A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift in Sources */,
 				09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */,
 				09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */,
+				2BAF27181AD427DF00DCF891 /* ButtonCollectionViewCell.swift in Sources */,
 				09286C8C1AB0575700B4EF99 /* IMGLYAD1920Filter.swift in Sources */,
 				2B009CA31AC05981006B0012 /* IMGLYStickersDataSource.swift in Sources */,
 				0902D7181A9D2E2400952EFC /* IMGLYBluesFilter.swift in Sources */,
@@ -1132,6 +1150,7 @@
 				09AD7CC31A7A37B800728A78 /* LUTToNSDataConverter.m in Sources */,
 				096CBB711A879A2B00956485 /* IMGLYFilterDialogViewController.swift in Sources */,
 				0902D7621A9D349200952EFC /* IMGLYSummerFilter.swift in Sources */,
+				2BAF27161AD4157200DCF891 /* MainEditorViewController.swift in Sources */,
 				0902D7261A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift in Sources */,
 				09286C781AB056A800B4EF99 /* IMGLYK6Filter.swift in Sources */,
 				09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */,
@@ -1150,6 +1169,7 @@
 				85886747EE37CE0F22FEFC34 /* IMGLYGradientViewDelegate.swift in Sources */,
 				2B845DC41AC16ECE00806B4E /* IMGLYSticker.swift in Sources */,
 				09286C7E1AB056E800B4EF99 /* IMGLYBreezeFilter.swift in Sources */,
+				2B3A52FF1AD40DB300FD4B74 /* EditorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

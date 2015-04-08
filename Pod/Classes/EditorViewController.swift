@@ -1,0 +1,96 @@
+//
+//  EditorViewController.swift
+//  imglyKit
+//
+//  Created by Sascha Schwabbauer on 07/04/15.
+//  Copyright (c) 2015 9elements GmbH. All rights reserved.
+//
+
+import UIKit
+
+@objc(IMGLYEditorViewController) public class EditorViewController: UIViewController {
+    
+    // MARK: - Properties
+    
+    public var updating = false {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                if self.updating {
+                    self.activityIndicatorView.startAnimating()
+                } else {
+                    self.activityIndicatorView.stopAnimating()
+                }
+            }
+        }
+    }
+    
+    public private(set) lazy var previewImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .ScaleAspectFit
+        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return imageView
+        }()
+    
+    public private(set) lazy var bottomContainerView: UIView = {
+        let view = UIView()
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return view
+    }()
+    
+    private lazy var activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        view.hidesWhenStopped = true
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return view
+    }()
+    
+    // MARK: - UIViewController
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+
+        configureNavigationItems()
+        configureViewHierarchy()
+        configureViewConstraints()
+    }
+    
+    // MARK: - Configuration
+    
+    private func configureNavigationItems() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "tappedDone:")
+    }
+    
+    private func configureViewHierarchy() {
+        view.backgroundColor = UIColor.blackColor()
+
+        view.addSubview(previewImageView)
+        view.addSubview(bottomContainerView)
+        previewImageView.addSubview(activityIndicatorView)
+    }
+    
+    private func configureViewConstraints() {
+        let views: [NSObject: AnyObject] = [
+            "previewImageView" : previewImageView,
+            "bottomContainerView" : bottomContainerView,
+            "topLayoutGuide" : topLayoutGuide
+        ]
+        
+        let metrics: [NSObject: NSNumber] = [
+            "bottomContainerViewHeight" : 100
+        ]
+        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[previewImageView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomContainerView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][previewImageView][bottomContainerView(==bottomContainerViewHeight)]|", options: nil, metrics: metrics, views: views))
+        
+        previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterX, multiplier: 1, constant: 0))
+        previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterY, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterY, multiplier: 1, constant: 0))
+    }
+    
+    // MARK: - Actions
+    
+    public func tappedDone(sender: UIBarButtonItem?) {
+        // Subclasses must override this
+    }
+    
+}

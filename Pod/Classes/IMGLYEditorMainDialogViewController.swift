@@ -9,8 +9,8 @@
 import UIKit
 
 @objc public enum IMGLYEditorResult: Int {
-    case Done,
-    Cancel
+    case Done
+    case Cancel
 }
 
 public typealias IMGLYSubEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void

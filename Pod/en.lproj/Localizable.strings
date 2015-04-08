@@ -1,0 +1,20 @@
+/* 
+  Localizable.strings
+  imglyKit
+
+  Created by Sascha Schwabbauer on 07/04/15.
+  Copyright (c) 2015 9elements GmbH. All rights reserved.
+*/
+
+// Main Editor
+"main-editor.title" = "Editor";
+"main-editor.button.magic" = "Magic";
+"main-editor.button.filter" = "Filter";
+"main-editor.button.stickers" = "Stickers";
+"main-editor.button.orientation" = "Orientation";
+"main-editor.button.focus" = "Focus";
+"main-editor.button.crop" = "Crop";
+"main-editor.button.brightness" = "Brightness";
+"main-editor.button.contrast" = "Contrast";
+"main-editor.button.saturation" = "Saturation";
+"main-editor.button.text" = "Text";

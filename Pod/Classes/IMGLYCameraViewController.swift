@@ -158,13 +158,19 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate, IMGLYCameraCont
     }
     
     private func showModalEditorNavigationController() {
-        let editorViewController = IMGLYEditorMainDialogViewController()
-        editorViewController.hiResImage = image_
+        let editorViewController = MainEditorViewController()
+        editorViewController.highResolutionImage = image_
         editorViewController.initialFilterType = cameraView!.filterSelectorView.activeFilterType
-        editorViewController.completionBlock = editorCompletionBlock
+//        editorViewController.completionBlock = editorCompletionBlock
+       
+        let navigationController = UINavigationController(rootViewController: editorViewController)
+        navigationController.navigationBar.barTintColor = UIColor.blackColor()
+        navigationController.navigationBar.translucent = false
+        navigationController.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
+        
         image_ = nil
         
-        self.showViewController(editorViewController, sender: nil)
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
     // MARK:- IMGLYCameraControllerDelegate
