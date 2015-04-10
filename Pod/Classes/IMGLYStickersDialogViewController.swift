@@ -34,7 +34,7 @@ public class IMGLYStickersDialogViewController: UIViewController, IMGLYSubEditor
     
     public var previewImage: UIImage?
     public var completionHandler: IMGLYSubEditorCompletionBlock?
-    public var fixedFilterStack: IMGLYFixedFilterStack?
+    public var fixedFilterStack: FixedFilterStack?
     public var dialogView: UIView? {
         get {
             return view

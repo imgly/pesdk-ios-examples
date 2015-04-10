@@ -1,15 +1,16 @@
 //
-//  ButtonCollectionViewCell.swift
+//  ImageCaptionCollectionViewCell.swift
 //  imglyKit
 //
-//  Created by Sascha Schwabbauer on 07/04/15.
+//  Created by Sascha Schwabbauer on 08/04/15.
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
 import UIKit
 
-class ButtonCollectionViewCell: UICollectionViewCell {
-
+// TODO: Public?
+class ImageCaptionCollectionViewCell: UICollectionViewCell {
+    
     // MARK: - Properties
     
     lazy var imageView: UIImageView = {
@@ -22,7 +23,7 @@ class ButtonCollectionViewCell: UICollectionViewCell {
     lazy var textLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFontOfSize(11)
-        label.textColor = UIColor.whiteColor()
+        label.textColor = UIColor(white: 0.5, alpha: 1.0)
         label.setTranslatesAutoresizingMaskIntoConstraints(false)
         return label
         }()
@@ -33,7 +34,7 @@ class ButtonCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         commonInit()
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
@@ -44,6 +45,7 @@ class ButtonCollectionViewCell: UICollectionViewCell {
     }
     
     // MARK: - Helpers
+    
     private func configureViews() {
         let containerView = UIView()
         containerView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -59,8 +61,9 @@ class ButtonCollectionViewCell: UICollectionViewCell {
         ]
         
         let metrics: [ NSObject: NSNumber ] = [
-            "imageHeight" : 44,
-            "imageWidth" : 44
+            "imageHeight" : imageSize.height,
+            "imageWidth" : imageSize.width,
+            "imageCaptionMargin" : imageCaptionMargin
         ]
         
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -76,13 +79,25 @@ class ButtonCollectionViewCell: UICollectionViewCell {
             views: views))
         
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[imageView(==imageHeight)][textLabel]|",
+            "V:|[imageView(==imageHeight)]-(imageCaptionMargin)-[textLabel]|",
             options: .AlignAllCenterX,
             metrics: metrics,
             views: views))
         
         contentView.addConstraint(NSLayoutConstraint(item: containerView, attribute: .CenterX, relatedBy: .Equal, toItem: contentView, attribute: .CenterX, multiplier: 1, constant: 0))
         contentView.addConstraint(NSLayoutConstraint(item: containerView, attribute: .CenterY, relatedBy: .Equal, toItem: contentView, attribute: .CenterY, multiplier: 1, constant: 0))
+    }
+    
+    // MARK: - Subclasses
+    
+    var imageSize: CGSize {
+        // Subclasses should override this
+        return CGSizeZero
+    }
+    
+    var imageCaptionMargin: CGFloat {
+        // Subclasses should override this
+        return 0
     }
     
 }

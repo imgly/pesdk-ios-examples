@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYKDynamicFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "KDynamic"
+public class IMGLYKDynamicFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "KDynamic")
         self.displayName = "Dynamic"
     }
     

@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYSoftFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Soft"
+public class IMGLYSoftFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Soft")
         self.displayName = "Soft"
     }
     

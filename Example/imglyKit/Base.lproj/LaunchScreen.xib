@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C1510" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -11,23 +11,29 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BFJ-vy-jyg" userLabel="Top controls view">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="40"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                     <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rn-jD-pfY" userLabel="Choose flash mode button">
-                            <rect key="frame" x="20" y="10" width="50" height="20"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8rn-jD-pfY" userLabel="Choose flash mode button">
+                            <rect key="frame" x="20" y="0.0" width="50" height="44"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="EBb-EI-9Ga"/>
                                 <constraint firstAttribute="width" constant="50" id="dpg-pn-Yyp"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="sKd-Wv-vZ2"/>
                             </constraints>
                             <state key="normal" image="flash_auto">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="EBb-EI-9Ga"/>
+                                    <exclude reference="dpg-pn-Yyp"/>
+                                </mask>
+                            </variation>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rp1-dQ-MnB" userLabel="Swap camera button">
-                            <rect key="frame" x="552" y="9" width="28" height="21"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rp1-dQ-MnB" userLabel="Swap camera button">
+                            <rect key="frame" x="536" y="0.0" width="44" height="44"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="21" id="6dq-oR-3rC"/>
-                                <constraint firstAttribute="width" constant="28" id="pxA-3U-xGR"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="IqM-CZ-KMu"/>
                             </constraints>
                             <state key="normal" image="cam_switch">
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -36,11 +42,13 @@
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="centerY" secondItem="Rp1-dQ-MnB" secondAttribute="centerY" constant="0.5" id="KAC-7b-58e"/>
+                        <constraint firstAttribute="bottom" secondItem="Rp1-dQ-MnB" secondAttribute="bottom" id="9W4-El-Hul"/>
+                        <constraint firstAttribute="bottom" secondItem="8rn-jD-pfY" secondAttribute="bottom" id="GKV-Ty-c5I"/>
                         <constraint firstAttribute="trailing" secondItem="Rp1-dQ-MnB" secondAttribute="trailing" constant="20" id="MZU-Ff-Nkn"/>
                         <constraint firstItem="8rn-jD-pfY" firstAttribute="leading" secondItem="BFJ-vy-jyg" secondAttribute="leading" constant="20" id="pfB-Cl-OoT"/>
-                        <constraint firstAttribute="height" constant="40" id="vfj-JF-tf3"/>
-                        <constraint firstAttribute="centerY" secondItem="8rn-jD-pfY" secondAttribute="centerY" constant="0.5" id="x3X-gR-Rza"/>
+                        <constraint firstItem="8rn-jD-pfY" firstAttribute="top" secondItem="BFJ-vy-jyg" secondAttribute="top" id="r2Y-Cp-8GX"/>
+                        <constraint firstItem="Rp1-dQ-MnB" firstAttribute="top" secondItem="BFJ-vy-jyg" secondAttribute="top" id="su1-X8-pj0"/>
+                        <constraint firstAttribute="height" constant="44" id="vfj-JF-tf3"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svf-Oe-eMU" userLabel="Bottom controls view">

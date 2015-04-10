@@ -29,22 +29,20 @@ public class IMGLYStickerFilter: CIFilter {
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage! {
-        get {
-            if inputImage == nil {
-                return CIImage.emptyImage()
-            }
-            
-            if sticker == nil {
-                return inputImage
-            }
-            
-            var stickerImage = createStickerImage()
-            var stickerCIImage = CIImage(CGImage: stickerImage.CGImage)
-            var filter = CIFilter(name: "CISourceOverCompositing")
-            filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-            filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
-            return filter.outputImage
+        if inputImage == nil {
+            return CIImage.emptyImage()
         }
+        
+        if sticker == nil {
+            return inputImage
+        }
+        
+        var stickerImage = createStickerImage()
+        var stickerCIImage = CIImage(CGImage: stickerImage.CGImage)
+        var filter = CIFilter(name: "CISourceOverCompositing")
+        filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+        filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
+        return filter.outputImage
     }
     
     private func createStickerImage() -> UIImage {
@@ -58,5 +56,16 @@ public class IMGLYStickerFilter: CIFilter {
         var image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
         return image
+    }
+}
+
+extension IMGLYStickerFilter: NSCopying {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = super.copyWithZone(zone) as! IMGLYStickerFilter
+        copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
+        copy.sticker = sticker
+        copy.position = position
+        copy.size = size
+        return copy
     }
 }

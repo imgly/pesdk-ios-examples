@@ -39,8 +39,8 @@ public class IMGLYCBSBaseViewController: UIViewController, IMGLYSubEditorViewCon
         }
     }
     
-    public var fixedFilterStack_:IMGLYFixedFilterStack?
-    public var fixedFilterStack:IMGLYFixedFilterStack? {
+    public var fixedFilterStack_:FixedFilterStack?
+    public var fixedFilterStack:FixedFilterStack? {
         get {
             return fixedFilterStack_
         }

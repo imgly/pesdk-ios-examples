@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYPaleFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Pale"
+public class IMGLYPaleFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Pale")
         self.displayName = "Pale"
     }
     

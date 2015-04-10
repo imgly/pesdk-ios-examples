@@ -13,10 +13,10 @@ import GLKit
 Represents the angle an image should be rotated by.
 */
 @objc public enum IMGLYRotationAngle: Int {
-    case _0,
-    _90,
-    _180,
-    _270
+    case _0
+    case _90
+    case _180
+    case _270
 }
 
 /**
@@ -29,7 +29,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage:CIImage?
     public var cropRect = CGRectMake(0, 0, 1, 1)
-    public var rotationAngle:IMGLYRotationAngle = IMGLYRotationAngle._0
+    public var rotationAngle = IMGLYRotationAngle._0
     
     private var flipVertical_ = false
     private var flipHorizontal_ = false
@@ -135,5 +135,17 @@ public class IMGLYOrientationCropFilter : CIFilter {
         } else {
             flipHorizontal_ = !flipHorizontal_
         }
+    }
+}
+
+extension IMGLYOrientationCropFilter: NSCopying {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = super.copyWithZone(zone) as! IMGLYOrientationCropFilter
+        copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
+        copy.cropRect = cropRect
+        copy.rotationAngle = rotationAngle
+        copy.flipVertical_ = flipVertical_
+        copy.flipHorizontal_ = flipHorizontal_
+        return copy
     }
 }

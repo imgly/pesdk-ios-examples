@@ -18,8 +18,13 @@ static const int kDimension = 64;
  The resulting data can be used to feed an CIColorCube filter, so that the transformation
  realised by the LUT is applied with a core image standard filter
  */
-- (NSData*)colorCubeDataFromLUT:(NSString *)name {
++ (nullable NSData *)colorCubeDataFromLUT:(nonnull NSString *)name {
     UIImage *image = [UIImage imageNamed:name inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
+    
+    if (!image) {
+        return nil;
+    }
+    
     NSInteger width = CGImageGetWidth(image.CGImage);
     NSInteger height = CGImageGetHeight(image.CGImage);
     NSInteger rowNum = height / kDimension;
@@ -71,8 +76,7 @@ static const int kDimension = 64;
     return [NSData dataWithBytesNoCopy:data length:size freeWhenDone:YES];
   }
 
-- (unsigned char *)createRGBABitmapFromImage:(CGImageRef)image
-{
++ (unsigned char *)createRGBABitmapFromImage:(CGImageRef)image {
     CGContextRef context = NULL;
     CGColorSpaceRef colorSpace;
     unsigned char *bitmap;

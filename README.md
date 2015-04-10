@@ -156,7 +156,7 @@ To use the filter in you project you need to:
    ![identity](http://i.imgur.com/s15Q10X.png)
      
 * Add the resulting image to the `Filter Responses` group in the project. Note: the image must be saved in PNG format.
-* Create a new class that derives from `IMGLYResponseFilter`.
+* Create a new class that derives from `ResponseFilter`.
 * Add a init method that sets the `responseName` property to the filename of the added image.
 * Add a new type to `IMGLYFilterType`.
 * Add a new case to the `effectFilterWithType` method in the instance factory.
@@ -166,7 +166,7 @@ The framework will take care about the rest, such as preview rendering.
 Here is an example of a response-filter
 
 ```
-class IMGLYSteelTypeFilter: IMGLYResponseFilter {
+class IMGLYSteelTypeFilter: ResponseFilter {
    	override init() {
        	super.init()
        	self.responseName = "Steel"

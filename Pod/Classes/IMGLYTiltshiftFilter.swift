@@ -40,32 +40,30 @@ public class IMGLYTiltshiftFilter : CIFilter {
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage! {
-        get {
-            if inputImage == nil {
-                return CIImage.emptyImage()
-            }
-            if tiltShiftType == IMGLYTiltshiftType.Off {
-                return inputImage!
-            }
-            
-            rect_ = inputImage!.extent()
-            imageSize_ = rect_.size
-            calcScaleVector()
-            calculateCenterAndRadius()
-            var maskImage:CIImage?
-            if tiltShiftType == IMGLYTiltshiftType.Circle {
-                maskImage = createRadialMaskImage()
-            }
-            else if tiltShiftType == IMGLYTiltshiftType.Box {
-                maskImage = createLinearMaskImage()
-            }
-            var blurredImage = bluredImage()
-            var blendFilter = CIFilter(name: "CIBlendWithMask")
-            blendFilter.setValue(blurredImage, forKey: kCIInputImageKey)
-            blendFilter.setValue(inputImage!, forKey: "inputBackgroundImage")
-            blendFilter.setValue(maskImage, forKey: "inputMaskImage")
-            return blendFilter.outputImage
+        if inputImage == nil {
+            return CIImage.emptyImage()
         }
+        if tiltShiftType == IMGLYTiltshiftType.Off {
+            return inputImage!
+        }
+        
+        rect_ = inputImage!.extent()
+        imageSize_ = rect_.size
+        calcScaleVector()
+        calculateCenterAndRadius()
+        var maskImage:CIImage?
+        if tiltShiftType == IMGLYTiltshiftType.Circle {
+            maskImage = createRadialMaskImage()
+        }
+        else if tiltShiftType == IMGLYTiltshiftType.Box {
+            maskImage = createLinearMaskImage()
+        }
+        var blurredImage = bluredImage()
+        var blendFilter = CIFilter(name: "CIBlendWithMask")
+        blendFilter.setValue(blurredImage, forKey: kCIInputImageKey)
+        blendFilter.setValue(inputImage!, forKey: "inputBackgroundImage")
+        blendFilter.setValue(maskImage, forKey: "inputMaskImage")
+        return blendFilter.outputImage
     }
     
 
@@ -171,5 +169,21 @@ public class IMGLYTiltshiftFilter : CIFilter {
         cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
         return cropFilter.outputImage
     }
-    
+}
+
+extension IMGLYTiltshiftFilter: NSCopying {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = super.copyWithZone(zone) as! IMGLYTiltshiftFilter
+        copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
+        copy.controlPoint1 = controlPoint1
+        copy.controlPoint2 = controlPoint2
+        copy.tiltShiftType = tiltShiftType
+        copy.blurRadius = blurRadius
+        copy.center_ = center_
+        copy.radius_ = radius_
+        copy.scaleVector_ = scaleVector_
+        copy.imageSize_ = imageSize_
+        copy.rect_ = rect_
+        return copy
+    }
 }

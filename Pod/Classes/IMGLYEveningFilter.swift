@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYEveningFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Evening"
+public class IMGLYEveningFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Evening")
         self.displayName = "Evening"
     }
     

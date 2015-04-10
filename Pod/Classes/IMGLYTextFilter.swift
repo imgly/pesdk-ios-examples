@@ -34,21 +34,19 @@ public class IMGLYTextFilter : CIFilter {
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage! {
-        get {
-            if inputImage == nil {
-                return CIImage.emptyImage()
-            }
-            if text.isEmpty {
-                return inputImage
-            }
-            
-            var textImage = createTextImage()
-            var textCIImage = CIImage(CGImage: textImage.CGImage)
-            var filter = CIFilter(name: "CISourceOverCompositing")
-            filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-            filter.setValue(textCIImage, forKey: kCIInputImageKey)
-            return filter.outputImage
+        if inputImage == nil {
+            return CIImage.emptyImage()
         }
+        if text.isEmpty {
+            return inputImage
+        }
+        
+        var textImage = createTextImage()
+        var textCIImage = CIImage(CGImage: textImage.CGImage)
+        var filter = CIFilter(name: "CISourceOverCompositing")
+        filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+        filter.setValue(textCIImage, forKey: kCIInputImageKey)
+        return filter.outputImage
     }
     
     private func createTextImage() -> UIImage {
@@ -63,5 +61,18 @@ public class IMGLYTextFilter : CIFilter {
         var image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
         return image
+    }
+}
+
+extension IMGLYTextFilter: NSCopying {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = super.copyWithZone(zone) as! IMGLYTextFilter
+        copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
+        copy.text = (text as NSString).copyWithZone(zone) as! String
+        copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
+        copy.fontScaleFactor = fontScaleFactor
+        copy.position = position
+        copy.color = color.copyWithZone(zone) as! UIColor
+        return copy
     }
 }

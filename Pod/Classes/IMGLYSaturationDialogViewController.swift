@@ -39,7 +39,7 @@ public class IMGLYSaturationDialogViewController: IMGLYCBSBaseViewController, IM
     public var initialValue:Float {
         get {
             if fixedFilterStack != nil {
-                return fixedFilterStack!.brightnessFilter!.saturation
+                return fixedFilterStack!.brightnessFilter.saturation
             }
             return 1.0
         }
@@ -47,7 +47,7 @@ public class IMGLYSaturationDialogViewController: IMGLYCBSBaseViewController, IM
     
     public func setValue(value:Float) {
         if fixedFilterStack != nil {
-            fixedFilterStack!.brightnessFilter!.saturation = value
+            fixedFilterStack!.brightnessFilter.saturation = value
         }
     }
 }

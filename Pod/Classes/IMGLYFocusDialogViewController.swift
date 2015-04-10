@@ -12,7 +12,7 @@ public class IMGLYFocusDialogViewController: UIViewController, IMGLYSubEditorVie
 IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate {
     
     public var completionHandler:IMGLYSubEditorCompletionBlock?
-    public var fixedFilterStack:IMGLYFixedFilterStack?
+    public var fixedFilterStack:FixedFilterStack?
     
     private var dialogView_:IMGLYFocusDialogView?
     private var filteredImage_:UIImage? = nil
@@ -86,13 +86,13 @@ IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate {
     private func updatePreviewImage() {
         if fixedFilterStack != nil {
             if tiltShiftType == IMGLYTiltshiftType.Circle {
-                fixedFilterStack!.tiltShiftFilter!.controlPoint1 = circleGradientView_!.normalizedControlPoint1
-                fixedFilterStack!.tiltShiftFilter!.controlPoint2 = circleGradientView_!.normalizedControlPoint2
+                fixedFilterStack!.tiltShiftFilter.controlPoint1 = circleGradientView_!.normalizedControlPoint1
+                fixedFilterStack!.tiltShiftFilter.controlPoint2 = circleGradientView_!.normalizedControlPoint2
             } else if tiltShiftType == IMGLYTiltshiftType.Box {
-                fixedFilterStack!.tiltShiftFilter!.controlPoint1 = boxGradientView_!.normalizedControlPoint1
-                fixedFilterStack!.tiltShiftFilter!.controlPoint2 = boxGradientView_!.normalizedControlPoint2
+                fixedFilterStack!.tiltShiftFilter.controlPoint1 = boxGradientView_!.normalizedControlPoint1
+                fixedFilterStack!.tiltShiftFilter.controlPoint2 = boxGradientView_!.normalizedControlPoint2
             }
-            fixedFilterStack!.tiltShiftFilter!.tiltShiftType = tiltShiftType
+            fixedFilterStack!.tiltShiftFilter.tiltShiftType = tiltShiftType
             
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!,
                 filters: fixedFilterStack!.activeFilters)
@@ -101,9 +101,9 @@ IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate {
     }
     
     private func createNonBlurryImage() {
-        fixedFilterStack!.tiltShiftFilter!.tiltShiftType = IMGLYTiltshiftType.Off
+        fixedFilterStack!.tiltShiftFilter.tiltShiftType = IMGLYTiltshiftType.Off
         nonBlurryImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
-        fixedFilterStack!.tiltShiftFilter!.tiltShiftType = oldTiltShiftType
+        fixedFilterStack!.tiltShiftFilter.tiltShiftType = oldTiltShiftType
     }
     
     private func layoutCircleGradientView() {
@@ -225,14 +225,14 @@ IMGLYFocusDialogViewDelegate, IMGLYGradientViewDelegate {
     
     // MARK:- Value store/restore
     private func storeOldValues() {
-        oldTiltShiftType = fixedFilterStack!.tiltShiftFilter!.tiltShiftType
-        oldControlPoint1 = fixedFilterStack!.tiltShiftFilter!.controlPoint1
-        oldControlPoint2 = fixedFilterStack!.tiltShiftFilter!.controlPoint2
+        oldTiltShiftType = fixedFilterStack!.tiltShiftFilter.tiltShiftType
+        oldControlPoint1 = fixedFilterStack!.tiltShiftFilter.controlPoint1
+        oldControlPoint2 = fixedFilterStack!.tiltShiftFilter.controlPoint2
     }
     
     private func restoreOldValues() {
-        fixedFilterStack!.tiltShiftFilter!.tiltShiftType = oldTiltShiftType
-        fixedFilterStack!.tiltShiftFilter!.controlPoint1 = oldControlPoint1
-        fixedFilterStack!.tiltShiftFilter!.controlPoint2 = oldControlPoint2
+        fixedFilterStack!.tiltShiftFilter.tiltShiftType = oldTiltShiftType
+        fixedFilterStack!.tiltShiftFilter.controlPoint1 = oldControlPoint1
+        fixedFilterStack!.tiltShiftFilter.controlPoint2 = oldControlPoint2
     }
 }

@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYHighContrastFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "HighContrast"
+public class IMGLYHighContrastFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "HighContrast")
         self.displayName = "Hicon"
     }
     

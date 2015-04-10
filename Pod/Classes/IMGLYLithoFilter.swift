@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYLithoFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Litho"
+public class IMGLYLithoFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Litho")
         self.displayName = "Litho"
     }
     

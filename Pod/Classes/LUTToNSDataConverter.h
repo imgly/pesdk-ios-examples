@@ -15,6 +15,6 @@
  The resulting data can be used to feed an CIColorCube filter, so that the transformation 
  realised by the LUT is applied with a core image standard filter 
  */
-- (NSData*)colorCubeDataFromLUT:(NSString *)name;
++ (nullable NSData *)colorCubeDataFromLUT:(nonnull NSString *)name;
 
 @end

@@ -18,3 +18,6 @@
 "main-editor.button.contrast" = "Contrast";
 "main-editor.button.saturation" = "Saturation";
 "main-editor.button.text" = "Text";
+
+// Filter Editor
+"filter-editor.title" = "Filter";

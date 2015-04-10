@@ -39,7 +39,7 @@ public class IMGLYBrightnessDialogViewController: IMGLYCBSBaseViewController, IM
     public var initialValue:Float {
         get {
             if fixedFilterStack != nil {
-                return fixedFilterStack!.brightnessFilter!.brightness
+                return fixedFilterStack!.brightnessFilter.brightness
             }
             return 0.0
         }
@@ -47,7 +47,7 @@ public class IMGLYBrightnessDialogViewController: IMGLYCBSBaseViewController, IM
     
     public func setValue(value:Float) {
         if fixedFilterStack != nil {
-            fixedFilterStack!.brightnessFilter!.brightness = value
+            fixedFilterStack!.brightnessFilter.brightness = value
         }
     }
 }

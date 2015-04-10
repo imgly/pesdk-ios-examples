@@ -12,14 +12,13 @@ import GLKit
 /**
 *  A filter that does nothing. It is used within the fixed-filterstack.
 */
-public class IMGLYNoneFilter : IMGLYResponseFilter {
+public class IMGLYNoneFilter : ResponseFilter {
     required public init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        self.displayName = "None"
     }
     
-    override init() {
-        super.init()
+    init() {
+        super.init(responseName: "None")
         self.displayName = "None"
     }
     

@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYNeatFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Neat"
+public class IMGLYNeatFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Neat")
         self.displayName = "Neat"
     }
     

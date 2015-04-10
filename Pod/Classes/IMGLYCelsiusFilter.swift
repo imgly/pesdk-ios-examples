@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYCelsiusFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Celsius"
+public class IMGLYCelsiusFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Celsius")
         self.displayName = "Celsius"
     }
     

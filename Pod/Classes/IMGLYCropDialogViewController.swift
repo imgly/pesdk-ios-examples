@@ -49,8 +49,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFilterStack?
-    public var fixedFilterStack:IMGLYFixedFilterStack? {
+    private var fixedFilterStack_:FixedFilterStack?
+    public var fixedFilterStack:FixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -91,8 +91,8 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     
     public override func viewDidLoad() {
         super.viewDidLoad()
-        oldRect_ = fixedFilterStack!.orientationCropFilter!.cropRect
-        fixedFilterStack!.orientationCropFilter!.cropRect = CGRectMake(0, 0, 1, 1)
+        oldRect_ = fixedFilterStack!.orientationCropFilter.cropRect
+        fixedFilterStack!.orientationCropFilter.cropRect = CGRectMake(0, 0, 1, 1)
         dialogView_ = self.view as? IMGLYCropDialogView
         dialogView_?.delegate = self
         cropRectComponent.setup(dialogView_!.transperentRectView, parentView: self.view, showAnchors: true)
@@ -455,7 +455,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     public func doneButtonPressed() {
         if self.completionHandler != nil {
             var rect = normalizedCropRect()
-            fixedFilterStack!.orientationCropFilter!.cropRect = rect
+            fixedFilterStack!.orientationCropFilter.cropRect = rect
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             self.completionHandler?(IMGLYEditorResult.Done, filteredImage_)
         }
@@ -464,7 +464,7 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
     
     public func backButtonPressed() {
         if self.completionHandler != nil {
-            fixedFilterStack!.orientationCropFilter!.cropRect  = oldRect_
+            fixedFilterStack!.orientationCropFilter.cropRect  = oldRect_
             self.completionHandler?(IMGLYEditorResult.Cancel, nil)
         }
         self.dismissViewControllerAnimated(true, completion: { () -> Void in })
@@ -538,6 +538,6 @@ IMGLYSubEditorViewControllerProtocol, IMGLYCropDialogViewDelegate {
             cropRectTopBound_ + sizeDeltaY,
             rectWidth,
             rectHeight)
-        fixedFilterStack!.orientationCropFilter!.cropRect = normalizedCropRect()
+        fixedFilterStack!.orientationCropFilter.cropRect = normalizedCropRect()
     }
 }

@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "SepiaHigh"
+public class IMGLYSepiaHighFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "SepiaHigh")
         self.displayName = "Sepia High"
     }
     

@@ -8,6 +8,40 @@
 
 import UIKit
 
+// TODO: Device Rotation
+// TODO: Status Bar
+// TODO: Refactor Instance Factory
+
+@objc public enum IMGLYEditorResult: Int {
+    case Done
+    case Cancel
+}
+
+// TODO: Delete
+public typealias IMGLYSubEditorCompletionBlock = (IMGLYEditorResult,UIImage?)->Void
+@objc public protocol IMGLYSubEditorViewControllerProtocol {
+    var previewImage:UIImage? {set get}
+    var completionHandler:IMGLYSubEditorCompletionBlock? {get set}
+    var fixedFilterStack:FixedFilterStack? {get set}
+    var dialogView:UIView? {get set}
+    func viewDidLoad()
+}
+
+@objc public enum IMGLYMainMenuButtonType: Int {
+    case Magic
+    case Filter
+    case Stickers
+    case Orientation
+    case Focus
+    case Crop
+    case Brightness
+    case Contrast
+    case Saturation
+    case Noise
+    case Text
+    case Reset
+}
+
 public typealias EditorCompletionBlock = (IMGLYEditorResult, UIImage?) -> Void
 
 private let ButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
@@ -27,7 +61,7 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
                 image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),
                 selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil),
                 handler: { [unowned self] in self.subEditorButtonPressed(.Magic) },
-                showSelection: { [unowned self] in return self.fixedFilterStack.enhancementFilter!.enabled }))
+                showSelection: { [unowned self] in return self.fixedFilterStack.enhancementFilter.enabled }))
         
         handlers.append(
             ActionButton(
@@ -87,8 +121,8 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
         }()
     
     public var completionBlock: EditorCompletionBlock?
-    public var initialFilterType = IMGLYFilterType.None
-    private let fixedFilterStack = IMGLYFixedFilterStack()
+    public var initialFilter: ResponseFilter?
+    public private(set) var fixedFilterStack = FixedFilterStack()
     
     private let maxLowResolutionSideLength = CGFloat(800)
     public var highResolutionImage: UIImage? {
@@ -96,8 +130,6 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
             generateLowResolutionImage()
         }
     }
-    private var lowResolutionImage: UIImage?
-    private var lowResolutionImageBackup: UIImage?
     
     // MARK: - UIViewController
     
@@ -108,9 +140,14 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
         navigationItem.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
-        fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType) as? IMGLYResponseFilter
+        navigationController?.delegate = self
+        
+        if let initialFilter = self.initialFilter {
+            fixedFilterStack.effectFilter = initialFilter
+        }
         updatePreviewImage()
         
+        // TODO: Auslagern?
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = ButtonCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
@@ -132,43 +169,30 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
     
     // MARK: - Helpers
     
-    func subEditorButtonPressed(buttonType: IMGLYMainMenuButtonType) {
+    private func subEditorButtonPressed(buttonType: IMGLYMainMenuButtonType) {
         if (buttonType == IMGLYMainMenuButtonType.Magic) {
             if !updating {
-                fixedFilterStack.enhancementFilter!.enabled = !fixedFilterStack.enhancementFilter!.enabled
+                fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
                 updatePreviewImage()
             }
         } else {
-            if let viewController = IMGLYInstanceFactory.sharedInstance.viewControllerForButtonType(buttonType) {
-                viewController.fixedFilterStack = fixedFilterStack
-                viewController.previewImage = lowResolutionImageBackup
-                //                viewController!.completionHandler = subEditorCompletionBlock
+            if let viewController = IMGLYInstanceFactory.sharedInstance.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
+                viewController.lowResolutionImage = lowResolutionImage
+                viewController.previewImageView.image = previewImageView.image
+                viewController.completionHandler = subEditorDidComplete
                 
-                //                if let viewController = viewController as? UIViewController {
-                //                    viewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-                //                }
-                
-                showViewController(viewController as! UIViewController, sender: self)
+                showViewController(viewController, sender: self)
             }
         }
     }
     
-    func updatePreviewImage() {
-        if let lowResolutionImage = lowResolutionImage {            
-            updating = true
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.previewImageView.image = processedImage
-                    self.updating = false
-                }
-            }
-        }
+    private func subEditorDidComplete(image: UIImage?, fixedFilterStack: FixedFilterStack) {
+        previewImageView.image = image
+        self.fixedFilterStack = fixedFilterStack
     }
     
-    func generateLowResolutionImage() {
-        if let highResolutionImage = highResolutionImage {
+    private func generateLowResolutionImage() {
+        if let highResolutionImage = self.highResolutionImage {
             if highResolutionImage.size.width > maxLowResolutionSideLength || highResolutionImage.size.height > maxLowResolutionSideLength  {
                 let scale: CGFloat
                 
@@ -181,13 +205,22 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
                 var newWidth  = CGFloat(roundf(Float(highResolutionImage.size.width) * Float(scale)))
                 var newHeight = CGFloat(roundf(Float(highResolutionImage.size.height) * Float(scale)))
                 lowResolutionImage = highResolutionImage.imageResizedToSize(CGSize(width: newWidth, height: newHeight), withInterpolationQuality: kCGInterpolationDefault)
-                
-                if let lowResolutionImage = self.lowResolutionImage {
-                    lowResolutionImageBackup = UIImage(CGImage: lowResolutionImage.CGImage)
-                }
             } else {
                 lowResolutionImage = UIImage(CGImage: highResolutionImage.CGImage)
-                lowResolutionImageBackup = UIImage(CGImage: highResolutionImage.CGImage)
+            }
+        }
+    }
+    
+    private func updatePreviewImage() {
+        if let lowResolutionImage = self.lowResolutionImage {
+            updating = true
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+                let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.previewImageView.image = processedImage
+                    self.updating = false
+                }
             }
         }
     }
@@ -247,5 +280,11 @@ extension MainEditorViewController: UICollectionViewDelegate {
         if actionButton.selectedImage != nil && actionButton.showSelection != nil {
             collectionView.reloadItemsAtIndexPaths([indexPath])
         }
+    }
+}
+
+extension MainEditorViewController: UINavigationControllerDelegate {
+    public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return NavigationAnimationController()
     }
 }

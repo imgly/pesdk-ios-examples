@@ -64,7 +64,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     // MARK: - computed vars
     
     /// The response filter that is applied to the live-feed.
-    public var effectFilter: CIFilter?
+    public var effectFilter: ResponseFilter = IMGLYNoneFilter()
     
     // MARK:- init functions
     public init(previewView: UIView) {
@@ -102,7 +102,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     private func setupVideoPreview() {
         if !videoPreviewAdded_ {
             let window = (UIApplication.sharedApplication().delegate?.window!)!
-            glContext_ = EAGLContext(API:EAGLRenderingAPI.OpenGLES2)
+            glContext_ = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
             videoPreviewView = GLKView(frame: CGRectZero, context: glContext_)
             videoPreviewView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
             
@@ -118,7 +118,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             }
             
             // create the CIContext instance, note that this must be done after videoPreviewView is properly set up
-            ciContext_ = CIContext(EAGLContext: glContext_, options:nil)
+            ciContext_ = CIContext(EAGLContext: glContext_, options: nil)
             videoPreviewView.bindDrawable()
             videoPreviewAdded_ = true
         }
@@ -146,16 +146,16 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             captureSessionQueue_ = dispatch_queue_create("capture_session_queue", nil);
         }
         
-        dispatch_async(captureSessionQueue_!) {
-            var videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-            self.videoDevice_  = nil
-            
-            for device in videoDevices {
-                if device.position == self.cameraPosition_ {
-                    self.videoDevice_ = device as? AVCaptureDevice
-                }
+        let videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
+        videoDevice_ = nil
+        
+        for device in videoDevices {
+            if device.position == self.cameraPosition_ {
+                videoDevice_ = device as? AVCaptureDevice
             }
-            
+        }
+        
+        dispatch_async(captureSessionQueue_!) {
             self.updateSupportedFlashModeList()
             
             let preset = AVCaptureSessionPresetPhoto;
@@ -431,10 +431,10 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         let sourceImage = CIImage(CVPixelBuffer:imageBuffer as CVPixelBufferRef, options: nil)
         
         let filteredImage: CIImage?
-        if let effectFilter = effectFilter {
-            filteredImage = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter])
-        } else {
+        if effectFilter is IMGLYNoneFilter {
             filteredImage = sourceImage
+        } else {
+            filteredImage = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter])
         }
         
         let sourceExtent = sourceImage.extent()

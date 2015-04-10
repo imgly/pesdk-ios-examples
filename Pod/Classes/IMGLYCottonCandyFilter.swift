@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "CottonCandy"
+public class IMGLYCottonCandyFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "CottonCandy")
         self.displayName = "Candy"
     }
     

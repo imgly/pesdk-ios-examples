@@ -24,6 +24,8 @@ import UIKit
         }
     }
     
+    public var lowResolutionImage: UIImage?
+    
     public private(set) lazy var previewImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .ScaleAspectFit

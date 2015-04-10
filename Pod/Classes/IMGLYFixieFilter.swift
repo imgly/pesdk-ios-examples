@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYFixieFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Fixie"
+public class IMGLYFixieFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Fixie")
         self.displayName = "Fixie"
     }
     

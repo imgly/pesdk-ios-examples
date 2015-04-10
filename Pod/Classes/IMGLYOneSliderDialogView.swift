@@ -8,6 +8,12 @@
 
 import UIKit
 
+@objc public protocol IMGLYSliderDialogViewDelegate {
+    func sliderValueChanged(newValue:Float)
+    func doneButtonPressed()
+    func backButtonPressed()
+}
+
 public class IMGLYOneSliderDialogView: UIView {
     @IBOutlet public var contentView: UIView!
     @IBOutlet public weak var previewImageView: UIImageView!

@@ -28,7 +28,7 @@ import GLKit
     
     :returns: A CIFilter object that realizes the desired filter.
     */
-    public func effectFilterWithType(type:IMGLYFilterType) -> CIFilter? {
+    public func effectFilterWithType(type:IMGLYFilterType) -> ResponseFilter {
         switch(type) {
         case IMGLYFilterType.None:
             return IMGLYNoneFilter()
@@ -166,8 +166,6 @@ import GLKit
             return IMGLYNeatFilter()
         case IMGLYFilterType.Plate:
             return IMGLYPlateFilter()
-        default:
-            fatalError("No filter found for type \(type)")
         }
     }
     
@@ -230,116 +228,118 @@ import GLKit
     Change this list to select the set of filters you want to present to the user.
     :returns: An array of filter types.
     */
-    public func availableFilterList() -> [IMGLYFilterType] {
-        return [IMGLYFilterType.None,
-            IMGLYFilterType.K1,
-            IMGLYFilterType.K2,
-            IMGLYFilterType.K6,
-            IMGLYFilterType.KDynamic,
-            IMGLYFilterType.Fridge,
-            IMGLYFilterType.Breeze,
-            IMGLYFilterType.Orchid,
-            IMGLYFilterType.Chest,
-            IMGLYFilterType.Front,
-            IMGLYFilterType.Fixie,
-            IMGLYFilterType.X400,
-            IMGLYFilterType.BW,
-            IMGLYFilterType.AD1920,
-            IMGLYFilterType.Lenin,
-            IMGLYFilterType.Quozi,
-            IMGLYFilterType.Pola669,
-            IMGLYFilterType.PolaSX,
-            IMGLYFilterType.Food,
-            IMGLYFilterType.Glam,
-            IMGLYFilterType.Celsius,
-            IMGLYFilterType.Texas,
-            IMGLYFilterType.Lomo,
-            IMGLYFilterType.Gobblin,
-            IMGLYFilterType.Sin,
-            IMGLYFilterType.Mellow,
-            IMGLYFilterType.Sunny,
-            IMGLYFilterType.A15,
-            IMGLYFilterType.Soft,
-            IMGLYFilterType.Blues,
-            IMGLYFilterType.Elder,
-            IMGLYFilterType.Sunset,
-            IMGLYFilterType.Evening,
-            IMGLYFilterType.Steel,
-            IMGLYFilterType.Seventies,
-            IMGLYFilterType.HighContrast,
-            IMGLYFilterType.BlueShadows,
-            IMGLYFilterType.Highcarb,
-            IMGLYFilterType.Eighties,
-            IMGLYFilterType.Colorful,
-            IMGLYFilterType.Lomo100,
-            IMGLYFilterType.Pro400,
-            IMGLYFilterType.Twilight,
-            IMGLYFilterType.CottonCandy,
-            IMGLYFilterType.Mono3200,
-            IMGLYFilterType.BlissfulBlue,
-            IMGLYFilterType.Pale,
-            IMGLYFilterType.Settled,
-            IMGLYFilterType.Cool,
-            IMGLYFilterType.Litho,
-            IMGLYFilterType.Prelude,
-            IMGLYFilterType.Nepal,
-            IMGLYFilterType.Ancient,
-            IMGLYFilterType.Pitched,
-            IMGLYFilterType.Lucid,
-            IMGLYFilterType.Creamy,
-            IMGLYFilterType.Keen,
-            IMGLYFilterType.Tender,
-            IMGLYFilterType.Bleached,
-            IMGLYFilterType.BleachedBlue,
-            IMGLYFilterType.Fall,
-            IMGLYFilterType.Winter,
-            IMGLYFilterType.SepiaHigh,
-            IMGLYFilterType.Summer,
-            IMGLYFilterType.Classic,
-            IMGLYFilterType.NoGreen,
-            IMGLYFilterType.Neat,
-            IMGLYFilterType.Plate]
+    public var availableFilterList: [IMGLYFilterType] {
+        return [
+            .None,
+            .K1,
+            .K2,
+            .K6,
+            .KDynamic,
+            .Fridge,
+            .Breeze,
+            .Orchid,
+            .Chest,
+            .Front,
+            .Fixie,
+            .X400,
+            .BW,
+            .AD1920,
+            .Lenin,
+            .Quozi,
+            .Pola669,
+            .PolaSX,
+            .Food,
+            .Glam,
+            .Celsius,
+            .Texas,
+            .Lomo,
+            .Gobblin,
+            .Sin,
+            .Mellow,
+            .Sunny,
+            .A15,
+            .Soft,
+            .Blues,
+            .Elder,
+            .Sunset,
+            .Evening,
+            .Steel,
+            .Seventies,
+            .HighContrast,
+            .BlueShadows,
+            .Highcarb,
+            .Eighties,
+            .Colorful,
+            .Lomo100,
+            .Pro400,
+            .Twilight,
+            .CottonCandy,
+            .Mono3200,
+            .BlissfulBlue,
+            .Pale,
+            .Settled,
+            .Cool,
+            .Litho,
+            .Prelude,
+            .Nepal,
+            .Ancient,
+            .Pitched,
+            .Lucid,
+            .Creamy,
+            .Keen,
+            .Tender,
+            .Bleached,
+            .BleachedBlue,
+            .Fall,
+            .Winter,
+            .SepiaHigh,
+            .Summer,
+            .Classic,
+            .NoGreen,
+            .Neat,
+            .Plate
+        ]
     }
     
-    // MARK:- dialog viewcontroller
+    // MARK: - Editor View Controllers
     
     /**
-    Return the viewcontroller acording to the button-type.
+    Return the viewcontroller according to the button-type.
     This is used by the main menu.
     
     :param: type The type of the button pressed.
     
-    :returns: A viewcontroller acording to the button-type.
+    :returns: A viewcontroller according to the button-type.
     */
-    public func viewControllerForButtonType(type:IMGLYMainMenuButtonType) -> IMGLYSubEditorViewControllerProtocol? {
+    public func viewControllerForButtonType(type: IMGLYMainMenuButtonType, withFixedFilterStack fixedFilterStack: FixedFilterStack) -> SubEditorViewController? {
         switch (type) {
         case IMGLYMainMenuButtonType.Filter:
-            return filterDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Stickers:
-            return stickersDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Orientation:
-            return orientationDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Focus:
-            return focusDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Crop:
-            return cropDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Brightness:
-            return brightnessDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Contrast:
-            return contrastDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Saturation:
-            return saturationDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Noise:
-            return IMGLYFilterDialogViewController() as IMGLYSubEditorViewControllerProtocol
-        case IMGLYMainMenuButtonType.Text:
-            return textDialogViewController() as IMGLYSubEditorViewControllerProtocol
+            return filterEditorViewControllerWithFixedFilterStack(fixedFilterStack)
+//        case IMGLYMainMenuButtonType.Stickers:
+//            return stickersDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Orientation:
+//            return orientationDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Focus:
+//            return focusDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Crop:
+//            return cropDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Brightness:
+//            return brightnessDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Contrast:
+//            return contrastDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Saturation:
+//            return saturationDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Noise:
+//            return IMGLYFilterDialogViewController() as IMGLYSubEditorViewControllerProtocol
+//        case IMGLYMainMenuButtonType.Text:
+//            return textDialogViewController() as IMGLYSubEditorViewControllerProtocol
         default:
             return nil
         }
     }
     
-    public func filterDialogViewController() -> IMGLYFilterDialogViewController {
-        return IMGLYFilterDialogViewController()
+    public func filterEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack) -> FilterEditorViewController {
+        return FilterEditorViewController(fixedFilterStack: fixedFilterStack)
     }
     
     public func stickersDialogViewController() -> IMGLYStickersDialogViewController {
@@ -386,8 +386,8 @@ import GLKit
 
     public func viewForButtonType(type:IMGLYMainMenuButtonType) -> UIView? {
         switch (type) {
-        case IMGLYMainMenuButtonType.Filter:
-            return filterDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Filter:
+//            return filterDialogView() as UIView
         case IMGLYMainMenuButtonType.Stickers:
             return stickersDialogView() as UIView
         case IMGLYMainMenuButtonType.Orientation:
@@ -402,8 +402,8 @@ import GLKit
             return oneSliderDialogView() as UIView
         case IMGLYMainMenuButtonType.Saturation:
             return oneSliderDialogView() as UIView
-        case IMGLYMainMenuButtonType.Noise:
-            return filterDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Noise:
+//            return filterDialogView() as UIView
         case IMGLYMainMenuButtonType.Text:
             return textDialogView() as UIView
         default:
@@ -411,10 +411,10 @@ import GLKit
         }
     }
     
-    public func filterDialogView() -> IMGLYFilterDialogView {
-        var dialog = IMGLYFilterDialogView(frame: CGRectZero)
-        return dialog
-    }
+//    public func filterDialogView() -> IMGLYFilterDialogView {
+//        var dialog = IMGLYFilterDialogView(frame: CGRectZero)
+//        return dialog
+//    }
     
     public func stickersDialogView() -> IMGLYStickersDialogView {
         return IMGLYStickersDialogView(frame: CGRectZero)
@@ -462,8 +462,9 @@ import GLKit
     
     :returns: An array of fontnames.
     */
-    public func availableFontsList() -> [String] {
-        return ["AmericanTypewriter",
+    public var availableFontsList: [String] {
+        return [
+            "AmericanTypewriter",
             "Avenir-Heavy",
             "ChalkboardSE-Regular",
             "ArialMT",
@@ -486,7 +487,8 @@ import GLKit
             "Sullivan",
             "Tommaso",
             "Valencia",
-            "Vevey"]
+            "Vevey"
+        ]
     }
     
     public func fontImporter() -> IMGLYFontImporter {

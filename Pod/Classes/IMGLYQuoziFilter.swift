@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYQuoziFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Quozi"
+public class IMGLYQuoziFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Quozi")
         self.displayName = "Quozi"
     }
     

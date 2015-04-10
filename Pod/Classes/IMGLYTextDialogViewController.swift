@@ -47,8 +47,8 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
         }
     }
     
-    private var fixedFilterStack_:IMGLYFixedFilterStack?
-    public var fixedFilterStack:IMGLYFixedFilterStack? {
+    private var fixedFilterStack_:FixedFilterStack?
+    public var fixedFilterStack:FixedFilterStack? {
         get {
             return fixedFilterStack_
         }
@@ -177,11 +177,11 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     public func doneButtonPressed() {
         textInput_!.resignFirstResponder()
         if completionHandler != nil {
-            fixedFilterStack!.textFilter!.text = textLabel_!.text!
-            fixedFilterStack!.textFilter!.color = textColor_
-            fixedFilterStack!.textFilter!.fontName = fontName_
-            fixedFilterStack!.textFilter!.position = transformedTextPosition()
-            fixedFilterStack!.textFilter!.fontScaleFactor = currentTextSize_ / scaledImageSize().height
+            fixedFilterStack!.textFilter.text = textLabel_!.text!
+            fixedFilterStack!.textFilter.color = textColor_
+            fixedFilterStack!.textFilter.fontName = fontName_
+            fixedFilterStack!.textFilter.position = transformedTextPosition()
+            fixedFilterStack!.textFilter.fontScaleFactor = currentTextSize_ / scaledImageSize().height
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             completionHandler?(IMGLYEditorResult.Done, self.filteredImage_)
         }
@@ -383,22 +383,22 @@ IMGLYTextDialogViewDelegate, IMGLYFontSelectorDelegate, UITextFieldDelegate, UIG
     
     // MARK:- store/restore
     private func storeValues() {
-        oldColor_ = fixedFilterStack!.textFilter!.color
-        oldPosition_ = fixedFilterStack!.textFilter!.position
-        oldText_ = fixedFilterStack!.textFilter!.text
-        oldFontScaleFactor_ = fixedFilterStack!.textFilter!.fontScaleFactor
+        oldColor_ = fixedFilterStack!.textFilter.color
+        oldPosition_ = fixedFilterStack!.textFilter.position
+        oldText_ = fixedFilterStack!.textFilter.text
+        oldFontScaleFactor_ = fixedFilterStack!.textFilter.fontScaleFactor
     }
     
     private func restoreValues() {
-        fixedFilterStack!.textFilter!.color = oldColor_
-        fixedFilterStack!.textFilter!.position = oldPosition_
-        fixedFilterStack!.textFilter!.text = oldText_
-        fixedFilterStack!.textFilter!.fontScaleFactor = oldFontScaleFactor_
+        fixedFilterStack!.textFilter.color = oldColor_
+        fixedFilterStack!.textFilter.position = oldPosition_
+        fixedFilterStack!.textFilter.text = oldText_
+        fixedFilterStack!.textFilter.fontScaleFactor = oldFontScaleFactor_
     }
     
     public func updatePreviewImage() {
         if fixedFilterStack != nil {
-            fixedFilterStack!.textFilter!.text = ""
+            fixedFilterStack!.textFilter.text = ""
             filteredImage_ = IMGLYPhotoProcessor.processWithUIImage(previewImage!, filters: fixedFilterStack!.activeFilters)
             dialogView_!.previewImageView.image = filteredImage_
         }

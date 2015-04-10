@@ -8,10 +8,9 @@
 
 import Foundation
 
-public class IMGLYSinFilter: IMGLYResponseFilter {
-    override init() {
-        super.init()
-        self.responseName = "Sin"
+public class IMGLYSinFilter: ResponseFilter {
+    init() {
+        super.init(responseName: "Sin")
         self.displayName = "Sin"
     }
     
