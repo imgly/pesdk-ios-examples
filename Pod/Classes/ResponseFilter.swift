@@ -28,7 +28,7 @@ import GLKit
     public var inputImage: CIImage?
     public let responseName: String
 
-    /// Returns the acording filter type of the response filter.
+    /// Returns the according filter type of the response filter.
     public var filterType: IMGLYFilterType {
         return .None
     }
@@ -66,7 +66,7 @@ import GLKit
 
 extension ResponseFilter: NSCopying {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = ResponseFilter(responseName: responseName)
+        let copy = super.copyWithZone(zone) as! ResponseFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.colorCubeData = colorCubeData?.copyWithZone(zone) as? NSData
         return copy

@@ -22,13 +22,13 @@ import UIKit
         let bundle = NSBundle(forClass: EditorViewController.self)
         navigationItem.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
-        filterSelectionController.selectedBlock = { [unowned self] filter in
-            self.fixedFilterStack.effectFilter = filter
+        filterSelectionController.selectedBlock = { [unowned self] filterType in
+            self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
             self.updatePreviewImage()
         }
         
-        filterSelectionController.activeFilter = { [unowned self] in
-            return self.fixedFilterStack.effectFilter
+        filterSelectionController.activeFilterType = { [unowned self] in
+            return self.fixedFilterStack.effectFilter.filterType
         }
         
         let views = [ "filterSelectionView" : filterSelectionController.filterSelectionView ]

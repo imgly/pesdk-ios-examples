@@ -323,12 +323,12 @@ import GLKit
 //            return focusDialogViewController() as IMGLYSubEditorViewControllerProtocol
 //        case IMGLYMainMenuButtonType.Crop:
 //            return cropDialogViewController() as IMGLYSubEditorViewControllerProtocol
-//        case IMGLYMainMenuButtonType.Brightness:
-//            return brightnessDialogViewController() as IMGLYSubEditorViewControllerProtocol
-//        case IMGLYMainMenuButtonType.Contrast:
-//            return contrastDialogViewController() as IMGLYSubEditorViewControllerProtocol
-//        case IMGLYMainMenuButtonType.Saturation:
-//            return saturationDialogViewController() as IMGLYSubEditorViewControllerProtocol
+        case IMGLYMainMenuButtonType.Brightness:
+            return brightnessEditorViewControllerWithFixedFilterStack(fixedFilterStack)
+        case IMGLYMainMenuButtonType.Contrast:
+            return contrastEditorViewControllerWithFixedFilterStack(fixedFilterStack)
+        case IMGLYMainMenuButtonType.Saturation:
+            return saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack)
 //        case IMGLYMainMenuButtonType.Noise:
 //            return IMGLYFilterDialogViewController() as IMGLYSubEditorViewControllerProtocol
 //        case IMGLYMainMenuButtonType.Text:
@@ -354,18 +354,18 @@ import GLKit
         return IMGLYCropDialogViewController()
     }
     
-    public func brightnessDialogViewController() -> IMGLYBrightnessDialogViewController {
-        return IMGLYBrightnessDialogViewController()
+    public func brightnessEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack) -> BrightnessEditorViewController {
+        return BrightnessEditorViewController(fixedFilterStack: fixedFilterStack)
     }
     
-    public func contrastDialogViewController() -> IMGLYContrastDialogViewController {
-        return IMGLYContrastDialogViewController()
+    public func contrastEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack) -> ContrastEditorViewController {
+        return ContrastEditorViewController(fixedFilterStack: fixedFilterStack)
     }
     
-    public func saturationDialogViewController() -> IMGLYSaturationDialogViewController {
-        return IMGLYSaturationDialogViewController()
+    public func saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack) -> SaturationEditorViewController {
+        return SaturationEditorViewController(fixedFilterStack: fixedFilterStack)
     }
-    
+
     public func textDialogViewController() -> IMGLYTextDialogViewController {
         return IMGLYTextDialogViewController()
     }
@@ -396,12 +396,12 @@ import GLKit
             return focusDialogView() as UIView
         case IMGLYMainMenuButtonType.Crop:
             return cropDialogView() as UIView
-        case IMGLYMainMenuButtonType.Brightness:
-            return oneSliderDialogView() as UIView
-        case IMGLYMainMenuButtonType.Contrast:
-            return oneSliderDialogView() as UIView
-        case IMGLYMainMenuButtonType.Saturation:
-            return oneSliderDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Brightness:
+//            return oneSliderDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Contrast:
+//            return oneSliderDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Saturation:
+//            return oneSliderDialogView() as UIView
 //        case IMGLYMainMenuButtonType.Noise:
 //            return filterDialogView() as UIView
         case IMGLYMainMenuButtonType.Text:
@@ -422,11 +422,6 @@ import GLKit
     
     public func focusDialogView() -> IMGLYFocusDialogView {
         var dialog = IMGLYFocusDialogView(frame: CGRectZero)
-        return dialog
-    }
-    
-    public func oneSliderDialogView() -> IMGLYOneSliderDialogView {
-        var dialog = IMGLYOneSliderDialogView(frame: CGRectZero)
         return dialog
     }
     

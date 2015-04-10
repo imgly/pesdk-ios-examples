@@ -12,13 +12,17 @@ import UIKit
     
     // MARK: - Properties
     
+    public var shouldShowActivityIndicator = true
+    
     public var updating = false {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                if self.updating {
-                    self.activityIndicatorView.startAnimating()
-                } else {
-                    self.activityIndicatorView.stopAnimating()
+            if shouldShowActivityIndicator {
+                dispatch_async(dispatch_get_main_queue()) {
+                    if self.updating {
+                        self.activityIndicatorView.startAnimating()
+                    } else {
+                        self.activityIndicatorView.stopAnimating()
+                    }
                 }
             }
         }

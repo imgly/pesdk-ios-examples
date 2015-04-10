@@ -8,7 +8,8 @@
 
 import UIKit
 
-public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> Void
+public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> (Void)
+public typealias PreviewImageGenerationCompletionBlock = () -> (Void)
 
 @objc(IMGLYSubEditorViewController) public class SubEditorViewController: EditorViewController {
     
@@ -37,7 +38,7 @@ public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> Void
     
     // MARK: - Helpers
     
-    internal func updatePreviewImage() {
+    internal func updatePreviewImageWithCompletion(completionHandler: PreviewImageGenerationCompletionBlock?) {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
@@ -46,8 +47,13 @@ public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> Void
                 dispatch_async(dispatch_get_main_queue()) {
                     self.previewImageView.image = processedImage
                     self.updating = false
+                    completionHandler?()
                 }
             }
         }
+    }
+    
+    internal func updatePreviewImage() {
+        updatePreviewImageWithCompletion(nil)
     }
 }

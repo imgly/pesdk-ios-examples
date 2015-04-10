@@ -14,8 +14,8 @@ private let FilterActivationDuration = NSTimeInterval(0.15)
 
 private var FilterPreviews = [IMGLYFilterType : UIImage]()
 
-public typealias FilterSelectedBlock = (ResponseFilter) -> (Void)
-public typealias FilterActiveBlock = () -> (ResponseFilter)
+public typealias FilterTypeSelectedBlock = (IMGLYFilterType) -> (Void)
+public typealias FilterTypeActiveBlock = () -> (IMGLYFilterType)
 
 @objc(IMGLYFilterSelectionController) public class FilterSelectionController: NSObject {
     
@@ -23,8 +23,8 @@ public typealias FilterActiveBlock = () -> (ResponseFilter)
     
     private var selectedCellIndex: Int?
     public let filterSelectionView: UICollectionView
-    public var selectedBlock: FilterSelectedBlock?
-    public var activeFilter: FilterActiveBlock?
+    public var selectedBlock: FilterTypeSelectedBlock?
+    public var activeFilterType: FilterTypeActiveBlock?
     
     // MARK: - Initializers
     
@@ -67,7 +67,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
             filterCell.hideTick()
             
             if let filterPreviewImage = FilterPreviews[filterType] {
-                self.updateCell(filterCell, atIndexPath: indexPath, withFilter: filter, forImage: filterPreviewImage)
+                self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
                 filterCell.activityIndicator.stopAnimating()
             } else {
                 filterCell.activityIndicator.startAnimating()
@@ -79,7 +79,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
                     dispatch_async(dispatch_get_main_queue()) {
                         FilterPreviews[filterType] = filterPreviewImage
                         if let filterCell = collectionView.cellForItemAtIndexPath(indexPath) as? FilterCollectionViewCell {
-                            self.updateCell(filterCell, atIndexPath: indexPath, withFilter: filter, forImage: filterPreviewImage)
+                            self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
                             filterCell.activityIndicator.stopAnimating()
                         }
                     }
@@ -92,10 +92,10 @@ extension FilterSelectionController: UICollectionViewDataSource {
     
     // MARK: - Helpers
     
-    private func updateCell(cell: FilterCollectionViewCell, atIndexPath indexPath: NSIndexPath, withFilter filter: ResponseFilter, forImage image: UIImage?) {
+    private func updateCell(cell: FilterCollectionViewCell, atIndexPath indexPath: NSIndexPath, withFilterType filterType: IMGLYFilterType, forImage image: UIImage?) {
         cell.imageView.image = image
         
-        if let activeFilter = activeFilter?() where activeFilter.displayName == filter.displayName {
+        if let activeFilterType = activeFilterType?() where activeFilterType == filterType {
             cell.showTick()
             selectedCellIndex = indexPath.item
         }
@@ -120,9 +120,8 @@ extension FilterSelectionController: UICollectionViewDelegate {
         }
         
         let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
-        let filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
         
-        selectedBlock?(filter)
+        selectedBlock?(filterType)
         
         // get cell of newly selected filter
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? FilterCollectionViewCell {

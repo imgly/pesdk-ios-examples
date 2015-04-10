@@ -121,7 +121,7 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
         }()
     
     public var completionBlock: EditorCompletionBlock?
-    public var initialFilter: ResponseFilter?
+    public var initialFilterType: IMGLYFilterType?
     public private(set) var fixedFilterStack = FixedFilterStack()
     
     private let maxLowResolutionSideLength = CGFloat(800)
@@ -142,8 +142,8 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
         
         navigationController?.delegate = self
         
-        if let initialFilter = self.initialFilter {
-            fixedFilterStack.effectFilter = initialFilter
+        if let initialFilterType = self.initialFilterType {
+            fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)
         }
         updatePreviewImage()
         

@@ -233,15 +233,15 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     }
     
     private func configureFilterSelectionController() {
-        filterSelectionController.selectedBlock = { [unowned self] filter in
-            self.cameraController?.effectFilter = filter
+        filterSelectionController.selectedBlock = { [unowned self] filterType in
+            self.cameraController?.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
         }
         
-        filterSelectionController.activeFilter = { [unowned self] in
+        filterSelectionController.activeFilterType = { [unowned self] in
             if let cameraController = self.cameraController {
-                return cameraController.effectFilter
+                return cameraController.effectFilter.filterType
             } else {
-                return IMGLYNoneFilter()
+                return .None
             }
         }
     }
@@ -251,7 +251,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     private func showEditorNavigationControllerWithImage(image: UIImage?) {
         let editorViewController = MainEditorViewController()
         editorViewController.highResolutionImage = image
-        editorViewController.initialFilter = cameraController?.effectFilter
+        editorViewController.initialFilterType = cameraController?.effectFilter.filterType
         editorViewController.completionBlock = editorCompletionBlock
         
         let navigationController = UINavigationController(rootViewController: editorViewController)
@@ -320,20 +320,23 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     
     public func toggleFilters(sender: UIButton?) {
         if let filterSelectionViewConstraint = self.filterSelectionViewConstraint {
+            let animationDuration = NSTimeInterval(0.6)
+            let dampingFactor = CGFloat(0.6)
+            
             if filterSelectionViewConstraint.constant == 0 {
                 // Expand
                 filterSelectionViewConstraint.constant = -1 * CGFloat(FilterSelectionViewHeight)
-                UIView.animateWithDuration(0.3) {
+                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: .AllowUserInteraction, animations: {
                     sender?.transform = CGAffineTransformIdentity
                     self.view.layoutIfNeeded()
-                }
+                }, completion: nil)
             } else {
                 // Close
                 filterSelectionViewConstraint.constant = 0
-                UIView.animateWithDuration(0.3) {
+                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: .AllowUserInteraction, animations: {
                     sender?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
                     self.view.layoutIfNeeded()
-                }
+                    }, completion: nil)
             }
         }
     }

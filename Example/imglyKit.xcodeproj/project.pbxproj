@@ -105,11 +105,8 @@
 		09286CDC1AB05F9600B4EF99 /* Sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC21AB05F9600B4EF99 /* Sunny.png */; };
 		09286CDD1AB05F9600B4EF99 /* Texas.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC31AB05F9600B4EF99 /* Texas.png */; };
 		09286CDE1AB05F9600B4EF99 /* X400.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC41AB05F9600B4EF99 /* X400.png */; };
-		0937E8161A8E783D00915A4C /* IMGLYContrastDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0937E8151A8E783D00915A4C /* IMGLYContrastDialogViewController.swift */; };
 		095C22681A9B70570036EBC6 /* IMGLYCropRectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095C22671A9B70570036EBC6 /* IMGLYCropRectComponent.swift */; };
 		0972FDD71A9786B900F464DF /* IMGLYOrientationCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */; };
-		097599A41A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097599A31A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift */; };
-		097599A61A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097599A51A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift */; };
 		098720B61A90E459002449FB /* IMGLYCropDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */; };
 		098BEAE81A83D5630073DB2F /* IMGLYNoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */; };
 		0991996B1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0991996A1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift */; };
@@ -123,8 +120,6 @@
 		09AD7CC31A7A37B800728A78 /* LUTToNSDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AD7CC21A7A37B800728A78 /* LUTToNSDataConverter.m */; };
 		09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD7CC41A7A43A900728A78 /* IMGLYSteelFilter.swift */; };
 		09B13A521A9382CC00AF85D1 /* IMGLYCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */; };
-		09CD01741A8BB5E200178BF5 /* IMGLYOneSliderDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CD01731A8BB5E200178BF5 /* IMGLYOneSliderDialogView.swift */; };
-		09CD01761A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */; };
 		09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */; };
 		09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */; };
 		09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */; };
@@ -165,6 +160,7 @@
 		2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */; };
 		2B845DC41AC16ECE00806B4E /* IMGLYSticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */; };
 		2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */; };
+		2B8ED93A1AD861C700694AA7 /* SliderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */; };
 		2B8EDA481AAF003D00AB75B5 /* CIFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */; };
 		2B8EDAD11AAF015600AB75B5 /* Soft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAA41AAF015600AB75B5 /* Soft.png */; };
 		2B8EDAD21AAF015600AB75B5 /* Blues.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAA51AAF015600AB75B5 /* Blues.png */; };
@@ -218,10 +214,12 @@
 		2BDF4E861AD56A040085B82F /* FilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E851AD56A040085B82F /* FilterCollectionViewCell.swift */; };
 		2BDF4E881AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E871AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift */; };
 		2BDF4E8A1AD58E1E0085B82F /* FilterSelectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E891AD58E1E0085B82F /* FilterSelectionController.swift */; };
+		2BE1494E1AD8649E00EBA673 /* BrightnessEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */; };
+		2BE149501AD86AAE00EBA673 /* ContrastEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */; };
+		2BE149521AD86ABC00EBA673 /* SaturationEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */; };
 		2BEB59021AD8007700AC0468 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEB59011AD8007700AC0468 /* CameraViewController.swift */; };
 		2BFE55EB1AAF05DD007B8CFD /* IMGLYCropDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */; };
 		2BFE55EE1AAF05DD007B8CFD /* IMGLYFocusDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E71AAF05DD007B8CFD /* IMGLYFocusDialogView.xib */; };
-		2BFE55EF1AAF05DD007B8CFD /* IMGLYOneSliderDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E81AAF05DD007B8CFD /* IMGLYOneSliderDialogView.xib */; };
 		2BFE55F01AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */; };
 		2BFE55F11AAF05DD007B8CFD /* IMGLYTextDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */; };
 		85886704BD128653D2967B9C /* IMGLYCircleGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858866F270F03960F9115907 /* IMGLYCircleGradientView.swift */; };
@@ -338,11 +336,8 @@
 		09286CC21AB05F9600B4EF99 /* Sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Sunny.png; path = "../../Pod/Filter Responses/Sunny.png"; sourceTree = "<group>"; };
 		09286CC31AB05F9600B4EF99 /* Texas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Texas.png; path = "../../Pod/Filter Responses/Texas.png"; sourceTree = "<group>"; };
 		09286CC41AB05F9600B4EF99 /* X400.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = X400.png; path = "../../Pod/Filter Responses/X400.png"; sourceTree = "<group>"; };
-		0937E8151A8E783D00915A4C /* IMGLYContrastDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastDialogViewController.swift; path = ../../Pod/Classes/IMGLYContrastDialogViewController.swift; sourceTree = "<group>"; };
 		095C22671A9B70570036EBC6 /* IMGLYCropRectComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCropRectComponent.swift; path = ../../Pod/Classes/IMGLYCropRectComponent.swift; sourceTree = "<group>"; };
 		0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYOrientationCropFilter.swift; path = ../../Pod/Classes/IMGLYOrientationCropFilter.swift; sourceTree = "<group>"; };
-		097599A31A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCBSBaseViewController.swift; path = ../../Pod/Classes/IMGLYCBSBaseViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		097599A51A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYSaturationDialogViewController.swift; path = ../../Pod/Classes/IMGLYSaturationDialogViewController.swift; sourceTree = "<group>"; };
 		098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCropDialogViewController.swift; path = ../../Pod/Classes/IMGLYCropDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNoneFilter.swift; path = ../../Pod/Classes/IMGLYNoneFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		0991996A1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNoGreenFilter.swift; path = ../../Pod/Classes/IMGLYNoGreenFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -362,8 +357,6 @@
 		09AD7CC21A7A37B800728A78 /* LUTToNSDataConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LUTToNSDataConverter.m; path = ../../Pod/Classes/LUTToNSDataConverter.m; sourceTree = "<group>"; };
 		09AD7CC41A7A43A900728A78 /* IMGLYSteelFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSteelFilter.swift; path = ../../Pod/Classes/IMGLYSteelFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCropFilter.swift; path = ../../Pod/Classes/IMGLYCropFilter.swift; sourceTree = "<group>"; };
-		09CD01731A8BB5E200178BF5 /* IMGLYOneSliderDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYOneSliderDialogView.swift; path = ../../Pod/Classes/IMGLYOneSliderDialogView.swift; sourceTree = "<group>"; };
-		09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBrightnessDialogViewController.swift; path = ../../Pod/Classes/IMGLYBrightnessDialogViewController.swift; sourceTree = "<group>"; };
 		09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYInstanceFactory.swift; path = ../../Pod/Classes/IMGLYInstanceFactory.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYPhotoProcessor.swift; path = ../../Pod/Classes/IMGLYPhotoProcessor.swift; sourceTree = "<group>"; };
 		09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/IMGLYContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; };
@@ -404,6 +397,7 @@
 		2B62BB901AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYStickersDialogViewController.swift; path = ../../Pod/Classes/IMGLYStickersDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYSticker.swift; path = ../../Pod/Classes/IMGLYSticker.swift; sourceTree = "<group>"; };
 		2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickerFilter.swift; path = ../../Pod/Classes/IMGLYStickerFilter.swift; sourceTree = "<group>"; };
+		2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SliderEditorViewController.swift; path = ../../Pod/Classes/SliderEditorViewController.swift; sourceTree = "<group>"; };
 		2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CIFilterExtension.swift; path = ../../Pod/Classes/CIFilterExtension.swift; sourceTree = "<group>"; };
 		2B8EDAA41AAF015600AB75B5 /* Soft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Soft.png; path = "../../Pod/Filter Responses/Soft.png"; sourceTree = "<group>"; };
 		2B8EDAA51AAF015600AB75B5 /* Blues.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Blues.png; path = "../../Pod/Filter Responses/Blues.png"; sourceTree = "<group>"; };
@@ -460,10 +454,12 @@
 		2BDF4E851AD56A040085B82F /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterCollectionViewCell.swift; path = ../../Pod/Classes/FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BDF4E871AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCaptionCollectionViewCell.swift; path = ../../Pod/Classes/ImageCaptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BDF4E891AD58E1E0085B82F /* FilterSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = FilterSelectionController.swift; path = ../../Pod/Classes/FilterSelectionController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrightnessEditorViewController.swift; path = ../../Pod/Classes/BrightnessEditorViewController.swift; sourceTree = "<group>"; };
+		2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContrastEditorViewController.swift; path = ../../Pod/Classes/ContrastEditorViewController.swift; sourceTree = "<group>"; };
+		2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaturationEditorViewController.swift; path = ../../Pod/Classes/SaturationEditorViewController.swift; sourceTree = "<group>"; };
 		2BEB59011AD8007700AC0468 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = ../../Pod/Classes/CameraViewController.swift; sourceTree = "<group>"; };
 		2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYCropDialogView.xib; path = ../../Pod/XIBs/IMGLYCropDialogView.xib; sourceTree = "<group>"; };
 		2BFE55E71AAF05DD007B8CFD /* IMGLYFocusDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYFocusDialogView.xib; path = ../../Pod/XIBs/IMGLYFocusDialogView.xib; sourceTree = "<group>"; };
-		2BFE55E81AAF05DD007B8CFD /* IMGLYOneSliderDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYOneSliderDialogView.xib; path = ../../Pod/XIBs/IMGLYOneSliderDialogView.xib; sourceTree = "<group>"; };
 		2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYOrientationDialogView.xib; path = ../../Pod/XIBs/IMGLYOrientationDialogView.xib; sourceTree = "<group>"; };
 		2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYTextDialogView.xib; path = ../../Pod/XIBs/IMGLYTextDialogView.xib; sourceTree = "<group>"; };
 		858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBoxGradientView.swift; path = ../../Pod/Classes/IMGLYBoxGradientView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -502,13 +498,14 @@
 				2BDF4E851AD56A040085B82F /* FilterCollectionViewCell.swift */,
 				2BDF4E871AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift */,
 				2BDF4E891AD58E1E0085B82F /* FilterSelectionController.swift */,
+				2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */,
+				2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */,
+				2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */,
+				2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */,
 				858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */,
-				09CD01751A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift */,
-				097599A31A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift */,
 				858866F270F03960F9115907 /* IMGLYCircleGradientView.swift */,
 				0917BB461AA8FCE0002A028E /* IMGLYColorButton.swift */,
 				09FAEA1E1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift */,
-				0937E8151A8E783D00915A4C /* IMGLYContrastDialogViewController.swift */,
 				09FAEA1C1A8FA11000F6FF05 /* IMGLYCropDialogView.swift */,
 				2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */,
 				098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */,
@@ -518,12 +515,9 @@
 				09F694751A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift */,
 				09FB55521AAA07A0005DE191 /* IMGLYFontSelector.swift */,
 				858867A642AC2B451E2B1A4F /* IMGLYGradientViewDelegate.swift */,
-				09CD01731A8BB5E200178BF5 /* IMGLYOneSliderDialogView.swift */,
-				2BFE55E81AAF05DD007B8CFD /* IMGLYOneSliderDialogView.xib */,
 				099406DB1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift */,
 				2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */,
 				099406DF1A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift */,
-				097599A51A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift */,
 				2B845DC31AC16ECE00806B4E /* IMGLYSticker.swift */,
 				2B009C9E1AC05885006B0012 /* IMGLYStickerCollectionViewCell.swift */,
 				2B009CA01AC058EB006B0012 /* IMGLYStickerCollectionViewCell.xib */,
@@ -952,7 +946,6 @@
 				09286CC51AB05F9600B4EF99 /* AD1920.png in Resources */,
 				2B8EDAD21AAF015600AB75B5 /* Blues.png in Resources */,
 				09286CDA1AB05F9600B4EF99 /* Quozi.png in Resources */,
-				2BFE55EF1AAF05DD007B8CFD /* IMGLYOneSliderDialogView.xib in Resources */,
 				2B8EDAF01AAF015700AB75B5 /* Keen.png in Resources */,
 				09286CD11AB05F9600B4EF99 /* K2.png in Resources */,
 				2B8EDAE11AAF015600AB75B5 /* Twilight.png in Resources */,
@@ -1046,7 +1039,6 @@
 				2BAF271A1AD434D200DCF891 /* ActionButton.swift in Sources */,
 				0917BB471AA8FCE0002A028E /* IMGLYColorButton.swift in Sources */,
 				0902D74C1A9D334A00952EFC /* IMGLYAncientFilter.swift in Sources */,
-				097599A61A8F63C0003CA7FB /* IMGLYSaturationDialogViewController.swift in Sources */,
 				0972FDD71A9786B900F464DF /* IMGLYOrientationCropFilter.swift in Sources */,
 				0917BB451AA8FA93002A028E /* IMGLYTextColorSelectorView.swift in Sources */,
 				2BAF27221AD538A700DCF891 /* MainEditorViewController.swift in Sources */,
@@ -1064,6 +1056,7 @@
 				0902D7601A9D347800952EFC /* IMGLYSepiaHighFilter.swift in Sources */,
 				2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */,
 				2B62BB911AC03C3500EFBD6A /* IMGLYStickersDialogViewController.swift in Sources */,
+				2BE149521AD86ABC00EBA673 /* SaturationEditorViewController.swift in Sources */,
 				0917BB3D1AA8F5F3002A028E /* IMGLYTextDialogView.swift in Sources */,
 				09286C7A1AB056C500B4EF99 /* IMGLYKDynamicFilter.swift in Sources */,
 				2BDF4E841AD5550B0085B82F /* FixedFilterStack.swift in Sources */,
@@ -1086,7 +1079,6 @@
 				0917BB431AA8F7B0002A028E /* IMGLYTextFilter.swift in Sources */,
 				0902D74A1A9D328200952EFC /* IMGLYNepalFilter.swift in Sources */,
 				09286C7C1AB056D800B4EF99 /* IMGLYFridgeFilter.swift in Sources */,
-				09CD01761A8BB5EF00178BF5 /* IMGLYBrightnessDialogViewController.swift in Sources */,
 				09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */,
 				09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */,
 				2BAF27181AD427DF00DCF891 /* ButtonCollectionViewCell.swift in Sources */,
@@ -1112,8 +1104,6 @@
 				0902D72E1A9D2F8900952EFC /* IMGLYEightiesFilter.swift in Sources */,
 				09286CA41AB057EC00B4EF99 /* IMGLYMellowFilter.swift in Sources */,
 				0902D7681A9D34E400952EFC /* IMGLYNeatFilter.swift in Sources */,
-				0937E8161A8E783D00915A4C /* IMGLYContrastDialogViewController.swift in Sources */,
-				097599A41A8E8927003CA7FB /* IMGLYCBSBaseViewController.swift in Sources */,
 				0902D71C1A9D2E5D00952EFC /* IMGLYElderFilter.swift in Sources */,
 				0902D7201A9D2E8C00952EFC /* IMGLYEveningFilter.swift in Sources */,
 				09FB55531AAA07A0005DE191 /* IMGLYFontSelector.swift in Sources */,
@@ -1122,13 +1112,15 @@
 				2B8EDA481AAF003D00AB75B5 /* CIFilterExtension.swift in Sources */,
 				0902D7541A9D33DD00952EFC /* IMGLYKeenFilter.swift in Sources */,
 				09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */,
+				2B8ED93A1AD861C700694AA7 /* SliderEditorViewController.swift in Sources */,
+				2BE149501AD86AAE00EBA673 /* ContrastEditorViewController.swift in Sources */,
 				09FB557E1AADAEA2005DE191 /* IMGLYFontImporter.swift in Sources */,
 				09B13A521A9382CC00AF85D1 /* IMGLYCropFilter.swift in Sources */,
 				09286C881AB0573900B4EF99 /* IMGLYX400Filter.swift in Sources */,
 				09286C801AB056F400B4EF99 /* IMGLYOrchidFilter.swift in Sources */,
 				09F694761A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift in Sources */,
 				098720B61A90E459002449FB /* IMGLYCropDialogViewController.swift in Sources */,
-				09CD01741A8BB5E200178BF5 /* IMGLYOneSliderDialogView.swift in Sources */,
+				2BE1494E1AD8649E00EBA673 /* BrightnessEditorViewController.swift in Sources */,
 				0902D7441A9D321400952EFC /* IMGLYCoolFilter.swift in Sources */,
 				09286C9E1AB057C400B4EF99 /* IMGLYLomoFilter.swift in Sources */,
 				09286C821AB0570000B4EF99 /* IMGLYChestFilter.swift in Sources */,

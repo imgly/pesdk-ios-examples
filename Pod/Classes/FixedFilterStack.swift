@@ -16,6 +16,9 @@ import CoreImage
 *   care about creating the single filters.
 */
 @objc(IMGLYFixedFilterStack) public class FixedFilterStack: NSObject {
+    
+    // MARK: - Properties
+    
     public var enhancementFilter: IMGLYEnhancementFilter = {
         let filter = IMGLYInstanceFactory.sharedInstance.enhancementFilter()
         filter.enabled = false
@@ -36,11 +39,17 @@ import CoreImage
         
         return activeFilters
     }
+    
+    // MARK: - Initializers
+    
+    required override public init () {
+        super.init()
+    }
 }
 
 extension FixedFilterStack: NSCopying {
     public func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = FixedFilterStack()
+        let copy = self.dynamicType()
         copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
         copy.effectFilter = effectFilter.copyWithZone(zone) as! ResponseFilter
