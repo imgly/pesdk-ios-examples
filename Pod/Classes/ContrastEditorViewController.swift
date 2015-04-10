@@ -10,6 +10,15 @@ import UIKit
 
 @objc(IMGLYContrastEditorViewController) public class ContrastEditorViewController: SliderEditorViewController {
 
+    // MARK: - UIViewController
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let bundle = NSBundle(forClass: self.dynamicType)
+        navigationItem.title = NSLocalizedString("contrast-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+    }
+    
     // MARK: - SliderEditorViewController
     
     override public var minimumValue: Float {

@@ -55,7 +55,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(FilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
         
         if let filterCell = cell as? FilterCollectionViewCell {
-            let bundle = NSBundle(forClass: FilterEditorViewController.self)
+            let bundle = NSBundle(forClass: self.dynamicType)
             let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
             let filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
             

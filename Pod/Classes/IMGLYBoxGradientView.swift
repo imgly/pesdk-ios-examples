@@ -82,7 +82,7 @@ public class IMGLYBoxGradientView : UIView {
     }
     
     public func configureCrossImageView() {
-        crossImageView_.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: IMGLYBoxGradientView.self), compatibleWithTraitCollection:nil)
+        crossImageView_.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
         crossImageView_.userInteractionEnabled = true
         crossImageView_.frame = CGRectMake(0, 0, crossImageView_.image!.size.width, crossImageView_.image!.size.height)
         addSubview(crossImageView_)

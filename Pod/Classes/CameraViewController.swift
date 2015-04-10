@@ -38,7 +38,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         }()
     
     public private(set) lazy var flashButton: UIButton = {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -48,7 +48,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         }()
     
     public private(set) lazy var switchCameraButton: UIButton = {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.setImage(UIImage(named: "cam_switch", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -58,7 +58,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         }()
     
     public private(set) lazy var cameraRollButton: UIButton = {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.setImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -70,7 +70,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         }()
     
     public private(set) lazy var takePhotoButton: UIButton = {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.setImage(UIImage(named: "LensAperture_ShapeLayer_00000", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -88,7 +88,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         }()
     
     public private(set) lazy var filterSelectionButton: UIButton = {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.setTranslatesAutoresizingMaskIntoConstraints(false)
         button.setImage(UIImage(named: "show_filter", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -381,7 +381,7 @@ extension CameraViewController: IMGLYCameraControllerDelegate {
     }
     
     public func didSetFlashMode(flashMode: AVCaptureFlashMode) {
-        let bundle = NSBundle(forClass: CameraViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         
         switch(flashMode) {
         case AVCaptureFlashMode.Auto:

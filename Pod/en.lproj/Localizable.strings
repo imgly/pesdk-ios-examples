@@ -21,3 +21,15 @@
 
 // Filter Editor
 "filter-editor.title" = "Filter";
+
+// Stickers Editor
+"stickers-editor.title" = "Stickers";
+
+// Brightness Editor
+"brightness-editor.title" = "Brightness";
+
+// Contrast Editor
+"contrast-editor.title" = "Contrast";
+
+// Saturation Editor
+"saturation-editor.title" = "Saturation";

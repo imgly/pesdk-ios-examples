@@ -11,7 +11,7 @@ import UIKit
 @objc public class IMGLYContainerViewHelper {
     // MARK: - View connection
     public func loadXib(name:String, view:UIView) {
-        NSBundle(forClass: IMGLYContainerViewHelper.self).loadNibNamed(name, owner: view, options: nil)
+        NSBundle(forClass: self.dynamicType).loadNibNamed(name, owner: view, options: nil)
     }
     
     public func addContentViewAndSetupConstraints(#hostView:UIView, contentView:UIView) {

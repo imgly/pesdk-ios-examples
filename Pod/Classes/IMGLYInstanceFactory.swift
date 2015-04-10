@@ -315,8 +315,8 @@ import GLKit
         switch (type) {
         case IMGLYMainMenuButtonType.Filter:
             return filterEditorViewControllerWithFixedFilterStack(fixedFilterStack)
-//        case IMGLYMainMenuButtonType.Stickers:
-//            return stickersDialogViewController() as IMGLYSubEditorViewControllerProtocol
+        case IMGLYMainMenuButtonType.Stickers:
+            return stickersEditorViewControllerWithFixedFilterStack(fixedFilterStack)
 //        case IMGLYMainMenuButtonType.Orientation:
 //            return orientationDialogViewController() as IMGLYSubEditorViewControllerProtocol
 //        case IMGLYMainMenuButtonType.Focus:
@@ -342,8 +342,8 @@ import GLKit
         return FilterEditorViewController(fixedFilterStack: fixedFilterStack)
     }
     
-    public func stickersDialogViewController() -> IMGLYStickersDialogViewController {
-        return IMGLYStickersDialogViewController()
+    public func stickersEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack) -> StickersEditorViewController {
+        return StickersEditorViewController(fixedFilterStack: fixedFilterStack)
     }
     
     public func orientationDialogViewController() -> IMGLYOrientationDialogViewController {
@@ -388,8 +388,8 @@ import GLKit
         switch (type) {
 //        case IMGLYMainMenuButtonType.Filter:
 //            return filterDialogView() as UIView
-        case IMGLYMainMenuButtonType.Stickers:
-            return stickersDialogView() as UIView
+//        case IMGLYMainMenuButtonType.Stickers:
+//            return stickersDialogView() as UIView
         case IMGLYMainMenuButtonType.Orientation:
             return orientationDialogView() as UIView
         case IMGLYMainMenuButtonType.Focus:
@@ -416,9 +416,9 @@ import GLKit
 //        return dialog
 //    }
     
-    public func stickersDialogView() -> IMGLYStickersDialogView {
-        return IMGLYStickersDialogView(frame: CGRectZero)
-    }
+//    public func stickersDialogView() -> IMGLYStickersDialogView {
+//        return IMGLYStickersDialogView(frame: CGRectZero)
+//    }
     
     public func focusDialogView() -> IMGLYFocusDialogView {
         var dialog = IMGLYFocusDialogView(frame: CGRectZero)

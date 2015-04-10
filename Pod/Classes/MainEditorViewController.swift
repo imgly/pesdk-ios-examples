@@ -52,7 +52,7 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
     // MARK: - Properties
     
     public lazy var actionButtons: [ActionButton] = {
-        let bundle = NSBundle(forClass: MainEditorViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         var handlers = [ActionButton]()
         
         handlers.append(
@@ -136,7 +136,7 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: EditorViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         navigationItem.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
@@ -256,7 +256,7 @@ extension MainEditorViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
         
         if let buttonCell = cell as? ButtonCollectionViewCell {
-            let bundle = NSBundle(forClass: MainEditorViewController.self)
+            let bundle = NSBundle(forClass: self.dynamicType)
             let actionButton = actionButtons[indexPath.item]
             
             if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection where showSelectionBlock() {

@@ -19,7 +19,7 @@ import UIKit
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: EditorViewController.self)
+        let bundle = NSBundle(forClass: self.dynamicType)
         navigationItem.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
         filterSelectionController.selectedBlock = { [unowned self] filterType in

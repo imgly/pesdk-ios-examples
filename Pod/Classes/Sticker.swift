@@ -1,5 +1,5 @@
 //
-//  IMGLYSticker.swift
+//  Sticker.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 24/03/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IMGLYSticker: NSObject {
+@objc(IMGLYSticker) public class Sticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
     

@@ -1,5 +1,5 @@
 //
-//  IMGLYStickersDataSource.swift
+//  StickersDataSource.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 23/03/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-@objc public protocol IMGLYStickersDataSourceDelegate: class, UICollectionViewDataSource {
-    var stickers: [IMGLYSticker] { get }
+@objc(IMGLYStickersDataSourceDelegate) public protocol StickersDataSourceDelegate: class, UICollectionViewDataSource {
+    var stickers: [Sticker] { get }
 }
 
-public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate {
-    public let stickers: [IMGLYSticker]
+@objc(IMGLYStickersDataSource) public class StickersDataSource: NSObject, StickersDataSourceDelegate {
+    public let stickers: [Sticker]
     
     override init() {
         let stickerFiles = [
@@ -37,9 +37,9 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
         ]
         
         stickers = stickerFiles.map { file in
-            if let image = UIImage(named: file, inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil) {
-                let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil)
-                return IMGLYSticker(image: image, thumbnail: thumbnail)
+            if let image = UIImage(named: file, inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil) {
+                let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil)
+                return Sticker(image: image, thumbnail: thumbnail)
             }
             
             return nil
@@ -48,7 +48,7 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
         super.init()
     }
     
-    init(stickers: [IMGLYSticker]) {
+    init(stickers: [Sticker]) {
         self.stickers = stickers
         super.init()
     }
@@ -62,7 +62,7 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickerCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! StickerCollectionViewCell
         
         cell.imageView.image = stickers[indexPath.row].thumbnail ?? stickers[indexPath.row].image
         

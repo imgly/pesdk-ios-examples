@@ -10,6 +10,15 @@ import UIKit
 
 @objc(IMGLYBrightnessEditorViewController) public class BrightnessEditorViewController: SliderEditorViewController {
 
+    // MARK: - UIViewController
+    
+    override public func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let bundle = NSBundle(forClass: self.dynamicType)
+        navigationItem.title = NSLocalizedString("brightness-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+    }
+    
     // MARK: - SliderEditorViewController
     
     override public var minimumValue: Float {

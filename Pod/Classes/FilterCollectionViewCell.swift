@@ -24,7 +24,7 @@ class FilterCollectionViewCell: ImageCaptionCollectionViewCell {
         imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         imageView.contentMode = .Center
         imageView.alpha = 0
-        imageView.image = UIImage(named: "icon_tick", inBundle: NSBundle(forClass: FilterCollectionViewCell.self), compatibleWithTraitCollection:nil)
+        imageView.image = UIImage(named: "icon_tick", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
         return imageView
     }()
     
