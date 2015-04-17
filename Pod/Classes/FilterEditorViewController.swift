@@ -23,7 +23,7 @@ import UIKit
         navigationItem.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
         filterSelectionController.selectedBlock = { [unowned self] filterType in
-            self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            self.fixedFilterStack.effectFilter = InstanceFactory.sharedInstance.effectFilterWithType(filterType)
             self.updatePreviewImage()
         }
         
@@ -31,8 +31,12 @@ import UIKit
             return self.fixedFilterStack.effectFilter.filterType
         }
         
-        let views = [ "filterSelectionView" : filterSelectionController.filterSelectionView ]
-        bottomContainerView.addSubview(filterSelectionController.filterSelectionView)
+        let views = [ "filterSelectionView" : filterSelectionController.view ]
+        
+        addChildViewController(filterSelectionController)
+        filterSelectionController.didMoveToParentViewController(self)
+        bottomContainerView.addSubview(filterSelectionController.view)
+        
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[filterSelectionView]|", options: nil, metrics: nil, views: views))
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[filterSelectionView]|", options: nil, metrics: nil, views: views))
     }

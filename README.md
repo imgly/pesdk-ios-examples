@@ -44,7 +44,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'imglyKit', '~> 2.0'
+pod 'imglyKit', '~> 2.1'
 ```
 
 Then, run the following command:
@@ -91,7 +91,7 @@ For more information about Swift and Objective-C interoperability please refer t
 ## Structure
 The SDK can be subdivided in two part, front-end and back-end.
 We also provided an instance-factory that handles the object generation for you.
-Its class is called `IMGLYInstanceFactory`. It has a property called `sharedInstance` that 
+Its class is called `InstanceFactory`. It has a property called `sharedInstance` that 
 uses the singleton pattern, so it doesn't need to be created every time.
 Besides the views and viewcontrollers, it also has methods to create the different filters, and
 the photo-processor, described below.
@@ -100,26 +100,26 @@ the photo-processor, described below.
 
 The frontend part of the SDK contains all the views and view controllers, or generally speaking the UI. The itself consists of two parts. Camera related UI and filter or operation related UI.
 
-For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and  controls to operate the camera settings such as flash, front camera or back camera. 
-After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it performs a segue called `ModalEditorNavigationController`, that presents a new view controller.
-That view controller must implement the `IMGLYEditorMainDialogViewControllerProtocol` protocol. The provided `IMGLYEditorMainDialogViewController` does so. 
+For the camera UI there is the `CameraViewController`. That controller shows a camera live stream, a filter selector, and  controls to operate the camera settings such as flash, front camera or back camera. 
+After a photo has been taken the `CameraViewController` calls the handed over completion handler, or if none is set, it performs a segue called `ModalEditorNavigationController`, that presents a new view controller.
+That view controller must implement the `EditorMainDialogViewControllerProtocol` protocol. The provided `EditorMainDialogViewController` does so. 
  
-The `IMGLYEditorMainDialogViewController` functions as main-dialog. It is connected to sub-dialogs that allow the user to edit an image. The sub-dialogs are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
+The `EditorMainDialogViewController` functions as main-dialog. It is connected to sub-dialogs that allow the user to edit an image. The sub-dialogs are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
 These dialogs use a lower resolution image as preview to improve the performance.
 When the user presses the done button of the main dialog, the chosen settings are applied to the full resolution image.
-The `IMGLYEditorMainDialogViewController` can be used without the `IMGLYCameraViewController` like so:
+The `EditorMainDialogViewController` can be used without the `CameraViewController` like so:
 
 ```
 func callEditorViewController() {
-	var editorViewController = IMGLYEditorMainDialogViewController()
-	editorViewController.hiResImage = image_!
-	editorViewController.intialFilterType = IMGLYFilterType.None
+	var editorViewController = EditorMainDialogViewController()
+	editorViewController.hiResImage = image
+	editorViewController.intialFilterType = .None
 	editorViewController.completionBlock = editorCompletionBlock
 }
 	
 ...
 
-func editorCompletionBlock(result:IMGLYEditorResult, image:UIImage?) {
+func editorCompletionBlock(result: EditorResult, image:UIImage?) {
 	...
 }
 ```
@@ -131,19 +131,14 @@ The img.ly SDK comes with an example app to demonstrate the simplicity and power
 
 ## Backend
 
-The backend takes care about the actual image manipulation. The `IMGLYPhotoProcessor` is the main class, its `processWithCIImage` / `processWithUIImage` methods take an image and an array of `CIFilter` objects and apply the filters to the given image sequentially.
+The backend takes care about the actual image manipulation. The `PhotoProcessor` is the main class, its `processWithCIImage` / `processWithUIImage` methods take an image and an array of `CIFilter` objects and apply the filters to the given image sequentially.
 
 The following code filters an image with the steel filter.
 
 ```
-var filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.Steel)
-var filteredImage = IMGLYPhotoProcessor.processWithUIImage(image, filters: [filter])
+var filter = InstanceFactory.sharedInstance.effectFilterWithType(.Steel)
+var filteredImage = PhotoProcessor.processWithUIImage(image, filters: [filter])
 ```
-
-### Source-filters 
-
-When using a filter chain, the first element needs to be either an `IMGLYSourceVideoFilter` or an
-`IMGLYSourcePhotoFilter` for a video-frame or a still image. 
 
 ### Response-filters
 
@@ -158,7 +153,7 @@ To use the filter in you project you need to:
 * Add the resulting image to the `Filter Responses` group in the project. Note: the image must be saved in PNG format.
 * Create a new class that derives from `ResponseFilter`.
 * Add a init method that sets the `responseName` property to the filename of the added image.
-* Add a new type to `IMGLYFilterType`.
+* Add a new type to `FilterType`.
 * Add a new case to the `effectFilterWithType` method in the instance factory.
 * Add the new type to the available filters list. 
 
@@ -166,7 +161,7 @@ The framework will take care about the rest, such as preview rendering.
 Here is an example of a response-filter
 
 ```
-class IMGLYSteelTypeFilter: ResponseFilter {
+class SteelTypeFilter: ResponseFilter {
    	override init() {
        	super.init()
        	self.responseName = "Steel"
@@ -177,17 +172,15 @@ class IMGLYSteelTypeFilter: ResponseFilter {
        	super.init(coder: aDecoder)
    	}
     
-   	override var filterType:IMGLYFilterType {
-       	get {
-           	return IMGLYFilterType.Steel
-       	}
+   	override var filterType: FilterType {
+        return IMGLYFilterType.Steel
    	}
 }
 ```
 
 ### Fixed filter stack
 
-The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
+The `PhotoProcessor` allows to apply any list of filters to an image.
 In order to make the process easier and non-destructive, all the editor dialogs 
 use a fixed-filter-stack. That means that the order of the filters is immutable and
 the user just sets the parameters for the distinct filters.

@@ -18,7 +18,6 @@ public typealias ShowSelectionBlock = () -> (Bool)
     let handler: ActionButtonHandler
     let showSelection: ShowSelectionBlock?
         
-    // TODO: Check if default parameters are exposed to Objective-C somehow
     init(title: String?, image: UIImage?, selectedImage: UIImage? = nil, handler: ActionButtonHandler, showSelection: ShowSelectionBlock? = nil) {
         self.title = title
         self.image = image

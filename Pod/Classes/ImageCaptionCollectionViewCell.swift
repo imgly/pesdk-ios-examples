@@ -8,7 +8,6 @@
 
 import UIKit
 
-// TODO: Public?
 class ImageCaptionCollectionViewCell: UICollectionViewCell {
     
     // MARK: - Properties

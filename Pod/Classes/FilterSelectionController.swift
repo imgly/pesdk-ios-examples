@@ -12,52 +12,51 @@ private let FilterCollectionViewCellReuseIdentifier = "FilterCollectionViewCell"
 private let FilterCollectionViewCellSize = CGSize(width: 60, height: 90)
 private let FilterActivationDuration = NSTimeInterval(0.15)
 
-private var FilterPreviews = [IMGLYFilterType : UIImage]()
+private var FilterPreviews = [FilterType : UIImage]()
 
-public typealias FilterTypeSelectedBlock = (IMGLYFilterType) -> (Void)
-public typealias FilterTypeActiveBlock = () -> (IMGLYFilterType)
+public typealias FilterTypeSelectedBlock = (FilterType) -> (Void)
+public typealias FilterTypeActiveBlock = () -> (FilterType)
 
-@objc(IMGLYFilterSelectionController) public class FilterSelectionController: NSObject {
+@objc(IMGLYFilterSelectionController) public class FilterSelectionController: UICollectionViewController {
     
     // MARK: - Properties
     
     private var selectedCellIndex: Int?
-    public let filterSelectionView: UICollectionView
     public var selectedBlock: FilterTypeSelectedBlock?
     public var activeFilterType: FilterTypeActiveBlock?
     
     // MARK: - Initializers
     
-    override init() {
+    init() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = FilterCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         flowLayout.minimumInteritemSpacing = 7
         flowLayout.minimumLineSpacing = 7
+        super.init(collectionViewLayout: flowLayout)
         
-        filterSelectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        super.init()
-        
-        filterSelectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        filterSelectionView.dataSource = self
-        filterSelectionView.delegate = self
-        filterSelectionView.registerClass(FilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCellReuseIdentifier)
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView?.registerClass(FilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCellReuseIdentifier)
+    }
+
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 }
 
 extension FilterSelectionController: UICollectionViewDataSource {
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(IMGLYInstanceFactory.sharedInstance.availableFilterList)
+    public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return count(InstanceFactory.sharedInstance.availableFilterList)
     }
     
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(FilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
         
         if let filterCell = cell as? FilterCollectionViewCell {
             let bundle = NSBundle(forClass: self.dynamicType)
-            let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
-            let filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            let filterType = InstanceFactory.sharedInstance.availableFilterList[indexPath.item]
+            let filter = InstanceFactory.sharedInstance.effectFilterWithType(filterType)
             
             filterCell.textLabel.text = filter.displayName
             filterCell.imageView.layer.cornerRadius = 3
@@ -74,7 +73,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
                 
                 // Create filterPreviewImage
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
-                    let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil)!, filters: [filter])
+                    let filterPreviewImage = PhotoProcessor.processWithUIImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil)!, filters: [filter])
                     
                     dispatch_async(dispatch_get_main_queue()) {
                         FilterPreviews[filterType] = filterPreviewImage
@@ -92,7 +91,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
     
     // MARK: - Helpers
     
-    private func updateCell(cell: FilterCollectionViewCell, atIndexPath indexPath: NSIndexPath, withFilterType filterType: IMGLYFilterType, forImage image: UIImage?) {
+    private func updateCell(cell: FilterCollectionViewCell, atIndexPath indexPath: NSIndexPath, withFilterType filterType: FilterType, forImage image: UIImage?) {
         cell.imageView.image = image
         
         if let activeFilterType = activeFilterType?() where activeFilterType == filterType {
@@ -103,7 +102,7 @@ extension FilterSelectionController: UICollectionViewDataSource {
 }
 
 extension FilterSelectionController: UICollectionViewDelegate {
-    public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    public override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let layoutAttributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)
         let extendedCellRect = CGRectInset(layoutAttributes.frame, -60, 0)
         collectionView.scrollRectToVisible(extendedCellRect, animated: true)
@@ -119,7 +118,7 @@ extension FilterSelectionController: UICollectionViewDelegate {
             })
         }
         
-        let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
+        let filterType = InstanceFactory.sharedInstance.availableFilterList[indexPath.item]
         
         selectedBlock?(filterType)
         

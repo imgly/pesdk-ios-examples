@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name             = "imglyKit"
-	s.version          = "2.0.4"
+	s.version          = "2.1.0"
 	s.license          = { :type => 'Copyright', :file => 'LICENSE' }
 	s.summary          = "Creates stunning images with a nice selection of premium filters."
 	s.homepage         = "https://github.com/imgly/imgly-sdk-ios"
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
 	s.requires_arc = true
 
 	s.source_files = 'Pod/Classes/**/*'
-	s.resources = ['Pod/Assets.xcassets', 'Pod/XIBs/*.xib', 'Pod/Filter Responses/*.png', 'Pod/Fonts/*']
+	s.resources = ['Pod/Assets.xcassets', 'Pod/Filter Responses/*.png', 'Pod/Fonts/*', 'Pod/en.lproj/Localizable.strings']
 
 	s.frameworks = 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
 end

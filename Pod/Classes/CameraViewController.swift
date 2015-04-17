@@ -103,7 +103,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     public let filterSelectionController = FilterSelectionController()
     
     private var currentCameraPosition = AVCaptureDevicePosition.Front
-    public private(set) var cameraController: IMGLYCameraController?
+    public private(set) var cameraController: CameraController?
     
     private var buttonsEnabled = true {
         didSet {
@@ -111,7 +111,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
             switchCameraButton.enabled = buttonsEnabled
             cameraRollButton.enabled = buttonsEnabled
             takePhotoButton.enabled = buttonsEnabled
-            filterSelectionController.filterSelectionView.userInteractionEnabled = buttonsEnabled
+            filterSelectionController.view.userInteractionEnabled = buttonsEnabled
             filterSelectionButton.enabled = buttonsEnabled
         }
     }
@@ -129,10 +129,59 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         configureCameraController()
     }
     
+    public override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+            filterSelectionController.beginAppearanceTransition(true, animated: animated)
+        }
+    }
+    
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+            filterSelectionController.endAppearanceTransition()
+        }
+        
         setLastImageFromRollAsPreview()
         cameraController?.startCaptureSession()
+    }
+    
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+            filterSelectionController.beginAppearanceTransition(false, animated: animated)
+        }
+    }
+    
+    public override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+            filterSelectionController.endAppearanceTransition()
+        }
+    }
+    
+    public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
+        return false
+    }
+    
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    public override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    public override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return .Portrait
     }
 
     // MARK: - Configuration
@@ -141,7 +190,10 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         view.addSubview(topControlsView)
         view.addSubview(cameraPreviewContainer)
         view.addSubview(bottomControlsView)
-        view.addSubview(filterSelectionController.filterSelectionView)
+        
+        addChildViewController(filterSelectionController)
+        filterSelectionController.didMoveToParentViewController(self)
+        view.addSubview(filterSelectionController.view)
         
         topControlsView.addSubview(flashButton)
         topControlsView.addSubview(switchCameraButton)
@@ -157,7 +209,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
             "topControlsView" : topControlsView,
             "cameraPreviewContainer" : cameraPreviewContainer,
             "bottomControlsView" : bottomControlsView,
-            "filterSelectionView" : filterSelectionController.filterSelectionView,
+            "filterSelectionView" : filterSelectionController.view,
             "flashButton" : flashButton,
             "switchCameraButton" : switchCameraButton,
             "cameraRollButton" : cameraRollButton,
@@ -186,7 +238,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][topControlsView(==topControlsViewHeight)][cameraPreviewContainer][bottomControlsView(==bottomControlsViewHeight)][filterSelectionView(==filterSelectionViewHeight)]", options: nil, metrics: metrics, views: views))
         
-        filterSelectionViewConstraint = NSLayoutConstraint(item: filterSelectionController.filterSelectionView, attribute: .Top, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
+        filterSelectionViewConstraint = NSLayoutConstraint(item: filterSelectionController.view, attribute: .Top, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
         view.addConstraint(filterSelectionViewConstraint!)
     }
     
@@ -218,7 +270,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         // Needed so that the framebuffer can bind to OpenGL ES
         view.layoutIfNeeded()
         
-        cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
+        cameraController = CameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
         if cameraController!.isCameraPresentWithPosition(AVCaptureDevicePosition.Back) {
             cameraController!.setupWithCameraPosition(AVCaptureDevicePosition.Back)
@@ -234,7 +286,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     
     private func configureFilterSelectionController() {
         filterSelectionController.selectedBlock = { [unowned self] filterType in
-            self.cameraController?.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            self.cameraController?.effectFilter = InstanceFactory.sharedInstance.effectFilterWithType(filterType)
         }
         
         filterSelectionController.activeFilterType = { [unowned self] in
@@ -254,8 +306,8 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
         editorViewController.initialFilterType = cameraController?.effectFilter.filterType
         editorViewController.completionBlock = editorCompletionBlock
         
-        let navigationController = UINavigationController(rootViewController: editorViewController)
-        navigationController.navigationBar.barTintColor = UIColor.blackColor()
+        let navigationController = NavigationController(rootViewController: editorViewController)
+        navigationController.navigationBar.barStyle = .Black
         navigationController.navigationBar.translucent = false
         navigationController.navigationBar.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor() ]
         
@@ -325,25 +377,31 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
             
             if filterSelectionViewConstraint.constant == 0 {
                 // Expand
+                filterSelectionController.beginAppearanceTransition(true, animated: true)
                 filterSelectionViewConstraint.constant = -1 * CGFloat(FilterSelectionViewHeight)
-                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: .AllowUserInteraction, animations: {
+                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: nil, animations: {
                     sender?.transform = CGAffineTransformIdentity
                     self.view.layoutIfNeeded()
-                }, completion: nil)
+                    }, completion: { finished in
+                        self.filterSelectionController.endAppearanceTransition()
+                })
             } else {
                 // Close
+                filterSelectionController.beginAppearanceTransition(false, animated: true)
                 filterSelectionViewConstraint.constant = 0
-                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: .AllowUserInteraction, animations: {
+                UIView.animateWithDuration(animationDuration, delay: 0, usingSpringWithDamping: dampingFactor, initialSpringVelocity: 0, options: nil, animations: {
                     sender?.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
                     self.view.layoutIfNeeded()
-                    }, completion: nil)
+                    }, completion: { finished in
+                        self.filterSelectionController.endAppearanceTransition()
+                })
             }
         }
     }
     
     // MARK: - Completion
-    private func editorCompletionBlock(result: IMGLYEditorResult, image: UIImage?) {
-        if let image = image where result == IMGLYEditorResult.Done {
+    private func editorCompletionBlock(result: EditorResult, image: UIImage?) {
+        if let image = image where result == EditorResult.Done {
             UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil);
         }
     }
@@ -354,7 +412,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
 
 }
 
-extension CameraViewController: IMGLYCameraControllerDelegate {
+extension CameraViewController: CameraControllerDelegate {
     public func captureSessionStarted() {
         dispatch_async(dispatch_get_main_queue()) {
             self.buttonsEnabled = true
@@ -399,8 +457,6 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         let image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         self.dismissViewControllerAnimated(true, completion: {
-            // TODO: Check
-//            UIApplication.sharedApplication().statusBarHidden = true
             if let completionBlock = self.completionBlock {
                 completionBlock(image)
             } else {
@@ -410,9 +466,6 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: {
-            // TODO: Check
-//            UIApplication.sharedApplication().statusBarHidden = true
-        })
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

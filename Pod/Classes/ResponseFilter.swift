@@ -9,8 +9,8 @@
 import Foundation
 import GLKit
 
-@objc public protocol IMGLYFilterTypeProtocol {
-    var filterType: IMGLYFilterType { get }
+@objc public protocol FilterTypeProtocol {
+    var filterType: FilterType { get }
 }
 
 /**
@@ -23,13 +23,13 @@ import GLKit
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
-@objc(IMGLYResponseFilter) public class ResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
+@objc(ResponseFilter) public class ResponseFilter: CIFilter, FilterTypeProtocol {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public let responseName: String
 
     /// Returns the according filter type of the response filter.
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .None
     }
     

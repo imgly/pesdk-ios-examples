@@ -7,77 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0902D7181A9D2E2400952EFC /* IMGLYBluesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7171A9D2E2400952EFC /* IMGLYBluesFilter.swift */; };
-		0902D71A1A9D2E3C00952EFC /* IMGLYSoftFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7191A9D2E3C00952EFC /* IMGLYSoftFilter.swift */; };
-		0902D71C1A9D2E5D00952EFC /* IMGLYElderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D71B1A9D2E5D00952EFC /* IMGLYElderFilter.swift */; };
-		0902D71E1A9D2E7500952EFC /* IMGLYSunsetFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D71D1A9D2E7500952EFC /* IMGLYSunsetFilter.swift */; };
-		0902D7201A9D2E8C00952EFC /* IMGLYEveningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D71F1A9D2E8C00952EFC /* IMGLYEveningFilter.swift */; };
-		0902D7241A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7231A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift */; };
-		0902D7261A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7251A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift */; };
-		0902D7281A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7271A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift */; };
-		0902D72A1A9D2F0A00952EFC /* IMGLYHighcarbFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7291A9D2F0A00952EFC /* IMGLYHighcarbFilter.swift */; };
-		0902D72C1A9D2F6100952EFC /* IMGLYCottonCandyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D72B1A9D2F6100952EFC /* IMGLYCottonCandyFilter.swift */; };
-		0902D72E1A9D2F8900952EFC /* IMGLYEightiesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D72D1A9D2F8900952EFC /* IMGLYEightiesFilter.swift */; };
-		0902D7301A9D2FCD00952EFC /* IMGLYTwilightFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D72F1A9D2FCD00952EFC /* IMGLYTwilightFilter.swift */; };
-		0902D7321A9D2FEC00952EFC /* IMGLYColorfulFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7311A9D2FEC00952EFC /* IMGLYColorfulFilter.swift */; };
-		0902D7341A9D302800952EFC /* IMGLYLomo100Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7331A9D302800952EFC /* IMGLYLomo100Filter.swift */; };
-		0902D7361A9D303800952EFC /* IMGLYPro400Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7351A9D303800952EFC /* IMGLYPro400Filter.swift */; };
-		0902D7381A9D306700952EFC /* IMGLYMono3200Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7371A9D306700952EFC /* IMGLYMono3200Filter.swift */; };
-		0902D73E1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D73D1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift */; };
-		0902D7401A9D30E400952EFC /* IMGLYPaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D73F1A9D30E400952EFC /* IMGLYPaleFilter.swift */; };
-		0902D7421A9D31F700952EFC /* IMGLYSettledFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7411A9D31F700952EFC /* IMGLYSettledFilter.swift */; };
-		0902D7441A9D321400952EFC /* IMGLYCoolFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7431A9D321400952EFC /* IMGLYCoolFilter.swift */; };
-		0902D7461A9D323400952EFC /* IMGLYLithoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7451A9D323400952EFC /* IMGLYLithoFilter.swift */; };
-		0902D7481A9D326700952EFC /* IMGLYPreludeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7471A9D326700952EFC /* IMGLYPreludeFilter.swift */; };
-		0902D74A1A9D328200952EFC /* IMGLYNepalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7491A9D328200952EFC /* IMGLYNepalFilter.swift */; };
-		0902D74C1A9D334A00952EFC /* IMGLYAncientFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D74B1A9D334A00952EFC /* IMGLYAncientFilter.swift */; };
-		0902D74E1A9D336200952EFC /* IMGLYPitchedFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D74D1A9D336200952EFC /* IMGLYPitchedFilter.swift */; };
-		0902D7501A9D339200952EFC /* IMGLYLucidFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D74F1A9D339200952EFC /* IMGLYLucidFilter.swift */; };
-		0902D7521A9D33B200952EFC /* IMGLYCreamyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7511A9D33B200952EFC /* IMGLYCreamyFilter.swift */; };
-		0902D7541A9D33DD00952EFC /* IMGLYKeenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7531A9D33DD00952EFC /* IMGLYKeenFilter.swift */; };
-		0902D7561A9D33F500952EFC /* IMGLYTenderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7551A9D33F500952EFC /* IMGLYTenderFilter.swift */; };
-		0902D7581A9D342000952EFC /* IMGLYBleachedFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7571A9D342000952EFC /* IMGLYBleachedFilter.swift */; };
-		0902D75A1A9D343000952EFC /* IMGLYBleachedBlueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7591A9D343000952EFC /* IMGLYBleachedBlueFilter.swift */; };
-		0902D75C1A9D344100952EFC /* IMGLYFallFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D75B1A9D344100952EFC /* IMGLYFallFilter.swift */; };
-		0902D75E1A9D345B00952EFC /* IMGLYWinterFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D75D1A9D345B00952EFC /* IMGLYWinterFilter.swift */; };
-		0902D7601A9D347800952EFC /* IMGLYSepiaHighFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D75F1A9D347800952EFC /* IMGLYSepiaHighFilter.swift */; };
-		0902D7621A9D349200952EFC /* IMGLYSummerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7611A9D349200952EFC /* IMGLYSummerFilter.swift */; };
-		0902D7641A9D34A900952EFC /* IMGLYClassicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7631A9D34A900952EFC /* IMGLYClassicFilter.swift */; };
-		0902D7681A9D34E400952EFC /* IMGLYNeatFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7671A9D34E400952EFC /* IMGLYNeatFilter.swift */; };
-		0902D76A1A9D350400952EFC /* IMGLYPlateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0902D7691A9D350400952EFC /* IMGLYPlateFilter.swift */; };
-		0917BB3B1AA8F5E4002A028E /* IMGLYTextDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB3A1AA8F5E4002A028E /* IMGLYTextDialogViewController.swift */; };
-		0917BB3D1AA8F5F3002A028E /* IMGLYTextDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB3C1AA8F5F3002A028E /* IMGLYTextDialogView.swift */; };
-		0917BB431AA8F7B0002A028E /* IMGLYTextFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB421AA8F7B0002A028E /* IMGLYTextFilter.swift */; };
-		0917BB451AA8FA93002A028E /* IMGLYTextColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB441AA8FA93002A028E /* IMGLYTextColorSelectorView.swift */; };
-		0917BB471AA8FCE0002A028E /* IMGLYColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB461AA8FCE0002A028E /* IMGLYColorButton.swift */; };
-		091A4F521A7E612800F43565 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091A4F511A7E612800F43565 /* IMGLYCameraController.swift */; };
-		09286C741AB0568C00B4EF99 /* IMGLYK1Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C731AB0568C00B4EF99 /* IMGLYK1Filter.swift */; };
-		09286C761AB0569A00B4EF99 /* IMGLYK2Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C751AB0569A00B4EF99 /* IMGLYK2Filter.swift */; };
-		09286C781AB056A800B4EF99 /* IMGLYK6Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C771AB056A800B4EF99 /* IMGLYK6Filter.swift */; };
-		09286C7A1AB056C500B4EF99 /* IMGLYKDynamicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C791AB056C500B4EF99 /* IMGLYKDynamicFilter.swift */; };
-		09286C7C1AB056D800B4EF99 /* IMGLYFridgeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C7B1AB056D800B4EF99 /* IMGLYFridgeFilter.swift */; };
-		09286C7E1AB056E800B4EF99 /* IMGLYBreezeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C7D1AB056E800B4EF99 /* IMGLYBreezeFilter.swift */; };
-		09286C801AB056F400B4EF99 /* IMGLYOrchidFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C7F1AB056F400B4EF99 /* IMGLYOrchidFilter.swift */; };
-		09286C821AB0570000B4EF99 /* IMGLYChestFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C811AB0570000B4EF99 /* IMGLYChestFilter.swift */; };
-		09286C841AB0571300B4EF99 /* IMGLYFrontFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C831AB0571300B4EF99 /* IMGLYFrontFilter.swift */; };
-		09286C861AB0572800B4EF99 /* IMGLYFixieFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C851AB0572800B4EF99 /* IMGLYFixieFilter.swift */; };
-		09286C881AB0573900B4EF99 /* IMGLYX400Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C871AB0573900B4EF99 /* IMGLYX400Filter.swift */; };
-		09286C8A1AB0574500B4EF99 /* IMGLYBWFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C891AB0574500B4EF99 /* IMGLYBWFilter.swift */; };
-		09286C8C1AB0575700B4EF99 /* IMGLYAD1920Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C8B1AB0575700B4EF99 /* IMGLYAD1920Filter.swift */; };
-		09286C8E1AB0576400B4EF99 /* IMGLYLeninFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C8D1AB0576400B4EF99 /* IMGLYLeninFilter.swift */; };
-		09286C901AB0577100B4EF99 /* IMGLYQuoziFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C8F1AB0577100B4EF99 /* IMGLYQuoziFilter.swift */; };
-		09286C921AB0577E00B4EF99 /* IMGLYPola669Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C911AB0577E00B4EF99 /* IMGLYPola669Filter.swift */; };
-		09286C941AB0578900B4EF99 /* IMGLYPolaSXFIlter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C931AB0578900B4EF99 /* IMGLYPolaSXFIlter.swift */; };
-		09286C961AB0579500B4EF99 /* IMGLYFoodFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C951AB0579500B4EF99 /* IMGLYFoodFilter.swift */; };
-		09286C981AB057A200B4EF99 /* IMGLYGlamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C971AB057A200B4EF99 /* IMGLYGlamFilter.swift */; };
-		09286C9A1AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C991AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift */; };
-		09286C9C1AB057B800B4EF99 /* IMGLYTexasFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C9B1AB057B800B4EF99 /* IMGLYTexasFilter.swift */; };
-		09286C9E1AB057C400B4EF99 /* IMGLYLomoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C9D1AB057C400B4EF99 /* IMGLYLomoFilter.swift */; };
-		09286CA01AB057D000B4EF99 /* IMGLYGobblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286C9F1AB057D000B4EF99 /* IMGLYGobblinFilter.swift */; };
-		09286CA21AB057DE00B4EF99 /* IMGLYSinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286CA11AB057DE00B4EF99 /* IMGLYSinFilter.swift */; };
-		09286CA41AB057EC00B4EF99 /* IMGLYMellowFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286CA31AB057EC00B4EF99 /* IMGLYMellowFilter.swift */; };
-		09286CA61AB057FB00B4EF99 /* IMGLYSunnyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286CA51AB057FB00B4EF99 /* IMGLYSunnyFilter.swift */; };
-		09286CA81AB0580700B4EF99 /* IMGLYA15Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09286CA71AB0580700B4EF99 /* IMGLYA15Filter.swift */; };
+		0917BB431AA8F7B0002A028E /* TextFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB421AA8F7B0002A028E /* TextFilter.swift */; };
+		0917BB451AA8FA93002A028E /* TextColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB441AA8FA93002A028E /* TextColorSelectorView.swift */; };
+		0917BB471AA8FCE0002A028E /* ColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0917BB461AA8FCE0002A028E /* ColorButton.swift */; };
+		091A4F521A7E612800F43565 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 091A4F511A7E612800F43565 /* CameraController.swift */; };
 		09286CAA1AB05E0C00B4EF99 /* A15.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CA91AB05E0C00B4EF99 /* A15.png */; };
 		09286CC51AB05F9600B4EF99 /* AD1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CAB1AB05F9500B4EF99 /* AD1920.png */; };
 		09286CC61AB05F9600B4EF99 /* Breeze.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CAC1AB05F9500B4EF99 /* Breeze.png */; };
@@ -105,30 +38,21 @@
 		09286CDC1AB05F9600B4EF99 /* Sunny.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC21AB05F9600B4EF99 /* Sunny.png */; };
 		09286CDD1AB05F9600B4EF99 /* Texas.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC31AB05F9600B4EF99 /* Texas.png */; };
 		09286CDE1AB05F9600B4EF99 /* X400.png in Resources */ = {isa = PBXBuildFile; fileRef = 09286CC41AB05F9600B4EF99 /* X400.png */; };
-		095C22681A9B70570036EBC6 /* IMGLYCropRectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095C22671A9B70570036EBC6 /* IMGLYCropRectComponent.swift */; };
-		0972FDD71A9786B900F464DF /* IMGLYOrientationCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */; };
-		098720B61A90E459002449FB /* IMGLYCropDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */; };
-		098BEAE81A83D5630073DB2F /* IMGLYNoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */; };
-		0991996B1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0991996A1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift */; };
-		099406DC1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099406DB1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift */; };
-		099406E01A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099406DF1A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift */; };
-		099C31631AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C31621AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift */; };
+		095C22681A9B70570036EBC6 /* CropRectComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 095C22671A9B70570036EBC6 /* CropRectComponent.swift */; };
+		0972FDD71A9786B900F464DF /* OrientationCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0972FDD61A9786B900F464DF /* OrientationCropFilter.swift */; };
+		098BEAE81A83D5630073DB2F /* NoneFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098BEAE71A83D5630073DB2F /* NoneFilter.swift */; };
+		099C31631AA5E942007D42C2 /* TiltshiftFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099C31621AA5E942007D42C2 /* TiltshiftFilter.swift */; };
 		09A1743C1A6FC99800F22012 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A1743B1A6FC99800F22012 /* AppDelegate.swift */; };
 		09A174431A6FC99800F22012 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 09A174421A6FC99800F22012 /* Images.xcassets */; };
 		09A174461A6FC99800F22012 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 09A174441A6FC99800F22012 /* LaunchScreen.xib */; };
 		09A174521A6FC99800F22012 /* imglyKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09A174511A6FC99800F22012 /* imglyKitTests.swift */; };
 		09AD7CC31A7A37B800728A78 /* LUTToNSDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 09AD7CC21A7A37B800728A78 /* LUTToNSDataConverter.m */; };
-		09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AD7CC41A7A43A900728A78 /* IMGLYSteelFilter.swift */; };
-		09B13A521A9382CC00AF85D1 /* IMGLYCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */; };
-		09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */; };
-		09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */; };
-		09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */; };
+		09B13A521A9382CC00AF85D1 /* CropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09B13A511A9382CC00AF85D1 /* CropFilter.swift */; };
+		09D0B26E1A81232E008782FB /* InstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26D1A81232E008782FB /* InstanceFactory.swift */; };
+		09D0B2701A81250C008782FB /* PhotoProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B26F1A81250C008782FB /* PhotoProcessor.swift */; };
+		09D0B27A1A825768008782FB /* ContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D0B2791A825768008782FB /* ContrastBrightnessSaturationFilter.swift */; };
 		09E48BD71A790D8300678F8A /* ResponseFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09E48BD61A790D8300678F8A /* ResponseFilter.swift */; };
-		09F694741A95FF7700F16FDC /* IMGLYFocusDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F694731A95FF7700F16FDC /* IMGLYFocusDialogView.swift */; };
-		09F694761A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09F694751A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift */; };
-		09FAEA1D1A8FA11000F6FF05 /* IMGLYCropDialogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FAEA1C1A8FA11000F6FF05 /* IMGLYCropDialogView.swift */; };
-		09FAEA1F1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FAEA1E1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift */; };
-		09FB55531AAA07A0005DE191 /* IMGLYFontSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB55521AAA07A0005DE191 /* IMGLYFontSelector.swift */; };
+		09FB55531AAA07A0005DE191 /* FontSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB55521AAA07A0005DE191 /* FontSelectorView.swift */; };
 		09FB55681AAA5910005DE191 /* Bender-Inline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55551AAA5910005DE191 /* Bender-Inline.otf */; };
 		09FB55691AAA5910005DE191 /* BLANCH_CONDENSED.otf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55561AAA5910005DE191 /* BLANCH_CONDENSED.otf */; };
 		09FB556A1AAA5910005DE191 /* MavenProLight-200.otf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55571AAA5910005DE191 /* MavenProLight-200.otf */; };
@@ -148,14 +72,22 @@
 		09FB55781AAA5910005DE191 /* Muncie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55651AAA5910005DE191 /* Muncie.ttf */; };
 		09FB55791AAA5910005DE191 /* Tommaso.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55661AAA5910005DE191 /* Tommaso.ttf */; };
 		09FB557A1AAA5910005DE191 /* vevey.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 09FB55671AAA5910005DE191 /* vevey.ttf */; };
-		09FB557E1AADAEA2005DE191 /* IMGLYFontImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */; };
-		09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */; };
+		09FB557E1AADAEA2005DE191 /* FontImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB557D1AADAEA2005DE191 /* FontImporter.swift */; };
+		09FB55821AAE24D3005DE191 /* EnhancementFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FB55811AAE24D3005DE191 /* EnhancementFilter.swift */; };
 		2B009C9F1AC05885006B0012 /* StickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009C9E1AC05885006B0012 /* StickerCollectionViewCell.swift */; };
 		2B009CA31AC05981006B0012 /* StickersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B009CA21AC05981006B0012 /* StickersDataSource.swift */; };
+		2B18432C1ADC1186005B27CC /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B18432B1ADC1186005B27CC /* NavigationController.swift */; };
+		2B18432E1ADC1AB9005B27CC /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B18432D1ADC1AB9005B27CC /* UIImageViewExtension.swift */; };
+		2B2C1EC81ADBC74700BFAE3A /* OrientationEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2C1EC71ADBC74700BFAE3A /* OrientationEditorViewController.swift */; };
+		2B2C1ECA1ADBC83700BFAE3A /* ImageCaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2C1EC91ADBC83600BFAE3A /* ImageCaptionButton.swift */; };
+		2B2C1ECC1ADBF53400BFAE3A /* CropEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2C1ECB1ADBF53400BFAE3A /* CropEditorViewController.swift */; };
+		2B2C1ECE1ADBF91E00BFAE3A /* FocusEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B2C1ECD1ADBF91E00BFAE3A /* FocusEditorViewController.swift */; };
 		2B3565B31AD3DCE10030F197 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */; };
 		2B3A52FF1AD40DB300FD4B74 /* EditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */; };
 		2B845DC41AC16ECE00806B4E /* Sticker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC31AC16ECE00806B4E /* Sticker.swift */; };
-		2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */; };
+		2B845DC61AC1999000806B4E /* StickerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B845DC51AC1999000806B4E /* StickerFilter.swift */; };
+		2B8DB0AF1AE145A000309956 /* TextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8DB0AE1AE145A000309956 /* TextEditorViewController.swift */; };
+		2B8DB0B11AE1472800309956 /* GradientViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8DB0B01AE1472800309956 /* GradientViewDelegate.swift */; };
 		2B8ED93A1AD861C700694AA7 /* SliderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */; };
 		2B8EDA481AAF003D00AB75B5 /* CIFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */; };
 		2B8EDAD11AAF015600AB75B5 /* Soft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B8EDAA41AAF015600AB75B5 /* Soft.png */; };
@@ -215,13 +147,75 @@
 		2BE149521AD86ABC00EBA673 /* SaturationEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */; };
 		2BE149541AD8717100EBA673 /* StickersEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE149531AD8717100EBA673 /* StickersEditorViewController.swift */; };
 		2BEB59021AD8007700AC0468 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEB59011AD8007700AC0468 /* CameraViewController.swift */; };
-		2BFE55EB1AAF05DD007B8CFD /* IMGLYCropDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */; };
-		2BFE55EE1AAF05DD007B8CFD /* IMGLYFocusDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E71AAF05DD007B8CFD /* IMGLYFocusDialogView.xib */; };
-		2BFE55F01AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */; };
-		2BFE55F11AAF05DD007B8CFD /* IMGLYTextDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */; };
-		85886704BD128653D2967B9C /* IMGLYCircleGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858866F270F03960F9115907 /* IMGLYCircleGradientView.swift */; };
-		85886747EE37CE0F22FEFC34 /* IMGLYGradientViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858867A642AC2B451E2B1A4F /* IMGLYGradientViewDelegate.swift */; };
-		8588683A60159E1C27DAD5D7 /* IMGLYBoxGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */; };
+		2BF4BA471AE1631900595AFA /* A15Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA051AE1631800595AFA /* A15Filter.swift */; };
+		2BF4BA481AE1631900595AFA /* AD1920Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA061AE1631800595AFA /* AD1920Filter.swift */; };
+		2BF4BA491AE1631900595AFA /* AncientFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA071AE1631800595AFA /* AncientFilter.swift */; };
+		2BF4BA4A1AE1631900595AFA /* BleachedBlueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA081AE1631800595AFA /* BleachedBlueFilter.swift */; };
+		2BF4BA4B1AE1631900595AFA /* BleachedFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA091AE1631800595AFA /* BleachedFilter.swift */; };
+		2BF4BA4C1AE1631900595AFA /* BlissfulBlueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0A1AE1631800595AFA /* BlissfulBlueFilter.swift */; };
+		2BF4BA4D1AE1631900595AFA /* BluesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0B1AE1631800595AFA /* BluesFilter.swift */; };
+		2BF4BA4E1AE1631900595AFA /* BlueShadowsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0C1AE1631800595AFA /* BlueShadowsFilter.swift */; };
+		2BF4BA4F1AE1631900595AFA /* BreezeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0D1AE1631800595AFA /* BreezeFilter.swift */; };
+		2BF4BA501AE1631900595AFA /* BWFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0E1AE1631800595AFA /* BWFilter.swift */; };
+		2BF4BA511AE1631900595AFA /* CelsiusFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA0F1AE1631800595AFA /* CelsiusFilter.swift */; };
+		2BF4BA521AE1631900595AFA /* ChestFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA101AE1631800595AFA /* ChestFilter.swift */; };
+		2BF4BA531AE1631900595AFA /* ClassicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA111AE1631800595AFA /* ClassicFilter.swift */; };
+		2BF4BA541AE1631900595AFA /* ColorfulFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA121AE1631800595AFA /* ColorfulFilter.swift */; };
+		2BF4BA551AE1631900595AFA /* CoolFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA131AE1631800595AFA /* CoolFilter.swift */; };
+		2BF4BA561AE1631900595AFA /* CottonCandyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA141AE1631800595AFA /* CottonCandyFilter.swift */; };
+		2BF4BA571AE1631900595AFA /* CreamyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA151AE1631800595AFA /* CreamyFilter.swift */; };
+		2BF4BA581AE1631900595AFA /* EightiesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA161AE1631800595AFA /* EightiesFilter.swift */; };
+		2BF4BA591AE1631900595AFA /* ElderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA171AE1631800595AFA /* ElderFilter.swift */; };
+		2BF4BA5A1AE1631900595AFA /* EppHighContrastFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA181AE1631800595AFA /* EppHighContrastFilter.swift */; };
+		2BF4BA5B1AE1631900595AFA /* EveningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA191AE1631800595AFA /* EveningFilter.swift */; };
+		2BF4BA5C1AE1631900595AFA /* FallFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1A1AE1631800595AFA /* FallFilter.swift */; };
+		2BF4BA5D1AE1631900595AFA /* FixieFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1B1AE1631800595AFA /* FixieFilter.swift */; };
+		2BF4BA5E1AE1631900595AFA /* FoodFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1C1AE1631800595AFA /* FoodFilter.swift */; };
+		2BF4BA5F1AE1631900595AFA /* FridgeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1D1AE1631800595AFA /* FridgeFilter.swift */; };
+		2BF4BA601AE1631900595AFA /* FrontFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1E1AE1631800595AFA /* FrontFilter.swift */; };
+		2BF4BA611AE1631900595AFA /* GlamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA1F1AE1631800595AFA /* GlamFilter.swift */; };
+		2BF4BA621AE1631900595AFA /* GobblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA201AE1631800595AFA /* GobblinFilter.swift */; };
+		2BF4BA631AE1631900595AFA /* HighcarbFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA211AE1631800595AFA /* HighcarbFilter.swift */; };
+		2BF4BA641AE1631900595AFA /* K1Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA221AE1631800595AFA /* K1Filter.swift */; };
+		2BF4BA651AE1631900595AFA /* K2Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA231AE1631800595AFA /* K2Filter.swift */; };
+		2BF4BA661AE1631900595AFA /* K6Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA241AE1631800595AFA /* K6Filter.swift */; };
+		2BF4BA671AE1631900595AFA /* KDynamicFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA251AE1631800595AFA /* KDynamicFilter.swift */; };
+		2BF4BA681AE1631900595AFA /* KeenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA261AE1631800595AFA /* KeenFilter.swift */; };
+		2BF4BA691AE1631900595AFA /* LeninFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA271AE1631800595AFA /* LeninFilter.swift */; };
+		2BF4BA6A1AE1631900595AFA /* LithoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA281AE1631800595AFA /* LithoFilter.swift */; };
+		2BF4BA6B1AE1631900595AFA /* Lomo100Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA291AE1631800595AFA /* Lomo100Filter.swift */; };
+		2BF4BA6C1AE1631900595AFA /* LomoFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2A1AE1631800595AFA /* LomoFilter.swift */; };
+		2BF4BA6D1AE1631900595AFA /* LucidFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2B1AE1631800595AFA /* LucidFilter.swift */; };
+		2BF4BA6E1AE1631900595AFA /* MellowFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2C1AE1631800595AFA /* MellowFilter.swift */; };
+		2BF4BA6F1AE1631900595AFA /* Mono3200Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2D1AE1631800595AFA /* Mono3200Filter.swift */; };
+		2BF4BA701AE1631900595AFA /* NeatFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2E1AE1631800595AFA /* NeatFilter.swift */; };
+		2BF4BA711AE1631900595AFA /* NepalFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA2F1AE1631800595AFA /* NepalFilter.swift */; };
+		2BF4BA721AE1631900595AFA /* NoGreenFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA301AE1631800595AFA /* NoGreenFilter.swift */; };
+		2BF4BA731AE1631900595AFA /* OrchidFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA311AE1631800595AFA /* OrchidFilter.swift */; };
+		2BF4BA741AE1631900595AFA /* PaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA321AE1631800595AFA /* PaleFilter.swift */; };
+		2BF4BA751AE1631900595AFA /* PitchedFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA331AE1631800595AFA /* PitchedFilter.swift */; };
+		2BF4BA761AE1631900595AFA /* PlateFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA341AE1631800595AFA /* PlateFilter.swift */; };
+		2BF4BA771AE1631900595AFA /* Pola669Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA351AE1631800595AFA /* Pola669Filter.swift */; };
+		2BF4BA781AE1631900595AFA /* PreludeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA361AE1631800595AFA /* PreludeFilter.swift */; };
+		2BF4BA791AE1631900595AFA /* Pro400Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA371AE1631800595AFA /* Pro400Filter.swift */; };
+		2BF4BA7A1AE1631900595AFA /* QuoziFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA381AE1631800595AFA /* QuoziFilter.swift */; };
+		2BF4BA7B1AE1631900595AFA /* SepiaHighFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA391AE1631800595AFA /* SepiaHighFilter.swift */; };
+		2BF4BA7C1AE1631900595AFA /* SettledFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3A1AE1631800595AFA /* SettledFilter.swift */; };
+		2BF4BA7D1AE1631900595AFA /* SeventiesFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3B1AE1631800595AFA /* SeventiesFilter.swift */; };
+		2BF4BA7E1AE1631900595AFA /* SinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3C1AE1631800595AFA /* SinFilter.swift */; };
+		2BF4BA7F1AE1631900595AFA /* SoftFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3D1AE1631800595AFA /* SoftFilter.swift */; };
+		2BF4BA801AE1631900595AFA /* SteelFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3E1AE1631800595AFA /* SteelFilter.swift */; };
+		2BF4BA811AE1631900595AFA /* SummerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA3F1AE1631800595AFA /* SummerFilter.swift */; };
+		2BF4BA821AE1631900595AFA /* SunnyFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA401AE1631800595AFA /* SunnyFilter.swift */; };
+		2BF4BA831AE1631900595AFA /* SunsetFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA411AE1631900595AFA /* SunsetFilter.swift */; };
+		2BF4BA841AE1631900595AFA /* TenderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA421AE1631900595AFA /* TenderFilter.swift */; };
+		2BF4BA851AE1631900595AFA /* TexasFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA431AE1631900595AFA /* TexasFilter.swift */; };
+		2BF4BA861AE1631900595AFA /* TwilightFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA441AE1631900595AFA /* TwilightFilter.swift */; };
+		2BF4BA871AE1631900595AFA /* WinterFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA451AE1631900595AFA /* WinterFilter.swift */; };
+		2BF4BA881AE1631900595AFA /* X400Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA461AE1631900595AFA /* X400Filter.swift */; };
+		2BF4BA8A1AE1652C00595AFA /* PolaSXFIlter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4BA891AE1652C00595AFA /* PolaSXFIlter.swift */; };
+		85886704BD128653D2967B9C /* CircleGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858866F270F03960F9115907 /* CircleGradientView.swift */; };
+		8588683A60159E1C27DAD5D7 /* BoxGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858865DAF993BC37B19A894B /* BoxGradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -235,77 +229,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0902D7171A9D2E2400952EFC /* IMGLYBluesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBluesFilter.swift; path = ../../Pod/Classes/IMGLYBluesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7191A9D2E3C00952EFC /* IMGLYSoftFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSoftFilter.swift; path = ../../Pod/Classes/IMGLYSoftFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D71B1A9D2E5D00952EFC /* IMGLYElderFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYElderFilter.swift; path = ../../Pod/Classes/IMGLYElderFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D71D1A9D2E7500952EFC /* IMGLYSunsetFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSunsetFilter.swift; path = ../../Pod/Classes/IMGLYSunsetFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D71F1A9D2E8C00952EFC /* IMGLYEveningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYEveningFilter.swift; path = ../../Pod/Classes/IMGLYEveningFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7231A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSeventiesFilter.swift; path = ../../Pod/Classes/IMGLYSeventiesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7251A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYEppHighContrastFilter.swift; path = ../../Pod/Classes/IMGLYEppHighContrastFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7271A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBlueShadowsFilter.swift; path = ../../Pod/Classes/IMGLYBlueShadowsFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7291A9D2F0A00952EFC /* IMGLYHighcarbFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYHighcarbFilter.swift; path = ../../Pod/Classes/IMGLYHighcarbFilter.swift; sourceTree = "<group>"; };
-		0902D72B1A9D2F6100952EFC /* IMGLYCottonCandyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCottonCandyFilter.swift; path = ../../Pod/Classes/IMGLYCottonCandyFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D72D1A9D2F8900952EFC /* IMGLYEightiesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYEightiesFilter.swift; path = ../../Pod/Classes/IMGLYEightiesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D72F1A9D2FCD00952EFC /* IMGLYTwilightFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYTwilightFilter.swift; path = ../../Pod/Classes/IMGLYTwilightFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7311A9D2FEC00952EFC /* IMGLYColorfulFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYColorfulFilter.swift; path = ../../Pod/Classes/IMGLYColorfulFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7331A9D302800952EFC /* IMGLYLomo100Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYLomo100Filter.swift; path = ../../Pod/Classes/IMGLYLomo100Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7351A9D303800952EFC /* IMGLYPro400Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPro400Filter.swift; path = ../../Pod/Classes/IMGLYPro400Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7371A9D306700952EFC /* IMGLYMono3200Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYMono3200Filter.swift; path = ../../Pod/Classes/IMGLYMono3200Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D73D1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBlissfulBlueFilter.swift; path = ../../Pod/Classes/IMGLYBlissfulBlueFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D73F1A9D30E400952EFC /* IMGLYPaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPaleFilter.swift; path = ../../Pod/Classes/IMGLYPaleFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7411A9D31F700952EFC /* IMGLYSettledFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSettledFilter.swift; path = ../../Pod/Classes/IMGLYSettledFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7431A9D321400952EFC /* IMGLYCoolFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCoolFilter.swift; path = ../../Pod/Classes/IMGLYCoolFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7451A9D323400952EFC /* IMGLYLithoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYLithoFilter.swift; path = ../../Pod/Classes/IMGLYLithoFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7471A9D326700952EFC /* IMGLYPreludeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPreludeFilter.swift; path = ../../Pod/Classes/IMGLYPreludeFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7491A9D328200952EFC /* IMGLYNepalFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNepalFilter.swift; path = ../../Pod/Classes/IMGLYNepalFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D74B1A9D334A00952EFC /* IMGLYAncientFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYAncientFilter.swift; path = ../../Pod/Classes/IMGLYAncientFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D74D1A9D336200952EFC /* IMGLYPitchedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPitchedFilter.swift; path = ../../Pod/Classes/IMGLYPitchedFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D74F1A9D339200952EFC /* IMGLYLucidFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYLucidFilter.swift; path = ../../Pod/Classes/IMGLYLucidFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7511A9D33B200952EFC /* IMGLYCreamyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCreamyFilter.swift; path = ../../Pod/Classes/IMGLYCreamyFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7531A9D33DD00952EFC /* IMGLYKeenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYKeenFilter.swift; path = ../../Pod/Classes/IMGLYKeenFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7551A9D33F500952EFC /* IMGLYTenderFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYTenderFilter.swift; path = ../../Pod/Classes/IMGLYTenderFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7571A9D342000952EFC /* IMGLYBleachedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBleachedFilter.swift; path = ../../Pod/Classes/IMGLYBleachedFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7591A9D343000952EFC /* IMGLYBleachedBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBleachedBlueFilter.swift; path = ../../Pod/Classes/IMGLYBleachedBlueFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D75B1A9D344100952EFC /* IMGLYFallFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFallFilter.swift; path = ../../Pod/Classes/IMGLYFallFilter.swift; sourceTree = "<group>"; };
-		0902D75D1A9D345B00952EFC /* IMGLYWinterFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYWinterFilter.swift; path = ../../Pod/Classes/IMGLYWinterFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D75F1A9D347800952EFC /* IMGLYSepiaHighFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSepiaHighFilter.swift; path = ../../Pod/Classes/IMGLYSepiaHighFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7611A9D349200952EFC /* IMGLYSummerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSummerFilter.swift; path = ../../Pod/Classes/IMGLYSummerFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7631A9D34A900952EFC /* IMGLYClassicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYClassicFilter.swift; path = ../../Pod/Classes/IMGLYClassicFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7671A9D34E400952EFC /* IMGLYNeatFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNeatFilter.swift; path = ../../Pod/Classes/IMGLYNeatFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0902D7691A9D350400952EFC /* IMGLYPlateFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPlateFilter.swift; path = ../../Pod/Classes/IMGLYPlateFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0917BB3A1AA8F5E4002A028E /* IMGLYTextDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYTextDialogViewController.swift; path = ../../Pod/Classes/IMGLYTextDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0917BB3C1AA8F5F3002A028E /* IMGLYTextDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYTextDialogView.swift; path = ../../Pod/Classes/IMGLYTextDialogView.swift; sourceTree = "<group>"; };
-		0917BB421AA8F7B0002A028E /* IMGLYTextFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYTextFilter.swift; path = ../../Pod/Classes/IMGLYTextFilter.swift; sourceTree = "<group>"; };
-		0917BB441AA8FA93002A028E /* IMGLYTextColorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYTextColorSelectorView.swift; path = ../../Pod/Classes/IMGLYTextColorSelectorView.swift; sourceTree = "<group>"; };
-		0917BB461AA8FCE0002A028E /* IMGLYColorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYColorButton.swift; path = ../../Pod/Classes/IMGLYColorButton.swift; sourceTree = "<group>"; };
-		091A4F511A7E612800F43565 /* IMGLYCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCameraController.swift; path = ../../Pod/Classes/IMGLYCameraController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C731AB0568C00B4EF99 /* IMGLYK1Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYK1Filter.swift; path = ../../Pod/Classes/IMGLYK1Filter.swift; sourceTree = "<group>"; };
-		09286C751AB0569A00B4EF99 /* IMGLYK2Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYK2Filter.swift; path = ../../Pod/Classes/IMGLYK2Filter.swift; sourceTree = "<group>"; };
-		09286C771AB056A800B4EF99 /* IMGLYK6Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYK6Filter.swift; path = ../../Pod/Classes/IMGLYK6Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C791AB056C500B4EF99 /* IMGLYKDynamicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYKDynamicFilter.swift; path = ../../Pod/Classes/IMGLYKDynamicFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C7B1AB056D800B4EF99 /* IMGLYFridgeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFridgeFilter.swift; path = ../../Pod/Classes/IMGLYFridgeFilter.swift; sourceTree = "<group>"; };
-		09286C7D1AB056E800B4EF99 /* IMGLYBreezeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBreezeFilter.swift; path = ../../Pod/Classes/IMGLYBreezeFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C7F1AB056F400B4EF99 /* IMGLYOrchidFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYOrchidFilter.swift; path = ../../Pod/Classes/IMGLYOrchidFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C811AB0570000B4EF99 /* IMGLYChestFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYChestFilter.swift; path = ../../Pod/Classes/IMGLYChestFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C831AB0571300B4EF99 /* IMGLYFrontFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFrontFilter.swift; path = ../../Pod/Classes/IMGLYFrontFilter.swift; sourceTree = "<group>"; };
-		09286C851AB0572800B4EF99 /* IMGLYFixieFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFixieFilter.swift; path = ../../Pod/Classes/IMGLYFixieFilter.swift; sourceTree = "<group>"; };
-		09286C871AB0573900B4EF99 /* IMGLYX400Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYX400Filter.swift; path = ../../Pod/Classes/IMGLYX400Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C891AB0574500B4EF99 /* IMGLYBWFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBWFilter.swift; path = ../../Pod/Classes/IMGLYBWFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C8B1AB0575700B4EF99 /* IMGLYAD1920Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYAD1920Filter.swift; path = ../../Pod/Classes/IMGLYAD1920Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C8D1AB0576400B4EF99 /* IMGLYLeninFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYLeninFilter.swift; path = ../../Pod/Classes/IMGLYLeninFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C8F1AB0577100B4EF99 /* IMGLYQuoziFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYQuoziFilter.swift; path = ../../Pod/Classes/IMGLYQuoziFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C911AB0577E00B4EF99 /* IMGLYPola669Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPola669Filter.swift; path = ../../Pod/Classes/IMGLYPola669Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C931AB0578900B4EF99 /* IMGLYPolaSXFIlter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYPolaSXFIlter.swift; path = ../../Pod/Classes/IMGLYPolaSXFIlter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C951AB0579500B4EF99 /* IMGLYFoodFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFoodFilter.swift; path = ../../Pod/Classes/IMGLYFoodFilter.swift; sourceTree = "<group>"; };
-		09286C971AB057A200B4EF99 /* IMGLYGlamFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYGlamFilter.swift; path = ../../Pod/Classes/IMGLYGlamFilter.swift; sourceTree = "<group>"; };
-		09286C991AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCelsiusFilter.swift; path = ../../Pod/Classes/IMGLYCelsiusFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C9B1AB057B800B4EF99 /* IMGLYTexasFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYTexasFilter.swift; path = ../../Pod/Classes/IMGLYTexasFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C9D1AB057C400B4EF99 /* IMGLYLomoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYLomoFilter.swift; path = ../../Pod/Classes/IMGLYLomoFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286C9F1AB057D000B4EF99 /* IMGLYGobblinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYGobblinFilter.swift; path = ../../Pod/Classes/IMGLYGobblinFilter.swift; sourceTree = "<group>"; };
-		09286CA11AB057DE00B4EF99 /* IMGLYSinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSinFilter.swift; path = ../../Pod/Classes/IMGLYSinFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286CA31AB057EC00B4EF99 /* IMGLYMellowFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYMellowFilter.swift; path = ../../Pod/Classes/IMGLYMellowFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286CA51AB057FB00B4EF99 /* IMGLYSunnyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSunnyFilter.swift; path = ../../Pod/Classes/IMGLYSunnyFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09286CA71AB0580700B4EF99 /* IMGLYA15Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYA15Filter.swift; path = ../../Pod/Classes/IMGLYA15Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0917BB421AA8F7B0002A028E /* TextFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextFilter.swift; path = ../../Pod/Classes/TextFilter.swift; sourceTree = "<group>"; };
+		0917BB441AA8FA93002A028E /* TextColorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextColorSelectorView.swift; path = ../../Pod/Classes/TextColorSelectorView.swift; sourceTree = "<group>"; };
+		0917BB461AA8FCE0002A028E /* ColorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ColorButton.swift; path = ../../Pod/Classes/ColorButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		091A4F511A7E612800F43565 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CameraController.swift; path = ../../Pod/Classes/CameraController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09286CA91AB05E0C00B4EF99 /* A15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = A15.png; path = "../../Pod/Filter Responses/A15.png"; sourceTree = "<group>"; };
 		09286CAB1AB05F9500B4EF99 /* AD1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = AD1920.png; path = "../../Pod/Filter Responses/AD1920.png"; sourceTree = "<group>"; };
 		09286CAC1AB05F9500B4EF99 /* Breeze.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Breeze.png; path = "../../Pod/Filter Responses/Breeze.png"; sourceTree = "<group>"; };
@@ -333,17 +260,13 @@
 		09286CC21AB05F9600B4EF99 /* Sunny.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Sunny.png; path = "../../Pod/Filter Responses/Sunny.png"; sourceTree = "<group>"; };
 		09286CC31AB05F9600B4EF99 /* Texas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Texas.png; path = "../../Pod/Filter Responses/Texas.png"; sourceTree = "<group>"; };
 		09286CC41AB05F9600B4EF99 /* X400.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = X400.png; path = "../../Pod/Filter Responses/X400.png"; sourceTree = "<group>"; };
-		095C22671A9B70570036EBC6 /* IMGLYCropRectComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCropRectComponent.swift; path = ../../Pod/Classes/IMGLYCropRectComponent.swift; sourceTree = "<group>"; };
-		0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYOrientationCropFilter.swift; path = ../../Pod/Classes/IMGLYOrientationCropFilter.swift; sourceTree = "<group>"; };
-		098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYCropDialogViewController.swift; path = ../../Pod/Classes/IMGLYCropDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNoneFilter.swift; path = ../../Pod/Classes/IMGLYNoneFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		0991996A1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYNoGreenFilter.swift; path = ../../Pod/Classes/IMGLYNoGreenFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		099406DB1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYOrientationDialogView.swift; path = ../../Pod/Classes/IMGLYOrientationDialogView.swift; sourceTree = "<group>"; };
-		099406DF1A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYOrientationDialogViewController.swift; path = ../../Pod/Classes/IMGLYOrientationDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		099C31621AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYTiltshiftFilter.swift; path = ../../Pod/Classes/IMGLYTiltshiftFilter.swift; sourceTree = "<group>"; };
+		095C22671A9B70570036EBC6 /* CropRectComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CropRectComponent.swift; path = ../../Pod/Classes/CropRectComponent.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		0972FDD61A9786B900F464DF /* OrientationCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationCropFilter.swift; path = ../../Pod/Classes/OrientationCropFilter.swift; sourceTree = "<group>"; };
+		098BEAE71A83D5630073DB2F /* NoneFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = NoneFilter.swift; path = ../../Pod/Classes/NoneFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		099C31621AA5E942007D42C2 /* TiltshiftFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TiltshiftFilter.swift; path = ../../Pod/Classes/TiltshiftFilter.swift; sourceTree = "<group>"; };
 		09A174361A6FC99800F22012 /* imglyKit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = imglyKit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		09A1743A1A6FC99800F22012 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		09A1743B1A6FC99800F22012 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = imglyKit/AppDelegate.swift; sourceTree = "<group>"; };
+		09A1743B1A6FC99800F22012 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AppDelegate.swift; path = imglyKit/AppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09A174421A6FC99800F22012 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = imglyKit/Images.xcassets; sourceTree = "<group>"; };
 		09A174451A6FC99800F22012 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		09A1744B1A6FC99800F22012 /* imglyKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = imglyKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -352,17 +275,12 @@
 		09AD7CC01A7A37B800728A78 /* imglyKit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "imglyKit-Bridging-Header.h"; path = "imglyKit/imglyKit-Bridging-Header.h"; sourceTree = "<group>"; };
 		09AD7CC11A7A37B800728A78 /* LUTToNSDataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LUTToNSDataConverter.h; path = ../../Pod/Classes/LUTToNSDataConverter.h; sourceTree = "<group>"; };
 		09AD7CC21A7A37B800728A78 /* LUTToNSDataConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LUTToNSDataConverter.m; path = ../../Pod/Classes/LUTToNSDataConverter.m; sourceTree = "<group>"; };
-		09AD7CC41A7A43A900728A78 /* IMGLYSteelFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYSteelFilter.swift; path = ../../Pod/Classes/IMGLYSteelFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCropFilter.swift; path = ../../Pod/Classes/IMGLYCropFilter.swift; sourceTree = "<group>"; };
-		09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYInstanceFactory.swift; path = ../../Pod/Classes/IMGLYInstanceFactory.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYPhotoProcessor.swift; path = ../../Pod/Classes/IMGLYPhotoProcessor.swift; sourceTree = "<group>"; };
-		09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/IMGLYContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; };
+		09B13A511A9382CC00AF85D1 /* CropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CropFilter.swift; path = ../../Pod/Classes/CropFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		09D0B26D1A81232E008782FB /* InstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = InstanceFactory.swift; path = ../../Pod/Classes/InstanceFactory.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		09D0B26F1A81250C008782FB /* PhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoProcessor.swift; path = ../../Pod/Classes/PhotoProcessor.swift; sourceTree = "<group>"; };
+		09D0B2791A825768008782FB /* ContrastBrightnessSaturationFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ContrastBrightnessSaturationFilter.swift; path = ../../Pod/Classes/ContrastBrightnessSaturationFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09E48BD61A790D8300678F8A /* ResponseFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ResponseFilter.swift; path = ../../Pod/Classes/ResponseFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09F694731A95FF7700F16FDC /* IMGLYFocusDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFocusDialogView.swift; path = ../../Pod/Classes/IMGLYFocusDialogView.swift; sourceTree = "<group>"; };
-		09F694751A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYFocusDialogViewController.swift; path = ../../Pod/Classes/IMGLYFocusDialogViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		09FAEA1C1A8FA11000F6FF05 /* IMGLYCropDialogView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCropDialogView.swift; path = ../../Pod/Classes/IMGLYCropDialogView.swift; sourceTree = "<group>"; };
-		09FAEA1E1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYContainerViewHelper.swift; path = ../../Pod/Classes/IMGLYContainerViewHelper.swift; sourceTree = "<group>"; };
-		09FB55521AAA07A0005DE191 /* IMGLYFontSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFontSelector.swift; path = ../../Pod/Classes/IMGLYFontSelector.swift; sourceTree = "<group>"; };
+		09FB55521AAA07A0005DE191 /* FontSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontSelectorView.swift; path = ../../Pod/Classes/FontSelectorView.swift; sourceTree = "<group>"; };
 		09FB55551AAA5910005DE191 /* Bender-Inline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Bender-Inline.otf"; path = "../../Pod/Fonts/Bender-Inline.otf"; sourceTree = "<group>"; };
 		09FB55561AAA5910005DE191 /* BLANCH_CONDENSED.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = BLANCH_CONDENSED.otf; path = ../../Pod/Fonts/BLANCH_CONDENSED.otf; sourceTree = "<group>"; };
 		09FB55571AAA5910005DE191 /* MavenProLight-200.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "MavenProLight-200.otf"; path = "../../Pod/Fonts/MavenProLight-200.otf"; sourceTree = "<group>"; };
@@ -382,14 +300,22 @@
 		09FB55651AAA5910005DE191 /* Muncie.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Muncie.ttf; path = ../../Pod/Fonts/Muncie.ttf; sourceTree = "<group>"; };
 		09FB55661AAA5910005DE191 /* Tommaso.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Tommaso.ttf; path = ../../Pod/Fonts/Tommaso.ttf; sourceTree = "<group>"; };
 		09FB55671AAA5910005DE191 /* vevey.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = vevey.ttf; path = ../../Pod/Fonts/vevey.ttf; sourceTree = "<group>"; };
-		09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFontImporter.swift; path = ../../Pod/Classes/IMGLYFontImporter.swift; sourceTree = "<group>"; };
-		09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYEnhancementFilter.swift; path = ../../Pod/Classes/IMGLYEnhancementFilter.swift; sourceTree = "<group>"; };
+		09FB557D1AADAEA2005DE191 /* FontImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FontImporter.swift; path = ../../Pod/Classes/FontImporter.swift; sourceTree = "<group>"; };
+		09FB55811AAE24D3005DE191 /* EnhancementFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EnhancementFilter.swift; path = ../../Pod/Classes/EnhancementFilter.swift; sourceTree = "<group>"; };
 		2B009C9E1AC05885006B0012 /* StickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickerCollectionViewCell.swift; path = ../../Pod/Classes/StickerCollectionViewCell.swift; sourceTree = "<group>"; };
 		2B009CA21AC05981006B0012 /* StickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickersDataSource.swift; path = ../../Pod/Classes/StickersDataSource.swift; sourceTree = "<group>"; };
+		2B18432B1ADC1186005B27CC /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationController.swift; path = ../../Pod/Classes/NavigationController.swift; sourceTree = "<group>"; };
+		2B18432D1ADC1AB9005B27CC /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageViewExtension.swift; path = ../../Pod/Classes/UIImageViewExtension.swift; sourceTree = "<group>"; };
+		2B2C1EC71ADBC74700BFAE3A /* OrientationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrientationEditorViewController.swift; path = ../../Pod/Classes/OrientationEditorViewController.swift; sourceTree = "<group>"; };
+		2B2C1EC91ADBC83600BFAE3A /* ImageCaptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCaptionButton.swift; path = ../../Pod/Classes/ImageCaptionButton.swift; sourceTree = "<group>"; };
+		2B2C1ECB1ADBF53400BFAE3A /* CropEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CropEditorViewController.swift; path = ../../Pod/Classes/CropEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2B2C1ECD1ADBF91E00BFAE3A /* FocusEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FocusEditorViewController.swift; path = ../../Pod/Classes/FocusEditorViewController.swift; sourceTree = "<group>"; };
 		2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageExtension.swift; path = ../../Pod/Classes/UIImageExtension.swift; sourceTree = "<group>"; };
-		2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EditorViewController.swift; path = ../../Pod/Classes/EditorViewController.swift; sourceTree = "<group>"; };
+		2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = EditorViewController.swift; path = ../../Pod/Classes/EditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2B845DC31AC16ECE00806B4E /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Sticker.swift; path = ../../Pod/Classes/Sticker.swift; sourceTree = "<group>"; };
-		2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickerFilter.swift; path = ../../Pod/Classes/IMGLYStickerFilter.swift; sourceTree = "<group>"; };
+		2B845DC51AC1999000806B4E /* StickerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickerFilter.swift; path = ../../Pod/Classes/StickerFilter.swift; sourceTree = "<group>"; };
+		2B8DB0AE1AE145A000309956 /* TextEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextEditorViewController.swift; path = ../../Pod/Classes/TextEditorViewController.swift; sourceTree = "<group>"; };
+		2B8DB0B01AE1472800309956 /* GradientViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GradientViewDelegate.swift; path = ../../pod/classes/GradientViewDelegate.swift; sourceTree = "<group>"; };
 		2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SliderEditorViewController.swift; path = ../../Pod/Classes/SliderEditorViewController.swift; sourceTree = "<group>"; };
 		2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CIFilterExtension.swift; path = ../../Pod/Classes/CIFilterExtension.swift; sourceTree = "<group>"; };
 		2B8EDAA41AAF015600AB75B5 /* Soft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Soft.png; path = "../../Pod/Filter Responses/Soft.png"; sourceTree = "<group>"; };
@@ -432,11 +358,11 @@
 		2B8EDACC1AAF015600AB75B5 /* NoGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = NoGreen.png; path = "../../Pod/Filter Responses/NoGreen.png"; sourceTree = "<group>"; };
 		2B8EDACE1AAF015600AB75B5 /* Neat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Neat.png; path = "../../Pod/Filter Responses/Neat.png"; sourceTree = "<group>"; };
 		2B8EDACF1AAF015600AB75B5 /* Plate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Plate.png; path = "../../Pod/Filter Responses/Plate.png"; sourceTree = "<group>"; };
-		2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ButtonCollectionViewCell.swift; path = ../../Pod/Classes/ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
-		2BAF27191AD434D200DCF891 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ActionButton.swift; path = ../../Pod/Classes/ActionButton.swift; sourceTree = "<group>"; };
+		2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ButtonCollectionViewCell.swift; path = ../../Pod/Classes/ButtonCollectionViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BAF27191AD434D200DCF891 /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ActionButton.swift; path = ../../Pod/Classes/ActionButton.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BAF271B1AD439D800DCF891 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = Localizable.strings; path = ../../Pod/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BAF271D1AD5350800DCF891 /* NavigationAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NavigationAnimationController.swift; path = ../../Pod/Classes/NavigationAnimationController.swift; sourceTree = "<group>"; };
-		2BAF271F1AD5385600DCF891 /* FilterEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterEditorViewController.swift; path = ../../Pod/Classes/FilterEditorViewController.swift; sourceTree = "<group>"; };
+		2BAF271F1AD5385600DCF891 /* FilterEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = FilterEditorViewController.swift; path = ../../Pod/Classes/FilterEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BAF27211AD538A700DCF891 /* MainEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = MainEditorViewController.swift; path = ../../pod/Classes/MainEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BAF27231AD5402B00DCF891 /* SubEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = SubEditorViewController.swift; path = ../../Pod/Classes/SubEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BB1892F1AAEF9800027FBB5 /* imglyKit.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = imglyKit.podspec; path = ../imglyKit.podspec; sourceTree = "<group>"; };
@@ -447,18 +373,80 @@
 		2BDF4E851AD56A040085B82F /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FilterCollectionViewCell.swift; path = ../../Pod/Classes/FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BDF4E871AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageCaptionCollectionViewCell.swift; path = ../../Pod/Classes/ImageCaptionCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BDF4E891AD58E1E0085B82F /* FilterSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = FilterSelectionController.swift; path = ../../Pod/Classes/FilterSelectionController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BrightnessEditorViewController.swift; path = ../../Pod/Classes/BrightnessEditorViewController.swift; sourceTree = "<group>"; };
-		2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ContrastEditorViewController.swift; path = ../../Pod/Classes/ContrastEditorViewController.swift; sourceTree = "<group>"; };
+		2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BrightnessEditorViewController.swift; path = ../../Pod/Classes/BrightnessEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ContrastEditorViewController.swift; path = ../../Pod/Classes/ContrastEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SaturationEditorViewController.swift; path = ../../Pod/Classes/SaturationEditorViewController.swift; sourceTree = "<group>"; };
 		2BE149531AD8717100EBA673 /* StickersEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StickersEditorViewController.swift; path = ../../Pod/Classes/StickersEditorViewController.swift; sourceTree = "<group>"; };
-		2BEB59011AD8007700AC0468 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraViewController.swift; path = ../../Pod/Classes/CameraViewController.swift; sourceTree = "<group>"; };
-		2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYCropDialogView.xib; path = ../../Pod/XIBs/IMGLYCropDialogView.xib; sourceTree = "<group>"; };
-		2BFE55E71AAF05DD007B8CFD /* IMGLYFocusDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYFocusDialogView.xib; path = ../../Pod/XIBs/IMGLYFocusDialogView.xib; sourceTree = "<group>"; };
-		2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYOrientationDialogView.xib; path = ../../Pod/XIBs/IMGLYOrientationDialogView.xib; sourceTree = "<group>"; };
-		2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = IMGLYTextDialogView.xib; path = ../../Pod/XIBs/IMGLYTextDialogView.xib; sourceTree = "<group>"; };
-		858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYBoxGradientView.swift; path = ../../Pod/Classes/IMGLYBoxGradientView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		858866F270F03960F9115907 /* IMGLYCircleGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYCircleGradientView.swift; path = ../../Pod/Classes/IMGLYCircleGradientView.swift; sourceTree = "<group>"; };
-		858867A642AC2B451E2B1A4F /* IMGLYGradientViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYGradientViewDelegate.swift; path = ../../Pod/Classes/IMGLYGradientViewDelegate.swift; sourceTree = "<group>"; };
+		2BEB59011AD8007700AC0468 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CameraViewController.swift; path = ../../Pod/Classes/CameraViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA051AE1631800595AFA /* A15Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = A15Filter.swift; path = ../../pod/classes/A15Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA061AE1631800595AFA /* AD1920Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AD1920Filter.swift; path = ../../pod/classes/AD1920Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA071AE1631800595AFA /* AncientFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = AncientFilter.swift; path = ../../pod/classes/AncientFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA081AE1631800595AFA /* BleachedBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BleachedBlueFilter.swift; path = ../../pod/classes/BleachedBlueFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA091AE1631800595AFA /* BleachedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BleachedFilter.swift; path = ../../pod/classes/BleachedFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0A1AE1631800595AFA /* BlissfulBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BlissfulBlueFilter.swift; path = ../../pod/classes/BlissfulBlueFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0B1AE1631800595AFA /* BluesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BluesFilter.swift; path = ../../pod/classes/BluesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0C1AE1631800595AFA /* BlueShadowsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BlueShadowsFilter.swift; path = ../../pod/classes/BlueShadowsFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0D1AE1631800595AFA /* BreezeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BreezeFilter.swift; path = ../../pod/classes/BreezeFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0E1AE1631800595AFA /* BWFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BWFilter.swift; path = ../../pod/classes/BWFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA0F1AE1631800595AFA /* CelsiusFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CelsiusFilter.swift; path = ../../pod/classes/CelsiusFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA101AE1631800595AFA /* ChestFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ChestFilter.swift; path = ../../pod/classes/ChestFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA111AE1631800595AFA /* ClassicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ClassicFilter.swift; path = ../../pod/classes/ClassicFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA121AE1631800595AFA /* ColorfulFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ColorfulFilter.swift; path = ../../pod/classes/ColorfulFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA131AE1631800595AFA /* CoolFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CoolFilter.swift; path = ../../pod/classes/CoolFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA141AE1631800595AFA /* CottonCandyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CottonCandyFilter.swift; path = ../../pod/classes/CottonCandyFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA151AE1631800595AFA /* CreamyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CreamyFilter.swift; path = ../../pod/classes/CreamyFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA161AE1631800595AFA /* EightiesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = EightiesFilter.swift; path = ../../pod/classes/EightiesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA171AE1631800595AFA /* ElderFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = ElderFilter.swift; path = ../../pod/classes/ElderFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA181AE1631800595AFA /* EppHighContrastFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = EppHighContrastFilter.swift; path = ../../pod/classes/EppHighContrastFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA191AE1631800595AFA /* EveningFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = EveningFilter.swift; path = ../../pod/classes/EveningFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA1A1AE1631800595AFA /* FallFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = FallFilter.swift; path = ../../pod/classes/FallFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA1B1AE1631800595AFA /* FixieFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = FixieFilter.swift; path = ../../pod/classes/FixieFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4BA1C1AE1631800595AFA /* FoodFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FoodFilter.swift; path = ../../pod/classes/FoodFilter.swift; sourceTree = "<group>"; };
+		2BF4BA1D1AE1631800595AFA /* FridgeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FridgeFilter.swift; path = ../../pod/classes/FridgeFilter.swift; sourceTree = "<group>"; };
+		2BF4BA1E1AE1631800595AFA /* FrontFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FrontFilter.swift; path = ../../pod/classes/FrontFilter.swift; sourceTree = "<group>"; };
+		2BF4BA1F1AE1631800595AFA /* GlamFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GlamFilter.swift; path = ../../pod/classes/GlamFilter.swift; sourceTree = "<group>"; };
+		2BF4BA201AE1631800595AFA /* GobblinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GobblinFilter.swift; path = ../../pod/classes/GobblinFilter.swift; sourceTree = "<group>"; };
+		2BF4BA211AE1631800595AFA /* HighcarbFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HighcarbFilter.swift; path = ../../pod/classes/HighcarbFilter.swift; sourceTree = "<group>"; };
+		2BF4BA221AE1631800595AFA /* K1Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = K1Filter.swift; path = ../../pod/classes/K1Filter.swift; sourceTree = "<group>"; };
+		2BF4BA231AE1631800595AFA /* K2Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = K2Filter.swift; path = ../../pod/classes/K2Filter.swift; sourceTree = "<group>"; };
+		2BF4BA241AE1631800595AFA /* K6Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = K6Filter.swift; path = ../../pod/classes/K6Filter.swift; sourceTree = "<group>"; };
+		2BF4BA251AE1631800595AFA /* KDynamicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KDynamicFilter.swift; path = ../../pod/classes/KDynamicFilter.swift; sourceTree = "<group>"; };
+		2BF4BA261AE1631800595AFA /* KeenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeenFilter.swift; path = ../../pod/classes/KeenFilter.swift; sourceTree = "<group>"; };
+		2BF4BA271AE1631800595AFA /* LeninFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeninFilter.swift; path = ../../pod/classes/LeninFilter.swift; sourceTree = "<group>"; };
+		2BF4BA281AE1631800595AFA /* LithoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LithoFilter.swift; path = ../../pod/classes/LithoFilter.swift; sourceTree = "<group>"; };
+		2BF4BA291AE1631800595AFA /* Lomo100Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Lomo100Filter.swift; path = ../../pod/classes/Lomo100Filter.swift; sourceTree = "<group>"; };
+		2BF4BA2A1AE1631800595AFA /* LomoFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LomoFilter.swift; path = ../../pod/classes/LomoFilter.swift; sourceTree = "<group>"; };
+		2BF4BA2B1AE1631800595AFA /* LucidFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LucidFilter.swift; path = ../../pod/classes/LucidFilter.swift; sourceTree = "<group>"; };
+		2BF4BA2C1AE1631800595AFA /* MellowFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MellowFilter.swift; path = ../../pod/classes/MellowFilter.swift; sourceTree = "<group>"; };
+		2BF4BA2D1AE1631800595AFA /* Mono3200Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Mono3200Filter.swift; path = ../../pod/classes/Mono3200Filter.swift; sourceTree = "<group>"; };
+		2BF4BA2E1AE1631800595AFA /* NeatFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NeatFilter.swift; path = ../../pod/classes/NeatFilter.swift; sourceTree = "<group>"; };
+		2BF4BA2F1AE1631800595AFA /* NepalFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NepalFilter.swift; path = ../../pod/classes/NepalFilter.swift; sourceTree = "<group>"; };
+		2BF4BA301AE1631800595AFA /* NoGreenFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoGreenFilter.swift; path = ../../pod/classes/NoGreenFilter.swift; sourceTree = "<group>"; };
+		2BF4BA311AE1631800595AFA /* OrchidFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OrchidFilter.swift; path = ../../pod/classes/OrchidFilter.swift; sourceTree = "<group>"; };
+		2BF4BA321AE1631800595AFA /* PaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PaleFilter.swift; path = ../../pod/classes/PaleFilter.swift; sourceTree = "<group>"; };
+		2BF4BA331AE1631800595AFA /* PitchedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PitchedFilter.swift; path = ../../pod/classes/PitchedFilter.swift; sourceTree = "<group>"; };
+		2BF4BA341AE1631800595AFA /* PlateFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PlateFilter.swift; path = ../../pod/classes/PlateFilter.swift; sourceTree = "<group>"; };
+		2BF4BA351AE1631800595AFA /* Pola669Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pola669Filter.swift; path = ../../pod/classes/Pola669Filter.swift; sourceTree = "<group>"; };
+		2BF4BA361AE1631800595AFA /* PreludeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreludeFilter.swift; path = ../../pod/classes/PreludeFilter.swift; sourceTree = "<group>"; };
+		2BF4BA371AE1631800595AFA /* Pro400Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pro400Filter.swift; path = ../../pod/classes/Pro400Filter.swift; sourceTree = "<group>"; };
+		2BF4BA381AE1631800595AFA /* QuoziFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = QuoziFilter.swift; path = ../../pod/classes/QuoziFilter.swift; sourceTree = "<group>"; };
+		2BF4BA391AE1631800595AFA /* SepiaHighFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SepiaHighFilter.swift; path = ../../pod/classes/SepiaHighFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3A1AE1631800595AFA /* SettledFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettledFilter.swift; path = ../../pod/classes/SettledFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3B1AE1631800595AFA /* SeventiesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SeventiesFilter.swift; path = ../../pod/classes/SeventiesFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3C1AE1631800595AFA /* SinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SinFilter.swift; path = ../../pod/classes/SinFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3D1AE1631800595AFA /* SoftFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoftFilter.swift; path = ../../pod/classes/SoftFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3E1AE1631800595AFA /* SteelFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SteelFilter.swift; path = ../../pod/classes/SteelFilter.swift; sourceTree = "<group>"; };
+		2BF4BA3F1AE1631800595AFA /* SummerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SummerFilter.swift; path = ../../pod/classes/SummerFilter.swift; sourceTree = "<group>"; };
+		2BF4BA401AE1631800595AFA /* SunnyFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SunnyFilter.swift; path = ../../pod/classes/SunnyFilter.swift; sourceTree = "<group>"; };
+		2BF4BA411AE1631900595AFA /* SunsetFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SunsetFilter.swift; path = ../../pod/classes/SunsetFilter.swift; sourceTree = "<group>"; };
+		2BF4BA421AE1631900595AFA /* TenderFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TenderFilter.swift; path = ../../pod/classes/TenderFilter.swift; sourceTree = "<group>"; };
+		2BF4BA431AE1631900595AFA /* TexasFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TexasFilter.swift; path = ../../pod/classes/TexasFilter.swift; sourceTree = "<group>"; };
+		2BF4BA441AE1631900595AFA /* TwilightFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TwilightFilter.swift; path = ../../pod/classes/TwilightFilter.swift; sourceTree = "<group>"; };
+		2BF4BA451AE1631900595AFA /* WinterFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WinterFilter.swift; path = ../../pod/classes/WinterFilter.swift; sourceTree = "<group>"; };
+		2BF4BA461AE1631900595AFA /* X400Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = X400Filter.swift; path = ../../pod/classes/X400Filter.swift; sourceTree = "<group>"; };
+		2BF4BA891AE1652C00595AFA /* PolaSXFIlter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PolaSXFIlter.swift; path = ../../pod/classes/PolaSXFIlter.swift; sourceTree = "<group>"; };
+		858865DAF993BC37B19A894B /* BoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BoxGradientView.swift; path = ../../Pod/Classes/BoxGradientView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		858866F270F03960F9115907 /* CircleGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = CircleGradientView.swift; path = ../../Pod/Classes/CircleGradientView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -483,36 +471,27 @@
 			isa = PBXGroup;
 			children = (
 				2BAF27191AD434D200DCF891 /* ActionButton.swift */,
+				858865DAF993BC37B19A894B /* BoxGradientView.swift */,
 				2BE1494D1AD8649E00EBA673 /* BrightnessEditorViewController.swift */,
 				2BAF27171AD427DF00DCF891 /* ButtonCollectionViewCell.swift */,
+				858866F270F03960F9115907 /* CircleGradientView.swift */,
+				0917BB461AA8FCE0002A028E /* ColorButton.swift */,
 				2BE1494F1AD86AAE00EBA673 /* ContrastEditorViewController.swift */,
+				2B2C1ECB1ADBF53400BFAE3A /* CropEditorViewController.swift */,
+				095C22671A9B70570036EBC6 /* CropRectComponent.swift */,
 				2B3A52FE1AD40DB300FD4B74 /* EditorViewController.swift */,
 				2BDF4E851AD56A040085B82F /* FilterCollectionViewCell.swift */,
 				2BAF271F1AD5385600DCF891 /* FilterEditorViewController.swift */,
 				2BDF4E891AD58E1E0085B82F /* FilterSelectionController.swift */,
+				2B2C1ECD1ADBF91E00BFAE3A /* FocusEditorViewController.swift */,
+				09FB55521AAA07A0005DE191 /* FontSelectorView.swift */,
+				2B8DB0B01AE1472800309956 /* GradientViewDelegate.swift */,
+				2B2C1EC91ADBC83600BFAE3A /* ImageCaptionButton.swift */,
 				2BDF4E871AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift */,
-				858865DAF993BC37B19A894B /* IMGLYBoxGradientView.swift */,
-				858866F270F03960F9115907 /* IMGLYCircleGradientView.swift */,
-				0917BB461AA8FCE0002A028E /* IMGLYColorButton.swift */,
-				09FAEA1E1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift */,
-				09FAEA1C1A8FA11000F6FF05 /* IMGLYCropDialogView.swift */,
-				2BFE55E41AAF05DD007B8CFD /* IMGLYCropDialogView.xib */,
-				098720B51A90E459002449FB /* IMGLYCropDialogViewController.swift */,
-				095C22671A9B70570036EBC6 /* IMGLYCropRectComponent.swift */,
-				09F694731A95FF7700F16FDC /* IMGLYFocusDialogView.swift */,
-				2BFE55E71AAF05DD007B8CFD /* IMGLYFocusDialogView.xib */,
-				09F694751A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift */,
-				09FB55521AAA07A0005DE191 /* IMGLYFontSelector.swift */,
-				858867A642AC2B451E2B1A4F /* IMGLYGradientViewDelegate.swift */,
-				099406DB1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift */,
-				2BFE55E91AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib */,
-				099406DF1A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift */,
-				0917BB441AA8FA93002A028E /* IMGLYTextColorSelectorView.swift */,
-				0917BB3C1AA8F5F3002A028E /* IMGLYTextDialogView.swift */,
-				2BFE55EA1AAF05DD007B8CFD /* IMGLYTextDialogView.xib */,
-				0917BB3A1AA8F5E4002A028E /* IMGLYTextDialogViewController.swift */,
 				2BAF27211AD538A700DCF891 /* MainEditorViewController.swift */,
 				2BAF271D1AD5350800DCF891 /* NavigationAnimationController.swift */,
+				2B18432B1ADC1186005B27CC /* NavigationController.swift */,
+				2B2C1EC71ADBC74700BFAE3A /* OrientationEditorViewController.swift */,
 				2BE149511AD86ABC00EBA673 /* SaturationEditorViewController.swift */,
 				2B8ED9391AD861C700694AA7 /* SliderEditorViewController.swift */,
 				2B845DC31AC16ECE00806B4E /* Sticker.swift */,
@@ -520,6 +499,8 @@
 				2B009CA21AC05981006B0012 /* StickersDataSource.swift */,
 				2BE149531AD8717100EBA673 /* StickersEditorViewController.swift */,
 				2BAF27231AD5402B00DCF891 /* SubEditorViewController.swift */,
+				0917BB441AA8FA93002A028E /* TextColorSelectorView.swift */,
+				2B8DB0AE1AE145A000309956 /* TextEditorViewController.swift */,
 			);
 			name = Editor;
 			sourceTree = "<group>";
@@ -527,17 +508,17 @@
 		099199681A7943EB005FD9D6 /* Processing */ = {
 			isa = PBXGroup;
 			children = (
+				09D0B2791A825768008782FB /* ContrastBrightnessSaturationFilter.swift */,
+				09B13A511A9382CC00AF85D1 /* CropFilter.swift */,
+				09FB55811AAE24D3005DE191 /* EnhancementFilter.swift */,
 				2BDF4E831AD5550B0085B82F /* FixedFilterStack.swift */,
-				09D0B2791A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift */,
-				09B13A511A9382CC00AF85D1 /* IMGLYCropFilter.swift */,
-				09FB55811AAE24D3005DE191 /* IMGLYEnhancementFilter.swift */,
-				098BEAE71A83D5630073DB2F /* IMGLYNoneFilter.swift */,
-				0972FDD61A9786B900F464DF /* IMGLYOrientationCropFilter.swift */,
-				09D0B26F1A81250C008782FB /* IMGLYPhotoProcessor.swift */,
-				2B845DC51AC1999000806B4E /* IMGLYStickerFilter.swift */,
-				0917BB421AA8F7B0002A028E /* IMGLYTextFilter.swift */,
-				099C31621AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift */,
+				098BEAE71A83D5630073DB2F /* NoneFilter.swift */,
+				0972FDD61A9786B900F464DF /* OrientationCropFilter.swift */,
+				09D0B26F1A81250C008782FB /* PhotoProcessor.swift */,
 				099199691A7943F8005FD9D6 /* ResponseFilters */,
+				2B845DC51AC1999000806B4E /* StickerFilter.swift */,
+				0917BB421AA8F7B0002A028E /* TextFilter.swift */,
+				099C31621AA5E942007D42C2 /* TiltshiftFilter.swift */,
 			);
 			name = Processing;
 			sourceTree = "<group>";
@@ -545,76 +526,76 @@
 		099199691A7943F8005FD9D6 /* ResponseFilters */ = {
 			isa = PBXGroup;
 			children = (
-				09286CA71AB0580700B4EF99 /* IMGLYA15Filter.swift */,
-				09286C8B1AB0575700B4EF99 /* IMGLYAD1920Filter.swift */,
-				0902D74B1A9D334A00952EFC /* IMGLYAncientFilter.swift */,
-				0902D7591A9D343000952EFC /* IMGLYBleachedBlueFilter.swift */,
-				0902D7571A9D342000952EFC /* IMGLYBleachedFilter.swift */,
-				0902D73D1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift */,
-				0902D7171A9D2E2400952EFC /* IMGLYBluesFilter.swift */,
-				0902D7271A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift */,
-				09286C7D1AB056E800B4EF99 /* IMGLYBreezeFilter.swift */,
-				09286C891AB0574500B4EF99 /* IMGLYBWFilter.swift */,
-				09286C991AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift */,
-				09286C811AB0570000B4EF99 /* IMGLYChestFilter.swift */,
-				0902D7631A9D34A900952EFC /* IMGLYClassicFilter.swift */,
-				0902D7311A9D2FEC00952EFC /* IMGLYColorfulFilter.swift */,
-				0902D7431A9D321400952EFC /* IMGLYCoolFilter.swift */,
-				0902D72B1A9D2F6100952EFC /* IMGLYCottonCandyFilter.swift */,
-				0902D7511A9D33B200952EFC /* IMGLYCreamyFilter.swift */,
-				0902D72D1A9D2F8900952EFC /* IMGLYEightiesFilter.swift */,
-				0902D71B1A9D2E5D00952EFC /* IMGLYElderFilter.swift */,
-				0902D7251A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift */,
-				0902D71F1A9D2E8C00952EFC /* IMGLYEveningFilter.swift */,
-				0902D75B1A9D344100952EFC /* IMGLYFallFilter.swift */,
-				09286C851AB0572800B4EF99 /* IMGLYFixieFilter.swift */,
-				09286C951AB0579500B4EF99 /* IMGLYFoodFilter.swift */,
-				09286C7B1AB056D800B4EF99 /* IMGLYFridgeFilter.swift */,
-				09286C831AB0571300B4EF99 /* IMGLYFrontFilter.swift */,
-				09286C971AB057A200B4EF99 /* IMGLYGlamFilter.swift */,
-				09286C9F1AB057D000B4EF99 /* IMGLYGobblinFilter.swift */,
-				0902D7291A9D2F0A00952EFC /* IMGLYHighcarbFilter.swift */,
-				09286C731AB0568C00B4EF99 /* IMGLYK1Filter.swift */,
-				09286C751AB0569A00B4EF99 /* IMGLYK2Filter.swift */,
-				09286C771AB056A800B4EF99 /* IMGLYK6Filter.swift */,
-				09286C791AB056C500B4EF99 /* IMGLYKDynamicFilter.swift */,
-				0902D7531A9D33DD00952EFC /* IMGLYKeenFilter.swift */,
-				09286C8D1AB0576400B4EF99 /* IMGLYLeninFilter.swift */,
-				0902D7451A9D323400952EFC /* IMGLYLithoFilter.swift */,
-				0902D7331A9D302800952EFC /* IMGLYLomo100Filter.swift */,
-				09286C9D1AB057C400B4EF99 /* IMGLYLomoFilter.swift */,
-				0902D74F1A9D339200952EFC /* IMGLYLucidFilter.swift */,
-				09286CA31AB057EC00B4EF99 /* IMGLYMellowFilter.swift */,
-				0902D7371A9D306700952EFC /* IMGLYMono3200Filter.swift */,
-				0902D7671A9D34E400952EFC /* IMGLYNeatFilter.swift */,
-				0902D7491A9D328200952EFC /* IMGLYNepalFilter.swift */,
-				0991996A1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift */,
-				09286C7F1AB056F400B4EF99 /* IMGLYOrchidFilter.swift */,
-				0902D73F1A9D30E400952EFC /* IMGLYPaleFilter.swift */,
-				0902D74D1A9D336200952EFC /* IMGLYPitchedFilter.swift */,
-				0902D7691A9D350400952EFC /* IMGLYPlateFilter.swift */,
-				09286C911AB0577E00B4EF99 /* IMGLYPola669Filter.swift */,
-				09286C931AB0578900B4EF99 /* IMGLYPolaSXFIlter.swift */,
-				0902D7471A9D326700952EFC /* IMGLYPreludeFilter.swift */,
-				0902D7351A9D303800952EFC /* IMGLYPro400Filter.swift */,
-				09286C8F1AB0577100B4EF99 /* IMGLYQuoziFilter.swift */,
-				09E48BD61A790D8300678F8A /* ResponseFilter.swift */,
-				0902D75F1A9D347800952EFC /* IMGLYSepiaHighFilter.swift */,
-				0902D7411A9D31F700952EFC /* IMGLYSettledFilter.swift */,
-				0902D7231A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift */,
-				09286CA11AB057DE00B4EF99 /* IMGLYSinFilter.swift */,
-				0902D7191A9D2E3C00952EFC /* IMGLYSoftFilter.swift */,
-				09AD7CC41A7A43A900728A78 /* IMGLYSteelFilter.swift */,
-				0902D7611A9D349200952EFC /* IMGLYSummerFilter.swift */,
-				09286CA51AB057FB00B4EF99 /* IMGLYSunnyFilter.swift */,
-				0902D71D1A9D2E7500952EFC /* IMGLYSunsetFilter.swift */,
-				0902D7551A9D33F500952EFC /* IMGLYTenderFilter.swift */,
-				09286C9B1AB057B800B4EF99 /* IMGLYTexasFilter.swift */,
-				0902D72F1A9D2FCD00952EFC /* IMGLYTwilightFilter.swift */,
-				0902D75D1A9D345B00952EFC /* IMGLYWinterFilter.swift */,
-				09286C871AB0573900B4EF99 /* IMGLYX400Filter.swift */,
+				2BF4BA051AE1631800595AFA /* A15Filter.swift */,
+				2BF4BA061AE1631800595AFA /* AD1920Filter.swift */,
+				2BF4BA071AE1631800595AFA /* AncientFilter.swift */,
+				2BF4BA081AE1631800595AFA /* BleachedBlueFilter.swift */,
+				2BF4BA091AE1631800595AFA /* BleachedFilter.swift */,
+				2BF4BA0A1AE1631800595AFA /* BlissfulBlueFilter.swift */,
+				2BF4BA0B1AE1631800595AFA /* BluesFilter.swift */,
+				2BF4BA0C1AE1631800595AFA /* BlueShadowsFilter.swift */,
+				2BF4BA0D1AE1631800595AFA /* BreezeFilter.swift */,
+				2BF4BA0E1AE1631800595AFA /* BWFilter.swift */,
+				2BF4BA0F1AE1631800595AFA /* CelsiusFilter.swift */,
+				2BF4BA101AE1631800595AFA /* ChestFilter.swift */,
+				2BF4BA111AE1631800595AFA /* ClassicFilter.swift */,
+				2BF4BA121AE1631800595AFA /* ColorfulFilter.swift */,
+				2BF4BA131AE1631800595AFA /* CoolFilter.swift */,
+				2BF4BA141AE1631800595AFA /* CottonCandyFilter.swift */,
+				2BF4BA151AE1631800595AFA /* CreamyFilter.swift */,
+				2BF4BA161AE1631800595AFA /* EightiesFilter.swift */,
+				2BF4BA171AE1631800595AFA /* ElderFilter.swift */,
+				2BF4BA181AE1631800595AFA /* EppHighContrastFilter.swift */,
+				2BF4BA191AE1631800595AFA /* EveningFilter.swift */,
+				2BF4BA1A1AE1631800595AFA /* FallFilter.swift */,
+				2BF4BA1B1AE1631800595AFA /* FixieFilter.swift */,
+				2BF4BA1C1AE1631800595AFA /* FoodFilter.swift */,
+				2BF4BA1D1AE1631800595AFA /* FridgeFilter.swift */,
+				2BF4BA1E1AE1631800595AFA /* FrontFilter.swift */,
+				2BF4BA1F1AE1631800595AFA /* GlamFilter.swift */,
+				2BF4BA201AE1631800595AFA /* GobblinFilter.swift */,
+				2BF4BA211AE1631800595AFA /* HighcarbFilter.swift */,
+				2BF4BA221AE1631800595AFA /* K1Filter.swift */,
+				2BF4BA231AE1631800595AFA /* K2Filter.swift */,
+				2BF4BA241AE1631800595AFA /* K6Filter.swift */,
+				2BF4BA251AE1631800595AFA /* KDynamicFilter.swift */,
+				2BF4BA261AE1631800595AFA /* KeenFilter.swift */,
+				2BF4BA271AE1631800595AFA /* LeninFilter.swift */,
+				2BF4BA281AE1631800595AFA /* LithoFilter.swift */,
+				2BF4BA291AE1631800595AFA /* Lomo100Filter.swift */,
+				2BF4BA2A1AE1631800595AFA /* LomoFilter.swift */,
+				2BF4BA2B1AE1631800595AFA /* LucidFilter.swift */,
 				09AD7CC11A7A37B800728A78 /* LUTToNSDataConverter.h */,
 				09AD7CC21A7A37B800728A78 /* LUTToNSDataConverter.m */,
+				2BF4BA2C1AE1631800595AFA /* MellowFilter.swift */,
+				2BF4BA2D1AE1631800595AFA /* Mono3200Filter.swift */,
+				2BF4BA2E1AE1631800595AFA /* NeatFilter.swift */,
+				2BF4BA2F1AE1631800595AFA /* NepalFilter.swift */,
+				2BF4BA301AE1631800595AFA /* NoGreenFilter.swift */,
+				2BF4BA311AE1631800595AFA /* OrchidFilter.swift */,
+				2BF4BA321AE1631800595AFA /* PaleFilter.swift */,
+				2BF4BA331AE1631800595AFA /* PitchedFilter.swift */,
+				2BF4BA341AE1631800595AFA /* PlateFilter.swift */,
+				2BF4BA351AE1631800595AFA /* Pola669Filter.swift */,
+				2BF4BA891AE1652C00595AFA /* PolaSXFIlter.swift */,
+				2BF4BA361AE1631800595AFA /* PreludeFilter.swift */,
+				2BF4BA371AE1631800595AFA /* Pro400Filter.swift */,
+				2BF4BA381AE1631800595AFA /* QuoziFilter.swift */,
+				09E48BD61A790D8300678F8A /* ResponseFilter.swift */,
+				2BF4BA391AE1631800595AFA /* SepiaHighFilter.swift */,
+				2BF4BA3A1AE1631800595AFA /* SettledFilter.swift */,
+				2BF4BA3B1AE1631800595AFA /* SeventiesFilter.swift */,
+				2BF4BA3C1AE1631800595AFA /* SinFilter.swift */,
+				2BF4BA3D1AE1631800595AFA /* SoftFilter.swift */,
+				2BF4BA3E1AE1631800595AFA /* SteelFilter.swift */,
+				2BF4BA3F1AE1631800595AFA /* SummerFilter.swift */,
+				2BF4BA401AE1631800595AFA /* SunnyFilter.swift */,
+				2BF4BA411AE1631900595AFA /* SunsetFilter.swift */,
+				2BF4BA421AE1631900595AFA /* TenderFilter.swift */,
+				2BF4BA431AE1631900595AFA /* TexasFilter.swift */,
+				2BF4BA441AE1631900595AFA /* TwilightFilter.swift */,
+				2BF4BA451AE1631900595AFA /* WinterFilter.swift */,
+				2BF4BA461AE1631900595AFA /* X400Filter.swift */,
 			);
 			name = ResponseFilters;
 			sourceTree = "<group>";
@@ -643,14 +624,14 @@
 			isa = PBXGroup;
 			children = (
 				2BB189321AAEFCA60027FBB5 /* Assets.xcassets */,
-				2BAF271B1AD439D800DCF891 /* Localizable.strings */,
 				09A2DA8D1A84CC98004E9BA6 /* Camera */,
 				093687AF1A8544A9002E1E7D /* Editor */,
 				09CC87711A877BE70094EAC5 /* Extensions */,
 				2B8EDAA31AAF014500AB75B5 /* Filter Responses */,
+				09FB557D1AADAEA2005DE191 /* FontImporter.swift */,
 				09FB55541AAA58CF005DE191 /* Fonts */,
-				09FB557D1AADAEA2005DE191 /* IMGLYFontImporter.swift */,
-				09D0B26D1A81232E008782FB /* IMGLYInstanceFactory.swift */,
+				09D0B26D1A81232E008782FB /* InstanceFactory.swift */,
+				2BAF271B1AD439D800DCF891 /* Localizable.strings */,
 				099199681A7943EB005FD9D6 /* Processing */,
 			);
 			path = imglyKit;
@@ -685,8 +666,8 @@
 		09A2DA8D1A84CC98004E9BA6 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				091A4F511A7E612800F43565 /* CameraController.swift */,
 				2BEB59011AD8007700AC0468 /* CameraViewController.swift */,
-				091A4F511A7E612800F43565 /* IMGLYCameraController.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -696,6 +677,7 @@
 			children = (
 				2B8EDA471AAF003D00AB75B5 /* CIFilterExtension.swift */,
 				2B3565B21AD3DCE10030F197 /* UIImageExtension.swift */,
+				2B18432D1ADC1AB9005B27CC /* UIImageViewExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -910,7 +892,6 @@
 				2B8EDAE41AAF015600AB75B5 /* BlissfulBlue.png in Resources */,
 				2B8EDAF81AAF015700AB75B5 /* Classic.png in Resources */,
 				2B8EDAF31AAF015700AB75B5 /* Fall.png in Resources */,
-				2BFE55EE1AAF05DD007B8CFD /* IMGLYFocusDialogView.xib in Resources */,
 				2B8EDADD1AAF015600AB75B5 /* Colorful.png in Resources */,
 				2B8EDAE21AAF015600AB75B5 /* Mono3200.png in Resources */,
 				2B8EDAD11AAF015600AB75B5 /* Soft.png in Resources */,
@@ -945,7 +926,6 @@
 				2B8EDAF61AAF015700AB75B5 /* SepiaHigh.png in Resources */,
 				2B8EDAEF1AAF015700AB75B5 /* Creamy.png in Resources */,
 				09FB557A1AAA5910005DE191 /* vevey.ttf in Resources */,
-				2BFE55F11AAF05DD007B8CFD /* IMGLYTextDialogView.xib in Resources */,
 				09286CAA1AB05E0C00B4EF99 /* A15.png in Resources */,
 				09FB55781AAA5910005DE191 /* Muncie.ttf in Resources */,
 				09FB55771AAA5910005DE191 /* mensch.ttf in Resources */,
@@ -954,8 +934,6 @@
 				2B8EDAD51AAF015600AB75B5 /* Evening.png in Resources */,
 				09286CC61AB05F9600B4EF99 /* Breeze.png in Resources */,
 				09286CCB1AB05F9600B4EF99 /* Food.png in Resources */,
-				2BFE55EB1AAF05DD007B8CFD /* IMGLYCropDialogView.xib in Resources */,
-				2BFE55F01AAF05DD007B8CFD /* IMGLYOrientationDialogView.xib in Resources */,
 				09A174431A6FC99800F22012 /* Images.xcassets in Resources */,
 				2B8EDAD81AAF015600AB75B5 /* Seventies.png in Resources */,
 				09FB556C1AAA5910005DE191 /* ValenciaRegular.otf in Resources */,
@@ -1014,125 +992,123 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0902D7461A9D323400952EFC /* IMGLYLithoFilter.swift in Sources */,
-				0902D7481A9D326700952EFC /* IMGLYPreludeFilter.swift in Sources */,
+				2BF4BA4E1AE1631900595AFA /* BlueShadowsFilter.swift in Sources */,
 				2B3565B31AD3DCE10030F197 /* UIImageExtension.swift in Sources */,
-				09286CA81AB0580700B4EF99 /* IMGLYA15Filter.swift in Sources */,
-				0902D71E1A9D2E7500952EFC /* IMGLYSunsetFilter.swift in Sources */,
-				091A4F521A7E612800F43565 /* IMGLYCameraController.swift in Sources */,
-				0902D71A1A9D2E3C00952EFC /* IMGLYSoftFilter.swift in Sources */,
-				09286C9A1AB057AD00B4EF99 /* IMGLYCelsiusFilter.swift in Sources */,
+				2BF4BA511AE1631900595AFA /* CelsiusFilter.swift in Sources */,
+				2BF4BA6F1AE1631900595AFA /* Mono3200Filter.swift in Sources */,
+				091A4F521A7E612800F43565 /* CameraController.swift in Sources */,
+				2B18432C1ADC1186005B27CC /* NavigationController.swift in Sources */,
+				2BF4BA661AE1631900595AFA /* K6Filter.swift in Sources */,
 				2BDF4E881AD56A8B0085B82F /* ImageCaptionCollectionViewCell.swift in Sources */,
+				2BF4BA551AE1631900595AFA /* CoolFilter.swift in Sources */,
 				2BE149541AD8717100EBA673 /* StickersEditorViewController.swift in Sources */,
-				0902D7521A9D33B200952EFC /* IMGLYCreamyFilter.swift in Sources */,
-				0902D74E1A9D336200952EFC /* IMGLYPitchedFilter.swift in Sources */,
 				2BAF271A1AD434D200DCF891 /* ActionButton.swift in Sources */,
-				0917BB471AA8FCE0002A028E /* IMGLYColorButton.swift in Sources */,
-				0902D74C1A9D334A00952EFC /* IMGLYAncientFilter.swift in Sources */,
-				0972FDD71A9786B900F464DF /* IMGLYOrientationCropFilter.swift in Sources */,
-				0917BB451AA8FA93002A028E /* IMGLYTextColorSelectorView.swift in Sources */,
+				2BF4BA751AE1631900595AFA /* PitchedFilter.swift in Sources */,
+				2BF4BA5E1AE1631900595AFA /* FoodFilter.swift in Sources */,
+				2BF4BA731AE1631900595AFA /* OrchidFilter.swift in Sources */,
+				2BF4BA6D1AE1631900595AFA /* LucidFilter.swift in Sources */,
+				2BF4BA881AE1631900595AFA /* X400Filter.swift in Sources */,
+				2BF4BA7C1AE1631900595AFA /* SettledFilter.swift in Sources */,
+				0917BB471AA8FCE0002A028E /* ColorButton.swift in Sources */,
+				2BF4BA4F1AE1631900595AFA /* BreezeFilter.swift in Sources */,
+				0972FDD71A9786B900F464DF /* OrientationCropFilter.swift in Sources */,
+				2BF4BA8A1AE1652C00595AFA /* PolaSXFIlter.swift in Sources */,
+				0917BB451AA8FA93002A028E /* TextColorSelectorView.swift in Sources */,
+				2BF4BA701AE1631900595AFA /* NeatFilter.swift in Sources */,
+				2BF4BA501AE1631900595AFA /* BWFilter.swift in Sources */,
 				2BAF27221AD538A700DCF891 /* MainEditorViewController.swift in Sources */,
-				0902D75E1A9D345B00952EFC /* IMGLYWinterFilter.swift in Sources */,
-				099C31631AA5E942007D42C2 /* IMGLYTiltshiftFilter.swift in Sources */,
+				2BF4BA861AE1631900595AFA /* TwilightFilter.swift in Sources */,
+				099C31631AA5E942007D42C2 /* TiltshiftFilter.swift in Sources */,
+				2BF4BA5B1AE1631900595AFA /* EveningFilter.swift in Sources */,
+				2BF4BA681AE1631900595AFA /* KeenFilter.swift in Sources */,
+				2BF4BA7A1AE1631900595AFA /* QuoziFilter.swift in Sources */,
 				2BAF271E1AD5350800DCF891 /* NavigationAnimationController.swift in Sources */,
-				09286C921AB0577E00B4EF99 /* IMGLYPola669Filter.swift in Sources */,
-				0902D72A1A9D2F0A00952EFC /* IMGLYHighcarbFilter.swift in Sources */,
-				09F694741A95FF7700F16FDC /* IMGLYFocusDialogView.swift in Sources */,
-				0902D7361A9D303800952EFC /* IMGLYPro400Filter.swift in Sources */,
-				0902D72C1A9D2F6100952EFC /* IMGLYCottonCandyFilter.swift in Sources */,
-				0902D7341A9D302800952EFC /* IMGLYLomo100Filter.swift in Sources */,
-				09286CA01AB057D000B4EF99 /* IMGLYGobblinFilter.swift in Sources */,
-				09286C761AB0569A00B4EF99 /* IMGLYK2Filter.swift in Sources */,
-				0902D7601A9D347800952EFC /* IMGLYSepiaHighFilter.swift in Sources */,
-				2B845DC61AC1999000806B4E /* IMGLYStickerFilter.swift in Sources */,
+				2B845DC61AC1999000806B4E /* StickerFilter.swift in Sources */,
 				2BE149521AD86ABC00EBA673 /* SaturationEditorViewController.swift in Sources */,
-				0917BB3D1AA8F5F3002A028E /* IMGLYTextDialogView.swift in Sources */,
-				09286C7A1AB056C500B4EF99 /* IMGLYKDynamicFilter.swift in Sources */,
+				2BF4BA491AE1631900595AFA /* AncientFilter.swift in Sources */,
+				2BF4BA521AE1631900595AFA /* ChestFilter.swift in Sources */,
 				2BDF4E841AD5550B0085B82F /* FixedFilterStack.swift in Sources */,
-				09286C981AB057A200B4EF99 /* IMGLYGlamFilter.swift in Sources */,
-				0917BB3B1AA8F5E4002A028E /* IMGLYTextDialogViewController.swift in Sources */,
-				0902D75C1A9D344100952EFC /* IMGLYFallFilter.swift in Sources */,
-				0902D7321A9D2FEC00952EFC /* IMGLYColorfulFilter.swift in Sources */,
-				0902D7401A9D30E400952EFC /* IMGLYPaleFilter.swift in Sources */,
+				2BF4BA7B1AE1631900595AFA /* SepiaHighFilter.swift in Sources */,
+				2BF4BA471AE1631900595AFA /* A15Filter.swift in Sources */,
+				2BF4BA531AE1631900595AFA /* ClassicFilter.swift in Sources */,
+				2B2C1ECA1ADBC83700BFAE3A /* ImageCaptionButton.swift in Sources */,
+				2B8DB0B11AE1472800309956 /* GradientViewDelegate.swift in Sources */,
+				2BF4BA6E1AE1631900595AFA /* MellowFilter.swift in Sources */,
+				2BF4BA651AE1631900595AFA /* K2Filter.swift in Sources */,
 				2BAF27201AD5385600DCF891 /* FilterEditorViewController.swift in Sources */,
-				0902D7301A9D2FCD00952EFC /* IMGLYTwilightFilter.swift in Sources */,
-				0902D75A1A9D343000952EFC /* IMGLYBleachedBlueFilter.swift in Sources */,
-				09286C941AB0578900B4EF99 /* IMGLYPolaSXFIlter.swift in Sources */,
-				09FAEA1F1A8FA19B00F6FF05 /* IMGLYContainerViewHelper.swift in Sources */,
-				0902D76A1A9D350400952EFC /* IMGLYPlateFilter.swift in Sources */,
-				09286CA61AB057FB00B4EF99 /* IMGLYSunnyFilter.swift in Sources */,
-				09286C8A1AB0574500B4EF99 /* IMGLYBWFilter.swift in Sources */,
-				0902D7381A9D306700952EFC /* IMGLYMono3200Filter.swift in Sources */,
-				095C22681A9B70570036EBC6 /* IMGLYCropRectComponent.swift in Sources */,
-				0902D7641A9D34A900952EFC /* IMGLYClassicFilter.swift in Sources */,
-				0917BB431AA8F7B0002A028E /* IMGLYTextFilter.swift in Sources */,
-				0902D74A1A9D328200952EFC /* IMGLYNepalFilter.swift in Sources */,
-				09286C7C1AB056D800B4EF99 /* IMGLYFridgeFilter.swift in Sources */,
-				09AD7CC51A7A43A900728A78 /* IMGLYSteelFilter.swift in Sources */,
-				09FB55821AAE24D3005DE191 /* IMGLYEnhancementFilter.swift in Sources */,
+				2BF4BA631AE1631900595AFA /* HighcarbFilter.swift in Sources */,
+				2BF4BA5C1AE1631900595AFA /* FallFilter.swift in Sources */,
+				2BF4BA7E1AE1631900595AFA /* SinFilter.swift in Sources */,
+				2BF4BA741AE1631900595AFA /* PaleFilter.swift in Sources */,
+				2B18432E1ADC1AB9005B27CC /* UIImageViewExtension.swift in Sources */,
+				095C22681A9B70570036EBC6 /* CropRectComponent.swift in Sources */,
+				2BF4BA5F1AE1631900595AFA /* FridgeFilter.swift in Sources */,
+				0917BB431AA8F7B0002A028E /* TextFilter.swift in Sources */,
+				2B2C1ECC1ADBF53400BFAE3A /* CropEditorViewController.swift in Sources */,
+				09FB55821AAE24D3005DE191 /* EnhancementFilter.swift in Sources */,
+				2BF4BA871AE1631900595AFA /* WinterFilter.swift in Sources */,
+				2BF4BA561AE1631900595AFA /* CottonCandyFilter.swift in Sources */,
+				2BF4BA791AE1631900595AFA /* Pro400Filter.swift in Sources */,
 				2BAF27181AD427DF00DCF891 /* ButtonCollectionViewCell.swift in Sources */,
-				09286C8C1AB0575700B4EF99 /* IMGLYAD1920Filter.swift in Sources */,
+				2BF4BA691AE1631900595AFA /* LeninFilter.swift in Sources */,
+				2BF4BA851AE1631900595AFA /* TexasFilter.swift in Sources */,
+				2BF4BA761AE1631900595AFA /* PlateFilter.swift in Sources */,
 				2B009CA31AC05981006B0012 /* StickersDataSource.swift in Sources */,
-				0902D7181A9D2E2400952EFC /* IMGLYBluesFilter.swift in Sources */,
-				0902D7421A9D31F700952EFC /* IMGLYSettledFilter.swift in Sources */,
-				09FAEA1D1A8FA11000F6FF05 /* IMGLYCropDialogView.swift in Sources */,
-				09286C861AB0572800B4EF99 /* IMGLYFixieFilter.swift in Sources */,
-				099406DC1A975E8700B87DD0 /* IMGLYOrientationDialogView.swift in Sources */,
-				0902D7241A9D2EBE00952EFC /* IMGLYSeventiesFilter.swift in Sources */,
-				09286C901AB0577100B4EF99 /* IMGLYQuoziFilter.swift in Sources */,
-				0902D7281A9D2EEC00952EFC /* IMGLYBlueShadowsFilter.swift in Sources */,
 				09E48BD71A790D8300678F8A /* ResponseFilter.swift in Sources */,
-				09286C741AB0568C00B4EF99 /* IMGLYK1Filter.swift in Sources */,
-				0991996B1A79444B005FD9D6 /* IMGLYNoGreenFilter.swift in Sources */,
-				099406E01A975EBC00B87DD0 /* IMGLYOrientationDialogViewController.swift in Sources */,
-				09286C9C1AB057B800B4EF99 /* IMGLYTexasFilter.swift in Sources */,
-				09286C8E1AB0576400B4EF99 /* IMGLYLeninFilter.swift in Sources */,
+				2BF4BA621AE1631900595AFA /* GobblinFilter.swift in Sources */,
 				2BEB59021AD8007700AC0468 /* CameraViewController.swift in Sources */,
+				2BF4BA4B1AE1631900595AFA /* BleachedFilter.swift in Sources */,
 				2BDF4E8A1AD58E1E0085B82F /* FilterSelectionController.swift in Sources */,
-				0902D72E1A9D2F8900952EFC /* IMGLYEightiesFilter.swift in Sources */,
-				09286CA41AB057EC00B4EF99 /* IMGLYMellowFilter.swift in Sources */,
-				0902D7681A9D34E400952EFC /* IMGLYNeatFilter.swift in Sources */,
-				0902D71C1A9D2E5D00952EFC /* IMGLYElderFilter.swift in Sources */,
-				0902D7201A9D2E8C00952EFC /* IMGLYEveningFilter.swift in Sources */,
-				09FB55531AAA07A0005DE191 /* IMGLYFontSelector.swift in Sources */,
+				09FB55531AAA07A0005DE191 /* FontSelectorView.swift in Sources */,
 				09A1743C1A6FC99800F22012 /* AppDelegate.swift in Sources */,
-				09D0B27A1A825768008782FB /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */,
+				2BF4BA4D1AE1631900595AFA /* BluesFilter.swift in Sources */,
+				2B2C1ECE1ADBF91E00BFAE3A /* FocusEditorViewController.swift in Sources */,
+				09D0B27A1A825768008782FB /* ContrastBrightnessSaturationFilter.swift in Sources */,
+				2BF4BA591AE1631900595AFA /* ElderFilter.swift in Sources */,
+				2BF4BA581AE1631900595AFA /* EightiesFilter.swift in Sources */,
+				2BF4BA481AE1631900595AFA /* AD1920Filter.swift in Sources */,
+				2BF4BA771AE1631900595AFA /* Pola669Filter.swift in Sources */,
+				2BF4BA541AE1631900595AFA /* ColorfulFilter.swift in Sources */,
 				2B8EDA481AAF003D00AB75B5 /* CIFilterExtension.swift in Sources */,
-				0902D7541A9D33DD00952EFC /* IMGLYKeenFilter.swift in Sources */,
-				09D0B26E1A81232E008782FB /* IMGLYInstanceFactory.swift in Sources */,
+				2BF4BA7F1AE1631900595AFA /* SoftFilter.swift in Sources */,
+				09D0B26E1A81232E008782FB /* InstanceFactory.swift in Sources */,
+				2BF4BA6C1AE1631900595AFA /* LomoFilter.swift in Sources */,
+				2BF4BA811AE1631900595AFA /* SummerFilter.swift in Sources */,
 				2B8ED93A1AD861C700694AA7 /* SliderEditorViewController.swift in Sources */,
+				2BF4BA641AE1631900595AFA /* K1Filter.swift in Sources */,
+				2BF4BA7D1AE1631900595AFA /* SeventiesFilter.swift in Sources */,
 				2BE149501AD86AAE00EBA673 /* ContrastEditorViewController.swift in Sources */,
-				09FB557E1AADAEA2005DE191 /* IMGLYFontImporter.swift in Sources */,
-				09B13A521A9382CC00AF85D1 /* IMGLYCropFilter.swift in Sources */,
-				09286C881AB0573900B4EF99 /* IMGLYX400Filter.swift in Sources */,
-				09286C801AB056F400B4EF99 /* IMGLYOrchidFilter.swift in Sources */,
-				09F694761A95FF9300F16FDC /* IMGLYFocusDialogViewController.swift in Sources */,
-				098720B61A90E459002449FB /* IMGLYCropDialogViewController.swift in Sources */,
+				09FB557E1AADAEA2005DE191 /* FontImporter.swift in Sources */,
+				2BF4BA5D1AE1631900595AFA /* FixieFilter.swift in Sources */,
+				09B13A521A9382CC00AF85D1 /* CropFilter.swift in Sources */,
+				2BF4BA571AE1631900595AFA /* CreamyFilter.swift in Sources */,
+				2BF4BA831AE1631900595AFA /* SunsetFilter.swift in Sources */,
 				2BE1494E1AD8649E00EBA673 /* BrightnessEditorViewController.swift in Sources */,
-				0902D7441A9D321400952EFC /* IMGLYCoolFilter.swift in Sources */,
-				09286C9E1AB057C400B4EF99 /* IMGLYLomoFilter.swift in Sources */,
-				09286C821AB0570000B4EF99 /* IMGLYChestFilter.swift in Sources */,
+				2BF4BA801AE1631900595AFA /* SteelFilter.swift in Sources */,
+				2BF4BA4C1AE1631900595AFA /* BlissfulBlueFilter.swift in Sources */,
+				2B8DB0AF1AE145A000309956 /* TextEditorViewController.swift in Sources */,
 				09AD7CC31A7A37B800728A78 /* LUTToNSDataConverter.m in Sources */,
-				0902D7621A9D349200952EFC /* IMGLYSummerFilter.swift in Sources */,
-				0902D7261A9D2EDC00952EFC /* IMGLYEppHighContrastFilter.swift in Sources */,
-				09286C781AB056A800B4EF99 /* IMGLYK6Filter.swift in Sources */,
 				2BDF4E861AD56A040085B82F /* FilterCollectionViewCell.swift in Sources */,
-				09D0B2701A81250C008782FB /* IMGLYPhotoProcessor.swift in Sources */,
-				09286C841AB0571300B4EF99 /* IMGLYFrontFilter.swift in Sources */,
-				0902D7581A9D342000952EFC /* IMGLYBleachedFilter.swift in Sources */,
+				2B2C1EC81ADBC74700BFAE3A /* OrientationEditorViewController.swift in Sources */,
+				09D0B2701A81250C008782FB /* PhotoProcessor.swift in Sources */,
 				2BAF27241AD5402B00DCF891 /* SubEditorViewController.swift in Sources */,
-				0902D7561A9D33F500952EFC /* IMGLYTenderFilter.swift in Sources */,
-				098BEAE81A83D5630073DB2F /* IMGLYNoneFilter.swift in Sources */,
-				09286C961AB0579500B4EF99 /* IMGLYFoodFilter.swift in Sources */,
-				0902D7501A9D339200952EFC /* IMGLYLucidFilter.swift in Sources */,
-				09286CA21AB057DE00B4EF99 /* IMGLYSinFilter.swift in Sources */,
+				098BEAE81A83D5630073DB2F /* NoneFilter.swift in Sources */,
 				2B009C9F1AC05885006B0012 /* StickerCollectionViewCell.swift in Sources */,
-				0902D73E1A9D30BC00952EFC /* IMGLYBlissfulBlueFilter.swift in Sources */,
-				8588683A60159E1C27DAD5D7 /* IMGLYBoxGradientView.swift in Sources */,
-				85886704BD128653D2967B9C /* IMGLYCircleGradientView.swift in Sources */,
-				85886747EE37CE0F22FEFC34 /* IMGLYGradientViewDelegate.swift in Sources */,
+				2BF4BA821AE1631900595AFA /* SunnyFilter.swift in Sources */,
+				2BF4BA711AE1631900595AFA /* NepalFilter.swift in Sources */,
+				8588683A60159E1C27DAD5D7 /* BoxGradientView.swift in Sources */,
+				85886704BD128653D2967B9C /* CircleGradientView.swift in Sources */,
+				2BF4BA6A1AE1631900595AFA /* LithoFilter.swift in Sources */,
+				2BF4BA4A1AE1631900595AFA /* BleachedBlueFilter.swift in Sources */,
+				2BF4BA601AE1631900595AFA /* FrontFilter.swift in Sources */,
+				2BF4BA721AE1631900595AFA /* NoGreenFilter.swift in Sources */,
 				2B845DC41AC16ECE00806B4E /* Sticker.swift in Sources */,
-				09286C7E1AB056E800B4EF99 /* IMGLYBreezeFilter.swift in Sources */,
+				2BF4BA5A1AE1631900595AFA /* EppHighContrastFilter.swift in Sources */,
+				2BF4BA6B1AE1631900595AFA /* Lomo100Filter.swift in Sources */,
+				2BF4BA841AE1631900595AFA /* TenderFilter.swift in Sources */,
+				2BF4BA671AE1631900595AFA /* KDynamicFilter.swift in Sources */,
+				2BF4BA611AE1631900595AFA /* GlamFilter.swift in Sources */,
+				2BF4BA781AE1631900595AFA /* PreludeFilter.swift in Sources */,
 				2B3A52FF1AD40DB300FD4B74 /* EditorViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

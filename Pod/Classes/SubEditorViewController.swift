@@ -42,7 +42,7 @@ public typealias PreviewImageGenerationCompletionBlock = () -> (Void)
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
-                let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                let processedImage = PhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.previewImageView.image = processedImage

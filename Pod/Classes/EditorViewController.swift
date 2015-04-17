@@ -60,6 +60,22 @@ import UIKit
         configureViewConstraints()
     }
     
+    public override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    public override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    public override func shouldAutorotate() -> Bool {
+        return false
+    }
+    
+    public override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
+        return .Portrait
+    }
+    
     // MARK: - Configuration
     
     private func configureNavigationItems() {

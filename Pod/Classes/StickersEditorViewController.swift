@@ -33,10 +33,10 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         
         for view in stickersClipView.subviews as! [UIView] {
             if let view = view as? UIImageView {
-                let stickerFilter = IMGLYInstanceFactory.sharedInstance.stickerFilter()
+                let stickerFilter = InstanceFactory.sharedInstance.stickerFilter()
                 stickerFilter.sticker = view.image
-                stickerFilter.position = CGPoint(x: view.frame.origin.x / CGRectGetWidth(stickersClipView.frame), y: view.frame.origin.y / CGRectGetHeight(stickersClipView.frame))
-                stickerFilter.size = CGSize(width: view.frame.size.width / CGRectGetWidth(stickersClipView.frame), height: view.frame.size.height / CGRectGetHeight(stickersClipView.frame))
+                stickerFilter.position = CGPoint(x: view.frame.origin.x / stickersClipView.frame.size.width, y: view.frame.origin.y / stickersClipView.frame.size.height)
+                stickerFilter.size = CGSize(width: view.frame.size.width / stickersClipView.frame.size.width, height: view.frame.size.height / stickersClipView.frame.size.height)
                 fixedFilterStack.stickerFilters.append(stickerFilter)
                 addedStickers = true
             }
@@ -68,27 +68,7 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        // calculate frame of image within imageView
-        let imageSize = scaledImageSize()
-        let imageFrame = CGRect(x: CGRectGetMidX(self.previewImageView.frame) - imageSize.width / 2, y: CGRectGetMidY(self.previewImageView.frame) - imageSize.height / 2, width: imageSize.width, height: imageSize.height)
-        
-        stickersClipView.frame = imageFrame
-    }
-    
-    // MARK: - Helpers
-    
-    private func scaledImageSize() -> CGSize {
-        if let image = previewImageView.image {
-            var widthRatio = previewImageView.bounds.size.width / image.size.width
-            var heightRatio = previewImageView.bounds.size.height / image.size.height
-            var scale = min(widthRatio, heightRatio)
-            var size = CGSizeZero
-            size.width = scale * image.size.width
-            size.height = scale * image.size.height
-            return size
-        } else {
-            return CGSizeZero
-        }
+        stickersClipView.frame = view.convertRect(previewImageView.imageFrame, fromView: previewImageView)
     }
     
     // MARK: - Configuration
