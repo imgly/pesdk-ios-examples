@@ -8,8 +8,6 @@
 
 import UIKit
 
-// TODO: Refactor Instance Factory
-
 @objc public enum EditorResult: Int {
     case Done
     case Cancel
@@ -221,22 +219,26 @@ private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
     // MARK: - EditorViewController
     
     override public func tappedDone(sender: UIBarButtonItem?) {
-        highResolutionImage = highResolutionImage?.imageRotatedToMatchOrientation
-        var filteredHighResolutionImage: UIImage?
-        
-        if let highResolutionImage = self.highResolutionImage {
-            filteredHighResolutionImage = PhotoProcessor.processWithUIImage(highResolutionImage, filters: fixedFilterStack.activeFilters)
+        if let completionBlock = completionBlock {
+            highResolutionImage = highResolutionImage?.imageRotatedToMatchOrientation
+            var filteredHighResolutionImage: UIImage?
+            
+            if let highResolutionImage = self.highResolutionImage {
+                filteredHighResolutionImage = PhotoProcessor.processWithUIImage(highResolutionImage, filters: fixedFilterStack.activeFilters)
+            }
+            
+            completionBlock(.Done, filteredHighResolutionImage)
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
         }
-        
-        dismissViewControllerAnimated(true, completion: {
-            self.completionBlock?(.Done, filteredHighResolutionImage)
-        })
     }
     
     @objc private func cancelTapped(sender: UIBarButtonItem?) {
-        dismissViewControllerAnimated(true, completion: {
-            self.completionBlock?(.Cancel, nil)
-        })
+        if let completionBlock = completionBlock {
+            completionBlock(.Cancel, nil)
+        } else {
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
 }
 

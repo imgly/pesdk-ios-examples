@@ -83,6 +83,8 @@ private let MinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         navigationItem.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
+        InstanceFactory.sharedInstance.fontImporter().importFonts()
+        
         configureColorSelectorView()
         configureTextClipView()
         configureTextField()

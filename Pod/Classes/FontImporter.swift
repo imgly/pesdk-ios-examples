@@ -28,7 +28,7 @@ import CoreText
         }
     }
     
-    private func importFontsWithExtension(ext:String) {
+    private func importFontsWithExtension(ext: String) {
         let paths = NSBundle(forClass: self.dynamicType).pathsForResourcesOfType(ext, inDirectory: nil)
         for fontPath in paths as! [String] {
             let data: NSData? = NSFileManager.defaultManager().contentsAtPath(fontPath)

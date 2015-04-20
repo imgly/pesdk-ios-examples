@@ -122,6 +122,7 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
 
     override public func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.blackColor()
         
         configureViewHierarchy()
         configureViewConstraints()
@@ -402,8 +403,10 @@ public typealias CameraCompletionBlock = (UIImage?) -> (Void)
     // MARK: - Completion
     private func editorCompletionBlock(result: EditorResult, image: UIImage?) {
         if let image = image where result == EditorResult.Done {
-            UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil);
+            UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
         }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @objc private func image(image: UIImage, didFinishSavingWithError: NSError, contextInfo:UnsafePointer<Void>) {

@@ -9,8 +9,6 @@
 import Foundation
 import GLKit
 
-// TODO: Fix missing fonts
-
 /**
   A singleton that is out to create objects. It is used within the SDK to 
   create filters, views, viewcontrollers and such.
