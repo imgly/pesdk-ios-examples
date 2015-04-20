@@ -10,7 +10,7 @@ import UIKit
 
 public extension UIImageView {
     // calculate frame of image within imageView
-    var imageFrame: CGRect {
+    var imgly_imageFrame: CGRect {
         let imageSize: CGSize
         
         if let image = image {

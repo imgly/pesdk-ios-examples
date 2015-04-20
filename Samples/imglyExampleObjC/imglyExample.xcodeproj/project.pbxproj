@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2588F0BB7991BD553A0EC60D /* Pods_imglyExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 840B0E835A75F73E3728C31D /* Pods_imglyExample.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		2B1F25611AB6E5E00037C9D2 /* photo-1423439793616-f2aa4356b37e.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 2B1F25601AB6E5E00037C9D2 /* photo-1423439793616-f2aa4356b37e.jpeg */; };
 		2B709D661AB6D9E800AE9592 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B709D651AB6D9E800AE9592 /* main.m */; };
 		2B709D691AB6D9E800AE9592 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B709D681AB6D9E800AE9592 /* AppDelegate.m */; };
@@ -23,6 +24,7 @@
 		2B709D681AB6D9E800AE9592 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		2B709D701AB6D9E800AE9592 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		2B709D731AB6D9E800AE9592 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		840B0E835A75F73E3728C31D /* Pods_imglyExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_imglyExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2588F0BB7991BD553A0EC60D /* Pods_imglyExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +81,7 @@
 		4B2B724A47123E8B96F14684 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				840B0E835A75F73E3728C31D /* Pods_imglyExample.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -89,12 +93,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2B709D831AB6D9E800AE9592 /* Build configuration list for PBXNativeTarget "imglyExample" */;
 			buildPhases = (
-				9C15E258E1F50691E62FA645 /* Check Pods Manifest.lock */,
 				2B709D5C1AB6D9E800AE9592 /* Sources */,
 				2B709D5D1AB6D9E800AE9592 /* Frameworks */,
 				2B709D5E1AB6D9E800AE9592 /* Resources */,
-				AFE5B9AD7665A3F020F1386F /* Embed Pods Frameworks */,
-				8E7991E9A39B8984782B9EE7 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -149,54 +150,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8E7991E9A39B8984782B9EE7 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-imglyExample/Pods-imglyExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C15E258E1F50691E62FA645 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		AFE5B9AD7665A3F020F1386F /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-imglyExample/Pods-imglyExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2B709D5C1AB6D9E800AE9592 /* Sources */ = {

@@ -35,10 +35,10 @@
     __weak IMGLYCameraViewController *weakCameraViewController = cameraViewController;
     
     cameraViewController.completionBlock = ^(UIImage *image) {
-        // Instantiate an IMGLYEditorMainDialogViewController
-        IMGLYEditorMainDialogViewController *editorViewController = [[IMGLYEditorMainDialogViewController alloc] init];
+        // Instantiate an IMGLYMainEditorViewController
+        IMGLYMainEditorViewController *editorViewController = [[IMGLYMainEditorViewController alloc] init];
         
-        // Set the completion block of the IMGLYEditorMainDialogViewController, this will contain the altered image
+        // Set the completion block of the IMGLYMainEditorViewController, this will contain the altered image
         editorViewController.completionBlock = ^(IMGLYEditorResult result, UIImage *image) {
             if (result == IMGLYEditorResultDone) {
                 // This is where you get the altered image
@@ -47,15 +47,22 @@
                 // Optionally save to album
                 UIImageWriteToSavedPhotosAlbum(image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
             }
+            
+            [weakCameraViewController dismissViewControllerAnimated:YES completion:nil];
         };
         
         // Pass the image that was captured by the IMGLYCameraViewController
-        editorViewController.hiResImage = image;
+        editorViewController.highResolutionImage = image;
         // Pass the filter that was selected in the IMGLYCameraViewController
-        editorViewController.initialFilterType = weakCameraViewController.cameraView.filterSelectorView.activeFilterType;
+        editorViewController.initialFilterType = weakCameraViewController.cameraController.effectFilter.filterType;
         
-        // Present the IMGLYEditorMainDialogViewController modally on the IMGLYCameraViewController
-        [weakCameraViewController presentViewController:editorViewController animated:YES completion:nil];
+        // Present the IMGLYMainEditorViewController inside a IMGLYNavigationController modally on the IMGLYCameraViewController
+        IMGLYNavigationController *navigationController = [[IMGLYNavigationController alloc] initWithRootViewController:editorViewController];
+        navigationController.navigationBar.barStyle = UIBarStyleBlack;
+        navigationController.navigationBar.translucent = NO;
+        navigationController.navigationBar.titleTextAttributes = @{ NSForegroundColorAttributeName : [UIColor whiteColor] };
+        
+        [weakCameraViewController presentViewController:navigationController animated:YES completion:nil];
     };
     
     self.window.rootViewController = cameraViewController;
@@ -65,7 +72,7 @@
 }
 
 - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-    [((IMGLYCameraViewController *)self.window.rootViewController).cameraView setLastImageFromRollAsPreview];
+    [((IMGLYCameraViewController *)self.window.rootViewController) setLastImageFromRollAsPreview];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

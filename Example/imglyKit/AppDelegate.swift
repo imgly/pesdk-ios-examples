@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let cameraViewController = CameraViewController()
+        let cameraViewController = IMGLYCameraViewController()
 
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = cameraViewController

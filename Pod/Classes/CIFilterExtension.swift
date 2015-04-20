@@ -13,7 +13,7 @@ import ObjectiveC
 private var displayNameAssociationKey: UInt8 = 0
 
 public extension CIFilter {
-    public func imageInputAttributeKeys() -> [String] {
+    public func imgly_imageInputAttributeKeys() -> [String] {
         // cache the enumerated image input attributes
         var associationKey = "_storedImageInputAttributeKeys"
         var attributes: AnyObject! = objc_getAssociatedObject(self, associationKey);
@@ -32,15 +32,15 @@ public extension CIFilter {
         return attributes as! [String]
     }
     
-    public func imageInputCount() -> Int {
-        return self.imageInputAttributeKeys().count;
+    public func imgly_imageInputCount() -> Int {
+        return self.imgly_imageInputAttributeKeys().count;
     }
     
-    public func isUsableFilter() -> Bool {
+    public func imgly_isUsableFilter() -> Bool {
         return self.name() != "CIColorCube"
     }
     
-    public var displayName: String? {
+    public var imgly_displayName: String? {
         get {
             return objc_getAssociatedObject(self, &displayNameAssociationKey) as? String
         }

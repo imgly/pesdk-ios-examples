@@ -23,7 +23,7 @@ public extension UIImage {
     
     :discussion: The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
     */
-    public func imageResizedToSize(size: CGSize, withInterpolationQuality interpolationQuality: CGInterpolationQuality) -> UIImage? {
+    public func imgly_imageResizedToSize(size: CGSize, withInterpolationQuality interpolationQuality: CGInterpolationQuality) -> UIImage? {
         let drawTransposed: Bool
         
         switch imageOrientation {
@@ -33,12 +33,12 @@ public extension UIImage {
             drawTransposed = false
         }
         
-        let transform = transformForCurrentOrientationTranslatedToSize(size)
+        let transform = imgly_transformForCurrentOrientationTranslatedToSize(size)
         
-        return imageResizedToSize(size, withTransform: transform, drawTransposed: drawTransposed, interpolationQuality: interpolationQuality)
+        return imgly_imageResizedToSize(size, withTransform: transform, drawTransposed: drawTransposed, interpolationQuality: interpolationQuality)
     }
     
-    public var imageRotatedToMatchOrientation: UIImage {
+    public var imgly_imageRotatedToMatchOrientation: UIImage {
         let imageWidth = CGImageGetWidth(self.CGImage)
         let imageHeight = CGImageGetHeight(self.CGImage)
         let imageSize = CGSize(width: imageWidth, height: imageHeight)
@@ -109,7 +109,7 @@ public extension UIImage {
         return imageCopy
     }
     
-    private func transformForCurrentOrientationTranslatedToSize(size: CGSize) -> CGAffineTransform {
+    private func imgly_transformForCurrentOrientationTranslatedToSize(size: CGSize) -> CGAffineTransform {
         var transform = CGAffineTransformIdentity
         
         switch imageOrientation {
@@ -140,7 +140,7 @@ public extension UIImage {
         return transform
     }
     
-    private func imageResizedToSize(size: CGSize, withTransform transform: CGAffineTransform, drawTransposed: Bool, interpolationQuality: CGInterpolationQuality) -> UIImage? {
+    private func imgly_imageResizedToSize(size: CGSize, withTransform transform: CGAffineTransform, drawTransposed: Bool, interpolationQuality: CGInterpolationQuality) -> UIImage? {
         let newRect = CGRectIntegral(CGRect(x: 0, y: 0, width: size.width, height: size.height))
         let transposedRect = CGRect(x: 0, y: 0, width: newRect.size.height, height: newRect.size.width)
         let image = self.CGImage
