@@ -19,8 +19,8 @@ public class IMGLYTextFilter : CIFilter {
     ///  This factor determins the font-size. Its a relative value that is multiplied with the image height
     ///  during the process.
     public var fontScaleFactor = CGFloat(1)
-    /// The relative position of the text within the image.
-    public var position = CGPointZero
+    /// The relative frame of the text within the image.
+    public var frame = CGRect()
     /// The color of the text.
     public var color = UIColor.whiteColor()
     
@@ -55,8 +55,9 @@ public class IMGLYTextFilter : CIFilter {
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height))
+        
         var font = UIFont(name:fontName, size:fontScaleFactor * imageSize.height)
-        text.drawAtPoint(CGPointMake(position.x * imageSize.width, position.y * imageSize.height),
+        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width),
             withAttributes: [NSFontAttributeName:font!, NSForegroundColorAttributeName:color])
         var image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
@@ -71,7 +72,7 @@ extension IMGLYTextFilter: NSCopying {
         copy.text = (text as NSString).copyWithZone(zone) as! String
         copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
         copy.fontScaleFactor = fontScaleFactor
-        copy.position = position
+        copy.frame = frame
         copy.color = color.copyWithZone(zone) as! UIColor
         return copy
     }

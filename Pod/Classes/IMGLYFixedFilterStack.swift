@@ -34,9 +34,8 @@ public class IMGLYFixedFilterStack: NSObject {
     public var stickerFilters = [CIFilter]()
     
     public var activeFilters: [CIFilter] {
-        var activeFilters: [CIFilter] = [enhancementFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
+        var activeFilters: [CIFilter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
         activeFilters += stickerFilters
-        activeFilters.append(orientationCropFilter)
         
         return activeFilters
     }
@@ -52,12 +51,12 @@ extension IMGLYFixedFilterStack: NSCopying {
     public func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = self.dynamicType()
         copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
+        copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
         copy.effectFilter = effectFilter.copyWithZone(zone) as! IMGLYResponseFilter
         copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! IMGLYContrastBrightnessSaturationFilter
         copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! IMGLYTiltshiftFilter
         copy.textFilter = textFilter.copyWithZone(zone) as! IMGLYTextFilter
         copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [CIFilter]
-        copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
         return copy
     }
 }

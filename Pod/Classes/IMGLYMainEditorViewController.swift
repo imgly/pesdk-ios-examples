@@ -222,10 +222,17 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
             var filteredHighResolutionImage: UIImage?
             
             if let highResolutionImage = self.highResolutionImage {
-                filteredHighResolutionImage = IMGLYPhotoProcessor.processWithUIImage(highResolutionImage, filters: fixedFilterStack.activeFilters)
+                sender?.enabled = false
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+                    filteredHighResolutionImage = IMGLYPhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completionBlock(.Done, filteredHighResolutionImage)
+                    }
+                }
+            } else {
+                completionBlock(.Done, filteredHighResolutionImage)
             }
-            
-            completionBlock(.Done, filteredHighResolutionImage)
         } else {
             dismissViewControllerAnimated(true, completion: nil)
         }

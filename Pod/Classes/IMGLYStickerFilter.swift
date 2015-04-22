@@ -14,10 +14,8 @@ public class IMGLYStickerFilter: CIFilter {
     public var inputImage: CIImage?
     /// The sticker that should be rendered.
     public var sticker: UIImage?
-    /// The relative position of the sticker within the image.
-    public var position = CGPointZero
-    /// The relative size of the sticker within the image.
-    public var size = CGSizeZero
+    /// The relative frame of the sticker within the image.
+    public var frame = CGRect()
     
     override init() {
         super.init()
@@ -52,7 +50,8 @@ public class IMGLYStickerFilter: CIFilter {
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height))
 
-        sticker?.drawInRect(CGRect(x: position.x * imageSize.width, y: position.y * imageSize.height, width: size.width * imageSize.width, height: size.height * imageSize.height))
+        let stickerRect = CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width)
+        sticker?.drawInRect(stickerRect)
         var image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext();
         return image
@@ -64,8 +63,7 @@ extension IMGLYStickerFilter: NSCopying {
         let copy = super.copyWithZone(zone) as! IMGLYStickerFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.sticker = sticker
-        copy.position = position
-        copy.size = size
+        copy.frame = frame
         return copy
     }
 }

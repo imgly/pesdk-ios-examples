@@ -30,22 +30,22 @@ public class IMGLYCropFilter : CIFilter {
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage! {
-        get {
-            if inputImage == nil {
-                return CIImage.emptyImage()
-            }
-            var rect = inputImage!.extent()
+        if let inputImage = inputImage {
+            let rect = inputImage.extent()
+            
             // important: CICrop has its coordinate system upside-down
-            // so we need to reverse that 
-            var scaledRect = CGRectMake(cropRect.origin.x * rect.width,
-                rect.height - cropRect.origin.y * rect.height,
-                cropRect.size.width * rect.width,
-                -cropRect.size.height * rect.height)
-            var rectAsVector = CIVector(CGRect: scaledRect)
-            var cropFilter = CIFilter(name: "CICrop")
-            cropFilter.setValue(inputImage!, forKey: kCIInputImageKey)
-            cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
-            return cropFilter.outputImage
+            // so we need to reverse that
+            let scaledRect = CGRect(x: cropRect.origin.x * rect.width,
+                y: rect.height - cropRect.origin.y * rect.height,
+                width: cropRect.size.width * rect.width,
+                height: -cropRect.size.height * rect.height)
+            
+            let croppedImage = inputImage.imageByCroppingToRect(scaledRect)
+            let croppedImageRect = croppedImage.extent()
+            let transformedImage = croppedImage.imageByApplyingTransform(CGAffineTransformMakeTranslation(-1 * croppedImageRect.origin.x, -1 * croppedImageRect.origin.y))
+            return transformedImage
+        } else {
+            return CIImage.emptyImage()
         }
     }
 }

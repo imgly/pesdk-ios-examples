@@ -106,7 +106,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         fixedFilterStack.textFilter.text = textLabel.text ?? ""
         fixedFilterStack.textFilter.color = textColor
         fixedFilterStack.textFilter.fontName = fontName
-        fixedFilterStack.textFilter.position = transformedTextPosition()
+        fixedFilterStack.textFilter.frame = transformedTextFrame()
         fixedFilterStack.textFilter.fontScaleFactor = currentTextSize / previewImageView.imgly_imageFrame.size.height
         
         updatePreviewImageWithCompletion {
@@ -281,11 +281,16 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         textLabel.frame.origin.y += (diffY / 2.0)
     }
     
-    private func transformedTextPosition() -> CGPoint {
-        var position = textLabel.frame.origin
-        position.x = position.x / previewImageView.imgly_imageFrame.size.width
-        position.y = position.y / previewImageView.imgly_imageFrame.size.height
-        return position
+    private func transformedTextFrame() -> CGRect {
+        var origin = textLabel.frame.origin
+        origin.x = origin.x / previewImageView.imgly_imageFrame.size.width
+        origin.y = origin.y / previewImageView.imgly_imageFrame.size.height
+        
+        var size = textLabel.frame.size
+        size.width = size.width / textLabel.frame.size.width
+        size.height = size.height / textLabel.frame.size.height
+        
+        return CGRect(origin: origin, size: size)
     }
 }
 

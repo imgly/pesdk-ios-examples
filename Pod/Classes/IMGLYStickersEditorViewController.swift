@@ -35,8 +35,9 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             if let view = view as? UIImageView {
                 let stickerFilter = IMGLYInstanceFactory.sharedInstance.stickerFilter()
                 stickerFilter.sticker = view.image
-                stickerFilter.position = CGPoint(x: view.frame.origin.x / stickersClipView.frame.size.width, y: view.frame.origin.y / stickersClipView.frame.size.height)
-                stickerFilter.size = CGSize(width: view.frame.size.width / stickersClipView.frame.size.width, height: view.frame.size.height / stickersClipView.frame.size.height)
+                let origin = CGPoint(x: view.frame.origin.x / stickersClipView.frame.size.width, y: view.frame.origin.y / stickersClipView.frame.size.height)
+                let size = CGSize(width: view.frame.size.width / stickersClipView.frame.size.width, height: view.frame.size.height / stickersClipView.frame.size.width)
+                stickerFilter.frame = CGRect(origin: origin, size: size)
                 fixedFilterStack.stickerFilters.append(stickerFilter)
                 addedStickers = true
             }

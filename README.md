@@ -1,4 +1,4 @@
-![img.ly](http://i.imgur.com/fgH1HRt.png)
+![img.ly](http://i.imgur.com/EC8walN.png)
 
 ## img.ly SDK for iOS
 
@@ -10,16 +10,15 @@ img.ly SDK provides tools to create photo applications for iOS with a big variet
 
 ### Features
 
-* 40 stunning build-in filters to choose from.
-* Open-source, need anything? Want to change anything? Go ahead, we provide the full source-code.
+* 40 stunning build in filters to choose from.
+* Open source, need anything? Want to change anything? Go ahead, we provide the full source code.
 * Native code. Our backend is Core Image based, therefore we dodge all the nasty OpenGL problems other frameworks face. Also its easier to add new filters. Just derive from `CIFilter` override the `outputImage` property and you are good to go.
-* Design dialogs directly in Xcode's interface builder. In version two user don't have to dig into code to change colors, icons and what not, just open the nib and change what you want.
-* iPad support. Since version two uses auto-layout, its easy to compile your app for iPhone and iPad. No more ugly nested iPhone app on your iPad.
-* Design filters in photoshop! Before you had to tweak values in code or copy past them from photoshop or your favorite image editor. With our response technology that belongs to the past. Design your filter in photoshop, once you are done apply it onto the provided identity-image. That will 'record' the filter response. Save it, add it as new filter, done !
+* iPad support. Since version two uses auto layout, it's easy to compile your app for iPhone and iPad. No more ugly nested iPhone app on your iPad.
+* Design filters in photoshop! Before you had to tweak values in code or copy & paste them from photoshop or your favorite image editor. With our response technology that is a thing of the past. Design your filter in photoshop, once you are done apply it onto the provided identity image. That will 'record' the filter response. Save it, add it as new filter, done!
 * Swift. Keeping up with time, we used Swift to code the img.ly SDK, leading to leaner easier code.
-* Live-preview, as with version one, filters can be previewed during the camera preview.
+* Live preview, as with version one, filters can be previewed in the camera preview.
 * Low memory footprint, with version two we were able to reduce the memory footprint massively.
-* Non-destructive. Don't like what u did ? No problem, just redo, or even discard it.
+* Non-destructive. Don't like what you did? No problem, just redo or even discard it.
 
 ![Example](http://i.imgur.com/EorDrpS.png)
 
@@ -66,11 +65,8 @@ We strongly recommend that you use CocoaPods for installation. If you decide to 
 
 ### Important
 
-You need Xcode 6.3 Beta 3 to build and run this project. The reason for this is,
-that Apple released Swift 1.2. Using Swift 1.0 would cause the code to break after the next
-release of Xcode.
-The current snapshot isn't final yet. Some things aren't perfect yet. But 
-the major things are done and good to go. Future releases will add more comfort to some things.
+Because we are using Swift 1.2, you need at least Xcode 6.3 to build and run this project. 
+The current snapshot isn't final yet. Some things aren't perfect yet. But the major things are done and good to go. Future releases will add more comfort to some things.
 
 ## Objective-C compatibility
 
@@ -89,61 +85,56 @@ A slightly more complex sample project for this is located [here](https://github
 For more information about Swift and Objective-C interoperability please refer to [Using Swift with Cocoa and Objective-C](https://developer.apple.com/library/ios/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
 
 ## Structure
-The SDK can be subdivided in two part, front-end and back-end.
-We also provided an instance-factory that handles the object generation for you.
-Its class is called `InstanceFactory`. It has a property called `sharedInstance` that 
+
+The SDK can be divided into two parts, frontend and backend.
+We also provided an instance factory that handles the object generation for you.
+Its class is called `IMGLYInstanceFactory`. It has a property called `sharedInstance` that 
 uses the singleton pattern, so it doesn't need to be created every time.
-Besides the views and viewcontrollers, it also has methods to create the different filters, and
-the photo-processor, described below.
+Besides the views and view controllers, it also has methods to create the different filters, and the photo processor described below.
 
 ## Frontend
 
-The frontend part of the SDK contains all the views and view controllers, or generally speaking the UI. The itself consists of two parts. Camera related UI and filter or operation related UI.
+The frontend part of the SDK contains all the views and view controllers, or generally speaking the UI. The frontend itself consists of two parts. Camera related UI and filter or operation related UI.
 
-For the camera UI there is the `CameraViewController`. That controller shows a camera live stream, a filter selector, and  controls to operate the camera settings such as flash, front camera or back camera. 
-After a photo has been taken the `CameraViewController` calls the handed over completion handler, or if none is set, it performs a segue called `ModalEditorNavigationController`, that presents a new view controller.
-That view controller must implement the `EditorMainDialogViewControllerProtocol` protocol. The provided `EditorMainDialogViewController` does so. 
+For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and controls to operate the camera settings such as flash, front camera or back camera. 
+After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it presents a `IMGLYMainEditorViewController` within a `IMGLYNavigationController` modally. 
  
-The `EditorMainDialogViewController` functions as main-dialog. It is connected to sub-dialogs that allow the user to edit an image. The sub-dialogs are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
-These dialogs use a lower resolution image as preview to improve the performance.
+The `IMGLYMainEditorViewController` functions as main editor. It is connected to sub editors that allow the user to edit an image. The sub editors are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
+These dialogs use a lower resolution image as a preview to improve the performance.
 When the user presses the done button of the main dialog, the chosen settings are applied to the full resolution image.
-The `EditorMainDialogViewController` can be used without the `CameraViewController` like so:
+The `IMGLYMainEditorViewController` can be used without the `IMGLYCameraViewController` like so:
 
 ```
 func callEditorViewController() {
-	var editorViewController = EditorMainDialogViewController()
-	editorViewController.hiResImage = image
+	var editorViewController = IMGLYMainEditorViewController()
+	editorViewController.highResolutionImage = image
 	editorViewController.intialFilterType = .None
 	editorViewController.completionBlock = editorCompletionBlock
 }
 	
 ...
 
-func editorCompletionBlock(result: EditorResult, image:UIImage?) {
+func editorCompletionBlock(result: IMGLYEditorResult, image: UIImage?) {
 	...
 }
 ```
-
-Every view controller comes with a dedicated view. That is represented by a code and a xib file.
-The xib file can be altered to match your needs.
 
 The img.ly SDK comes with an example app to demonstrate the simplicity and power of the SDK. 
 
 ## Backend
 
-The backend takes care about the actual image manipulation. The `PhotoProcessor` is the main class, its `processWithCIImage` / `processWithUIImage` methods take an image and an array of `CIFilter` objects and apply the filters to the given image sequentially.
+The backend takes care about the actual image manipulation. The `IMGLYPhotoProcessor` is the main class, its `processWithCIImage` / `processWithUIImage` methods take an image and an array of `CIFilter` objects and apply the filters to the given image sequentially.
 
 The following code filters an image with the steel filter.
 
 ```
-var filter = InstanceFactory.sharedInstance.effectFilterWithType(.Steel)
-var filteredImage = PhotoProcessor.processWithUIImage(image, filters: [filter])
+let filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(.Steel)
+let filteredImage = IMGLYPhotoProcessor.processWithUIImage(image, filters: [filter])
 ```
 
-### Response-filters
+### Response Filters
 
-Response-filters are new in version 2. These enable you to create filters in programs such as photoshop. The main idea behind them is, to take an image that represents the identity function, for 
-the colors in an image, and apply effects on that image.
+Response filters are new in version 2. These enable you to create filters in programs such as photoshop. The main idea behind them is to take an image that represents the identity function, for the colors in an image, and apply effects on that image.
 The resulting image represents the response of the colors to the effect.
 To use the filter in you project you need to:
 
@@ -151,21 +142,21 @@ To use the filter in you project you need to:
    ![identity](http://i.imgur.com/s15Q10X.png)
      
 * Add the resulting image to the `Filter Responses` group in the project. Note: the image must be saved in PNG format.
-* Create a new class that derives from `ResponseFilter`.
+* Create a new class that derives from `IMGLYResponseFilter`.
 * Add a init method that sets the `responseName` property to the filename of the added image.
-* Add a new type to `FilterType`.
+* Add a new type to `IMGLYFilterType`.
 * Add a new case to the `effectFilterWithType` method in the instance factory.
 * Add the new type to the available filters list. 
 
 The framework will take care about the rest, such as preview rendering.
-Here is an example of a response-filter
+Here is an example of a response filter
 
 ```
-class SteelTypeFilter: ResponseFilter {
+class IMGLYSteelTypeFilter: IMGLYResponseFilter {
    	override init() {
        	super.init()
        	self.responseName = "Steel"
-       	self.displayName = "steel"
+       	self.imgly_displayName = "steel"
    	}
     
    	required init(coder aDecoder: NSCoder) {
@@ -178,18 +169,18 @@ class SteelTypeFilter: ResponseFilter {
 }
 ```
 
-### Fixed filter stack
+### Fixed Filter Stack
 
-The `PhotoProcessor` allows to apply any list of filters to an image.
-In order to make the process easier and non-destructive, all the editor dialogs 
-use a fixed-filter-stack. That means that the order of the filters is immutable and
+The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
+In order to make the process easier and non-destructive, all the editor view controllers 
+use a fixed filter stack. That means that the order of the filters is immutable and
 the user just sets the parameters for the distinct filters.
-The input is always the originally take image, and the output image contains all the changes made.
+The input is always the originally taken image and the output image contains all the changes made.
 
 ### Choose available filters
 
 As the example app demonstrates we added MANY filters to choose from.
-To select a set of filter change the `availableFilterList` method of the instance-factory.
+To select a set of filter change the `availableFilterList` method of the instance factory.
 It simply returns an array of filter types. Those will be used inside the framework. 
 
 ### License
