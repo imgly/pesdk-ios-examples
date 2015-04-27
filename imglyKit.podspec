@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
 	s.source_files = 'Pod/Classes/**/*'
 	s.resources = ['Pod/Assets.xcassets', 'Pod/Filter Responses/*.png', 'Pod/Fonts/*', 'Pod/en.lproj/Localizable.strings']
 
-	s.frameworks = 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
+	s.frameworks = 'Accelerate', 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
 end
