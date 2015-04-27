@@ -108,6 +108,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     public var completionBlock: IMGLYEditorCompletionBlock?
     public var initialFilterType = IMGLYFilterType.None
+    public var initialFilterIntensity = NSNumber(double: 0.5)
     public private(set) var fixedFilterStack = IMGLYFixedFilterStack()
     
     private let maxLowResolutionSideLength = CGFloat(800)
@@ -129,6 +130,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         navigationController?.delegate = self
         
         fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)
+        fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
         
         updatePreviewImage()
         configureMenuCollectionView()

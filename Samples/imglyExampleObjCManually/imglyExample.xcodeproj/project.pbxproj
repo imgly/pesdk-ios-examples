@@ -301,7 +301,7 @@
 		2B2EEADB1AE5211800CCC2AB /* IMGLYOrientationCropFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYOrientationCropFilter.swift; sourceTree = "<group>"; };
 		2B2EEADC1AE5211800CCC2AB /* IMGLYOrientationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYOrientationEditorViewController.swift; sourceTree = "<group>"; };
 		2B2EEADD1AE5211800CCC2AB /* IMGLYPaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPaleFilter.swift; sourceTree = "<group>"; };
-		2B2EEADE1AE5211800CCC2AB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPhotoProcessor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2B2EEADE1AE5211800CCC2AB /* IMGLYPhotoProcessor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPhotoProcessor.swift; sourceTree = "<group>"; };
 		2B2EEADF1AE5211800CCC2AB /* IMGLYPitchedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPitchedFilter.swift; sourceTree = "<group>"; };
 		2B2EEAE01AE5211800CCC2AB /* IMGLYPlateFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPlateFilter.swift; sourceTree = "<group>"; };
 		2B2EEAE11AE5211800CCC2AB /* IMGLYPola669Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYPola669Filter.swift; sourceTree = "<group>"; };

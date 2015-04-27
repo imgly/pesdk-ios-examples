@@ -26,6 +26,7 @@ import GLKit
 public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
+    public var inputIntensity = NSNumber(float: 1)
     public let responseName: String
 
     /// Returns the according filter type of the response filter.
@@ -33,9 +34,9 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
         return .None
     }
     
-    private lazy var colorCubeData: NSData? = {
-        return LUTToNSDataConverter.colorCubeDataFromLUT(self.responseName)
-    }()
+    private var colorCubeData: NSData? {
+        return LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
+    }
     
     init(responseName: String) {
         self.responseName = responseName
@@ -52,15 +53,21 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
             return CIImage.emptyImage()
         }
         
-        if colorCubeData == nil {
-            return inputImage
+        var outputImage: CIImage?
+        
+        autoreleasepool {
+            if let colorCubeData = colorCubeData {
+                var filter = CIFilter(name: "CIColorCube")
+                filter.setValue(colorCubeData, forKey: "inputCubeData")
+                filter.setValue(64, forKey: "inputCubeDimension")
+                filter.setValue(inputImage, forKey: kCIInputImageKey)
+                outputImage = filter.outputImage
+            } else {
+                outputImage = inputImage
+            }
         }
         
-        var filter = CIFilter(name: "CIColorCube")
-        filter.setValue(colorCubeData, forKey: "inputCubeData")
-        filter.setValue(64, forKey: "inputCubeDimension")
-        filter.setValue(inputImage, forKey: kCIInputImageKey)
-        return filter.outputImage
+        return outputImage
     }
 }
 
@@ -68,7 +75,7 @@ extension IMGLYResponseFilter: NSCopying {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYResponseFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
-        copy.colorCubeData = colorCubeData?.copyWithZone(zone) as? NSData
+        copy.inputIntensity = inputIntensity
         return copy
     }
 }

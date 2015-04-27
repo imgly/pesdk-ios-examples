@@ -41,8 +41,12 @@ public class IMGLYCropFilter : CIFilter {
                 height: -cropRect.size.height * rect.height)
             
             let croppedImage = inputImage.imageByCroppingToRect(scaledRect)
+            
+            // CICrop does not actually crop the image, but rather hides parts of the image
+            // To actually get the cropped contents only, we have to apply a transform
             let croppedImageRect = croppedImage.extent()
             let transformedImage = croppedImage.imageByApplyingTransform(CGAffineTransformMakeTranslation(-1 * croppedImageRect.origin.x, -1 * croppedImageRect.origin.y))
+            
             return transformedImage
         } else {
             return CIImage.emptyImage()

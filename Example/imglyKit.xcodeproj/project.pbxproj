@@ -138,6 +138,7 @@
 		2BAF27221AD538A700DCF891 /* IMGLYMainEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAF27211AD538A700DCF891 /* IMGLYMainEditorViewController.swift */; };
 		2BAF27241AD5402B00DCF891 /* IMGLYSubEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BAF27231AD5402B00DCF891 /* IMGLYSubEditorViewController.swift */; };
 		2BB189331AAEFCA60027FBB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BB189321AAEFCA60027FBB5 /* Assets.xcassets */; };
+		2BD91C201AE7C451004853F6 /* Identity.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BD91C1F1AE7C451004853F6 /* Identity.png */; };
 		2BDF4E841AD5550B0085B82F /* IMGLYFixedFilterStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E831AD5550B0085B82F /* IMGLYFixedFilterStack.swift */; };
 		2BDF4E861AD56A040085B82F /* IMGLYFilterCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E851AD56A040085B82F /* IMGLYFilterCollectionViewCell.swift */; };
 		2BDF4E881AD56A8B0085B82F /* IMGLYImageCaptionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDF4E871AD56A8B0085B82F /* IMGLYImageCaptionCollectionViewCell.swift */; };
@@ -369,6 +370,7 @@
 		2BB189301AAEF9800027FBB5 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		2BB189311AAEF9800027FBB5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; lineEnding = 0; name = README.md; path = ../README.md; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.markdown; };
 		2BB189321AAEFCA60027FBB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ../../Pod/Assets.xcassets; sourceTree = "<group>"; };
+		2BD91C1F1AE7C451004853F6 /* Identity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Identity.png; path = "../../Pod/Filter Responses/Identity.png"; sourceTree = "<group>"; };
 		2BDF4E831AD5550B0085B82F /* IMGLYFixedFilterStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = IMGLYFixedFilterStack.swift; path = ../../Pod/Classes/IMGLYFixedFilterStack.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BDF4E851AD56A040085B82F /* IMGLYFilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYFilterCollectionViewCell.swift; path = ../../Pod/Classes/IMGLYFilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BDF4E871AD56A8B0085B82F /* IMGLYImageCaptionCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYImageCaptionCollectionViewCell.swift; path = ../../Pod/Classes/IMGLYImageCaptionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -740,6 +742,7 @@
 				09286CB51AB05F9500B4EF99 /* Gobblin.png */,
 				2B8EDAAE1AAF015600AB75B5 /* Highcarb.png */,
 				2B8EDAAC1AAF015600AB75B5 /* HighContrast.png */,
+				2BD91C1F1AE7C451004853F6 /* Identity.png */,
 				09286CB61AB05F9500B4EF99 /* K1.png */,
 				09286CB71AB05F9500B4EF99 /* K2.png */,
 				09286CB81AB05F9500B4EF99 /* K6.png */,
@@ -909,6 +912,7 @@
 				2B8EDAF41AAF015700AB75B5 /* Bleached.png in Resources */,
 				09286CD71AB05F9600B4EF99 /* Orchid.png in Resources */,
 				09286CD91AB05F9600B4EF99 /* PolaSX.png in Resources */,
+				2BD91C201AE7C451004853F6 /* Identity.png in Resources */,
 				09286CD01AB05F9600B4EF99 /* K1.png in Resources */,
 				09FB55751AAA5910005DE191 /* Homestead-Regular.ttf in Resources */,
 				09286CCF1AB05F9600B4EF99 /* Gobblin.png in Resources */,

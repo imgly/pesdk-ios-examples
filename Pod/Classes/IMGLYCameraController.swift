@@ -112,6 +112,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             if previewView != nil {
                 videoPreviewView!.frame = previewView!.bounds
                 previewView!.addSubview(videoPreviewView)
+                previewView!.sendSubviewToBack(videoPreviewView)
             } else {
                 videoPreviewView!.frame = window.bounds
                 window.addSubview(videoPreviewView)

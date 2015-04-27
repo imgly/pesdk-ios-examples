@@ -8,10 +8,65 @@
 
 #import "LUTToNSDataConverter.h"
 #import <UIKit/UIKit.h>
+#import <Accelerate/Accelerate.h>
 
 static const int kDimension = 64;
+static NSData *identityLUT;
 
 @implementation LUTToNSDataConverter
+
++ (nullable NSData *)colorCubeDataFromLUTNamed:(nonnull NSString *)name interpolatedWithIdentityLUTNamed:(nonnull NSString *)identityName withIntensity:(float)intensity cacheIdentityLUT:(BOOL)shouldCache {
+    if (intensity < 0 || intensity > 1) {
+        return nil;
+    }
+    
+    NSData *interpolatedLUT;
+    
+    @autoreleasepool {
+        NSData *lut = [self colorCubeDataFromLUT:name];
+        if (!lut) {
+            return nil;
+        }
+        
+        NSData *identity;
+        if (!shouldCache) {
+            identity = [self colorCubeDataFromLUT:identityName];
+        } else {
+            if (identityLUT != nil) {
+                identity = identityLUT;
+            } else {
+                identityLUT = [self colorCubeDataFromLUT:identityName];
+                identity = identityLUT;
+            }
+        }
+        
+        if (!identity) {
+            return nil;
+        }
+        
+        if (lut.length != identity.length) {
+            return nil;
+        }
+        
+        NSUInteger size = lut.length;
+        
+        const float *lutData = (const float *)lut.bytes;
+        const float *identityData = (const float *)identity.bytes;
+        
+        float *data = malloc(size);
+        vDSP_vsbsm(lutData, 1, identityData, 1, &intensity, data, 1, size / sizeof(float));
+        vDSP_vadd(data, 1, identityData, 1, data, 1, size / sizeof(float));
+        
+        // This is basically the Accelerate Framework's way of doing this:
+        //        for (int i = 0; i < size / sizeof(float); i++) {
+        //            data[i] = (lutData[i] - identityData[i]) * intensity + identityData[i];
+        //        }
+        
+        interpolatedLUT = [NSData dataWithBytesNoCopy:data length:size freeWhenDone:YES];
+    }
+    
+    return interpolatedLUT;
+}
 
 /*
  This method reads an LUT image and converts it to a cube color space representation.
@@ -35,7 +90,7 @@ static const int kDimension = 64;
         return nil;
     }
     
-    unsigned char *bitmap = [self createRGBABitmapFromImage:image.CGImage];
+    float *bitmap = [self createRGBABitmapFromImage:image.CGImage];
     
     if (bitmap == NULL) {
         return nil;
@@ -49,21 +104,12 @@ static const int kDimension = 64;
         for (int y = 0; y < kDimension; y++) {
             int tmp = z;
             for (int col = 0; col < columnNum; col++) {
-                for (int x = 0; x < kDimension; x++) {
-                    float r = (unsigned int)bitmap[bitmapOffset];
-                    float g = (unsigned int)bitmap[bitmapOffset + 1];
-                    float b = (unsigned int)bitmap[bitmapOffset + 2];
-                    float a = (unsigned int)bitmap[bitmapOffset + 3];
-                    
-                    NSInteger dataOffset = (z * kDimension * kDimension + y * kDimension + x) * 4;
-                    
-                    data[dataOffset] = r / 255.0;
-                    data[dataOffset + 1] = g / 255.0;
-                    data[dataOffset + 2] = b / 255.0;
-                    data[dataOffset + 3] = a / 255.0;
-                    
-                    bitmapOffset += 4;
-                }
+                NSInteger dataOffset = (z * kDimension * kDimension + y * kDimension) * 4;
+                
+                const float divider = 255.0;
+                vDSP_vsdiv(&bitmap[bitmapOffset], 1, &divider, &data[dataOffset], 1, kDimension * 4);
+                
+                bitmapOffset += kDimension * 4;
                 z++;
             }
             z = tmp;
@@ -74,9 +120,9 @@ static const int kDimension = 64;
     free(bitmap);
     
     return [NSData dataWithBytesNoCopy:data length:size freeWhenDone:YES];
-  }
+}
 
-+ (unsigned char *)createRGBABitmapFromImage:(CGImageRef)image {
++ (float *)createRGBABitmapFromImage:(CGImageRef)image {
     CGContextRef context = NULL;
     CGColorSpaceRef colorSpace;
     unsigned char *bitmap;
@@ -116,7 +162,12 @@ static const int kDimension = 64;
     
     CGContextDrawImage(context, CGRectMake(0, 0, width, height), image);
     CGContextRelease(context);
-    return bitmap;
+    
+    float *convertedBitmap = malloc(bitmapSize * sizeof(float));
+    vDSP_vfltu8(bitmap, 1, convertedBitmap, 1, bitmapSize);
+    free(bitmap);
+    
+    return convertedBitmap;
 }
 
 @end

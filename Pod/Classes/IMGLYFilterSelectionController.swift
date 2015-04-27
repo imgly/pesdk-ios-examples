@@ -17,6 +17,8 @@ private var FilterPreviews = [IMGLYFilterType : UIImage]()
 public typealias IMGLYFilterTypeSelectedBlock = (IMGLYFilterType) -> (Void)
 public typealias IMGLYFilterTypeActiveBlock = () -> (IMGLYFilterType)
 
+private let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
+
 public class IMGLYFilterSelectionController: UICollectionViewController {
     
     // MARK: - Properties
@@ -72,7 +74,7 @@ extension IMGLYFilterSelectionController: UICollectionViewDataSource {
                 filterCell.activityIndicator.startAnimating()
                 
                 // Create filterPreviewImage
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0)) {
+                dispatch_async(PhotoProcessorQueue) {
                     let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil)!, filters: [filter])
                     
                     dispatch_async(dispatch_get_main_queue()) {

@@ -11,6 +11,8 @@ import AVFoundation
 import MobileCoreServices
 import Photos
 
+let InitialFilterIntensity = Float(0.5)
+private let ShowFilterIntensitySliderInterval = NSTimeInterval(2)
 private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
 public typealias IMGLYCameraCompletionBlock = (UIImage?) -> (Void)
@@ -98,6 +100,19 @@ public class IMGLYCameraViewController: UIViewController {
         button.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         return button
         }()
+    
+    public private(set) lazy var filterIntensitySlider: UISlider = {
+        let slider = UISlider()
+        slider.setTranslatesAutoresizingMaskIntoConstraints(false)
+        slider.minimumValue = 0
+        slider.maximumValue = 1
+        slider.value = 0.5
+        slider.alpha = 0
+        slider.addTarget(self, action: "changeIntensity:", forControlEvents: .ValueChanged)
+        return slider
+    }()
+    
+    private var hideSliderTimer: NSTimer?
     
     private var filterSelectionViewConstraint: NSLayoutConstraint?
     public let filterSelectionController = IMGLYFilterSelectionController()
@@ -202,6 +217,8 @@ public class IMGLYCameraViewController: UIViewController {
         bottomControlsView.addSubview(cameraRollButton)
         bottomControlsView.addSubview(takePhotoButton)
         bottomControlsView.addSubview(filterSelectionButton)
+        
+        cameraPreviewContainer.addSubview(filterIntensitySlider)
     }
     
     private func configureViewConstraints() {
@@ -215,7 +232,8 @@ public class IMGLYCameraViewController: UIViewController {
             "switchCameraButton" : switchCameraButton,
             "cameraRollButton" : cameraRollButton,
             "takePhotoButton" : takePhotoButton,
-            "filterSelectionButton" : filterSelectionButton
+            "filterSelectionButton" : filterSelectionButton,
+            "filterIntensitySlider" : filterIntensitySlider
         ]
         
         let metrics: [NSObject : NSNumber] = [
@@ -223,11 +241,13 @@ public class IMGLYCameraViewController: UIViewController {
             "bottomControlsViewHeight" : 100,
             "filterSelectionViewHeight" : FilterSelectionViewHeight,
             "topControlMargin" : 20,
-            "topControlMinWidth" : 44
+            "topControlMinWidth" : 44,
+            "filterIntensitySliderLeftRightMargin" : 20
         ]
         
         configureSuperviewConstraintsWithMetrics(metrics, views: views)
         configureTopControlsConstraintsWithMetrics(metrics, views: views)
+        configureCameraPreviewContainerConstraintsWithMetrics(metrics, views: views)
         configureBottomControlsConstraintsWithMetrics(metrics, views: views)
     }
     
@@ -247,6 +267,11 @@ public class IMGLYCameraViewController: UIViewController {
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==topControlMargin)-[flashButton(>=topControlMinWidth)]-(>=topControlMargin)-[switchCameraButton(>=topControlMinWidth)]-(==topControlMargin)-|", options: nil, metrics: metrics, views: views))
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flashButton]|", options: nil, metrics: nil, views: views))
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[switchCameraButton]|", options: nil, metrics: nil, views: views))
+    }
+    
+    private func configureCameraPreviewContainerConstraintsWithMetrics(metrics: [NSObject : NSNumber], views: [NSObject : AnyObject]) {
+        cameraPreviewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: nil, metrics: metrics, views: views))
+        cameraPreviewContainer.addConstraint(NSLayoutConstraint(item: filterIntensitySlider, attribute: .Bottom, relatedBy: .Equal, toItem: cameraPreviewContainer, attribute: .Bottom, multiplier: 1, constant: -20))
     }
     
     private func configureBottomControlsConstraintsWithMetrics(metrics: [NSObject : NSNumber], views: [NSObject : AnyObject]) {
@@ -288,6 +313,26 @@ public class IMGLYCameraViewController: UIViewController {
     private func configureFilterSelectionController() {
         filterSelectionController.selectedBlock = { [unowned self] filterType in
             self.cameraController?.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            
+            if filterType == .None {
+                self.hideSliderTimer?.invalidate()
+                if self.filterIntensitySlider.alpha > 0 {
+                    UIView.animateWithDuration(0.3) {
+                        self.filterIntensitySlider.alpha = 0
+                    }
+                }
+            } else {
+                self.cameraController?.effectFilter.inputIntensity = InitialFilterIntensity
+                self.filterIntensitySlider.value = InitialFilterIntensity
+                
+                if self.filterIntensitySlider.alpha < 1 {
+                    UIView.animateWithDuration(0.3) {
+                        self.filterIntensitySlider.alpha = 1
+                    }
+                }
+                
+                self.resetHideSliderTimer()
+            }
         }
         
         filterSelectionController.activeFilterType = { [unowned self] in
@@ -301,11 +346,17 @@ public class IMGLYCameraViewController: UIViewController {
     
     // MARK: - Helpers
     
+    private func resetHideSliderTimer() {
+        hideSliderTimer?.invalidate()
+        hideSliderTimer = NSTimer.scheduledTimerWithTimeInterval(ShowFilterIntensitySliderInterval, target: self, selector: "hideFilterIntensitySlider:", userInfo: nil, repeats: false)
+    }
+    
     private func showEditorNavigationControllerWithImage(image: UIImage?) {
         let editorViewController = IMGLYMainEditorViewController()
         editorViewController.highResolutionImage = image
         if let cameraController = cameraController {
             editorViewController.initialFilterType = cameraController.effectFilter.filterType
+            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
         }
         editorViewController.completionBlock = editorCompletionBlock
         
@@ -331,6 +382,13 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     // MARK: - Targets
+    
+    @objc private func hideFilterIntensitySlider(timer: NSTimer?) {
+        UIView.animateWithDuration(0.3) {
+            self.filterIntensitySlider.alpha = 0
+            self.hideSliderTimer = nil
+        }
+    }
     
     public func changeFlash(sender: UIButton?) {
         cameraController?.selectNextFlashmode()
@@ -399,6 +457,13 @@ public class IMGLYCameraViewController: UIViewController {
                         self.filterSelectionController.endAppearanceTransition()
                 })
             }
+        }
+    }
+    
+    @objc private func changeIntensity(sender: UISlider?) {
+        if let slider = sender {
+            resetHideSliderTimer()
+            cameraController?.effectFilter.inputIntensity = slider.value
         }
     }
     
