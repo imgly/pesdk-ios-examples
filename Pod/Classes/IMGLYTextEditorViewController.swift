@@ -62,6 +62,13 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         return label
         }()
     
+    public private(set) lazy var fontSelectorContainerView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .Dark)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return view
+        }()
+    
     public private(set) lazy var fontSelectorView: IMGLYFontSelectorView = {
         let selector = IMGLYFontSelectorView()
         selector.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -141,14 +148,19 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func configureFontSelectorView() {
-        view.addSubview(fontSelectorView)
+        view.addSubview(fontSelectorContainerView)
+        fontSelectorContainerView.contentView.addSubview(fontSelectorView)
         
         let views = [
+            "fontSelectorContainerView" : fontSelectorContainerView,
             "fontSelectorView" : fontSelectorView
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: nil, metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorContainerView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorContainerView]|", options: nil, metrics: nil, views: views))
+        
+        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: nil, metrics: nil, views: views))
+        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: nil, metrics: nil, views: views))
     }
     
     private func registerForKeyboardNotifications() {
@@ -324,7 +336,7 @@ extension IMGLYTextEditorViewController: UITextFieldDelegate {
 
 extension IMGLYTextEditorViewController: IMGLYFontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: IMGLYFontSelectorView, didSelectFontWithName fontName: String) {
-        fontSelectorView.removeFromSuperview()
+        fontSelectorContainerView.removeFromSuperview()
         self.fontName = fontName
         textField.font = UIFont(name: fontName, size: FontSizeInTextField)
         textField.becomeFirstResponder()
