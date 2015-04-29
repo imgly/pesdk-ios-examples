@@ -109,7 +109,10 @@ extension IMGLYFilterSelectionController: UICollectionViewDelegate {
         let extendedCellRect = CGRectInset(layoutAttributes.frame, -60, 0)
         collectionView.scrollRectToVisible(extendedCellRect, animated: true)
         
+        let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
+        
         if selectedCellIndex == indexPath.item {
+            selectedBlock?(filterType)
             return
         }
         
@@ -119,8 +122,6 @@ extension IMGLYFilterSelectionController: UICollectionViewDelegate {
                 cell.hideTick()
             })
         }
-        
-        let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
         
         selectedBlock?(filterType)
         

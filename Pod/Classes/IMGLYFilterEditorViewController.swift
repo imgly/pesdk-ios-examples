@@ -15,12 +15,20 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     public let filterSelectionController = IMGLYFilterSelectionController()
     
     public private(set) lazy var filterIntensitySlider: UISlider = {
+        let bundle = NSBundle(forClass: self.dynamicType)
         let slider = UISlider()
         slider.setTranslatesAutoresizingMaskIntoConstraints(false)
         slider.minimumValue = 0
         slider.maximumValue = 1
-        slider.value = 0.5
+        slider.value = 0.75
         slider.addTarget(self, action: "changeIntensity:", forControlEvents: .ValueChanged)
+        
+        slider.minimumTrackTintColor = UIColor.whiteColor()
+        slider.maximumTrackTintColor = UIColor.whiteColor()
+        let sliderThumbImage = UIImage(named: "slider_thumb_image", inBundle: bundle, compatibleWithTraitCollection: nil)
+        slider.setThumbImage(sliderThumbImage, forState: .Normal)
+        slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
+        
         return slider
         }()
     
@@ -43,8 +51,6 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     
     private func configureFilterSelectionController() {
         filterSelectionController.selectedBlock = { [unowned self] filterType in
-            self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
-            
             if filterType == .None {
                 if self.filterIntensitySlider.alpha > 0 {
                     UIView.animateWithDuration(0.3) {
@@ -58,8 +64,11 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
                     }
                 }
                 
-                self.fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
-                self.filterIntensitySlider.value = InitialFilterIntensity
+                if filterType != self.fixedFilterStack.effectFilter.filterType {
+                    self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+                    self.fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
+                    self.filterIntensitySlider.value = InitialFilterIntensity
+                }
             }
             
             self.updatePreviewImage()
@@ -94,7 +103,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         ]
         
         let metrics: [NSObject : NSNumber] = [
-            "filterIntensitySliderLeftRightMargin" : 20
+            "filterIntensitySliderLeftRightMargin" : 10
         ]
         
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: nil, metrics: metrics, views: views))

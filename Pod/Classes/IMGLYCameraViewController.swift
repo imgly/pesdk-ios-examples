@@ -11,7 +11,7 @@ import AVFoundation
 import MobileCoreServices
 import Photos
 
-let InitialFilterIntensity = Float(0.5)
+let InitialFilterIntensity = Float(0.75)
 private let ShowFilterIntensitySliderInterval = NSTimeInterval(2)
 private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
@@ -102,13 +102,22 @@ public class IMGLYCameraViewController: UIViewController {
         }()
     
     public private(set) lazy var filterIntensitySlider: UISlider = {
+        let bundle = NSBundle(forClass: self.dynamicType)
         let slider = UISlider()
         slider.setTranslatesAutoresizingMaskIntoConstraints(false)
         slider.minimumValue = 0
         slider.maximumValue = 1
-        slider.value = 0.5
+        slider.value = 0.75
         slider.alpha = 0
         slider.addTarget(self, action: "changeIntensity:", forControlEvents: .ValueChanged)
+        
+        slider.minimumTrackTintColor = UIColor.whiteColor()
+        slider.maximumTrackTintColor = UIColor.whiteColor()
+        slider.thumbTintColor = UIColor(red:1, green:0.8, blue:0, alpha:1)
+        let sliderThumbImage = UIImage(named: "slider_thumb_image", inBundle: bundle, compatibleWithTraitCollection: nil)
+        slider.setThumbImage(sliderThumbImage, forState: .Normal)
+        slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
+        
         return slider
     }()
     
@@ -242,7 +251,7 @@ public class IMGLYCameraViewController: UIViewController {
             "filterSelectionViewHeight" : FilterSelectionViewHeight,
             "topControlMargin" : 20,
             "topControlMinWidth" : 44,
-            "filterIntensitySliderLeftRightMargin" : 20
+            "filterIntensitySliderLeftRightMargin" : 10
         ]
         
         configureSuperviewConstraintsWithMetrics(metrics, views: views)
@@ -312,7 +321,11 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func configureFilterSelectionController() {
         filterSelectionController.selectedBlock = { [unowned self] filterType in
-            self.cameraController?.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            if let cameraController = self.cameraController where cameraController.effectFilter.filterType != filterType {
+                cameraController.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+                cameraController.effectFilter.inputIntensity = InitialFilterIntensity
+                self.filterIntensitySlider.value = InitialFilterIntensity
+            }
             
             if filterType == .None {
                 self.hideSliderTimer?.invalidate()
@@ -322,9 +335,6 @@ public class IMGLYCameraViewController: UIViewController {
                     }
                 }
             } else {
-                self.cameraController?.effectFilter.inputIntensity = InitialFilterIntensity
-                self.filterIntensitySlider.value = InitialFilterIntensity
-                
                 if self.filterIntensitySlider.alpha < 1 {
                     UIView.animateWithDuration(0.3) {
                         self.filterIntensitySlider.alpha = 1
