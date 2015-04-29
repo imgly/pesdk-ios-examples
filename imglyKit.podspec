@@ -11,8 +11,8 @@ Pod::Spec.new do |s|
 	s.platform     = :ios, '8.0'
 	s.requires_arc = true
 
-	s.source_files = 'Pod/Classes/**/*'
-	s.resources = ['Pod/Assets.xcassets', 'Pod/Filter Responses/*.png', 'Pod/Fonts/*', 'Pod/en.lproj/Localizable.strings']
+    s.source_files = ['imglyKit/Camera/**/*', 'imglyKit/Editor/**/*', 'imglyKit/Extensions/**/*', 'imglyKit/Processing/**/*', 'imglyKit/*.swift']
+	s.resources = ['imglyKit/Assets.xcassets', 'imglyKit/Filter Responses/*.png', 'imglyKit/Fonts/*', 'imglyKit/en.lproj/Localizable.strings']
 
 	s.frameworks = 'Accelerate', 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
 end
