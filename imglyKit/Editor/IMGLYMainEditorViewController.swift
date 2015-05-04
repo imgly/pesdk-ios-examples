@@ -108,7 +108,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     public var completionBlock: IMGLYEditorCompletionBlock?
     public var initialFilterType = IMGLYFilterType.None
-    public var initialFilterIntensity = NSNumber(double: 0.5)
+    public var initialFilterIntensity = NSNumber(double: 0.75)
     public private(set) var fixedFilterStack = IMGLYFixedFilterStack()
     
     private let maxLowResolutionSideLength = CGFloat(800)

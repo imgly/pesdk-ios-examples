@@ -6,7 +6,7 @@ img.ly SDK for iOS is a Cocoa Touch framework for creating stunning images with 
 
 ### Overview
 
-img.ly SDK provides tools to create photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow live preview of filters, img.ly SDK provides high-resolution images. With version two we were able to remove any resolution limits. Above that it's easy to customize the look of the app using Xcode's interface builder.
+img.ly SDK provides tools for creating photo applications for iOS with a big variety of filters that can be previewed in real-time. Unlike other apps that allow a live preview of filters, the img.ly SDK even provides a live preview when using high-resolution images. Version 2.0 removes any resolution limits, is written in Swift and allows for easy customization.
 
 ### Features
 
@@ -30,7 +30,7 @@ img.ly SDK provides tools to create photo applications for iOS with a big variet
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Cocoa projects.
 
-CocoaPods 0.36 adds supports for Swift and embedded frameworks (more information about this is available [here](http://blog.cocoapods.org/CocoaPods-0.36/)). You can install it with the following command:
+CocoaPods 0.36 added support for Swift and embedded frameworks (more information about this is available [here](http://blog.cocoapods.org/CocoaPods-0.36/)). You can install it with the following command:
 
 ```bash
 $ gem install cocoapods
@@ -73,7 +73,7 @@ github "imgly/imgly-sdk-ios" >= 2.1
 
 If you prefer not to use either of the aforementioned dependency managers, you can integrate imglyKit into your project manually.
 
-### Embedded Framework
+#### Embedded Framework
 
 - Add imglyKit as a [submodule](http://git-scm.com/docs/git-submodule) by opening the Terminal, `cd`-ing into your top-level project directory, and entering the following command:
 
@@ -122,7 +122,7 @@ The SDK can be divided into two parts, frontend and backend.
 We also provided an instance factory that handles the object generation for you.
 Its class is called `IMGLYInstanceFactory`. It has a property called `sharedInstance` that 
 uses the singleton pattern, so it doesn't need to be created every time.
-Besides the views and view controllers, it also has methods to create the different filters, and the photo processor described below.
+Beside the views and view controllers, it also has methods to create the different filters, and the photo processor described below.
 
 ## Frontend
 
@@ -131,16 +131,17 @@ The frontend part of the SDK contains all the views and view controllers, or gen
 For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and controls to operate the camera settings such as flash, front camera or back camera. 
 After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it presents a `IMGLYMainEditorViewController` within a `IMGLYNavigationController` modally. 
  
-The `IMGLYMainEditorViewController` functions as main editor. It is connected to sub editors that allow the user to edit an image. The sub editors are, Magic (automatic image enhancement), filter, orientation (flip rotate), focus (tiltshift), crop, brightness, contrast, saturation, and text. 
+The `IMGLYMainEditorViewController` functions as main editor. It is connected to sub editors that allow the user to edit an image. The built-in sub editors are Magic (automatic image enhancement), Filter, Stickers, Orientation (Flip / Rotate), Focus (Tiltshift), Crop, Brightness, Contrast, Saturation, and Text. 
 These dialogs use a lower resolution image as a preview to improve the performance.
-When the user presses the done button of the main dialog, the chosen settings are applied to the full resolution image.
+When the user presses the done button of the main editor, the chosen settings are applied to the full resolution image.
 The `IMGLYMainEditorViewController` can be used without the `IMGLYCameraViewController` like so:
 
 ```
 func callEditorViewController() {
 	var editorViewController = IMGLYMainEditorViewController()
 	editorViewController.highResolutionImage = image
-	editorViewController.intialFilterType = .None
+	editorViewController.initialFilterType = .None
+	editorViewController.initialFilterIntensity = 0.5
 	editorViewController.completionBlock = editorCompletionBlock
 }
 	
@@ -150,6 +151,10 @@ func editorCompletionBlock(result: IMGLYEditorResult, image: UIImage?) {
 	...
 }
 ```
+
+### Adding a custom editor
+
+You can easily create your own sub editors by subclassing `IMGLYSubEditorViewController`. The main editor automatically passes a deep copy of the fixed filter stack, a low resolution image, and a completion handler to each sub editor. Each subclass also has an `UIImageView` called `previewImageView` that is used to present the preview image and an `UIView` called `bottomContainerView` that you can use to present your own controls. Within your subclass you should modify the passed `fixedFilterStack` and update the preview image whenever necessary by using `updatePreviewImageWithCompletion(completionHandler:)`. Finally, if the user taps the Done button, the updated fixed filter stack is passed back to the main editor, if the user taps the Cancel button, the updated fixed filter stack and simply discarded. You also have to add a new `IMGLYActionButton` to the `actionButtons` property of `IMGLYMainEditorViewController`.
 
 The img.ly SDK comes with an example app to demonstrate the simplicity and power of the SDK. 
 
