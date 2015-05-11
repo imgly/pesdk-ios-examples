@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
     s.source_files = ['imglyKit/Camera/**/*', 'imglyKit/Editor/**/*', 'imglyKit/Extensions/**/*', 'imglyKit/Processing/**/*', 'imglyKit/*.swift']
 	s.resources = ['imglyKit/Assets.xcassets', 'imglyKit/Filter Responses/*.png', 'imglyKit/Fonts/*', 'imglyKit/en.lproj/Localizable.strings']
 
-	s.frameworks = 'Accelerate', 'AVFoundation', 'CoreImage', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
+	s.frameworks = 'Accelerate', 'AVFoundation', 'CoreImage', 'CoreMotion', 'Foundation', 'GLKit', 'MobileCoreServices', 'OpenGLES', 'Photos', 'UIKit'
 end

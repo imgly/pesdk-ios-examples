@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
 		2BF4D3AB1AF114FA00C801B2 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A91AF114FA00C801B2 /* IMGLYCameraController.swift */; };
@@ -218,6 +219,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYAnimationDelegate.swift; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D3891AF1139600C801B2 /* imglyKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imglyKit.h; sourceTree = "<group>"; };
@@ -487,6 +489,7 @@
 		2BF4D3A01AF113E600C801B2 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */,
 				2BF4D3A91AF114FA00C801B2 /* IMGLYCameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */,
 			);
@@ -906,6 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */,
 				2BF4D3DA1AF1150500C801B2 /* IMGLYFontSelectorView.swift in Sources */,
 				2BF4D3E31AF1150500C801B2 /* IMGLYSliderEditorViewController.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* IMGLYNavigationAnimationController.swift in Sources */,

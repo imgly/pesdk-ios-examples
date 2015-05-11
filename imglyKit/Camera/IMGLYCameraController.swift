@@ -10,8 +10,10 @@ import UIKit
 import OpenGLES
 import GLKit
 import AVFoundation
+import CoreMotion
 
 private let kIMGLYIndicatorSize = CGFloat(75)
+private let kIMGLYDeviceMotionThreshold = Double(0.4)
 
 public protocol IMGLYCameraControllerDelegate: class {
     func captureSessionStarted()
@@ -28,7 +30,6 @@ It provides methods to start a capture session, toggle between cameras, or selec
 public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate {
     public weak var delegate: IMGLYCameraControllerDelegate?
     public let tapGestureRecognizer = UITapGestureRecognizer()
-    public let doubleTapGestureRecognizer = UITapGestureRecognizer()
     
     // MARK:- private vars
     private var glContext_ : EAGLContext!
@@ -60,6 +61,10 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     //private var flashMode_ = AVCaptureFlashMode.Auto
     private var flashModeIndex_ = 0
     private var supportedFlashModes_:[AVCaptureFlashMode] =  []
+
+    private lazy var motionManager = CMMotionManager()
+    private lazy var motionManagerQueue = NSOperationQueue()
+    private var initialAttitude: CMAttitude?
     
     // MARK: - computed vars
     
@@ -133,12 +138,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         focusIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         previewView!.layer.addSublayer(focusIndicatorLayer)
         
-        doubleTapGestureRecognizer.addTarget(self, action: "doubleTapped:")
-        doubleTapGestureRecognizer.numberOfTapsRequired = 2
-        videoPreviewView.addGestureRecognizer(doubleTapGestureRecognizer)
-        
         tapGestureRecognizer.addTarget(self, action: "tapped:")
-        tapGestureRecognizer.requireGestureRecognizerToFail(doubleTapGestureRecognizer)
         videoPreviewView.addGestureRecognizer(tapGestureRecognizer)
     }
 
@@ -459,7 +459,65 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         videoPreviewView.display()
     }
     
+    // MARK: - Focus Lock
+    
+    public func disableFocusLockAnimated(animated: Bool) {
+        motionManager.stopDeviceMotionUpdates()
+        initialAttitude = nil
+        
+        if isFocusPointSupported || isExposurePointSupported {
+            resetFocusAndExposurePoints()
+
+            if animated {
+                CATransaction.begin()
+                CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+                focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+                focusIndicatorLayer.frame = CGRect(x: 0, y: 0, width: kIMGLYIndicatorSize * 2, height: kIMGLYIndicatorSize * 2)
+                focusIndicatorLayer.transform = CATransform3DIdentity
+                
+                if let previewView = previewView {
+                    focusIndicatorLayer.position = previewView.center
+                }
+                
+                CATransaction.commit()
+                
+                let resizeAnimation = CABasicAnimation(keyPath: "transform")
+                resizeAnimation.duration = 0.25
+                resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
+                resizeAnimation.delegate = IMGLYAnimationDelegate(block: { _ in
+                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.85 * Double(NSEC_PER_SEC)))
+                    dispatch_after(delayTime, dispatch_get_main_queue()) {
+                        self.focusIndicatorLayer.opacity = 0
+                        
+                        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+                        fadeAnimation.duration = 0.25
+                        fadeAnimation.fromValue = 1
+                        fadeAnimation.delegate = IMGLYAnimationDelegate(block: { _ in
+                            CATransaction.begin()
+                            CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+                            self.focusIndicatorLayer.hidden = true
+                            self.focusIndicatorLayer.opacity = 1
+                            self.focusIndicatorLayer.frame = CGRect(x: 0, y: 0, width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+                            CATransaction.commit()
+                        })
+                        
+                        self.focusIndicatorLayer.addAnimation(fadeAnimation, forKey: nil)
+                    }
+                })
+                
+                focusIndicatorLayer.addAnimation(resizeAnimation, forKey: nil)
+            } else {
+                focusIndicatorLayer.hidden = true
+            }
+        }
+    }
+    
     // MARK: - Helpers
+    
+    // get magnitude of vector via Pythagorean theorem
+    private func magnitudeFromAttitude(attitude: CMAttitude) -> Double {
+        return sqrt(pow(attitude.roll, 2) + pow(attitude.yaw, 2) + pow(attitude.pitch, 2))
+    }
     
     private func fitRect(sourceRect: CGRect, intoTargetRect targetRect: CGRect, withContentMode contentMode: UIViewContentMode) -> CGRect {
         if !(contentMode == .ScaleAspectFit || contentMode == .ScaleAspectFill) {
@@ -526,6 +584,22 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
             if focusIndicatorLayer.hidden == false {
                 if videoDevice.focusMode == .Locked && videoDevice.exposureMode == .Locked {
                     focusIndicatorLayer.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
+                    
+                    // Check MotionManager for rotation and disable focus when movement has been detected
+                    motionManager.startDeviceMotionUpdatesToQueue(motionManagerQueue) { [unowned self] (deviceMotion, error) in
+                        if let initialAttitude = self.initialAttitude {
+                            deviceMotion.attitude.multiplyByInverseOfAttitude(initialAttitude)
+                            let magnitude = self.magnitudeFromAttitude(deviceMotion.attitude) ?? 0
+                            
+                            if magnitude > kIMGLYDeviceMotionThreshold {
+                                NSOperationQueue.mainQueue().addOperationWithBlock {
+                                    self.disableFocusLockAnimated(true)
+                                }
+                            }
+                        } else {
+                            self.initialAttitude = deviceMotion.attitude
+                        }
+                    }
                 }
             }
         }
@@ -568,6 +642,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     private func showFocusIndicatorLayerAtLocation(location: CGPoint) {
         CATransaction.begin()
         CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        focusIndicatorLayer.opacity = 1
         focusIndicatorLayer.hidden = false
         focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
         focusIndicatorLayer.position = location
@@ -598,13 +673,6 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
                 let pointOfInterest = CGPoint(x: focusPointLocation.x / CGRectGetWidth(videoFrame), y: focusPointLocation.y / CGRectGetHeight(videoFrame))
                 updateFocusAndExposurePoints(pointOfInterest)
             }
-        }
-    }
-    
-    @objc private func doubleTapped(recognizer: UITapGestureRecognizer) {
-        if isFocusPointSupported || isExposurePointSupported {
-            focusIndicatorLayer.hidden = true
-            resetFocusAndExposurePoints()
         }
     }
 }
