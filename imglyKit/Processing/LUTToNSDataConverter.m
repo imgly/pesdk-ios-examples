@@ -57,7 +57,7 @@ static NSData *identityLUT;
         vDSP_vsbsm(lutData, 1, identityData, 1, &intensity, data, 1, size / sizeof(float));
         vDSP_vadd(data, 1, identityData, 1, data, 1, size / sizeof(float));
         
-        // This is basically the Accelerate Framework's way of doing this:
+        // This is basically Accelerate Framework's way of doing this:
         //        for (int i = 0; i < size / sizeof(float); i++) {
         //            data[i] = (lutData[i] - identityData[i]) * intensity + identityData[i];
         //        }

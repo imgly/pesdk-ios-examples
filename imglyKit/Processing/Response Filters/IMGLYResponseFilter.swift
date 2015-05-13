@@ -26,7 +26,11 @@ import GLKit
 public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
-    public var inputIntensity = NSNumber(float: 1)
+    public var inputIntensity = NSNumber(float: 1) {
+        didSet {
+            colorCubeData = nil
+        }
+    }
     public let responseName: String
 
     /// Returns the according filter type of the response filter.
@@ -34,8 +38,19 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
         return .None
     }
     
+    private var _colorCubeData: NSData?
     private var colorCubeData: NSData? {
-        return LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
+        get {
+            if _colorCubeData == nil {
+                _colorCubeData = LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
+            }
+            
+            return _colorCubeData
+        }
+        
+        set {
+            _colorCubeData = newValue
+        }
     }
     
     init(responseName: String) {
