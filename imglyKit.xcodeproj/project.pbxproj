@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */; };
 		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
@@ -219,6 +220,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYAnimationDelegate.swift; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 			isa = PBXGroup;
 			children = (
 				2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */,
+				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
 				2BF4D3ED1AF1151500C801B2 /* UIImageViewExtension.swift */,
 			);
@@ -914,6 +917,7 @@
 				2BF4D3E31AF1150500C801B2 /* IMGLYSliderEditorViewController.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* IMGLYNavigationAnimationController.swift in Sources */,
 				2BF4D53E1AF1156F00C801B2 /* LUTToNSDataConverter.m in Sources */,
+				2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */,
 				2BF4D4FF1AF1155E00C801B2 /* IMGLYBreezeFilter.swift in Sources */,
 				2BF4D3D81AF1150500C801B2 /* IMGLYFilterSelectionController.swift in Sources */,
 				2BF4D5391AF1155E00C801B2 /* IMGLYWinterFilter.swift in Sources */,

@@ -15,6 +15,9 @@ import CoreMotion
 private let kIMGLYIndicatorSize = CGFloat(75)
 private let kIMGLYDeviceMotionThreshold = Double(0.4)
 
+private class IMGLYBlockOperation: NSBlockOperation {
+}
+
 public protocol IMGLYCameraControllerDelegate: class {
     func captureSessionStarted()
     func captureSessionStopped()
@@ -64,6 +67,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
 
     private lazy var motionManager = CMMotionManager()
     private lazy var motionManagerQueue = NSOperationQueue()
+    private var focusIndicatorFadeOutTimer: NSTimer?
     private var initialAttitude: CMAttitude?
     
     // MARK: - computed vars
@@ -462,7 +466,15 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     // MARK: - Focus Lock
     
     public func disableFocusLockAnimated(animated: Bool) {
+        focusIndicatorFadeOutTimer?.invalidate()
         motionManager.stopDeviceMotionUpdates()
+        
+        for operation in NSOperationQueue.mainQueue().operations {
+            if operation.isKindOfClass(IMGLYBlockOperation) {
+                operation.cancel()
+            }
+        }
+        
         initialAttitude = nil
         
         if isFocusPointSupported || isExposurePointSupported {
@@ -470,9 +482,9 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
 
             if animated {
                 CATransaction.begin()
-                CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+                CATransaction.setDisableActions(true)
                 focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
-                focusIndicatorLayer.frame = CGRect(x: 0, y: 0, width: kIMGLYIndicatorSize * 2, height: kIMGLYIndicatorSize * 2)
+                focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize * 2, height: kIMGLYIndicatorSize * 2)
                 focusIndicatorLayer.transform = CATransform3DIdentity
                 
                 if let previewView = previewView {
@@ -484,24 +496,27 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
                 let resizeAnimation = CABasicAnimation(keyPath: "transform")
                 resizeAnimation.duration = 0.25
                 resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
-                resizeAnimation.delegate = IMGLYAnimationDelegate(block: { _ in
-                    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.85 * Double(NSEC_PER_SEC)))
-                    dispatch_after(delayTime, dispatch_get_main_queue()) {
-                        self.focusIndicatorLayer.opacity = 0
-                        
-                        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
-                        fadeAnimation.duration = 0.25
-                        fadeAnimation.fromValue = 1
-                        fadeAnimation.delegate = IMGLYAnimationDelegate(block: { _ in
-                            CATransaction.begin()
-                            CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
-                            self.focusIndicatorLayer.hidden = true
-                            self.focusIndicatorLayer.opacity = 1
-                            self.focusIndicatorLayer.frame = CGRect(x: 0, y: 0, width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
-                            CATransaction.commit()
-                        })
-                        
-                        self.focusIndicatorLayer.addAnimation(fadeAnimation, forKey: nil)
+                resizeAnimation.delegate = IMGLYAnimationDelegate(block: { finished in
+                    if finished {
+                        self.focusIndicatorFadeOutTimer = NSTimer.after(0.85) { [unowned self] in
+                            self.focusIndicatorLayer.opacity = 0
+                            
+                            let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+                            fadeAnimation.duration = 0.25
+                            fadeAnimation.fromValue = 1
+                            fadeAnimation.delegate = IMGLYAnimationDelegate(block: { finished in
+                                if finished {
+                                    CATransaction.begin()
+                                    CATransaction.setDisableActions(true)
+                                    self.focusIndicatorLayer.hidden = true
+                                    self.focusIndicatorLayer.opacity = 1
+                                    self.focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+                                    CATransaction.commit()
+                                }
+                            })
+                            
+                            self.focusIndicatorLayer.addAnimation(fadeAnimation, forKey: nil)
+                        }
                     }
                 })
                 
@@ -592,9 +607,11 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
                             let magnitude = self.magnitudeFromAttitude(deviceMotion.attitude) ?? 0
                             
                             if magnitude > kIMGLYDeviceMotionThreshold {
-                                NSOperationQueue.mainQueue().addOperationWithBlock {
+                                let blockOperation = IMGLYBlockOperation(block: {
                                     self.disableFocusLockAnimated(true)
-                                }
+                                })
+                                
+                                NSOperationQueue.mainQueue().addOperation(blockOperation)
                             }
                         } else {
                             self.initialAttitude = deviceMotion.attitude
@@ -640,16 +657,21 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
     }
     
     private func showFocusIndicatorLayerAtLocation(location: CGPoint) {
-        CATransaction.begin()
-        CATransaction.setValue(kCFBooleanTrue, forKey: kCATransactionDisableActions)
+        focusIndicatorFadeOutTimer?.invalidate()
+        focusIndicatorFadeOutTimer = nil
+        
         focusIndicatorLayer.opacity = 1
         focusIndicatorLayer.hidden = false
         focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
         focusIndicatorLayer.position = location
-        focusIndicatorLayer.transform = CATransform3DMakeScale(1.5, 1.5, 1)
-        CATransaction.commit()
-        
         focusIndicatorLayer.transform = CATransform3DIdentity
+        focusIndicatorLayer.removeAllAnimations()
+        
+        let resizeAnimation = CABasicAnimation(keyPath: "transform")
+        resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
+        resizeAnimation.duration = 0.25
+        focusIndicatorLayer.addAnimation(resizeAnimation, forKey: nil)
     }
     
     // MARK: - KVO
