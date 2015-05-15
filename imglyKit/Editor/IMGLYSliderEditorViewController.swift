@@ -50,6 +50,12 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         configureViews()
     }
     
+    // MARK: - IMGLYEditorViewController
+    
+    public override var enableZoomingInPreviewImage: Bool {
+        return true
+    }
+    
     // MARK: - Configuration
     
     private func configureViews() {

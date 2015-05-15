@@ -95,8 +95,14 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        transparentRectView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         reCalculateCropRectBounds()
+    }
+    
+    // MARK: - IMGLYEditorViewController
+    
+    public override var enableZoomingInPreviewImage: Bool {
+        return true
     }
     
     // MARK: - SubEditorViewController
@@ -180,9 +186,9 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     private func reCalculateCropRectBounds() {
         let width = transparentRectView.frame.size.width
         let height = transparentRectView.frame.size.height
-        cropRectLeftBound = (width - previewImageView.imgly_imageFrame.size.width) / 2.0
+        cropRectLeftBound = (width - previewImageView.visibleImageFrame.size.width) / 2.0
         cropRectRightBound = width - cropRectLeftBound
-        cropRectTopBound = (height - previewImageView.imgly_imageFrame.size.height) / 2.0
+        cropRectTopBound = (height - previewImageView.visibleImageFrame.size.height) / 2.0
         cropRectBottomBound = height - cropRectTopBound
     }
     

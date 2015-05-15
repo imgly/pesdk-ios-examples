@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */; };
+		2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */; };
 		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
@@ -46,7 +47,6 @@
 		2BF4D3EA1AF1150500C801B2 /* IMGLYTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3CB1AF1150400C801B2 /* IMGLYTextEditorViewController.swift */; };
 		2BF4D3EE1AF1151500C801B2 /* CIFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */; };
 		2BF4D3EF1AF1151500C801B2 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */; };
-		2BF4D3F01AF1151500C801B2 /* UIImageViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3ED1AF1151500C801B2 /* UIImageViewExtension.swift */; };
 		2BF4D4351AF1152500C801B2 /* A15.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F11AF1152400C801B2 /* A15.png */; };
 		2BF4D4361AF1152500C801B2 /* AD1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F21AF1152400C801B2 /* AD1920.png */; };
 		2BF4D4371AF1152500C801B2 /* Ancient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F31AF1152400C801B2 /* Ancient.png */; };
@@ -221,6 +221,7 @@
 
 /* Begin PBXFileReference section */
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
+		2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYZoomingImageView.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYAnimationDelegate.swift; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -261,7 +262,6 @@
 		2BF4D3CB1AF1150400C801B2 /* IMGLYTextEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYTextEditorViewController.swift; sourceTree = "<group>"; };
 		2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CIFilterExtension.swift; sourceTree = "<group>"; };
 		2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtension.swift; sourceTree = "<group>"; };
-		2BF4D3ED1AF1151500C801B2 /* UIImageViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageViewExtension.swift; sourceTree = "<group>"; };
 		2BF4D3F11AF1152400C801B2 /* A15.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A15.png; sourceTree = "<group>"; };
 		2BF4D3F21AF1152400C801B2 /* AD1920.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AD1920.png; sourceTree = "<group>"; };
 		2BF4D3F31AF1152400C801B2 /* Ancient.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Ancient.png; sourceTree = "<group>"; };
@@ -532,6 +532,7 @@
 				2BF4D3C91AF1150400C801B2 /* IMGLYSubEditorViewController.swift */,
 				2BF4D3CA1AF1150400C801B2 /* IMGLYTextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* IMGLYTextEditorViewController.swift */,
+				2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -542,7 +543,6 @@
 				2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
-				2BF4D3ED1AF1151500C801B2 /* UIImageViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -961,7 +961,7 @@
 				2BF4D3AB1AF114FA00C801B2 /* IMGLYCameraController.swift in Sources */,
 				2BF4D3DC1AF1150500C801B2 /* IMGLYImageCaptionButton.swift in Sources */,
 				2BF4D5161AF1155E00C801B2 /* IMGLYK6Filter.swift in Sources */,
-				2BF4D3F01AF1151500C801B2 /* UIImageViewExtension.swift in Sources */,
+				2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */,
 				2BF4D3E11AF1150500C801B2 /* IMGLYOrientationEditorViewController.swift in Sources */,
 				2BF4D3CC1AF1150400C801B2 /* IMGLYActionButton.swift in Sources */,
 				2BF4D50E1AF1155E00C801B2 /* IMGLYFoodFilter.swift in Sources */,

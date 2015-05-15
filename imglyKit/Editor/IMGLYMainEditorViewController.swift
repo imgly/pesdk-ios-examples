@@ -247,6 +247,10 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
+    
+    public override var enableZoomingInPreviewImage: Bool {
+        return true
+    }
 }
 
 extension IMGLYMainEditorViewController: UICollectionViewDataSource {

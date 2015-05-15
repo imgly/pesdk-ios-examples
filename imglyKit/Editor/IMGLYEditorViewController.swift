@@ -30,10 +30,10 @@ public class IMGLYEditorViewController: UIViewController {
     
     public var lowResolutionImage: UIImage?
     
-    public private(set) lazy var previewImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .ScaleAspectFit
+    public private(set) lazy var previewImageView: IMGLYZoomingImageView = {
+        let imageView = IMGLYZoomingImageView()
         imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
         return imageView
         }()
     
@@ -107,6 +107,11 @@ public class IMGLYEditorViewController: UIViewController {
         
         previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterX, multiplier: 1, constant: 0))
         previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterY, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterY, multiplier: 1, constant: 0))
+    }
+    
+    public var enableZoomingInPreviewImage: Bool {
+        // Subclasses should override this to enable zooming
+        return false
     }
     
     // MARK: - Actions

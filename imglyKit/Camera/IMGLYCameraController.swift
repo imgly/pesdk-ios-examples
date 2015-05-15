@@ -660,6 +660,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         focusIndicatorFadeOutTimer?.invalidate()
         focusIndicatorFadeOutTimer = nil
         
+        CATransaction.begin()
         focusIndicatorLayer.opacity = 1
         focusIndicatorLayer.hidden = false
         focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
@@ -667,6 +668,7 @@ public class IMGLYCameraController: NSObject, AVCaptureVideoDataOutputSampleBuff
         focusIndicatorLayer.position = location
         focusIndicatorLayer.transform = CATransform3DIdentity
         focusIndicatorLayer.removeAllAnimations()
+        CATransaction.commit()
         
         let resizeAnimation = CABasicAnimation(keyPath: "transform")
         resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))

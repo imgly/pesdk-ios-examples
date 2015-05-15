@@ -104,7 +104,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        textClipView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        textClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
     }
     
     // MARK: - SubEditorViewController
@@ -114,7 +114,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         fixedFilterStack.textFilter.color = textColor
         fixedFilterStack.textFilter.fontName = fontName
         fixedFilterStack.textFilter.frame = transformedTextFrame()
-        fixedFilterStack.textFilter.fontScaleFactor = currentTextSize / previewImageView.imgly_imageFrame.size.height
+        fixedFilterStack.textFilter.fontScaleFactor = currentTextSize / previewImageView.visibleImageFrame.size.height
         
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
@@ -295,8 +295,8 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     
     private func transformedTextFrame() -> CGRect {
         var origin = textLabel.frame.origin
-        origin.x = origin.x / previewImageView.imgly_imageFrame.size.width
-        origin.y = origin.y / previewImageView.imgly_imageFrame.size.height
+        origin.x = origin.x / previewImageView.visibleImageFrame.size.width
+        origin.y = origin.y / previewImageView.visibleImageFrame.size.height
         
         var size = textLabel.frame.size
         size.width = size.width / textLabel.frame.size.width

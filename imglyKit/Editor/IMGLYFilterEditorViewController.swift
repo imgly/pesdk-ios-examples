@@ -47,6 +47,12 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         configureFilterIntensitySlider()
     }
     
+    // MARK: - IMGLYEditorViewController
+    
+    public override var enableZoomingInPreviewImage: Bool {
+        return true
+    }
+    
     // MARK: - Configuration
     
     private func configureFilterSelectionController() {

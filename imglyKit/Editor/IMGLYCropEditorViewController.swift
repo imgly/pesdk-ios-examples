@@ -119,7 +119,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        transparentRectView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         reCalculateCropRectBounds()
     }
     
@@ -484,9 +484,9 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     private func reCalculateCropRectBounds() {
         var width = transparentRectView.frame.size.width
         var height = transparentRectView.frame.size.height
-        cropRectLeftBound = (width - previewImageView.imgly_imageFrame.size.width) / 2.0
+        cropRectLeftBound = (width - previewImageView.visibleImageFrame.size.width) / 2.0
         cropRectRightBound = width - cropRectLeftBound
-        cropRectTopBound = (height - previewImageView.imgly_imageFrame.size.height) / 2.0
+        cropRectTopBound = (height - previewImageView.visibleImageFrame.size.height) / 2.0
         cropRectBottomBound = height - cropRectTopBound
     }
     

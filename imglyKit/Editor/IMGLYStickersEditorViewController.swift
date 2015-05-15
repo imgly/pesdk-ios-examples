@@ -69,7 +69,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        stickersClipView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        stickersClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
     }
     
     // MARK: - Configuration

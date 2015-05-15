@@ -89,10 +89,10 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        circleGradientView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        circleGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         circleGradientView.centerGUIElements()
         
-        boxGradientView.frame = view.convertRect(previewImageView.imgly_imageFrame, fromView: previewImageView)
+        boxGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         boxGradientView.centerGUIElements()
     }
     
