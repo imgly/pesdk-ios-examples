@@ -111,7 +111,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     public var initialFilterIntensity = NSNumber(double: 0.75)
     public private(set) var fixedFilterStack = IMGLYFixedFilterStack()
     
-    private let maxLowResolutionSideLength = CGFloat(800)
+    private let maxLowResolutionSideLength = CGFloat(1600)
     public var highResolutionImage: UIImage? {
         didSet {
             generateLowResolutionImage()
@@ -195,9 +195,9 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 
                 var newWidth  = CGFloat(roundf(Float(highResolutionImage.size.width) * Float(scale)))
                 var newHeight = CGFloat(roundf(Float(highResolutionImage.size.height) * Float(scale)))
-                lowResolutionImage = highResolutionImage.imgly_imageResizedToSize(CGSize(width: newWidth, height: newHeight), withInterpolationQuality: kCGInterpolationDefault)
+                lowResolutionImage = highResolutionImage.imgly_normalizedImageOfSize(CGSize(width: newWidth, height: newHeight))
             } else {
-                lowResolutionImage = UIImage(CGImage: highResolutionImage.CGImage)
+                lowResolutionImage = highResolutionImage
             }
         }
     }
@@ -220,7 +220,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     override public func tappedDone(sender: UIBarButtonItem?) {
         if let completionBlock = completionBlock {
-            highResolutionImage = highResolutionImage?.imgly_imageRotatedToMatchOrientation
+            highResolutionImage = highResolutionImage?.imgly_normalizedImage
             var filteredHighResolutionImage: UIImage?
             
             if let highResolutionImage = self.highResolutionImage {

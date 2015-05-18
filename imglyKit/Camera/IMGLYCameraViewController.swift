@@ -30,6 +30,7 @@ public class IMGLYCameraViewController: UIViewController {
     public private(set) lazy var cameraPreviewContainer: UIView = {
         let view = UIView()
         view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.clipsToBounds = true
         return view
         }()
     
@@ -46,6 +47,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.contentHorizontalAlignment = .Left
         button.addTarget(self, action: "changeFlash:", forControlEvents: .TouchUpInside)
+        button.hidden = true
         return button
         }()
     
@@ -56,6 +58,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.setImage(UIImage(named: "cam_switch", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.contentHorizontalAlignment = .Right
         button.addTarget(self, action: "switchCamera:", forControlEvents: .TouchUpInside)
+        button.hidden = true
         return button
         }()
     
@@ -126,7 +129,6 @@ public class IMGLYCameraViewController: UIViewController {
     private var filterSelectionViewConstraint: NSLayoutConstraint?
     public let filterSelectionController = IMGLYFilterSelectionController()
     
-    private var currentCameraPosition = AVCaptureDevicePosition.Front
     public private(set) var cameraController: IMGLYCameraController?
     
     private var buttonsEnabled = true {
@@ -170,7 +172,7 @@ public class IMGLYCameraViewController: UIViewController {
         }
         
         setLastImageFromRollAsPreview()
-        cameraController?.startCaptureSession()
+        cameraController?.startCamera()
     }
     
     public override func viewWillDisappear(animated: Bool) {
@@ -307,16 +309,7 @@ public class IMGLYCameraViewController: UIViewController {
         
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
-        if cameraController!.isCameraPresentWithPosition(AVCaptureDevicePosition.Back) {
-            cameraController!.setupWithCameraPosition(AVCaptureDevicePosition.Back)
-            currentCameraPosition = AVCaptureDevicePosition.Back
-        } else {
-            cameraController!.setupWithCameraPosition(AVCaptureDevicePosition.Front)
-            currentCameraPosition = AVCaptureDevicePosition.Front
-        }
-        
-        switchCameraButton.hidden = !cameraController!.isMoreThanOneCameraPresent()
-        flashButton.hidden = !cameraController!.isFlashPresent()
+        cameraController!.setup()
     }
     
     private func configureFilterSelectionController() {
@@ -355,6 +348,25 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    
+    private func updateFlashButton() {
+        if let cameraController = cameraController {
+            flashButton.hidden = !cameraController.flashAvailable
+            
+            let bundle = NSBundle(forClass: self.dynamicType)
+            
+            switch(cameraController.flashMode) {
+            case .Auto:
+                self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+            case .On:
+                self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+            case .Off:
+                self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+            }
+        } else {
+            flashButton.hidden = true
+        }
+    }
     
     private func resetHideSliderTimer() {
         hideSliderTimer?.invalidate()
@@ -401,16 +413,15 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     public func changeFlash(sender: UIButton?) {
-        cameraController?.selectNextFlashmode()
+        cameraController?.selectNextFlashMode()
     }
     
     public func switchCamera(sender: UIButton?) {
-        buttonsEnabled = false
         cameraController?.toggleCameraPosition()
     }
     
     public func showCameraRoll(sender: UIButton?) {
-        cameraController?.stopCaptureSession()
+        cameraController?.stopCamera()
         let imagePicker = UIImagePickerController()
         
         imagePicker.delegate = self
@@ -422,21 +433,17 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     public func takePhoto(sender: UIButton?) {
-        sender?.imageView?.startAnimating()
-        
-        buttonsEnabled = false
-        
-        cameraController?.takePhoto { (image, error) -> Void in
+        cameraController?.takePhoto { image, error in
             if error == nil {
-                self.cameraController?.stopCaptureSession()
-                dispatch_async(dispatch_get_main_queue(), {
-                    [unowned self] in
+                self.cameraController?.stopCamera()
+                
+                dispatch_async(dispatch_get_main_queue()) {
                     if let completionBlock = self.completionBlock {
                         completionBlock(image)
                     } else {
                         self.showEditorNavigationControllerWithImage(image)
                     }
-                    })
+                }
             }
         }
     }
@@ -478,6 +485,7 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     // MARK: - Completion
+    
     private func editorCompletionBlock(result: IMGLYEditorResult, image: UIImage?) {
         if let image = image where result == .Done {
             UIImageWriteToSavedPhotosAlbum(image, self, "image:didFinishSavingWithError:contextInfo:", nil)
@@ -493,41 +501,69 @@ public class IMGLYCameraViewController: UIViewController {
 }
 
 extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
-    public func captureSessionStarted() {
+    public func cameraControllerDidStartCamera(cameraController: IMGLYCameraController) {
         dispatch_async(dispatch_get_main_queue()) {
             self.buttonsEnabled = true
         }
     }
     
-    public func captureSessionStopped() {
-        
-    }
-    
-    public func willToggleCamera() {
-        
-    }
-    
-    public func didToggleCamera() {
+    public func cameraControllerDidStopCamera(cameraController: IMGLYCameraController) {
         dispatch_async(dispatch_get_main_queue()) {
-            if let cameraController = self.cameraController where cameraController.isFlashPresent() {
-                self.flashButton.hidden = false
-            }
-            else {
-                self.flashButton.hidden = true
-            }
+            self.buttonsEnabled = false
         }
     }
     
-    public func didSetFlashMode(flashMode: AVCaptureFlashMode) {
-        let bundle = NSBundle(forClass: self.dynamicType)
-        
-        switch(flashMode) {
-        case AVCaptureFlashMode.Auto:
-            self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection:nil), forState: UIControlState.Normal)
-        case AVCaptureFlashMode.On:
-            self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection:nil), forState: UIControlState.Normal)
-        case AVCaptureFlashMode.Off:
-            self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection:nil), forState: UIControlState.Normal)
+    public func cameraControllerDidStartStillImageCapture(cameraController: IMGLYCameraController) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.takePhotoButton.imageView?.startAnimating()
+            self.buttonsEnabled = false
+        }
+    }
+    
+    public func cameraControllerDidFailAuthorization(cameraController: IMGLYCameraController) {
+        dispatch_async(dispatch_get_main_queue()) {
+            let bundle = NSBundle(forClass: self.dynamicType)
+
+            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
+            
+            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
+                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            }
+            
+            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+            
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+            
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    public func cameraController(cameraController: IMGLYCameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateFlashButton()
+        }
+    }
+    
+    public func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateFlashButton()
+            self.switchCameraButton.hidden = !cameraController.moreThanOneCameraPresent
+        }
+    }
+    
+    public func cameraController(cameraController: IMGLYCameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.buttonsEnabled = false
+        }
+    }
+    
+    public func cameraController(cameraController: IMGLYCameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.buttonsEnabled = true
+            self.updateFlashButton()
         }
     }
 }

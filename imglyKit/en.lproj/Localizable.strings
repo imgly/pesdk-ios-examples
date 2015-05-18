@@ -6,6 +6,12 @@
   Copyright (c) 2015 9elements GmbH. All rights reserved.
 */
 
+// Camera View Controller
+"camera-view-controller.camera-no-permission.title" = "No permission";
+"camera-view-controller.camera-no-permission.message" = "Permission to use Camera are required, please change privacy settings.";
+"camera-view-controller.camera-no-permission.settings" = "Settings";
+"camera-view-controller.camera-no-permission.cancel" = "Cancel";
+
 // Main Editor
 "main-editor.title" = "Editor";
 "main-editor.button.magic" = "Magic";

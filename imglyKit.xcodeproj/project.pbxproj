@@ -10,9 +10,9 @@
 		2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */; };
 		2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */; };
 		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
+		2BEE5B321B063E7800FDF0F7 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
-		2BF4D3AB1AF114FA00C801B2 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A91AF114FA00C801B2 /* IMGLYCameraController.swift */; };
 		2BF4D3AC1AF114FA00C801B2 /* IMGLYCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */; };
 		2BF4D3CC1AF1150400C801B2 /* IMGLYActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AD1AF1150400C801B2 /* IMGLYActionButton.swift */; };
 		2BF4D3CD1AF1150500C801B2 /* IMGLYBoxGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AE1AF1150400C801B2 /* IMGLYBoxGradientView.swift */; };
@@ -223,11 +223,11 @@
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
 		2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYZoomingImageView.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYAnimationDelegate.swift; sourceTree = "<group>"; };
+		2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYCameraController.swift; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D3891AF1139600C801B2 /* imglyKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imglyKit.h; sourceTree = "<group>"; };
 		2BF4D3A71AF114F000C801B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		2BF4D3A91AF114FA00C801B2 /* IMGLYCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYCameraController.swift; sourceTree = "<group>"; };
 		2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYCameraViewController.swift; sourceTree = "<group>"; };
 		2BF4D3AD1AF1150400C801B2 /* IMGLYActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYActionButton.swift; sourceTree = "<group>"; };
 		2BF4D3AE1AF1150400C801B2 /* IMGLYBoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYBoxGradientView.swift; sourceTree = "<group>"; };
@@ -492,7 +492,7 @@
 			isa = PBXGroup;
 			children = (
 				2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */,
-				2BF4D3A91AF114FA00C801B2 /* IMGLYCameraController.swift */,
+				2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */,
 			);
 			path = Camera;
@@ -958,7 +958,6 @@
 				2BF4D52D1AF1155E00C801B2 /* IMGLYSepiaHighFilter.swift in Sources */,
 				2BF4D5441AF1159D00C801B2 /* IMGLYInstanceFactory.swift in Sources */,
 				2BF4D51C1AF1155E00C801B2 /* IMGLYLomoFilter.swift in Sources */,
-				2BF4D3AB1AF114FA00C801B2 /* IMGLYCameraController.swift in Sources */,
 				2BF4D3DC1AF1150500C801B2 /* IMGLYImageCaptionButton.swift in Sources */,
 				2BF4D5161AF1155E00C801B2 /* IMGLYK6Filter.swift in Sources */,
 				2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */,
@@ -1013,6 +1012,7 @@
 				2BF4D5321AF1155E00C801B2 /* IMGLYSteelFilter.swift in Sources */,
 				2BF4D52A1AF1155E00C801B2 /* IMGLYPro400Filter.swift in Sources */,
 				2BF4D50D1AF1155E00C801B2 /* IMGLYFixieFilter.swift in Sources */,
+				2BEE5B321B063E7800FDF0F7 /* IMGLYCameraController.swift in Sources */,
 				2BF4D5171AF1155E00C801B2 /* IMGLYKDynamicFilter.swift in Sources */,
 				2BF4D5041AF1155E00C801B2 /* IMGLYColorfulFilter.swift in Sources */,
 				2BF4D5281AF1155E00C801B2 /* IMGLYPolaSXFIlter.swift in Sources */,
