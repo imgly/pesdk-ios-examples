@@ -19,6 +19,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         slider.value = self.initialValue
         slider.continuous = true
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
+        slider.addTarget(self, action: "sliderTouchedUpInside:", forControlEvents: .TouchUpInside)
         slider.setTranslatesAutoresizingMaskIntoConstraints(false)
         return slider
     }()
@@ -76,6 +77,14 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         }
     }
     
+    @objc private func sliderTouchedUpInside(sender: UISlider?) {
+        changeTimer?.invalidate()
+        changeTimer = nil
+        
+        valueChanged(slider.value)
+        updatePreviewImage()
+    }
+    
     @objc private func update(timer: NSTimer) {
         valueChanged(slider.value)
         updatePreviewImageWithCompletion {
@@ -88,6 +97,5 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     public func valueChanged(value: Float) {
         // Subclasses should override this
     }
-
 
 }

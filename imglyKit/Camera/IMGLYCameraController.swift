@@ -287,8 +287,8 @@ public class IMGLYCameraController: NSObject {
                     let focusIndicatorLocation = recognizer.locationInView(previewView)
                     showFocusIndicatorLayerAtLocation(focusIndicatorLocation)
                     
-                    // TODO: Muss noch richtig berechnet werden
                     var pointOfInterest = CGPoint(x: focusPointLocation.x / CGRectGetWidth(videoFrame), y: focusPointLocation.y / CGRectGetHeight(videoFrame))
+                    pointOfInterest.x = 1 - pointOfInterest.x
                     
                     if let device = videoDeviceInput?.device where device.position == .Front {
                         pointOfInterest.y = 1 - pointOfInterest.y
