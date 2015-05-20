@@ -42,6 +42,7 @@ public class IMGLYCameraController: NSObject {
     
     dynamic private let session = AVCaptureSession()
     private let sessionQueue = dispatch_queue_create("capture_session_queue", nil)
+    private let sampleBufferQueue = dispatch_queue_create("sample_buffer_queue", nil)
     private var videoDeviceInput: AVCaptureDeviceInput?
     private var videoDataOutput: AVCaptureVideoDataOutput?
     dynamic private var stillImageOutput: AVCaptureStillImageOutput?
@@ -519,7 +520,7 @@ public class IMGLYCameraController: NSObject {
     
     private func setupOutputs() {
         let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
+        videoDataOutput.setSampleBufferDelegate(self, queue: self.sampleBufferQueue)
         if self.session.canAddOutput(videoDataOutput) {
             self.session.addOutput(videoDataOutput)
             self.videoDataOutput = videoDataOutput
@@ -537,6 +538,10 @@ public class IMGLYCameraController: NSObject {
     */
     public func startCamera() {
         assert(setupComplete, "setup() needs to be called before calling startCamera()")
+        
+        if session.running {
+            return
+        }
         
         startCameraWithCompletion(nil)
         
@@ -599,6 +604,10 @@ public class IMGLYCameraController: NSObject {
     */
     public func stopCamera() {
         assert(setupComplete, "setup() needs to be called before calling stopCamera()")
+        
+        if !session.running {
+            return
+        }
         
         stopCameraWithCompletion(nil)
         motionManager.stopAccelerometerUpdates()
