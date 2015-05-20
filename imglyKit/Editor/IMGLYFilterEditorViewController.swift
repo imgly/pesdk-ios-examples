@@ -69,12 +69,12 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
                         self.filterIntensitySlider.alpha = 1
                     }
                 }
-                
-                if filterType != self.fixedFilterStack.effectFilter.filterType {
-                    self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
-                    self.fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
-                    self.filterIntensitySlider.value = InitialFilterIntensity
-                }
+            }
+            
+            if filterType != self.fixedFilterStack.effectFilter.filterType {
+                self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+                self.fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
+                self.filterIntensitySlider.value = InitialFilterIntensity
             }
             
             self.updatePreviewImage()
