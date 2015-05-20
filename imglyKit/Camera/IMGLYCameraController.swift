@@ -143,7 +143,43 @@ public class IMGLYCameraController: NSObject {
             delegate?.cameraController?(self, willSwitchToCameraPosition: nextPosition)
             focusIndicatorLayer.hidden = true
             
+            let sessionGroup = dispatch_group_create()
+            
+            if let videoPreviewView = videoPreviewView {
+                // Hiding live preview
+                videoPreviewView.hidden = true
+                
+                // Adding a simple snapshot and immediately showing it
+                let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+                snapshot.transform = videoPreviewView.transform
+                snapshot.frame = videoPreviewView.frame
+                previewView.addSubview(snapshot)
+                
+                // Creating a snapshot with a UIBlurEffect added
+                let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+                snapshotWithBlur.transform = videoPreviewView.transform
+                snapshotWithBlur.frame = videoPreviewView.frame
+                
+                let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+                visualEffectView.frame = snapshotWithBlur.bounds
+                visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+                snapshotWithBlur.addSubview(visualEffectView)
+                
+                // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
+                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: .TransitionFlipFromLeft | .CurveEaseOut, completion: { _ in
+                    // Wait for camera to toggle
+                    dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
+                        // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                        UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0.2, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: { _ in
+                            // Deleting the blurred snapshot
+                            snapshotWithBlur.removeFromSuperview()
+                        })
+                    }
+                })
+            }
+            
             dispatch_async(sessionQueue) {
+                dispatch_group_enter(sessionGroup)
                 self.session.beginConfiguration()
                 self.session.removeInput(self.videoDeviceInput)
                 
@@ -152,24 +188,7 @@ public class IMGLYCameraController: NSObject {
                 self.addObserversToInputDevice()
                 
                 self.session.commitConfiguration()
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let videoPreviewView = self.videoPreviewView, device = self.videoDeviceInput?.device {
-                        if device.position == .Front {
-                            // front camera is mirrored so we need to transform the preview view
-                            CATransaction.begin()
-                            CATransaction.setDisableActions(true)
-                            videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-                            videoPreviewView.transform = CGAffineTransformScale(videoPreviewView.transform, 1, -1)
-                            CATransaction.commit()
-                        } else {
-                            CATransaction.begin()
-                            CATransaction.setDisableActions(true)
-                            videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-                            CATransaction.commit()
-                        }
-                    }
-                }
+                dispatch_group_leave(sessionGroup)
                 
                 self.delegate?.cameraController?(self, didSwitchToCameraPosition: nextPosition)
             }
@@ -483,6 +502,18 @@ public class IMGLYCameraController: NSObject {
         if self.session.canAddInput(videoDeviceInput) {
             self.session.addInput(videoDeviceInput)
             self.videoDeviceInput = videoDeviceInput
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                if let videoPreviewView = self.videoPreviewView, device = videoDevice {
+                    if device.position == .Front {
+                        // front camera is mirrored so we need to transform the preview view
+                        videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+                        videoPreviewView.transform = CGAffineTransformScale(videoPreviewView.transform, 1, -1)
+                    } else {
+                        videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+                    }
+                }
+            }
         }
     }
     
