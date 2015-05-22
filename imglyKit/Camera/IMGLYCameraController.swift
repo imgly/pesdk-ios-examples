@@ -12,6 +12,44 @@ import OpenGLES
 import GLKit
 import CoreMotion
 
+struct IMGLYSDKVersion: Comparable, Printable {
+    let majorVersion: Int
+    let minorVersion: Int
+    let patchVersion: Int
+    
+    var description: String {
+        return "\(majorVersion).\(minorVersion).\(patchVersion)"
+    }
+}
+
+func ==(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+    return (lhs.majorVersion == rhs.majorVersion) && (lhs.minorVersion == rhs.minorVersion) && (lhs.patchVersion == rhs.patchVersion)
+}
+
+func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+    if lhs.majorVersion < rhs.majorVersion {
+        return true
+    } else if lhs.majorVersion > rhs.majorVersion {
+        return false
+    }
+    
+    if lhs.minorVersion < rhs.minorVersion {
+        return true
+    } else if lhs.minorVersion > rhs.minorVersion {
+        return false
+    }
+    
+    if lhs.patchVersion < rhs.patchVersion {
+        return true
+    } else if lhs.patchVersion > rhs.patchVersion {
+        return false
+    }
+    
+    return false
+}
+
+let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 1, patchVersion: 5)
+
 private let kIMGLYIndicatorSize = CGFloat(75)
 private var CapturingStillImageContext = 0
 private var SessionRunningAndDeviceAuthorizedContext = 0
@@ -104,6 +142,40 @@ public class IMGLYCameraController: NSObject {
             }
         } else {
             super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        }
+    }
+    
+    // MARK: - SDK
+    
+    private func versionComponentsFromString(version: String) -> (majorVersion: Int, minorVersion: Int, patchVersion: Int)? {
+        let versionComponents = version.componentsSeparatedByString(".")
+        if count(versionComponents) == 3 {
+            if let major = versionComponents[0].toInt(), minor = versionComponents[1].toInt(), patch = versionComponents[2].toInt() {
+                return (major, minor, patch)
+            }
+        }
+        
+        return nil
+    }
+    
+    private func checkSDKVersion() {
+        let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
+        if let appIdentifier = appIdentifier, url = NSURL(string: "http://sdk.img.ly/version.json?sdk=ios&app=\(appIdentifier)") {
+            let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
+                if let data = data {
+                    let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: String]
+                    
+                    if let json = json, version = json["version"], versionComponents = self.versionComponentsFromString(version) {
+                        let remoteVersion = IMGLYSDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
+                        
+                        if CurrentSDKVersion < remoteVersion {
+                            println("Your version of the img.ly SDK is outdated. You are using version \(CurrentSDKVersion), the latest available version is \(remoteVersion). Please consider updating.")
+                        }
+                    }
+                }
+            }
+            
+            task.resume()
         }
     }
     
@@ -448,6 +520,7 @@ public class IMGLYCameraController: NSObject {
             return
         }
         
+        checkSDKVersion()
         checkDeviceAuthorizationStatus()
         
         glContext = EAGLContext(API: .OpenGLES2)
