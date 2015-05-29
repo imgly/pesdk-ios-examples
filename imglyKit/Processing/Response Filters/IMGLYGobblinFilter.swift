@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class IMGLYGobblinFilter: IMGLYResponseFilter {
+public class IMGLYGoblinFilter: IMGLYResponseFilter {
     init() {
-        super.init(responseName: "Gobblin")
-        self.imgly_displayName = "Gobblin"
+        super.init(responseName: "Goblin")
+        self.imgly_displayName = "Goblin"
     }
     
     required public init(coder aDecoder: NSCoder) {
@@ -20,7 +20,7 @@ public class IMGLYGobblinFilter: IMGLYResponseFilter {
     
     public override var filterType:IMGLYFilterType {
         get {
-            return IMGLYFilterType.Gobblin
+            return IMGLYFilterType.Goblin
         }
     }
 }

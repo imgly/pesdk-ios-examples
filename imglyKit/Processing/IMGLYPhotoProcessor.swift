@@ -36,7 +36,7 @@ All types of response-filters.
     Celsius,
     Texas,
     Lomo,
-    Gobblin,
+    Goblin,
     Sin,
     Mellow,
     Sunny,

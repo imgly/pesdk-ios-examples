@@ -197,7 +197,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 var newHeight = CGFloat(roundf(Float(highResolutionImage.size.height) * Float(scale)))
                 lowResolutionImage = highResolutionImage.imgly_normalizedImageOfSize(CGSize(width: newWidth, height: newHeight))
             } else {
-                lowResolutionImage = highResolutionImage
+                lowResolutionImage = highResolutionImage.imgly_normalizedImage
             }
         }
     }

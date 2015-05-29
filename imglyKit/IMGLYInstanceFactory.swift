@@ -76,8 +76,8 @@ import GLKit
             return IMGLYTexasFilter()
         case IMGLYFilterType.Lomo:
             return IMGLYLomoFilter()
-        case IMGLYFilterType.Gobblin:
-            return IMGLYGobblinFilter()
+        case IMGLYFilterType.Goblin:
+            return IMGLYGoblinFilter()
         case IMGLYFilterType.Sin:
             return IMGLYSinFilter()
         case IMGLYFilterType.Mellow:
@@ -253,7 +253,7 @@ import GLKit
             .Celsius,
             .Texas,
             .Lomo,
-            .Gobblin,
+            .Goblin,
             .Sin,
             .Mellow,
             .Sunny,
