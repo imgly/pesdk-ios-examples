@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import GLKit
 
 /**
   A singleton that is out to create objects. It is used within the SDK to 

@@ -6,14 +6,25 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
+#if os(iOS)
 import UIKit
 import CoreImage
+#elseif os(OSX)
+import AppKit
+import QuartzCore
+#endif
 
 public class IMGLYStickerFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
+    
     /// The sticker that should be rendered.
+    #if os(iOS)
     public var sticker: UIImage?
+    #elseif os(OSX)
+    public var sticker: NSImage?
+    #endif
+    
     /// The relative frame of the sticker within the image.
     public var frame = CGRect()
     
@@ -43,6 +54,8 @@ public class IMGLYStickerFilter: CIFilter {
         return filter.outputImage
     }
     
+    #if os(iOS)
+    
     private func createStickerImage() -> UIImage {
         var rect = inputImage!.extent()
         var imageSize = rect.size
@@ -56,6 +69,15 @@ public class IMGLYStickerFilter: CIFilter {
         UIGraphicsEndImageContext();
         return image
     }
+    
+    #elseif os(OSX)
+    
+    private func createStickerImage() -> NSImage {
+        // TODO
+        return NSImage()
+    }
+    
+    #endif
 }
 
 extension IMGLYStickerFilter: NSCopying {

@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import GLKit
+#if os(iOS)
+import CoreImage
+#elseif os(OSX)
+import QuartzCore
+#endif
 
 @objc public protocol IMGLYFilterTypeProtocol {
     var filterType: IMGLYFilterType { get }

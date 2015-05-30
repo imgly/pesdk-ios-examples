@@ -6,7 +6,12 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
+#if os(iOS)
 import CoreImage
+#elseif os(OSX)
+import QuartzCore
+#endif
+
 import CoreGraphics
 
 /**

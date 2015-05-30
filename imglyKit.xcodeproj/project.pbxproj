@@ -108,7 +108,7 @@
 		2B1ADA971B19C8E500C98522 /* IMGLYStickerFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4A61AF1154B00C801B2 /* IMGLYStickerFilter.swift */; };
 		2B1ADA981B19C8E500C98522 /* IMGLYTextFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4A71AF1154B00C801B2 /* IMGLYTextFilter.swift */; };
 		2B1ADA991B19C8E500C98522 /* IMGLYTiltshiftFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4A81AF1154B00C801B2 /* IMGLYTiltshiftFilter.swift */; };
-		2B1ADA9A1B19C8E500C98522 /* LUTToNSDataConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D53B1AF1156F00C801B2 /* LUTToNSDataConverter.h */; };
+		2B1ADA9A1B19C8E500C98522 /* LUTToNSDataConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D53B1AF1156F00C801B2 /* LUTToNSDataConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B1ADA9B1B19C8E500C98522 /* LUTToNSDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D53C1AF1156F00C801B2 /* LUTToNSDataConverter.m */; };
 		2B1ADA9C1B19C8EE00C98522 /* IMGLYA15Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4B31AF1155D00C801B2 /* IMGLYA15Filter.swift */; };
 		2B1ADA9D1B19C8EE00C98522 /* IMGLYAD1920Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4B41AF1155D00C801B2 /* IMGLYAD1920Filter.swift */; };
@@ -178,6 +178,9 @@
 		2B1ADADD1B19C8EE00C98522 /* IMGLYTwilightFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4F41AF1155E00C801B2 /* IMGLYTwilightFilter.swift */; };
 		2B1ADADE1B19C8EE00C98522 /* IMGLYWinterFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4F51AF1155E00C801B2 /* IMGLYWinterFilter.swift */; };
 		2B1ADADF1B19C8EE00C98522 /* IMGLYX400Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4F61AF1155E00C801B2 /* IMGLYX400Filter.swift */; };
+		2B1ADAE01B19CBB900C98522 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */; };
+		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
 		2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */; };
 		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
 		2BEE5B321B063E7800FDF0F7 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */; };
@@ -393,6 +396,8 @@
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
 		2B1ADA0F1B19C3F300C98522 /* IMGLYInstanceFactoryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYInstanceFactoryExtension.swift; sourceTree = "<group>"; };
 		2B1ADA1D1B19C86300C98522 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
+		2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAffineTransformExtension.swift; sourceTree = "<group>"; };
 		2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYZoomingImageView.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYAnimationDelegate.swift; sourceTree = "<group>"; };
 		2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYCameraController.swift; sourceTree = "<group>"; };
@@ -664,6 +669,8 @@
 			isa = PBXGroup;
 			children = (
 				2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */,
+				2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */,
+				2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -955,6 +962,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B1ADAE01B19CBB900C98522 /* imglyKit.h in Headers */,
 				2B1ADA9A1B19C8E500C98522 /* LUTToNSDataConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1299,6 +1307,8 @@
 				2B1ADAAF1B19C8EE00C98522 /* IMGLYEppHighContrastFilter.swift in Sources */,
 				2B1ADADD1B19C8EE00C98522 /* IMGLYTwilightFilter.swift in Sources */,
 				2B1ADA921B19C8E500C98522 /* IMGLYCropFilter.swift in Sources */,
+				2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */,
+				2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */,
 				2B1ADA931B19C8E500C98522 /* IMGLYEnhancementFilter.swift in Sources */,
 				2B1ADAB01B19C8EE00C98522 /* IMGLYEveningFilter.swift in Sources */,
 				2B1ADAC71B19C8EE00C98522 /* IMGLYNoGreenFilter.swift in Sources */,
@@ -1484,7 +1494,7 @@
 				INFOPLIST_FILE = "imglyKit/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = imglyKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -1503,7 +1513,7 @@
 				INFOPLIST_FILE = "imglyKit/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = imglyKit;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;

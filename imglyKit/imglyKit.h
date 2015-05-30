@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT double imglyKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char imglyKitVersionString[];

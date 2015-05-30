@@ -7,7 +7,13 @@
 //
 
 import Foundation
-import GLKit
+#if os(iOS)
+import CoreImage
+import UIKit
+#elseif os(OSX)
+import QuartzCore
+import AppKit
+#endif
 
 /**
 All types of response-filters.
@@ -107,10 +113,30 @@ All types of response-filters.
         return currentImage
     }
     
+    #if os(iOS)
+    
     public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
         var imageOrientation = image.imageOrientation
         var filteredCIImage = processWithCIImage(CIImage(image: image), filters: filters)
         var filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent())
         return UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
     }
+    
+    #elseif os(OSX)
+
+    public class func processWithNSImage(image: NSImage, filters: [CIFilter]) -> NSImage? {
+        // TODO: Check if return has to be an optional
+        let filteredCIImage = processWithCIImage(CIImage(data: image.TIFFRepresentation), filters: filters)
+        
+        if let filteredCIImage = filteredCIImage {
+            let rep = NSCIImageRep(CIImage: filteredCIImage)
+            let image = NSImage(size: NSSize(width: filteredCIImage.extent().size.width, height: filteredCIImage.extent().size.height))
+            image.addRepresentation(rep)
+            return image
+        }
+        
+        return nil
+    }
+    
+    #endif
 }

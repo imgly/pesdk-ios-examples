@@ -6,8 +6,13 @@
 //  Copyright (c) 2015 9elements GmbH. All rights reserved.
 //
 
+#if os(iOS)
 import CoreImage
 import UIKit
+#elseif os(OSX)
+import QuartzCore
+import AppKit
+#endif
 
 public class IMGLYTextFilter : CIFilter {
     /// A CIImage object that serves as input for the filter.
@@ -22,7 +27,11 @@ public class IMGLYTextFilter : CIFilter {
     /// The relative frame of the text within the image.
     public var frame = CGRect()
     /// The color of the text.
+    #if os(iOS)
     public var color = UIColor.whiteColor()
+    #elseif os(OSX)
+    public var color = NSColor.whiteColor()
+    #endif
     
     override init() {
         super.init()
@@ -49,6 +58,8 @@ public class IMGLYTextFilter : CIFilter {
         return filter.outputImage
     }
     
+    #if os(iOS)
+    
     private func createTextImage() -> UIImage {
         var rect = inputImage!.extent()
         var imageSize = rect.size
@@ -63,6 +74,15 @@ public class IMGLYTextFilter : CIFilter {
         UIGraphicsEndImageContext();
         return image
     }
+    
+    #elseif os(OSX)
+    
+    private func createTextImage() -> NSImage {
+        // TODO
+        return NSImage()
+    }
+
+    #endif
 }
 
 extension IMGLYTextFilter: NSCopying {
@@ -73,7 +93,12 @@ extension IMGLYTextFilter: NSCopying {
         copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
         copy.fontScaleFactor = fontScaleFactor
         copy.frame = frame
+        #if os(iOS)
         copy.color = color.copyWithZone(zone) as! UIColor
+        #elseif os(OSX)
+        copy.color = color.copyWithZone(zone) as! NSColor
+        #endif
+        
         return copy
     }
 }

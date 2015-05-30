@@ -7,7 +7,11 @@
 //
 
 import Foundation
-import GLKit
+#if os(iOS)
+import CoreImage
+#elseif os(OSX)
+import QuartzCore
+#endif
 
 /**
 *  A filter that does nothing. It is used within the fixed-filterstack.

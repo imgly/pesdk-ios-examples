@@ -7,7 +7,12 @@
 //
 
 #import "LUTToNSDataConverter.h"
+#if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
 #import <UIKit/UIKit.h>
+#elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
+#import <AppKit/AppKit.h>
+#import <imglyKit/imglyKit-Swift.h>
+#endif
 #import <Accelerate/Accelerate.h>
 
 static const int kDimension = 64;
@@ -74,7 +79,13 @@ static NSData *identityLUT;
  realised by the LUT is applied with a core image standard filter
  */
 + (nullable NSData *)colorCubeDataFromLUT:(nonnull NSString *)name {
+    #if defined(__IPHONE_OS_VERSION_MIN_REQUIRED)
     UIImage *image = [UIImage imageNamed:name inBundle:[NSBundle bundleForClass:self.class] compatibleWithTraitCollection:nil];
+    #elif defined(__MAC_OS_X_VERSION_MIN_REQUIRED)
+    NSBundle *bundle = [NSBundle bundleForClass:self.class];
+    NSImage *image = [bundle imageForResource:name];
+    image.name = name;
+    #endif
     
     if (!image) {
         return nil;
