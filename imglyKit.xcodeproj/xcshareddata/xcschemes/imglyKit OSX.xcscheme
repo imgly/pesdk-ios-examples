@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2BF4D3831AF1139600C801B2"
+               BlueprintIdentifier = "2B1ADA1C1B19C86300C98522"
                BuildableName = "imglyKit.framework"
-               BlueprintName = "imglyKit"
+               BlueprintName = "imglyKit OSX"
                ReferencedContainer = "container:imglyKit.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2BF4D3831AF1139600C801B2"
+            BlueprintIdentifier = "2B1ADA1C1B19C86300C98522"
             BuildableName = "imglyKit.framework"
-            BlueprintName = "imglyKit"
+            BlueprintName = "imglyKit OSX"
             ReferencedContainer = "container:imglyKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2BF4D3831AF1139600C801B2"
+            BlueprintIdentifier = "2B1ADA1C1B19C86300C98522"
             BuildableName = "imglyKit.framework"
-            BlueprintName = "imglyKit"
+            BlueprintName = "imglyKit OSX"
             ReferencedContainer = "container:imglyKit.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
