@@ -58,7 +58,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         return view
         }()
     
-    private let cropRectComponent = IMGLYInstanceFactory.sharedInstance.cropRectComponent()
+    private let cropRectComponent = IMGLYInstanceFactory.cropRectComponent()
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
     private var cropRectTopBound = CGFloat(0)

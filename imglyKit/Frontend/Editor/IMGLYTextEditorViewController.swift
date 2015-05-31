@@ -90,7 +90,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         let bundle = NSBundle(forClass: self.dynamicType)
         navigationItem.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
-        IMGLYInstanceFactory.sharedInstance.fontImporter().importFonts()
+        IMGLYInstanceFactory.fontImporter().importFonts()
         
         configureColorSelectorView()
         configureTextClipView()

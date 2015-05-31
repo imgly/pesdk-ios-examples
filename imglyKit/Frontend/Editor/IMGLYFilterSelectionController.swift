@@ -49,7 +49,7 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
 
 extension IMGLYFilterSelectionController: UICollectionViewDataSource {
     public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(IMGLYInstanceFactory.sharedInstance.availableFilterList)
+        return count(IMGLYInstanceFactory.availableFilterList)
     }
     
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -57,8 +57,8 @@ extension IMGLYFilterSelectionController: UICollectionViewDataSource {
         
         if let filterCell = cell as? IMGLYFilterCollectionViewCell {
             let bundle = NSBundle(forClass: self.dynamicType)
-            let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
-            let filter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+            let filterType = IMGLYInstanceFactory.availableFilterList[indexPath.item]
+            let filter = IMGLYInstanceFactory.effectFilterWithType(filterType)
             
             filterCell.textLabel.text = filter.imgly_displayName
             filterCell.imageView.layer.cornerRadius = 3
@@ -109,7 +109,7 @@ extension IMGLYFilterSelectionController: UICollectionViewDelegate {
         let extendedCellRect = CGRectInset(layoutAttributes.frame, -60, 0)
         collectionView.scrollRectToVisible(extendedCellRect, animated: true)
         
-        let filterType = IMGLYInstanceFactory.sharedInstance.availableFilterList[indexPath.item]
+        let filterType = IMGLYInstanceFactory.availableFilterList[indexPath.item]
         
         if selectedCellIndex == indexPath.item {
             selectedBlock?(filterType)

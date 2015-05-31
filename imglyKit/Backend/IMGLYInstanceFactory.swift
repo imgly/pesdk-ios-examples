@@ -13,13 +13,6 @@ import Foundation
   create filters, views, viewcontrollers and such.
 */
 @objc public class IMGLYInstanceFactory {
-    public class var sharedInstance : IMGLYInstanceFactory {
-        struct Static {
-            static let instance = IMGLYInstanceFactory()
-        }
-        return Static.instance
-    }
-    
     /**
     Creates a response filter with the specified type.
     
@@ -27,7 +20,7 @@ import Foundation
     
     :returns: A CIFilter object that realizes the desired filter.
     */
-    public func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
+    public class func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
         switch(type) {
         case IMGLYFilterType.None:
             return IMGLYNoneFilter()
@@ -173,7 +166,7 @@ import Foundation
     
     :returns: A text filter
     */
-    public func textFilter() -> IMGLYTextFilter {
+    public class func textFilter() -> IMGLYTextFilter {
         return IMGLYTextFilter()
     }
     
@@ -182,7 +175,7 @@ import Foundation
     
     :returns: A sticker filter
     */
-    public func stickerFilter() -> IMGLYStickerFilter {
+    public class func stickerFilter() -> IMGLYStickerFilter {
         return IMGLYStickerFilter()
     }
 
@@ -191,7 +184,7 @@ import Foundation
     
     :returns: A crop filter
     */
-    public func orientationCropFilter() -> IMGLYOrientationCropFilter {
+    public class func orientationCropFilter() -> IMGLYOrientationCropFilter {
         return IMGLYOrientationCropFilter()
     }
     
@@ -200,7 +193,7 @@ import Foundation
     
     :returns: A tiltshift filter.
     */
-    public func tiltShiftFilter() -> IMGLYTiltshiftFilter {
+    public class func tiltShiftFilter() -> IMGLYTiltshiftFilter {
         return IMGLYTiltshiftFilter()
     }
     
@@ -209,7 +202,7 @@ import Foundation
     
     :returns: A color-adjustment filter.
     */
-    public func colorAdjustmentFilter() -> IMGLYContrastBrightnessSaturationFilter {
+    public class func colorAdjustmentFilter() -> IMGLYContrastBrightnessSaturationFilter {
         return IMGLYContrastBrightnessSaturationFilter()
     }
     
@@ -218,7 +211,7 @@ import Foundation
     
     :returns: A enhancement filter.
     */
-    public func enhancementFilter() -> IMGLYEnhancementFilter {
+    public class func enhancementFilter() -> IMGLYEnhancementFilter {
         return IMGLYEnhancementFilter()
     }
     
@@ -227,7 +220,7 @@ import Foundation
     Change this list to select the set of filters you want to present to the user.
     :returns: An array of filter types.
     */
-    public var availableFilterList: [IMGLYFilterType] {
+    public class var availableFilterList: [IMGLYFilterType] {
         return [
             .None,
             .K1,
@@ -308,7 +301,7 @@ import Foundation
     
     :returns: An array of fontnames.
     */
-    public var availableFontsList: [String] {
+    public class var availableFontsList: [String] {
         return [
             "AmericanTypewriter",
             "Avenir-Heavy",
@@ -337,7 +330,7 @@ import Foundation
         ]
     }
     
-    public func fontImporter() -> IMGLYFontImporter {
+    public class func fontImporter() -> IMGLYFontImporter {
         return IMGLYFontImporter()
     }    
 

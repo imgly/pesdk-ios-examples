@@ -20,17 +20,17 @@ public class IMGLYFixedFilterStack: NSObject {
     // MARK: - Properties
     
     public var enhancementFilter: IMGLYEnhancementFilter = {
-        let filter = IMGLYInstanceFactory.sharedInstance.enhancementFilter()
+        let filter = IMGLYInstanceFactory.enhancementFilter()
         filter.enabled = false
         filter.storeEnhancedImage = true
         return filter
         }()
     
-    public var orientationCropFilter = IMGLYInstanceFactory.sharedInstance.orientationCropFilter()
-    public var effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(IMGLYFilterType.None)
-    public var brightnessFilter = IMGLYInstanceFactory.sharedInstance.colorAdjustmentFilter()
-    public var tiltShiftFilter = IMGLYInstanceFactory.sharedInstance.tiltShiftFilter()
-    public var textFilter = IMGLYInstanceFactory.sharedInstance.textFilter()
+    public var orientationCropFilter = IMGLYInstanceFactory.orientationCropFilter()
+    public var effectFilter = IMGLYInstanceFactory.effectFilterWithType(IMGLYFilterType.None)
+    public var brightnessFilter = IMGLYInstanceFactory.colorAdjustmentFilter()
+    public var tiltShiftFilter = IMGLYInstanceFactory.tiltShiftFilter()
+    public var textFilter = IMGLYInstanceFactory.textFilter()
     public var stickerFilters = [CIFilter]()
     
     public var activeFilters: [CIFilter] {

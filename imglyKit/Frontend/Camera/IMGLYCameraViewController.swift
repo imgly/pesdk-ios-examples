@@ -315,7 +315,7 @@ public class IMGLYCameraViewController: UIViewController {
     private func configureFilterSelectionController() {
         filterSelectionController.selectedBlock = { [unowned self] filterType in
             if let cameraController = self.cameraController where cameraController.effectFilter.filterType != filterType {
-                cameraController.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(filterType)
+                cameraController.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
                 cameraController.effectFilter.inputIntensity = InitialFilterIntensity
                 self.filterIntensitySlider.value = InitialFilterIntensity
             }

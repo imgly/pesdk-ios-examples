@@ -30,7 +30,7 @@ public class IMGLYFontSelectorView: UIScrollView {
     }
     
     private func commonInit() {       
-        fontNames = IMGLYInstanceFactory.sharedInstance.availableFontsList
+        fontNames = IMGLYInstanceFactory.availableFontsList
         configureFontButtons()
     }
     

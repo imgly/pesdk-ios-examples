@@ -129,7 +129,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         
         navigationController?.delegate = self
         
-        fixedFilterStack.effectFilter = IMGLYInstanceFactory.sharedInstance.effectFilterWithType(initialFilterType)
+        fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(initialFilterType)
         fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
         
         updatePreviewImage()
@@ -167,7 +167,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 updatePreviewImage()
             }
         } else {
-            if let viewController = IMGLYInstanceFactory.sharedInstance.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
+            if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
                 viewController.lowResolutionImage = lowResolutionImage
                 viewController.previewImageView.image = previewImageView.image
                 viewController.completionHandler = subEditorDidComplete
