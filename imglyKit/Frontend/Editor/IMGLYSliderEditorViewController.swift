@@ -79,10 +79,11 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     
     @objc private func sliderTouchedUpInside(sender: UISlider?) {
         changeTimer?.invalidate()
-        changeTimer = nil
         
         valueChanged(slider.value)
-        updatePreviewImage()
+        updatePreviewImageWithCompletion {
+            self.changeTimer = nil
+        }
     }
     
     @objc private func update(timer: NSTimer) {

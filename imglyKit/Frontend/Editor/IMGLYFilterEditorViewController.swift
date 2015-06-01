@@ -131,11 +131,11 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     
     @objc private func sliderTouchedUpInside(sender: UISlider?) {
         changeTimer?.invalidate()
-        changeTimer = nil
         
         fixedFilterStack.effectFilter.inputIntensity = filterIntensitySlider.value
         shouldShowActivityIndicator = false
         updatePreviewImageWithCompletion {
+            self.changeTimer = nil
             self.shouldShowActivityIndicator = true
         }
     }
