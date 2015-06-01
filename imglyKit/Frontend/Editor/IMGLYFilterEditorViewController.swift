@@ -34,7 +34,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         }()
     
     private var changeTimer: NSTimer?
-    private var updateInterval: NSTimeInterval = 0.1
+    private var updateInterval: NSTimeInterval = 0.01
     
     // MARK: - UIViewController
     
@@ -57,32 +57,36 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Configuration
     
     private func configureFilterSelectionController() {
-        filterSelectionController.selectedBlock = { [unowned self] filterType in
+        filterSelectionController.selectedBlock = { [weak self] filterType in
             if filterType == .None {
-                if self.filterIntensitySlider.alpha > 0 {
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
                     UIView.animateWithDuration(0.3) {
-                        self.filterIntensitySlider.alpha = 0
+                        filterIntensitySlider.alpha = 0
                     }
                 }
             } else {
-                if self.filterIntensitySlider.alpha < 1 {
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
                     UIView.animateWithDuration(0.3) {
-                        self.filterIntensitySlider.alpha = 1
+                        filterIntensitySlider.alpha = 1
                     }
                 }
             }
             
-            if filterType != self.fixedFilterStack.effectFilter.filterType {
-                self.fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
-                self.fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
-                self.filterIntensitySlider.value = InitialFilterIntensity
+            if let fixedFilterStack = self?.fixedFilterStack where filterType != fixedFilterStack.effectFilter.filterType {
+                fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
+                fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
+                self?.filterIntensitySlider.value = InitialFilterIntensity
             }
             
-            self.updatePreviewImage()
+            self?.updatePreviewImage()
         }
         
-        filterSelectionController.activeFilterType = { [unowned self] in
-            return self.fixedFilterStack.effectFilter.filterType
+        filterSelectionController.activeFilterType = { [weak self] in
+            if let fixedFilterStack = self?.fixedFilterStack {
+                return fixedFilterStack.effectFilter.filterType
+            }
+            
+            return nil
         }
         
         let views = [ "filterSelectionView" : filterSelectionController.view ]

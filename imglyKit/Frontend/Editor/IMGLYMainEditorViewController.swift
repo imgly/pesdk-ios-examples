@@ -205,7 +205,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     private func updatePreviewImage() {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            dispatch_async(PhotoProcessorQueue) {
                 let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -225,7 +225,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
             
             if let highResolutionImage = self.highResolutionImage {
                 sender?.enabled = false
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+                dispatch_async(PhotoProcessorQueue) {
                     filteredHighResolutionImage = IMGLYPhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
                     
                     dispatch_async(dispatch_get_main_queue()) {

@@ -313,33 +313,33 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureFilterSelectionController() {
-        filterSelectionController.selectedBlock = { [unowned self] filterType in
-            if let cameraController = self.cameraController where cameraController.effectFilter.filterType != filterType {
+        filterSelectionController.selectedBlock = { [weak self] filterType in
+            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
                 cameraController.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
                 cameraController.effectFilter.inputIntensity = InitialFilterIntensity
-                self.filterIntensitySlider.value = InitialFilterIntensity
+                self?.filterIntensitySlider.value = InitialFilterIntensity
             }
             
             if filterType == .None {
-                self.hideSliderTimer?.invalidate()
-                if self.filterIntensitySlider.alpha > 0 {
+                self?.hideSliderTimer?.invalidate()
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
                     UIView.animateWithDuration(0.3) {
-                        self.filterIntensitySlider.alpha = 0
+                        filterIntensitySlider.alpha = 0
                     }
                 }
             } else {
-                if self.filterIntensitySlider.alpha < 1 {
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
                     UIView.animateWithDuration(0.3) {
-                        self.filterIntensitySlider.alpha = 1
+                        filterIntensitySlider.alpha = 1
                     }
                 }
                 
-                self.resetHideSliderTimer()
+                self?.resetHideSliderTimer()
             }
         }
         
-        filterSelectionController.activeFilterType = { [unowned self] in
-            if let cameraController = self.cameraController {
+        filterSelectionController.activeFilterType = { [weak self] in
+            if let cameraController = self?.cameraController {
                 return cameraController.effectFilter.filterType
             } else {
                 return .None

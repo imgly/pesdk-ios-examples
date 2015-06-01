@@ -8,6 +8,8 @@
 
 import UIKit
 
+internal let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
+
 public class IMGLYEditorViewController: UIViewController {
     
     // MARK: - Properties

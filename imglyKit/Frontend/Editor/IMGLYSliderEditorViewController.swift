@@ -40,7 +40,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     }
     
     private var changeTimer: NSTimer?
-    private var updateInterval: NSTimeInterval = 0.1
+    private var updateInterval: NSTimeInterval = 0.01
     
     // MARK: - UIViewController
 

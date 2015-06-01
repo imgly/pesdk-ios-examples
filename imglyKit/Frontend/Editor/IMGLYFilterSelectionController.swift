@@ -15,9 +15,7 @@ private let FilterActivationDuration = NSTimeInterval(0.15)
 private var FilterPreviews = [IMGLYFilterType : UIImage]()
 
 public typealias IMGLYFilterTypeSelectedBlock = (IMGLYFilterType) -> (Void)
-public typealias IMGLYFilterTypeActiveBlock = () -> (IMGLYFilterType)
-
-private let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
+public typealias IMGLYFilterTypeActiveBlock = () -> (IMGLYFilterType?)
 
 public class IMGLYFilterSelectionController: UICollectionViewController {
     

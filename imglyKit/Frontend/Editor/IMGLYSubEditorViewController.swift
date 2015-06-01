@@ -41,7 +41,7 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     public func updatePreviewImageWithCompletion(completionHandler: IMGLYPreviewImageGenerationCompletionBlock?) {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)) {
+            dispatch_async(PhotoProcessorQueue) {
                 let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
                 
                 dispatch_async(dispatch_get_main_queue()) {
