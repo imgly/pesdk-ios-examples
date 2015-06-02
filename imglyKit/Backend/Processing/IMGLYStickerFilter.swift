@@ -14,6 +14,8 @@ import AppKit
 import QuartzCore
 #endif
 
+import CoreGraphics
+
 public class IMGLYStickerFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
@@ -21,12 +23,17 @@ public class IMGLYStickerFilter: CIFilter {
     /// The sticker that should be rendered.
     #if os(iOS)
     public var sticker: UIImage?
+    public var transform = CGAffineTransformIdentity
     #elseif os(OSX)
     public var sticker: NSImage?
+    public var transform = NSAffineTransform()
     #endif
     
-    /// The relative frame of the sticker within the image.
-    public var frame = CGRect()
+    /// The relative center of the sticker within the image.
+    public var center = CGPoint()
+    
+    /// The relative size of the sticker within the image.
+    public var size = CGSize()
     
     override init() {
         super.init()
@@ -62,11 +69,27 @@ public class IMGLYStickerFilter: CIFilter {
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height))
-
-        let stickerRect = CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width)
-        sticker?.drawInRect(stickerRect)
+        
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSaveGState(context)
+        
+        let center = CGPoint(x: self.center.x * imageSize.width, y: self.center.y * imageSize.height)
+        let size = CGSize(width: self.size.width * imageSize.width, height: self.size.height * imageSize.height)
+        let imageRect = CGRect(origin: center, size: size)
+        
+        // Move center to origin
+        CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
+        // Apply the transform
+        CGContextConcatCTM(context, transform)
+        // Move the origin back by half
+        CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
+        
+        sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
+        CGContextRestoreGState(context)
+        
         var image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
+        UIGraphicsEndImageContext()
+        
         return image
     }
     
@@ -85,7 +108,13 @@ extension IMGLYStickerFilter: NSCopying {
         let copy = super.copyWithZone(zone) as! IMGLYStickerFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.sticker = sticker
-        copy.frame = frame
+        copy.center = center
+        copy.size = size
+        #if os(iOS)
+        copy.transform = transform
+        #elseif os(OSX)
+        copy.transform = transform.copyWithZone(zone) as! NSAffineTransform
+        #endif
         return copy
     }
 }

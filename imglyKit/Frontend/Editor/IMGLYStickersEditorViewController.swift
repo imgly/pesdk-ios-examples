@@ -23,8 +23,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         }()
     
     private var draggedView: UIView?
-    private var initialCenterOfDraggedView = CGPointZero
-    private var initialSizeOfPinchedView = CGSizeZero
     
     // MARK: - SubEditorViewController
     
@@ -33,13 +31,22 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         
         for view in stickersClipView.subviews as! [UIView] {
             if let view = view as? UIImageView {
-                let stickerFilter = IMGLYInstanceFactory.stickerFilter()
-                stickerFilter.sticker = view.image
-                let origin = CGPoint(x: view.frame.origin.x / stickersClipView.frame.size.width, y: view.frame.origin.y / stickersClipView.frame.size.height)
-                let size = CGSize(width: view.frame.size.width / stickersClipView.frame.size.width, height: view.frame.size.height / stickersClipView.frame.size.width)
-                stickerFilter.frame = CGRect(origin: origin, size: size)
-                fixedFilterStack.stickerFilters.append(stickerFilter)
-                addedStickers = true
+                
+                if let image = view.image {
+                    let stickerFilter = IMGLYInstanceFactory.stickerFilter()
+                    stickerFilter.sticker = image
+                    let center = CGPoint(x: view.center.x / stickersClipView.frame.size.width, y: view.center.y / stickersClipView.frame.size.height)
+                    
+                    var size = initialSizeForStickerImage(image)
+                    size.width = size.width / stickersClipView.bounds.size.width
+                    size.height = size.height / stickersClipView.bounds.size.height
+
+                    stickerFilter.center = center
+                    stickerFilter.size = size
+                    stickerFilter.transform = view.transform
+                    fixedFilterStack.stickerFilters.append(stickerFilter)
+                    addedStickers = true
+                }
             }
         }
         
@@ -51,6 +58,17 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         } else {
             super.tappedDone(sender)
         }
+    }
+    
+    // MARK: - Helpers
+    
+    private func initialSizeForStickerImage(image: UIImage) -> CGSize {
+        let initialMaxStickerSize = CGRectGetWidth(stickersClipView.bounds) * 0.3
+        let widthRatio = initialMaxStickerSize / image.size.width
+        let heightRatio = initialMaxStickerSize / image.size.height
+        let scale = min(widthRatio, heightRatio)
+        
+        return CGSize(width: image.size.width * scale, height: image.size.height * scale)
     }
     
     // MARK: - UIViewController
@@ -105,7 +123,12 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         stickersClipView.addGestureRecognizer(panGestureRecognizer)
         
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinched:")
+        pinchGestureRecognizer.delegate = self
         stickersClipView.addGestureRecognizer(pinchGestureRecognizer)
+        
+        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "rotated:")
+        rotationGestureRecognizer.delegate = self
+        stickersClipView.addGestureRecognizer(rotationGestureRecognizer)
     }
     
     // MARK: - Gesture Handling
@@ -119,14 +142,14 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             draggedView = stickersClipView.hitTest(location, withEvent: nil) as? UIImageView
             if let draggedView = draggedView {
                 stickersClipView.bringSubviewToFront(draggedView)
-                initialCenterOfDraggedView = draggedView.center
             }
         case .Changed:
             if let draggedView = draggedView {
-                draggedView.center = CGPoint(x: initialCenterOfDraggedView.x + translation.x, y: initialCenterOfDraggedView.y + translation.y)
+                draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
+            
+            recognizer.setTranslation(CGPointZero, inView: stickersClipView)
         case .Cancelled, .Ended:
-            initialCenterOfDraggedView = CGPointZero
             draggedView = nil
         default:
             break
@@ -142,19 +165,50 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             
             switch recognizer.state {
             case .Began:
-                draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
+                if draggedView == nil {
+                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
+                }
+                
                 if let draggedView = draggedView {
                     stickersClipView.bringSubviewToFront(draggedView)
-                    initialSizeOfPinchedView = draggedView.frame.size
                 }
             case .Changed:
                 if let draggedView = draggedView {
-                    let center = draggedView.center
-                    draggedView.frame.size = CGSize(width: initialSizeOfPinchedView.width * scale, height: initialSizeOfPinchedView.height * scale)
-                    draggedView.center = center
+                    draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
                 }
+                
+                recognizer.scale = 1
             case .Cancelled, .Ended:
-                initialSizeOfPinchedView = CGSizeZero
+                draggedView = nil
+            default:
+                break
+            }
+        }
+    }
+    
+    @objc private func rotated(recognizer: UIRotationGestureRecognizer) {
+        if recognizer.numberOfTouches() == 2 {
+            let point1 = recognizer.locationOfTouch(0, inView: stickersClipView)
+            let point2 = recognizer.locationOfTouch(1, inView: stickersClipView)
+            let midpoint = CGPoint(x:(point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2)
+            let rotation = recognizer.rotation
+            
+            switch recognizer.state {
+            case .Began:
+                if draggedView == nil {
+                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
+                }
+                
+                if let draggedView = draggedView {
+                    stickersClipView.bringSubviewToFront(draggedView)
+                }
+            case .Changed:
+                if let draggedView = draggedView {
+                    draggedView.transform = CGAffineTransformRotate(draggedView.transform, rotation)
+                }
+                
+                recognizer.rotation = 0
+            case .Cancelled, .Ended:
                 draggedView = nil
             default:
                 break
@@ -168,13 +222,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         let sticker = stickersDataSource.stickers[indexPath.row]
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
-        
-        let initialMaxStickerSize = CGRectGetWidth(stickersClipView.bounds) * 0.3
-        let widthRatio = initialMaxStickerSize / sticker.image.size.width
-        let heightRatio = initialMaxStickerSize / sticker.image.size.height
-        let scale = min(widthRatio, heightRatio)
-        
-        imageView.frame.size = CGSize(width: sticker.image.size.width * scale, height: sticker.image.size.height * scale)
+        imageView.frame.size = initialSizeForStickerImage(sticker.image)
         imageView.center = CGPoint(x: CGRectGetMidX(stickersClipView.bounds), y: CGRectGetMidY(stickersClipView.bounds))
         stickersClipView.addSubview(imageView)
         imageView.transform = CGAffineTransformMakeScale(0, 0)
@@ -182,5 +230,15 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
             imageView.transform = CGAffineTransformIdentity
             }, completion: nil)
+    }
+}
+
+extension IMGLYStickersEditorViewController: UIGestureRecognizerDelegate {
+    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if (gestureRecognizer is UIPinchGestureRecognizer && otherGestureRecognizer is UIRotationGestureRecognizer) || (gestureRecognizer is UIRotationGestureRecognizer && otherGestureRecognizer is UIPinchGestureRecognizer) {
+            return true
+        }
+        
+        return false
     }
 }
