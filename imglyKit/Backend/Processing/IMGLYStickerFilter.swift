@@ -23,11 +23,12 @@ public class IMGLYStickerFilter: CIFilter {
     /// The sticker that should be rendered.
     #if os(iOS)
     public var sticker: UIImage?
-    public var transform = CGAffineTransformIdentity
     #elseif os(OSX)
     public var sticker: NSImage?
-    public var transform = NSAffineTransform()
     #endif
+    
+    /// The transform to apply to the sticker
+    public var transform = CGAffineTransformIdentity
     
     /// The relative center of the sticker within the image.
     public var center = CGPoint()
@@ -64,13 +65,43 @@ public class IMGLYStickerFilter: CIFilter {
     #if os(iOS)
     
     private func createStickerImage() -> UIImage {
-        var rect = inputImage!.extent()
-        var imageSize = rect.size
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
-        UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height))
+        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
         
         let context = UIGraphicsGetCurrentContext()
+        drawStickerInContext(context, withImageOfSize: imageSize)
+    
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    #elseif os(OSX)
+    
+    private func createStickerImage() -> NSImage {
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
+        
+        let image = NSImage(size: imageSize)
+        image.lockFocus()
+        NSColor(white: 1, alpha: 0).setFill()
+        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
+
+        let context = NSGraphicsContext.currentContext()!.CGContext
+        drawStickerInContext(context, withImageOfSize: imageSize)
+        
+        image.unlockFocus()
+        
+        return image
+    }
+    
+    #endif
+    
+    private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
         CGContextSaveGState(context)
         
         let center = CGPoint(x: self.center.x * imageSize.width, y: self.center.y * imageSize.height)
@@ -80,27 +111,13 @@ public class IMGLYStickerFilter: CIFilter {
         // Move center to origin
         CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
         // Apply the transform
-        CGContextConcatCTM(context, transform)
+        CGContextConcatCTM(context, self.transform)
         // Move the origin back by half
         CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
         
         sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
         CGContextRestoreGState(context)
-        
-        var image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return image
     }
-    
-    #elseif os(OSX)
-    
-    private func createStickerImage() -> NSImage {
-        // TODO
-        return NSImage()
-    }
-    
-    #endif
 }
 
 extension IMGLYStickerFilter: NSCopying {
@@ -110,11 +127,7 @@ extension IMGLYStickerFilter: NSCopying {
         copy.sticker = sticker
         copy.center = center
         copy.size = size
-        #if os(iOS)
         copy.transform = transform
-        #elseif os(OSX)
-        copy.transform = transform.copyWithZone(zone) as! NSAffineTransform
-        #endif
         return copy
     }
 }

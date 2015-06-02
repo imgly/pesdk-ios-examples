@@ -61,25 +61,37 @@ public class IMGLYTextFilter : CIFilter {
     #if os(iOS)
     
     private func createTextImage() -> UIImage {
-        var rect = inputImage!.extent()
-        var imageSize = rect.size
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
-        UIRectFill(CGRectMake(0, 0, imageSize.width, imageSize.height))
+        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
         
-        var font = UIFont(name:fontName, size:fontScaleFactor * imageSize.height)
-        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width),
-            withAttributes: [NSFontAttributeName:font!, NSForegroundColorAttributeName:color])
-        var image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext();
+        let font = UIFont(name: fontName, size: fontScaleFactor * imageSize.height)
+        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
         return image
     }
     
     #elseif os(OSX)
     
     private func createTextImage() -> NSImage {
-        // TODO
-        return NSImage()
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
+    
+        let image = NSImage(size: imageSize)
+        image.lockFocus()
+    
+        NSColor(white: 1, alpha: 0).setFill()
+        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
+        let font = NSFont(name: fontName, size: fontScaleFactor * imageSize.height)
+        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+    
+        image.unlockFocus()
+        
+        return image
     }
 
     #endif
