@@ -95,7 +95,7 @@ We strongly recommend that you use any of the methods described above for instal
 1. Drop all the files within the [imglyKit directory](https://github.com/imgly/imgly-sdk-ios/tree/master/imglyKit) except for `imglyKit.h` and `Info.plist` into your Xcode project.
 2. Create a bridging header (File > New > File > iOS > Source > Header File) and name it by your product module name followed by "-Bridging-Header.h" (e.g. "ExampleApp-Bridging-Header.h"). Add these lines to the header: 
 		
-		#import "LUTToNSDataConverter.h
+		#import "LUTToNSDataConverter.h"
 		
 3. Under build settings, set the Objective-C Bridging Header (SWIFT_OBJC_BRIDGING_HEADER) build setting under "Swift Compiler - Code Generation" to the previously created bridging header.
 
