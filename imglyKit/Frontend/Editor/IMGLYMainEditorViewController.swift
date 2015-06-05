@@ -31,7 +31,7 @@ import UIKit
 public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult, UIImage?) -> Void
 
 private let ButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
-private let ButtonCollectionViewCellSize = CGSize(width: 70, height: 90)
+private let ButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
 public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
@@ -142,7 +142,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = ButtonCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
         
@@ -230,6 +230,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                     
                     dispatch_async(dispatch_get_main_queue()) {
                         completionBlock(.Done, filteredHighResolutionImage)
+                        sender?.enabled = true
                     }
                 }
             } else {

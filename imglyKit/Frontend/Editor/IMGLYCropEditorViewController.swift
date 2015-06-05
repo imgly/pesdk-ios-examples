@@ -104,6 +104,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         if cropRect.origin.x != 0 || cropRect.origin.y != 0 ||
             cropRect.size.width != 1.0 || cropRect.size.height != 1.0 {
                 updatePreviewImageWithoutCropWithCompletion {
+                    self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                     self.reCalculateCropRectBounds()
                     self.setInitialCropRect()
