@@ -92,6 +92,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         
         IMGLYInstanceFactory.fontImporter().importFonts()
         
+        navigationItem.rightBarButtonItem?.enabled = false
         configureColorSelectorView()
         configureTextClipView()
         configureTextField()
@@ -325,6 +326,7 @@ extension IMGLYTextEditorViewController: UITextFieldDelegate {
         textLabel.text = textField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         setInitialTextLabelSize()
         showTextLabel()
+        navigationItem.rightBarButtonItem?.enabled = true
         return true
     }
     
