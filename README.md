@@ -43,7 +43,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'imglyKit', '~> 2.1'
+pod 'imglyKit', '~> 2.2'
 ```
 
 Then, run the following command:
@@ -66,7 +66,7 @@ $ brew install carthage
 To integrate imglyKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "imgly/imgly-sdk-ios" >= 2.1
+github "imgly/imgly-sdk-ios" >= 2.2
 ```
 
 ### Manually
