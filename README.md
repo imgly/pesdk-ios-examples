@@ -43,7 +43,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'imglyKit', '~> 2.1'
+pod 'imglyKit', '~> 2.2'
 ```
 
 Then, run the following command:
@@ -66,7 +66,7 @@ $ brew install carthage
 To integrate imglyKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "imgly/imgly-sdk-ios" >= 2.1
+github "imgly/imgly-sdk-ios" >= 2.2
 ```
 
 ### Manually
@@ -152,6 +152,14 @@ func editorCompletionBlock(result: IMGLYEditorResult, image: UIImage?) {
 }
 ```
 
+### Fixed Filter Stack
+
+The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
+In order to make the process easier and non-destructive, all the editor view controllers 
+use a fixed filter stack. That means that the order of the filters is immutable and
+the user just sets the parameters for the distinct filters.
+The input is always the originally taken image and the output image contains all the changes made.
+
 ### Adding a custom editor
 
 You can easily create your own sub editors by subclassing `IMGLYSubEditorViewController`. The main editor automatically passes a deep copy of the fixed filter stack, a low resolution image, and a completion handler to each sub editor. Each subclass also has an `UIImageView` called `previewImageView` that is used to present the preview image and an `UIView` called `bottomContainerView` that you can use to present your own controls. Within your subclass you should modify the passed `fixedFilterStack` and update the preview image whenever necessary by using `updatePreviewImageWithCompletion(completionHandler:)`. Finally, if the user taps the Done button, the updated fixed filter stack is passed back to the main editor, if the user taps the Cancel button, the updated fixed filter stack and simply discarded. You also have to add a new `IMGLYActionButton` to the `actionButtons` property of `IMGLYMainEditorViewController`.
@@ -205,14 +213,6 @@ class IMGLYSteelTypeFilter: IMGLYResponseFilter {
    	}
 }
 ```
-
-### Fixed Filter Stack
-
-The `IMGLYPhotoProcessor` allows to apply any list of filters to an image.
-In order to make the process easier and non-destructive, all the editor view controllers 
-use a fixed filter stack. That means that the order of the filters is immutable and
-the user just sets the parameters for the distinct filters.
-The input is always the originally taken image and the output image contains all the changes made.
 
 ### Choose available filters
 

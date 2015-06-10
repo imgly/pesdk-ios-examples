@@ -5,6 +5,6 @@
       location = "group:imglyKit.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Example.xcodeproj">
+      location = "group:/Users/sascha/Dropbox/Programmierung/iOS Apps/9elements/imgly-sdk-ios/iOS Example.xcodeproj">
    </FileRef>
 </Workspace>

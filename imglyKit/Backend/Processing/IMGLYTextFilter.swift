@@ -1,0 +1,116 @@
+//
+//  IMGLYTextFilter.swift
+//  imglyKit
+//
+//  Created by Carsten Przyluczky on 05/03/15.
+//  Copyright (c) 2015 9elements GmbH. All rights reserved.
+//
+
+#if os(iOS)
+import CoreImage
+import UIKit
+#elseif os(OSX)
+import QuartzCore
+import AppKit
+#endif
+
+public class IMGLYTextFilter : CIFilter {
+    /// A CIImage object that serves as input for the filter.
+    public var inputImage:CIImage?
+    /// The text that should be rendered.
+    public var text = ""
+    /// The name of the used font.
+    public var fontName = "Helvetica Neue"
+    ///  This factor determins the font-size. Its a relative value that is multiplied with the image height
+    ///  during the process.
+    public var fontScaleFactor = CGFloat(1)
+    /// The relative frame of the text within the image.
+    public var frame = CGRect()
+    /// The color of the text.
+    #if os(iOS)
+    public var color = UIColor.whiteColor()
+    #elseif os(OSX)
+    public var color = NSColor.whiteColor()
+    #endif
+    
+    override init() {
+        super.init()
+    }
+    
+    required public init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
+    public override var outputImage: CIImage! {
+        if inputImage == nil {
+            return CIImage.emptyImage()
+        }
+        if text.isEmpty {
+            return inputImage
+        }
+        
+        var textImage = createTextImage()
+        var textCIImage = CIImage(CGImage: textImage.CGImage)
+        var filter = CIFilter(name: "CISourceOverCompositing")
+        filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+        filter.setValue(textCIImage, forKey: kCIInputImageKey)
+        return filter.outputImage
+    }
+    
+    #if os(iOS)
+    
+    private func createTextImage() -> UIImage {
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
+        UIGraphicsBeginImageContext(imageSize)
+        UIColor(white: 1.0, alpha: 0.0).setFill()
+        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
+        
+        let font = UIFont(name: fontName, size: fontScaleFactor * imageSize.height)
+        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return image
+    }
+    
+    #elseif os(OSX)
+    
+    private func createTextImage() -> NSImage {
+        let rect = inputImage!.extent()
+        let imageSize = rect.size
+    
+        let image = NSImage(size: imageSize)
+        image.lockFocus()
+    
+        NSColor(white: 1, alpha: 0).setFill()
+        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
+        let font = NSFont(name: fontName, size: fontScaleFactor * imageSize.height)
+        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+    
+        image.unlockFocus()
+        
+        return image
+    }
+
+    #endif
+}
+
+extension IMGLYTextFilter: NSCopying {
+    public override func copyWithZone(zone: NSZone) -> AnyObject {
+        let copy = super.copyWithZone(zone) as! IMGLYTextFilter
+        copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
+        copy.text = (text as NSString).copyWithZone(zone) as! String
+        copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
+        copy.fontScaleFactor = fontScaleFactor
+        copy.frame = frame
+        #if os(iOS)
+        copy.color = color.copyWithZone(zone) as! UIColor
+        #elseif os(OSX)
+        copy.color = color.copyWithZone(zone) as! NSColor
+        #endif
+        
+        return copy
+    }
+}
