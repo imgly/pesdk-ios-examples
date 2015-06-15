@@ -195,7 +195,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func addGestureRecognizerToTransparentView() {
         transparentRectView.userInteractionEnabled = true
-        var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         transparentRectView.addGestureRecognizer(panGestureRecognizer)
     }
     
@@ -208,7 +208,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func addGestureRecognizerToAnchor(anchor: UIImageView) {
         anchor.userInteractionEnabled = true
-        var panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         anchor.addGestureRecognizer(panGestureRecognizer)
     }
     
@@ -231,7 +231,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
     
     public func handlePanOnTopLeft(recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+        let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.bottomRightAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.bottomRightAnchor_!.center.y - location.y
         
@@ -285,7 +285,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func handlePanOnTopRight(recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+        let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.bottomLeftAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.bottomLeftAnchor_!.center.y - location.y
         
@@ -338,7 +338,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     
     private func handlePanOnBottomLeft(recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+        let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.topRightAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.topRightAnchor_!.center.y - location.y
         
@@ -386,7 +386,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func handlePanOnBottomRight(recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+        let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.topLeftAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.topLeftAnchor_!.center.y - location.y
         sizeX = CGFloat(abs(Int(sizeX)))
@@ -429,11 +429,11 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return newSize
     }
     
-    private func handlePanOnTransparentView(recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+    private func handlePanOnTransparentView(recognizer: UIPanGestureRecognizer) {
+        let location = recognizer.locationInView(transparentRectView)
         if cropRectComponent.cropRect.contains(location) {
             calculateDragOffsetOnNewDrag(recognizer:recognizer)
-            var newLocation = clampedLocationToBounds(location)
+            let newLocation = clampedLocationToBounds(location)
             var rect = cropRectComponent.cropRect
             rect.origin.x = newLocation.x - dragOffset.x
             rect.origin.y = newLocation.y - dragOffset.y
@@ -442,21 +442,21 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         }
     }
     
-    private func calculateDragOffsetOnNewDrag(#recognizer:UIPanGestureRecognizer) {
-        var location = recognizer.locationInView(transparentRectView)
+    private func calculateDragOffsetOnNewDrag(#recognizer: UIPanGestureRecognizer) {
+        let location = recognizer.locationInView(transparentRectView)
         if recognizer.state == UIGestureRecognizerState.Began {
             dragOffset = CGPointMake(location.x - cropRectComponent.cropRect.origin.x, location.y - cropRectComponent.cropRect.origin.y)
         }
     }
     
-    private func clampedLocationToBounds(location:CGPoint) -> CGPoint {
-        var rect = cropRectComponent.cropRect
+    private func clampedLocationToBounds(location: CGPoint) -> CGPoint {
+        let rect = cropRectComponent.cropRect
         var locationX = location.x
         var locationY = location.y
-        var left = locationX - dragOffset.x
-        var right = left + rect.size.width
-        var top  = locationY - dragOffset.y
-        var bottom = top + rect.size.height
+        let left = locationX - dragOffset.x
+        let right = left + rect.size.width
+        let top  = locationY - dragOffset.y
+        let bottom = top + rect.size.height
         
         if left < cropRectLeftBound {
             locationX = cropRectLeftBound + dragOffset.x
@@ -475,16 +475,16 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func normalizedCropRect() -> CGRect {
         reCalculateCropRectBounds()
-        var boundWidth = cropRectRightBound - cropRectLeftBound
-        var boundHeight = cropRectBottomBound - cropRectTopBound
-        var x = (cropRectComponent.cropRect.origin.x - cropRectLeftBound) / boundWidth
-        var y = (cropRectComponent.cropRect.origin.y - cropRectTopBound) / boundHeight
+        let boundWidth = cropRectRightBound - cropRectLeftBound
+        let boundHeight = cropRectBottomBound - cropRectTopBound
+        let x = (cropRectComponent.cropRect.origin.x - cropRectLeftBound) / boundWidth
+        let y = (cropRectComponent.cropRect.origin.y - cropRectTopBound) / boundHeight
         return CGRectMake(x, y, cropRectComponent.cropRect.size.width / boundWidth, cropRectComponent.cropRect.size.height / boundHeight)
     }
     
     private func reCalculateCropRectBounds() {
-        var width = transparentRectView.frame.size.width
-        var height = transparentRectView.frame.size.height
+        let width = transparentRectView.frame.size.width
+        let height = transparentRectView.frame.size.height
         cropRectLeftBound = (width - previewImageView.visibleImageFrame.size.width) / 2.0
         cropRectRightBound = width - cropRectLeftBound
         cropRectTopBound = (height - previewImageView.visibleImageFrame.size.height) / 2.0
@@ -509,7 +509,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func setCropRectForSelectionRatio() {
-        var size = CGSizeMake(cropRectRightBound - cropRectLeftBound,
+        let size = CGSizeMake(cropRectRightBound - cropRectLeftBound,
             cropRectBottomBound - cropRectTopBound)
         var rectWidth = size.width
         var rectHeight = rectWidth

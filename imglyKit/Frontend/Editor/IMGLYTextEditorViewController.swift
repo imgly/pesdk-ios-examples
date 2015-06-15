@@ -198,8 +198,8 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         }
         
         if gestureRecognizer.numberOfTouches() > 1 {
-            var point1 = gestureRecognizer.locationOfTouch(0, inView:view)
-            var point2 = gestureRecognizer.locationOfTouch(1, inView:view)
+            let point1 = gestureRecognizer.locationOfTouch(0, inView:view)
+            let point2 = gestureRecognizer.locationOfTouch(1, inView:view)
             if  !beganTwoFingerPitch {
                 beganTwoFingerPitch = true
                 distanceAtPinchBegin = calculateNewFontSizeBasedOnDistanceBetweenPoint(point1, and: point2)
@@ -285,7 +285,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     
     private func updateTextLabelFrameForCurrentFont() {
         // resize and keep the text centered
-        var frame = textLabel.frame
+        let frame = textLabel.frame
         textLabel.sizeToFit()
         
         let diffX = frame.size.width - textLabel.frame.size.width

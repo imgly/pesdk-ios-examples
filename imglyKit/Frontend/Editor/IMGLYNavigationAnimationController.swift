@@ -29,7 +29,7 @@ extension IMGLYNavigationAnimationController: UIViewControllerAnimatedTransition
             containerView.sendSubviewToBack(toView)
             
             let duration = transitionDuration(transitionContext)
-            UIView.animateWithDuration(0.3, animations: {
+            UIView.animateWithDuration(duration, animations: {
                 fromView.alpha = 0
                 }, completion: { finished in
                     if transitionContext.transitionWasCancelled() {
