@@ -160,7 +160,7 @@ public class IMGLYCameraController: NSObject {
     
     private func checkSDKVersion() {
         let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
-        if let appIdentifier = appIdentifier, url = NSURL(string: "http://sdk.img.ly/version.json?sdk=ios&app=\(appIdentifier)") {
+        if let appIdentifier = appIdentifier, url = NSURL(string: "http://photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
             let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
                 if let data = data {
                     let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: String]
