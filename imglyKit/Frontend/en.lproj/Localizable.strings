@@ -11,6 +11,8 @@
 "camera-view-controller.camera-no-permission.message" = "Permission to use Camera are required, please change privacy settings.";
 "camera-view-controller.camera-no-permission.settings" = "Settings";
 "camera-view-controller.camera-no-permission.cancel" = "Cancel";
+"camera-view-controller.mode.photo" = "PHOTO";
+"camera-view-controller.mode.video" = "VIDEO";
 
 // Main Editor
 "main-editor.title" = "Editor";
