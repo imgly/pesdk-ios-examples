@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:imglyKit/Frontend/Camera/IMGLYShapeLayer.swift">
-   </FileRef>
-   <FileRef
       location = "group:imglyKit.xcodeproj">
    </FileRef>
    <FileRef
