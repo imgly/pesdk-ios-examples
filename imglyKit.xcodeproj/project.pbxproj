@@ -391,6 +391,7 @@
 		2BF4D5431AF1159D00C801B2 /* IMGLYFontImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D5411AF1159D00C801B2 /* IMGLYFontImporter.swift */; };
 		2BF4D5441AF1159D00C801B2 /* IMGLYInstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D5421AF1159D00C801B2 /* IMGLYInstanceFactory.swift */; };
 		2BF4D5451AF115A200C801B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
+		2BF51F701B41A7E700FFB4C2 /* IMGLYRecordingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */; };
 		2BF717D91B414FC600D4A50C /* IMGLYShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */; };
 /* End PBXBuildFile section */
 
@@ -612,6 +613,7 @@
 		2BF4D5411AF1159D00C801B2 /* IMGLYFontImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYFontImporter.swift; sourceTree = "<group>"; };
 		2BF4D5421AF1159D00C801B2 /* IMGLYInstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYInstanceFactory.swift; sourceTree = "<group>"; };
 		2BF4D5461AF115A200C801B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYRecordingMode.swift; sourceTree = "<group>"; };
 		2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYShapeLayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -721,6 +723,7 @@
 				2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */,
 				2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */,
+				2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */,
 				2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */,
 				2BE37B771B3D9978009FAD40 /* IMGLYVideoRecordButton.swift */,
 			);
@@ -1466,6 +1469,7 @@
 				2BF4D3D61AF1150500C801B2 /* IMGLYFilterCollectionViewCell.swift in Sources */,
 				2BF4D3EA1AF1150500C801B2 /* IMGLYTextEditorViewController.swift in Sources */,
 				2BF4D50F1AF1155E00C801B2 /* IMGLYFridgeFilter.swift in Sources */,
+				2BF51F701B41A7E700FFB4C2 /* IMGLYRecordingMode.swift in Sources */,
 				2BF4D51A1AF1155E00C801B2 /* IMGLYLithoFilter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

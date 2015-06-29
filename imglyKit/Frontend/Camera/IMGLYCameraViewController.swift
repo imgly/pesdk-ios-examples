@@ -17,65 +17,6 @@ private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
 public typealias IMGLYCameraCompletionBlock = (UIImage?) -> (Void)
 
-@objc public enum IMGLYRecordingMode: Int {
-    case Photo
-    case Video
-    
-    var bundle: NSBundle {
-        return NSBundle(forClass: IMGLYCameraViewController.self)
-    }
-    
-    var titleForSelectionButton: String {
-        switch self {
-        case .Photo:
-            return NSLocalizedString("camera-view-controller.mode.photo", tableName: nil, bundle: bundle, value: "", comment: "")
-        case .Video:
-            return NSLocalizedString("camera-view-controller.mode.video", tableName: nil, bundle: bundle, value: "", comment: "")
-        }
-    }
-    
-    var selectionButton: UIButton {
-        let button = UIButton()
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
-        button.setTitle(titleForSelectionButton, forState: .Normal)
-        button.titleLabel?.font = UIFont.systemFontOfSize(12)
-        button.setTitleColor(UIColor(red:1, green:0.8, blue:0, alpha:1), forState: .Selected)
-        return button
-    }
-    
-    var actionButton: UIControl {
-        switch self {
-        case .Photo:
-            let button = UIButton()
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
-            button.setImage(UIImage(named: "LensAperture_ShapeLayer_00000", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
-            button.imageView?.animationImages = [UIImage]()
-            button.imageView?.animationRepeatCount = 1
-            button.adjustsImageWhenHighlighted = false
-            
-            for var index = 0; index < 10; index++ {
-                let image = String(format: "LensAperture_ShapeLayer_%05d", index)
-                button.imageView?.animationImages?.append(UIImage(named: image, inBundle: bundle, compatibleWithTraitCollection:nil)!)
-            }
-            
-            return button
-        case .Video:
-            let button = IMGLYVideoRecordButton()
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
-            return button
-        }
-    }
-    
-    var actionSelector: Selector {
-        switch self {
-        case .Photo:
-            return "takePhoto:"
-        case .Video:
-            return "recordVideo:"
-        }
-    }
-}
-
 public class IMGLYCameraViewController: UIViewController {
     
     // MARK: - Initializers
@@ -106,6 +47,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     public private(set) lazy var topControlsView: UIView = {
         let view = UIView()
+        view.backgroundColor = UIColor.blackColor()
         view.setTranslatesAutoresizingMaskIntoConstraints(false)
         return view
         }()
@@ -119,6 +61,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     public private(set) lazy var bottomControlsView: UIView = {
         let view = UIView()
+        view.backgroundColor = UIColor.blackColor()
         view.setTranslatesAutoresizingMaskIntoConstraints(false)
         return view
         }()
@@ -232,7 +175,7 @@ public class IMGLYCameraViewController: UIViewController {
             }
             
             // fetch previous action button from container
-            let previousActionButton = actionButtonContainer.subviews.first as? UIControl
+            let previousActionButton = actionButtonContainer.subviews.last as? UIControl
             
             // add new action button to container
             let actionButton = currentRecordingMode.actionButton
@@ -246,6 +189,11 @@ public class IMGLYCameraViewController: UIViewController {
             bottomControlsView.addConstraint(centerModeButtonConstraint!)
             
             UIView.animateWithDuration(0.25, animations: {
+                self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
+
+                // update constraints for view hierarchy
+                self.updateViewsForRecordingMode(self.currentRecordingMode)
+                
                 // mark target as selected
                 target.selected = true
                 
@@ -296,6 +244,8 @@ public class IMGLYCameraViewController: UIViewController {
     public var completionBlock: IMGLYCameraCompletionBlock?
     
     private var centerModeButtonConstraint: NSLayoutConstraint?
+    private var cameraPreviewContainerTopConstraint: NSLayoutConstraint?
+    private var cameraPreviewContainerBottomConstraint: NSLayoutConstraint?
     
     // MARK: - UIViewController
 
@@ -387,8 +337,8 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureViewHierarchy() {
-        view.addSubview(topControlsView)
         view.addSubview(cameraPreviewContainer)
+        view.addSubview(topControlsView)
         view.addSubview(bottomControlsView)
         
         addChildViewController(filterSelectionController)
@@ -444,7 +394,12 @@ public class IMGLYCameraViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomControlsView]|", options: nil, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[filterSelectionView]|", options: nil, metrics: nil, views: views))
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][topControlsView(==topControlsViewHeight)][cameraPreviewContainer][bottomControlsView][filterSelectionView(==filterSelectionViewHeight)]", options: nil, metrics: metrics, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][topControlsView(==topControlsViewHeight)]", options: nil, metrics: metrics, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bottomControlsView][filterSelectionView(==filterSelectionViewHeight)]", options: nil, metrics: metrics, views: views))
+        
+        cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topControlsView, attribute: .Bottom, multiplier: 1, constant: 0)
+        cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomControlsView, attribute: .Top, multiplier: 1, constant: 0)
+        view.addConstraints([cameraPreviewContainerTopConstraint!, cameraPreviewContainerBottomConstraint!])
         
         filterSelectionViewConstraint = NSLayoutConstraint(item: filterSelectionController.view, attribute: .Top, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
         view.addConstraint(filterSelectionViewConstraint!)
@@ -506,6 +461,7 @@ public class IMGLYCameraViewController: UIViewController {
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
         cameraController!.setup()
+        cameraController!.switchToRecordingMode(currentRecordingMode)
     }
     
     private func configureFilterSelectionController() {
@@ -544,6 +500,38 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     // MARK: - Helpers
+    
+    private func updateViewsForRecordingMode(recordingMode: IMGLYRecordingMode) {
+        if let cameraPreviewContainerTopConstraint = cameraPreviewContainerTopConstraint {
+            view.removeConstraint(cameraPreviewContainerTopConstraint)
+        }
+        
+        if let cameraPreviewContainerBottomConstraint = cameraPreviewContainerBottomConstraint {
+            view.removeConstraint(cameraPreviewContainerBottomConstraint)
+        }
+        
+        
+        let color: UIColor
+        
+        switch recordingMode {
+        case .Photo:
+            cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topControlsView, attribute: .Bottom, multiplier: 1, constant: 0)
+            cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomControlsView, attribute: .Top, multiplier: 1, constant: 0)
+
+            color = UIColor.blackColor()
+        case .Video:
+            cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
+            cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1, constant: 0)
+            
+            color = UIColor.blackColor().colorWithAlphaComponent(0.3)
+        }
+        
+        topControlsView.backgroundColor = color
+        bottomControlsView.backgroundColor = color
+        filterSelectionController.collectionView?.backgroundColor = color
+        
+        view.addConstraints([cameraPreviewContainerTopConstraint!, cameraPreviewContainerBottomConstraint!])
+    }
     
     private func addActionButtonToContainer(actionButton: UIControl) {
         actionButtonContainer.addSubview(actionButton)
@@ -678,6 +666,12 @@ public class IMGLYCameraViewController: UIViewController {
     
     public func recordVideo(sender: IMGLYVideoRecordButton?) {
         if let recordVideoButton = sender {
+            if recordVideoButton.recording {
+                cameraController?.startVideoRecording()
+            } else {
+                cameraController?.stopVideoRecording()
+            }
+            
             if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
                 toggleFilters(filterSelectionButton)
             }
