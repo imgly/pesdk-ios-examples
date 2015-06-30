@@ -160,59 +160,7 @@ public class IMGLYCameraViewController: UIViewController {
                 return
             }
             
-            if let centerModeButtonConstraint = centerModeButtonConstraint {
-                bottomControlsView.removeConstraint(centerModeButtonConstraint)
-            }
-
-            let target = recordingModeSelectionButtons[find(recordingModes, currentRecordingMode)!]
-            
-            // disable target button and enable all other buttons
-            target.userInteractionEnabled = false
-            for recordingModeSelectionButton in recordingModeSelectionButtons {
-                if recordingModeSelectionButton != target {
-                    recordingModeSelectionButton.userInteractionEnabled = true
-                }
-            }
-            
-            // fetch previous action button from container
-            let previousActionButton = actionButtonContainer.subviews.last as? UIControl
-            
-            // add new action button to container
-            let actionButton = currentRecordingMode.actionButton
-            actionButton.addTarget(self, action: currentRecordingMode.actionSelector, forControlEvents: .TouchUpInside)
-            actionButton.alpha = 0
-            addActionButtonToContainer(actionButton)
-            actionButton.layoutIfNeeded()
-        
-            // create new centerModeButtonConstraint
-            centerModeButtonConstraint = NSLayoutConstraint(item: target, attribute: .CenterX, relatedBy: .Equal, toItem: actionButtonContainer, attribute: .CenterX, multiplier: 1, constant: 0)
-            bottomControlsView.addConstraint(centerModeButtonConstraint!)
-            
-            UIView.animateWithDuration(0.25, animations: {
-                self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
-
-                // update constraints for view hierarchy
-                self.updateViewsForRecordingMode(self.currentRecordingMode)
-                
-                // mark target as selected
-                target.selected = true
-                
-                // deselect all other buttons
-                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                    if recordingModeSelectionButton != target {
-                        recordingModeSelectionButton.selected = false
-                    }
-                }
-                
-                // fade new action button in and old action button out
-                actionButton.alpha = 1
-                previousActionButton?.alpha = 0
-                
-                self.bottomControlsView.layoutIfNeeded()
-                }) { finished in
-                    // remove old action button
-                    previousActionButton?.removeFromSuperview()
-            }
+            self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
         }
     }
 
@@ -456,8 +404,7 @@ public class IMGLYCameraViewController: UIViewController {
         
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
-        cameraController!.setup()
-        cameraController!.switchToRecordingMode(currentRecordingMode)
+        cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
     }
     
     private func configureFilterSelectionController() {
@@ -497,7 +444,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     // MARK: - Helpers
     
-    private func updateViewsForRecordingMode(recordingMode: IMGLYRecordingMode) {
+    private func updateConstraintsForRecordingMode(recordingMode: IMGLYRecordingMode) {
         if let cameraPreviewContainerTopConstraint = cameraPreviewContainerTopConstraint {
             view.removeConstraint(cameraPreviewContainerTopConstraint)
         }
@@ -507,26 +454,31 @@ public class IMGLYCameraViewController: UIViewController {
         }
         
         
-        let color: UIColor
-        
         switch recordingMode {
         case .Photo:
             cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topControlsView, attribute: .Bottom, multiplier: 1, constant: 0)
             cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomControlsView, attribute: .Top, multiplier: 1, constant: 0)
-
-            color = UIColor.blackColor()
         case .Video:
             cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topLayoutGuide, attribute: .Bottom, multiplier: 1, constant: 0)
             cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomLayoutGuide, attribute: .Top, multiplier: 1, constant: 0)
-            
+        }
+        
+        view.addConstraints([cameraPreviewContainerTopConstraint!, cameraPreviewContainerBottomConstraint!])
+    }
+    
+    private func updateViewsForRecordingMode(recordingMode: IMGLYRecordingMode) {
+        let color: UIColor
+        
+        switch recordingMode {
+        case .Photo:
+            color = UIColor.blackColor()
+        case .Video:
             color = UIColor.blackColor().colorWithAlphaComponent(0.3)
         }
         
         topControlsView.backgroundColor = color
         bottomControlsView.backgroundColor = color
         filterSelectionController.collectionView?.backgroundColor = color
-        
-        view.addConstraints([cameraPreviewContainerTopConstraint!, cameraPreviewContainerBottomConstraint!])
     }
     
     private func addActionButtonToContainer(actionButton: UIControl) {
@@ -818,6 +770,79 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
         dispatch_async(dispatch_get_main_queue()) {
             self.buttonsEnabled = true
             self.updateFlashButton()
+        }
+    }
+    
+    public func cameraController(cameraController: IMGLYCameraController, willSwitchToRecordingMode recordingMode: IMGLYRecordingMode) {
+        buttonsEnabled = false
+        
+        if let centerModeButtonConstraint = centerModeButtonConstraint {
+            bottomControlsView.removeConstraint(centerModeButtonConstraint)
+        }
+        
+        let target = self.recordingModeSelectionButtons[find(recordingModes, currentRecordingMode)!]
+        
+        // add new action button to container
+        let actionButton = currentRecordingMode.actionButton
+        actionButton.addTarget(self, action: currentRecordingMode.actionSelector, forControlEvents: .TouchUpInside)
+        actionButton.alpha = 0
+        self.addActionButtonToContainer(actionButton)
+        actionButton.layoutIfNeeded()
+        
+        // create new centerModeButtonConstraint
+        self.centerModeButtonConstraint = NSLayoutConstraint(item: target, attribute: .CenterX, relatedBy: .Equal, toItem: actionButtonContainer, attribute: .CenterX, multiplier: 1, constant: 0)
+        self.bottomControlsView.addConstraint(centerModeButtonConstraint!)
+    }
+    
+    public func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.buttonsEnabled = true
+//            self.updateFlashButton() // TODO
+        }
+    }
+    
+    public func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void) {
+        return {
+            let target = self.recordingModeSelectionButtons[find(self.recordingModes, self.currentRecordingMode)!]
+
+            // mark target as selected
+            target.selected = true
+            
+            // deselect all other buttons
+            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+                if recordingModeSelectionButton != target {
+                    recordingModeSelectionButton.selected = false
+                }
+            }
+            
+            // fade new action button in and old action button out
+            let actionButton = self.actionButtonContainer.subviews.last as? UIControl
+            
+            // fetch previous action button from container
+            let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
+            actionButton?.alpha = 1
+            previousActionButton?.alpha = 0
+            
+            self.bottomControlsView.layoutIfNeeded()
+        }
+    }
+    
+    public func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void) {
+        return {
+            // fetch previous action button from container
+            let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
+
+            // remove old action button
+            previousActionButton?.removeFromSuperview()
+            
+            self.updateConstraintsForRecordingMode(self.currentRecordingMode)
+        }
+    }
+    
+    public func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void) {
+        return {
+            // update constraints for view hierarchy
+            self.updateViewsForRecordingMode(self.currentRecordingMode)
         }
     }
 }

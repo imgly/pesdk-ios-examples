@@ -64,6 +64,11 @@ private var FocusAndExposureContext = 0
     optional func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController)
     optional func cameraController(cameraController: IMGLYCameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
     optional func cameraController(cameraController: IMGLYCameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
+    optional func cameraController(cameraController: IMGLYCameraController, willSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
+    optional func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
+    optional func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void)
 }
 
 public typealias IMGLYTakePhotoBlock = (UIImage?, NSError?) -> Void
@@ -234,34 +239,20 @@ public class IMGLYCameraController: NSObject {
             let sessionGroup = dispatch_group_create()
             
             if let videoPreviewView = videoPreviewView {
-                // Hiding live preview
-                videoPreviewView.hidden = true
-                
-                // Adding a simple snapshot and immediately showing it
-                let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
-                snapshot.transform = videoPreviewView.transform
-                snapshot.frame = videoPreviewView.frame
-                previewView.addSubview(snapshot)
-                
-                // Creating a snapshot with a UIBlurEffect added
-                let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
-                snapshotWithBlur.transform = videoPreviewView.transform
-                snapshotWithBlur.frame = videoPreviewView.frame
-                
-                let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-                visualEffectView.frame = snapshotWithBlur.bounds
-                visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-                snapshotWithBlur.addSubview(visualEffectView)
+                let (snapshotWithBlur, snapshot) = addSnapshotViewsToVideoPreviewView(videoPreviewView)
                 
                 // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
                 UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: .TransitionFlipFromLeft | .CurveEaseOut, completion: { _ in
                     // Wait for camera to toggle
                     dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
-                        // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
-                        UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0.2, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: { _ in
-                            // Deleting the blurred snapshot
-                            snapshotWithBlur.removeFromSuperview()
-                        })
+                        // Giving the preview view a bit of time to redraw first
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                            UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0.2, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: { _ in
+                                // Deleting the blurred snapshot
+                                snapshotWithBlur.removeFromSuperview()
+                            })
+                        }
                     }
                 })
             }
@@ -527,10 +518,15 @@ public class IMGLYCameraController: NSObject {
     
     // MARK: - Capture Session
     
+    public func setup() {
+        // For backwards compatibility
+        setupWithInitialRecordingMode(.Photo)
+    }
+    
     /**
     Initializes the camera and has to be called before calling `startCamera()` / `stopCamera()`
     */
-    public func setup() {
+    public func setupWithInitialRecordingMode(recordingMode: IMGLYRecordingMode) {
         if setupComplete {
             return
         }
@@ -551,6 +547,10 @@ public class IMGLYCameraController: NSObject {
         videoPreviewView!.bindDrawable()
         
         setupWithPreferredCameraPosition(.Back) {
+            if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
+                self.session.sessionPreset = recordingMode.sessionPreset
+            }
+            
             if let device = self.videoDeviceInput?.device {
                 if device.isFlashModeSupported(.Auto) {
                     self.flashMode = .Auto
@@ -566,15 +566,51 @@ public class IMGLYCameraController: NSObject {
     }
     
     public func switchToRecordingMode(recordingMode: IMGLYRecordingMode) {
+        delegate?.cameraController?(self, willSwitchToRecordingMode: recordingMode)
+        
+        focusIndicatorLayer.hidden = true
+        
+        let sessionGroup = dispatch_group_create()
+        
+        if let videoPreviewView = videoPreviewView {
+            let (snapshotWithBlur, snapshot) = addSnapshotViewsToVideoPreviewView(videoPreviewView)
+            
+            UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseOut, animations: {
+                // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
+                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0, options: .TransitionCrossDissolve, completion: nil)
+                self.delegate?.cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock?(self)()
+                }) { _ in
+                    self.delegate?.cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock?(self)()
+                    // Wait for mode switch
+                    dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
+                        // Giving the preview view a bit of time to redraw first
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            UIView.animateWithDuration(0.2, animations: {
+                                // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                                UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: nil)
+                                self.delegate?.cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock?(self)()
+                                }) { _ in
+                                    // Deleting the blurred snapshot
+                                    snapshotWithBlur.removeFromSuperview()
+                            }
+                        }
+                    }
+            }
+        }
+        
         dispatch_async(sessionQueue) {
+            dispatch_group_enter(sessionGroup)
             if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
                 self.session.sessionPreset = recordingMode.sessionPreset
             }
+            dispatch_group_leave(sessionGroup)
+            
+            self.delegate?.cameraController?(self, didSwitchToRecordingMode: recordingMode)
         }
     }
     
     private func setupWithPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition, completion: (() -> (Void))?) {
-        dispatch_async(sessionQueue) {            
+        dispatch_async(sessionQueue) {
             self.setupVideoInputsForPreferredCameraPosition(cameraPosition)
             self.setupAudioInputs()
             self.setupOutputs()
@@ -826,12 +862,6 @@ public class IMGLYCameraController: NSObject {
             }
             
             let videoCompressionSettings = self.videoDataOutput?.recommendedVideoSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie)
-//            var videoCompressionSettings: [String: AnyObject] = [AVVideoCodecKey: AVVideoCodecH264]
-//            if let currentVideoDimensions = self.currentVideoDimensions {
-//                videoCompressionSettings[AVVideoWidthKey] = NSNumber(int: currentVideoDimensions.width)
-//                videoCompressionSettings[AVVideoHeightKey] = NSNumber(int: currentVideoDimensions.height)
-//            }
-            
             self.assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: videoCompressionSettings)
             self.assetWriterVideoInput?.expectsMediaDataInRealTime = true
             
@@ -859,19 +889,6 @@ public class IMGLYCameraController: NSObject {
             
             if self.audioDeviceInput != nil {
                 let audioCompressionSettings = self.audioDataOutput?.recommendedAudioSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie)
-//                var layoutSize = 0
-//                
-//                let channelLayout = CMAudioFormatDescriptionGetChannelLayout(self.currentAudioSampleBufferFormatDescription, &layoutSize)
-//                let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(self.currentAudioSampleBufferFormatDescription)
-//                let channelLayoutData = NSData(bytes: channelLayout, length: layoutSize)
-//                
-//                let audioCompressionSettings = [
-//                    AVFormatIDKey: NSNumber(integer: kAudioFormatMPEG4AAC),
-//                    AVNumberOfChannelsKey: NSNumber(unsignedInt: basicDescription.memory.mChannelsPerFrame),
-//                    AVSampleRateKey: NSNumber(float: Float(basicDescription.memory.mSampleRate)),
-//                    AVEncoderBitRateKey: NSNumber(integer: 64000),
-//                    AVChannelLayoutKey: channelLayoutData
-//                ]
                 
                 if newAssetWriter.canApplyOutputSettings(audioCompressionSettings, forMediaType: AVMediaTypeAudio) {
                     self.assetWriterAudioInput = AVAssetWriterInput(mediaType: AVMediaTypeAudio, outputSettings: audioCompressionSettings)
@@ -938,6 +955,29 @@ public class IMGLYCameraController: NSObject {
     }
     
     // MARK: - Helpers
+    
+    func addSnapshotViewsToVideoPreviewView(videoPreviewView: UIView) -> (snapshotWithBlur: UIView, snapshotWithoutBlur: UIView) {
+        // Hiding live preview
+        videoPreviewView.hidden = true
+        
+        // Adding a simple snapshot and immediately showing it
+        let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+        snapshot.transform = videoPreviewView.transform
+        snapshot.frame = videoPreviewView.frame
+        previewView.addSubview(snapshot)
+        
+        // Creating a snapshot with a UIBlurEffect added
+        let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+        snapshotWithBlur.transform = videoPreviewView.transform
+        snapshotWithBlur.frame = videoPreviewView.frame
+        
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        visualEffectView.frame = snapshotWithBlur.bounds
+        visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        snapshotWithBlur.addSubview(visualEffectView)
+        
+        return (snapshotWithBlur: snapshotWithBlur, snapshotWithoutBlur: snapshot)
+    }
     
     class func deviceWithMediaType(mediaType: String, preferringPosition position: AVCaptureDevicePosition?) -> AVCaptureDevice? {
         let devices = AVCaptureDevice.devicesWithMediaType(mediaType) as! [AVCaptureDevice]
