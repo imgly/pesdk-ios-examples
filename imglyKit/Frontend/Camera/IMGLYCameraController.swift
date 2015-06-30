@@ -566,28 +566,15 @@ public class IMGLYCameraController: NSObject {
     }
     
     public func switchToRecordingMode(recordingMode: IMGLYRecordingMode) {
-        let preset: String
-        
-        switch recordingMode {
-        case .Photo:
-            preset = AVCaptureSessionPresetPhoto
-        case .Video:
-            preset = AVCaptureSessionPresetHigh
-        }
-        
         dispatch_async(sessionQueue) {
-            if self.session.canSetSessionPreset(preset) {
-                self.session.sessionPreset = preset
+            if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
+                self.session.sessionPreset = recordingMode.sessionPreset
             }
         }
     }
     
     private func setupWithPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition, completion: (() -> (Void))?) {
-        dispatch_async(sessionQueue) {
-            if self.session.canSetSessionPreset(AVCaptureSessionPresetPhoto) {
-                self.session.sessionPreset = AVCaptureSessionPresetPhoto
-            }
-            
+        dispatch_async(sessionQueue) {            
             self.setupVideoInputsForPreferredCameraPosition(cameraPosition)
             self.setupAudioInputs()
             self.setupOutputs()

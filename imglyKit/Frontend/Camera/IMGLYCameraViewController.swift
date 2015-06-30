@@ -384,7 +384,6 @@ public class IMGLYCameraViewController: UIViewController {
         
         configureSuperviewConstraintsWithMetrics(metrics, views: views)
         configureTopControlsConstraintsWithMetrics(metrics, views: views)
-        configureCameraPreviewContainerConstraintsWithMetrics(metrics, views: views)
         configureBottomControlsConstraintsWithMetrics(metrics, views: views)
     }
     
@@ -393,9 +392,11 @@ public class IMGLYCameraViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[cameraPreviewContainer]|", options: nil, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomControlsView]|", options: nil, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[filterSelectionView]|", options: nil, metrics: nil, views: views))
-        
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: nil, metrics: metrics, views: views))
+
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][topControlsView(==topControlsViewHeight)]", options: nil, metrics: metrics, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bottomControlsView][filterSelectionView(==filterSelectionViewHeight)]", options: nil, metrics: metrics, views: views))
+        view.addConstraint(NSLayoutConstraint(item: filterIntensitySlider, attribute: .Bottom, relatedBy: .Equal, toItem: bottomControlsView, attribute: .Top, multiplier: 1, constant: -20))
         
         cameraPreviewContainerTopConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Top, relatedBy: .Equal, toItem: topControlsView, attribute: .Bottom, multiplier: 1, constant: 0)
         cameraPreviewContainerBottomConstraint = NSLayoutConstraint(item: cameraPreviewContainer, attribute: .Bottom, relatedBy: .Equal, toItem: bottomControlsView, attribute: .Top, multiplier: 1, constant: 0)
@@ -409,11 +410,6 @@ public class IMGLYCameraViewController: UIViewController {
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==topControlMargin)-[flashButton(>=topControlMinWidth)]-(>=topControlMargin)-[switchCameraButton(>=topControlMinWidth)]-(==topControlMargin)-|", options: nil, metrics: metrics, views: views))
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flashButton]|", options: nil, metrics: nil, views: views))
         topControlsView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[switchCameraButton]|", options: nil, metrics: nil, views: views))
-    }
-    
-    private func configureCameraPreviewContainerConstraintsWithMetrics(metrics: [NSObject : NSNumber], views: [NSObject : AnyObject]) {
-        cameraPreviewContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: nil, metrics: metrics, views: views))
-        cameraPreviewContainer.addConstraint(NSLayoutConstraint(item: filterIntensitySlider, attribute: .Bottom, relatedBy: .Equal, toItem: cameraPreviewContainer, attribute: .Bottom, multiplier: 1, constant: -20))
     }
     
     private func configureBottomControlsConstraintsWithMetrics(metrics: [NSObject : NSNumber], views: [NSObject : AnyObject]) {
@@ -684,6 +680,7 @@ public class IMGLYCameraViewController: UIViewController {
                     
                     self.cameraRollButton.alpha = 0
                     self.filterSelectionButton.alpha = 0
+                    self.bottomControlsView.backgroundColor = UIColor.clearColor()
                     
                     for recordingModeSelectionButton in self.recordingModeSelectionButtons {
                         recordingModeSelectionButton.alpha = 0
@@ -694,6 +691,7 @@ public class IMGLYCameraViewController: UIViewController {
                     
                     self.cameraRollButton.alpha = 1
                     self.filterSelectionButton.alpha = 1
+                    self.bottomControlsView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
                     
                     for recordingModeSelectionButton in self.recordingModeSelectionButtons {
                         recordingModeSelectionButton.alpha = 1

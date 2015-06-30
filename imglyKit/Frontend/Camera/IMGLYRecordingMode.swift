@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 @objc public enum IMGLYRecordingMode: Int {
     case Photo
@@ -63,6 +64,15 @@ import UIKit
             return "takePhoto:"
         case .Video:
             return "recordVideo:"
+        }
+    }
+    
+    var sessionPreset: String {
+        switch self {
+        case .Photo:
+            return AVCaptureSessionPresetPhoto
+        case .Video:
+            return AVCaptureSessionPresetHigh
         }
     }
 }
