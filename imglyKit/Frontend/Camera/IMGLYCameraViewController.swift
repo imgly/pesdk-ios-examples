@@ -15,7 +15,7 @@ let InitialFilterIntensity = Float(0.75)
 private let ShowFilterIntensitySliderInterval = NSTimeInterval(2)
 private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
-public typealias IMGLYCameraCompletionBlock = (UIImage?) -> (Void)
+public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
 public class IMGLYCameraViewController: UIViewController {
     
@@ -501,17 +501,30 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func updateFlashButton() {
         if let cameraController = cameraController {
-            flashButton.hidden = !cameraController.flashAvailable
-            
             let bundle = NSBundle(forClass: self.dynamicType)
-            
-            switch(cameraController.flashMode) {
-            case .Auto:
-                self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
-            case .On:
-                self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
-            case .Off:
-                self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+
+            if currentRecordingMode == .Photo {
+                flashButton.hidden = !cameraController.flashAvailable
+                
+                switch(cameraController.flashMode) {
+                case .Auto:
+                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                case .On:
+                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                case .Off:
+                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                }
+            } else if currentRecordingMode == .Video {
+                flashButton.hidden = !cameraController.torchAvailable
+                
+                switch(cameraController.torchMode) {
+                case .Auto:
+                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                case .On:
+                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                case .Off:
+                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                }
             }
         } else {
             flashButton.hidden = true
@@ -523,7 +536,7 @@ public class IMGLYCameraViewController: UIViewController {
         hideSliderTimer = NSTimer.scheduledTimerWithTimeInterval(ShowFilterIntensitySliderInterval, target: self, selector: "hideFilterIntensitySlider:", userInfo: nil, repeats: false)
     }
     
-    private func showEditorNavigationControllerWithImage(image: UIImage?) {
+    private func showEditorNavigationControllerWithImage(image: UIImage) {
         let editorViewController = IMGLYMainEditorViewController()
         editorViewController.highResolutionImage = image
         if let cameraController = cameraController {
@@ -540,11 +553,18 @@ public class IMGLYCameraViewController: UIViewController {
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
+    private func showEditorNavigationControllerWithMovieURL(movieURL: NSURL) {
+        println("Recorded video: \(movieURL)")
+        // TODO: Add timer somewhere
+        // TODO: Add maximum video length
+        // TODO: Present editing view controller for videos
+    }
+    
     public func setLastImageFromRollAsPreview() {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
-        let fetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions)
+        let fetchResult = PHAsset.fetchAssetsWithMediaType(currentRecordingMode.mediaType, options: fetchOptions)
         if fetchResult.lastObject != nil {
             let lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
             PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: CGSize(width: BottomControlSize.width * 2, height: BottomControlSize.height * 2), contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
@@ -592,7 +612,12 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     public func changeFlash(sender: UIButton?) {
-        cameraController?.selectNextFlashMode()
+        switch(currentRecordingMode) {
+        case .Photo:
+            cameraController?.selectNextFlashMode()
+        case .Video:
+            cameraController?.selectNextTorchMode()
+        }
     }
     
     public func switchCamera(sender: UIButton?) {
@@ -604,7 +629,7 @@ public class IMGLYCameraViewController: UIViewController {
         
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        imagePicker.mediaTypes = [kUTTypeImage]
+        imagePicker.mediaTypes = [currentRecordingMode.imagePickerMediaType]
         imagePicker.allowsEditing = false
         
         self.presentViewController(imagePicker, animated: true, completion: nil)
@@ -615,9 +640,11 @@ public class IMGLYCameraViewController: UIViewController {
             if error == nil {
                 dispatch_async(dispatch_get_main_queue()) {
                     if let completionBlock = self.completionBlock {
-                        completionBlock(image)
+                        completionBlock(image, nil)
                     } else {
-                        self.showEditorNavigationControllerWithImage(image)
+                        if let image = image {
+                            self.showEditorNavigationControllerWithImage(image)
+                        }
                     }
                 }
             }
@@ -634,33 +661,6 @@ public class IMGLYCameraViewController: UIViewController {
             
             if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
                 toggleFilters(filterSelectionButton)
-            }
-            
-            UIView.animateWithDuration(0.25) {
-                // TODO: Handle via callbacks from cameraController?
-                if recordVideoButton.recording {
-                    self.swipeLeftGestureRecognizer.enabled = false
-                    self.swipeRightGestureRecognizer.enabled = false
-                    
-                    self.cameraRollButton.alpha = 0
-                    self.filterSelectionButton.alpha = 0
-                    self.bottomControlsView.backgroundColor = UIColor.clearColor()
-                    
-                    for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                        recordingModeSelectionButton.alpha = 0
-                    }
-                } else {
-                    self.swipeLeftGestureRecognizer.enabled = true
-                    self.swipeRightGestureRecognizer.enabled = true
-                    
-                    self.cameraRollButton.alpha = 1
-                    self.filterSelectionButton.alpha = 1
-                    self.bottomControlsView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
-                    
-                    for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                        recordingModeSelectionButton.alpha = 1
-                    }
-                }
             }
         }
     }
@@ -765,6 +765,12 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
         }
     }
     
+    public func cameraController(cameraController: IMGLYCameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateFlashButton()
+        }
+    }
+    
     public func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController) {
         dispatch_async(dispatch_get_main_queue()) {
             self.updateFlashButton()
@@ -808,8 +814,8 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
     
     public func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode) {
         dispatch_async(dispatch_get_main_queue()) {
+            self.setLastImageFromRollAsPreview()
             self.buttonsEnabled = true
-//            self.updateFlashButton() // TODO
         }
     }
     
@@ -857,19 +863,94 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             self.updateViewsForRecordingMode(self.currentRecordingMode)
         }
     }
+    
+    public func cameraControllerDidStartRecording(cameraController: IMGLYCameraController) {
+        dispatch_async(dispatch_get_main_queue()) {
+            UIView.animateWithDuration(0.25) {
+                self.swipeLeftGestureRecognizer.enabled = false
+                self.swipeRightGestureRecognizer.enabled = false
+                
+                self.cameraRollButton.alpha = 0
+                self.filterSelectionButton.alpha = 0
+                self.bottomControlsView.backgroundColor = UIColor.clearColor()
+                
+                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+                    recordingModeSelectionButton.alpha = 0
+                }
+            }
+        }
+    }
+    
+    private func updateUIForStoppedRecording() {
+        UIView.animateWithDuration(0.25) {
+            self.swipeLeftGestureRecognizer.enabled = true
+            self.swipeRightGestureRecognizer.enabled = true
+            
+            self.cameraRollButton.alpha = 1
+            self.filterSelectionButton.alpha = 1
+            self.bottomControlsView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
+            
+            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+                recordingModeSelectionButton.alpha = 1
+            }
+        }
+    }
+    
+    public func cameraControllerDidFailRecording(cameraController: IMGLYCameraController, error: NSError?) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateUIForStoppedRecording()
+            if let actionButton = self.actionButtonContainer.subviews.first as? IMGLYVideoRecordButton {
+                actionButton.recording = false
+            }
+            
+            let alertController = UIAlertController(title: "Error", message: "Video recording failed", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    public func cameraControllerDidFinishRecording(cameraController: IMGLYCameraController, fileURL: NSURL) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateUIForStoppedRecording()
+            if let completionBlock = self.completionBlock {
+                completionBlock(nil, fileURL)
+            } else {
+                self.showEditorNavigationControllerWithMovieURL(fileURL)
+            }
+        }
+    }
 }
 
 extension IMGLYCameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
-        self.dismissViewControllerAnimated(true, completion: {
-            if let completionBlock = self.completionBlock {
-                completionBlock(image)
-            } else {
-                self.showEditorNavigationControllerWithImage(image)
+        if let mediaType = info[UIImagePickerControllerMediaType] as? String {
+            if mediaType == kUTTypeImage as String {
+                let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+
+                self.dismissViewControllerAnimated(true, completion: {
+                    if let completionBlock = self.completionBlock {
+                        completionBlock(image, nil)
+                    } else {
+                        if let image = image {
+                            self.showEditorNavigationControllerWithImage(image)
+                        }
+                    }
+                })
+            } else if mediaType == kUTTypeMovie as String {
+                let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL
+
+                self.dismissViewControllerAnimated(true, completion: {
+                    if let completionBlock = self.completionBlock {
+                        completionBlock(nil, movieURL)
+                    } else {
+                        if let movieURL = movieURL {
+                            self.showEditorNavigationControllerWithMovieURL(movieURL)
+                        }
+                    }
+                })
             }
-        })
+        }
     }
     
     public func imagePickerControllerDidCancel(picker: UIImagePickerController) {

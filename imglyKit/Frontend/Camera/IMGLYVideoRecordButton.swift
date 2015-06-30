@@ -44,8 +44,10 @@ public final class IMGLYVideoRecordButton: UIControl {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        // TODO
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
+        
+        layer.addSublayer(outerLayer)
+        layer.addSublayer(innerLayer)
     }
     
     // MARK: - Helpers

@@ -61,6 +61,7 @@ private var FocusAndExposureContext = 0
     optional func cameraControllerDidStartStillImageCapture(cameraController: IMGLYCameraController)
     optional func cameraControllerDidFailAuthorization(cameraController: IMGLYCameraController)
     optional func cameraController(cameraController: IMGLYCameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode)
+    optional func cameraController(cameraController: IMGLYCameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode)
     optional func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController)
     optional func cameraController(cameraController: IMGLYCameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
     optional func cameraController(cameraController: IMGLYCameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
@@ -69,6 +70,9 @@ private var FocusAndExposureContext = 0
     optional func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
     optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
     optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerDidStartRecording(cameraController: IMGLYCameraController)
+    optional func cameraControllerDidFinishRecording(cameraController: IMGLYCameraController, fileURL: NSURL)
+    optional func cameraControllerDidFailRecording(cameraController: IMGLYCameraController, error: NSError?)
 }
 
 public typealias IMGLYTakePhotoBlock = (UIImage?, NSError?) -> Void
@@ -120,7 +124,6 @@ public class IMGLYCameraController: NSObject {
     private var assetWriter: AVAssetWriter?
     private var assetWriterAudioInput: AVAssetWriterInput?
     private var assetWriterVideoInput: AVAssetWriterInput?
-    private var assetWriterInputPixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor? // TODO: Probably not needed here
     private var currentVideoDimensions: CMVideoDimensions?
     private var currentAudioSampleBufferFormatDescription: CMFormatDescriptionRef?
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
@@ -332,6 +335,68 @@ public class IMGLYCameraController: NSObject {
                 }
                 
                 self.delegate?.cameraController?(self, didChangeToFlashMode: newValue)
+            }
+        }
+    }
+    
+    // MARK: - Torch
+    
+    /**
+    Selects the next torch-mode. The order is Auto->On->Off.
+    If the current device does not support auto-torch, this method
+    just toggles between on and off.
+    */
+    public func selectNextTorchMode() {
+        var nextTorchMode: AVCaptureTorchMode = .Off
+        
+        switch torchMode {
+        case .Auto:
+            if let device = videoDeviceInput?.device where device.isTorchModeSupported(.On) {
+                nextTorchMode = .On
+            }
+        case .On:
+            nextTorchMode = .Off
+        case .Off:
+            if let device = videoDeviceInput?.device {
+                if device.isTorchModeSupported(.Auto) {
+                    nextTorchMode = .Auto
+                } else if device.isTorchModeSupported(.On) {
+                    nextTorchMode = .On
+                }
+            }
+        }
+        
+        torchMode = nextTorchMode
+    }
+    
+    public private(set) var torchMode: AVCaptureTorchMode {
+        get {
+            if let device = self.videoDeviceInput?.device {
+                return device.torchMode
+            } else {
+                return .Off
+            }
+        }
+        
+        set {
+            dispatch_async(sessionQueue) {
+                var error: NSError?
+                self.session.beginConfiguration()
+                
+                if let device = self.videoDeviceInput?.device {
+                    device.lockForConfiguration(&error)
+                    device.torchMode = newValue
+                    device.unlockForConfiguration()
+                }
+                
+                self.session.commitConfiguration()
+                
+                if let error = error {
+                    println("Error changing torch mode: \(error.description)")
+                    return
+                }
+                
+                self.delegate?.cameraController?(self, didChangeToTorchMode: newValue)
             }
         }
     }
@@ -552,8 +617,10 @@ public class IMGLYCameraController: NSObject {
             }
             
             if let device = self.videoDeviceInput?.device {
-                if device.isFlashModeSupported(.Auto) {
+                if recordingMode == .Photo && device.isFlashModeSupported(.Auto) {
                     self.flashMode = .Auto
+                } else if recordingMode == .Video && device.isTorchModeSupported(.Auto) {
+                    self.torchMode = .Auto
                 }
             }
             
@@ -604,6 +671,15 @@ public class IMGLYCameraController: NSObject {
                 self.session.sessionPreset = recordingMode.sessionPreset
             }
             dispatch_group_leave(sessionGroup)
+            
+            switch(recordingMode) {
+            case .Photo:
+                self.flashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
+                self.torchMode = .Off
+            case .Video:
+                self.torchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
+                self.flashMode = .Off
+            }
             
             self.delegate?.cameraController?(self, didSwitchToRecordingMode: recordingMode)
         }
@@ -792,6 +868,15 @@ public class IMGLYCameraController: NSObject {
         return false
     }
     
+    /// Check if the current device has a torch.
+    public var torchAvailable: Bool {
+        if let device = self.videoDeviceInput?.device {
+            return device.torchAvailable
+        }
+        
+        return false
+    }
+    
     // MARK: - Still Image Capture
     
     /**
@@ -847,6 +932,8 @@ public class IMGLYCameraController: NSObject {
     }
     
     private func startWriting() {
+        delegate?.cameraControllerDidStartRecording?(self)
+        
         dispatch_async(sessionQueue) {
             var error: NSError?
             
@@ -857,7 +944,7 @@ public class IMGLYCameraController: NSObject {
             
             let newAssetWriter = AVAssetWriter(URL: outputFileURL, fileType: AVFileTypeQuickTimeMovie, error: &error)
             if newAssetWriter == nil || error != nil {
-                // TODO
+                self.delegate?.cameraControllerDidFailRecording?(self, error: error)
                 return
             }
             
@@ -871,17 +958,15 @@ public class IMGLYCameraController: NSObject {
                 sourcePixelBufferAttributes[kCVPixelBufferHeightKey] = NSNumber(int: currentVideoDimensions.height)
             }
             
-            self.assetWriterInputPixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.assetWriterVideoInput, sourcePixelBufferAttributes: sourcePixelBufferAttributes)
-            
             if let videoPreviewView = self.videoPreviewView {
                 self.assetWriterVideoInput?.transform = videoPreviewView.transform
             }
             
             let canAddInput = newAssetWriter.canAddInput(self.assetWriterVideoInput)
             if !canAddInput {
-                // TODO
                 self.assetWriterAudioInput = nil
                 self.assetWriterVideoInput = nil
+                self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
                 return
             }
             
@@ -896,8 +981,6 @@ public class IMGLYCameraController: NSObject {
                     
                     if newAssetWriter.canAddInput(self.assetWriterAudioInput) {
                         newAssetWriter.addInput(self.assetWriterAudioInput)
-                    } else {
-                        // TODO: Maybe just a hint, should proceed without audio
                     }
                 }
             }
@@ -916,7 +999,6 @@ public class IMGLYCameraController: NSObject {
             assetWriter.cancelWriting()
             assetWriterAudioInput = nil
             assetWriterVideoInput = nil
-            assetWriterInputPixelBufferAdaptor = nil
             self.assetWriter = nil
             
             // Remove temporary file
@@ -928,7 +1010,7 @@ public class IMGLYCameraController: NSObject {
                 UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
             }
             
-            // TODO: Callback
+            self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
         }
     }
     
@@ -936,7 +1018,6 @@ public class IMGLYCameraController: NSObject {
         if let assetWriter = assetWriter {
             assetWriterAudioInput = nil
             assetWriterVideoInput = nil
-            assetWriterInputPixelBufferAdaptor = nil
             self.assetWriter = nil
             
             dispatch_async(sessionQueue) {
@@ -944,10 +1025,21 @@ public class IMGLYCameraController: NSObject {
                 
                 assetWriter.finishWritingWithCompletionHandler {
                     if assetWriter.status == .Failed {
-                        // TODO: End background task + callback
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let backgroundRecordingID = self.backgroundRecordingID {
+                                UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
+                            }
+                        }
+                        
+                        self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
                     } else if assetWriter.status == .Completed {
-                        println("Wrote file: \(fileURL.path)")
-                        // TODO: End background task + callback
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let backgroundRecordingID = self.backgroundRecordingID {
+                                UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
+                            }
+                        }
+                        
+                        self.delegate?.cameraControllerDidFinishRecording?(self, fileURL: fileURL)
                     }
                 }
             }
@@ -1007,7 +1099,6 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             if let assetWriter = self.assetWriter, assetWriterAudioInput = self.assetWriterAudioInput where assetWriterAudioInput.readyForMoreMediaData {
                 let success = assetWriterAudioInput.appendSampleBuffer(sampleBuffer)
                 if !success {
-                    // TODO: Pass error somehow
                     self.abortWriting()
                 }
             }
@@ -1057,7 +1148,6 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
                     
                     let success = assetWriter.startWriting()
                     if !success {
-                        // TODO
                         abortWriting()
                         return
                     }
@@ -1068,7 +1158,6 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
                 if let assetWriterVideoInput = assetWriterVideoInput where assetWriterVideoInput.readyForMoreMediaData {
                     let success = assetWriterVideoInput.appendSampleBuffer(sampleBuffer)
                     if !success {
-                        // TODO
                         abortWriting()
                         return
                     }

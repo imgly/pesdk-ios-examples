@@ -8,6 +8,8 @@
 
 import UIKit
 import AVFoundation
+import Photos
+import MobileCoreServices
 
 @objc public enum IMGLYRecordingMode: Int {
     case Photo
@@ -73,6 +75,24 @@ import AVFoundation
             return AVCaptureSessionPresetPhoto
         case .Video:
             return AVCaptureSessionPresetHigh
+        }
+    }
+    
+    var mediaType: PHAssetMediaType {
+        switch self {
+        case .Photo:
+            return .Image
+        case .Video:
+            return .Video
+        }
+    }
+    
+    var imagePickerMediaType: String {
+        switch self {
+        case .Photo:
+            return kUTTypeImage as String
+        case .Video:
+            return kUTTypeMovie as String
         }
     }
 }
