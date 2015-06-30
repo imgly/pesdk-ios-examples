@@ -45,6 +45,13 @@ public class IMGLYCameraViewController: UIViewController {
     
     // MARK: - Properties
     
+    public private(set) lazy var backgroundContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.clearColor()
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        return view
+    }()
+    
     public private(set) lazy var topControlsView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor.blackColor()
@@ -285,7 +292,8 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureViewHierarchy() {
-        view.addSubview(cameraPreviewContainer)
+        view.addSubview(backgroundContainerView)
+        backgroundContainerView.addSubview(cameraPreviewContainer)
         view.addSubview(topControlsView)
         view.addSubview(bottomControlsView)
         
@@ -309,6 +317,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func configureViewConstraints() {
         let views: [NSObject : AnyObject] = [
+            "backgroundContainerView" : backgroundContainerView,
             "topLayoutGuide" : topLayoutGuide,
             "topControlsView" : topControlsView,
             "cameraPreviewContainer" : cameraPreviewContainer,
@@ -336,6 +345,9 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureSuperviewConstraintsWithMetrics(metrics: [NSObject : NSNumber], views: [NSObject : AnyObject]) {
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[backgroundContainerView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[backgroundContainerView]|", options: nil, metrics: nil, views: views))
+        
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[topControlsView]|", options: nil, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[cameraPreviewContainer]|", options: nil, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomControlsView]|", options: nil, metrics: nil, views: views))
