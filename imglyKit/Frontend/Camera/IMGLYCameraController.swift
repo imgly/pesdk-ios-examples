@@ -124,6 +124,7 @@ public class IMGLYCameraController: NSObject {
     private var assetWriter: AVAssetWriter?
     private var assetWriterAudioInput: AVAssetWriterInput?
     private var assetWriterVideoInput: AVAssetWriterInput?
+    private var assetWriterInputPixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor?
     private var currentVideoDimensions: CMVideoDimensions?
     private var currentAudioSampleBufferFormatDescription: CMFormatDescriptionRef?
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
@@ -968,6 +969,8 @@ public class IMGLYCameraController: NSObject {
                 sourcePixelBufferAttributes[kCVPixelBufferHeightKey] = NSNumber(int: currentVideoDimensions.height)
             }
             
+            self.assetWriterInputPixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.assetWriterVideoInput, sourcePixelBufferAttributes: sourcePixelBufferAttributes)
+            
             if let videoPreviewView = self.videoPreviewView {
                 self.assetWriterVideoInput?.transform = videoPreviewView.transform
             }
@@ -1034,6 +1037,7 @@ public class IMGLYCameraController: NSObject {
             assetWriterVideoInput = nil
             videoWritingStartTime = nil
             currentVideoTime = nil
+            assetWriterInputPixelBufferAdaptor = nil
             self.assetWriter = nil
             
             dispatch_async(sessionQueue) {
@@ -1187,11 +1191,6 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             glClearColor(0, 0, 0, 1.0)
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             
-            if let filteredImage = filteredImage {
-                ciContext?.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
-            }
-            
-            videoPreviewView.display()
             currentVideoTime = timestamp
             
             if let assetWriter = assetWriter {
@@ -1208,14 +1207,33 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
                     videoWritingStartTime = timestamp
                 }
                 
-                if let assetWriterVideoInput = assetWriterVideoInput where assetWriterVideoInput.readyForMoreMediaData {
-                    let success = assetWriterVideoInput.appendSampleBuffer(sampleBuffer)
-                    if !success {
+                if let assetWriterInputPixelBufferAdaptor = assetWriterInputPixelBufferAdaptor {
+                    var renderedOutputPixelBufferUnmanaged: Unmanaged<CVPixelBuffer>?
+                    var status = CVPixelBufferPoolCreatePixelBuffer(nil, assetWriterInputPixelBufferAdaptor.pixelBufferPool, &renderedOutputPixelBufferUnmanaged)
+                    if status != 0 {
                         abortWriting()
                         return
                     }
+                    
+                    let renderedOutputPixelBuffer = renderedOutputPixelBufferUnmanaged?.takeRetainedValue()
+                    
+                    if let filteredImage = filteredImage, renderedOutputPixelBuffer = renderedOutputPixelBuffer {
+                        ciContext?.render(filteredImage, toCVPixelBuffer: renderedOutputPixelBuffer)
+                        let drawImage = CIImage(CVPixelBuffer: renderedOutputPixelBuffer)
+                        ciContext?.drawImage(drawImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
+                        
+                        if let assetWriterVideoInput = assetWriterVideoInput where assetWriterVideoInput.readyForMoreMediaData {
+                            assetWriterInputPixelBufferAdaptor.appendPixelBuffer(renderedOutputPixelBuffer, withPresentationTime: timestamp)
+                        }
+                    }
+                }
+            } else {
+                if let filteredImage = filteredImage {
+                    ciContext?.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
                 }
             }
+            
+            videoPreviewView.display()
         }
     }
 }

@@ -13,6 +13,8 @@
 "camera-view-controller.camera-no-permission.cancel" = "Cancel";
 "camera-view-controller.mode.photo" = "PHOTO";
 "camera-view-controller.mode.video" = "VIDEO";
+"camera-view-controller.error-saving-video.title" = "Error while saving video";
+"camera-view-controller.error-saving-video.cancel" = "Cancel";
 
 // Main Editor
 "main-editor.title" = "Editor";

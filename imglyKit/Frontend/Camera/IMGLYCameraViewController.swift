@@ -579,16 +579,32 @@ public class IMGLYCameraViewController: UIViewController {
         self.presentViewController(navigationController, animated: true, completion: nil)
     }
     
-    private func showEditorNavigationControllerWithMovieURL(movieURL: NSURL) {
-        println("Recorded video: \(movieURL)")
-        // TODO: Present editing view controller for videos
+    private func saveMovieWithMovieURLToAssets(movieURL: NSURL) {
+        PHPhotoLibrary.sharedPhotoLibrary().performChanges({
+            let assetRequest = PHAssetChangeRequest.creationRequestForAssetFromVideoAtFileURL(movieURL)
+            }) { success, error in
+                if let error = error {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let bundle = NSBundle(forClass: self.dynamicType)
+                        
+                        let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.error-saving-video.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.error-saving-video.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+                        
+                        alertController.addAction(cancelAction)
+                        
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                    }
+                }
+                
+                NSFileManager.defaultManager().removeItemAtURL(movieURL, error: nil)
+        }
     }
     
     public func setLastImageFromRollAsPreview() {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
         
-        let fetchResult = PHAsset.fetchAssetsWithMediaType(currentRecordingMode.mediaType, options: fetchOptions)
+        let fetchResult = PHAsset.fetchAssetsWithMediaType(.Image, options: fetchOptions)
         if fetchResult.lastObject != nil {
             let lastAsset: PHAsset = fetchResult.lastObject as! PHAsset
             PHImageManager.defaultManager().requestImageForAsset(lastAsset, targetSize: CGSize(width: BottomControlSize.width * 2, height: BottomControlSize.height * 2), contentMode: PHImageContentMode.AspectFill, options: PHImageRequestOptions()) { (result, info) -> Void in
@@ -653,7 +669,7 @@ public class IMGLYCameraViewController: UIViewController {
         
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        imagePicker.mediaTypes = [currentRecordingMode.imagePickerMediaType]
+        imagePicker.mediaTypes = [kUTTypeImage]
         imagePicker.allowsEditing = false
         
         self.presentViewController(imagePicker, animated: true, completion: nil)
@@ -883,6 +899,8 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
                 previousActionButton.alpha = 0
             }
             
+            self.cameraRollButton.alpha = self.currentRecordingMode == .Video ? 0 : 1
+            
             self.bottomControlsView.layoutIfNeeded()
         }
     }
@@ -916,7 +934,6 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
                 self.swipeLeftGestureRecognizer.enabled = false
                 self.swipeRightGestureRecognizer.enabled = false
                 
-                self.cameraRollButton.alpha = 0
                 self.filterSelectionButton.alpha = 0
                 self.bottomControlsView.backgroundColor = UIColor.clearColor()
                 
@@ -932,7 +949,6 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             self.swipeLeftGestureRecognizer.enabled = true
             self.swipeRightGestureRecognizer.enabled = true
             
-            self.cameraRollButton.alpha = 1
             self.filterSelectionButton.alpha = 1
             self.bottomControlsView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
             
@@ -965,7 +981,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             if let completionBlock = self.completionBlock {
                 completionBlock(nil, fileURL)
             } else {
-                self.showEditorNavigationControllerWithMovieURL(fileURL)
+                self.saveMovieWithMovieURLToAssets(fileURL)
             }
         }
     }
@@ -979,35 +995,19 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
 
 extension IMGLYCameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        if let mediaType = info[UIImagePickerControllerMediaType] as? String {
-            if mediaType == kUTTypeImage as String {
-                let image = info[UIImagePickerControllerOriginalImage] as? UIImage
-
-                self.dismissViewControllerAnimated(true, completion: {
-                    if let completionBlock = self.completionBlock {
-                        completionBlock(image, nil)
-                    } else {
-                        if let image = image {
-                            self.showEditorNavigationControllerWithImage(image)
-                        }
-                    }
-                })
-            } else if mediaType == kUTTypeMovie as String {
-                let movieURL = info[UIImagePickerControllerMediaURL] as? NSURL
-
-                self.dismissViewControllerAnimated(true, completion: {
-                    if let completionBlock = self.completionBlock {
-                        completionBlock(nil, movieURL)
-                    } else {
-                        if let movieURL = movieURL {
-                            self.showEditorNavigationControllerWithMovieURL(movieURL)
-                        }
-                    }
-                })
+        let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        
+        self.dismissViewControllerAnimated(true, completion: {
+            if let completionBlock = self.completionBlock {
+                completionBlock(image, nil)
+            } else {
+                if let image = image {
+                    self.showEditorNavigationControllerWithImage(image)
+                }
             }
-        }
+        })
     }
-    
+
     public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
