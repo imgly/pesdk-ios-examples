@@ -71,6 +71,7 @@ private var FocusAndExposureContext = 0
     optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
     optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void)
     optional func cameraControllerDidStartRecording(cameraController: IMGLYCameraController)
+    optional func cameraController(cameraController: IMGLYCameraController, recordedSeconds seconds: Int)
     optional func cameraControllerDidFinishRecording(cameraController: IMGLYCameraController, fileURL: NSURL)
     optional func cameraControllerDidFailRecording(cameraController: IMGLYCameraController, error: NSError?)
 }
@@ -128,6 +129,10 @@ public class IMGLYCameraController: NSObject {
     private var currentAudioSampleBufferFormatDescription: CMFormatDescriptionRef?
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
     private var videoWritingStarted = false
+    private var videoWritingStartTime: CMTime?
+    private var currentVideoTime: CMTime?
+    private var timeUpdateTimer: NSTimer?
+    public var maximumVideoLength: Int?
     
     // MARK: - Initializers
     
@@ -633,6 +638,10 @@ public class IMGLYCameraController: NSObject {
     }
     
     public func switchToRecordingMode(recordingMode: IMGLYRecordingMode) {
+        switchToRecordingMode(recordingMode, animated: true)
+    }
+    
+    public func switchToRecordingMode(recordingMode: IMGLYRecordingMode, animated: Bool) {
         delegate?.cameraController?(self, willSwitchToRecordingMode: recordingMode)
         
         focusIndicatorLayer.hidden = true
@@ -642,7 +651,7 @@ public class IMGLYCameraController: NSObject {
         if let videoPreviewView = videoPreviewView {
             let (snapshotWithBlur, snapshot) = addSnapshotViewsToVideoPreviewView(videoPreviewView)
             
-            UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseOut, animations: {
+            UIView.animateWithDuration(animated ? 0.4 : 0, delay: 0, options: .CurveEaseOut, animations: {
                 // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
                 UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0, options: .TransitionCrossDissolve, completion: nil)
                 self.delegate?.cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock?(self)()
@@ -651,8 +660,8 @@ public class IMGLYCameraController: NSObject {
                     // Wait for mode switch
                     dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
                         // Giving the preview view a bit of time to redraw first
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
-                            UIView.animateWithDuration(0.2, animations: {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64((animated ? 0.05 : 0) * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            UIView.animateWithDuration(animated ? 0.2 : 0, animations: {
                                 // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
                                 UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: nil)
                                 self.delegate?.cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock?(self)()
@@ -674,11 +683,15 @@ public class IMGLYCameraController: NSObject {
             
             switch(recordingMode) {
             case .Photo:
-                self.flashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
-                self.torchMode = .Off
+                if self.flashAvailable {
+                    self.flashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
+                    self.torchMode = .Off
+                }
             case .Video:
-                self.torchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
-                self.flashMode = .Off
+                if self.torchAvailable {
+                    self.torchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
+                    self.flashMode = .Off
+                }
             }
             
             self.delegate?.cameraController?(self, didSwitchToRecordingMode: recordingMode)
@@ -919,6 +932,7 @@ public class IMGLYCameraController: NSObject {
     public func startVideoRecording() {
         if assetWriter == nil {
             startWriting()
+            startTimeUpdateTimer()
         }
     }
     
@@ -928,6 +942,7 @@ public class IMGLYCameraController: NSObject {
     public func stopVideoRecording() {
         if assetWriter != nil {
             stopWriting()
+            stopTimeUpdateTimer()
         }
     }
     
@@ -999,7 +1014,10 @@ public class IMGLYCameraController: NSObject {
             assetWriter.cancelWriting()
             assetWriterAudioInput = nil
             assetWriterVideoInput = nil
+            videoWritingStartTime = nil
+            currentVideoTime = nil
             self.assetWriter = nil
+            stopTimeUpdateTimer()
             
             // Remove temporary file
             let fileURL = assetWriter.outputURL
@@ -1018,6 +1036,8 @@ public class IMGLYCameraController: NSObject {
         if let assetWriter = assetWriter {
             assetWriterAudioInput = nil
             assetWriterVideoInput = nil
+            videoWritingStartTime = nil
+            currentVideoTime = nil
             self.assetWriter = nil
             
             dispatch_async(sessionQueue) {
@@ -1047,6 +1067,32 @@ public class IMGLYCameraController: NSObject {
     }
     
     // MARK: - Helpers
+    
+    func startTimeUpdateTimer() {
+        if let timeUpdateTimer = timeUpdateTimer {
+            timeUpdateTimer.invalidate()
+        }
+        
+        timeUpdateTimer = NSTimer.after(0.25, repeats: true, { () -> () in
+            if let currentVideoTime = self.currentVideoTime, videoWritingStartTime = self.videoWritingStartTime {
+                let diff = CMTimeSubtract(currentVideoTime, videoWritingStartTime)
+                let seconds = Int(CMTimeGetSeconds(diff))
+                
+                self.delegate?.cameraController?(self, recordedSeconds: seconds)
+                
+                if let maximumVideoLength = self.maximumVideoLength where seconds >= maximumVideoLength {
+                    self.stopVideoRecording()
+                }
+            }
+        })
+    }
+    
+    func stopTimeUpdateTimer() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.timeUpdateTimer?.invalidate()
+            self.timeUpdateTimer = nil
+        }
+    }
     
     func addSnapshotViewsToVideoPreviewView(videoPreviewView: UIView) -> (snapshotWithBlur: UIView, snapshotWithoutBlur: UIView) {
         // Hiding live preview
@@ -1141,6 +1187,7 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             }
             
             videoPreviewView.display()
+            currentVideoTime = timestamp
             
             if let assetWriter = assetWriter {
                 if !videoWritingStarted {
@@ -1153,6 +1200,7 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
                     }
                     
                     assetWriter.startSessionAtSourceTime(timestamp)
+                    videoWritingStartTime = timestamp
                 }
                 
                 if let assetWriterVideoInput = assetWriterVideoInput where assetWriterVideoInput.readyForMoreMediaData {

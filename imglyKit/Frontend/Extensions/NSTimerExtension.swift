@@ -24,12 +24,22 @@ private class NSTimerActor {
 
 extension NSTimer {
     class func new(after interval: NSTimeInterval, _ block: () -> ()) -> NSTimer {
+        return new(after: interval, repeats: false, block)
+    }
+    
+    class func new(after interval: NSTimeInterval, repeats: Bool, _ block: () -> ()) -> NSTimer {
         let actor = NSTimerActor(block)
-        return self.init(timeInterval: interval, target: actor, selector: "fire", userInfo: nil, repeats: false)
+        return self.init(timeInterval: interval, target: actor, selector: "fire", userInfo: nil, repeats: repeats)
     }
     
     class func after(interval: NSTimeInterval, _ block: () -> ()) -> NSTimer {
         let timer = NSTimer.new(after: interval, block)
+        NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+        return timer
+    }
+    
+    class func after(interval: NSTimeInterval, repeats: Bool, _ block: () -> ()) -> NSTimer {
+        let timer = NSTimer.new(after: interval, repeats: repeats, block)
         NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
         return timer
     }
