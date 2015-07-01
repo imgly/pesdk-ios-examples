@@ -48,7 +48,7 @@ func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     return false
 }
 
-let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 2, patchVersion: 1)
+let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 3, patchVersion: 0)
 
 private let kIMGLYIndicatorSize = CGFloat(75)
 private var CapturingStillImageContext = 0
