@@ -93,7 +93,6 @@ public class IMGLYCameraController: NSObject {
     
     dynamic private let session = AVCaptureSession()
     private let sessionQueue = dispatch_queue_create("capture_session_queue", nil)
-    private let sampleBufferQueue = dispatch_queue_create("sample_buffer_queue", nil)
     private var videoDeviceInput: AVCaptureDeviceInput?
     private var audioDeviceInput: AVCaptureDeviceInput?
     private var videoDataOutput: AVCaptureVideoDataOutput?
@@ -754,7 +753,7 @@ public class IMGLYCameraController: NSObject {
     
     private func setupOutputs() {
         let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.setSampleBufferDelegate(self, queue: self.sampleBufferQueue)
+        videoDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
         if self.session.canAddOutput(videoDataOutput) {
             self.session.addOutput(videoDataOutput)
             self.videoDataOutput = videoDataOutput
@@ -762,7 +761,7 @@ public class IMGLYCameraController: NSObject {
         
         if audioDeviceInput != nil {
             let audioDataOutput = AVCaptureAudioDataOutput()
-            audioDataOutput.setSampleBufferDelegate(self, queue: self.sampleBufferQueue)
+            audioDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
             if self.session.canAddOutput(audioDataOutput) {
                 self.session.addOutput(audioDataOutput)
                 self.audioDataOutput = audioDataOutput
@@ -932,7 +931,6 @@ public class IMGLYCameraController: NSObject {
     public func startVideoRecording() {
         if assetWriter == nil {
             startWriting()
-            startTimeUpdateTimer()
         }
     }
     
@@ -942,7 +940,6 @@ public class IMGLYCameraController: NSObject {
     public func stopVideoRecording() {
         if assetWriter != nil {
             stopWriting()
-            stopTimeUpdateTimer()
         }
     }
     
@@ -953,9 +950,7 @@ public class IMGLYCameraController: NSObject {
             var error: NSError?
             
             let outputFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent(kTempVideoFilename))!
-            if NSFileManager.defaultManager().fileExistsAtPath(outputFileURL.path!) {
-                NSFileManager.defaultManager().removeItemAtURL(outputFileURL, error: nil)
-            }
+            NSFileManager.defaultManager().removeItemAtURL(outputFileURL, error: nil)
             
             let newAssetWriter = AVAssetWriter(URL: outputFileURL, fileType: AVFileTypeQuickTimeMovie, error: &error)
             if newAssetWriter == nil || error != nil {
@@ -1003,9 +998,10 @@ public class IMGLYCameraController: NSObject {
             if UIDevice.currentDevice().multitaskingSupported {
                 self.backgroundRecordingID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({})
             }
-            
+
             self.videoWritingStarted = false
             self.assetWriter = newAssetWriter
+            self.startTimeUpdateTimer()
         }
     }
     
@@ -1043,7 +1039,14 @@ public class IMGLYCameraController: NSObject {
             dispatch_async(sessionQueue) {
                 let fileURL = assetWriter.outputURL
                 
+                if assetWriter.status == .Unknown {
+                    self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
+                    return
+                }
+                
                 assetWriter.finishWritingWithCompletionHandler {
+                    self.stopTimeUpdateTimer()
+
                     if assetWriter.status == .Failed {
                         dispatch_async(dispatch_get_main_queue()) {
                             if let backgroundRecordingID = self.backgroundRecordingID {
@@ -1069,22 +1072,24 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Helpers
     
     func startTimeUpdateTimer() {
-        if let timeUpdateTimer = timeUpdateTimer {
-            timeUpdateTimer.invalidate()
-        }
-        
-        timeUpdateTimer = NSTimer.after(0.25, repeats: true, { () -> () in
-            if let currentVideoTime = self.currentVideoTime, videoWritingStartTime = self.videoWritingStartTime {
-                let diff = CMTimeSubtract(currentVideoTime, videoWritingStartTime)
-                let seconds = Int(CMTimeGetSeconds(diff))
-                
-                self.delegate?.cameraController?(self, recordedSeconds: seconds)
-                
-                if let maximumVideoLength = self.maximumVideoLength where seconds >= maximumVideoLength {
-                    self.stopVideoRecording()
-                }
+        dispatch_async(dispatch_get_main_queue()) {
+            if let timeUpdateTimer = self.timeUpdateTimer {
+                timeUpdateTimer.invalidate()
             }
-        })
+            
+            self.timeUpdateTimer = NSTimer.after(0.25, repeats: true, { () -> () in
+                if let currentVideoTime = self.currentVideoTime, videoWritingStartTime = self.videoWritingStartTime {
+                    let diff = CMTimeSubtract(currentVideoTime, videoWritingStartTime)
+                    let seconds = Int(CMTimeGetSeconds(diff))
+                    
+                    self.delegate?.cameraController?(self, recordedSeconds: seconds)
+                    
+                    if let maximumVideoLength = self.maximumVideoLength where seconds >= maximumVideoLength {
+                        self.stopVideoRecording()
+                    }
+                }
+            })
+        }
     }
     
     func stopTimeUpdateTimer() {
