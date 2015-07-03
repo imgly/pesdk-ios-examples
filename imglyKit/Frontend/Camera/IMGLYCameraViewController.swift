@@ -195,6 +195,8 @@ public class IMGLYCameraViewController: UIViewController {
             } else {
                 cameraController?.maximumVideoLength = maximumVideoLength
             }
+            
+            updateRecordingTimeLabel(maximumVideoLength)
         }
     }
     
@@ -475,7 +477,12 @@ public class IMGLYCameraViewController: UIViewController {
     
     // MARK: - Helpers
     
+    private func updateRecordingTimeLabel(seconds: Int) {
+        self.recordingTimeLabel.text = NSString(format: "%02d:%02d", seconds / 60, seconds % 60) as String
+    }
+    
     private func addRecordingTimeLabel() {
+        updateRecordingTimeLabel(maximumVideoLength)
         topControlsView.addSubview(recordingTimeLabel)
         
         topControlsView.addConstraint(NSLayoutConstraint(item: recordingTimeLabel, attribute: .CenterX, relatedBy: .Equal, toItem: topControlsView, attribute: .CenterX, multiplier: 1, constant: 0))
@@ -934,6 +941,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
                 self.swipeLeftGestureRecognizer.enabled = false
                 self.swipeRightGestureRecognizer.enabled = false
                 
+                self.switchCameraButton.alpha = 0
                 self.filterSelectionButton.alpha = 0
                 self.bottomControlsView.backgroundColor = UIColor.clearColor()
                 
@@ -949,10 +957,11 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             self.swipeLeftGestureRecognizer.enabled = true
             self.swipeRightGestureRecognizer.enabled = true
             
+            self.switchCameraButton.alpha = 1
             self.filterSelectionButton.alpha = 1
             self.bottomControlsView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.3)
             
-            self.recordingTimeLabel.text = "00:00"
+            self.updateRecordingTimeLabel(self.maximumVideoLength)
             
             for recordingModeSelectionButton in self.recordingModeSelectionButtons {
                 recordingModeSelectionButton.alpha = 1
@@ -987,8 +996,16 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
     }
     
     public func cameraController(cameraController: IMGLYCameraController, recordedSeconds seconds: Int) {
+        let displayedSeconds: Int
+        
+        if maximumVideoLength > 0 {
+            displayedSeconds = maximumVideoLength - seconds
+        } else {
+            displayedSeconds = seconds
+        }
+        
         dispatch_async(dispatch_get_main_queue()) {
-            self.recordingTimeLabel.text = NSString(format: "%02d:%02d", seconds / 60, seconds % 60) as String
+            self.updateRecordingTimeLabel(displayedSeconds)
         }
     }
 }
