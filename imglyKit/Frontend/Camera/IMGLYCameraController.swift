@@ -48,7 +48,7 @@ func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     return false
 }
 
-let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 2, patchVersion: 0)
+let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 2, patchVersion: 1)
 
 private let kIMGLYIndicatorSize = CGFloat(75)
 private var CapturingStillImageContext = 0
@@ -163,9 +163,9 @@ public class IMGLYCameraController: NSObject {
         if let appIdentifier = appIdentifier, url = NSURL(string: "http://photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
             let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
                 if let data = data {
-                    let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: String]
+                    let json = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? [String: AnyObject]
                     
-                    if let json = json, version = json["version"], versionComponents = self.versionComponentsFromString(version) {
+                    if let json = json, version = json["version"] as? String, versionComponents = self.versionComponentsFromString(version) {
                         let remoteVersion = IMGLYSDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
                         
                         if CurrentSDKVersion < remoteVersion {

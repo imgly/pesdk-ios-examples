@@ -177,6 +177,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        cameraController?.stopCamera()
         
         if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
             filterSelectionController.beginAppearanceTransition(false, animated: animated)
@@ -421,7 +422,6 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     public func showCameraRoll(sender: UIButton?) {
-        cameraController?.stopCamera()
         let imagePicker = UIImagePickerController()
         
         imagePicker.delegate = self
@@ -435,8 +435,6 @@ public class IMGLYCameraViewController: UIViewController {
     public func takePhoto(sender: UIButton?) {
         cameraController?.takePhoto { image, error in
             if error == nil {
-                self.cameraController?.stopCamera()
-                
                 dispatch_async(dispatch_get_main_queue()) {
                     if let completionBlock = self.completionBlock {
                         completionBlock(image)
