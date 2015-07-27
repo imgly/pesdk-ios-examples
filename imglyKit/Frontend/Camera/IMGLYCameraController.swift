@@ -48,7 +48,7 @@ func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     return false
 }
 
-let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 2, patchVersion: 1)
+let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 3, patchVersion: 0)
 
 private let kIMGLYIndicatorSize = CGFloat(75)
 private var CapturingStillImageContext = 0
@@ -61,12 +61,25 @@ private var FocusAndExposureContext = 0
     optional func cameraControllerDidStartStillImageCapture(cameraController: IMGLYCameraController)
     optional func cameraControllerDidFailAuthorization(cameraController: IMGLYCameraController)
     optional func cameraController(cameraController: IMGLYCameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode)
+    optional func cameraController(cameraController: IMGLYCameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode)
     optional func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController)
     optional func cameraController(cameraController: IMGLYCameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
     optional func cameraController(cameraController: IMGLYCameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
+    optional func cameraController(cameraController: IMGLYCameraController, willSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
+    optional func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
+    optional func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void)
+    optional func cameraControllerDidStartRecording(cameraController: IMGLYCameraController)
+    optional func cameraController(cameraController: IMGLYCameraController, recordedSeconds seconds: Int)
+    optional func cameraControllerDidFinishRecording(cameraController: IMGLYCameraController, fileURL: NSURL)
+    optional func cameraControllerDidFailRecording(cameraController: IMGLYCameraController, error: NSError?)
 }
 
 public typealias IMGLYTakePhotoBlock = (UIImage?, NSError?) -> Void
+public typealias IMGLYRecordVideoBlock = (NSURL?, NSError?) -> Void
+
+private let kTempVideoFilename = "recording.mov"
 
 public class IMGLYCameraController: NSObject {
     
@@ -80,9 +93,10 @@ public class IMGLYCameraController: NSObject {
     
     dynamic private let session = AVCaptureSession()
     private let sessionQueue = dispatch_queue_create("capture_session_queue", nil)
-    private let sampleBufferQueue = dispatch_queue_create("sample_buffer_queue", nil)
     private var videoDeviceInput: AVCaptureDeviceInput?
+    private var audioDeviceInput: AVCaptureDeviceInput?
     private var videoDataOutput: AVCaptureVideoDataOutput?
+    private var audioDataOutput: AVCaptureAudioDataOutput?
     dynamic private var stillImageOutput: AVCaptureStillImageOutput?
     private var runtimeErrorHandlingObserver: NSObjectProtocol?
     dynamic private var deviceAuthorized = false
@@ -105,6 +119,20 @@ public class IMGLYCameraController: NSObject {
     dynamic private var sessionRunningAndDeviceAuthorized: Bool {
         return session.running && deviceAuthorized
     }
+    
+    // Video Recording
+    private var assetWriter: AVAssetWriter?
+    private var assetWriterAudioInput: AVAssetWriterInput?
+    private var assetWriterVideoInput: AVAssetWriterInput?
+    private var assetWriterInputPixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor?
+    private var currentVideoDimensions: CMVideoDimensions?
+    private var currentAudioSampleBufferFormatDescription: CMFormatDescriptionRef?
+    private var backgroundRecordingID: UIBackgroundTaskIdentifier?
+    private var videoWritingStarted = false
+    private var videoWritingStartTime: CMTime?
+    private var currentVideoTime: CMTime?
+    private var timeUpdateTimer: NSTimer?
+    public var maximumVideoLength: Int?
     
     // MARK: - Initializers
     
@@ -219,34 +247,20 @@ public class IMGLYCameraController: NSObject {
             let sessionGroup = dispatch_group_create()
             
             if let videoPreviewView = videoPreviewView {
-                // Hiding live preview
-                videoPreviewView.hidden = true
-                
-                // Adding a simple snapshot and immediately showing it
-                let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
-                snapshot.transform = videoPreviewView.transform
-                snapshot.frame = videoPreviewView.frame
-                previewView.addSubview(snapshot)
-                
-                // Creating a snapshot with a UIBlurEffect added
-                let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
-                snapshotWithBlur.transform = videoPreviewView.transform
-                snapshotWithBlur.frame = videoPreviewView.frame
-                
-                let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-                visualEffectView.frame = snapshotWithBlur.bounds
-                visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-                snapshotWithBlur.addSubview(visualEffectView)
+                let (snapshotWithBlur, snapshot) = addSnapshotViewsToVideoPreviewView(videoPreviewView)
                 
                 // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
                 UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: .TransitionFlipFromLeft | .CurveEaseOut, completion: { _ in
                     // Wait for camera to toggle
                     dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
-                        // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
-                        UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0.2, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: { _ in
-                            // Deleting the blurred snapshot
-                            snapshotWithBlur.removeFromSuperview()
-                        })
+                        // Giving the preview view a bit of time to redraw first
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                            UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0.2, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: { _ in
+                                // Deleting the blurred snapshot
+                                snapshotWithBlur.removeFromSuperview()
+                            })
+                        }
                     }
                 })
             }
@@ -257,7 +271,7 @@ public class IMGLYCameraController: NSObject {
                 self.session.removeInput(self.videoDeviceInput)
                 
                 self.removeObserversFromInputDevice()
-                self.setupInputsForPreferredCameraPosition(nextPosition)
+                self.setupVideoInputsForPreferredCameraPosition(nextPosition)
                 self.addObserversToInputDevice()
                 
                 self.session.commitConfiguration()
@@ -326,6 +340,68 @@ public class IMGLYCameraController: NSObject {
                 }
                 
                 self.delegate?.cameraController?(self, didChangeToFlashMode: newValue)
+            }
+        }
+    }
+    
+    // MARK: - Torch
+    
+    /**
+    Selects the next torch-mode. The order is Auto->On->Off.
+    If the current device does not support auto-torch, this method
+    just toggles between on and off.
+    */
+    public func selectNextTorchMode() {
+        var nextTorchMode: AVCaptureTorchMode = .Off
+        
+        switch torchMode {
+        case .Auto:
+            if let device = videoDeviceInput?.device where device.isTorchModeSupported(.On) {
+                nextTorchMode = .On
+            }
+        case .On:
+            nextTorchMode = .Off
+        case .Off:
+            if let device = videoDeviceInput?.device {
+                if device.isTorchModeSupported(.Auto) {
+                    nextTorchMode = .Auto
+                } else if device.isTorchModeSupported(.On) {
+                    nextTorchMode = .On
+                }
+            }
+        }
+        
+        torchMode = nextTorchMode
+    }
+    
+    public private(set) var torchMode: AVCaptureTorchMode {
+        get {
+            if let device = self.videoDeviceInput?.device {
+                return device.torchMode
+            } else {
+                return .Off
+            }
+        }
+        
+        set {
+            dispatch_async(sessionQueue) {
+                var error: NSError?
+                self.session.beginConfiguration()
+                
+                if let device = self.videoDeviceInput?.device {
+                    device.lockForConfiguration(&error)
+                    device.torchMode = newValue
+                    device.unlockForConfiguration()
+                }
+                
+                self.session.commitConfiguration()
+                
+                if let error = error {
+                    println("Error changing torch mode: \(error.description)")
+                    return
+                }
+                
+                self.delegate?.cameraController?(self, didChangeToTorchMode: newValue)
             }
         }
     }
@@ -512,10 +588,15 @@ public class IMGLYCameraController: NSObject {
     
     // MARK: - Capture Session
     
+    public func setup() {
+        // For backwards compatibility
+        setupWithInitialRecordingMode(.Photo)
+    }
+    
     /**
     Initializes the camera and has to be called before calling `startCamera()` / `stopCamera()`
     */
-    public func setup() {
+    public func setupWithInitialRecordingMode(recordingMode: IMGLYRecordingMode) {
         if setupComplete {
             return
         }
@@ -536,9 +617,15 @@ public class IMGLYCameraController: NSObject {
         videoPreviewView!.bindDrawable()
         
         setupWithPreferredCameraPosition(.Back) {
+            if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
+                self.session.sessionPreset = recordingMode.sessionPreset
+            }
+            
             if let device = self.videoDeviceInput?.device {
-                if device.isFlashModeSupported(.Auto) {
+                if recordingMode == .Photo && device.isFlashModeSupported(.Auto) {
                     self.flashMode = .Auto
+                } else if recordingMode == .Video && device.isTorchModeSupported(.Auto) {
+                    self.torchMode = .Auto
                 }
             }
             
@@ -550,27 +637,85 @@ public class IMGLYCameraController: NSObject {
         setupComplete = true
     }
     
-    private func setupWithPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition, completion: (() -> (Void))?) {
+    public func switchToRecordingMode(recordingMode: IMGLYRecordingMode) {
+        switchToRecordingMode(recordingMode, animated: true)
+    }
+    
+    public func switchToRecordingMode(recordingMode: IMGLYRecordingMode, animated: Bool) {
+        delegate?.cameraController?(self, willSwitchToRecordingMode: recordingMode)
+        
+        focusIndicatorLayer.hidden = true
+        
+        let sessionGroup = dispatch_group_create()
+        
+        if let videoPreviewView = videoPreviewView {
+            let (snapshotWithBlur, snapshot) = addSnapshotViewsToVideoPreviewView(videoPreviewView)
+            
+            UIView.animateWithDuration(animated ? 0.4 : 0, delay: 0, options: .CurveEaseOut, animations: {
+                // Transitioning between the regular snapshot and the blurred snapshot, this automatically removes `snapshot` and adds `snapshotWithBlur` to the view hierachy
+                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0, options: .TransitionCrossDissolve, completion: nil)
+                self.delegate?.cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock?(self)()
+                }) { _ in
+                    self.delegate?.cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock?(self)()
+                    // Wait for mode switch
+                    dispatch_group_notify(sessionGroup, dispatch_get_main_queue()) {
+                        // Giving the preview view a bit of time to redraw first
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64((animated ? 0.05 : 0) * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                            UIView.animateWithDuration(animated ? 0.2 : 0, animations: {
+                                // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                                UIView.transitionFromView(snapshotWithBlur, toView: videoPreviewView, duration: 0, options: .TransitionCrossDissolve | .ShowHideTransitionViews, completion: nil)
+                                self.delegate?.cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock?(self)()
+                                }) { _ in
+                                    // Deleting the blurred snapshot
+                                    snapshotWithBlur.removeFromSuperview()
+                            }
+                        }
+                    }
+            }
+        }
+        
         dispatch_async(sessionQueue) {
-            if self.session.canSetSessionPreset(AVCaptureSessionPresetPhoto) {
-                self.session.sessionPreset = AVCaptureSessionPresetPhoto
+            dispatch_group_enter(sessionGroup)
+            if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
+                self.session.sessionPreset = recordingMode.sessionPreset
+            }
+            dispatch_group_leave(sessionGroup)
+            
+            switch(recordingMode) {
+            case .Photo:
+                if self.flashAvailable {
+                    self.flashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
+                    self.torchMode = .Off
+                }
+            case .Video:
+                if self.torchAvailable {
+                    self.torchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
+                    self.flashMode = .Off
+                }
             }
             
-            self.setupInputsForPreferredCameraPosition(cameraPosition)
+            self.delegate?.cameraController?(self, didSwitchToRecordingMode: recordingMode)
+        }
+    }
+    
+    private func setupWithPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition, completion: (() -> (Void))?) {
+        dispatch_async(sessionQueue) {
+            self.setupVideoInputsForPreferredCameraPosition(cameraPosition)
+            self.setupAudioInputs()
             self.setupOutputs()
             
             completion?()
         }
     }
     
-    private func setupInputsForPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition) {
+    private func setupVideoInputsForPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition) {
         var error: NSError?
         
         let videoDevice = IMGLYCameraController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPosition)
         let videoDeviceInput = AVCaptureDeviceInput(device: videoDevice, error: &error)
         
         if let error = error {
-            println("Error in setupInputsForPreferredCameraPosition: \(error.description)")
+            println("Error in setupVideoInputsForPreferredCameraPosition: \(error.description)")
         }
         
         if self.session.canAddInput(videoDeviceInput) {
@@ -591,12 +736,37 @@ public class IMGLYCameraController: NSObject {
         }
     }
     
+    private func setupAudioInputs() {
+        var error: NSError?
+        
+        let audioDevice = IMGLYCameraController.deviceWithMediaType(AVMediaTypeAudio, preferringPosition: nil)
+        let audioDeviceInput = AVCaptureDeviceInput(device: audioDevice, error: &error)
+        
+        if let error = error {
+            println("Error in setupAudioInputs: \(error.description)")
+        }
+        
+        if self.session.canAddInput(audioDeviceInput) {
+            self.session.addInput(audioDeviceInput)
+            self.audioDeviceInput = audioDeviceInput
+        }
+    }
+    
     private func setupOutputs() {
         let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.setSampleBufferDelegate(self, queue: self.sampleBufferQueue)
+        videoDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
         if self.session.canAddOutput(videoDataOutput) {
             self.session.addOutput(videoDataOutput)
             self.videoDataOutput = videoDataOutput
+        }
+        
+        if audioDeviceInput != nil {
+            let audioDataOutput = AVCaptureAudioDataOutput()
+            audioDataOutput.setSampleBufferDelegate(self, queue: self.sessionQueue)
+            if self.session.canAddOutput(audioDataOutput) {
+                self.session.addOutput(audioDataOutput)
+                self.audioDataOutput = audioDataOutput
+            }
         }
         
         let stillImageOutput = AVCaptureStillImageOutput()
@@ -711,6 +881,15 @@ public class IMGLYCameraController: NSObject {
         return false
     }
     
+    /// Check if the current device has a torch.
+    public var torchAvailable: Bool {
+        if let device = self.videoDeviceInput?.device {
+            return device.torchAvailable
+        }
+        
+        return false
+    }
+    
     // MARK: - Still Image Capture
     
     /**
@@ -745,16 +924,222 @@ public class IMGLYCameraController: NSObject {
         }
     }
     
+    // MARK: - Video Capture
+    
+    /**
+    Starts recording a video.
+    */
+    public func startVideoRecording() {
+        if assetWriter == nil {
+            startWriting()
+        }
+    }
+    
+    /**
+    Stop recording a video.
+    */
+    public func stopVideoRecording() {
+        if assetWriter != nil {
+            stopWriting()
+        }
+    }
+    
+    private func startWriting() {
+        delegate?.cameraControllerDidStartRecording?(self)
+        
+        dispatch_async(sessionQueue) {
+            var error: NSError?
+            
+            let outputFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent(kTempVideoFilename))!
+            NSFileManager.defaultManager().removeItemAtURL(outputFileURL, error: nil)
+            
+            let newAssetWriter = AVAssetWriter(URL: outputFileURL, fileType: AVFileTypeQuickTimeMovie, error: &error)
+            if newAssetWriter == nil || error != nil {
+                self.delegate?.cameraControllerDidFailRecording?(self, error: error)
+                return
+            }
+            
+            let videoCompressionSettings = self.videoDataOutput?.recommendedVideoSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie)
+            self.assetWriterVideoInput = AVAssetWriterInput(mediaType: AVMediaTypeVideo, outputSettings: videoCompressionSettings)
+            self.assetWriterVideoInput?.expectsMediaDataInRealTime = true
+            
+            var sourcePixelBufferAttributes: [NSObject: AnyObject] = [kCVPixelBufferPixelFormatTypeKey: NSNumber(integer: kCVPixelFormatType_32BGRA), kCVPixelFormatOpenGLESCompatibility: kCFBooleanTrue]
+            if let currentVideoDimensions = self.currentVideoDimensions {
+                sourcePixelBufferAttributes[kCVPixelBufferWidthKey] = NSNumber(int: currentVideoDimensions.width)
+                sourcePixelBufferAttributes[kCVPixelBufferHeightKey] = NSNumber(int: currentVideoDimensions.height)
+            }
+            
+            self.assetWriterInputPixelBufferAdaptor = AVAssetWriterInputPixelBufferAdaptor(assetWriterInput: self.assetWriterVideoInput, sourcePixelBufferAttributes: sourcePixelBufferAttributes)
+            
+            if let videoDevice = self.videoDeviceInput?.device, captureVideoOrientation = self.captureVideoOrientation {
+                if videoDevice.position == .Front {
+                    self.assetWriterVideoInput?.transform = GetTransformForDeviceOrientation(captureVideoOrientation, mirrored: true)
+                } else {
+                    self.assetWriterVideoInput?.transform = GetTransformForDeviceOrientation(captureVideoOrientation)
+                }
+            }
+
+            let canAddInput = newAssetWriter.canAddInput(self.assetWriterVideoInput)
+            if !canAddInput {
+                self.assetWriterAudioInput = nil
+                self.assetWriterVideoInput = nil
+                self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
+                return
+            }
+            
+            newAssetWriter.addInput(self.assetWriterVideoInput)
+            
+            if self.audioDeviceInput != nil {
+                let audioCompressionSettings = self.audioDataOutput?.recommendedAudioSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie)
+                
+                if newAssetWriter.canApplyOutputSettings(audioCompressionSettings, forMediaType: AVMediaTypeAudio) {
+                    self.assetWriterAudioInput = AVAssetWriterInput(mediaType: AVMediaTypeAudio, outputSettings: audioCompressionSettings)
+                    self.assetWriterAudioInput?.expectsMediaDataInRealTime = true
+                    
+                    if newAssetWriter.canAddInput(self.assetWriterAudioInput) {
+                        newAssetWriter.addInput(self.assetWriterAudioInput)
+                    }
+                }
+            }
+            
+            if UIDevice.currentDevice().multitaskingSupported {
+                self.backgroundRecordingID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({})
+            }
+
+            self.videoWritingStarted = false
+            self.assetWriter = newAssetWriter
+            self.startTimeUpdateTimer()
+        }
+    }
+    
+    private func abortWriting() {
+        if let assetWriter = assetWriter {
+            assetWriter.cancelWriting()
+            assetWriterAudioInput = nil
+            assetWriterVideoInput = nil
+            videoWritingStartTime = nil
+            currentVideoTime = nil
+            self.assetWriter = nil
+            stopTimeUpdateTimer()
+            
+            // Remove temporary file
+            let fileURL = assetWriter.outputURL
+            NSFileManager.defaultManager().removeItemAtURL(fileURL, error: nil)
+            
+            // End background task
+            if let backgroundRecordingID = backgroundRecordingID where UIDevice.currentDevice().multitaskingSupported {
+                UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
+            }
+            
+            self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
+        }
+    }
+    
+    private func stopWriting() {
+        if let assetWriter = assetWriter {
+            assetWriterAudioInput = nil
+            assetWriterVideoInput = nil
+            videoWritingStartTime = nil
+            currentVideoTime = nil
+            assetWriterInputPixelBufferAdaptor = nil
+            self.assetWriter = nil
+            
+            dispatch_async(sessionQueue) {
+                let fileURL = assetWriter.outputURL
+                
+                if assetWriter.status == .Unknown {
+                    self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
+                    return
+                }
+                
+                assetWriter.finishWritingWithCompletionHandler {
+                    self.stopTimeUpdateTimer()
+
+                    if assetWriter.status == .Failed {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let backgroundRecordingID = self.backgroundRecordingID {
+                                UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
+                            }
+                        }
+                        
+                        self.delegate?.cameraControllerDidFailRecording?(self, error: nil)
+                    } else if assetWriter.status == .Completed {
+                        dispatch_async(dispatch_get_main_queue()) {
+                            if let backgroundRecordingID = self.backgroundRecordingID {
+                                UIApplication.sharedApplication().endBackgroundTask(backgroundRecordingID)
+                            }
+                        }
+                        
+                        self.delegate?.cameraControllerDidFinishRecording?(self, fileURL: fileURL)
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - Helpers
     
-    class func deviceWithMediaType(mediaType: String, preferringPosition position: AVCaptureDevicePosition) -> AVCaptureDevice? {
+    func startTimeUpdateTimer() {
+        dispatch_async(dispatch_get_main_queue()) {
+            if let timeUpdateTimer = self.timeUpdateTimer {
+                timeUpdateTimer.invalidate()
+            }
+            
+            self.timeUpdateTimer = NSTimer.after(0.25, repeats: true, { () -> () in
+                if let currentVideoTime = self.currentVideoTime, videoWritingStartTime = self.videoWritingStartTime {
+                    let diff = CMTimeSubtract(currentVideoTime, videoWritingStartTime)
+                    let seconds = Int(CMTimeGetSeconds(diff))
+                    
+                    self.delegate?.cameraController?(self, recordedSeconds: seconds)
+                    
+                    if let maximumVideoLength = self.maximumVideoLength where seconds >= maximumVideoLength {
+                        self.stopVideoRecording()
+                    }
+                }
+            })
+        }
+    }
+    
+    func stopTimeUpdateTimer() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.timeUpdateTimer?.invalidate()
+            self.timeUpdateTimer = nil
+        }
+    }
+    
+    func addSnapshotViewsToVideoPreviewView(videoPreviewView: UIView) -> (snapshotWithBlur: UIView, snapshotWithoutBlur: UIView) {
+        // Hiding live preview
+        videoPreviewView.hidden = true
+        
+        // Adding a simple snapshot and immediately showing it
+        let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+        snapshot.transform = videoPreviewView.transform
+        snapshot.frame = previewView.frame
+        previewView.superview?.addSubview(snapshot)
+        
+        // Creating a snapshot with a UIBlurEffect added
+        let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+        snapshotWithBlur.transform = videoPreviewView.transform
+        snapshotWithBlur.frame = previewView.frame
+        
+        let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+        visualEffectView.frame = snapshotWithBlur.bounds
+        visualEffectView.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        snapshotWithBlur.addSubview(visualEffectView)
+        
+        return (snapshotWithBlur: snapshotWithBlur, snapshotWithoutBlur: snapshot)
+    }
+    
+    class func deviceWithMediaType(mediaType: String, preferringPosition position: AVCaptureDevicePosition?) -> AVCaptureDevice? {
         let devices = AVCaptureDevice.devicesWithMediaType(mediaType) as! [AVCaptureDevice]
         var captureDevice = devices.first
         
-        for device in devices {
-            if device.position == position {
-                captureDevice = device
-                break
+        if let position = position {
+            for device in devices {
+                if device.position == position {
+                    captureDevice = device
+                    break
+                }
             }
         }
         
@@ -763,11 +1148,25 @@ public class IMGLYCameraController: NSObject {
     
 }
 
-extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
         let mediaType = CMFormatDescriptionGetMediaType(formatDescription)
         
+        if mediaType == CMMediaType(kCMMediaType_Audio) {
+            self.currentAudioSampleBufferFormatDescription = formatDescription
+            if let assetWriter = self.assetWriter, assetWriterAudioInput = self.assetWriterAudioInput where assetWriterAudioInput.readyForMoreMediaData {
+                let success = assetWriterAudioInput.appendSampleBuffer(sampleBuffer)
+                if !success {
+                    self.abortWriting()
+                }
+            }
+
+            return
+        }
+        
+        let timestamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+        currentVideoDimensions = CMVideoFormatDescriptionGetDimensions(formatDescription)
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)
         let sourceImage = CIImage(CVPixelBuffer: imageBuffer as CVPixelBufferRef, options: nil)
         
@@ -796,8 +1195,46 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate {
             glClearColor(0, 0, 0, 1.0)
             glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
             
-            if let filteredImage = filteredImage {
-                ciContext?.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
+            currentVideoTime = timestamp
+            
+            if let assetWriter = assetWriter {
+                if !videoWritingStarted {
+                    videoWritingStarted = true
+                    
+                    let success = assetWriter.startWriting()
+                    if !success {
+                        abortWriting()
+                        return
+                    }
+                    
+                    assetWriter.startSessionAtSourceTime(timestamp)
+                    videoWritingStartTime = timestamp
+                }
+                
+                if let assetWriterInputPixelBufferAdaptor = assetWriterInputPixelBufferAdaptor {
+                    var renderedOutputPixelBufferUnmanaged: Unmanaged<CVPixelBuffer>?
+                    var status = CVPixelBufferPoolCreatePixelBuffer(nil, assetWriterInputPixelBufferAdaptor.pixelBufferPool, &renderedOutputPixelBufferUnmanaged)
+                    if status != 0 {
+                        abortWriting()
+                        return
+                    }
+                    
+                    let renderedOutputPixelBuffer = renderedOutputPixelBufferUnmanaged?.takeRetainedValue()
+                    
+                    if let filteredImage = filteredImage, renderedOutputPixelBuffer = renderedOutputPixelBuffer {
+                        ciContext?.render(filteredImage, toCVPixelBuffer: renderedOutputPixelBuffer)
+                        let drawImage = CIImage(CVPixelBuffer: renderedOutputPixelBuffer)
+                        ciContext?.drawImage(drawImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
+                        
+                        if let assetWriterVideoInput = assetWriterVideoInput where assetWriterVideoInput.readyForMoreMediaData {
+                            assetWriterInputPixelBufferAdaptor.appendPixelBuffer(renderedOutputPixelBuffer, withPresentationTime: timestamp)
+                        }
+                    }
+                }
+            } else {
+                if let filteredImage = filteredImage {
+                    ciContext?.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: sourceExtent)
+                }
             }
             
             videoPreviewView.display()
@@ -834,4 +1271,23 @@ extension CGRect {
         self.size.width = scaledWidth
         self.size.height = scaledHeight
     }
+}
+
+// MARK: - Helper Functions
+
+private func GetTransformForDeviceOrientation(orientation: AVCaptureVideoOrientation, mirrored: Bool = false) -> CGAffineTransform {
+    let result: CGAffineTransform
+    
+    switch orientation {
+    case .Portrait:
+        result = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+    case .PortraitUpsideDown:
+        result = CGAffineTransformMakeRotation(CGFloat(3 * M_PI_2))
+    case .LandscapeRight:
+        result = mirrored ? CGAffineTransformMakeRotation(CGFloat(M_PI)) : CGAffineTransformIdentity
+    case .LandscapeLeft:
+        result = mirrored ? CGAffineTransformIdentity : CGAffineTransformMakeRotation(CGFloat(M_PI))
+    }
+    
+    return result
 }

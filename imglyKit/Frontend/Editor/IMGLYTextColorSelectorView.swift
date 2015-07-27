@@ -42,7 +42,6 @@ public class IMGLYTextColorSelectorView: UIScrollView {
     }
     
     private func configureColorArray() {
-        UIColor(red: 1, green: 2, blue: 2, alpha: 3)
         colorArray = [
             UIColor.whiteColor(),
             UIColor.blackColor(),

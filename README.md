@@ -19,6 +19,7 @@ img.ly SDK provides tools for creating photo applications for iOS with a big var
 * Live preview, as with version one, filters can be previewed in the camera preview.
 * Low memory footprint, with version two we were able to reduce the memory footprint massively.
 * Non-destructive. Don't like what you did? No problem, just redo or even discard it.
+* In addition to adding beautiful filters to your photos, you can now also record videos and add the same filters.
 
 ![Example](http://i.imgur.com/EorDrpS.png)
 
@@ -43,7 +44,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'imglyKit', '~> 2.2'
+pod 'imglyKit', '~> 2.3'
 ```
 
 Then, run the following command:
@@ -66,7 +67,7 @@ $ brew install carthage
 To integrate imglyKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "imgly/imgly-sdk-ios" >= 2.2
+github "imgly/imgly-sdk-ios" >= 2.3
 ```
 
 ### Manually
@@ -128,8 +129,9 @@ Beside the views and view controllers, it also has methods to create the differe
 
 The frontend part of the SDK contains all the views and view controllers, or generally speaking the UI. The frontend itself consists of two parts. Camera related UI and filter or operation related UI.
 
-For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and controls to operate the camera settings such as flash, front camera or back camera. 
+For the camera UI there is the `IMGLYCameraViewController`. That controller shows a camera live stream, a filter selector, and controls to operate the camera settings such as flash, front camera or back camera. You have to instantiate the `IMGLYCameraViewController` with the recording modes that you want to make available, currently `.Photo` and `.Video` are supported.
 After a photo has been taken the `IMGLYCameraViewController` calls the handed over completion handler, or if none is set, it presents a `IMGLYMainEditorViewController` within a `IMGLYNavigationController` modally. 
+After a video has been taken the `IMGLYCameraViewController` call a completion block with the URL to the generated video file.
  
 The `IMGLYMainEditorViewController` functions as main editor. It is connected to sub editors that allow the user to edit an image. The built-in sub editors are Magic (automatic image enhancement), Filter, Stickers, Orientation (Flip / Rotate), Focus (Tiltshift), Crop, Brightness, Contrast, Saturation, and Text. 
 These dialogs use a lower resolution image as a preview to improve the performance.
