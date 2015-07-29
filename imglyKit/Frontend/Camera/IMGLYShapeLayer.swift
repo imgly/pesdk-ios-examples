@@ -9,7 +9,7 @@
 import QuartzCore
 
 class IMGLYShapeLayer: CAShapeLayer {
-    override func actionForKey(event: String!) -> CAAction! {
+    override func actionForKey(event: String) -> CAAction? {
         if event == "path" {
             let animation = CABasicAnimation(keyPath: event)
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)

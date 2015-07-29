@@ -14,7 +14,7 @@ public class IMGLYColorfulFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Colorful"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

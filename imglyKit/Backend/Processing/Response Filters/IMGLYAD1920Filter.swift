@@ -14,7 +14,7 @@ public class IMGLYAD1920Filter: IMGLYResponseFilter {
         self.imgly_displayName = "AD1920"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

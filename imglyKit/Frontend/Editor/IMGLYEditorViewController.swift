@@ -34,21 +34,21 @@ public class IMGLYEditorViewController: UIViewController {
     
     public private(set) lazy var previewImageView: IMGLYZoomingImageView = {
         let imageView = IMGLYZoomingImageView()
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
         return imageView
         }()
     
     public private(set) lazy var bottomContainerView: UIView = {
         let view = UIView()
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     private lazy var activityIndicatorView: UIActivityIndicatorView = {
         let view = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
         view.hidesWhenStopped = true
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -93,19 +93,19 @@ public class IMGLYEditorViewController: UIViewController {
     }
     
     private func configureViewConstraints() {
-        let views: [NSObject: AnyObject] = [
+        let views: [String: AnyObject] = [
             "previewImageView" : previewImageView,
             "bottomContainerView" : bottomContainerView,
             "topLayoutGuide" : topLayoutGuide
         ]
         
-        let metrics: [NSObject: NSNumber] = [
+        let metrics: [String: AnyObject] = [
             "bottomContainerViewHeight" : 100
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[previewImageView]|", options: nil, metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomContainerView]|", options: nil, metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][previewImageView][bottomContainerView(==bottomContainerViewHeight)]|", options: nil, metrics: metrics, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[previewImageView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[bottomContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide][previewImageView][bottomContainerView(==bottomContainerViewHeight)]|", options: [], metrics: metrics, views: views))
         
         previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterX, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterX, multiplier: 1, constant: 0))
         previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterY, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterY, multiplier: 1, constant: 0))

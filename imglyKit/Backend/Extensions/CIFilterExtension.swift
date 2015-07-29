@@ -23,7 +23,7 @@ public extension CIFilter {
         }
         
         set(newValue) {
-            objc_setAssociatedObject(self, &displayNameAssociationKey, newValue, objc_AssociationPolicy(OBJC_ASSOCIATION_RETAIN))
+            objc_setAssociatedObject(self, &displayNameAssociationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         }
     }
 }

@@ -11,7 +11,7 @@ import UIKit
 public typealias IMGLYActionButtonHandler = () -> (Void)
 public typealias IMGLYShowSelectionBlock = () -> (Bool)
 
-@objc public class IMGLYActionButton {
+public class IMGLYActionButton {
     let title: String?
     let image: UIImage?
     let selectedImage: UIImage?

@@ -26,7 +26,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.free", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -36,7 +36,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.1-to-1", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -46,7 +46,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.4-to-3", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -56,7 +56,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.16-to-9", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -138,7 +138,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func configureButtons() {
         let buttonContainerView = UIView()
-        buttonContainerView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         
         buttonContainerView.addSubview(freeRatioButton)
@@ -160,15 +160,15 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         
         // Button Constraints
         
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[freeRatioButton(==buttonWidth)][oneToOneRatioButton(==freeRatioButton)][fourToThreeRatioButton(==freeRatioButton)][sixteenToNineRatioButton(==freeRatioButton)]|", options: nil, metrics: metrics, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[freeRatioButton]|", options: nil, metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[oneToOneRatioButton]|", options: nil, metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fourToThreeRatioButton]|", options: nil, metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[sixteenToNineRatioButton]|", options: nil, metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[freeRatioButton(==buttonWidth)][oneToOneRatioButton(==freeRatioButton)][fourToThreeRatioButton(==freeRatioButton)][sixteenToNineRatioButton(==freeRatioButton)]|", options: [], metrics: metrics, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[freeRatioButton]|", options: [], metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[oneToOneRatioButton]|", options: [], metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fourToThreeRatioButton]|", options: [], metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[sixteenToNineRatioButton]|", options: [], metrics: nil, views: views))
         
         // Container Constraints
         
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
     }
     
@@ -442,7 +442,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         }
     }
     
-    private func calculateDragOffsetOnNewDrag(#recognizer: UIPanGestureRecognizer) {
+    private func calculateDragOffsetOnNewDrag(recognizer recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         if recognizer.state == UIGestureRecognizerState.Began {
             dragOffset = CGPointMake(location.x - cropRectComponent.cropRect.origin.x, location.y - cropRectComponent.cropRect.origin.y)

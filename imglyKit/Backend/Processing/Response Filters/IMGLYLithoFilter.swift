@@ -14,7 +14,7 @@ public class IMGLYLithoFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Litho"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

@@ -36,7 +36,7 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
             "star"
         ]
         
-        stickers = stickerFiles.map { file in
+        stickers = stickerFiles.map { (file: String) -> IMGLYSticker? in
             if let image = UIImage(named: file, inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil) {
                 let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil)
                 return IMGLYSticker(image: image, thumbnail: thumbnail)

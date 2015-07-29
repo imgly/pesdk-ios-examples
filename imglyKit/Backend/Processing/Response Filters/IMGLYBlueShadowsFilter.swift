@@ -14,7 +14,7 @@ public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Blue Shade"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

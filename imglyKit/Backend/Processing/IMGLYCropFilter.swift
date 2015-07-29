@@ -29,14 +29,14 @@ public class IMGLYCropFilter : CIFilter {
         super.init()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage! {
+    public override var outputImage: CIImage {
         if let inputImage = inputImage {
-            let rect = inputImage.extent()
+            let rect = inputImage.extent
             
             // important: CICrop has its coordinate system upside-down
             // so we need to reverse that
@@ -49,7 +49,7 @@ public class IMGLYCropFilter : CIFilter {
             
             // CICrop does not actually crop the image, but rather hides parts of the image
             // To actually get the cropped contents only, we have to apply a transform
-            let croppedImageRect = croppedImage.extent()
+            let croppedImageRect = croppedImage.extent
             let transformedImage = croppedImage.imageByApplyingTransform(CGAffineTransformMakeTranslation(-1 * croppedImageRect.origin.x, -1 * croppedImageRect.origin.y))
             
             return transformedImage
@@ -59,7 +59,7 @@ public class IMGLYCropFilter : CIFilter {
     }
 }
 
-extension IMGLYCropFilter: NSCopying {
+extension IMGLYCropFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYCropFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

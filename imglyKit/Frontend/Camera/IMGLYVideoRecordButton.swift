@@ -43,7 +43,7 @@ public final class IMGLYVideoRecordButton: UIControl {
         layer.addSublayer(innerLayer)
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         layer.addSublayer(outerLayer)
@@ -81,7 +81,7 @@ public final class IMGLYVideoRecordButton: UIControl {
     
     // MARK: - UIControl
     
-    public override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    public override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
         let location = touch.locationInView(self)
         if !innerLayer.containsPoint(location) {
             return false
@@ -91,7 +91,7 @@ public final class IMGLYVideoRecordButton: UIControl {
         return true
     }
     
-    public override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
+    public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
         recording = !recording
         innerLayer.fillColor = IMGLYVideoRecordButton.recordingColor.CGColor
         sendActionsForControlEvents(.TouchUpInside)

@@ -30,14 +30,17 @@ public class IMGLYFontImporter {
     
     private func importFontsWithExtension(ext: String) {
         let paths = NSBundle(forClass: self.dynamicType).pathsForResourcesOfType(ext, inDirectory: nil)
-        for fontPath in paths as! [String] {
+        for fontPath in paths {
             let data: NSData? = NSFileManager.defaultManager().contentsAtPath(fontPath)
             var error: Unmanaged<CFError>?
-            var provider = CGDataProviderCreateWithCFData(data as! CFDataRef)
-            var font = CGFontCreateWithDataProvider(provider)
-            if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
-                println("Failed to register font, error: \(error)")
-                return
+            let provider = CGDataProviderCreateWithCFData(data)
+            let font = CGFontCreateWithDataProvider(provider)
+            
+            if let font = font {
+                if (!CTFontManagerRegisterGraphicsFont(font, &error)) {
+                    print("Failed to register font, error: \(error)")
+                    return
+                }
             }
         }
     }

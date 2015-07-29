@@ -17,7 +17,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.off", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "turnOff:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -27,7 +27,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.linear", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateLinear:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -37,7 +37,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.radial", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateRadial:", forControlEvents: .TouchUpInside)
         return button
         }()
@@ -100,7 +100,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
     
     private func configureButtons() {
         let buttonContainerView = UIView()
-        buttonContainerView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         
         buttonContainerView.addSubview(offButton)
@@ -120,14 +120,14 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         
         // Button Constraints
         
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[offButton(==buttonWidth)][linearButton(==offButton)][radialButton(==offButton)]|", options: nil, metrics: metrics, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[offButton]|", options: nil, metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[linearButton]|", options: nil, metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[radialButton]|", options: nil, metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[offButton(==buttonWidth)][linearButton(==offButton)][radialButton(==offButton)]|", options: [], metrics: metrics, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[offButton]|", options: [], metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[linearButton]|", options: [], metrics: nil, views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[radialButton]|", options: [], metrics: nil, views: views))
         
         // Container Constraints
         
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
     }
     

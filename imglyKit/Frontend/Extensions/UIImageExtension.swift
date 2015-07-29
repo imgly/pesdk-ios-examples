@@ -25,9 +25,9 @@ public extension UIImage {
     /**
     Returns a rescaled copy of the image, taking into account its orientation
     
-    :param: size The size of the rescaled image.
+    - parameter size: The size of the rescaled image.
     
-    :returns: The rescaled image.
+    - returns: The rescaled image.
     
     :discussion: The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
     */
@@ -40,7 +40,7 @@ public extension UIImage {
     }
 }
 
-extension UIImageOrientation: Printable {
+extension UIImageOrientation: CustomStringConvertible {
     public var description: String {
         switch self {
         case Up: return "Up"

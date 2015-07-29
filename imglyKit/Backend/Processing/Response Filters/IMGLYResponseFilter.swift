@@ -62,21 +62,20 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
         super.init()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         self.responseName = ""
         super.init(coder: aDecoder)
     }
     
-    public override var outputImage: CIImage! {
-        if inputImage == nil {
+    public override var outputImage: CIImage {
+        guard let inputImage = inputImage else {
             return CIImage.emptyImage()
         }
         
-        var outputImage: CIImage?
+        var outputImage: CIImage!
         
         autoreleasepool {
-            if let colorCubeData = colorCubeData {
-                var filter = CIFilter(name: "CIColorCube")
+            if let colorCubeData = colorCubeData, filter = CIFilter(name: "CIColorCube") {
                 filter.setValue(colorCubeData, forKey: "inputCubeData")
                 filter.setValue(64, forKey: "inputCubeDimension")
                 filter.setValue(inputImage, forKey: kCIInputImageKey)
@@ -90,7 +89,7 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     }
 }
 
-extension IMGLYResponseFilter: NSCopying {
+extension IMGLYResponseFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYResponseFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

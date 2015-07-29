@@ -16,9 +16,9 @@ extension IMGLYInstanceFactory {
     Return the viewcontroller according to the button-type.
     This is used by the main menu.
     
-    :param: type The type of the button pressed.
+    - parameter type: The type of the button pressed.
     
-    :returns: A viewcontroller according to the button-type.
+    - returns: A viewcontroller according to the button-type.
     */
     public class func viewControllerForButtonType(type: IMGLYMainMenuButtonType, withFixedFilterStack fixedFilterStack: IMGLYFixedFilterStack) -> IMGLYSubEditorViewController? {
         switch (type) {
