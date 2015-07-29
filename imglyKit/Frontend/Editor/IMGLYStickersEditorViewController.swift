@@ -29,7 +29,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     public override func tappedDone(sender: UIBarButtonItem?) {
         var addedStickers = false
         
-        for view in stickersClipView.subviews as! [UIView] {
+        for view in stickersClipView.subviews {
             if let view = view as? UIImageView {
                 
                 if let image = view.image {
@@ -101,15 +101,15 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         flowLayout.minimumLineSpacing = 10
         
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = stickersDataSource
         collectionView.delegate = self
         collectionView.registerClass(IMGLYStickerCollectionViewCell.self, forCellWithReuseIdentifier: StickersCollectionViewCellReuseIdentifier)
         
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[collectionView]|", options: nil, metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[collectionView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|", options: [], metrics: nil, views: views))
     }
     
     private func configureStickersClipView() {
@@ -227,7 +227,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         stickersClipView.addSubview(imageView)
         imageView.transform = CGAffineTransformMakeScale(0, 0)
         
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: nil, animations: { () -> Void in
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             imageView.transform = CGAffineTransformIdentity
             }, completion: nil)
     }

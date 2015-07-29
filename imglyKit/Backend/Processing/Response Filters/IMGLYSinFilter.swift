@@ -14,7 +14,7 @@ public class IMGLYSinFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Sin"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

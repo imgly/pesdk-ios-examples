@@ -34,8 +34,8 @@ public class IMGLYEnhancementFilter : CIFilter {
     private var enhancedImage:CIImage? = nil
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage! {
-        if inputImage == nil {
+    public override var outputImage: CIImage {
+        guard let inputImage = inputImage else {
             return CIImage.emptyImage()
         }
         
@@ -49,15 +49,18 @@ public class IMGLYEnhancementFilter : CIFilter {
             }
         }
         
+        
         var intermediateImage = inputImage
-        var filters = intermediateImage!.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
+        let filters = intermediateImage.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
         for filter in filters {
-            filter.setValue(intermediateImage, forKey: kCIInputImageKey)
+            filter.setValue(inputImage, forKey: kCIInputImageKey)
             intermediateImage = filter.outputImage
         }
+        
         if storeEnhancedImage {
             enhancedImage = intermediateImage
         }
+        
         return intermediateImage
     }
     
@@ -66,7 +69,7 @@ public class IMGLYEnhancementFilter : CIFilter {
     }
 }
 
-extension IMGLYEnhancementFilter: NSCopying {
+extension IMGLYEnhancementFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

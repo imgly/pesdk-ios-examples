@@ -14,7 +14,7 @@ public class IMGLYGlamFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Glam"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

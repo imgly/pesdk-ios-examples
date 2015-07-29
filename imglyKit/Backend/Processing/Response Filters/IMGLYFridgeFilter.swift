@@ -14,7 +14,7 @@ public class IMGLYFridgeFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Fridge"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

@@ -14,7 +14,7 @@ public class IMGLYWinterFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Winter"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

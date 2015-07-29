@@ -14,7 +14,7 @@ public class IMGLYFallFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Fall"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

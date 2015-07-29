@@ -54,13 +54,13 @@ public class IMGLYCropRectComponent {
     }
     
     private func addMaskRectView() {
-        var bounds = CGRectMake(0, 0, transparentView_!.frame.size.width,
+        let bounds = CGRectMake(0, 0, transparentView_!.frame.size.width,
             transparentView_!.frame.size.height)
         
-        var maskLayer = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         maskLayer.frame = bounds
         maskLayer.fillColor = UIColor.blackColor().CGColor
-        var path = UIBezierPath(rect: cropRect)
+        let path = UIBezierPath(rect: cropRect)
         path.appendPath(UIBezierPath(rect: bounds))
         maskLayer.path = path.CGPath
         maskLayer.fillRule = kCAFillRuleEvenOdd
@@ -69,7 +69,7 @@ public class IMGLYCropRectComponent {
     }
     
     private func setupAnchors() {
-        var anchorImage = UIImage(named: "crop_anchor", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
+        let anchorImage = UIImage(named: "crop_anchor", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
         topLeftAnchor_ = createAnchorWithImage(anchorImage)
         topRightAnchor_ = createAnchorWithImage(anchorImage)
         bottomLeftAnchor_ = createAnchorWithImage(anchorImage)
@@ -77,7 +77,7 @@ public class IMGLYCropRectComponent {
     }
     
     private func createAnchorWithImage(image:UIImage?) -> UIImageView {
-        var anchor = UIImageView(image: image!)
+        let anchor = UIImageView(image: image!)
         anchor.contentMode = UIViewContentMode.Center
         anchor.frame = CGRectMake(0, 0, 44, 44)
         anchor.hidden = true
@@ -93,12 +93,12 @@ public class IMGLYCropRectComponent {
     }
     
     private func layoutLines() {
-        var left = cropRect.origin.x + transparentView_!.frame.origin.x
-        var right = left + cropRect.size.width - 1.0
-        var top = cropRect.origin.y + transparentView_!.frame.origin.y
-        var bottom = top + cropRect.size.height - 1.0
-        var width = cropRect.size.width
-        var height = cropRect.size.height
+        let left = cropRect.origin.x + transparentView_!.frame.origin.x
+        let right = left + cropRect.size.width - 1.0
+        let top = cropRect.origin.y + transparentView_!.frame.origin.y
+        let bottom = top + cropRect.size.height - 1.0
+        let width = cropRect.size.width
+        let height = cropRect.size.height
         
         leftLineView_.frame = CGRectMake(left, top, 1, height)
         rightLineView_.frame = CGRectMake(right, top, 1, height)
@@ -107,10 +107,10 @@ public class IMGLYCropRectComponent {
     }
     
     private func layoutAnchors() {
-        var left = cropRect.origin.x
-        var right = left + cropRect.size.width
-        var top = cropRect.origin.y
-        var bottom = top + cropRect.size.height
+        let left = cropRect.origin.x
+        let right = left + cropRect.size.width
+        let top = cropRect.origin.y
+        let bottom = top + cropRect.size.height
         topLeftAnchor_!.center = CGPointMake(left, top)
         topRightAnchor_!.center = CGPointMake(right, top)
         bottomLeftAnchor_!.center = CGPointMake(left, bottom)

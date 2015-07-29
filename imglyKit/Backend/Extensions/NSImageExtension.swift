@@ -12,9 +12,9 @@ import AppKit
 import CoreGraphics
 
 public extension NSImage {
-    var CGImage: CoreGraphics.CGImage! {
+    var CGImage: CoreGraphics.CGImage? {
         let cgImage = CGImageForProposedRect(nil, context: nil, hints: nil)
-        return cgImage!.takeUnretainedValue()
+        return cgImage
     }
 }
 

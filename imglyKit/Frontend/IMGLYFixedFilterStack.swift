@@ -49,7 +49,7 @@ public class IMGLYFixedFilterStack: NSObject {
 
 extension IMGLYFixedFilterStack: NSCopying {
     public func copyWithZone(zone: NSZone) -> AnyObject {
-        let copy = self.dynamicType()
+        let copy = self.dynamicType.init()
         copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
         copy.effectFilter = effectFilter.copyWithZone(zone) as! IMGLYResponseFilter

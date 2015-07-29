@@ -20,7 +20,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         slider.continuous = true
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         slider.addTarget(self, action: "sliderTouchedUpInside:", forControlEvents: .TouchUpInside)
-        slider.setTranslatesAutoresizingMaskIntoConstraints(false)
+        slider.translatesAutoresizingMaskIntoConstraints = false
         return slider
     }()
     
@@ -65,7 +65,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         let views = ["slider" : slider]
         let metrics = ["margin" : 20]
         
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==margin)-[slider]-(==margin)-|", options: nil, metrics: metrics, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==margin)-[slider]-(==margin)-|", options: [], metrics: metrics, views: views))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: slider, attribute: .CenterY, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterY, multiplier: 1, constant: 0))
     }
     

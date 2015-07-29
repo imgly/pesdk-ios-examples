@@ -24,7 +24,7 @@ public class IMGLYAnimationDelegate: NSObject {
     
     // MARK: - Animation Delegate
     
-    public override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+    public override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         block(flag)
     }
 }

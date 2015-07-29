@@ -14,7 +14,7 @@ public class IMGLYNepalFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Nepal"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

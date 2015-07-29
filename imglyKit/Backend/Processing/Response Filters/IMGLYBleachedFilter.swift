@@ -14,7 +14,7 @@ public class IMGLYBleachedFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Bleached"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

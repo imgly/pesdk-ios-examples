@@ -36,22 +36,22 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
         flowLayout.minimumLineSpacing = 7
         super.init(collectionViewLayout: flowLayout)
         
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.registerClass(IMGLYFilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCellReuseIdentifier)
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
 
-extension IMGLYFilterSelectionController: UICollectionViewDataSource {
+extension IMGLYFilterSelectionController {
     public override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(IMGLYInstanceFactory.availableFilterList)
+        return IMGLYInstanceFactory.availableFilterList.count
     }
     
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(FilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(FilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath) 
         
         if let filterCell = cell as? IMGLYFilterCollectionViewCell {
             let bundle = NSBundle(forClass: self.dynamicType)
@@ -64,7 +64,7 @@ extension IMGLYFilterSelectionController: UICollectionViewDataSource {
             filterCell.imageView.contentMode = .ScaleToFill
             filterCell.imageView.image = nil
             filterCell.hideTick()
-            
+
             if let filterPreviewImage = FilterPreviews[filterType] {
                 self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
                 filterCell.activityIndicator.stopAnimating()
@@ -101,11 +101,12 @@ extension IMGLYFilterSelectionController: UICollectionViewDataSource {
     }
 }
 
-extension IMGLYFilterSelectionController: UICollectionViewDelegate {
+extension IMGLYFilterSelectionController {
     public override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let layoutAttributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath)
-        let extendedCellRect = CGRectInset(layoutAttributes.frame, -60, 0)
-        collectionView.scrollRectToVisible(extendedCellRect, animated: true)
+        if let layoutAttributes = collectionView.collectionViewLayout.layoutAttributesForItemAtIndexPath(indexPath) {
+            let extendedCellRect = CGRectInset(layoutAttributes.frame, -60, 0)
+            collectionView.scrollRectToVisible(extendedCellRect, animated: true)
+        }
         
         let filterType = IMGLYInstanceFactory.availableFilterList[indexPath.item]
         

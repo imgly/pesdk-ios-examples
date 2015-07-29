@@ -17,7 +17,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     public private(set) lazy var filterIntensitySlider: UISlider = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let slider = UISlider()
-        slider.setTranslatesAutoresizingMaskIntoConstraints(false)
+        slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.value = 0.75
@@ -95,8 +95,8 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         filterSelectionController.didMoveToParentViewController(self)
         bottomContainerView.addSubview(filterSelectionController.view)
         
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[filterSelectionView]|", options: nil, metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[filterSelectionView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[filterSelectionView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[filterSelectionView]|", options: [], metrics: nil, views: views))
     }
     
     private func configureFilterIntensitySlider() {
@@ -109,15 +109,15 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         
         view.addSubview(filterIntensitySlider)
         
-        let views: [NSObject : AnyObject] = [
+        let views: [String : AnyObject] = [
             "filterIntensitySlider" : filterIntensitySlider
         ]
         
-        let metrics: [NSObject : NSNumber] = [
+        let metrics: [String : AnyObject] = [
             "filterIntensitySliderLeftRightMargin" : 10
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: nil, metrics: metrics, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-(==filterIntensitySliderLeftRightMargin)-[filterIntensitySlider]-(==filterIntensitySliderLeftRightMargin)-|", options: [], metrics: metrics, views: views))
         view.addConstraint(NSLayoutConstraint(item: filterIntensitySlider, attribute: .Bottom, relatedBy: .Equal, toItem: previewImageView, attribute: .Bottom, multiplier: 1, constant: -20))
     }
     

@@ -147,15 +147,15 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         flowLayout.minimumLineSpacing = 0
         
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
-        collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCellReuseIdentifier)
         
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[collectionView]|", options: nil, metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[collectionView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[collectionView]|", options: [], metrics: nil, views: views))
     }
     
     // MARK: - Helpers
@@ -193,8 +193,8 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                     scale = maxLowResolutionSideLength / highResolutionImage.size.height
                 }
                 
-                var newWidth  = CGFloat(roundf(Float(highResolutionImage.size.width) * Float(scale)))
-                var newHeight = CGFloat(roundf(Float(highResolutionImage.size.height) * Float(scale)))
+                let newWidth  = CGFloat(roundf(Float(highResolutionImage.size.width) * Float(scale)))
+                let newHeight = CGFloat(roundf(Float(highResolutionImage.size.height) * Float(scale)))
                 lowResolutionImage = highResolutionImage.imgly_normalizedImageOfSize(CGSize(width: newWidth, height: newHeight))
             } else {
                 lowResolutionImage = highResolutionImage.imgly_normalizedImage
@@ -256,14 +256,13 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
 extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return count(actionButtons)
+        return actionButtons.count
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath) 
         
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
-            let bundle = NSBundle(forClass: self.dynamicType)
             let actionButton = actionButtons[indexPath.item]
             
             if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection where showSelectionBlock() {

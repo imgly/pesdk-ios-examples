@@ -17,7 +17,7 @@ public class IMGLYImageCaptionButton: UIControl {
     
     public private(set) lazy var textLabel: UILabel = {
         let label = UILabel()
-        label.setTranslatesAutoresizingMaskIntoConstraints(false)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFontOfSize(11)
         label.textColor = UIColor.whiteColor()
         return label
@@ -26,7 +26,7 @@ public class IMGLYImageCaptionButton: UIControl {
     public private(set) lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .Center
-        imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
         }()
     
@@ -57,7 +57,7 @@ public class IMGLYImageCaptionButton: UIControl {
         commonInit()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -72,7 +72,7 @@ public class IMGLYImageCaptionButton: UIControl {
     private func configureViews() {
         let containerView = UIView()
         containerView.userInteractionEnabled = false
-        containerView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.addSubview(imageView)
         containerView.addSubview(textLabel)
         addSubview(containerView)
@@ -83,7 +83,7 @@ public class IMGLYImageCaptionButton: UIControl {
             "textLabel" : textLabel
         ]
         
-        let metrics: [ NSObject: NSNumber ] = [
+        let metrics: [ String: AnyObject ] = [
             "imageHeight" : ImageSize.height,
             "imageWidth" : ImageSize.width,
             "imageCaptionMargin" : ImageCaptionMargin
@@ -91,13 +91,13 @@ public class IMGLYImageCaptionButton: UIControl {
         
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "|-(>=0)-[imageView(==imageWidth)]-(>=0)-|",
-            options: nil,
+            options: [],
             metrics: metrics,
             views: views))
         
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "|-(>=0)-[textLabel]-(>=0)-|",
-            options: nil,
+            options: [],
             metrics: metrics,
             views: views))
         

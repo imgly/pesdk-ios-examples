@@ -28,7 +28,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     
     public private(set) lazy var textColorSelectorView: IMGLYTextColorSelectorView = {
         let view = IMGLYTextColorSelectorView()
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.menuDelegate = self
         return view
         }()
@@ -65,13 +65,13 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     public private(set) lazy var fontSelectorContainerView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .Dark)
         let view = UIVisualEffectView(effect: blurEffect)
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
         }()
     
     public private(set) lazy var fontSelectorView: IMGLYFontSelectorView = {
         let selector = IMGLYFontSelectorView()
-        selector.setTranslatesAutoresizingMaskIntoConstraints(false)
+        selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
         return selector
     }()
@@ -131,8 +131,8 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
             "textColorSelectorView" : textColorSelectorView
         ]
         
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: nil, metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: nil, metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: [], metrics: nil, views: views))
     }
     
     private func configureTextClipView() {
@@ -157,11 +157,11 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
             "fontSelectorView" : fontSelectorView
         ]
         
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorContainerView]|", options: nil, metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorContainerView]|", options: nil, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorContainerView]|", options: [], metrics: nil, views: views))
         
-        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: nil, metrics: nil, views: views))
-        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: nil, metrics: nil, views: views))
+        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
+        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: [], metrics: nil, views: views))
     }
     
     private func registerForKeyboardNotifications() {
@@ -243,7 +243,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
             
             var size = CGSizeZero
             if !text.isEmpty {
-                do {
+                repeat {
                     currentTextSize += 1.0
                     let font = UIFont(name: fontName, size: currentTextSize)
                     size = text.sizeWithAttributes([ NSFontAttributeName: font as! AnyObject ])
@@ -258,7 +258,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         if let text = textLabel.text {
             if !text.isEmpty {
                 maximumFontSize = currentTextSize
-                do {
+                repeat {
                     maximumFontSize += 1.0
                     let font = UIFont(name: fontName, size: maximumFontSize)
                     size = text.sizeWithAttributes([ NSFontAttributeName: font as! AnyObject ])
@@ -323,7 +323,7 @@ extension IMGLYTextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideTextField()
-        textLabel.text = textField.text.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         setInitialTextLabelSize()
         showTextLabel()
         navigationItem.rightBarButtonItem?.enabled = true
