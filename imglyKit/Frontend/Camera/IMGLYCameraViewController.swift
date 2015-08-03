@@ -32,6 +32,15 @@ public class IMGLYCameraViewController: UIViewController {
         self.init(recordingModes: modes)
     }
     
+    /**
+    Initializes a camera view controller.
+    
+    :param: recordingModes An array of recording modes that you want to support.
+    
+    :returns: An initialized IMGLYCameraViewController.
+    
+    :discussion: If you use the standard `init` method or `initWithCoder` to initialize a `IMGLYCameraViewController` object, a camera view controller with all supported recording modes is created.
+    */
     public init(recordingModes: [IMGLYRecordingMode]) {
         assert(recordingModes.count > 0, "You need to set at least one recording mode.")
         self.recordingModes = recordingModes
@@ -40,7 +49,9 @@ public class IMGLYCameraViewController: UIViewController {
     }
 
     required public init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        recordingModes = [.Photo, .Video]
+        currentRecordingMode = recordingModes.first!
+        super.init(coder: aDecoder)
     }
     
     // MARK: - Properties
