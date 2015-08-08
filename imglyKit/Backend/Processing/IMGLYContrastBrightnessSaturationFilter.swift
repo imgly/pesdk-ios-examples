@@ -36,7 +36,7 @@ public class IMGLYContrastBrightnessSaturationFilter : CIFilter {
         contrastFilter.setValue(brightness, forKey: "inputBrightness")
         contrastFilter.setValue(saturation, forKey: "inputSaturation")
         contrastFilter.setValue(inputImage, forKey: kCIInputImageKey)
-        return contrastFilter.outputImage
+        return contrastFilter.outputImage!
     }
 }
 

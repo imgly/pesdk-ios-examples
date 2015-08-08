@@ -54,7 +54,7 @@ public class IMGLYEnhancementFilter : CIFilter {
         let filters = intermediateImage.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
         for filter in filters {
             filter.setValue(inputImage, forKey: kCIInputImageKey)
-            intermediateImage = filter.outputImage
+            intermediateImage = filter.outputImage!
         }
         
         if storeEnhancedImage {

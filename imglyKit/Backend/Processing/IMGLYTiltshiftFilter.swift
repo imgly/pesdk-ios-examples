@@ -75,7 +75,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         blendFilter.setValue(blurredImage, forKey: kCIInputImageKey)
         blendFilter.setValue(inputImage, forKey: "inputBackgroundImage")
         blendFilter.setValue(maskImage, forKey: "inputMaskImage")
-        return blendFilter.outputImage
+        return blendFilter.outputImage!
     }
     
 
@@ -122,7 +122,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         cropFilter.setValue(filter.outputImage, forKey: kCIInputImageKey)
         cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
         
-        return cropFilter.outputImage
+        return cropFilter.outputImage!
     }
     
     private func createLinearMaskImage() -> CIImage {
@@ -164,7 +164,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         addFilter.setValue(gradient1, forKey: kCIInputImageKey)
         addFilter.setValue(gradient2, forKey: kCIInputBackgroundImageKey)
 
-        return addFilter.outputImage
+        return addFilter.outputImage!
     }
     
     // MARK:- Blur
@@ -183,7 +183,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         let rectAsVector = CIVector(CGRect: blurRect)
         cropFilter.setValue(blurFilter.outputImage, forKey: kCIInputImageKey)
         cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
-        return cropFilter.outputImage
+        return cropFilter.outputImage!
     }
 }
 

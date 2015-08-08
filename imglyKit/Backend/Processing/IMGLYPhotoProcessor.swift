@@ -100,7 +100,7 @@ public class IMGLYPhotoProcessor {
         for filter in filters {
             filter.setValue(currentImage, forKey:kCIInputImageKey)
             
-            currentImage = filter.outputImage
+            currentImage = filter.outputImage!
         }
         
         if CGRectIsEmpty(currentImage.extent) {

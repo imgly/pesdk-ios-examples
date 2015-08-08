@@ -30,7 +30,7 @@ public class IMGLYScaleFilter: CIFilter {
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
         
-        return filter.outputImage
+        return filter.outputImage!
     }
 }
 
