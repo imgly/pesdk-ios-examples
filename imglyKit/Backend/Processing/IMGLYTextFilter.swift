@@ -57,7 +57,7 @@ public class IMGLYTextFilter : CIFilter {
             let textCIImage = CIImage(CGImage: cgImage)
             filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
             filter.setValue(textCIImage, forKey: kCIInputImageKey)
-            return filter.outputImage
+            return filter.outputImage!
         } else {
             return inputImage
         }

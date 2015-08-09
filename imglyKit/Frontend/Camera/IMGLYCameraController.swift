@@ -989,7 +989,7 @@ public class IMGLYCameraController: NSObject {
         dispatch_async(sessionQueue) {
             var error: NSError?
             
-            let outputFileURL = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent(kTempVideoFilename))
+            let outputFileURL = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent(kTempVideoFilename))
             do {
                 try NSFileManager.defaultManager().removeItemAtURL(outputFileURL)
             } catch _ {

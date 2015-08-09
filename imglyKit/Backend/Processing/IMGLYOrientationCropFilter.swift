@@ -91,7 +91,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
             let invertedTransform = CGAffineTransformInvert(inputImage.imageTransformForOrientation(orientation.intValue))
             
             guard let filter = CIFilter(name: "CIAffineTransform") else {
-                return outputImage
+                return outputImage!
             }
             
             #if os(iOS)
@@ -105,7 +105,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
             outputImage = filter.outputImage
         }
         
-        return outputImage
+        return outputImage!
     }
     
     private func realNumberForRotationAngle(rotationAngle: IMGLYRotationAngle) -> CGFloat {

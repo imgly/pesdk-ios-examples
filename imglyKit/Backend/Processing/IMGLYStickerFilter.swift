@@ -63,7 +63,7 @@ public class IMGLYStickerFilter: CIFilter {
         let stickerCIImage = CIImage(CGImage: cgImage)
         filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
         filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
-        return filter.outputImage
+        return filter.outputImage!
     }
     
     #if os(iOS)
@@ -76,7 +76,7 @@ public class IMGLYStickerFilter: CIFilter {
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
         
         let context = UIGraphicsGetCurrentContext()
-        drawStickerInContext(context, withImageOfSize: imageSize)
+        drawStickerInContext(context!, withImageOfSize: imageSize)
     
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
