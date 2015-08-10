@@ -67,12 +67,12 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
         super.init(coder: aDecoder)
     }
     
-    public override var outputImage: CIImage {
+    public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
-            return CIImage.emptyImage()
+            return nil
         }
         
-        var outputImage: CIImage!
+        var outputImage: CIImage?
         
         autoreleasepool {
             if let colorCubeData = colorCubeData, filter = CIFilter(name: "CIColorCube") {

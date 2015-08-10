@@ -18,9 +18,9 @@ public class IMGLYScaleFilter: CIFilter {
     public var scale = Float(1)
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage {
+    public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
-            return CIImage.emptyImage()
+            return nil
         }
         
         guard let filter = CIFilter(name: "CILanczosScaleTransform") else {
