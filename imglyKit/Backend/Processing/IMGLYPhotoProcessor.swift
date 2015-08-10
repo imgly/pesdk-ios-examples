@@ -95,7 +95,7 @@ public class IMGLYPhotoProcessor {
             return image
         }
         
-        var currentImage = image
+        var currentImage: CIImage? = image
         
         for filter in filters {
             filter.setValue(currentImage, forKey:kCIInputImageKey)
@@ -103,7 +103,7 @@ public class IMGLYPhotoProcessor {
             currentImage = filter.outputImage
         }
         
-        if CGRectIsEmpty(currentImage.extent) {
+        if let currentImage = currentImage where CGRectIsEmpty(currentImage.extent) {
             return nil
         }
         

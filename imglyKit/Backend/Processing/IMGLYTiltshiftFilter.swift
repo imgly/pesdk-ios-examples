@@ -45,9 +45,9 @@ public class IMGLYTiltshiftFilter : CIFilter {
     private var rect_ = CGRectZero
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage {
+    public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
-            return CIImage.emptyImage()
+            return nil
         }
 
         if tiltShiftType == IMGLYTiltshiftType.Off {
@@ -58,6 +58,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         imageSize_ = rect_.size
         calcScaleVector()
         calculateCenterAndRadius()
+        
         var maskImage:CIImage?
         if tiltShiftType == IMGLYTiltshiftType.Circle {
             maskImage = createRadialMaskImage()
@@ -97,13 +98,13 @@ public class IMGLYTiltshiftFilter : CIFilter {
         radius_ = sqrt(midVectorX * midVectorX + midVectorY * midVectorY)
     }
     
-    private func createRadialMaskImage() -> CIImage {
+    private func createRadialMaskImage() -> CIImage? {
         let factor = imageSize_.width > imageSize_.height ? imageSize_.width : imageSize_.height
         let radiusInPixels = factor * radius_
         let fadeWidth = radiusInPixels * 0.4
         
         guard let filter = CIFilter(name: "CIRadialGradient"), cropFilter = CIFilter(name: "CICrop") else {
-            return CIImage.emptyImage()
+            return nil
         }
         
         filter.setValue(radiusInPixels, forKey: "inputRadius0")
@@ -125,7 +126,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
         return cropFilter.outputImage
     }
     
-    private func createLinearMaskImage() -> CIImage {
+    private func createLinearMaskImage() -> CIImage? {
         let innerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
         let outerColor = CIColor(red:0, green: 1, blue: 0,alpha: 0)
         
@@ -140,7 +141,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
             controlPoint2InPixels.y + 0.3 * diagonalVector.y)
         
         guard let filter = CIFilter(name: "CILinearGradient"), cropFilter = CIFilter(name: "CICrop"), addFilter = CIFilter(name: "CIAdditionCompositing") else {
-            return CIImage.emptyImage()
+            return nil
         }
         
         filter.setValue(innerColor, forKey: "inputColor0")
@@ -168,9 +169,9 @@ public class IMGLYTiltshiftFilter : CIFilter {
     }
     
     // MARK:- Blur
-    private func bluredImage() -> CIImage {
+    private func bluredImage() -> CIImage? {
         guard let blurFilter = CIFilter(name: "CIGaussianBlur"), cropFilter = CIFilter(name: "CICrop") else {
-            return CIImage.emptyImage()
+            return nil
         }
         
         blurFilter.setValue(inputImage!, forKey: kCIInputImageKey)

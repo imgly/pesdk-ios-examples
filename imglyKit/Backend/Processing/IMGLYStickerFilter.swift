@@ -45,9 +45,9 @@ public class IMGLYStickerFilter: CIFilter {
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage {
+    public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
-            return CIImage.emptyImage()
+            return nil
         }
         
         if sticker == nil {
@@ -75,8 +75,9 @@ public class IMGLYStickerFilter: CIFilter {
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
         
-        let context = UIGraphicsGetCurrentContext()
-        drawStickerInContext(context, withImageOfSize: imageSize)
+        if let context = UIGraphicsGetCurrentContext() {
+            drawStickerInContext(context, withImageOfSize: imageSize)
+        }
     
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
