@@ -88,7 +88,7 @@ public class IMGLYCameraController: NSObject {
     /// The response filter that is applied to the live-feed.
     public var effectFilter: IMGLYResponseFilter = IMGLYNoneFilter()
     public let previewView: UIView
-    public var previewContentMode :UIViewContentMode  = .ScaleAspectFit
+    public var previewContentMode: UIViewContentMode  = .ScaleAspectFit
 
     public weak var delegate: IMGLYCameraControllerDelegate?
     public let tapGestureRecognizer = UITapGestureRecognizer()
@@ -1252,7 +1252,7 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView.drawableWidth, height: videoPreviewView.drawableHeight)
             
             videoPreviewFrame = sourceExtent
-            videoPreviewFrame.fittedIntoTargetRect(targetRect, withContentMode: self.previewContentMode)
+            videoPreviewFrame.fittedIntoTargetRect(targetRect, withContentMode: previewContentMode)
             
             if glContext != EAGLContext.currentContext() {
                 EAGLContext.setCurrentContext(glContext)
