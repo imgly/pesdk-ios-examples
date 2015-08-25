@@ -303,7 +303,7 @@ public class IMGLYCameraController: NSObject {
         maskIndicatorLayer.borderWidth = 1
         maskIndicatorLayer.frame.origin = CGPointMake(0, 0)
         maskIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
-        maskIndicatorLayer.hidden = false
+        maskIndicatorLayer.hidden = true
         maskIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         previewView.layer.addSublayer(maskIndicatorLayer)
     }
@@ -312,7 +312,7 @@ public class IMGLYCameraController: NSObject {
         upperMaskDarkenLayer.borderWidth = 0
         upperMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
         upperMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
-        upperMaskDarkenLayer.hidden = false
+        upperMaskDarkenLayer.hidden = true
         upperMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         upperMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
         previewView.layer.addSublayer(upperMaskDarkenLayer)
@@ -322,11 +322,14 @@ public class IMGLYCameraController: NSObject {
         lowerMaskDarkenLayer.borderWidth = 0
         lowerMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
         lowerMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
-        lowerMaskDarkenLayer.hidden = false
+        lowerMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         lowerMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
         previewView.layer.addSublayer(lowerMaskDarkenLayer)
     }
+    
+    
+    // MARK: - Square view 
     
     /*
     Please note, the calculations in this method might look a bit wierd.
@@ -344,6 +347,18 @@ public class IMGLYCameraController: NSObject {
         // add extra space to the bottom to avoid a gab due to the lower bar animation
         lowerMaskDarkenLayer.frame = CGRectMake(left, top + height, width, top * 2)
         CATransaction.commit()
+    }
+    
+    public func showSquareView() {
+        maskIndicatorLayer.hidden = false
+        upperMaskDarkenLayer.hidden = false
+        lowerMaskDarkenLayer.hidden = false
+    }
+    
+    public func hideSquareView() {
+        maskIndicatorLayer.hidden = true
+        upperMaskDarkenLayer.hidden = true
+        lowerMaskDarkenLayer.hidden = true
     }
     
     // MARK: - Flash
