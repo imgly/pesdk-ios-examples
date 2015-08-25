@@ -328,15 +328,21 @@ public class IMGLYCameraController: NSObject {
         previewView.layer.addSublayer(lowerMaskDarkenLayer)
     }
     
+    /*
+    Please note, the calculations in this method might look a bit wierd.
+    The reason is that the frame we are getting is rotated by 90 degree
+    */
     private func updateSquareIndicatorView(newRect: CGRect) {
         var width = newRect.size.height / 2.0
         var height = width
         var top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
         var left = newRect.origin.y / 2.0
         CATransaction.begin()
+        CATransaction.setAnimationDuration(0)
         maskIndicatorLayer.frame = CGRectMake(left, top, width, height)
         upperMaskDarkenLayer.frame = CGRectMake(left, 0, width, top)
-        lowerMaskDarkenLayer.frame = CGRectMake(left, top + height, width, top)
+        // add extra space to the bottom to avoid a gab due to the lower bar animation
+        lowerMaskDarkenLayer.frame = CGRectMake(left, top + height, width, top * 2)
         CATransaction.commit()
     }
     
