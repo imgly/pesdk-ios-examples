@@ -1028,8 +1028,10 @@ public class IMGLYCameraController: NSObject {
                     
                     if let imageDataSampleBuffer = imageDataSampleBuffer {
                         let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                        let image = UIImage(data: imageData)
-                        
+                        let tempImage = UIImage(data: imageData)
+                        var stack = IMGLYFixedFilterStack()
+                       stack.orientationCropFilter.cropRect = CGRectMake(0, 0, 0.5, 0.5)
+                        let image = IMGLYPhotoProcessor.processWithUIImage(tempImage!, filters: stack.activeFilters)
                         completion(image, nil)
                     } else {
                         completion(nil, error)
