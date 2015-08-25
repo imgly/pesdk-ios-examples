@@ -396,6 +396,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		12F65D5B1B8D0F9300F26B7E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
 		2B1ADA0F1B19C3F300C98522 /* IMGLYInstanceFactoryExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYInstanceFactoryExtension.swift; sourceTree = "<group>"; };
 		2B1ADA1D1B19C86300C98522 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1048,6 +1049,7 @@
 			knownRegions = (
 				en,
 				Base,
+				it,
 			);
 			mainGroup = 2BF4D37A1AF1139600C801B2;
 			productRefGroup = 2BF4D3851AF1139600C801B2 /* Products */;
@@ -1481,6 +1483,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2BF4D5461AF115A200C801B2 /* en */,
+				12F65D5B1B8D0F9300F26B7E /* it */,
 			);
 			name = Localizable.strings;
 			path = .;

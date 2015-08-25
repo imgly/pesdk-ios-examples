@@ -1,0 +1,68 @@
+/* 
+  Localizable.strings
+  imglyKit
+
+  Created by Sascha Schwabbauer on 07/04/15.
+  Copyright (c) 2015 9elements GmbH. All rights reserved.
+*/
+
+// Camera View Controller
+"camera-view-controller.camera-no-permission.title" = "Nessun permesso";
+"camera-view-controller.camera-no-permission.message" = "E' necessario il permesso di utilizzare la camera, per favore modifica le impostazioni della privacy.";
+"camera-view-controller.camera-no-permission.settings" = "Impostazioni";
+"camera-view-controller.camera-no-permission.cancel" = "Annulla";
+"camera-view-controller.mode.photo" = "FOTO";
+"camera-view-controller.mode.video" = "VIDEO";
+"camera-view-controller.error-saving-video.title" = "Errore salvando il video";
+"camera-view-controller.error-saving-video.cancel" = "Annulla";
+
+// Main Editor
+"main-editor.title" = "Editor";
+"main-editor.button.magic" = "Magic";
+"main-editor.button.filter" = "Filtri";
+"main-editor.button.stickers" = "Stickers";
+"main-editor.button.orientation" = "Orientamento";
+"main-editor.button.focus" = "Focus";
+"main-editor.button.crop" = "Crop";
+"main-editor.button.brightness" = "Luminosità";
+"main-editor.button.contrast" = "Contrasto";
+"main-editor.button.saturation" = "Saturatione";
+"main-editor.button.text" = "Testo";
+
+// Filter Editor
+"filter-editor.title" = "Filtro";
+
+// Stickers Editor
+"stickers-editor.title" = "Stickers";
+
+// Orientation Editor
+"orientation-editor.title" = "Orientamento";
+"orientation-editor.rotate-left" = "Ruota S";
+"orientation-editor.rotate-right" = "Ruota R";
+"orientation-editor.flip-horizontally" = "Inverti H";
+"orientation-editor.flip-vertically" = "Inverti V";
+
+// Focus Editor
+"focus-editor.title" = "Focus";
+"focus-editor.off" = "Off";
+"focus-editor.linear" = "Lineare";
+"focus-editor.radial" = "Radiale";
+
+// Crop Editor
+"crop-editor.title" = "Crop";
+"crop-editor.free" = "Libero";
+"crop-editor.1-to-1" = "1:1";
+"crop-editor.4-to-3" = "4:3";
+"crop-editor.16-to-9" = "16:9";
+
+// Brightness Editor
+"brightness-editor.title" = "Luminosità";
+
+// Contrast Editor
+"contrast-editor.title" = "Contrasto";
+
+// Saturation Editor
+"saturation-editor.title" = "Saturatione";
+
+// Text Editor
+"text-editor.title" = "Testo";

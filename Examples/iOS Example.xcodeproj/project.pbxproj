@@ -53,6 +53,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		12F65D5C1B8D10DC00F26B7E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2BF4D77B1AF11E2E00C801B2 /* iOS Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D77F1AF11E2E00C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D7871AF11E2E00C801B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				2BF4D78A1AF11E2E00C801B2 /* Base */,
+				12F65D5C1B8D10DC00F26B7E /* it */,
 			);
 			name = LaunchScreen.xib;
 			path = .;
