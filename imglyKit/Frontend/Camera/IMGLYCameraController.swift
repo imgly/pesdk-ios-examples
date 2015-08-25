@@ -108,7 +108,9 @@ public class IMGLYCameraController: NSObject {
     private var setupComplete = false
     private var videoPreviewFrame = CGRectZero
     private let focusIndicatorLayer = CALayer()
-    private let squareIndicatorLayer = CALayer()
+    private let maskIndicatorLayer = CALayer()
+    private let upperMaskDarkenLayer = CALayer()
+    private let lowerMaskDarkenLayer = CALayer()
     private var focusIndicatorFadeOutTimer: NSTimer?
     private var focusIndicatorAnimating = false
     private let motionManager: CMMotionManager = {
@@ -289,15 +291,41 @@ public class IMGLYCameraController: NSObject {
         }
     }
     
-    // MARK: - Square layer
-    private func setupSquareIndicator() {
-        squareIndicatorLayer.borderColor = UIColor.redColor().CGColor
-        squareIndicatorLayer.borderWidth = 1
-        squareIndicatorLayer.frame.origin = CGPointMake(100, 100)
-        squareIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
-        squareIndicatorLayer.hidden = false
-        squareIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        previewView.layer.addSublayer(squareIndicatorLayer)
+    // MARK: - Mask layer
+    private func setupMaskLayers() {
+        setupMaskIndicatorLayer()
+        setupUpperMaskDarkenLayer()
+        setupLowerMaskDarkenLayer()
+    }
+    
+    private func setupMaskIndicatorLayer() {
+        maskIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        maskIndicatorLayer.borderWidth = 1
+        maskIndicatorLayer.frame.origin = CGPointMake(0, 0)
+        maskIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        maskIndicatorLayer.hidden = false
+        maskIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        previewView.layer.addSublayer(maskIndicatorLayer)
+    }
+    
+    private func setupUpperMaskDarkenLayer() {
+        upperMaskDarkenLayer.borderWidth = 0
+        upperMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        upperMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        upperMaskDarkenLayer.hidden = false
+        upperMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        upperMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        previewView.layer.addSublayer(upperMaskDarkenLayer)
+    }
+
+    private func setupLowerMaskDarkenLayer() {
+        lowerMaskDarkenLayer.borderWidth = 0
+        lowerMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        lowerMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        lowerMaskDarkenLayer.hidden = false
+        lowerMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        lowerMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        previewView.layer.addSublayer(lowerMaskDarkenLayer)
     }
     
     private func updateSquareIndicatorView(newRect: CGRect) {
@@ -306,8 +334,9 @@ public class IMGLYCameraController: NSObject {
         var top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
         var left = newRect.origin.y / 2.0
         CATransaction.begin()
-        squareIndicatorLayer.frame = CGRectMake(left, top, width, height)
-        squareIndicatorLayer.needsLayout()
+        maskIndicatorLayer.frame = CGRectMake(left, top, width, height)
+        upperMaskDarkenLayer.frame = CGRectMake(left, 0, width, top)
+        lowerMaskDarkenLayer.frame = CGRectMake(left, top + height, width, top)
         CATransaction.commit()
     }
     
@@ -681,7 +710,7 @@ public class IMGLYCameraController: NSObject {
         }
         
         setupFocusIndicator()
-        setupSquareIndicator();
+        setupMaskLayers();
         
         setupComplete = true
     }
