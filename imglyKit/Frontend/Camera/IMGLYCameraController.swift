@@ -108,6 +108,7 @@ public class IMGLYCameraController: NSObject {
     private var setupComplete = false
     private var videoPreviewFrame = CGRectZero
     private let focusIndicatorLayer = CALayer()
+    private let squareIndicatorLayer = CALayer()
     private var focusIndicatorFadeOutTimer: NSTimer?
     private var focusIndicatorAnimating = false
     private let motionManager: CMMotionManager = {
@@ -286,6 +287,28 @@ public class IMGLYCameraController: NSObject {
                 self.delegate?.cameraController?(self, didSwitchToCameraPosition: nextPosition)
             }
         }
+    }
+    
+    // MARK: - Square layer
+    private func setupSquareIndicator() {
+        squareIndicatorLayer.borderColor = UIColor.redColor().CGColor
+        squareIndicatorLayer.borderWidth = 1
+        squareIndicatorLayer.frame.origin = CGPointMake(100, 100)
+        squareIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        squareIndicatorLayer.hidden = false
+        squareIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        previewView.layer.addSublayer(squareIndicatorLayer)
+    }
+    
+    private func updateSquareIndicatorView(newRect: CGRect) {
+        var width = newRect.size.height / 2.0
+        var height = width
+        var top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
+        var left = newRect.origin.y / 2.0
+        CATransaction.begin()
+        squareIndicatorLayer.frame = CGRectMake(left, top, width, height)
+        squareIndicatorLayer.needsLayout()
+        CATransaction.commit()
     }
     
     // MARK: - Flash
@@ -658,6 +681,7 @@ public class IMGLYCameraController: NSObject {
         }
         
         setupFocusIndicator()
+        setupSquareIndicator();
         
         setupComplete = true
     }
@@ -1253,7 +1277,7 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             
             videoPreviewFrame = sourceExtent
             videoPreviewFrame.fittedIntoTargetRect(targetRect, withContentMode: previewContentMode)
-            
+            updateSquareIndicatorView(self.videoPreviewFrame)
             if glContext != EAGLContext.currentContext() {
                 EAGLContext.setCurrentContext(glContext)
             }
