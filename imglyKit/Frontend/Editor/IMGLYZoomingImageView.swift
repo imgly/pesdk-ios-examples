@@ -36,7 +36,7 @@ public class IMGLYZoomingImageView: UIScrollView {
     
     public var visibleImageFrame: CGRect {
         var visibleImageFrame = bounds
-        visibleImageFrame.intersect(imageView.frame)
+        visibleImageFrame.intersectInPlace(imageView.frame)
         return visibleImageFrame
     }
     
