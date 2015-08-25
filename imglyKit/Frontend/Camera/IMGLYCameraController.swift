@@ -113,6 +113,7 @@ public class IMGLYCameraController: NSObject {
     private let lowerMaskDarkenLayer = CALayer()
     private var focusIndicatorFadeOutTimer: NSTimer?
     private var focusIndicatorAnimating = false
+    private var squareMode = false
     private let motionManager: CMMotionManager = {
         let motionManager = CMMotionManager()
         motionManager.accelerometerUpdateInterval = 0.2
@@ -349,16 +350,18 @@ public class IMGLYCameraController: NSObject {
         CATransaction.commit()
     }
     
-    public func showSquareView() {
+    public func enableSquareMode() {
         maskIndicatorLayer.hidden = false
         upperMaskDarkenLayer.hidden = false
         lowerMaskDarkenLayer.hidden = false
+        squareMode = true
     }
     
     public func hideSquareView() {
         maskIndicatorLayer.hidden = true
         upperMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.hidden = true
+        squareMode = false
     }
     
     // MARK: - Flash
@@ -1007,6 +1010,14 @@ public class IMGLYCameraController: NSObject {
     
     // MARK: - Still Image Capture
     
+    public func squareTakenImage(image:UIImage) -> UIImage {
+        var scale = (image.size.width / image.size.height)
+        var offset = (1.0 - scale) / 2.0
+        var stack = IMGLYFixedFilterStack()
+        stack.orientationCropFilter.cropRect = CGRectMake(offset, 0, scale, 1.0)
+        return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
+    }
+    
     /**
     Takes a photo and hands it over to the completion block.
     
@@ -1028,10 +1039,10 @@ public class IMGLYCameraController: NSObject {
                     
                     if let imageDataSampleBuffer = imageDataSampleBuffer {
                         let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                        let tempImage = UIImage(data: imageData)
-                        var stack = IMGLYFixedFilterStack()
-                       stack.orientationCropFilter.cropRect = CGRectMake(0, 0, 0.5, 0.5)
-                        let image = IMGLYPhotoProcessor.processWithUIImage(tempImage!, filters: stack.activeFilters)
+                        var image = UIImage(data: imageData)
+                        if self.squareMode {
+                            image = self.squareTakenImage(image!)
+                        }
                         completion(image, nil)
                     } else {
                         completion(nil, error)

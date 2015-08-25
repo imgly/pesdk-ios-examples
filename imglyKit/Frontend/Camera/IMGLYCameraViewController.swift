@@ -446,7 +446,7 @@ public class IMGLYCameraViewController: UIViewController {
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
-        cameraController!.showSquareView()
+        cameraController!.enableSquareMode()
         if maximumVideoLength > 0 {
             cameraController!.maximumVideoLength = maximumVideoLength
         }
