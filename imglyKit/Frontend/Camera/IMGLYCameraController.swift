@@ -1011,9 +1011,14 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Still Image Capture
     
     public func squareTakenImage(image:UIImage) -> UIImage {
+        let stack = IMGLYFixedFilterStack()
         var scale = (image.size.width / image.size.height)
+        if let captureVideoOrientation = self.captureVideoOrientation {
+            if captureVideoOrientation == .LandscapeRight || captureVideoOrientation == .LandscapeLeft {
+                scale = (image.size.height / image.size.width)
+            }
+        }
         var offset = (1.0 - scale) / 2.0
-        var stack = IMGLYFixedFilterStack()
         stack.orientationCropFilter.cropRect = CGRectMake(offset, 0, scale, 1.0)
         return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
     }
