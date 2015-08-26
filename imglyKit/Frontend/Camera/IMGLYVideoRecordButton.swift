@@ -53,18 +53,18 @@ public final class IMGLYVideoRecordButton: UIControl {
     // MARK: - Helpers
     
     private func updateOuterLayer() {
-        let outerRect = bounds.rectByInsetting(dx: IMGLYVideoRecordButton.lineWidth, dy: IMGLYVideoRecordButton.lineWidth)
+        let outerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth, dy: IMGLYVideoRecordButton.lineWidth)
         outerLayer.frame = bounds
         outerLayer.path = UIBezierPath(ovalInRect: outerRect).CGPath
     }
     
     private func updateInnerLayer() {
         if recording {
-            let innerRect = bounds.rectByInsetting(dx: 0.3 * bounds.size.width, dy: 0.3 * bounds.size.height)
+            let innerRect = bounds.insetBy(dx: 0.3 * bounds.size.width, dy: 0.3 * bounds.size.height)
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: 4).CGPath
         } else {
-            let innerRect = bounds.rectByInsetting(dx: IMGLYVideoRecordButton.lineWidth * 2.5, dy: IMGLYVideoRecordButton.lineWidth * 2.5)
+            let innerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth * 2.5, dy: IMGLYVideoRecordButton.lineWidth * 2.5)
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: innerRect.size.width / 2).CGPath
         }
