@@ -113,7 +113,6 @@ public class IMGLYCameraController: NSObject {
     private let lowerMaskDarkenLayer = CALayer()
     private var focusIndicatorFadeOutTimer: NSTimer?
     private var focusIndicatorAnimating = false
-    private var squareMode = false
     private let motionManager: CMMotionManager = {
         let motionManager = CMMotionManager()
         motionManager.accelerometerUpdateInterval = 0.2
@@ -125,6 +124,8 @@ public class IMGLYCameraController: NSObject {
     dynamic private var sessionRunningAndDeviceAuthorized: Bool {
         return session.running && deviceAuthorized
     }
+    
+    public var squareMode: Bool
     
     // Video Recording
     private var assetWriter: AVAssetWriter?
@@ -144,6 +145,7 @@ public class IMGLYCameraController: NSObject {
     
     init(previewView: UIView) {
         self.previewView = previewView
+        self.squareMode = false
         super.init()
     }
     
@@ -350,18 +352,16 @@ public class IMGLYCameraController: NSObject {
         CATransaction.commit()
     }
     
-    public func enableSquareMode() {
+    public func showSquareMask() {
         maskIndicatorLayer.hidden = false
         upperMaskDarkenLayer.hidden = false
         lowerMaskDarkenLayer.hidden = false
-        squareMode = true
     }
     
-    public func hideSquareView() {
+    public func hideSquareMask() {
         maskIndicatorLayer.hidden = true
         upperMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.hidden = true
-        squareMode = false
     }
     
     // MARK: - Flash
@@ -782,7 +782,7 @@ public class IMGLYCameraController: NSObject {
                 self.session.sessionPreset = recordingMode.sessionPreset
             }
             dispatch_group_leave(sessionGroup)
-            
+
             switch(recordingMode) {
             case .Photo:
                 if self.flashAvailable {

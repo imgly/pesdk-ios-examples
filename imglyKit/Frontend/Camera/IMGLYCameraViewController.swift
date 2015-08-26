@@ -45,12 +45,14 @@ public class IMGLYCameraViewController: UIViewController {
         assert(recordingModes.count > 0, "You need to set at least one recording mode.")
         self.recordingModes = recordingModes
         self.currentRecordingMode = recordingModes.first!
+        self.squareMode = false
         super.init(nibName: nil, bundle: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
         recordingModes = [.Photo, .Video]
         currentRecordingMode = recordingModes.first!
+        self.squareMode = false
         super.init(coder: aDecoder)
     }
     
@@ -191,6 +193,12 @@ public class IMGLYCameraViewController: UIViewController {
         }
     }
 
+    public var squareMode: Bool {
+        didSet {
+            self.cameraController?.squareMode = squareMode
+        }
+    }
+    
     private var hideSliderTimer: NSTimer?
     
     private var filterSelectionViewConstraint: NSLayoutConstraint?
@@ -246,6 +254,7 @@ public class IMGLYCameraViewController: UIViewController {
         configureViewConstraints()
         configureFilterSelectionController()
         configureCameraController()
+        cameraController?.squareMode = squareMode
         cameraController?.switchToRecordingMode(currentRecordingMode, animated: false)
     }
     
@@ -446,7 +455,6 @@ public class IMGLYCameraViewController: UIViewController {
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
-        cameraController!.enableSquareMode()
         if maximumVideoLength > 0 {
             cameraController!.maximumVideoLength = maximumVideoLength
         }
@@ -879,7 +887,13 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
         // add recordingTimeLabel
         if recordingMode == .Video {
             self.addRecordingTimeLabel()
+            self.cameraController?.hideSquareMask()
+        } else {
+            if self.squareMode {
+                self.cameraController?.showSquareMask()
+            }
         }
+        
     }
     
     public func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode) {
