@@ -15,7 +15,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
 
     // MARK: - Properties
     
-    public let stickersDataSource = IMGLYStickersDataSource()
+    public var stickersDataSource = IMGLYStickersDataSource()
     public private(set) lazy var stickersClipView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
