@@ -35,7 +35,8 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
                 if let image = view.image {
                     let stickerFilter = IMGLYInstanceFactory.stickerFilter()
                     stickerFilter.sticker = image
-                    let center = CGPoint(x: view.center.x / stickersClipView.frame.size.width, y: view.center.y / stickersClipView.frame.size.height)
+                    let center = CGPoint(x: view.center.x / stickersClipView.frame.size.width,
+                                         y: view.center.y / stickersClipView.frame.size.height)
                     
                     var size = initialSizeForStickerImage(image)
                     size.width = size.width / stickersClipView.bounds.size.width
@@ -237,15 +238,15 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             let imageView = UIImageView(image: stickerFilter.sticker!)
             imageView.userInteractionEnabled = true
             
-            var size = stickerFilter.size
-            size.width = size.width * stickersClipView.bounds.size.width
-            size.height = size.height * stickersClipView.bounds.size.height
+            var size = CGSize(width: stickerFilter.size.width * stickersClipView.bounds.size.width,
+                              height: stickerFilter.size.height * stickersClipView.bounds.size.height)
             imageView.frame.size = size
             
-            let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width, y: stickerFilter.center.y * stickersClipView.frame.size.height)
+            let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width,
+                                 y: stickerFilter.center.y * stickersClipView.frame.size.height)
             imageView.center = center
-            stickersClipView.addSubview(imageView)
             imageView.transform = stickerFilter.transform
+            stickersClipView.addSubview(imageView)
         }
     }
     
