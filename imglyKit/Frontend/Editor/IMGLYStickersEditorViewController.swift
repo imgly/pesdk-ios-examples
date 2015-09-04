@@ -23,6 +23,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         }()
     
     private var draggedView: UIView?
+    private var tempStickerCopy = [CIFilter]()
     
     // MARK: - SubEditorViewController
     
@@ -31,7 +32,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         
         for view in stickersClipView.subviews {
             if let view = view as? UIImageView {
-                
                 if let image = view.image {
                     let stickerFilter = IMGLYInstanceFactory.stickerFilter()
                     stickerFilter.sticker = image
@@ -40,7 +40,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
                     var size = initialSizeForStickerImage(image)
                     size.width = size.width / stickersClipView.bounds.size.width
                     size.height = size.height / stickersClipView.bounds.size.height
-
                     stickerFilter.center = center
                     stickerFilter.size = size
                     stickerFilter.transform = view.transform
@@ -82,6 +81,13 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         configureStickersCollectionView()
         configureStickersClipView()
         configureGestureRecognizers()
+        backupStickers()
+        fixedFilterStack.stickerFilters.removeAll()
+    }
+    
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        rerenderPreviewWithoutStickers()
     }
     
     override public func viewDidLayoutSubviews() {
@@ -215,9 +221,41 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             }
         }
     }
+    
+    
+    // MARK: - sticker object restore
+    
+    private func rerenderPreviewWithoutStickers() {
+        updatePreviewImageWithCompletion { () -> (Void) in
+            self.addStickerImagesFromStickerFilters(self.tempStickerCopy)
+        }
+    }
+    
+    private func addStickerImagesFromStickerFilters(stickerFilters: [CIFilter]) {
+        for element  in stickerFilters {
+            let stickerFilter = element as! IMGLYStickerFilter
+            let imageView = UIImageView(image: stickerFilter.sticker!)
+            imageView.userInteractionEnabled = true
+            
+            var size = stickerFilter.size
+            size.width = size.width * stickersClipView.bounds.size.width
+            size.height = size.height * stickersClipView.bounds.size.height
+            imageView.frame.size = size
+            
+            let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width, y: stickerFilter.center.y * stickersClipView.frame.size.height)
+            imageView.center = center
+            stickersClipView.addSubview(imageView)
+            imageView.transform = stickerFilter.transform
+        }
+    }
+    
+    private func backupStickers() {
+        tempStickerCopy = NSArray(array: fixedFilterStack.stickerFilters, copyItems: true) as! [CIFilter]
+    }
 }
 
 extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
+    // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let sticker = stickersDataSource.stickers[indexPath.row]
         let imageView = UIImageView(image: sticker.image)
