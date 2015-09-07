@@ -33,8 +33,8 @@ public class IMGLYStickerFilter: CIFilter {
     /// The relative center of the sticker within the image.
     public var center = CGPoint()
     
-    /// The relative size of the sticker within the image.
-    public var size = CGSize()
+    /// The relative scale of the sticker within the image.
+    public var scale = CGFloat(1.0)
     
     override init() {
         super.init()
@@ -64,6 +64,11 @@ public class IMGLYStickerFilter: CIFilter {
         filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
         filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
         return filter.outputImage
+    }
+    
+    public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
+        let stickerRatio = sticker!.size.height / sticker!.size.width
+        return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
     
     #if os(iOS)
@@ -110,7 +115,7 @@ public class IMGLYStickerFilter: CIFilter {
         CGContextSaveGState(context)
         
         let center = CGPoint(x: self.center.x * imageSize.width, y: self.center.y * imageSize.height)
-        let size = CGSize(width: self.size.width * imageSize.width, height: self.size.height * imageSize.height)
+        let size = self.absolutStickerSizeForImageSize(imageSize)
         let imageRect = CGRect(origin: center, size: size)
         
         // Move center to origin
@@ -131,7 +136,7 @@ extension IMGLYStickerFilter {
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.sticker = sticker
         copy.center = center
-        copy.size = size
+        copy.scale = scale
         copy.transform = transform
         return copy
     }
