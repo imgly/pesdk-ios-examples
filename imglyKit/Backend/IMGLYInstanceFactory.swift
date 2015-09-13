@@ -74,10 +74,6 @@ public class IMGLYInstanceFactory {
             return IMGLYSinFilter()
         case .Mellow:
             return IMGLYMellowFilter()
-        case .Sunny:
-            return IMGLYSunnyFilter()
-        case .A15:
-            return IMGLYA15Filter()
         case .Soft:
             return IMGLYSoftFilter()
         case .Blues:
@@ -110,10 +106,6 @@ public class IMGLYInstanceFactory {
             return IMGLYTwilightFilter()
         case .CottonCandy:
             return IMGLYCottonCandyFilter()
-        case .Mono3200:
-            return IMGLYMono3200Filter()
-        case .BlissfulBlue:
-            return IMGLYBlissfulBlueFilter()
         case .Pale:
             return IMGLYPaleFilter()
         case .Settled:
@@ -122,10 +114,6 @@ public class IMGLYInstanceFactory {
             return IMGLYCoolFilter()
         case .Litho:
             return IMGLYLithoFilter()
-        case .Prelude:
-            return IMGLYPreludeFilter()
-        case .Nepal:
-            return IMGLYNepalFilter()
         case .Ancient:
             return IMGLYAncientFilter()
         case .Pitched:
@@ -257,8 +245,6 @@ public class IMGLYInstanceFactory {
             .Goblin,
             .Sin,
             .Mellow,
-            .Sunny,
-            .A15,
             .Soft,
             .Blues,
             .Elder,
@@ -275,14 +261,10 @@ public class IMGLYInstanceFactory {
             .Pro400,
             .Twilight,
             .CottonCandy,
-            .Mono3200,
-            .BlissfulBlue,
             .Pale,
             .Settled,
             .Cool,
             .Litho,
-            .Prelude,
-            .Nepal,
             .Ancient,
             .Pitched,
             .Lucid,
