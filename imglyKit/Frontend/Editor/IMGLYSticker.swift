@@ -12,7 +12,7 @@ public class IMGLYSticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
     
-    init(image: UIImage, thumbnail: UIImage?) {
+    public init(image: UIImage, thumbnail: UIImage?) {
         self.image = image
         self.thumbnail = thumbnail
         super.init()

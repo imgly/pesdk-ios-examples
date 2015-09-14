@@ -48,7 +48,7 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
         super.init()
     }
     
-    init(stickers: [IMGLYSticker]) {
+    public init(stickers: [IMGLYSticker]) {
         self.stickers = stickers
         super.init()
     }
