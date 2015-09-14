@@ -238,7 +238,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             let imageView = UIImageView(image: stickerFilter.sticker!)
             imageView.userInteractionEnabled = true
             
-            var size = stickerFilter.absolutStickerSizeForImageSize(stickersClipView.bounds.size)
+            let size = stickerFilter.absolutStickerSizeForImageSize(stickersClipView.bounds.size)
             imageView.frame.size = size
             
             let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width,
