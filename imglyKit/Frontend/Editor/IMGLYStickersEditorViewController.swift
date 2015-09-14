@@ -233,9 +233,12 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func addStickerImagesFromStickerFilters(stickerFilters: [CIFilter]) {
-        for element  in stickerFilters {
-            let stickerFilter = element as! IMGLYStickerFilter
-            let imageView = UIImageView(image: stickerFilter.sticker!)
+        for element in stickerFilters {
+            guard let stickerFilter = element as? IMGLYStickerFilter else {
+                return
+            }
+            
+            let imageView = UIImageView(image: stickerFilter.sticker)
             imageView.userInteractionEnabled = true
             
             let size = stickerFilter.absolutStickerSizeForImageSize(stickersClipView.bounds.size)
@@ -250,7 +253,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func backupStickers() {
-        tempStickerCopy = NSArray(array: fixedFilterStack.stickerFilters, copyItems: true) as! [CIFilter]
+        tempStickerCopy = fixedFilterStack.stickerFilters
     }
 }
 
