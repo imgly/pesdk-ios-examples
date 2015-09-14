@@ -339,10 +339,10 @@ public class IMGLYCameraController: NSObject {
     The reason is that the frame we are getting is rotated by 90 degree
     */
     private func updateSquareIndicatorView(newRect: CGRect) {
-        var width = newRect.size.height / 2.0
-        var height = width
-        var top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
-        var left = newRect.origin.y / 2.0
+        let width = newRect.size.height / 2.0
+        let height = width
+        let top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
+        let left = newRect.origin.y / 2.0
         CATransaction.begin()
         CATransaction.setAnimationDuration(0)
         maskIndicatorLayer.frame = CGRectMake(left, top, width, height)
@@ -734,7 +734,7 @@ public class IMGLYCameraController: NSObject {
         }
         
         setupFocusIndicator()
-        setupMaskLayers();
+        setupMaskLayers()
         
         setupComplete = true
     }
@@ -1018,7 +1018,7 @@ public class IMGLYCameraController: NSObject {
                 scale = (image.size.height / image.size.width)
             }
         }
-        var offset = (1.0 - scale) / 2.0
+        let offset = (1.0 - scale) / 2.0
         stack.orientationCropFilter.cropRect = CGRectMake(offset, 0, scale, 1.0)
         return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
     }
