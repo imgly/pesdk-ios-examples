@@ -12,151 +12,139 @@ import Foundation
   A singleton that is out to create objects. It is used within the SDK to 
   create filters, views, viewcontrollers and such.
 */
-@objc public class IMGLYInstanceFactory {
+public class IMGLYInstanceFactory {
     /**
     Creates a response filter with the specified type.
     
-    :param: type The type of the filter that should be created.
+    - parameter type: The type of the filter that should be created.
     
-    :returns: A CIFilter object that realizes the desired filter.
+    - returns: A CIFilter object that realizes the desired filter.
     */
     public class func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
         switch(type) {
-        case IMGLYFilterType.None:
+        case .None:
             return IMGLYNoneFilter()
-        case IMGLYFilterType.K1:
+        case .K1:
             return IMGLYK1Filter()
-        case IMGLYFilterType.K2:
+        case .K2:
             return IMGLYK2Filter()
-        case IMGLYFilterType.K6:
+        case .K6:
             return IMGLYK6Filter()
-        case IMGLYFilterType.KDynamic:
+        case .KDynamic:
             return IMGLYKDynamicFilter()
-        case IMGLYFilterType.Fridge:
+        case .Fridge:
             return IMGLYFridgeFilter()
-        case IMGLYFilterType.Breeze:
+        case .Breeze:
             return IMGLYBreezeFilter()
-        case IMGLYFilterType.Orchid:
+        case .Orchid:
             return IMGLYOrchidFilter()
-        case IMGLYFilterType.Chest:
+        case .Chest:
             return IMGLYChestFilter()
-        case IMGLYFilterType.Front:
+        case .Front:
             return IMGLYFrontFilter()
-        case IMGLYFilterType.Fixie:
+        case .Fixie:
             return IMGLYFixieFilter()
-        case IMGLYFilterType.X400:
+        case .X400:
             return IMGLYX400Filter()
-        case IMGLYFilterType.BW:
+        case .BW:
             return IMGLYBWFilter()
-        case IMGLYFilterType.AD1920:
+        case .AD1920:
             return IMGLYAD1920Filter()
-        case IMGLYFilterType.Lenin:
+        case .Lenin:
             return IMGLYLeninFilter()
-        case IMGLYFilterType.Quozi:
+        case .Quozi:
             return IMGLYQuoziFilter()
-        case IMGLYFilterType.Pola669:
+        case .Pola669:
             return IMGLYPola669Filter()
-        case IMGLYFilterType.PolaSX:
+        case .PolaSX:
             return IMGLYPolaSXFilter()
-        case IMGLYFilterType.Food:
+        case .Food:
             return IMGLYFoodFilter()
-        case IMGLYFilterType.Glam:
+        case .Glam:
             return IMGLYGlamFilter()
-        case IMGLYFilterType.Celsius:
+        case .Celsius:
             return IMGLYCelsiusFilter()
-        case IMGLYFilterType.Texas:
+        case .Texas:
             return IMGLYTexasFilter()
-        case IMGLYFilterType.Lomo:
+        case .Lomo:
             return IMGLYLomoFilter()
-        case IMGLYFilterType.Goblin:
+        case .Goblin:
             return IMGLYGoblinFilter()
-        case IMGLYFilterType.Sin:
+        case .Sin:
             return IMGLYSinFilter()
-        case IMGLYFilterType.Mellow:
+        case .Mellow:
             return IMGLYMellowFilter()
-        case IMGLYFilterType.Sunny:
-            return IMGLYSunnyFilter()
-        case IMGLYFilterType.A15:
-            return IMGLYA15Filter()
-        case IMGLYFilterType.Soft:
+        case .Soft:
             return IMGLYSoftFilter()
-        case IMGLYFilterType.Blues:
+        case .Blues:
             return IMGLYBluesFilter()
-        case IMGLYFilterType.Elder:
+        case .Elder:
             return IMGLYElderFilter()
-        case IMGLYFilterType.Sunset:
+        case .Sunset:
             return IMGLYSunsetFilter()
-        case IMGLYFilterType.Evening:
+        case .Evening:
             return IMGLYEveningFilter()
-        case IMGLYFilterType.Steel:
+        case .Steel:
             return IMGLYSteelFilter()
-        case IMGLYFilterType.Seventies:
+        case .Seventies:
             return IMGLYSeventiesFilter()
-        case IMGLYFilterType.HighContrast:
+        case .HighContrast:
             return IMGLYHighContrastFilter()
-        case IMGLYFilterType.BlueShadows:
+        case .BlueShadows:
             return IMGLYBlueShadowsFilter()
-        case IMGLYFilterType.Highcarb:
+        case .Highcarb:
             return IMGLYHighcarbFilter()
-        case IMGLYFilterType.Eighties:
+        case .Eighties:
             return IMGLYEightiesFilter()
-        case IMGLYFilterType.Colorful:
+        case .Colorful:
             return IMGLYColorfulFilter()
-        case IMGLYFilterType.Lomo100:
+        case .Lomo100:
             return IMGLYLomo100Filter()
-        case IMGLYFilterType.Pro400:
+        case .Pro400:
             return IMGLYPro400Filter()
-        case IMGLYFilterType.Twilight:
+        case .Twilight:
             return IMGLYTwilightFilter()
-        case IMGLYFilterType.CottonCandy:
+        case .CottonCandy:
             return IMGLYCottonCandyFilter()
-        case IMGLYFilterType.Mono3200:
-            return IMGLYMono3200Filter()
-        case IMGLYFilterType.BlissfulBlue:
-            return IMGLYBlissfulBlueFilter()
-        case IMGLYFilterType.Pale:
+        case .Pale:
             return IMGLYPaleFilter()
-        case IMGLYFilterType.Settled:
+        case .Settled:
             return IMGLYSettledFilter()
-        case IMGLYFilterType.Cool:
+        case .Cool:
             return IMGLYCoolFilter()
-        case IMGLYFilterType.Litho:
+        case .Litho:
             return IMGLYLithoFilter()
-        case IMGLYFilterType.Prelude:
-            return IMGLYPreludeFilter()
-        case IMGLYFilterType.Nepal:
-            return IMGLYNepalFilter()
-        case IMGLYFilterType.Ancient:
+        case .Ancient:
             return IMGLYAncientFilter()
-        case IMGLYFilterType.Pitched:
+        case .Pitched:
             return IMGLYPitchedFilter()
-        case IMGLYFilterType.Lucid:
+        case .Lucid:
             return IMGLYLucidFilter()
-        case IMGLYFilterType.Creamy:
+        case .Creamy:
             return IMGLYCreamyFilter()
-        case IMGLYFilterType.Keen:
+        case .Keen:
             return IMGLYKeenFilter()
-        case IMGLYFilterType.Tender:
+        case .Tender:
             return IMGLYTenderFilter()
-        case IMGLYFilterType.Bleached:
+        case .Bleached:
             return IMGLYBleachedFilter()
-        case IMGLYFilterType.BleachedBlue:
+        case .BleachedBlue:
             return IMGLYBleachedBlueFilter()
-        case IMGLYFilterType.Fall:
+        case .Fall:
             return IMGLYFallFilter()
-        case IMGLYFilterType.Winter:
+        case .Winter:
             return IMGLYWinterFilter()
-        case IMGLYFilterType.SepiaHigh:
+        case .SepiaHigh:
             return IMGLYSepiaHighFilter()
-        case IMGLYFilterType.Summer:
+        case .Summer:
             return IMGLYSummerFilter()
-        case IMGLYFilterType.Classic:
+        case .Classic:
             return IMGLYClassicFilter()
-        case IMGLYFilterType.NoGreen:
+        case .NoGreen:
             return IMGLYNoGreenFilter()
-        case IMGLYFilterType.Neat:
+        case .Neat:
             return IMGLYNeatFilter()
-        case IMGLYFilterType.Plate:
+        case .Plate:
             return IMGLYPlateFilter()
         }
     }
@@ -164,7 +152,7 @@ import Foundation
     /**
     Creates a text filter.
     
-    :returns: A text filter
+    - returns: A text filter
     */
     public class func textFilter() -> IMGLYTextFilter {
         return IMGLYTextFilter()
@@ -173,7 +161,7 @@ import Foundation
     /**
     Creates a sticker filter.
     
-    :returns: A sticker filter
+    - returns: A sticker filter
     */
     public class func stickerFilter() -> IMGLYStickerFilter {
         return IMGLYStickerFilter()
@@ -182,7 +170,7 @@ import Foundation
     /**
     Creates a crop filter.
     
-    :returns: A crop filter
+    - returns: A crop filter
     */
     public class func orientationCropFilter() -> IMGLYOrientationCropFilter {
         return IMGLYOrientationCropFilter()
@@ -191,7 +179,7 @@ import Foundation
     /**
     Creates a tiltshift filter.
     
-    :returns: A tiltshift filter.
+    - returns: A tiltshift filter.
     */
     public class func tiltShiftFilter() -> IMGLYTiltshiftFilter {
         return IMGLYTiltshiftFilter()
@@ -200,7 +188,7 @@ import Foundation
     /**
     Creates a color-adjustment filter.
     
-    :returns: A color-adjustment filter.
+    - returns: A color-adjustment filter.
     */
     public class func colorAdjustmentFilter() -> IMGLYContrastBrightnessSaturationFilter {
         return IMGLYContrastBrightnessSaturationFilter()
@@ -209,16 +197,25 @@ import Foundation
     /**
     Creates an enhancement filter.
     
-    :returns: A enhancement filter.
+    - returns: A enhancement filter.
     */
     public class func enhancementFilter() -> IMGLYEnhancementFilter {
         return IMGLYEnhancementFilter()
     }
     
     /**
+    Creates an scale filter.
+    
+    - returns: A scale filter.
+    */
+    public class func scaleFilter() -> IMGLYScaleFilter {
+        return IMGLYScaleFilter()
+    }
+    
+    /**
     Returns the list of filters, that should be available in the dialogs.
     Change this list to select the set of filters you want to present to the user.
-    :returns: An array of filter types.
+    - returns: An array of filter types.
     */
     public class var availableFilterList: [IMGLYFilterType] {
         return [
@@ -248,8 +245,6 @@ import Foundation
             .Goblin,
             .Sin,
             .Mellow,
-            .Sunny,
-            .A15,
             .Soft,
             .Blues,
             .Elder,
@@ -266,14 +261,10 @@ import Foundation
             .Pro400,
             .Twilight,
             .CottonCandy,
-            .Mono3200,
-            .BlissfulBlue,
             .Pale,
             .Settled,
             .Cool,
             .Litho,
-            .Prelude,
-            .Nepal,
             .Ancient,
             .Pitched,
             .Lucid,
@@ -299,7 +290,7 @@ import Foundation
     Returns a list that determins what fonts will be available within
     the text-dialog.
     
-    :returns: An array of fontnames.
+    - returns: An array of fontnames.
     */
     public class var availableFontsList: [String] {
         return [

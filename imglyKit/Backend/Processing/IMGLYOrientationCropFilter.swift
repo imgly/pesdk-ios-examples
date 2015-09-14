@@ -38,7 +38,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     private var flipVertical_ = false
     private var flipHorizontal_ = false
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.imgly_displayName = "OrientationCropFilter"
     }
@@ -49,42 +49,63 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage! {
-        get {
-            if inputImage == nil {
-                return CIImage.emptyImage()
-            }
-            var radiant = realNumberForRotationAngle(rotationAngle)
-            var rotationTransformation = CGAffineTransformMakeRotation(radiant)
-            var flipH:CGFloat = flipHorizontal_ ? -1 : 1
-            var flipV:CGFloat = flipVertical_ ? -1 : 1
-            var flipTransformation = CGAffineTransformScale(rotationTransformation, flipH, flipV)
-            var filter = CIFilter(name: "CIAffineTransform")
-            filter.setValue(inputImage!, forKey: kCIInputImageKey)
-            
-            #if os(iOS)
+    public override var outputImage: CIImage? {
+        guard let inputImage = inputImage else {
+            return nil
+        }
+        
+        let radiant = realNumberForRotationAngle(rotationAngle)
+        let rotationTransformation = CGAffineTransformMakeRotation(radiant)
+        let flipH:CGFloat = flipHorizontal_ ? -1 : 1
+        let flipV:CGFloat = flipVertical_ ? -1 : 1
+        var flipTransformation = CGAffineTransformScale(rotationTransformation, flipH, flipV)
+        
+        guard let filter = CIFilter(name: "CIAffineTransform") else {
+            return inputImage
+        }
+        
+        filter.setValue(inputImage, forKey: kCIInputImageKey)
+        
+        if let orientation = inputImage.properties["Orientation"] as? NSNumber {
+            // Rotate image to match image orientation before cropping
+            let transform = inputImage.imageTransformForOrientation(orientation.intValue)
+            flipTransformation = CGAffineTransformConcat(flipTransformation, transform)
+        }
+        
+        #if os(iOS)
             let transform = NSValue(CGAffineTransform: flipTransformation)
             #elseif os(OSX)
             let transform = NSAffineTransform(CGAffineTransform: flipTransformation)
+        #endif
+        
+        filter.setValue(transform, forKey: kCIInputTransformKey)
+        var outputImage = filter.outputImage
+        
+        let cropFilter = IMGLYCropFilter()
+        cropFilter.cropRect = cropRect
+        cropFilter.setValue(outputImage, forKey: kCIInputImageKey)
+        outputImage = cropFilter.outputImage
+        
+        if let orientation = inputImage.properties["Orientation"] as? NSNumber {
+            // Rotate image back to match metadata
+            let invertedTransform = CGAffineTransformInvert(inputImage.imageTransformForOrientation(orientation.intValue))
+            
+            guard let filter = CIFilter(name: "CIAffineTransform") else {
+                return outputImage
+            }
+            
+            #if os(iOS)
+                let transform = NSValue(CGAffineTransform: invertedTransform)
+                #elseif os(OSX)
+                let transform = NSAffineTransform(CGAffineTransform: invertedTransform)
             #endif
             
             filter.setValue(transform, forKey: kCIInputTransformKey)
-            var transformedImage = filter!.outputImage
-            
-            #if os(iOS)
-            let context = CIContext(options: nil)
-            #elseif os(OSX)
-            let context = CIContext(CGContext: NSGraphicsContext.currentContext()?.CGContext, options: nil)
-            #endif
-            
-            var tempCGImage = context.createCGImage(transformedImage!, fromRect: transformedImage!.extent())
-            var tempCIImage = CIImage(CGImage: tempCGImage)
-            var cropFilter = IMGLYCropFilter()
-            cropFilter.cropRect = cropRect
-            cropFilter.setValue(tempCIImage!, forKey: kCIInputImageKey)
-            var croppedImage = cropFilter.outputImage
-            return croppedImage
+            filter.setValue(outputImage, forKey: kCIInputImageKey)
+            outputImage = filter.outputImage
         }
+        
+        return outputImage
     }
     
     private func realNumberForRotationAngle(rotationAngle: IMGLYRotationAngle) -> CGFloat {
@@ -156,7 +177,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
 }
 
-extension IMGLYOrientationCropFilter: NSCopying {
+extension IMGLYOrientationCropFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYOrientationCropFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

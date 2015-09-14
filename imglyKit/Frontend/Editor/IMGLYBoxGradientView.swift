@@ -52,7 +52,7 @@ public class IMGLYBoxGradientView : UIView {
         commonInit()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
@@ -166,7 +166,7 @@ public class IMGLYBoxGradientView : UIView {
             (controllPoint1.y + controllPoint2.y) / 2.0);
     }
     
-    public func informDeletageAboutRecognizerStates(#recognizer: UIGestureRecognizer) {
+    public func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Began {
             if gradientViewDelegate != nil {
                 gradientViewDelegate!.userInteractionStarted()

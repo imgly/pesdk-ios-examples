@@ -14,7 +14,7 @@ public class IMGLYK2Filter: IMGLYResponseFilter {
         self.imgly_displayName = "K2"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

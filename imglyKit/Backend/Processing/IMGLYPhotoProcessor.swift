@@ -45,8 +45,6 @@ All types of response-filters.
     Goblin,
     Sin,
     Mellow,
-    Sunny,
-    A15,
     Soft,
     Blues,
     Elder,
@@ -63,14 +61,10 @@ All types of response-filters.
     Pro400,
     Twilight,
     CottonCandy,
-    Mono3200,
-    BlissfulBlue,
     Pale,
     Settled,
     Cool,
     Litho,
-    Prelude,
-    Nepal,
     Ancient,
     Pitched,
     Lucid,
@@ -89,48 +83,49 @@ All types of response-filters.
     Plate
 }
 
-@objc public class IMGLYPhotoProcessor {
+public class IMGLYPhotoProcessor {
     public class func processWithCIImage(image: CIImage, filters: [CIFilter]) -> CIImage? {
         if filters.count == 0 {
             return image
         }
         
-        var currentImage:CIImage? = image
-        var activeInputs:[CIImage] = []
+        var currentImage: CIImage? = image
         
         for filter in filters {
-            filter.setValue(currentImage!, forKey:kCIInputImageKey)
+            filter.setValue(currentImage, forKey:kCIInputImageKey)
             
             currentImage = filter.outputImage
-            if currentImage == nil {
-                return nil
-            }
         }
         
-        if CGRectIsEmpty(currentImage!.extent()) {
+        if let currentImage = currentImage where CGRectIsEmpty(currentImage.extent) {
             return nil
         }
+        
         return currentImage
     }
     
     #if os(iOS)
     
     public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
-        var imageOrientation = image.imageOrientation
-        var filteredCIImage = processWithCIImage(CIImage(image: image), filters: filters)
-        var filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent())
+        let imageOrientation = image.imageOrientation
+        guard let coreImage = CIImage(image: image) else {
+            return nil
+        }
+        
+        let filteredCIImage = processWithCIImage(coreImage, filters: filters)
+        let filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent)
         return UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
     }
     
     #elseif os(OSX)
 
     public class func processWithNSImage(image: NSImage, filters: [CIFilter]) -> NSImage? {
-        if let image = CIImage(data: image.TIFFRepresentation) {
+        if let tiffRepresentation = image.TIFFRepresentation, image = CIImage(data: tiffRepresentation) {
             let filteredCIImage = processWithCIImage(image, filters: filters)
             
             if let filteredCIImage = filteredCIImage {
                 let rep = NSCIImageRep(CIImage: filteredCIImage)
-                let image = NSImage(size: NSSize(width: filteredCIImage.extent().size.width, height: filteredCIImage.extent().size.height))
+                let image = NSImage(size: NSSize(width: filteredCIImage.extent.size.width, height: filteredCIImage.extent.size.height))
                 image.addRepresentation(rep)
                 return image
             }

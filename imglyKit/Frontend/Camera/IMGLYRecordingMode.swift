@@ -30,7 +30,7 @@ import MobileCoreServices
     
     var selectionButton: UIButton {
         let button = UIButton()
-        button.setTranslatesAutoresizingMaskIntoConstraints(false)
+        button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(titleForSelectionButton, forState: .Normal)
         button.titleLabel?.font = UIFont.systemFontOfSize(12)
         button.setTitleColor(UIColor(red:1, green:0.8, blue:0, alpha:1), forState: .Selected)
@@ -41,7 +41,7 @@ import MobileCoreServices
         switch self {
         case .Photo:
             let button = UIButton()
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             button.setImage(UIImage(named: "LensAperture_ShapeLayer_00000", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
             button.imageView?.animationImages = [UIImage]()
             button.imageView?.animationRepeatCount = 1
@@ -55,7 +55,7 @@ import MobileCoreServices
             return button
         case .Video:
             let button = IMGLYVideoRecordButton()
-            button.setTranslatesAutoresizingMaskIntoConstraints(false)
+            button.translatesAutoresizingMaskIntoConstraints = false
             return button
         }
     }

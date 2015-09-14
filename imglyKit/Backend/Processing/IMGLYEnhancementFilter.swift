@@ -31,12 +31,12 @@ public class IMGLYEnhancementFilter : CIFilter {
     /// If this is set to true, the enhanced image is kept until reset is called.
     public var storeEnhancedImage = false
     
-    private var enhancedImage:CIImage? = nil
+    private var enhancedImage: CIImage? = nil
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage! {
-        if inputImage == nil {
-            return CIImage.emptyImage()
+    public override var outputImage: CIImage? {
+        guard let inputImage = inputImage else {
+            return nil
         }
         
         if !enabled {
@@ -45,19 +45,22 @@ public class IMGLYEnhancementFilter : CIFilter {
         
         if storeEnhancedImage {
             if enhancedImage != nil {
-                return enhancedImage!
+                return enhancedImage
             }
         }
         
-        var intermediateImage = inputImage
-        var filters = intermediateImage!.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
-        for filter in filters {
-            filter.setValue(intermediateImage, forKey: kCIInputImageKey)
+        
+        var intermediateImage: CIImage? = inputImage
+        let filters = intermediateImage?.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
+        for filter in filters ?? [] {
+            filter.setValue(inputImage, forKey: kCIInputImageKey)
             intermediateImage = filter.outputImage
         }
+        
         if storeEnhancedImage {
             enhancedImage = intermediateImage
         }
+        
         return intermediateImage
     }
     
@@ -66,7 +69,7 @@ public class IMGLYEnhancementFilter : CIFilter {
     }
 }
 
-extension IMGLYEnhancementFilter: NSCopying {
+extension IMGLYEnhancementFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

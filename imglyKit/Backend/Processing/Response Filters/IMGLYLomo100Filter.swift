@@ -14,7 +14,7 @@ public class IMGLYLomo100Filter: IMGLYResponseFilter {
         self.imgly_displayName = "Lomo 100"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

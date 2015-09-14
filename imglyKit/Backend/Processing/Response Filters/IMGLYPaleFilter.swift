@@ -14,7 +14,7 @@ public class IMGLYPaleFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Pale"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

@@ -37,31 +37,36 @@ public class IMGLYTextFilter : CIFilter {
         super.init()
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
-    public override var outputImage: CIImage! {
-        if inputImage == nil {
-            return CIImage.emptyImage()
+    public override var outputImage: CIImage? {
+        guard let inputImage = inputImage else {
+            return nil
         }
+        
         if text.isEmpty {
             return inputImage
         }
         
-        var textImage = createTextImage()
-        var textCIImage = CIImage(CGImage: textImage.CGImage)
-        var filter = CIFilter(name: "CISourceOverCompositing")
-        filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-        filter.setValue(textCIImage, forKey: kCIInputImageKey)
-        return filter.outputImage
+        let textImage = createTextImage()
+        
+        if let cgImage = textImage.CGImage, filter = CIFilter(name: "CISourceOverCompositing") {
+            let textCIImage = CIImage(CGImage: cgImage)
+            filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
+            filter.setValue(textCIImage, forKey: kCIInputImageKey)
+            return filter.outputImage
+        } else {
+            return inputImage
+        }
     }
     
     #if os(iOS)
     
     private func createTextImage() -> UIImage {
-        let rect = inputImage!.extent()
+        let rect = inputImage!.extent
         let imageSize = rect.size
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
@@ -78,7 +83,7 @@ public class IMGLYTextFilter : CIFilter {
     #elseif os(OSX)
     
     private func createTextImage() -> NSImage {
-        let rect = inputImage!.extent()
+        let rect = inputImage!.extent
         let imageSize = rect.size
     
         let image = NSImage(size: imageSize)
@@ -97,7 +102,7 @@ public class IMGLYTextFilter : CIFilter {
     #endif
 }
 
-extension IMGLYTextFilter: NSCopying {
+extension IMGLYTextFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = super.copyWithZone(zone) as! IMGLYTextFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage

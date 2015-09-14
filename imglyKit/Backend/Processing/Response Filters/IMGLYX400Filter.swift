@@ -14,7 +14,7 @@ public class IMGLYX400Filter: IMGLYResponseFilter {
         self.imgly_displayName = "X400"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

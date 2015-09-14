@@ -43,7 +43,7 @@ public final class IMGLYVideoRecordButton: UIControl {
         layer.addSublayer(innerLayer)
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         layer.addSublayer(outerLayer)
@@ -53,18 +53,18 @@ public final class IMGLYVideoRecordButton: UIControl {
     // MARK: - Helpers
     
     private func updateOuterLayer() {
-        let outerRect = bounds.rectByInsetting(dx: IMGLYVideoRecordButton.lineWidth, dy: IMGLYVideoRecordButton.lineWidth)
+        let outerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth, dy: IMGLYVideoRecordButton.lineWidth)
         outerLayer.frame = bounds
         outerLayer.path = UIBezierPath(ovalInRect: outerRect).CGPath
     }
     
     private func updateInnerLayer() {
         if recording {
-            let innerRect = bounds.rectByInsetting(dx: 0.3 * bounds.size.width, dy: 0.3 * bounds.size.height)
+            let innerRect = bounds.insetBy(dx: 0.3 * bounds.size.width, dy: 0.3 * bounds.size.height)
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: 4).CGPath
         } else {
-            let innerRect = bounds.rectByInsetting(dx: IMGLYVideoRecordButton.lineWidth * 2.5, dy: IMGLYVideoRecordButton.lineWidth * 2.5)
+            let innerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth * 2.5, dy: IMGLYVideoRecordButton.lineWidth * 2.5)
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: innerRect.size.width / 2).CGPath
         }
@@ -81,7 +81,7 @@ public final class IMGLYVideoRecordButton: UIControl {
     
     // MARK: - UIControl
     
-    public override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) -> Bool {
+    public override func beginTrackingWithTouch(touch: UITouch, withEvent event: UIEvent?) -> Bool {
         let location = touch.locationInView(self)
         if !innerLayer.containsPoint(location) {
             return false
@@ -91,7 +91,7 @@ public final class IMGLYVideoRecordButton: UIControl {
         return true
     }
     
-    public override func endTrackingWithTouch(touch: UITouch, withEvent event: UIEvent) {
+    public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
         recording = !recording
         innerLayer.fillColor = IMGLYVideoRecordButton.recordingColor.CGColor
         sendActionsForControlEvents(.TouchUpInside)

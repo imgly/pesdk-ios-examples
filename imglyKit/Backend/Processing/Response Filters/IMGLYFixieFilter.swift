@@ -14,7 +14,7 @@ public class IMGLYFixieFilter: IMGLYResponseFilter {
         self.imgly_displayName = "Fixie"
     }
     
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

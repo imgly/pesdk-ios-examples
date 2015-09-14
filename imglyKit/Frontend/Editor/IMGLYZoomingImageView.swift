@@ -36,7 +36,7 @@ public class IMGLYZoomingImageView: UIScrollView {
     
     public var visibleImageFrame: CGRect {
         var visibleImageFrame = bounds
-        visibleImageFrame.intersect(imageView.frame)
+        visibleImageFrame.intersectInPlace(imageView.frame)
         return visibleImageFrame
     }
     
@@ -47,7 +47,7 @@ public class IMGLYZoomingImageView: UIScrollView {
         commonInit()
     }
 
-    required public init(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
