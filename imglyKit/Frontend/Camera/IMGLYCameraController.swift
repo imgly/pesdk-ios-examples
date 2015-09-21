@@ -108,6 +108,9 @@ public class IMGLYCameraController: NSObject {
     private var setupComplete = false
     private var videoPreviewFrame = CGRectZero
     private let focusIndicatorLayer = CALayer()
+    private let maskIndicatorLayer = CALayer()
+    private let upperMaskDarkenLayer = CALayer()
+    private let lowerMaskDarkenLayer = CALayer()
     private var focusIndicatorFadeOutTimer: NSTimer?
     private var focusIndicatorAnimating = false
     private let motionManager: CMMotionManager = {
@@ -121,6 +124,8 @@ public class IMGLYCameraController: NSObject {
     dynamic private var sessionRunningAndDeviceAuthorized: Bool {
         return session.running && deviceAuthorized
     }
+    
+    public var squareMode: Bool
     
     // Video Recording
     private var assetWriter: AVAssetWriter?
@@ -140,6 +145,7 @@ public class IMGLYCameraController: NSObject {
     
     init(previewView: UIView) {
         self.previewView = previewView
+        self.squareMode = false
         super.init()
     }
     
@@ -286,6 +292,76 @@ public class IMGLYCameraController: NSObject {
                 self.delegate?.cameraController?(self, didSwitchToCameraPosition: nextPosition)
             }
         }
+    }
+    
+    // MARK: - Mask layer
+    private func setupMaskLayers() {
+        setupMaskIndicatorLayer()
+        setupUpperMaskDarkenLayer()
+        setupLowerMaskDarkenLayer()
+    }
+    
+    private func setupMaskIndicatorLayer() {
+        maskIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        maskIndicatorLayer.borderWidth = 1
+        maskIndicatorLayer.frame.origin = CGPointMake(0, 0)
+        maskIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        maskIndicatorLayer.hidden = true
+        maskIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        previewView.layer.addSublayer(maskIndicatorLayer)
+    }
+    
+    private func setupUpperMaskDarkenLayer() {
+        upperMaskDarkenLayer.borderWidth = 0
+        upperMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        upperMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        upperMaskDarkenLayer.hidden = true
+        upperMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        upperMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        previewView.layer.addSublayer(upperMaskDarkenLayer)
+    }
+
+    private func setupLowerMaskDarkenLayer() {
+        lowerMaskDarkenLayer.borderWidth = 0
+        lowerMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        lowerMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        lowerMaskDarkenLayer.hidden = true
+        lowerMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        lowerMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        previewView.layer.addSublayer(lowerMaskDarkenLayer)
+    }
+    
+    
+    // MARK: - Square view 
+    
+    /*
+    Please note, the calculations in this method might look a bit weird.
+    The reason is that the frame we are getting is rotated by 90 degree
+    */
+    private func updateSquareIndicatorView(newRect: CGRect) {
+        let width = newRect.size.height / 2.0
+        let height = width
+        let top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
+        let left = newRect.origin.y / 2.0
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0)
+        maskIndicatorLayer.frame = CGRect(x: left, y: top, width: width, height: height).integral
+        upperMaskDarkenLayer.frame = CGRect(x: left, y: 0, width: width, height: top - 1).integral
+        // add extra space to the bottom to avoid a gab due to the lower bar animation
+        lowerMaskDarkenLayer.frame = CGRect(x: left, y: top + height + 1, width: width, height: top * 2).integral
+        CATransaction.commit()
+    }
+    
+    public func showSquareMask() {
+        maskIndicatorLayer.hidden = false
+        upperMaskDarkenLayer.hidden = false
+        lowerMaskDarkenLayer.hidden = false
+    }
+    
+    public func hideSquareMask() {
+        maskIndicatorLayer.hidden = true
+        upperMaskDarkenLayer.hidden = true
+        lowerMaskDarkenLayer.hidden = true
     }
     
     // MARK: - Flash
@@ -658,6 +734,7 @@ public class IMGLYCameraController: NSObject {
         }
         
         setupFocusIndicator()
+        setupMaskLayers()
         
         setupComplete = true
     }
@@ -705,7 +782,7 @@ public class IMGLYCameraController: NSObject {
                 self.session.sessionPreset = recordingMode.sessionPreset
             }
             dispatch_group_leave(sessionGroup)
-            
+
             switch(recordingMode) {
             case .Photo:
                 if self.flashAvailable {
@@ -933,6 +1010,19 @@ public class IMGLYCameraController: NSObject {
     
     // MARK: - Still Image Capture
     
+    public func squareTakenImage(image:UIImage) -> UIImage {
+        let stack = IMGLYFixedFilterStack()
+        var scale = (image.size.width / image.size.height)
+        if let captureVideoOrientation = self.captureVideoOrientation {
+            if captureVideoOrientation == .LandscapeRight || captureVideoOrientation == .LandscapeLeft {
+                scale = (image.size.height / image.size.width)
+            }
+        }
+        let offset = (1.0 - scale) / 2.0
+        stack.orientationCropFilter.cropRect = CGRectMake(offset, 0, scale, 1.0)
+        return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
+    }
+    
     /**
     Takes a photo and hands it over to the completion block.
     
@@ -954,8 +1044,10 @@ public class IMGLYCameraController: NSObject {
                     
                     if let imageDataSampleBuffer = imageDataSampleBuffer {
                         let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                        let image = UIImage(data: imageData)
-                        
+                        var image = UIImage(data: imageData)
+                        if self.squareMode {
+                            image = self.squareTakenImage(image!)
+                        }
                         completion(image, nil)
                     } else {
                         completion(nil, error)
@@ -1253,7 +1345,7 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
             
             videoPreviewFrame = sourceExtent
             videoPreviewFrame.fittedIntoTargetRect(targetRect, withContentMode: previewContentMode)
-            
+            updateSquareIndicatorView(self.videoPreviewFrame)
             if glContext != EAGLContext.currentContext() {
                 EAGLContext.setCurrentContext(glContext)
             }
