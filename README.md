@@ -44,7 +44,7 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 use_frameworks!
 
-pod 'imglyKit', '~> 2.3'
+pod 'imglyKit', '~> 2.4'
 ```
 
 Then, run the following command:
@@ -67,7 +67,7 @@ $ brew install carthage
 To integrate imglyKit into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "imgly/imgly-sdk-ios" >= 2.3
+github "imgly/imgly-sdk-ios" >= 2.4
 ```
 
 ### Manually
@@ -102,7 +102,7 @@ We strongly recommend that you use any of the methods described above for instal
 
 ### Important
 
-Because we are using Swift 1.2, you need at least Xcode 6.3 to build and run this project. 
+Because we are using Swift 2, you need Xcode 7 to build and run this project. 
 The current snapshot isn't final yet. Some things aren't perfect yet. But the major things are done and good to go. Future releases will add more comfort to some things.
 
 ## Objective-C compatibility

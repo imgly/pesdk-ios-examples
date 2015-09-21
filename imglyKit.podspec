@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name             = "imglyKit"
-	s.version          = "2.3.1"
+	s.version          = "2.4.0"
 	s.license          = { :type => 'Copyright', :file => 'LICENSE' }
 	s.summary          = "Creates stunning images with a nice selection of premium filters."
 	s.homepage         = "https://github.com/imgly/imgly-sdk-ios"
@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
 	s.source           = { :git => 'https://github.com/imgly/imgly-sdk-ios.git', :tag => s.version.to_s }
 
 	s.ios.deployment_target = '8.0'
-	s.osx.deployment_target = '10.9'
+	s.osx.deployment_target = '10.10'
 	
 	s.requires_arc = true
 
