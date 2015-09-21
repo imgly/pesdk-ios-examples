@@ -335,7 +335,7 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Square view 
     
     /*
-    Please note, the calculations in this method might look a bit wierd.
+    Please note, the calculations in this method might look a bit weird.
     The reason is that the frame we are getting is rotated by 90 degree
     */
     private func updateSquareIndicatorView(newRect: CGRect) {
@@ -345,10 +345,10 @@ public class IMGLYCameraController: NSObject {
         let left = newRect.origin.y / 2.0
         CATransaction.begin()
         CATransaction.setAnimationDuration(0)
-        maskIndicatorLayer.frame = CGRectMake(left, top, width, height)
-        upperMaskDarkenLayer.frame = CGRectMake(left, 0, width, top)
+        maskIndicatorLayer.frame = CGRect(x: left, y: top, width: width, height: height).integral
+        upperMaskDarkenLayer.frame = CGRect(x: left, y: 0, width: width, height: top - 1).integral
         // add extra space to the bottom to avoid a gab due to the lower bar animation
-        lowerMaskDarkenLayer.frame = CGRectMake(left, top + height, width, top * 2)
+        lowerMaskDarkenLayer.frame = CGRect(x: left, y: top + height + 1, width: width, height: top * 2).integral
         CATransaction.commit()
     }
     
