@@ -43,10 +43,10 @@ public class IMGLYCropFilter : CIFilter {
         
         // important: CICrop has its coordinate system upside-down
         // so we need to reverse that
-        let scaledRect = CGRect(x: cropRect.origin.x * rect.width,
-            y: rect.height - cropRect.origin.y * rect.height,
-            width: cropRect.size.width * rect.width,
-            height: -cropRect.size.height * rect.height)
+        let scaledRect = CGRect(x: rect.origin.x + cropRect.origin.x * rect.size.width,
+            y: rect.origin.y + (rect.size.height - cropRect.origin.y * rect.size.height),
+            width: cropRect.size.width * rect.size.width,
+            height: -cropRect.size.height * rect.size.height)
         
         let croppedImage = inputImage.imageByCroppingToRect(scaledRect)
         

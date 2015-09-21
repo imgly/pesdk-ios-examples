@@ -56,8 +56,8 @@ public class IMGLYOrientationCropFilter : CIFilter {
         
         let radiant = realNumberForRotationAngle(rotationAngle)
         let rotationTransformation = CGAffineTransformMakeRotation(radiant)
-        let flipH:CGFloat = flipHorizontal_ ? -1 : 1
-        let flipV:CGFloat = flipVertical_ ? -1 : 1
+        let flipH: CGFloat = flipHorizontal_ ? -1 : 1
+        let flipV: CGFloat = flipVertical_ ? -1 : 1
         var flipTransformation = CGAffineTransformScale(rotationTransformation, flipH, flipV)
         
         guard let filter = CIFilter(name: "CIAffineTransform") else {
