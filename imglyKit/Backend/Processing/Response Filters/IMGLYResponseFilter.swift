@@ -32,7 +32,9 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {
         didSet {
-            colorCubeData = nil
+            if (oldValue != inputIntensity) {
+                colorCubeData = nil
+            }
         }
     }
     public let responseName: String
@@ -94,6 +96,7 @@ extension IMGLYResponseFilter {
         let copy = super.copyWithZone(zone) as! IMGLYResponseFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.inputIntensity = inputIntensity
+        copy._colorCubeData = _colorCubeData
         return copy
     }
 }
