@@ -371,6 +371,7 @@
 		2BF4D5451AF115A200C801B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
 		2BF51F701B41A7E700FFB4C2 /* IMGLYRecordingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */; };
 		2BF717D91B414FC600D4A50C /* IMGLYShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */; };
+		E9D550EE1C05E27D00CE72C3 /* IMGLYConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D550ED1C05E27D00CE72C3 /* IMGLYConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -582,6 +583,7 @@
 		2BF4D5461AF115A200C801B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYRecordingMode.swift; sourceTree = "<group>"; };
 		2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYShapeLayer.swift; sourceTree = "<group>"; };
+		E9D550ED1C05E27D00CE72C3 /* IMGLYConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -605,6 +607,7 @@
 		2B1ADA0B1B19C33600C98522 /* Frontend */ = {
 			isa = PBXGroup;
 			children = (
+				E9D550EC1C05E24700CE72C3 /* Configuration */,
 				2BF4D3A71AF114F000C801B2 /* Assets.xcassets */,
 				2BF4D3A01AF113E600C801B2 /* Camera */,
 				2BF4D3A11AF113ED00C801B2 /* Editor */,
@@ -918,6 +921,14 @@
 				2BF4D4F61AF1155E00C801B2 /* IMGLYX400Filter.swift */,
 			);
 			path = "Response Filters";
+			sourceTree = "<group>";
+		};
+		E9D550EC1C05E24700CE72C3 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				E9D550ED1C05E27D00CE72C3 /* IMGLYConfiguration.swift */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1344,6 +1355,7 @@
 				2BF4D5141AF1155E00C801B2 /* IMGLYK1Filter.swift in Sources */,
 				2BF717D91B414FC600D4A50C /* IMGLYShapeLayer.swift in Sources */,
 				2BF4D51B1AF1155E00C801B2 /* IMGLYLomo100Filter.swift in Sources */,
+				E9D550EE1C05E27D00CE72C3 /* IMGLYConfiguration.swift in Sources */,
 				2BF4D52F1AF1155E00C801B2 /* IMGLYSeventiesFilter.swift in Sources */,
 				2BF4D3D91AF1150500C801B2 /* IMGLYFocusEditorViewController.swift in Sources */,
 				2BF4D3D51AF1150500C801B2 /* IMGLYEditorViewController.swift in Sources */,
