@@ -14,6 +14,8 @@ public class IMGLYEditorViewController: UIViewController {
     
     // MARK: - Properties
     
+    var configuration: IMGLYConfiguration = IMGLYConfiguration()
+    
     public var shouldShowActivityIndicator = true
     
     public var updating = false {
@@ -51,6 +53,21 @@ public class IMGLYEditorViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    // MARK: - Initalization
+    
+    init(configuration: IMGLYConfiguration) {
+        super.init(nibName: nil, bundle: nil)
+        self.configuration = configuration
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     // MARK: - UIViewController
     

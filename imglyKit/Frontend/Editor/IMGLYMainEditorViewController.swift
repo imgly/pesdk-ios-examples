@@ -8,6 +8,41 @@
 
 import UIKit
 
+// Options for configuring the IMGLYMainEditorViewController
+public struct IMGLYMainEditorViewControllerOptions {
+
+    // MARK: UI
+    
+    ///  Defaults to 'Editor'
+    public lazy var title: String? = NSLocalizedString("main-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    
+    ///  Defaults to black
+    public lazy var backgroundColor: UIColor = UIColor.blackColor()
+    
+    /**
+    A configuration block to configure the given cancel button item.
+    Defaults to a 'Cancel' in the apps tintColor.
+    */
+    public lazy var cancelButtonConfigurationBlock: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
+        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
+        barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
+    }
+    
+    /**
+     A configuration block to configure the given done button item.
+     Defaults to a 'Done' in the apps tintColor.
+     */
+    public lazy var doneButtonConfigurationBlock: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
+        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
+        barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
+    }
+    
+    // MARK: Behaviour
+    
+    /// Controls if the user can zoom the preview image. Defaults to **true**.
+    public lazy var allowsPreviewImageZoom: Bool = true
+}
+
 @objc public enum IMGLYEditorResult: Int {
     case Done
     case Cancel
@@ -36,9 +71,9 @@ private let ButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     // MARK: - Properties
-    
+        
     public lazy var actionButtons: [IMGLYActionButton] = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         var handlers = [IMGLYActionButton]()
         
         handlers.append(
@@ -123,9 +158,13 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        self.view.backgroundColor = self.configuration.mainEditorViewControllerOptions.backgroundColor
+        
+        navigationItem.title = self.configuration.mainEditorViewControllerOptions.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
+        
+        configuration.mainEditorViewControllerOptions.cancelButtonConfigurationBlock(navigationItem.leftBarButtonItem!)
+        configuration.mainEditorViewControllerOptions.doneButtonConfigurationBlock(navigationItem.rightBarButtonItem!)
         
         navigationController?.delegate = self
         
@@ -167,7 +206,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 updatePreviewImage()
             }
         } else {
-            if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
+            if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
                 viewController.lowResolutionImage = lowResolutionImage
                 viewController.previewImageView.image = previewImageView.image
                 viewController.completionHandler = subEditorDidComplete
@@ -250,7 +289,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     }
     
     public override var enableZoomingInPreviewImage: Bool {
-        return true
+        return self.configuration.mainEditorViewControllerOptions.allowsPreviewImageZoom
     }
 }
 

@@ -20,9 +20,9 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     
     // MARK: - Initializers
     
-    public init(fixedFilterStack: IMGLYFixedFilterStack) {
+    public init(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) {
         self.fixedFilterStack = fixedFilterStack.copy() as! IMGLYFixedFilterStack
-        super.init(nibName: nil, bundle: nil)
+        super.init(configuration: configuration)
     }
 
     required public init?(coder aDecoder: NSCoder) {

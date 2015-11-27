@@ -13,6 +13,8 @@ public enum IMGLYConfigurationError: ErrorType {
     case ReplacingClassNotASubclass
 }
 
+public typealias IMGLYBarButtonItemConfigurationClosure = (UIBarButtonItem) -> ()
+
 /**
 An IMGLYConfiguration defines behaviour and look of all view controllers
 provided by the imglyKit. It uses the builder pattern to create an
