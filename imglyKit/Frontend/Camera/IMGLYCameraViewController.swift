@@ -25,6 +25,13 @@ public class IMGLYCameraViewController: UIViewController {
         self.init(recordingModes: [.Photo, .Video])
     }
     
+    public convenience init(configuration: IMGLYConfiguration) {
+        self.init()
+        self.configuration = configuration
+    }
+    
+    private var configuration: IMGLYConfiguration = IMGLYConfiguration()
+    
     /// This initializer should only be used in Objective-C. It expects an NSArray of NSNumbers that wrap
     /// the integer value of IMGLYRecordingMode.
     public convenience init(recordingModes: [NSNumber]) {
@@ -590,7 +597,7 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func showEditorNavigationControllerWithImage(image: UIImage) {
-        let editorViewController = IMGLYMainEditorViewController()
+        let editorViewController = self.configuration.getClassForReplacedClass(IMGLYMainEditorViewController.self).init() as! IMGLYMainEditorViewController
         editorViewController.highResolutionImage = image
         if let cameraController = cameraController {
             editorViewController.initialFilterType = cameraController.effectFilter.filterType
