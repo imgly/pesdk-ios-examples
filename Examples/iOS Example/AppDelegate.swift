@@ -15,7 +15,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let cameraViewController = IMGLYCameraViewController(recordingModes: [.Photo, .Video])
+        
+        // Start with default configuration
+        let configuration = IMGLYConfiguration()
+        
+        // Customize the done button using the configuration block
+        configuration.mainEditorViewControllerOptions.doneButtonConfigurationBlock = { barButtonItem in
+            barButtonItem.tintColor = UIColor.greenColor()
+        }
+        
+        // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
+        do {
+            try configuration.replaceClass(IMGLYMainEditorViewController.self, replacingClass: IMGLYMainEditorSubclassViewController.self, namespace: "iOS_Example")
+        } catch {
+            print("Couldn't replace class")
+        }
+        
+        let cameraViewController = IMGLYCameraViewController(configuration: configuration)
         cameraViewController.maximumVideoLength = 15
         cameraViewController.squareMode = false
         
