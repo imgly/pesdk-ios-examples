@@ -48,7 +48,7 @@ func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     return false
 }
 
-let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 4, patchVersion: 0)
+let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 4, patchVersion: 1)
 
 private let kIMGLYIndicatorSize = CGFloat(75)
 private var CapturingStillImageContext = 0
@@ -196,7 +196,7 @@ public class IMGLYCameraController: NSObject {
     
     private func checkSDKVersion() {
         let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
-        if let appIdentifier = appIdentifier, url = NSURL(string: "https://photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
+        if let appIdentifier = appIdentifier, url = NSURL(string: "https://www.photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
             let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
                 if let data = data {
                     do {
