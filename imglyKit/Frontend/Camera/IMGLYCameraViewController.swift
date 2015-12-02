@@ -598,6 +598,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func showEditorNavigationControllerWithImage(image: UIImage) {
         let editorViewController = self.configuration.getClassForReplacedClass(IMGLYMainEditorViewController.self).init() as! IMGLYMainEditorViewController
+        editorViewController.configuration = configuration
         editorViewController.highResolutionImage = image
         if let cameraController = cameraController {
             editorViewController.initialFilterType = cameraController.effectFilter.filterType

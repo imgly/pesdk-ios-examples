@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         configuration.mainEditorViewControllerOptions.doneButtonConfigurationBlock = { barButtonItem in
             barButtonItem.tintColor = UIColor.greenColor()
         }
+        configuration.mainEditorViewControllerOptions.editorActionsDataSource = IMGLYMainEditorActionsDataSource(availableActionTypes: [ .Magic, .Noise, .Focus ])
         
         // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
         do {

@@ -16,8 +16,4 @@ class IMGLYMainEditorSubclassViewController: IMGLYMainEditorViewController {
         
         print("SUBCLASS!")
     }
-    
-    internal override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
-    }
 }
