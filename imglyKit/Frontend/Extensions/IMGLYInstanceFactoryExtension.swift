@@ -20,25 +20,25 @@ extension IMGLYInstanceFactory {
     
     - returns: A viewcontroller according to the button-type.
     */
-    public class func viewControllerForButtonType(type: IMGLYMainMenuButtonType, withFixedFilterStack fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYSubEditorViewController? {
-        switch (type) {
-        case IMGLYMainMenuButtonType.Filter:
+    public class func viewControllerForEditorActionType(actionType: IMGLYMainEditorActionType, withFixedFilterStack fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYSubEditorViewController? {
+        switch (actionType) {
+        case .Filter:
             return filterEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Stickers:
+        case .Stickers:
             return stickersEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Orientation:
+        case .Orientation:
             return orientationEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Focus:
+        case .Focus:
             return focusEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Crop:
+        case .Crop:
             return cropEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Brightness:
+        case .Brightness:
             return brightnessEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Contrast:
+        case .Contrast:
             return contrastEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Saturation:
+        case .Saturation:
             return saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
-        case IMGLYMainMenuButtonType.Text:
+        case .Text:
             return textEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
         default:
             return nil

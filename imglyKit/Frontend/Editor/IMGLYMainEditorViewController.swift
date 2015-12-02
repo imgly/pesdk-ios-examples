@@ -9,8 +9,8 @@
 import UIKit
 
 // Options for configuring the IMGLYMainEditorViewController
-public struct IMGLYMainEditorViewControllerOptions {
-
+@objc public class IMGLYMainEditorViewControllerOptions: NSObject {
+    
     // MARK: UI
     
     ///  Defaults to 'Editor'
@@ -29,9 +29,9 @@ public struct IMGLYMainEditorViewControllerOptions {
     }
     
     /**
-     A configuration block to configure the given done button item.
-     Defaults to a 'Done' in the apps tintColor.
-     */
+    A configuration block to configure the given done button item.
+    Defaults to a 'Done' in the apps tintColor.
+    */
     public lazy var doneButtonConfigurationBlock: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
@@ -41,6 +41,10 @@ public struct IMGLYMainEditorViewControllerOptions {
     
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public lazy var allowsPreviewImageZoom: Bool = true
+    
+    /// Specifies the actions available in the bottom drawer. Defaults to the
+    /// IMGLYMainEditorActionsDataSource providing all editors.
+    public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
 }
 
 @objc public enum IMGLYEditorResult: Int {
@@ -48,7 +52,7 @@ public struct IMGLYMainEditorViewControllerOptions {
     case Cancel
 }
 
-@objc public enum IMGLYMainMenuButtonType: Int {
+@objc public enum IMGLYMainEditorActionType: Int {
     case Magic
     case Filter
     case Stickers
@@ -58,9 +62,7 @@ public struct IMGLYMainEditorViewControllerOptions {
     case Brightness
     case Contrast
     case Saturation
-    case Noise
     case Text
-    case Reset
 }
 
 public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult, UIImage?) -> Void
@@ -71,76 +73,6 @@ private let ButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     // MARK: - Properties
-        
-    public lazy var actionButtons: [IMGLYActionButton] = {
-        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
-        var handlers = [IMGLYActionButton]()
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),
-                selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Magic) },
-                showSelection: { [unowned self] in return self.fixedFilterStack.enhancementFilter.enabled }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.filter", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_filters", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Filter) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.stickers", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Stickers) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.orientation", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Orientation) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.focus", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_focus", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Focus) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.crop", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_crop", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Crop) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.brightness", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_brightness", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Brightness) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.contrast", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_contrast", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Contrast) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.saturation", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_saturation", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Saturation) }))
-        
-        handlers.append(
-            IMGLYActionButton(
-                title: NSLocalizedString("main-editor.button.text", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_text", inBundle: bundle, compatibleWithTraitCollection: nil),
-                handler: { [unowned self] in self.subEditorButtonPressed(.Text) }))
-        
-        return handlers
-        }()
-    
     public var completionBlock: IMGLYEditorCompletionBlock?
     public var initialFilterType = IMGLYFilterType.None
     public var initialFilterIntensity = NSNumber(double: 0.75)
@@ -199,14 +131,15 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     // MARK: - Helpers
     
-    private func subEditorButtonPressed(buttonType: IMGLYMainMenuButtonType) {
-        if (buttonType == IMGLYMainMenuButtonType.Magic) {
+    private func subEditorButtonPressed(actionType: IMGLYMainEditorActionType) {
+        if (actionType == .Magic) {
             if !updating {
                 fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
                 updatePreviewImage()
+                
             }
         } else {
-            if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
+            if let viewController = IMGLYInstanceFactory.viewControllerForEditorActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
                 viewController.lowResolutionImage = lowResolutionImage
                 viewController.previewImageView.image = previewImageView.image
                 viewController.completionHandler = subEditorDidComplete
@@ -295,22 +228,17 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
 extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return actionButtons.count
+        return self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionCount()
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath) 
         
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
-            let actionButton = actionButtons[indexPath.item]
-            
-            if let selectedImage = actionButton.selectedImage, let showSelectionBlock = actionButton.showSelection where showSelectionBlock() {
-                buttonCell.imageView.image = selectedImage
-            } else {
-                buttonCell.imageView.image = actionButton.image
-            }
-            
-            buttonCell.textLabel.text = actionButton.title
+            let dataSource = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource
+            let action = dataSource.actionAtIndex(indexPath.item)
+            buttonCell.textLabel.text = action.title
+            buttonCell.imageView.image = action.image
         }
         
         return cell
@@ -319,11 +247,21 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
 
 extension IMGLYMainEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let actionButton = actionButtons[indexPath.item]
-        actionButton.handler()
-        
-        if actionButton.selectedImage != nil && actionButton.showSelection != nil {
-            collectionView.reloadItemsAtIndexPaths([indexPath])
+        let action = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionAtIndex(indexPath.item)
+        subEditorButtonPressed(action.editorType)
+        collectionView.reloadItemsAtIndexPaths([indexPath])
+    }
+    
+    public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
+        let action = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionAtIndex(indexPath.item)
+        if (action.editorType == .Magic) {
+            if let buttonCell = cell as? IMGLYButtonCollectionViewCell, let selectedImage = action.selectedImage {
+                if (fixedFilterStack.enhancementFilter.enabled) {
+                    buttonCell.imageView.image = selectedImage
+                } else {
+                    buttonCell.imageView.image = action.image
+                }
+            }
         }
     }
 }
