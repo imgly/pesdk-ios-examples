@@ -34,12 +34,17 @@ public class IMGLYFixedFilterStack: NSObject {
     public var stickerFilters = [CIFilter]()
     
     public var activeFilters: [CIFilter] {
+        setCropRectForStickerFilters()
         var activeFilters: [CIFilter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
         activeFilters += stickerFilters
-        
         return activeFilters
     }
     
+    private func setCropRectForStickerFilters () {
+        for stickerFilter in stickerFilters {
+            (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
+        }
+    }
     // MARK: - Initializers
     
     required override public init () {

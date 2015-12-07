@@ -36,6 +36,9 @@ public class IMGLYStickerFilter: CIFilter {
     /// The relative scale of the sticker within the image.
     public var scale = CGFloat(1.0)
     
+    /// The crop-create applied to the input image, so we can adjust the sticker position
+    public var cropRect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    
     override init() {
         super.init()
     }
@@ -111,10 +114,41 @@ public class IMGLYStickerFilter: CIFilter {
     
     #endif
     
+    /*
+const oldEnd = operation.getEnd()
+const oldStart = operation.getStart()
+const newEnd = options.end
+const newStart = options.start
+
+const oldDimensions = oldEnd.clone().subtract(oldStart)
+.multiply(inputDimensions)
+const newDimensions = newEnd.clone().subtract(newStart)
+.multiply(inputDimensions)
+
+this._options.stickers.forEach((sticker) => {
+const position = sticker.getPosition()
+const scale = sticker.getScale()
+
+sticker.set({
+position: position.clone()
+.add(
+oldStart.clone().subtract(newStart)
+)
+.divide(
+newDimensions.clone().divide(oldDimensions)
+),
+scale: scale.clone()
+.multiply(oldDimensions.x / newDimensions.x)
+})
+*/
     private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
         CGContextSaveGState(context)
+
+        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+        var center = CGPoint(x: self.center.x * originalSize.width, y: self.center.y * originalSize.height)
+        center.x -= (cropRect.origin.x * originalSize.width)
+        center.y -= (cropRect.origin.y * originalSize.height)
         
-        let center = CGPoint(x: self.center.x * imageSize.width, y: self.center.y * imageSize.height)
         let size = self.absolutStickerSizeForImageSize(imageSize)
         let imageRect = CGRect(origin: center, size: size)
         
