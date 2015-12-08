@@ -67,7 +67,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         let widthRatio = initialMaxStickerSize / image.size.width
         let heightRatio = initialMaxStickerSize / image.size.height
         let scale = min(widthRatio, heightRatio)
-        
         return CGSize(width: image.size.width * scale, height: image.size.height * scale)
     }
     
@@ -240,8 +239,11 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             
             let imageView = UIImageView(image: stickerFilter.sticker)
             imageView.userInteractionEnabled = true
-            
-            let size = stickerFilter.absolutStickerSizeForImageSize(stickersClipView.bounds.size)
+            print ((element as! IMGLYStickerFilter).cropRect.width)
+            var completeSize = stickersClipView.bounds.size
+            completeSize.width *= 1.0 / (element as! IMGLYStickerFilter).cropRect.width
+            completeSize.height *= 1.0 / (element as! IMGLYStickerFilter).cropRect.height
+            let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
             imageView.frame.size = size
             
             let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width,

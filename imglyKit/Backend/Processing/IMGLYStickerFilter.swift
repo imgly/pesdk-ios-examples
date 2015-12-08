@@ -114,33 +114,6 @@ public class IMGLYStickerFilter: CIFilter {
     
     #endif
     
-    /*
-const oldEnd = operation.getEnd()
-const oldStart = operation.getStart()
-const newEnd = options.end
-const newStart = options.start
-
-const oldDimensions = oldEnd.clone().subtract(oldStart)
-.multiply(inputDimensions)
-const newDimensions = newEnd.clone().subtract(newStart)
-.multiply(inputDimensions)
-
-this._options.stickers.forEach((sticker) => {
-const position = sticker.getPosition()
-const scale = sticker.getScale()
-
-sticker.set({
-position: position.clone()
-.add(
-oldStart.clone().subtract(newStart)
-)
-.divide(
-newDimensions.clone().divide(oldDimensions)
-),
-scale: scale.clone()
-.multiply(oldDimensions.x / newDimensions.x)
-})
-*/
     private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
         CGContextSaveGState(context)
 
@@ -149,24 +122,15 @@ scale: scale.clone()
         center.x -= (cropRect.origin.x * originalSize.width)
         center.y -= (cropRect.origin.y * originalSize.height)
         
-        //let size = self.absolutStickerSizeForImageSize(imageSize)
-        let stickerRatio = sticker!.size.height / sticker!.size.width
-        let size =  CGSize(width: self.scale * originalSize.width, height: self.scale * stickerRatio * originalSize.width)
+        let size = self.absolutStickerSizeForImageSize(originalSize)
         let imageRect = CGRect(origin: center, size: size)
         
         // Move center to origin
         CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
         // Apply the transform
         CGContextConcatCTM(context, self.transform)
-        
-    /*    let stickerRatio = sticker!.size.height / sticker!.size.width
-        let widthScaleFactor = originalSize.width / imageSize.width
-        CGContextScaleCTM(context, widthScaleFactor, widthScaleFactor * stickerRatio)
-      */
         // Move the origin back by half
         CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
-        
-        
         
         sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
         CGContextRestoreGState(context)
@@ -181,6 +145,7 @@ extension IMGLYStickerFilter {
         copy.center = center
         copy.scale = scale
         copy.transform = transform
+        copy.cropRect = cropRect
         return copy
     }
 }
