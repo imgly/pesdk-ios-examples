@@ -149,15 +149,24 @@ scale: scale.clone()
         center.x -= (cropRect.origin.x * originalSize.width)
         center.y -= (cropRect.origin.y * originalSize.height)
         
-        let size = self.absolutStickerSizeForImageSize(imageSize)
+        //let size = self.absolutStickerSizeForImageSize(imageSize)
+        let stickerRatio = sticker!.size.height / sticker!.size.width
+        let size =  CGSize(width: self.scale * originalSize.width, height: self.scale * stickerRatio * originalSize.width)
         let imageRect = CGRect(origin: center, size: size)
         
         // Move center to origin
         CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
         // Apply the transform
         CGContextConcatCTM(context, self.transform)
+        
+    /*    let stickerRatio = sticker!.size.height / sticker!.size.width
+        let widthScaleFactor = originalSize.width / imageSize.width
+        CGContextScaleCTM(context, widthScaleFactor, widthScaleFactor * stickerRatio)
+      */
         // Move the origin back by half
         CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
+        
+        
         
         sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
         CGContextRestoreGState(context)
