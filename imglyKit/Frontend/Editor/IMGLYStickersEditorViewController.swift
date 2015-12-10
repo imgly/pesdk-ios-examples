@@ -24,7 +24,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     
     private var draggedView: UIView?
     private var tempStickerCopy = [CIFilter]()
-    private var cropRect = CGRectMake(0, 0, 1, 1)
     // MARK: - SubEditorViewController
     
     public override func tappedDone(sender: UIBarButtonItem?) {
@@ -35,7 +34,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
                 if let image = view.image {
                     let stickerFilter = IMGLYInstanceFactory.stickerFilter()
                     stickerFilter.sticker = image
-                    stickerFilter.cropRect = self.cropRect
+                    stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
                     let cropRect = stickerFilter.cropRect
                     let completeSize = stickersClipView.bounds.size
                     var center = CGPoint(x: view.center.x / completeSize.width,
@@ -252,8 +251,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             }
             let imageView = UIImageView(image: stickerFilter.sticker)
             imageView.userInteractionEnabled = true
-            let cropRect = (element as! IMGLYStickerFilter).cropRect
-            self.cropRect = cropRect
+            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
             var completeSize = stickersClipView.bounds.size
             completeSize.width *= 1.0 / cropRect.width
             completeSize.height *= 1.0 / cropRect.height

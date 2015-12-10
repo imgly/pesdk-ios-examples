@@ -140,6 +140,14 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         }
     }
     
+    private func rotateStickersRight () {
+        for filter in self.fixedFilterStack.activeFilters {
+            if let stickerFilter = filter as? IMGLYStickerFilter {
+                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, CGFloat(M_PI_2))
+            }
+        }
+    }
+    
     // MARK: - Actions
     
     @objc private func rotateLeft(sender: IMGLYImageCaptionButton) {
@@ -151,6 +159,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     
     @objc private func rotateRight(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.rotateRight()
+        self.rotateStickersRight()
         updatePreviewImageWithoutCropWithCompletion {
             self.view.layoutIfNeeded()
         }

@@ -50,6 +50,7 @@ public class IMGLYFixedFilterStack: NSObject {
     required override public init () {
         super.init()
     }
+    
 }
 
 extension IMGLYFixedFilterStack: NSCopying {
