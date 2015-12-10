@@ -295,7 +295,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         imageView.transform = CGAffineTransformMakeScale(0, 0)
 
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-            imageView.transform = CGAffineTransformIdentity
+            imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
             }, completion: nil)
     }
 }
