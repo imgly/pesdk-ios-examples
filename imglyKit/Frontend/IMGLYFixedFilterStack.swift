@@ -86,6 +86,7 @@ public class IMGLYFixedFilterStack: NSObject {
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
                 let center = stickerFilter.center
+                flipRotationHorizontal(stickerFilter)
                 stickerFilter.center.x = -center.x
                 stickerFilter.center.x += 0.5
                 stickerFilter.center.y += 0.5
@@ -93,6 +94,19 @@ public class IMGLYFixedFilterStack: NSObject {
         }
     }
     // MARK: - Initializers
+    private func flipRotationHorizontal (stickerFilter:IMGLYStickerFilter) {
+        var angle = atan2(stickerFilter.transform.b, stickerFilter.transform.a)
+        let twoPI = CGFloat(M_PI * 2.0)
+        // normalize angle
+        while (angle >= twoPI) {
+            angle -= twoPI
+        }
+        while (angle < 0) {
+            angle += twoPI
+        }
+        let delta = CGFloat(M_PI) - angle
+        stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, delta * 2.0)
+    }
     
     required override public init () {
         super.init()

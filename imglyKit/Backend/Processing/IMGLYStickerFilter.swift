@@ -128,8 +128,6 @@ public class IMGLYStickerFilter: CIFilter {
         let size = self.absolutStickerSizeForImageSize(originalSize)
         let imageRect = CGRect(origin: center, size: size)
         
-        print("size",  atan2(transform.b, transform.a))
-        
         // Move center to origin
         CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
         // Apply the transform
