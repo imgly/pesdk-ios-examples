@@ -167,6 +167,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     
     @objc private func flipVertically(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.flipVertical()
+        fixedFilterStack.flipStickersVertical()
         updatePreviewImageWithoutCropWithCompletion {
         }
     }
