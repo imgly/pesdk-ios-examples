@@ -76,6 +76,22 @@ public class IMGLYFixedFilterStack: NSObject {
         }
     }
 
+    public func flipStickersHorizontal () {
+        for filter in self.activeFilters {
+            if let stickerFilter = filter as? IMGLYStickerFilter {
+                if let sticker = stickerFilter.sticker {
+                    let flippedOrientation = UIImageOrientation(rawValue:(sticker.imageOrientation.rawValue + 4) % 8)
+                    stickerFilter.sticker = UIImage(CGImage: sticker.CGImage!, scale: sticker.scale, orientation: flippedOrientation!)
+                }
+                stickerFilter.center.x -= 0.5
+                stickerFilter.center.y -= 0.5
+                let center = stickerFilter.center
+                stickerFilter.center.x = -center.x
+                stickerFilter.center.x += 0.5
+                stickerFilter.center.y += 0.5
+            }
+        }
+    }
     // MARK: - Initializers
     
     required override public init () {
