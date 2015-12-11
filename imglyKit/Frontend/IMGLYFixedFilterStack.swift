@@ -45,6 +45,37 @@ public class IMGLYFixedFilterStack: NSObject {
             (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
         }
     }
+    
+    public func rotateStickersRight () {
+        for filter in self.activeFilters {
+            if let stickerFilter = filter as? IMGLYStickerFilter {
+                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, CGFloat(M_PI_2))
+                stickerFilter.center.x -= 0.5
+                stickerFilter.center.y -= 0.5
+                let center = stickerFilter.center
+                stickerFilter.center.x = -center.y
+                stickerFilter.center.y = center.x
+                stickerFilter.center.x += 0.5
+                stickerFilter.center.y += 0.5
+            }
+        }
+    }
+
+    public func rotateStickersLeft () {
+        for filter in self.activeFilters {
+            if let stickerFilter = filter as? IMGLYStickerFilter {
+                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, CGFloat(-M_PI_2))
+                stickerFilter.center.x -= 0.5
+                stickerFilter.center.y -= 0.5
+                let center = stickerFilter.center
+                stickerFilter.center.x = center.y
+                stickerFilter.center.y = -center.x
+                stickerFilter.center.x += 0.5
+                stickerFilter.center.y += 0.5
+            }
+        }
+    }
+
     // MARK: - Initializers
     
     required override public init () {

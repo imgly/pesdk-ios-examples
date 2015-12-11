@@ -71,6 +71,9 @@ public class IMGLYStickerFilter: CIFilter {
     
     public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
+        if(imageSize.width > imageSize.height) {
+            return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
+        }
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
     
@@ -124,6 +127,8 @@ public class IMGLYStickerFilter: CIFilter {
         
         let size = self.absolutStickerSizeForImageSize(originalSize)
         let imageRect = CGRect(origin: center, size: size)
+        
+        print("size",  atan2(transform.b, transform.a))
         
         // Move center to origin
         CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
