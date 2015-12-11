@@ -164,6 +164,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
         self.cropRect.size.width = tempRect.size.height
         self.cropRect.size.height = -tempRect.size.width
         moveCropRectTopLeftToOrigin()
+        sanitizeCropRect()
     }
 
     private func rotateCropRectRight() {
@@ -174,18 +175,21 @@ public class IMGLYOrientationCropFilter : CIFilter {
         self.cropRect.size.width = -tempRect.size.height
         self.cropRect.size.height = tempRect.size.width
         moveCropRectTopLeftToOrigin()
+        sanitizeCropRect()
     }
     
     private func flipCropRectHorizontal() {
         moveCropRectMidToOrigin()
         self.cropRect.origin.x = -self.cropRect.origin.x - self.cropRect.size.width
         moveCropRectTopLeftToOrigin()
+        sanitizeCropRect()
     }
     
     private func flipCropRectVertical() {
         moveCropRectMidToOrigin()
         self.cropRect.origin.y = -self.cropRect.origin.y - self.cropRect.size.height
         moveCropRectTopLeftToOrigin()
+        sanitizeCropRect()
     }
     
     private func moveCropRectMidToOrigin() {
@@ -196,6 +200,17 @@ public class IMGLYOrientationCropFilter : CIFilter {
     private func moveCropRectTopLeftToOrigin() {
         self.cropRect.origin.x += 0.5
         self.cropRect.origin.y += 0.5
+    }
+    
+    private func sanitizeCropRect () {
+        if (self.cropRect.size.width < 0.0) {
+            self.cropRect.size.width *= -1.0
+            self.cropRect.origin.x = self.cropRect.origin.x - self.cropRect.width
+        }
+        if (self.cropRect.size.height < 0.0) {
+            self.cropRect.size.height *= -1.0
+            self.cropRect.origin.y = self.cropRect.origin.y - self.cropRect.height
+        }
     }
     
     /**
