@@ -56,6 +56,13 @@ public class IMGLYEditorViewController: UIViewController {
     
     // MARK: - Initalization
     
+    /**
+    This is the designated initializer that accepts an IMGLYConfiguration
+    
+    - parameter configuration: An IMGLYConfiguration object
+    
+    - returns: An initialized EditorViewController
+    */
     init(configuration: IMGLYConfiguration) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration

@@ -68,9 +68,9 @@ import UIKit
     
     // MARK: Default EditorActions
     
-    private func itemsForAvailableActions(types: [IMGLYMainEditorActionOption]) -> [ IMGLYMainEditorAction] {
+    private func itemsForAvailableActions(types: [IMGLYMainEditorActionOption]) -> [IMGLYMainEditorAction] {
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
-        var actions: [ IMGLYMainEditorAction ] = []
+        var actions: [IMGLYMainEditorAction] = []
         if (types.contains(.Magic)) {
             actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: ""),
                 image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),

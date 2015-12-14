@@ -20,19 +20,19 @@ import UIKit
     public lazy var backgroundColor: UIColor = UIColor.blackColor()
     
     /**
-    A configuration block to configure the given cancel button item.
+    A configuration closure to configure the given cancel button item.
     Defaults to a 'Cancel' in the apps tintColor.
     */
-    public lazy var cancelButtonConfigurationBlock: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
+    public lazy var cancelButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
     }
     
     /**
-    A configuration block to configure the given done button item.
+    A configuration closure to configure the given done button item.
     Defaults to a 'Done' in the apps tintColor.
     */
-    public lazy var doneButtonConfigurationBlock: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
+    public lazy var doneButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
     }
@@ -95,8 +95,8 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         navigationItem.title = self.configuration.mainEditorViewControllerOptions.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
-        configuration.mainEditorViewControllerOptions.cancelButtonConfigurationBlock(navigationItem.leftBarButtonItem!)
-        configuration.mainEditorViewControllerOptions.doneButtonConfigurationBlock(navigationItem.rightBarButtonItem!)
+        configuration.mainEditorViewControllerOptions.cancelButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
+        configuration.mainEditorViewControllerOptions.doneButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
         
         navigationController?.delegate = self
         
