@@ -47,29 +47,24 @@ public class IMGLYFixedFilterStack: NSObject {
     }
     
     public func rotateStickersRight () {
-        for filter in self.activeFilters {
-            if let stickerFilter = filter as? IMGLYStickerFilter {
-                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, CGFloat(M_PI_2))
-                stickerFilter.center.x -= 0.5
-                stickerFilter.center.y -= 0.5
-                let center = stickerFilter.center
-                stickerFilter.center.x = -center.y
-                stickerFilter.center.y = center.x
-                stickerFilter.center.x += 0.5
-                stickerFilter.center.y += 0.5
-            }
-        }
+        rotateStickers(CGFloat(M_PI_2), negateX: true, negateY: false)
     }
 
     public func rotateStickersLeft () {
+        rotateStickers(CGFloat(-M_PI_2), negateX: false, negateY: true)
+    }
+    
+    private func rotateStickers (angle:CGFloat, negateX:Bool ,negateY:Bool) {
+        let xFactor:CGFloat = negateX ? -1.0 : 1.0
+        let yFactor:CGFloat = negateY ? -1.0 : 1.0
         for filter in self.activeFilters {
             if let stickerFilter = filter as? IMGLYStickerFilter {
-                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, CGFloat(-M_PI_2))
+                stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, angle)
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
                 let center = stickerFilter.center
-                stickerFilter.center.x = center.y
-                stickerFilter.center.y = -center.x
+                stickerFilter.center.x = xFactor * center.y
+                stickerFilter.center.y = yFactor * center.x
                 stickerFilter.center.x += 0.5
                 stickerFilter.center.y += 0.5
             }
@@ -77,24 +72,14 @@ public class IMGLYFixedFilterStack: NSObject {
     }
 
     public func flipStickersHorizontal () {
-        for filter in self.activeFilters {
-            if let stickerFilter = filter as? IMGLYStickerFilter {
-                if let sticker = stickerFilter.sticker {
-                    let flippedOrientation = UIImageOrientation(rawValue:(sticker.imageOrientation.rawValue + 4) % 8)
-                    stickerFilter.sticker = UIImage(CGImage: sticker.CGImage!, scale: sticker.scale, orientation: flippedOrientation!)
-                }
-                stickerFilter.center.x -= 0.5
-                stickerFilter.center.y -= 0.5
-                let center = stickerFilter.center
-                flipRotationHorizontal(stickerFilter)
-                stickerFilter.center.x = -center.x
-                stickerFilter.center.x += 0.5
-                stickerFilter.center.y += 0.5
-            }
-        }
+        flipStickers(true)
     }
 
     public func flipStickersVertical () {
+        flipStickers(false)
+    }
+    
+    private func flipStickers(horizontal:Bool) {
         for filter in self.activeFilters {
             if let stickerFilter = filter as? IMGLYStickerFilter {
                 if let sticker = stickerFilter.sticker {
@@ -104,8 +89,13 @@ public class IMGLYFixedFilterStack: NSObject {
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
                 let center = stickerFilter.center
-                flipRotationVertical(stickerFilter)
-                stickerFilter.center.y = -center.y
+                if (horizontal) {
+                    flipRotationHorizontal(stickerFilter)
+                    stickerFilter.center.x = -center.x
+                } else {
+                    flipRotationVertical(stickerFilter)
+                    stickerFilter.center.y = -center.y
+                }
                 stickerFilter.center.x += 0.5
                 stickerFilter.center.y += 0.5
             }
@@ -113,6 +103,14 @@ public class IMGLYFixedFilterStack: NSObject {
     }
 
     private func flipRotationHorizontal (stickerFilter:IMGLYStickerFilter) {
+        flipRotation(stickerFilter, axisAngle: CGFloat(M_PI))
+    }
+    
+    private func flipRotationVertical (stickerFilter:IMGLYStickerFilter) {
+        flipRotation(stickerFilter, axisAngle: CGFloat(M_PI_2))
+    }
+
+    private func flipRotation (stickerFilter:IMGLYStickerFilter, axisAngle:CGFloat) {
         var angle = atan2(stickerFilter.transform.b, stickerFilter.transform.a)
         let twoPI = CGFloat(M_PI * 2.0)
         // normalize angle
@@ -122,24 +120,10 @@ public class IMGLYFixedFilterStack: NSObject {
         while (angle < 0) {
             angle += twoPI
         }
-        let delta = CGFloat(M_PI) - angle
+        let delta = axisAngle - angle
         stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, delta * 2.0)
     }
 
-    private func flipRotationVertical (stickerFilter:IMGLYStickerFilter) {
-        var angle = atan2(stickerFilter.transform.b, stickerFilter.transform.a)
-        let twoPI = CGFloat(M_PI * 2.0)
-        // normalize angle
-        while (angle >= twoPI) {
-            angle -= twoPI
-        }
-        while (angle < 0) {
-            angle += twoPI
-        }
-        let delta = CGFloat(M_PI_2) - angle
-        stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, delta * 2.0)
-    }
-    
     // MARK: - Initializers
     required override public init () {
         super.init()
