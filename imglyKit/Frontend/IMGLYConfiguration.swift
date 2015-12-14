@@ -13,7 +13,17 @@ public enum IMGLYConfigurationError: ErrorType {
     case ReplacingClassNotASubclass
 }
 
+/// This closure allows the configuration of the given barbutton item.
 public typealias IMGLYBarButtonItemConfigurationClosure = (UIBarButtonItem) -> ()
+
+/// This closure allows the configuration of the given button.
+public typealias IMGLYButtonConfigurationClosure = (UIButton) -> ()
+
+/// This closure allows the configuration of the given label.
+public typealias IMGLYLabelConfigurationClosure = (UILabel) -> ()
+
+/// This closure allows the configuration of the given slider.
+public typealias IMGLYSliderConfigurationClosure = (UISlider) -> ()
 
 /**
 An IMGLYConfiguration defines behaviour and look of all view controllers
@@ -23,6 +33,8 @@ immutable copy via a closure.
 @objc public class IMGLYConfiguration : NSObject {
     
     // MARK: Properties
+    
+    public var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
     
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
     

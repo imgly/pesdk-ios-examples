@@ -89,6 +89,8 @@ public class IMGLYCameraController: NSObject {
     public var effectFilter: IMGLYResponseFilter = IMGLYNoneFilter()
     public let previewView: UIView
     public var previewContentMode: UIViewContentMode  = .ScaleAspectFit
+    public var tapToFocusEnabled = true
+    public var allowedCameraPositions: [IMGLYCameraPosition] = [ .Back, .Front ]
 
     public weak var delegate: IMGLYCameraControllerDelegate?
     public let tapGestureRecognizer = UITapGestureRecognizer()
@@ -234,10 +236,11 @@ public class IMGLYCameraController: NSObject {
     
     // MARK: - Camera
     
-    /// Use this property to determine if more than one camera is available. Within the SDK this property is used to determine if the toggle button is visible.
+    /// Use this property to determine if more than one camera is available and if more than one camera is allowed.
+    /// Within the SDK this property is used to determine if the toggle button is visible.
     public var moreThanOneCameraPresent: Bool {
         let videoDevices = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo)
-        return videoDevices.count > 1
+        return videoDevices.count > 1 && allowedCameraPositions.count > 1
     }
     
     public func toggleCameraPosition() {
@@ -564,7 +567,7 @@ public class IMGLYCameraController: NSObject {
     
     private var focusPointSupported: Bool {
         if let device = videoDeviceInput?.device {
-            return device.focusPointOfInterestSupported && device.isFocusModeSupported(.AutoFocus) && device.isFocusModeSupported(.ContinuousAutoFocus)
+            return device.focusPointOfInterestSupported && device.isFocusModeSupported(.AutoFocus) && device.isFocusModeSupported(.ContinuousAutoFocus) && tapToFocusEnabled
         }
         
         return false
@@ -722,7 +725,12 @@ public class IMGLYCameraController: NSObject {
         ciContext = CIContext(EAGLContext: glContext, options: options)
         videoPreviewView!.bindDrawable()
         
-        setupWithPreferredCameraPosition(.Back) {
+        var preferredCameraPosition: AVCaptureDevicePosition = .Back
+        if !allowedCameraPositions.contains(IMGLYCameraPosition.Back) {
+            preferredCameraPosition = .Front
+        }
+        
+        setupWithPreferredCameraPosition(preferredCameraPosition) {
             if self.session.canSetSessionPreset(recordingMode.sessionPreset) {
                 self.session.sessionPreset = recordingMode.sessionPreset
             }
@@ -792,12 +800,16 @@ public class IMGLYCameraController: NSObject {
             case .Photo:
                 if self.flashAvailable {
                     self.flashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
-                    self.torchMode = .Off
+                    if (self.torchAvailable) {
+                        self.torchMode = .Off
+                    }
                 }
             case .Video:
                 if self.torchAvailable {
                     self.torchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
-                    self.flashMode = .Off
+                    if (self.flashAvailable) {
+                        self.flashMode = .Off
+                    }
                 }
             }
             

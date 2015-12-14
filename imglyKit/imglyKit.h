@@ -28,3 +28,9 @@ typedef NS_OPTIONS(NSInteger, IMGLYMainEditorActionOption) {
     IMGLYMainEditorActionOptionSaturation = 1 << 8,
     IMGLYMainEditorActionOptionText = 1 << 9,
 };
+
+// Bitmask for allowed camera positions
+typedef NS_OPTIONS(NSInteger, IMGLYCameraPosition) {
+    IMGLYCameraPositionBack =  1 << 0,
+    IMGLYCameraPositionFront = 1 << 1
+};

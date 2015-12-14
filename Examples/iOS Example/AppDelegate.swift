@@ -20,10 +20,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = IMGLYConfiguration()
         
         // Customize the done button using the configuration block
-        configuration.mainEditorViewControllerOptions.doneButtonConfigurationBlock = { barButtonItem in
+        configuration.mainEditorViewControllerOptions.doneButtonConfigurationClosure = { barButtonItem in
             barButtonItem.tintColor = UIColor.greenColor()
         }
-        configuration.mainEditorViewControllerOptions.editorActionsDataSource = IMGLYMainEditorActionsDataSource(availableActionTypes: [ .Magic, .Noise, .Focus ])
+        configuration.mainEditorViewControllerOptions.editorActionsDataSource = IMGLYMainEditorActionsDataSource(availableActionTypes: [ .Magic, .Brightness, .Focus ])
+        
+        let cameraViewControllerOptions = IMGLYCameraViewControllerOptions()
+        cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
+        cameraViewControllerOptions.tapToFocusEnabled = false
+        cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
+        
+        configuration.cameraViewControllerOptions = cameraViewControllerOptions
+        
         
         // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
         do {
