@@ -48,6 +48,9 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     
     // MARK: Behaviour
     
+    /// Enable/Disable permanent crop to square.
+    public var cropToSquare = false
+    
     /// Enable/Disable tap to focus on the camera preview image.
     public var tapToFocusEnabled = true
     
@@ -102,7 +105,6 @@ public class IMGLYCameraViewController: UIViewController {
         assert(recordingModes.count > 0, "You need to set at least one recording mode.")
         self.recordingModes = recordingModes
         self.currentRecordingMode = recordingModes.first!
-        self.squareMode = false
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
     }
@@ -110,7 +112,6 @@ public class IMGLYCameraViewController: UIViewController {
     required public init?(coder aDecoder: NSCoder) {
         recordingModes = [.Photo, .Video]
         currentRecordingMode = recordingModes.first!
-        self.squareMode = false
         self.configuration = IMGLYConfiguration()
         super.init(coder: aDecoder)
     }
@@ -259,12 +260,6 @@ public class IMGLYCameraViewController: UIViewController {
         }
     }
 
-    public var squareMode: Bool {
-        didSet {
-            self.cameraController?.squareMode = squareMode
-        }
-    }
-    
     private var hideSliderTimer: NSTimer?
     
     private var filterSelectionViewConstraint: NSLayoutConstraint?
@@ -319,7 +314,6 @@ public class IMGLYCameraViewController: UIViewController {
         configureViewConstraints()
         configureFilterSelectionController()
         configureCameraController()
-        cameraController?.squareMode = squareMode
         cameraController?.switchToRecordingMode(currentRecordingMode, animated: false)
     }
     
@@ -424,7 +418,7 @@ public class IMGLYCameraViewController: UIViewController {
             bottomControlsView.addSubview(recordingModeSelectionButton)
         }
         
-        if (configuration.cameraViewControllerOptions.showFilterIntensitySlider) {
+        if configuration.cameraViewControllerOptions.showFilterIntensitySlider {
             cameraPreviewContainer.addSubview(filterIntensitySlider)
         }
     }
@@ -533,6 +527,7 @@ public class IMGLYCameraViewController: UIViewController {
         cameraController!.allowedCameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
         cameraController!.allowedFlashModes = configuration.cameraViewControllerOptions.allowedFlashModes
         cameraController!.allowedTorchModes = configuration.cameraViewControllerOptions.allowedTorchModes
+        cameraController!.squareMode = configuration.cameraViewControllerOptions.cropToSquare
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
         if maximumVideoLength > 0 {
@@ -974,7 +969,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             self.addRecordingTimeLabel()
             self.cameraController?.hideSquareMask()
         } else {
-            if self.squareMode {
+            if configuration.cameraViewControllerOptions.cropToSquare {
                 self.cameraController?.showSquareMask()
             }
         }

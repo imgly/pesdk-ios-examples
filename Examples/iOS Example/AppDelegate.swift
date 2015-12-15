@@ -30,6 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cameraViewControllerOptions.tapToFocusEnabled = false
         cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
         cameraViewControllerOptions.allowedTorchModes = [ .Off ]
+        cameraViewControllerOptions.cropToSquare = true
         
         configuration.cameraViewControllerOptions = cameraViewControllerOptions
         
@@ -43,7 +44,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let cameraViewController = IMGLYCameraViewController(configuration: configuration)
         cameraViewController.maximumVideoLength = 15
-        cameraViewController.squareMode = false
         
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
         window?.rootViewController = cameraViewController
