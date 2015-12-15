@@ -421,7 +421,7 @@ public class IMGLYCameraViewController: UIViewController {
         }
         
         if configuration.cameraViewControllerOptions.showFilterIntensitySlider {
-            cameraPreviewContainer.addSubview(filterIntensitySlider)
+            backgroundContainerView.addSubview(filterIntensitySlider)
         }
     }
     
