@@ -34,3 +34,17 @@ typedef NS_OPTIONS(NSInteger, IMGLYCameraPosition) {
     IMGLYCameraPositionBack =  1 << 0,
     IMGLYCameraPositionFront = 1 << 1
 };
+
+// Bitmask for allowed flash types
+typedef NS_OPTIONS(NSInteger, IMGLYFlashMode) {
+    IMGLYFlashModeOff = 1 << 0,
+    IMGLYFlashModeOn = 1 << 1,
+    IMGLYFlashModeAuto = 1 << 2
+};
+
+// Bitmask for allowed torch types
+typedef NS_OPTIONS(NSInteger, IMGLYTorchMode) {
+    IMGLYTorchModeOff = 1 << 0,
+    IMGLYTorchModeOn = 1 << 1,
+    IMGLYTorchModeAuto = 1 << 2
+};

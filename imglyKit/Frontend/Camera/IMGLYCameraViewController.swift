@@ -46,7 +46,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
     public lazy var filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
     
-    // MARK: Configuration
+    // MARK: Behaviour
     
     /// Enable/Disable tap to focus on the camera preview image.
     public var tapToFocusEnabled = true
@@ -60,9 +60,15 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// Enable/Disable filter intensity slider.
     public var showFilterIntensitySlider = true
     
-    /// Allowed camera positions
+    /// Allowed camera positions. Defaults to all available positions
+    /// and falls back to supported position if only one exists.
     public var allowedCameraPositions: [IMGLYCameraPosition] = [ .Back, .Front ]
     
+    /// Allowed flash modes. Defaults to all available modes.
+    public var allowedFlashModes: [IMGLYFlashMode] = [ .Auto, .On, .Off ]
+
+    /// Allowed torch modes. Defaults to all available modes.
+    public var allowedTorchModes: [IMGLYTorchMode] = [ .Auto, .On, .Off ]
 }
 
 public class IMGLYCameraViewController: UIViewController {
@@ -525,6 +531,8 @@ public class IMGLYCameraViewController: UIViewController {
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
         cameraController!.tapToFocusEnabled = configuration.cameraViewControllerOptions.tapToFocusEnabled
         cameraController!.allowedCameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
+        cameraController!.allowedFlashModes = configuration.cameraViewControllerOptions.allowedFlashModes
+        cameraController!.allowedTorchModes = configuration.cameraViewControllerOptions.allowedTorchModes
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
         if maximumVideoLength > 0 {

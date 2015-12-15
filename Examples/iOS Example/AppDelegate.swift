@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
         cameraViewControllerOptions.tapToFocusEnabled = false
         cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
+        cameraViewControllerOptions.allowedTorchModes = [ .Off ]
         
         configuration.cameraViewControllerOptions = cameraViewControllerOptions
         
