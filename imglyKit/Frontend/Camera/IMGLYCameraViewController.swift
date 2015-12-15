@@ -21,8 +21,8 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     // MARK: UI
     
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.
-    /// Defaults to black.
-    public lazy var backgroundColor: UIColor = UIColor.blackColor()
+    /// Defaults to the global background color.
+    public var backgroundColor: UIColor?
     
     /// Use this closure to configure the flash button. Defaults to an empty implementation.
     public lazy var flashButtonConfigurationClosure: IMGLYButtonConfigurationClosure = { _ in }
@@ -79,7 +79,16 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 public class IMGLYCameraViewController: UIViewController {
     
     private let configuration: IMGLYConfiguration
-
+    private var currentBackgroundColor: UIColor {
+        get {
+            if let customBackgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor {
+                return customBackgroundColor
+            }
+            
+            return configuration.backgroundColor
+        }
+    }
+    
     // MARK: - Initializers
     
     public convenience init(configuration: IMGLYConfiguration = IMGLYConfiguration()) {
@@ -122,20 +131,21 @@ public class IMGLYCameraViewController: UIViewController {
     
     public private(set) lazy var backgroundContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = self.currentBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
     public private(set) lazy var topControlsView: UIView = {
         let view = UIView()
-        view.backgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor
+        view.backgroundColor = self.currentBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
         }()
     
     public private(set) lazy var cameraPreviewContainer: UIView = {
         let view = UIView()
+        view.backgroundColor = self.currentBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
         return view
@@ -143,7 +153,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     public private(set) lazy var bottomControlsView: UIView = {
         let view = UIView()
-        view.backgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor
+        view.backgroundColor = self.currentBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
         }()
@@ -152,7 +162,8 @@ public class IMGLYCameraViewController: UIViewController {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        let buttonImage = UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.setImage(buttonImage!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.contentHorizontalAlignment = .Left
         button.addTarget(self, action: "changeFlash:", forControlEvents: .TouchUpInside)
         button.hidden = true
@@ -164,7 +175,8 @@ public class IMGLYCameraViewController: UIViewController {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "cam_switch", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        let buttonImage = UIImage(named: "cam_switch", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.setImage(buttonImage!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.contentHorizontalAlignment = .Right
         button.addTarget(self, action: "switchCamera:", forControlEvents: .TouchUpInside)
         button.hidden = true
@@ -392,7 +404,7 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func configureViewHierarchy() {
         /// Handle custom colors
-        view.backgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor
+        view.backgroundColor = currentBackgroundColor
 
         view.addSubview(backgroundContainerView)
         backgroundContainerView.addSubview(cameraPreviewContainer)
@@ -614,9 +626,9 @@ public class IMGLYCameraViewController: UIViewController {
         
         switch recordingMode {
         case .Photo:
-            color = self.configuration.cameraViewControllerOptions.backgroundColor
+            color = currentBackgroundColor
         case .Video:
-            color = self.configuration.cameraViewControllerOptions.backgroundColor.colorWithAlphaComponent(0.3)
+            color = currentBackgroundColor.colorWithAlphaComponent(0.3)
         }
         
         topControlsView.backgroundColor = color
@@ -1072,7 +1084,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             
             self.switchCameraButton.alpha = 1
             self.filterSelectionButton.alpha = 1
-            self.bottomControlsView.backgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor.colorWithAlphaComponent(0.3)
+            self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
             
             self.updateRecordingTimeLabel(self.maximumVideoLength)
             

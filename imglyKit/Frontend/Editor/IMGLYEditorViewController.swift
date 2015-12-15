@@ -10,6 +10,29 @@ import UIKit
 
 internal let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
 
+@objc public class IMGLYEditorViewControllerOptions: NSObject {
+    
+    ///  Defaults to 'Editor'
+    public lazy var title: String? = "Editor"
+    
+    /// The viewControllers backgroundColor. Defaults to the configurations
+    /// global background color.
+    public var backgroundColor: UIColor?
+    
+    /**
+     A configuration closure to configure the given left bar button item.
+     Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
+     a navigation controller.
+     */
+    public lazy var leftBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { _ in }
+    
+    /**
+     A configuration closure to configure the given done button item.
+     Defaults to 'Editor' in the apps tintColor.
+     */
+    public lazy var rightBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { _ in }
+}
+
 public class IMGLYEditorViewController: UIViewController {
     
     // MARK: - Properties
@@ -36,6 +59,7 @@ public class IMGLYEditorViewController: UIViewController {
     
     public private(set) lazy var previewImageView: IMGLYZoomingImageView = {
         let imageView = IMGLYZoomingImageView()
+        imageView.backgroundColor = self.configuration.backgroundColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
         return imageView
@@ -43,6 +67,7 @@ public class IMGLYEditorViewController: UIViewController {
     
     public private(set) lazy var bottomContainerView: UIView = {
         let view = UIView()
+        view.backgroundColor = self.view.backgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -109,7 +134,11 @@ public class IMGLYEditorViewController: UIViewController {
     }
     
     private func configureViewHierarchy() {
-        view.backgroundColor = UIColor.blackColor()
+        if let navBar = self.navigationController?.navigationBar {
+            navBar.barTintColor = self.configuration.backgroundColor
+        }
+        
+        view.backgroundColor = self.configuration.backgroundColor
 
         view.addSubview(previewImageView)
         view.addSubview(bottomContainerView)

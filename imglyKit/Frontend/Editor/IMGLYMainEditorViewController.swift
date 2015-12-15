@@ -9,34 +9,8 @@
 import UIKit
 
 // Options for configuring the IMGLYMainEditorViewController
-@objc public class IMGLYMainEditorViewControllerOptions: NSObject {
-    
-    // MARK: UI
-    
-    ///  Defaults to 'Editor'
-    public lazy var title: String? = NSLocalizedString("main-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
-    
-    ///  Defaults to black
-    public lazy var backgroundColor: UIColor = UIColor.blackColor()
-    
-    /**
-    A configuration closure to configure the given cancel button item.
-    Defaults to a 'Cancel' in the apps tintColor.
-    */
-    public lazy var cancelButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
-        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
-        barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
-    }
-    
-    /**
-    A configuration closure to configure the given done button item.
-    Defaults to a 'Done' in the apps tintColor.
-    */
-    public lazy var doneButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { barButtonItem in
-        let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
-        barButtonItem.title = NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: "")
-    }
-    
+@objc public class IMGLYMainEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+
     // MARK: Behaviour
     
     /// Controls if the user can zoom the preview image. Defaults to **true**.
@@ -45,6 +19,15 @@ import UIKit
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.
     public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
+    
+    // MARK: Init
+    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
 }
 
 @objc public enum IMGLYEditorResult: Int {
@@ -95,8 +78,8 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         navigationItem.title = self.configuration.mainEditorViewControllerOptions.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
-        configuration.mainEditorViewControllerOptions.cancelButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
-        configuration.mainEditorViewControllerOptions.doneButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
+        configuration.mainEditorViewControllerOptions.leftBarButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
+        configuration.mainEditorViewControllerOptions.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
         
         navigationController?.delegate = self
         
@@ -121,6 +104,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
+        collectionView.backgroundColor = self.configuration.mainEditorViewControllerOptions.backgroundColor
         collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCellReuseIdentifier)
         
         let views = [ "collectionView" : collectionView ]

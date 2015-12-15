@@ -34,6 +34,9 @@ immutable copy via a closure.
     
     // MARK: Properties
     
+    /// Defaults to black.
+    public var backgroundColor: UIColor = UIColor.blackColor()
+    
     public var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
     
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
