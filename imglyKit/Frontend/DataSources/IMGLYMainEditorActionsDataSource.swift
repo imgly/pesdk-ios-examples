@@ -16,10 +16,8 @@ import UIKit
  */
 @objc public protocol IMGLYMainEditorActionsDataSourceProtocol {
     
-    /**
-     - returns: The total count of all actions.
-     */
-    func actionCount() -> Int
+    /// The total count of all actions.
+    var actionCount: Int { get }
     
     /**
      - parameter index: The index of the requested action.
@@ -58,10 +56,12 @@ import UIKit
     
     // MARK: IMGLYMainEditorActionsDataSource
     
-    public func actionCount() -> Int {
-        return items.count
+    public var actionCount: Int {
+        get {
+            return items.count
+        }
     }
-    
+
     public func actionAtIndex(index: Int) -> IMGLYMainEditorAction {
         return items[index]
     }
