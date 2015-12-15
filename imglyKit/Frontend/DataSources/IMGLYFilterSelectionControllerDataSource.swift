@@ -68,7 +68,8 @@ import UIKit
     }
     
     /**
-     Creates a default datasource offering the given filters
+     Creates a default datasource offering the given filters in their
+     order within the array.
      - Parameter availableActionTypes: An array of supported `IMGLYMainEditorActionType`s
      */
     public convenience init(availableFilters: [IMGLYFilterType]) {

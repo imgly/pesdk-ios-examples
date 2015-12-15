@@ -30,7 +30,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cameraViewControllerOptions.tapToFocusEnabled = false
         cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
         cameraViewControllerOptions.allowedTorchModes = [ .Off ]
-        cameraViewControllerOptions.cropToSquare = true
+        cameraViewControllerOptions.cropToSquare = false
+        cameraViewControllerOptions.filterDataSource = IMGLYFilterSelectionControllerDataSource(availableFilters: [ .Bleached, .Ancient ])
         
         configuration.cameraViewControllerOptions = cameraViewControllerOptions
         

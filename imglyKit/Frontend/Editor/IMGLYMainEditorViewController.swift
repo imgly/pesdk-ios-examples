@@ -228,7 +228,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
 extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionCount()
+        return self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionCount
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {

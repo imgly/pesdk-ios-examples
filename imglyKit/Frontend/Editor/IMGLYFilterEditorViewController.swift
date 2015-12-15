@@ -57,7 +57,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Configuration
     
     private func configureFilterSelectionController() {
-        filterSelectionController.selectedBlock = { [weak self] filterType in
+        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
             if filterType == .None {
                 if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
                     UIView.animateWithDuration(0.3) {
@@ -74,8 +74,8 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
             
             if let fixedFilterStack = self?.fixedFilterStack where filterType != fixedFilterStack.effectFilter.filterType {
                 fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
-                fixedFilterStack.effectFilter.inputIntensity = InitialFilterIntensity
-                self?.filterIntensitySlider.value = InitialFilterIntensity
+                fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
+                self?.filterIntensitySlider.value = initialFilterIntensity
             }
             
             self?.updatePreviewImage()

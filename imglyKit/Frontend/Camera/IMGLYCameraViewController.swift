@@ -11,7 +11,6 @@ import AVFoundation
 import MobileCoreServices
 import Photos
 
-let InitialFilterIntensity = Float(0.75)
 private let ShowFilterIntensitySliderInterval = NSTimeInterval(2)
 private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
@@ -59,6 +58,9 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     
     /// Enable/Disable filter bottom drawer.
     public var showFilters = true
+    
+    /// An object conforming to the `IMGLYFilterSelectionControllerDataSourceProtocol`
+    public var filterDataSource: IMGLYFilterSelectionControllerDataSourceProtocol = IMGLYFilterSelectionControllerDataSource()
     
     /// Enable/Disable filter intensity slider.
     public var showFilterIntensitySlider = true
@@ -536,11 +538,12 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureFilterSelectionController() {
-        filterSelectionController.selectedBlock = { [weak self] filterType in
+        filterSelectionController.dataSource = self.configuration.cameraViewControllerOptions.filterDataSource
+        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
             if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
                 cameraController.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
-                cameraController.effectFilter.inputIntensity = InitialFilterIntensity
-                self?.filterIntensitySlider.value = InitialFilterIntensity
+                cameraController.effectFilter.inputIntensity = initialFilterIntensity
+                self?.filterIntensitySlider.value = initialFilterIntensity
             }
             
             if filterType == .None {
