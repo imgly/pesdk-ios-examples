@@ -13,9 +13,6 @@ import UIKit
 
     // MARK: Behaviour
     
-    /// Controls if the user can zoom the preview image. Defaults to **true**.
-    public lazy var allowsPreviewImageZoom = true
-    
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.
     public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
@@ -73,13 +70,13 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = self.configuration.mainEditorViewControllerOptions.backgroundColor
+        self.view.backgroundColor = options.backgroundColor
         
-        navigationItem.title = self.configuration.mainEditorViewControllerOptions.title
+        navigationItem.title = options.title
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
         
-        configuration.mainEditorViewControllerOptions.leftBarButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
-        configuration.mainEditorViewControllerOptions.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
+        options.leftBarButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
+        options.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
         
         navigationController?.delegate = self
         
@@ -104,7 +101,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = self.configuration.mainEditorViewControllerOptions.backgroundColor
+        collectionView.backgroundColor = options.backgroundColor
         collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCellReuseIdentifier)
         
         let views = [ "collectionView" : collectionView ]
@@ -174,6 +171,10 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     // MARK: - EditorViewController
     
+    public override var options: IMGLYMainEditorViewControllerOptions {
+        return self.configuration.mainEditorViewControllerOptions
+    }
+    
     override public func tappedDone(sender: UIBarButtonItem?) {
         if let completionBlock = completionBlock {
             highResolutionImage = highResolutionImage?.imgly_normalizedImage
@@ -204,22 +205,18 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
             dismissViewControllerAnimated(true, completion: nil)
         }
     }
-    
-    public override var enableZoomingInPreviewImage: Bool {
-        return self.configuration.mainEditorViewControllerOptions.allowsPreviewImageZoom
-    }
 }
 
 extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionCount
+        return options.editorActionsDataSource.actionCount
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath) 
         
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
-            let dataSource = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource
+            let dataSource = options.editorActionsDataSource
             let action = dataSource.actionAtIndex(indexPath.item)
             buttonCell.textLabel.text = action.title
             buttonCell.imageView.image = action.image
@@ -231,13 +228,13 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
 
 extension IMGLYMainEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let action = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionAtIndex(indexPath.item)
+        let action = options.editorActionsDataSource.actionAtIndex(indexPath.item)
         subEditorButtonPressed(action.editorType)
         collectionView.reloadItemsAtIndexPaths([indexPath])
     }
     
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
-        let action = self.configuration.mainEditorViewControllerOptions.editorActionsDataSource.actionAtIndex(indexPath.item)
+        let action = options.editorActionsDataSource.actionAtIndex(indexPath.item)
         if (action.editorType == .Magic) {
             if let buttonCell = cell as? IMGLYButtonCollectionViewCell, let selectedImage = action.selectedImage {
                 if (fixedFilterStack.enhancementFilter.enabled) {

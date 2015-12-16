@@ -59,8 +59,8 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// Enable/Disable filter bottom drawer.
     public var showFilters = true
     
-    /// An object conforming to the `IMGLYFilterSelectionControllerDataSourceProtocol`
-    public var filterDataSource: IMGLYFilterSelectionControllerDataSourceProtocol = IMGLYFilterSelectionControllerDataSource()
+    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
+    public var filterDataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
     
     /// Enable/Disable filter intensity slider.
     public var showFilterIntensitySlider = true

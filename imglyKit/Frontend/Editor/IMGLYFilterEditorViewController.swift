@@ -18,17 +18,20 @@ import UIKit
     
     // MARK: Behaviour
     
-    /// An object conforming to the `IMGLYFilterSelectionControllerDataSourceProtocol`
+    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
     /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
     /// is set.
-    public var filterDataSource: IMGLYFilterSelectionControllerDataSourceProtocol = IMGLYFilterSelectionControllerDataSource()
+    public var filterDataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
     
     /// Enable/Disable the filter intensity slider. Defaults to true.
     public var showFilterIntensitySlider = true
     
-    /// Controls if the user can zoom the preview image. Defaults to **true**.
-    public var allowsPreviewImageZoom = true
-    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
 }
 
 public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
@@ -53,7 +56,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         slider.setThumbImage(sliderThumbImage, forState: .Normal)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
         
-        self.configuration.filterEditorViewControllerOptions.filterIntensitySliderConfigurationClosure(slider)
+        self.options.filterIntensitySliderConfigurationClosure(slider)
         
         return slider
     }()
@@ -66,19 +69,18 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: IMGLYFilterEditorViewController.self)
-        navigationItem.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        navigationItem.title = options.title
         
         configureFilterSelectionController()
-        if (self.configuration.filterEditorViewControllerOptions.showFilterIntensitySlider) {
+        if (options.showFilterIntensitySlider) {
             configureFilterIntensitySlider()
         }
     }
     
     // MARK: - IMGLYEditorViewController
     
-    public override var enableZoomingInPreviewImage: Bool {
-        return self.configuration.filterEditorViewControllerOptions.allowsPreviewImageZoom
+    public override var options: IMGLYFilterEditorViewControllerOptions {
+        return self.configuration.filterEditorViewControllerOptions
     }
     
     // MARK: - Configuration

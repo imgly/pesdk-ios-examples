@@ -15,11 +15,6 @@ import UIKit
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public lazy var sliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
-    
-    // MARK: Behaviour
-    
-    /// Controls if the user can zoom the preview image. Defaults to **true**.
-    public var allowsPreviewImageZoom = true
 }
 
 public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
@@ -54,7 +49,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         return 0
     }
     
-    public var options: IMGLYSliderEditorViewControllerOptions {
+    public override var options: IMGLYSliderEditorViewControllerOptions {
         // Subclasses should override this
         return IMGLYSliderEditorViewControllerOptions()
     }
@@ -69,12 +64,6 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
 
         shouldShowActivityIndicator = false
         configureViews()
-    }
-    
-    // MARK: - IMGLYEditorViewController
-    
-    public override var enableZoomingInPreviewImage: Bool {
-        return options.allowsPreviewImageZoom
     }
     
     // MARK: - Configuration

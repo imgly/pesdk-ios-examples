@@ -47,7 +47,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "turnOff:", forControlEvents: .TouchUpInside)
-        self.configuration.focusEditorViewControllerOptions.actionButtonConfigurationClosure(button, .Off)
+        self.options.actionButtonConfigurationClosure(button, .Off)
         return button
         }()
     
@@ -58,7 +58,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateLinear:", forControlEvents: .TouchUpInside)
-        self.configuration.focusEditorViewControllerOptions.actionButtonConfigurationClosure(button, .Linear)
+        self.options.actionButtonConfigurationClosure(button, .Linear)
         return button
         }()
     
@@ -69,7 +69,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateRadial:", forControlEvents: .TouchUpInside)
-        self.configuration.focusEditorViewControllerOptions.actionButtonConfigurationClosure(button, .Radial)
+        self.options.actionButtonConfigurationClosure(button, .Radial)
         return button
         }()
     
@@ -99,12 +99,18 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         return view
         }()
     
+    // MARK: - IMGLYEditorViewController
+    
+    public override var options: IMGLYFocusEditorViewControllerOptions {
+        return self.configuration.focusEditorViewControllerOptions
+    }
+    
     // MARK: - UIViewController
     
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = self.configuration.focusEditorViewControllerOptions.title
+        navigationItem.title = options.title
         
         configureButtons()
         configureGradientViews()
@@ -135,7 +141,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         
-        let allowedActions = self.configuration.focusEditorViewControllerOptions.allowedFocusActions
+        let allowedActions = options.allowedFocusActions
         if allowedActions.contains(.Off) {
             let viewName = "offButton"
             buttonContainerView.addSubview(offButton)

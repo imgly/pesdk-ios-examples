@@ -13,11 +13,9 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
 @objc public class IMGLYStickersEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     
-    // MARK: UI
-    
     // MARK: Behaviour
     
-    /// An object conforming to the `IMGLYFilterSelectionControllerDataSourceProtocol`
+    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
     /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
     /// is set.
     public var dataSource: IMGLYStickersDataSourceProtocol = IMGLYStickersDataSource()
@@ -46,6 +44,13 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     
     private var draggedView: UIView?
     private var tempStickerCopy = [CIFilter]()
+    
+    // MARK: - IMGLYEditorViewController
+    
+    public override var options: IMGLYStickersEditorViewControllerOptions {
+        return self.configuration.stickersEditorViewControllerOptions
+    }
+    
     // MARK: - SubEditorViewController
     
     public override func tappedDone(sender: UIBarButtonItem?) {
@@ -102,7 +107,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = self.configuration.stickersEditorViewControllerOptions.title
+        navigationItem.title = options.title
         
         configureStickersCollectionView()
         configureStickersClipView()
@@ -154,7 +159,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         panGestureRecognizer.maximumNumberOfTouches = 1
         stickersClipView.addGestureRecognizer(panGestureRecognizer)
         
-        if self.configuration.stickersEditorViewControllerOptions.canModifyStickerSize {
+        if options.canModifyStickerSize {
             let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinched:")
             pinchGestureRecognizer.delegate = self
             stickersClipView.addGestureRecognizer(pinchGestureRecognizer)
@@ -302,13 +307,13 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.configuration.stickersEditorViewControllerOptions.dataSource.stickerCount
+        return options.dataSource.stickerCount
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
         
-        let sticker = self.configuration.stickersEditorViewControllerOptions.dataSource.stickerAtIndex(indexPath.item)
+        let sticker = options.dataSource.stickerAtIndex(indexPath.item)
         cell.imageView.image = sticker.thumbnail ?? sticker.image
         
         return cell
@@ -318,7 +323,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
 extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let sticker = self.configuration.stickersEditorViewControllerOptions.dataSource.stickerAtIndex(indexPath.item)
+        let sticker = options.dataSource.stickerAtIndex(indexPath.item)
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
         imageView.frame.size = initialSizeForStickerImage(sticker.image)

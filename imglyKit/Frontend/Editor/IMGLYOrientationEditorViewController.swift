@@ -42,7 +42,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         button.imageView.image = UIImage(named: "icon_orientation_rotate-l", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateLeft:", forControlEvents: .TouchUpInside)
-        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .RotateLeft)
+        self.options.actionButtonConfigurationClosure(button, .RotateLeft)
         return button
         }()
     
@@ -53,7 +53,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         button.imageView.image = UIImage(named: "icon_orientation_rotate-r", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateRight:", forControlEvents: .TouchUpInside)
-        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .RotateRight)
+        self.options.actionButtonConfigurationClosure(button, .RotateRight)
         return button
         }()
     
@@ -64,7 +64,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         button.imageView.image = UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontally:", forControlEvents: .TouchUpInside)
-        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FlipHorizontally)
+        self.options.actionButtonConfigurationClosure(button, .FlipHorizontally)
         return button
         }()
     
@@ -75,7 +75,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         button.imageView.image = UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertically:", forControlEvents: .TouchUpInside)
-        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FlipVertically)
+        self.options.actionButtonConfigurationClosure(button, .FlipVertically)
         return button
         }()
     
@@ -85,7 +85,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = self.configuration.orientationEditorViewControllerOptions.title
+        navigationItem.title = options.title
         
         configureButtons()
     }
@@ -108,8 +108,8 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     
     // MARK: - IMGLYEditorViewController
     
-    public override var enableZoomingInPreviewImage: Bool {
-        return true
+    public override var options: IMGLYOrientationEditorViewControllerOptions {
+        return self.configuration.orientationEditorViewControllerOptions
     }
     
     // MARK: - SubEditorViewController
@@ -129,7 +129,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         
-        let allowedActions = configuration.orientationEditorViewControllerOptions.allowedOrientationActions
+        let allowedActions = options.allowedOrientationActions
         if allowedActions.contains(.RotateLeft) {
             buttonContainerView.addSubview(rotateLeftButton)
             views["rotateLeftButton"] = rotateLeftButton

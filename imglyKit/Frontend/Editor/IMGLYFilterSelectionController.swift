@@ -21,7 +21,7 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
     
     // MARK: - Properties
     
-    public var dataSource: IMGLYFilterSelectionControllerDataSourceProtocol = IMGLYFilterSelectionControllerDataSource()
+    public var dataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
     private var selectedCellIndex: Int?
     public var selectedBlock: IMGLYFilterTypeSelectedBlock?
     public var activeFilterType: IMGLYFilterTypeActiveBlock?

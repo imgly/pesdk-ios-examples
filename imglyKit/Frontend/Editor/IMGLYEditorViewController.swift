@@ -31,6 +31,9 @@ internal let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProces
      Defaults to 'Editor' in the apps tintColor.
      */
     public lazy var rightBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { _ in }
+    
+    /// Controls if the user can zoom the preview image. Defaults to **true**.
+    public lazy var allowsPreviewImageZoom = true
 }
 
 public class IMGLYEditorViewController: UIViewController {
@@ -40,6 +43,11 @@ public class IMGLYEditorViewController: UIViewController {
     var configuration: IMGLYConfiguration = IMGLYConfiguration()
     
     public var shouldShowActivityIndicator = true
+    
+    public var options: IMGLYEditorViewControllerOptions {
+        // Must be implemented in subclass
+        return IMGLYEditorViewControllerOptions()
+    }
     
     public var updating = false {
         didSet {
@@ -164,9 +172,8 @@ public class IMGLYEditorViewController: UIViewController {
         previewImageView.addConstraint(NSLayoutConstraint(item: activityIndicatorView, attribute: .CenterY, relatedBy: .Equal, toItem: previewImageView, attribute: .CenterY, multiplier: 1, constant: 0))
     }
     
-    public var enableZoomingInPreviewImage: Bool {
-        // Subclasses should override this to enable zooming
-        return false
+    var enableZoomingInPreviewImage: Bool {
+        return options.allowsPreviewImageZoom
     }
     
     // MARK: - Actions

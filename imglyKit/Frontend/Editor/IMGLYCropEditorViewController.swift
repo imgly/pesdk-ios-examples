@@ -43,7 +43,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
-        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .Free)
+        self.options.actionButtonConfigurationClosure(button, .Free)
         return button
         }()
     
@@ -54,7 +54,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
-        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .OneToOne)
+        self.options.actionButtonConfigurationClosure(button, .OneToOne)
         return button
         }()
     
@@ -65,7 +65,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
-        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FourToThree)
+        self.options.actionButtonConfigurationClosure(button, .FourToThree)
         return button
         }()
     
@@ -76,7 +76,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)
-        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .SixteenToNine)
+        self.options.actionButtonConfigurationClosure(button, .SixteenToNine)
         return button
         }()
     
@@ -110,7 +110,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = self.configuration.cropEditorViewControllerOptions.title
+        navigationItem.title = options.title
         configureButtons()
         configureCropRect()
         selectedButton = freeRatioButton
@@ -139,6 +139,12 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         
         transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         reCalculateCropRectBounds()
+    }
+    
+    // MARK: - IMGLYEditorViewController
+    
+    public override var options: IMGLYCropEditorViewControllerOptions {
+        return self.configuration.cropEditorViewControllerOptions
     }
     
     // MARK: - SubEditorViewController
@@ -171,7 +177,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         var views = [String: UIView]()
         var viewNames = [String]()
         for (button, action) in buttonToActionMap {
-            if self.configuration.cropEditorViewControllerOptions.allowedActions.contains(action) {
+            if options.allowedActions.contains(action) {
                 let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
                 viewNames.append(viewName)
                 buttonContainerView.addSubview(button)
