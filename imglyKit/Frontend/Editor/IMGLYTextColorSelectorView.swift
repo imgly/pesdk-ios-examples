@@ -15,7 +15,7 @@ public protocol IMGLYTextColorSelectorViewDelegate: class {
 public class IMGLYTextColorSelectorView: UIScrollView {
     public weak var menuDelegate: IMGLYTextColorSelectorViewDelegate?
     
-    private var colorArray = [UIColor]()
+    private var colorArray: [UIColor] = []
     private var buttonArray = [IMGLYColorButton]()
     
     private let kButtonYPosition = CGFloat(22)
@@ -33,16 +33,30 @@ public class IMGLYTextColorSelectorView: UIScrollView {
         commonInit()
     }
     
+    /**
+     Creates a text color selection view. If no available colors are given,
+     a default color set is presented.
+    */
+    public convenience init(availableColors: [UIColor]?) {
+        self.init()
+        if let availableColorsGiven = availableColors {
+            self.colorArray = availableColorsGiven
+        } else {
+            self.colorArray = defaultColorArray()
+        }
+        
+        commonInit()
+    }
+    
     private func commonInit() {
         self.autoresizesSubviews = false
         self.showsHorizontalScrollIndicator = false
         self.showsVerticalScrollIndicator = false
-        configureColorArray()
         configureColorButtons()
     }
     
-    private func configureColorArray() {
-        colorArray = [
+    private func defaultColorArray() -> [UIColor] {
+        return [
             UIColor.whiteColor(),
             UIColor.blackColor(),
             UIColor(red: CGFloat(0xec / 255.0), green:CGFloat(0x37 / 255.0), blue:CGFloat(0x13 / 255.0), alpha:1.0),

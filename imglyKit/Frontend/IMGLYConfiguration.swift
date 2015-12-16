@@ -25,6 +25,9 @@ public typealias IMGLYLabelConfigurationClosure = (UILabel) -> ()
 /// This closure allows the configuration of the given slider.
 public typealias IMGLYSliderConfigurationClosure = (UISlider) -> ()
 
+/// This closure allows the configuration of the given text field.
+public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
+
 /**
 An IMGLYConfiguration defines behaviour and look of all view controllers
 provided by the imglyKit. It uses the builder pattern to create an
@@ -38,6 +41,8 @@ immutable copy via a closure.
     public var backgroundColor: UIColor = UIColor.blackColor()
     
     public var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
+    
+    // Editors
     
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
     
@@ -56,6 +61,8 @@ immutable copy via a closure.
     public var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
     
     public var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
+    
+    public var textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions()
     
     // MARK: Class replacement
     

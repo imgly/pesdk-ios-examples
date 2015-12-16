@@ -18,6 +18,17 @@ public class IMGLYFontSelectorView: UIScrollView {
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)
     private var fontNames = [String]()
+    
+    public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
+        didSet {
+            for subview in self.subviews {
+                if subview is UIButton {
+                    let button = subview as! UIButton
+                    button.setTitleColor(fontPreviewTextColor, forState: .Normal)
+                }
+            }
+        }
+    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

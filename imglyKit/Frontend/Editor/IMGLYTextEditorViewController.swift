@@ -13,6 +13,27 @@ private let TextFieldHeight = CGFloat(40)
 private let TextLabelInitialMargin = CGFloat(40)
 private let MinimumFontSize = CGFloat(12.0)
 
+@objc public class IMGLYTextEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    
+    /// Use this closure to configure the text input field.
+    /// Defaults to an empty implementation.
+    public lazy var textFieldConfigurationClosure: IMGLYTextFieldConfigurationClosure = { _ in }
+    
+    /// Defaults to white.
+    public var fontPreviewTextColor: UIColor = UIColor.whiteColor()
+    
+    /// An optional array of custom color values. The user can select a text color
+    /// from the given values. If no colors are passed, a default color set is loaded.
+    public var availableFontColors: [UIColor]?
+    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
+}
+
 public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     
     // MARK: - Properties
@@ -28,7 +49,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     private var draggedView: UILabel?
     
     public private(set) lazy var textColorSelectorView: IMGLYTextColorSelectorView = {
-        let view = IMGLYTextColorSelectorView()
+        let view = IMGLYTextColorSelectorView(availableColors: self.options.availableFontColors)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.menuDelegate = self
         return view
@@ -49,6 +70,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         textField.clipsToBounds = false
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
         textField.returnKeyType = UIReturnKeyType.Done
+        self.options.textFieldConfigurationClosure(textField)
         return textField
         }()
     
@@ -74,6 +96,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         let selector = IMGLYFontSelectorView()
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
+        selector.fontPreviewTextColor = self.options.fontPreviewTextColor
         return selector
     }()
     
@@ -107,6 +130,12 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         super.viewDidLayoutSubviews()
         
         textClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
+    }
+    
+    // MARK: - IMGLYEditorViewController
+    
+    public override var options: IMGLYTextEditorViewControllerOptions {
+        return self.configuration.textEditorViewControllerOptions
     }
     
     // MARK: - SubEditorViewController
