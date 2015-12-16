@@ -57,9 +57,7 @@ import UIKit
     // MARK: IMGLYMainEditorActionsDataSource
     
     public var actionCount: Int {
-        get {
-            return items.count
-        }
+        return items.count
     }
 
     public func actionAtIndex(index: Int) -> IMGLYMainEditorAction {

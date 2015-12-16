@@ -87,9 +87,7 @@ import UIKit
     // MARK: IMGLYFilterSelectionDataSourceProtocol
 
     public var filterCount: Int {
-        get {
-            return self.availableFilterTypes.count
-        }
+        return self.availableFilterTypes.count
     }
     
     public func filterTypeAtIndex(index: Int) -> IMGLYFilterType {
