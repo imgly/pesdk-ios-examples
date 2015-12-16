@@ -8,13 +8,24 @@
 
 import UIKit
 
-public protocol IMGLYStickersDataSourceDelegate: class, UICollectionViewDataSource {
-    var stickers: [IMGLYSticker] { get }
+@objc public protocol IMGLYStickersDataSourceProtocol {
+    /// The total count of all available stickers.
+    var stickerCount: Int { get }
+    
+    /// The sticker at the given index.
+    func stickerAtIndex(index: Int) -> IMGLYSticker
 }
 
-public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate {
-    public let stickers: [IMGLYSticker]
+
+@objc public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceProtocol {
     
+    private let stickers: [IMGLYSticker]
+    
+    // MARK: Init
+    
+    /**
+     Creates a default datasource offering all available stickers.
+    */
     override init() {
         let stickerFiles = [
             "glasses_nerd",
@@ -48,24 +59,23 @@ public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceDelegate 
         super.init()
     }
     
+    /**
+     Creates a custom datasource offering the given stickers.
+    */
     public init(stickers: [IMGLYSticker]) {
         self.stickers = stickers
         super.init()
     }
     
-    public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 1
+    // MARK:- IMGLYStickersDataSource
+    
+    public var stickerCount: Int {
+        get {
+            return stickers.count
+        }
     }
     
-    public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stickers.count
-    }
-    
-    public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
-        
-        cell.imageView.image = stickers[indexPath.row].thumbnail ?? stickers[indexPath.row].image
-        
-        return cell
+    public func stickerAtIndex(index: Int) -> IMGLYSticker {
+        return stickers[index]
     }
 }

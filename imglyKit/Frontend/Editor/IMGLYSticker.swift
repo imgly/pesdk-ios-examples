@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IMGLYSticker: NSObject {
+@objc public class IMGLYSticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
     

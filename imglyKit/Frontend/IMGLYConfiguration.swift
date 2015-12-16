@@ -43,6 +43,8 @@ immutable copy via a closure.
     
     public var filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions()
     
+    public var stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions()
+    
     // MARK: Class replacement
     
     /**

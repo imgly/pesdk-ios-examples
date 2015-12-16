@@ -418,7 +418,7 @@
 		2BF4D3C41AF1150400C801B2 /* IMGLYSliderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYSliderEditorViewController.swift; sourceTree = "<group>"; };
 		2BF4D3C51AF1150400C801B2 /* IMGLYSticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYSticker.swift; sourceTree = "<group>"; };
 		2BF4D3C61AF1150400C801B2 /* IMGLYStickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYStickerCollectionViewCell.swift; sourceTree = "<group>"; };
-		2BF4D3C71AF1150400C801B2 /* IMGLYStickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYStickersDataSource.swift; sourceTree = "<group>"; };
+		2BF4D3C71AF1150400C801B2 /* IMGLYStickersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IMGLYStickersDataSource.swift; path = ../Editor/IMGLYStickersDataSource.swift; sourceTree = "<group>"; };
 		2BF4D3C81AF1150400C801B2 /* IMGLYStickersEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = IMGLYStickersEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3C91AF1150400C801B2 /* IMGLYSubEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYSubEditorViewController.swift; sourceTree = "<group>"; };
 		2BF4D3CA1AF1150400C801B2 /* IMGLYTextColorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYTextColorSelectorView.swift; sourceTree = "<group>"; };
@@ -734,7 +734,6 @@
 				2BF4D3C41AF1150400C801B2 /* IMGLYSliderEditorViewController.swift */,
 				2BF4D3C51AF1150400C801B2 /* IMGLYSticker.swift */,
 				2BF4D3C61AF1150400C801B2 /* IMGLYStickerCollectionViewCell.swift */,
-				2BF4D3C71AF1150400C801B2 /* IMGLYStickersDataSource.swift */,
 				2BF4D3C81AF1150400C801B2 /* IMGLYStickersEditorViewController.swift */,
 				2BF4D3C91AF1150400C801B2 /* IMGLYSubEditorViewController.swift */,
 				2BF4D3CA1AF1150400C801B2 /* IMGLYTextColorSelectorView.swift */,
@@ -931,6 +930,7 @@
 		E9AF1E601C0F2DF900893621 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
+				2BF4D3C71AF1150400C801B2 /* IMGLYStickersDataSource.swift */,
 				E9AF1E611C0F2E0D00893621 /* IMGLYMainEditorActionsDataSource.swift */,
 				E990B2331C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift */,
 			);
