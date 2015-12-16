@@ -22,7 +22,15 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     /// is set.
     public var dataSource: IMGLYStickersDataSourceProtocol = IMGLYStickersDataSource()
     
+    /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true
+    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("stickers-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
 }
 
 public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
@@ -94,8 +102,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("stickers-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        navigationItem.title = self.configuration.stickersEditorViewControllerOptions.title
         
         configureStickersCollectionView()
         configureStickersClipView()
