@@ -41,6 +41,8 @@ immutable copy via a closure.
     
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
     
+    public var filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions()
+    
     // MARK: Class replacement
     
     /**

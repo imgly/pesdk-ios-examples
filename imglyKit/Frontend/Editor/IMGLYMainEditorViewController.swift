@@ -14,7 +14,7 @@ import UIKit
     // MARK: Behaviour
     
     /// Controls if the user can zoom the preview image. Defaults to **true**.
-    public lazy var allowsPreviewImageZoom: Bool = true
+    public lazy var allowsPreviewImageZoom = true
     
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.

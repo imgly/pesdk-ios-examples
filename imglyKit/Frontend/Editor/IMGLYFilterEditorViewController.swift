@@ -8,6 +8,29 @@
 
 import UIKit
 
+@objc public class IMGLYFilterEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    
+    // MARK: UI
+    
+    /// Use this closure to configure the filter intensity slider.
+    /// Defaults to an empty implementation.
+    public lazy var filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
+    
+    // MARK: Behaviour
+    
+    /// An object conforming to the `IMGLYFilterSelectionControllerDataSourceProtocol`
+    /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
+    /// is set.
+    public var filterDataSource: IMGLYFilterSelectionControllerDataSourceProtocol = IMGLYFilterSelectionControllerDataSource()
+    
+    /// Enable/Disable the filter intensity slider. Defaults to true.
+    public var showFilterIntensitySlider = true
+    
+    /// Controls if the user can zoom the preview image. Defaults to **true**.
+    public var allowsPreviewImageZoom = true
+    
+}
+
 public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     
     // MARK: - Properties
@@ -15,7 +38,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     public let filterSelectionController = IMGLYFilterSelectionController()
     
     public private(set) lazy var filterIntensitySlider: UISlider = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYFilterEditorViewController.self)
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 0
@@ -30,8 +53,10 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         slider.setThumbImage(sliderThumbImage, forState: .Normal)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
         
+        self.configuration.filterEditorViewControllerOptions.filterIntensitySliderConfigurationClosure(slider)
+        
         return slider
-        }()
+    }()
     
     private var changeTimer: NSTimer?
     private var updateInterval: NSTimeInterval = 0.01
@@ -41,17 +66,19 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYFilterEditorViewController.self)
         navigationItem.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         
         configureFilterSelectionController()
-        configureFilterIntensitySlider()
+        if (self.configuration.filterEditorViewControllerOptions.showFilterIntensitySlider) {
+            configureFilterIntensitySlider()
+        }
     }
     
     // MARK: - IMGLYEditorViewController
     
     public override var enableZoomingInPreviewImage: Bool {
-        return true
+        return self.configuration.filterEditorViewControllerOptions.allowsPreviewImageZoom
     }
     
     // MARK: - Configuration
