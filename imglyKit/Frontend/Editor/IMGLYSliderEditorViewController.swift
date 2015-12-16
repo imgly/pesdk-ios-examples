@@ -74,7 +74,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     // MARK: - IMGLYEditorViewController
     
     public override var enableZoomingInPreviewImage: Bool {
-        return true
+        return options.allowsPreviewImageZoom
     }
     
     // MARK: - Configuration
