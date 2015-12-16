@@ -26,6 +26,12 @@ private let MinimumFontSize = CGFloat(12.0)
     /// from the given values. If no colors are passed, a default color set is loaded.
     public var availableFontColors: [UIColor]?
     
+    /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
+    public var canModifyTextSize = true
+    
+    /// Enables/Disables color changes through the bottom drawer. Defaults to true.
+    public var canModifyTextColor = true
+    
     public override init() {
         super.init()
         
@@ -117,7 +123,11 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         IMGLYInstanceFactory.fontImporter().importFonts()
         
         navigationItem.rightBarButtonItem?.enabled = false
-        configureColorSelectorView()
+        
+        if options.canModifyTextColor {
+            configureColorSelectorView()
+        }
+        
         configureTextClipView()
         configureTextField()
         configureTextLabel()
@@ -227,10 +237,12 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         panGestureRecognizer.minimumNumberOfTouches = 1
         panGestureRecognizer.maximumNumberOfTouches = 1
         textLabel.addGestureRecognizer(panGestureRecognizer)
-
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
-        pinchGestureRecognizer.delegate = self
-        textLabel.addGestureRecognizer(pinchGestureRecognizer)
+            
+        if options.canModifyTextSize {
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
+            pinchGestureRecognizer.delegate = self
+            textLabel.addGestureRecognizer(pinchGestureRecognizer)
+        }
         
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
