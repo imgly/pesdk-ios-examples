@@ -45,6 +45,8 @@ immutable copy via a closure.
     
     public var stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions()
     
+    public var orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions()
+    
     // MARK: Class replacement
     
     /**

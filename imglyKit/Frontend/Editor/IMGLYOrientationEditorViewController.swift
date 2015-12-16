@@ -8,47 +8,74 @@
 
 import UIKit
 
+
+@objc public class IMGLYOrientationEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    
+    public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYOrientationAction) -> ()
+
+    // MARK: Behaviour
+    
+    /// Defines all allowed actions. The action buttons are always shown in the rotate -> flip order.
+    /// Defaults to show all available actions.
+    public var allowedOrientationActions: [IMGLYOrientationAction] = [ .RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ]
+    
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public var actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure = { _ in }
+    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("orientation-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
+}
+
 public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController {
     
     // MARK: - Properties
     
     public private(set) lazy var rotateLeftButton: IMGLYImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("orientation-editor.rotate-left", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-l", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateLeft:", forControlEvents: .TouchUpInside)
+        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .RotateLeft)
         return button
         }()
     
     public private(set) lazy var rotateRightButton: IMGLYImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("orientation-editor.rotate-right", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-r", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateRight:", forControlEvents: .TouchUpInside)
+        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .RotateRight)
         return button
         }()
     
     public private(set) lazy var flipHorizontallyButton: IMGLYImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("orientation-editor.flip-horizontally", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontally:", forControlEvents: .TouchUpInside)
+        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FlipHorizontally)
         return button
         }()
     
     public private(set) lazy var flipVerticallyButton: IMGLYImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
         button.textLabel.text = NSLocalizedString("orientation-editor.flip-vertically", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertically:", forControlEvents: .TouchUpInside)
+        self.configuration.orientationEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FlipVertically)
         return button
         }()
     
@@ -58,8 +85,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("orientation-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        navigationItem.title = self.configuration.orientationEditorViewControllerOptions.title
         
         configureButtons()
     }
@@ -97,36 +123,52 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     // MARK: - Configuration
     
     private func configureButtons() {
+        var views = [String: UIView]()
+
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         
-        buttonContainerView.addSubview(rotateLeftButton)
-        buttonContainerView.addSubview(rotateRightButton)
-        buttonContainerView.addSubview(flipHorizontallyButton)
-        buttonContainerView.addSubview(flipVerticallyButton)
+        let allowedActions = configuration.orientationEditorViewControllerOptions.allowedOrientationActions
+        if allowedActions.contains(.RotateLeft) {
+            buttonContainerView.addSubview(rotateLeftButton)
+            views["rotateLeftButton"] = rotateLeftButton
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateLeftButton]|", options: [], metrics: nil, views: views))
+        }
         
-        let views = [
-            "buttonContainerView" : buttonContainerView,
-            "rotateLeftButton" : rotateLeftButton,
-            "rotateRightButton" : rotateRightButton,
-            "flipHorizontallyButton" : flipHorizontallyButton,
-            "flipVerticallyButton" : flipVerticallyButton
-        ]
+        if allowedActions.contains(.RotateRight) {
+            buttonContainerView.addSubview(rotateRightButton)
+            views["rotateRightButton"] = rotateRightButton
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateRightButton]|", options: [], metrics: nil, views: views))
+        }
+        
+        if allowedActions.contains(.FlipHorizontally) {
+            buttonContainerView.addSubview(flipHorizontallyButton)
+            views["flipHorizontallyButton"] = flipHorizontallyButton
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipHorizontallyButton]|", options: [], metrics: nil, views: views))
+        }
+        
+        if allowedActions.contains(.FlipVertically) {
+            buttonContainerView.addSubview(flipVerticallyButton)
+            views["flipVerticallyButton"] = flipVerticallyButton
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipVerticallyButton]|", options: [], metrics: nil, views: views))
+        }
         
         let metrics = [
             "buttonWidth" : 70
         ]
         
-        // Button Constraints
+        var visualFormatString = "|"
+        for key in views.keys {
+            visualFormatString += "[\(key)(==buttonWidth)]"
+        }
+        visualFormatString += "|"
         
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[rotateLeftButton(==buttonWidth)][rotateRightButton(==rotateLeftButton)][flipHorizontallyButton(==rotateLeftButton)][flipVerticallyButton(==rotateLeftButton)]|", options: [], metrics: metrics, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateLeftButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateRightButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipHorizontallyButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipVerticallyButton]|", options: [], metrics: nil, views: views))
+        // Button Constraints
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(visualFormatString, options: [], metrics: metrics, views: views))
         
         // Container Constraints
+        views["buttonContainerView"] = buttonContainerView
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
     }
