@@ -56,3 +56,9 @@ typedef NS_OPTIONS(NSInteger, IMGLYOrientationAction) {
     IMGLYOrientationActionFlipHorizontally = 1 << 2,
     IMGLYOrientationActionFlipVertically = 1 << 3
 };
+
+typedef NS_OPTIONS(NSInteger, IMGLYFocusAction) {
+    IMGLYFocusActionOff = 1 << 0,
+    IMGLYFocusActionLinear = 1 << 1,
+    IMGLYFocusActionRadial = 1 << 2
+};

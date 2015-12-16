@@ -47,6 +47,8 @@ immutable copy via a closure.
     
     public var orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions()
     
+    public var focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions()
+    
     // MARK: Class replacement
     
     /**
