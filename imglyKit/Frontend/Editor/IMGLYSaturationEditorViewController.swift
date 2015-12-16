@@ -15,11 +15,22 @@ public class IMGLYSaturationEditorViewController: IMGLYSliderEditorViewControlle
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("saturation-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        let bundle = NSBundle(forClass: IMGLYBrightnessEditorViewController.self)
+        let defaultTitle = NSLocalizedString("saturation-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        if let title = options.title {
+            if title != defaultTitle {
+                navigationItem.title = title
+            }
+        } else {
+            navigationItem.title = defaultTitle
+        }
     }
     
     // MARK: - SliderEditorViewController
+    
+    override public var options: IMGLYSliderEditorViewControllerOptions {
+        return self.configuration.saturationEditorViewControllerOptions
+    }
     
     override public var minimumValue: Float {
         return 0

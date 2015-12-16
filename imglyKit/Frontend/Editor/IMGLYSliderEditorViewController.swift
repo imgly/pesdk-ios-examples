@@ -8,6 +8,20 @@
 
 import UIKit
 
+@objc public class IMGLYSliderEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    
+    // MARK: UI
+    
+    /// Use this closure to configure the filter intensity slider.
+    /// Defaults to an empty implementation.
+    public lazy var sliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
+    
+    // MARK: Behaviour
+    
+    /// Controls if the user can zoom the preview image. Defaults to **true**.
+    public var allowsPreviewImageZoom = true
+}
+
 public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     
     // MARK: - Properties
@@ -21,6 +35,7 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         slider.addTarget(self, action: "sliderTouchedUpInside:", forControlEvents: .TouchUpInside)
         slider.translatesAutoresizingMaskIntoConstraints = false
+        self.options.sliderConfigurationClosure(slider)
         return slider
     }()
     
@@ -37,6 +52,11 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
     public var initialValue: Float {
         // Subclasses should override this
         return 0
+    }
+    
+    public var options: IMGLYSliderEditorViewControllerOptions {
+        // Subclasses should override this
+        return IMGLYSliderEditorViewControllerOptions()
     }
     
     private var changeTimer: NSTimer?

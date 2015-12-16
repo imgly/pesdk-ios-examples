@@ -15,11 +15,22 @@ public class IMGLYContrastEditorViewController: IMGLYSliderEditorViewController 
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("contrast-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        let bundle = NSBundle(forClass: IMGLYBrightnessEditorViewController.self)
+        let defaultTitle = NSLocalizedString("contrast-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        if let title = options.title {
+            if title != defaultTitle {
+                navigationItem.title = title
+            }
+        } else {
+            navigationItem.title = defaultTitle
+        }
     }
     
     // MARK: - SliderEditorViewController
+    
+    override public var options: IMGLYSliderEditorViewControllerOptions {
+        return self.configuration.contrastEditorViewControllerOptions
+    }
     
     override public var minimumValue: Float {
         return 0
