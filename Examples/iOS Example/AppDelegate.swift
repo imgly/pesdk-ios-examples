@@ -20,10 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let configuration = IMGLYConfiguration()
         
         // Customize the done button using the configuration block
-        configuration.mainEditorViewControllerOptions.doneButtonConfigurationClosure = { barButtonItem in
+        configuration.mainEditorViewControllerOptions.rightBarButtonConfigurationClosure = { barButtonItem in
             barButtonItem.tintColor = UIColor.greenColor()
         }
-        configuration.mainEditorViewControllerOptions.editorActionsDataSource = IMGLYMainEditorActionsDataSource(availableActionTypes: [ .Magic, .Brightness, .Focus ])
         
         let cameraViewControllerOptions = IMGLYCameraViewControllerOptions()
         cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
@@ -31,10 +30,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
         cameraViewControllerOptions.allowedTorchModes = [ .Off ]
         cameraViewControllerOptions.cropToSquare = false
-        cameraViewControllerOptions.filterDataSource = IMGLYFilterSelectionControllerDataSource(availableFilters: [ .Bleached, .Ancient ])
         
         configuration.cameraViewControllerOptions = cameraViewControllerOptions
         
+        configuration.textEditorViewControllerOptions.fontPreviewTextColor = UIColor.blueColor()
+        configuration.textEditorViewControllerOptions.availableFontColors = [ UIColor.redColor(), UIColor.greenColor() ]
+        configuration.textEditorViewControllerOptions.canModifyTextSize = false
+        configuration.textEditorViewControllerOptions.canModifyTextColor = false
         
         // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
         do {
