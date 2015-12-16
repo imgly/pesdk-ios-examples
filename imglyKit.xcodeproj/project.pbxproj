@@ -371,7 +371,7 @@
 		2BF4D5451AF115A200C801B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
 		2BF51F701B41A7E700FFB4C2 /* IMGLYRecordingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */; };
 		2BF717D91B414FC600D4A50C /* IMGLYShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */; };
-		E990B2341C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B2331C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift */; };
+		E990B2341C20506600806B30 /* IMGLYFiltersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B2331C20506600806B30 /* IMGLYFiltersDataSource.swift */; };
 		E9AF1E621C0F2E0D00893621 /* IMGLYMainEditorActionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF1E611C0F2E0D00893621 /* IMGLYMainEditorActionsDataSource.swift */; };
 		E9D550EE1C05E27D00CE72C3 /* IMGLYConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D550ED1C05E27D00CE72C3 /* IMGLYConfiguration.swift */; };
 /* End PBXBuildFile section */
@@ -585,7 +585,7 @@
 		2BF4D5461AF115A200C801B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BF51F6F1B41A7E700FFB4C2 /* IMGLYRecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYRecordingMode.swift; sourceTree = "<group>"; };
 		2BF717D71B414FC600D4A50C /* IMGLYShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYShapeLayer.swift; sourceTree = "<group>"; };
-		E990B2331C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYFilterSelectionControllerDataSource.swift; sourceTree = "<group>"; };
+		E990B2331C20506600806B30 /* IMGLYFiltersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYFiltersDataSource.swift; sourceTree = "<group>"; };
 		E9AF1E611C0F2E0D00893621 /* IMGLYMainEditorActionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYMainEditorActionsDataSource.swift; sourceTree = "<group>"; };
 		E9D550ED1C05E27D00CE72C3 /* IMGLYConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -932,7 +932,7 @@
 			children = (
 				2BF4D3C71AF1150400C801B2 /* IMGLYStickersDataSource.swift */,
 				E9AF1E611C0F2E0D00893621 /* IMGLYMainEditorActionsDataSource.swift */,
-				E990B2331C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift */,
+				E990B2331C20506600806B30 /* IMGLYFiltersDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1356,7 +1356,7 @@
 				2BF4D5311AF1155E00C801B2 /* IMGLYSoftFilter.swift in Sources */,
 				2BF4D4B11AF1154B00C801B2 /* IMGLYTextFilter.swift in Sources */,
 				2BF4D52D1AF1155E00C801B2 /* IMGLYSepiaHighFilter.swift in Sources */,
-				E990B2341C20506600806B30 /* IMGLYFilterSelectionControllerDataSource.swift in Sources */,
+				E990B2341C20506600806B30 /* IMGLYFiltersDataSource.swift in Sources */,
 				2BF4D5441AF1159D00C801B2 /* IMGLYInstanceFactory.swift in Sources */,
 				2BF4D51C1AF1155E00C801B2 /* IMGLYLomoFilter.swift in Sources */,
 				2BF4D3DC1AF1150500C801B2 /* IMGLYImageCaptionButton.swift in Sources */,

@@ -13,7 +13,7 @@ import UIKit
  This protocol describes an object that can act as
  a datasource for an `IMGLYFilterSelectionController`.
 */
-@objc public protocol IMGLYFilterSelectionControllerDataSourceProtocol {
+@objc public protocol IMGLYFiltersDataSourceProtocol {
     
     /// The total count of all available filters.
     var filterCount: Int { get }
@@ -52,7 +52,7 @@ import UIKit
  can be set in the initializer. Per default all filters
  currently included with the SDK are offered.
 */
-@objc public class IMGLYFilterSelectionControllerDataSource: NSObject, IMGLYFilterSelectionControllerDataSourceProtocol {
+@objc public class IMGLYFiltersDataSource: NSObject, IMGLYFiltersDataSourceProtocol {
     
     let InitialFilterIntensity = Float(0.75)
     
@@ -95,7 +95,7 @@ import UIKit
     }
     
     public func previewImageForFilterAtIndex(index: Int) -> UIImage {
-        let bundle = NSBundle(forClass: IMGLYFilterSelectionControllerDataSource.self)
+        let bundle = NSBundle(forClass: IMGLYFiltersDataSource.self)
         return UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil)!
     }
     
@@ -104,7 +104,7 @@ import UIKit
     }
     
     public func selectedImageForFilterAtIndex(index: Int) -> UIImage {
-        let bundle = NSBundle(forClass: IMGLYFilterSelectionControllerDataSource.self)
+        let bundle = NSBundle(forClass: IMGLYFiltersDataSource.self)
         return UIImage(named: "icon_tick", inBundle: bundle, compatibleWithTraitCollection:nil)!
     }
     
