@@ -44,7 +44,7 @@ public class IMGLYEditorViewController: UIViewController {
     
     public var shouldShowActivityIndicator = true
     
-    public var options: IMGLYEditorViewControllerOptions {
+    var options: IMGLYEditorViewControllerOptions {
         // Must be implemented in subclass
         return IMGLYEditorViewControllerOptions()
     }
