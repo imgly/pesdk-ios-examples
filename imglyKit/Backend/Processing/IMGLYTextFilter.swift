@@ -71,9 +71,11 @@ public class IMGLYTextFilter : CIFilter {
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
-        
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        customParagraphStyle.lineBreakMode = NSLineBreakMode.ByClipping
         let font = UIFont(name: fontName, size: fontScaleFactor * imageSize.height)
-        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+       // text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width * 1.5, height: frame.size.height * imageSize.width * 2), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
+        text.drawAtPoint(CGPoint(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height), withAttributes:  [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
