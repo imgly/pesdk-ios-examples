@@ -49,6 +49,14 @@ immutable copy via a closure.
     
     public var focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions()
     
+    public var cropEditorViewControllerOptions: IMGLYCropEditorViewControllerOptions = IMGLYCropEditorViewControllerOptions()
+    
+    public var brightnessEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
+    
+    public var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
+    
+    public var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
+    
     // MARK: Class replacement
     
     /**

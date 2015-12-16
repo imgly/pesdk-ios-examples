@@ -57,8 +57,17 @@ typedef NS_OPTIONS(NSInteger, IMGLYOrientationAction) {
     IMGLYOrientationActionFlipVertically = 1 << 3
 };
 
+// Bitmask for focus actions
 typedef NS_OPTIONS(NSInteger, IMGLYFocusAction) {
     IMGLYFocusActionOff = 1 << 0,
     IMGLYFocusActionLinear = 1 << 1,
     IMGLYFocusActionRadial = 1 << 2
+};
+
+// Bitmask for crop actions
+typedef NS_OPTIONS(NSInteger, IMGLYCropAction) {
+    IMGLYCropActionFree = 1 << 0,
+    IMGLYCropActionOneToOne = 1 << 1,
+    IMGLYCropActionFourToThree = 1 << 2,
+    IMGLYCropActionSixteenToNine = 1 << 3
 };

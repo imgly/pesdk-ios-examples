@@ -8,14 +8,29 @@
 
 import UIKit
 
-@objc public enum IMGLYSelectionMode: Int {
-    case Free
-    case OneToOne
-    case FourToThree
-    case SixteenToNine
-}
-
 public let MinimumCropSize = CGFloat(50)
+
+@objc public class IMGLYCropEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    
+    public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYCropAction) -> ()
+    
+    // MARK: Behaviour
+    
+    /// Defines all allowed focus actions. The focus buttons are always shown in the off -> linear -> radial order.
+    /// Defaults to show all available modes. The .Off action is always added.
+    public var allowedActions: [IMGLYCropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
+    
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public var actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure = { _ in }
+    
+    public override init() {
+        super.init()
+        
+        /// Override inherited properties with default values
+        self.title = NSLocalizedString("crop-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+    }
+}
 
 public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
 
@@ -28,6 +43,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .Free)
         return button
         }()
     
@@ -38,6 +54,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
+        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .OneToOne)
         return button
         }()
     
@@ -48,6 +65,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
+        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .FourToThree)
         return button
         }()
     
@@ -58,6 +76,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)
+        self.configuration.cropEditorViewControllerOptions.actionButtonConfigurationClosure(button, .SixteenToNine)
         return button
         }()
     
@@ -78,7 +97,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         }()
     
     private let cropRectComponent = IMGLYInstanceFactory.cropRectComponent()
-    public var selectionMode = IMGLYSelectionMode.Free
+    public var selectionMode = IMGLYCropAction.Free
     public var selectionRatio = CGFloat(1.0)
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
@@ -91,9 +110,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("crop-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
-        
+        navigationItem.title = self.configuration.cropEditorViewControllerOptions.title
         configureButtons()
         configureCropRect()
         selectedButton = freeRatioButton
@@ -137,39 +154,37 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Configuration
     
     private func configureButtons() {
+        let buttonToActionMap: [(IMGLYImageCaptionButton, IMGLYCropAction)] = [
+            (freeRatioButton, .Free),
+            (oneToOneRatioButton, .OneToOne),
+            (fourToThreeRatioButton, .FourToThree),
+            (sixteenToNineRatioButton, .SixteenToNine)
+        ]
+
+        // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
-        
-        buttonContainerView.addSubview(freeRatioButton)
-        buttonContainerView.addSubview(oneToOneRatioButton)
-        buttonContainerView.addSubview(fourToThreeRatioButton)
-        buttonContainerView.addSubview(sixteenToNineRatioButton)
-        
-        let views = [
-            "buttonContainerView" : buttonContainerView,
-            "freeRatioButton" : freeRatioButton,
-            "oneToOneRatioButton" : oneToOneRatioButton,
-            "fourToThreeRatioButton" : fourToThreeRatioButton,
-            "sixteenToNineRatioButton" : sixteenToNineRatioButton
-        ]
-        
-        let metrics = [
-            "buttonWidth" : 70
-        ]
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
+        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+
+        var views = [String: UIView]()
+        var viewNames = [String]()
+        for (button, action) in buttonToActionMap {
+            if self.configuration.cropEditorViewControllerOptions.allowedActions.contains(action) {
+                let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
+                viewNames.append(viewName)
+                buttonContainerView.addSubview(button)
+                views[viewName] = button
+                buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
+            }
+        }
         
         // Button Constraints
-        
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[freeRatioButton(==buttonWidth)][oneToOneRatioButton(==freeRatioButton)][fourToThreeRatioButton(==freeRatioButton)][sixteenToNineRatioButton(==freeRatioButton)]|", options: [], metrics: metrics, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[freeRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[oneToOneRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fourToThreeRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[sixteenToNineRatioButton]|", options: [], metrics: nil, views: views))
-        
-        // Container Constraints
-        
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
-        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        let visualFormatString = viewNames.reduce("") { (acc, name) -> String in
+            return acc + "[\(name)(==buttonWidth)]"
+        }
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
     }
     
     private func configureCropRect() {
@@ -250,7 +265,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func reCalulateSizeForTopLeftAnchor(size:CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != IMGLYSelectionMode.Free {
+        if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -304,7 +319,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func reCalulateSizeForTopRightAnchor(size:CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != IMGLYSelectionMode.Free {
+        if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -357,7 +372,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func reCalulateSizeForBottomLeftAnchor(size:CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != IMGLYSelectionMode.Free {
+        if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
             if (newSize.height > newSize.width) {
                 newSize.width = newSize.height
@@ -404,7 +419,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     
     private func reCalulateSizeForBottomRightAnchor(size:CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != IMGLYSelectionMode.Free {
+        if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -530,16 +545,16 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func calculateRatioForSelectionMode() {
-        if selectionMode == IMGLYSelectionMode.FourToThree {
+        if selectionMode == .FourToThree {
             selectionRatio = 4.0 / 3.0
         }
-        else if selectionMode == IMGLYSelectionMode.OneToOne {
+        else if selectionMode == .OneToOne {
             selectionRatio = 1.0
         }
-        else if selectionMode == IMGLYSelectionMode.SixteenToNine {
+        else if selectionMode == .SixteenToNine {
             selectionRatio = 16.0 / 9.0
         }
-        if selectionMode != IMGLYSelectionMode.Free {
+        if selectionMode != .Free {
             setCropRectForSelectionRatio()
             cropRectComponent.layoutViewsForCropRect()
         }
@@ -552,7 +567,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
             return
         }
         
-        selectionMode = IMGLYSelectionMode.Free
+        selectionMode = .Free
         calculateRatioForSelectionMode()
         
         selectedButton = sender
@@ -563,7 +578,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
             return
         }
         
-        selectionMode = IMGLYSelectionMode.OneToOne
+        selectionMode = .OneToOne
         calculateRatioForSelectionMode()
         
         selectedButton = sender
@@ -574,7 +589,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
             return
         }
         
-        selectionMode = IMGLYSelectionMode.FourToThree
+        selectionMode = .FourToThree
         calculateRatioForSelectionMode()
         
         selectedButton = sender
@@ -585,7 +600,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
             return
         }
         
-        selectionMode = IMGLYSelectionMode.SixteenToNine
+        selectionMode = .SixteenToNine
         calculateRatioForSelectionMode()
         
         selectedButton = sender
