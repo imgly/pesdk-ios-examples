@@ -29,7 +29,7 @@ public class IMGLYTextFilter : CIFilter {
     
     public var transform = CGAffineTransformIdentity
 
-    public var cropRect = CGRectZero
+    public var cropRect = CGRectMake(0, 0, 1, 1)
     
     /// The color of the text.
     #if os(iOS)
@@ -52,8 +52,6 @@ public class IMGLYTextFilter : CIFilter {
             return nil
         }
         
-        
-        
         if text.isEmpty {
             return inputImage
         }
@@ -75,6 +73,11 @@ public class IMGLYTextFilter : CIFilter {
     private func createTextImage() -> UIImage {
         let rect = inputImage!.extent
         let imageSize = rect.size
+        
+        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+        print(originalSize)
+        print(cropRect)
+        
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
@@ -101,10 +104,10 @@ public class IMGLYTextFilter : CIFilter {
     
         let image = NSImage(size: imageSize)
         image.lockFocus()
-    
         NSColor(white: 1, alpha: 0).setFill()
         NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
         let font = NSFont(name: fontName, size: fontScaleFactor * imageSize.height)
+    
         text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
     
         image.unlockFocus()
@@ -122,6 +125,7 @@ extension IMGLYTextFilter {
         copy.text = (text as NSString).copyWithZone(zone) as! String
         copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
         copy.fontScaleFactor = fontScaleFactor
+        copy.cropRect = cropRect
         copy.frame = frame
         #if os(iOS)
         copy.color = color.copyWithZone(zone) as! UIColor
