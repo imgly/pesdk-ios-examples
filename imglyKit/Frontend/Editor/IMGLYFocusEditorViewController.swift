@@ -8,14 +8,21 @@
 
 import UIKit
 
+@objc public enum IMGLYFocusAction: Int {
+    case Off
+    case Linear
+    case Radial
+}
+
 @objc public class IMGLYFocusEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     
     public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYFocusAction) -> ()
     
     // MARK: Behaviour
     
-    /// Defines all allowed focus actions. The focus buttons are always shown in the off -> linear -> radial order.
-    /// Defaults to show all available modes. The .Off action is always added.
+    /// Defines all allowed focus actions. The focus buttons are shown in the given order.
+    /// Defaults to show all available modes. The .Off action is always added. To set this
+    /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
     public var allowedFocusActions: [IMGLYFocusAction] = [ .Off, .Linear, .Radial ] {
         didSet {
             if !allowedFocusActions.contains(.Off) {
@@ -27,6 +34,19 @@ import UIKit
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure = { _ in }
+    
+    // MARK: Obj-C Compatibility
+    
+    /// An array of `IMGLYFocusAction` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedFocusActions` with the corresponding `IMGLYFocusAction` values.
+    public var allowedFocusActionsAsNSNumbers: [NSNumber] = [ IMGLYFocusAction.Off, .Linear, .Radial ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ IMGLYFocusAction(rawValue: $0.integerValue)! })
+        }
+    }
+    
+    // MARK: Init
     
     public override init() {
         super.init()
@@ -135,53 +155,36 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Configuration
     
     private func configureButtons() {
-        var views = [String: UIView]()
-        var viewNames = [String]()
+        // Map actions and buttons
+        let actionToButtonMap: [IMGLYFocusAction: IMGLYImageCaptionButton] = [
+            .Off: offButton,
+            .Linear: linearButton,
+            .Radial: radialButton
+        ]
+        
+        // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
+        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
         
-        let allowedActions = options.allowedFocusActions
-        if allowedActions.contains(.Off) {
-            let viewName = "offButton"
-            buttonContainerView.addSubview(offButton)
-            views[viewName] = offButton
+        var views = [String: UIView]()
+        var viewNames = [String]()
+        for action in options.allowedFocusActions {
+            let button = actionToButtonMap[action]!
+            let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
             viewNames.append(viewName)
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[offButton]|", options: [], metrics: nil, views: views))
+            buttonContainerView.addSubview(button)
+            views[viewName] = button
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
-        
-        if allowedActions.contains(.Linear) {
-            let viewName = "linearButton"
-            buttonContainerView.addSubview(linearButton)
-            views[viewName] = linearButton
-            viewNames.append(viewName)
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[linearButton]|", options: [], metrics: nil, views: views))
-        }
-
-        if allowedActions.contains(.Radial) {
-            let viewName = "radialButton"
-            buttonContainerView.addSubview(radialButton)
-            views[viewName] = radialButton
-            viewNames.append(viewName)
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[radialButton]|", options: [], metrics: nil, views: views))
-        }
-        
-        let metrics = [
-            "buttonWidth" : 90
-        ]
         
         // Button Constraints
-        var visualFormatString = ""
-        for name in viewNames {
-            visualFormatString += "[\(name)(==buttonWidth)]"
+        let visualFormatString = viewNames.reduce("") { (acc, name) -> String in
+            return acc + "[\(name)(==buttonWidth)]"
         }
-        
-        views["buttonContainerView"] = buttonContainerView
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: metrics, views: views))
-        
-        // Container Constraints
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
-        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 90 ], views: views))
     }
     
     private func configureGradientViews() {
