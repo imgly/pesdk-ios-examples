@@ -91,7 +91,7 @@ public class IMGLYCameraController: NSObject {
     public var previewContentMode: UIViewContentMode  = .ScaleAspectFit
     public var tapToFocusEnabled = true
     
-    public var allowedCameraPositions: [IMGLYCameraPosition] = [ .Back, .Front ] {
+    public var allowedCameraPositions: [AVCaptureDevicePosition] = [ .Back, .Front ] {
         didSet {
             if allowedCameraPositions.count == 0 {
                 fatalError("You have to allow at least one camera position (e.g. .Back)")
@@ -114,7 +114,7 @@ public class IMGLYCameraController: NSObject {
         }
     }
     
-    public var allowedFlashModes: [IMGLYFlashMode] = [.On, .Off, .Auto] {
+    public var allowedFlashModes: [AVCaptureFlashMode] = [.On, .Off, .Auto] {
         didSet {
             if allowedFlashModes.count == 0 {
                 fatalError("You have to allow at least one flash mode (e.g. .Off)")
@@ -122,7 +122,7 @@ public class IMGLYCameraController: NSObject {
         }
     }
     
-    public var allowedTorchModes: [IMGLYTorchMode] = [.On, .Off, .Auto] {
+    public var allowedTorchModes: [AVCaptureTorchMode] = [.On, .Off, .Auto] {
         didSet {
             if allowedTorchModes.count == 0 {
                 fatalError("You have to allow at least one torch mode (e.g. .Off")
@@ -408,33 +408,27 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Flash
     
     /**
-    Selects the next flash-mode. The order is Auto->On->Off.
-    If the current device does not support auto-flash, this method
-    uses the next allowed flash mode or off.
+    Selects the next flash-mode. The order is taken from `availableFlashModes`.
+    If the current device does not support a flash mode, this method uses the next flash mode that is supported or .Off.
     */
     public func selectNextFlashMode() {
-        var nextFlashMode: AVCaptureFlashMode = flashMode
+        guard let device = videoDeviceInput?.device else {
+            return
+        }
         
-        switch flashMode {
-        case .Auto:
-            if let device = videoDeviceInput?.device where device.isFlashModeSupported(.On) && allowedFlashModes.contains(.On) {
-                nextFlashMode = .On
-            } else if allowedFlashModes.contains(.Off) {
+        let currentFlashModeIndex = allowedFlashModes.indexOf(flashMode) ?? 0
+        var nextFlashModeIndex = (currentFlashModeIndex + 1) % allowedFlashModes.count
+        var nextFlashMode = allowedFlashModes[nextFlashModeIndex]
+        var counter = 1
+        
+        while !device.isFlashModeSupported(nextFlashMode) {
+            nextFlashModeIndex = (nextFlashModeIndex + 1) % allowedFlashModes.count
+            nextFlashMode = allowedFlashModes[nextFlashModeIndex]
+            counter++
+            
+            if counter >= allowedFlashModes.count {
                 nextFlashMode = .Off
-            }
-        case .On:
-            if allowedFlashModes.contains(.Off) {
-                nextFlashMode = .Off
-            } else if let device = videoDeviceInput?.device where device.isFlashModeSupported(.Auto) && allowedFlashModes.contains(.Auto) {
-                nextFlashMode = .Auto
-            }
-        case .Off:
-            if let device = videoDeviceInput?.device {
-                if device.isFlashModeSupported(.Auto) && allowedFlashModes.contains(.Auto) {
-                    nextFlashMode = .Auto
-                } else if device.isFlashModeSupported(.On) && allowedFlashModes.contains(.On) {
-                    nextFlashMode = .On
-                }
+                break
             }
         }
         
@@ -487,28 +481,23 @@ public class IMGLYCameraController: NSObject {
     just toggles between on and off.
     */
     public func selectNextTorchMode() {
-        var nextTorchMode: AVCaptureTorchMode = torchMode
+        guard let device = videoDeviceInput?.device else {
+            return
+        }
         
-        switch torchMode {
-        case .Auto:
-            if let device = videoDeviceInput?.device where device.isTorchModeSupported(.On) && allowedTorchModes.contains(.On) {
-                nextTorchMode = .On
-            } else if allowedTorchModes.contains(.Off) {
+        let currentTorchModeIndex = allowedTorchModes.indexOf(torchMode) ?? 0
+        var nextTorchModeIndex = (currentTorchModeIndex + 1) % allowedTorchModes.count
+        var nextTorchMode = allowedTorchModes[nextTorchModeIndex]
+        var counter = 1
+        
+        while !device.isTorchModeSupported(nextTorchMode) {
+            nextTorchModeIndex = (nextTorchModeIndex + 1) % allowedTorchModes.count
+            nextTorchMode = allowedTorchModes[nextTorchModeIndex]
+            counter++
+            
+            if counter >= allowedTorchModes.count {
                 nextTorchMode = .Off
-            }
-        case .On:
-            if allowedTorchModes.contains(.Off) {
-                nextTorchMode = .Off
-            } else if let device = videoDeviceInput?.device where device.isTorchModeSupported(.Auto) && allowedTorchModes.contains(.Auto) {
-                nextTorchMode = .Auto
-            }
-        case .Off:
-            if let device = videoDeviceInput?.device {
-                if device.isTorchModeSupported(.Auto) && allowedTorchModes.contains(.Auto) {
-                    nextTorchMode = .Auto
-                } else if device.isTorchModeSupported(.On) && allowedTorchModes.contains(.On) {
-                    nextTorchMode = .On
-                }
+                break
             }
         }
         
@@ -776,7 +765,7 @@ public class IMGLYCameraController: NSObject {
         videoPreviewView!.bindDrawable()
         
         var preferredCameraPosition: AVCaptureDevicePosition = .Back
-        if !allowedCameraPositions.contains(IMGLYCameraPosition.Back) {
+        if !allowedCameraPositions.contains(.Back) {
             preferredCameraPosition = .Front
         }
         
@@ -786,22 +775,16 @@ public class IMGLYCameraController: NSObject {
             }
             
             if let device = self.videoDeviceInput?.device {
-                if recordingMode == .Photo {
-                    if device.isFlashModeSupported(.Auto) && self.allowedFlashModes.contains(.Auto) {
-                        self.flashMode = .Auto
-                    } else if device.isFlashModeSupported(.On) && self.allowedFlashModes.contains(.On) {
-                        self.flashMode = .On
-                    } else {
-                        self.flashMode = .Off
-                    }
-                } else if recordingMode == .Video {
-                    if device.isTorchModeSupported(.Auto) && self.allowedTorchModes.contains(.Auto) {
-                        self.torchMode = .Auto
-                    } else if device.isTorchModeSupported(.On) && self.allowedTorchModes.contains(.On) {
-                        self.flashMode = .On
-                    } else {
-                        self.flashMode = .Off
-                    }
+                if device.isFlashModeSupported(self.allowedFlashModes[0]) {
+                    self.flashMode = self.allowedFlashModes[0]
+                } else {
+                    self.flashMode = .Off
+                }
+                
+                if device.isTorchModeSupported(self.allowedTorchModes[0]) {
+                    self.torchMode = self.allowedTorchModes[0]
+                } else {
+                    self.torchMode = .Off
                 }
             }
             
@@ -864,7 +847,7 @@ public class IMGLYCameraController: NSObject {
             case .Photo:
                 if self.flashAvailable {
                     let translatedFlashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
-                    if (self.allowedFlashModes.contains(self.flashModeOptionFromSystemFlashMode(translatedFlashMode))) {
+                    if self.allowedFlashModes.contains(translatedFlashMode) {
                         self.flashMode = translatedFlashMode
                     } else {
                         self.selectNextFlashMode()
@@ -877,7 +860,7 @@ public class IMGLYCameraController: NSObject {
             case .Video:
                 if self.torchAvailable {
                     let translatedTorchMode = AVCaptureTorchMode(rawValue: self.flashMode.rawValue)!
-                    if (self.allowedTorchModes.contains(self.torchModeOptionFromSystemTorchMode(translatedTorchMode))) {
+                    if self.allowedTorchModes.contains(translatedTorchMode) {
                         self.torchMode = translatedTorchMode
                     } else {
                         self.selectNextTorchMode()
@@ -1385,28 +1368,6 @@ public class IMGLYCameraController: NSObject {
         }
         
         return captureDevice
-    }
-    
-    private func flashModeOptionFromSystemFlashMode(flashMode: AVCaptureFlashMode) -> IMGLYFlashMode {
-        switch flashMode {
-        case .Off:
-            return .Off
-        case .On:
-            return .On
-        case .Auto:
-            return .Auto
-        }
-    }
-    
-    private func torchModeOptionFromSystemTorchMode(torchMode: AVCaptureTorchMode) -> IMGLYTorchMode {
-        switch torchMode {
-        case .Off:
-            return .Off
-        case .On:
-            return .On
-        case .Auto:
-            return .Auto
-        }
     }
 }
 

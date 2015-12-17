@@ -66,22 +66,65 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     public var showFilterIntensitySlider = true
     
     /// Allowed camera positions. Defaults to all available positions
-    /// and falls back to supported position if only one exists.
-    public var allowedCameraPositions: [IMGLYCameraPosition] = [ .Back, .Front ]
+    /// and falls back to supported position if only one exists. To set
+    /// this option from Objc-C see `allowedCameraPositionsAsNSNumbers`.
+    public var allowedCameraPositions: [AVCaptureDevicePosition] = [ .Back, .Front ]
     
-    /// Allowed flash modes. Defaults to all available modes.
-    public var allowedFlashModes: [IMGLYFlashMode] = [ .Auto, .On, .Off ]
+    /// Allowed flash modes. Defaults to all available modes. Duplicate
+    /// values are not removed and may lead to unexpected behaviour. The
+    /// first option is selected on launch, although the view controller
+    /// tries to match the previous torch mode on record mode changes.
+    /// To set  this option from Objc-C see `allowedFlashModesAsNSNumbers`.
+    public var allowedFlashModes: [AVCaptureFlashMode] = [ .Auto, .On, .Off ]
 
-    /// Allowed torch modes. Defaults to all available modes.
-    public var allowedTorchModes: [IMGLYTorchMode] = [ .Auto, .On, .Off ]
+    /// Allowed torch modes. Defaults to all available modes. Duplicate
+    /// values are not removed and may lead to unexpected behaviour. The
+    /// first option is selected on launch, although the view controller
+    /// tries to match the previous flash mode on record mode changes.
+    /// To set  this option from Objc-C see `allowedTorchModesAsNSNumbers`.
+    public var allowedTorchModes: [AVCaptureTorchMode] = [ .Auto, .On, .Off ]
+    
+    // MARK: Obj-C Compatibility
+    
+    /// An array of `AVCaptureDevicePosition` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedCameraPositions` with the corresponding unwrapped values.
+    public var allowedCameraPositionsAsNSNumbers: [NSNumber] = [ AVCaptureDevicePosition.Back, .Front ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedCameraPositions = allowedCameraPositionsAsNSNumbers.map({ AVCaptureDevicePosition(rawValue: $0.integerValue)! })
+        }
+    }
+    
+    /// An array of `AVCaptureFlashMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedFlashModes` with the corresponding unwrapped values.
+    public var allowedFlashModesAsNSNumbers: [NSNumber] = [ AVCaptureFlashMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedFlashModes = allowedFlashModesAsNSNumbers.map({ AVCaptureFlashMode(rawValue: $0.integerValue)! })
+        }
+    }
+    
+    /// An array of `AVCaptureTorchMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedFlashModes` with the corresponding unwrapped values.
+    public var allowedTorchModesAsNSNumbers: [NSNumber] = [ AVCaptureTorchMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedTorchModes = allowedTorchModesAsNSNumbers.map({ AVCaptureTorchMode(rawValue: $0.integerValue)! })
+        }
+    }
 }
 
 public class IMGLYCameraViewController: UIViewController {
     
     private let configuration: IMGLYConfiguration
+    
+    private var options: IMGLYCameraViewControllerOptions {
+        return self.configuration.cameraViewControllerOptions
+    }
+    
     private var currentBackgroundColor: UIColor {
         get {
-            if let customBackgroundColor = self.configuration.cameraViewControllerOptions.backgroundColor {
+            if let customBackgroundColor = options.backgroundColor {
                 return customBackgroundColor
             }
             
@@ -167,7 +210,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.contentHorizontalAlignment = .Left
         button.addTarget(self, action: "changeFlash:", forControlEvents: .TouchUpInside)
         button.hidden = true
-        self.configuration.cameraViewControllerOptions.flashButtonConfigurationClosure(button)
+        self.options.flashButtonConfigurationClosure(button)
         return button
         }()
     
@@ -180,7 +223,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.contentHorizontalAlignment = .Right
         button.addTarget(self, action: "switchCamera:", forControlEvents: .TouchUpInside)
         button.hidden = true
-        self.configuration.cameraViewControllerOptions.switchCameraButtonConfigurationClosure(button)
+        self.options.switchCameraButtonConfigurationClosure(button)
         return button
         }()
     
@@ -193,7 +236,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
         button.addTarget(self, action: "showCameraRoll:", forControlEvents: .TouchUpInside)
-        self.configuration.cameraViewControllerOptions.cameraRollButtonConfigurationClosure(button)
+        self.options.cameraRollButtonConfigurationClosure(button)
         return button
         }()
     
@@ -209,7 +252,7 @@ public class IMGLYCameraViewController: UIViewController {
         label.alpha = 0
         label.textColor = UIColor.whiteColor()
         label.text = "00:00"
-        self.configuration.cameraViewControllerOptions.timeLabelConfigurationClosure(label)
+        self.options.timeLabelConfigurationClosure(label)
         return label
     }()
     
@@ -224,7 +267,7 @@ public class IMGLYCameraViewController: UIViewController {
         button.clipsToBounds = true
         button.addTarget(self, action: "toggleFilters:", forControlEvents: .TouchUpInside)
         button.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        self.configuration.cameraViewControllerOptions.filterSelectorButtonConfigurationClosure(button)
+        self.options.filterSelectorButtonConfigurationClosure(button)
         return button
         }()
     
@@ -245,7 +288,7 @@ public class IMGLYCameraViewController: UIViewController {
         slider.setThumbImage(sliderThumbImage, forState: .Normal)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
         
-        self.configuration.cameraViewControllerOptions.filterIntensitySliderConfigurationClosure(slider)
+        self.options.filterIntensitySliderConfigurationClosure(slider)
         
         return slider
     }()
@@ -420,11 +463,11 @@ public class IMGLYCameraViewController: UIViewController {
         
         bottomControlsView.addSubview(actionButtonContainer)
     
-        if configuration.cameraViewControllerOptions.showCameraRoll {
+        if options.showCameraRoll {
             bottomControlsView.addSubview(cameraRollButton)
         }
     
-        if configuration.cameraViewControllerOptions.showFilters {
+        if options.showFilters {
             bottomControlsView.addSubview(filterSelectionButton)
         }
         
@@ -432,7 +475,7 @@ public class IMGLYCameraViewController: UIViewController {
             bottomControlsView.addSubview(recordingModeSelectionButton)
         }
         
-        if configuration.cameraViewControllerOptions.showFilterIntensitySlider {
+        if options.showFilterIntensitySlider {
             backgroundContainerView.addSubview(filterIntensitySlider)
         }
     }
@@ -537,11 +580,11 @@ public class IMGLYCameraViewController: UIViewController {
         view.layoutIfNeeded()
         
         cameraController = IMGLYCameraController(previewView: cameraPreviewContainer)
-        cameraController!.tapToFocusEnabled = configuration.cameraViewControllerOptions.tapToFocusEnabled
-        cameraController!.allowedCameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
-        cameraController!.allowedFlashModes = configuration.cameraViewControllerOptions.allowedFlashModes
-        cameraController!.allowedTorchModes = configuration.cameraViewControllerOptions.allowedTorchModes
-        cameraController!.squareMode = configuration.cameraViewControllerOptions.cropToSquare
+        cameraController!.tapToFocusEnabled = options.tapToFocusEnabled
+        cameraController!.allowedCameraPositions = options.allowedCameraPositions
+        cameraController!.allowedFlashModes = options.allowedFlashModes
+        cameraController!.allowedTorchModes = options.allowedTorchModes
+        cameraController!.squareMode = options.cropToSquare
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
         if maximumVideoLength > 0 {
@@ -550,7 +593,7 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureFilterSelectionController() {
-        filterSelectionController.dataSource = self.configuration.cameraViewControllerOptions.filterDataSource
+        filterSelectionController.dataSource = self.options.filterDataSource
         filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
             if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
                 cameraController.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
@@ -966,7 +1009,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
         self.addActionButtonToContainer(actionButton)
         // Call configuration closure if actionButton is a UIButton subclass
         if let imageCaptureActionButton = actionButton as? UIButton {
-            self.configuration.cameraViewControllerOptions.photoActionButtonConfigurationClosure(imageCaptureActionButton)
+            self.options.photoActionButtonConfigurationClosure(imageCaptureActionButton)
         }
         actionButton.layoutIfNeeded()
         
@@ -984,7 +1027,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
             self.addRecordingTimeLabel()
             self.cameraController?.hideSquareMask()
         } else {
-            if configuration.cameraViewControllerOptions.cropToSquare {
+            if options.cropToSquare {
                 self.cameraController?.showSquareMask()
             }
         }
