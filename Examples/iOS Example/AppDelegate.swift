@@ -17,33 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         // Start with default configuration
-        let configuration = IMGLYConfiguration()
-        
-        // Customize the done button using the configuration block
-        configuration.mainEditorViewControllerOptions.rightBarButtonConfigurationClosure = { barButtonItem in
-            barButtonItem.tintColor = UIColor.greenColor()
+        let configuration = IMGLYConfiguration() { builder in
+            let cameraViewControllerOptions = IMGLYCameraViewControllerOptions()
+            cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
+            cameraViewControllerOptions.tapToFocusEnabled = false
+            cameraViewControllerOptions.allowedCameraPositions = [ .Front, .Back ]
+            cameraViewControllerOptions.allowedFlashModes = [ .On, .Off ]
+            cameraViewControllerOptions.cropToSquare = false
+            
+            builder.cameraViewControllerOptions = cameraViewControllerOptions
         }
-        
-        let cameraViewControllerOptions = IMGLYCameraViewControllerOptions()
-        cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
-        cameraViewControllerOptions.tapToFocusEnabled = false
-        cameraViewControllerOptions.allowedCameraPositions = [ .Back ]
-        cameraViewControllerOptions.allowedTorchModes = [ .Off ]
-        cameraViewControllerOptions.cropToSquare = false
-        
-        configuration.cameraViewControllerOptions = cameraViewControllerOptions
-        
-        configuration.textEditorViewControllerOptions.fontPreviewTextColor = UIColor.blueColor()
-        configuration.textEditorViewControllerOptions.availableFontColors = [ UIColor.redColor(), UIColor.greenColor() ]
-        configuration.textEditorViewControllerOptions.canModifyTextSize = false
-        configuration.textEditorViewControllerOptions.canModifyTextColor = false
         
         // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
-        do {
-            try configuration.replaceClass(IMGLYMainEditorViewController.self, replacingClass: IMGLYMainEditorSubclassViewController.self, namespace: "iOS_Example")
-        } catch {
-            print("Couldn't replace class")
-        }
+//        do {
+//            try configuration.replaceClass(IMGLYMainEditorViewController.self, replacingClass: IMGLYMainEditorSubclassViewController.self, namespace: "iOS_Example")
+//        } catch {
+//            print("Couldn't replace class")
+//        }
         
         let cameraViewController = IMGLYCameraViewController(configuration: configuration)
         cameraViewController.maximumVideoLength = 15

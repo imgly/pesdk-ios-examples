@@ -14,10 +14,13 @@ import UIKit
     case Radial
 }
 
+
 @objc public class IMGLYFocusEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     
+    /// This closure allows the configuration of the given `IMGLYImageCaptionButton`,
+    /// depending on the linked focus action.
     public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYFocusAction) -> ()
-    
+
     // MARK: Behaviour
     
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.

@@ -38,40 +38,85 @@ immutable copy via a closure.
     // MARK: Properties
     
     /// Defaults to black.
+    public let backgroundColor: UIColor
+    
+    /// Camera View Controller
+    public let cameraViewControllerOptions: IMGLYCameraViewControllerOptions
+    
+    // Editor View Controller options
+    public let mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions
+    public let filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions
+    public let stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions
+    public let orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions
+    public let focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions
+    public let cropEditorViewControllerOptions: IMGLYCropEditorViewControllerOptions
+    public let brightnessEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
+    public let contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
+    public let saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
+    public let textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions
+    
+    //  MARK: Initialization
+    
+    override convenience init() {
+        self.init(builder: { _ in })
+    }
+    
+    public init(builder: (IMGLYConfigurationBuilder -> Void)) {
+        let builderForClosure = IMGLYConfigurationBuilder()
+        builder(builderForClosure)
+        self.backgroundColor = builderForClosure.backgroundColor
+        self.cameraViewControllerOptions = builderForClosure.cameraViewControllerOptions
+        self.mainEditorViewControllerOptions = builderForClosure.mainEditorViewControllerOptions
+        self.filterEditorViewControllerOptions = builderForClosure.filterEditorViewControllerOptions
+        self.stickersEditorViewControllerOptions = builderForClosure.stickersEditorViewControllerOptions
+        self.orientationEditorViewControllerOptions = builderForClosure.orientationEditorViewControllerOptions
+        self.focusEditorViewControllerOptions = builderForClosure.focusEditorViewControllerOptions
+        self.cropEditorViewControllerOptions = builderForClosure.cropEditorViewControllerOptions
+        self.brightnessEditorViewControllerOptions = builderForClosure.brightnessEditorViewControllerOptions
+        self.contrastEditorViewControllerOptions = builderForClosure.contrastEditorViewControllerOptions
+        self.saturationEditorViewControllerOptions = builderForClosure.saturationEditorViewControllerOptions
+        self.textEditorViewControllerOptions = builderForClosure.textEditorViewControllerOptions
+        self.classReplacingMap = builderForClosure.classReplacingMap
+        super.init()
+    }
+    
+    /// Used internally to fetch a replacement class for framework classes.
+    func getClassForReplacedClass(replacedClass: NSObject.Type) -> NSObject.Type {
+        guard let replacingClassName = classReplacingMap[String(replacedClass)]
+            else { return replacedClass }
+
+        return NSClassFromString(replacingClassName) as! NSObject.Type
+    }
+
+    private let classReplacingMap: [String: String]
+}
+
+/**
+ The configuration builder object offers all properties of `IMGLYConfiguration` in
+ a mutable version, in order to build an immutable `IMGLYConfiguration` object.
+*/
+@objc public class IMGLYConfigurationBuilder : NSObject {
     public var backgroundColor: UIColor = UIColor.blackColor()
-    
     public var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
-    
-    // Editors
-    
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
-    
     public var filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions()
-    
     public var stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions()
-    
     public var orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions()
-    
     public var focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions()
-    
     public var cropEditorViewControllerOptions: IMGLYCropEditorViewControllerOptions = IMGLYCropEditorViewControllerOptions()
-    
     public var brightnessEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    
     public var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    
     public var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    
     public var textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions()
     
     // MARK: Class replacement
     
     /**
-    Use this to use a specific subclass instead of the default imglyKit classes. This works
-    across all the whole framework and allows you to subclass all usages of a class.
-    
-    - Throws: An exception if the replacing class is not a subclass of the replaced class.
-    */
+     Use this to use a specific subclass instead of the default imglyKit classes. This works
+     across all the whole framework and allows you to subclass all usages of a class.
+     
+     - Throws: An exception if the replacing class is not a subclass of the replaced class.
+     */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
         
         if (!replacingClass.isSubclassOfClass(builtinClass)) {
@@ -84,16 +129,8 @@ immutable copy via a closure.
         classReplacingMap[builtinClassName] = replacingClassName
         print("Using \(replacingClassName) instead of \(builtinClassName)")
     }
-
-    func getClassForReplacedClass(replacedClass: NSObject.Type) -> NSObject.Type {
-        guard let replacingClassName = classReplacingMap[String(replacedClass)]
-            else { return replacedClass }
-
-        return NSClassFromString(replacingClassName) as! NSObject.Type
-    }
-
+    
     // MARK: Private properties
     
-    private var classReplacingMap: [String: String] = [:]
-
+    var classReplacingMap: [String: String] = [:]
 }
