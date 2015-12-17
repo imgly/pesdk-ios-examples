@@ -29,6 +29,8 @@ public class IMGLYTextFilter : CIFilter {
     
     public var transform = CGAffineTransformIdentity
 
+    public var cropRect = CGRectZero
+    
     /// The color of the text.
     #if os(iOS)
     public var color = UIColor.whiteColor()
@@ -49,6 +51,8 @@ public class IMGLYTextFilter : CIFilter {
         guard let inputImage = inputImage else {
             return nil
         }
+        
+        
         
         if text.isEmpty {
             return inputImage
