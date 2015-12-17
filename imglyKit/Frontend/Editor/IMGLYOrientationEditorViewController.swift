@@ -8,6 +8,12 @@
 
 import UIKit
 
+@objc public enum IMGLYOrientationAction: Int {
+    case RotateLeft
+    case RotateRight
+    case FlipHorizontally
+    case FlipVertically
+}
 
 @objc public class IMGLYOrientationEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     
@@ -16,12 +22,26 @@ import UIKit
     // MARK: Behaviour
     
     /// Defines all allowed actions. The action buttons are always shown in the rotate -> flip order.
-    /// Defaults to show all available actions.
+    /// Defaults to show all available actions. To set this
+    /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
     public var allowedOrientationActions: [IMGLYOrientationAction] = [ .RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ]
     
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure = { _ in }
+    
+    // MARK: Obj-C Compatibility
+    
+    /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedOrientationActions` with the corresponding `IMGLYFocusAction` values.
+    public var allowedOrientationActionsAsNSNumbers: [NSNumber] = [ IMGLYOrientationAction.RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.map({ IMGLYOrientationAction(rawValue: $0.integerValue)! })
+        }
+    }
+    
+    // MARK: Init
     
     public override init() {
         super.init()
@@ -123,56 +143,38 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     // MARK: - Configuration
     
     private func configureButtons() {
-        var views = [String: UIView]()
-
+        // Map actions and buttons
+        let actionToButtonMap: [IMGLYOrientationAction: IMGLYImageCaptionButton] = [
+            .RotateLeft: rotateLeftButton,
+            .RotateRight: rotateRightButton,
+            .FlipHorizontally: flipHorizontallyButton,
+            .FlipVertically: flipVerticallyButton
+        ]
+        
+        // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
+        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
         
-        let allowedActions = options.allowedOrientationActions
-        if allowedActions.contains(.RotateLeft) {
-            buttonContainerView.addSubview(rotateLeftButton)
-            views["rotateLeftButton"] = rotateLeftButton
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateLeftButton]|", options: [], metrics: nil, views: views))
+        var views = [String: UIView]()
+        var viewNames = [String]()
+        for action in options.allowedOrientationActions {
+            let button = actionToButtonMap[action]!
+            let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
+            viewNames.append(viewName)
+            buttonContainerView.addSubview(button)
+            views[viewName] = button
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
-        
-        if allowedActions.contains(.RotateRight) {
-            buttonContainerView.addSubview(rotateRightButton)
-            views["rotateRightButton"] = rotateRightButton
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[rotateRightButton]|", options: [], metrics: nil, views: views))
-        }
-        
-        if allowedActions.contains(.FlipHorizontally) {
-            buttonContainerView.addSubview(flipHorizontallyButton)
-            views["flipHorizontallyButton"] = flipHorizontallyButton
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipHorizontallyButton]|", options: [], metrics: nil, views: views))
-        }
-        
-        if allowedActions.contains(.FlipVertically) {
-            buttonContainerView.addSubview(flipVerticallyButton)
-            views["flipVerticallyButton"] = flipVerticallyButton
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[flipVerticallyButton]|", options: [], metrics: nil, views: views))
-        }
-        
-        let metrics = [
-            "buttonWidth" : 70
-        ]
-        
-        var visualFormatString = "|"
-        for key in views.keys {
-            visualFormatString += "[\(key)(==buttonWidth)]"
-        }
-        visualFormatString += "|"
         
         // Button Constraints
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(visualFormatString, options: [], metrics: metrics, views: views))
-        
-        // Container Constraints
-        views["buttonContainerView"] = buttonContainerView
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: views))
-        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        let visualFormatString = viewNames.reduce("") { (acc, name) -> String in
+            return acc + "[\(name)(==buttonWidth)]"
+        }
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
     }
-    
     
     // MARK: - Helpers
     

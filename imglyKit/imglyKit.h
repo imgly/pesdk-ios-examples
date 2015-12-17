@@ -13,14 +13,6 @@ FOUNDATION_EXPORT const unsigned char imglyKitVersionString[];
 
 #import <imglyKit/LUTToNSDataConverter.h>
 
-// Bitmask for allowed orientation types
-typedef NS_OPTIONS(NSInteger, IMGLYOrientationAction) {
-    IMGLYOrientationActionRotateLeft = 1 << 0,
-    IMGLYOrientationActionRotateRight = 1 << 1,
-    IMGLYOrientationActionFlipHorizontally = 1 << 2,
-    IMGLYOrientationActionFlipVertically = 1 << 3
-};
-
 // Bitmask for crop actions
 typedef NS_OPTIONS(NSInteger, IMGLYCropAction) {
     IMGLYCropActionFree = 1 << 0,
