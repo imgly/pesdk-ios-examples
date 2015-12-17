@@ -78,17 +78,18 @@ public class IMGLYTextFilter : CIFilter {
         print(originalSize)
         print(cropRect)
         
+        let position = CGPoint(x: frame.origin.x * originalSize.width, y: frame.origin.y * originalSize.height)
+        
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
         let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         customParagraphStyle.lineBreakMode = NSLineBreakMode.ByClipping
-        let font = UIFont(name: fontName, size: fontScaleFactor * imageSize.height)
-       // text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width * 1.5, height: frame.size.height * imageSize.width * 2), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
+        let font = UIFont(name: fontName, size: fontScaleFactor * originalSize.height)
         let context = UIGraphicsGetCurrentContext()
         CGContextSaveGState(context)
         CGContextConcatCTM(context, self.transform)
-        text.drawAtPoint(CGPoint(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height), withAttributes:  [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
+        text.drawAtPoint(position, withAttributes:  [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
         let image = UIGraphicsGetImageFromCurrentImageContext()
         CGContextRestoreGState(context)
         UIGraphicsEndImageContext()
