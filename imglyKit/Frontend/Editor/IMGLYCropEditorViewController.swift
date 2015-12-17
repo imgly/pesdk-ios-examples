@@ -10,6 +10,13 @@ import UIKit
 
 public let MinimumCropSize = CGFloat(50)
 
+@objc public enum IMGLYCropAction: Int {
+    case Free
+    case OneToOne
+    case FourToThree
+    case SixteenToNine
+}
+
 @objc public class IMGLYCropEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     
     public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYCropAction) -> ()
@@ -17,12 +24,26 @@ public let MinimumCropSize = CGFloat(50)
     // MARK: Behaviour
     
     /// Defines all allowed focus actions. The focus buttons are always shown in the off -> linear -> radial order.
-    /// Defaults to show all available modes. The .Off action is always added.
-    public var allowedActions: [IMGLYCropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
+    /// Defaults to show all available modes. The .Off action is always added. To set this
+    /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
+    public var allowedCropActions: [IMGLYCropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
     
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure = { _ in }
+    
+    // MARK: Obj-C Compatibility
+    
+    /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedOrientationActions` with the corresponding `IMGLYFocusAction` values.
+    public var allowedCropActionsAsNSNumbers: [NSNumber] = [ IMGLYCropAction.Free, .OneToOne, .FourToThree, .SixteenToNine ].map({ NSNumber(integer: $0.rawValue) }) {
+        didSet {
+            self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ IMGLYCropAction(rawValue: $0.integerValue)! })
+        }
+    }
+    
+    // MARK: Init
     
     public override init() {
         super.init()
@@ -160,30 +181,30 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Configuration
     
     private func configureButtons() {
-        let buttonToActionMap: [(IMGLYImageCaptionButton, IMGLYCropAction)] = [
-            (freeRatioButton, .Free),
-            (oneToOneRatioButton, .OneToOne),
-            (fourToThreeRatioButton, .FourToThree),
-            (sixteenToNineRatioButton, .SixteenToNine)
+        // Map actions and buttons
+        let actionToButtonMap: [IMGLYCropAction: IMGLYImageCaptionButton] = [
+            .Free: freeRatioButton,
+            .OneToOne: oneToOneRatioButton,
+            .FourToThree: fourToThreeRatioButton,
+            .SixteenToNine: sixteenToNineRatioButton
         ]
-
+        
         // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
-
+        
         var views = [String: UIView]()
         var viewNames = [String]()
-        for (button, action) in buttonToActionMap {
-            if options.allowedActions.contains(action) {
-                let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
-                viewNames.append(viewName)
-                buttonContainerView.addSubview(button)
-                views[viewName] = button
-                buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
-            }
+        for action in options.allowedCropActions {
+            let button = actionToButtonMap[action]!
+            let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
+            viewNames.append(viewName)
+            buttonContainerView.addSubview(button)
+            views[viewName] = button
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
         
         // Button Constraints

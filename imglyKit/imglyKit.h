@@ -12,11 +12,3 @@ FOUNDATION_EXPORT double imglyKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char imglyKitVersionString[];
 
 #import <imglyKit/LUTToNSDataConverter.h>
-
-// Bitmask for crop actions
-typedef NS_OPTIONS(NSInteger, IMGLYCropAction) {
-    IMGLYCropActionFree = 1 << 0,
-    IMGLYCropActionOneToOne = 1 << 1,
-    IMGLYCropActionFourToThree = 1 << 2,
-    IMGLYCropActionSixteenToNine = 1 << 3
-};
