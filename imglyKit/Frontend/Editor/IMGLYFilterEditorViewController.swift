@@ -68,9 +68,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = options.title
-        
+                
         configureFilterSelectionController()
         if (options.showFilterIntensitySlider) {
             configureFilterIntensitySlider()

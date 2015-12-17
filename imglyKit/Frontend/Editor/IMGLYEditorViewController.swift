@@ -67,7 +67,7 @@ public class IMGLYEditorViewController: UIViewController {
     
     public private(set) lazy var previewImageView: IMGLYZoomingImageView = {
         let imageView = IMGLYZoomingImageView()
-        imageView.backgroundColor = self.configuration.backgroundColor
+        imageView.backgroundColor = self.currentBackgroundColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
         return imageView
@@ -75,7 +75,7 @@ public class IMGLYEditorViewController: UIViewController {
     
     public private(set) lazy var bottomContainerView: UIView = {
         let view = UIView()
-        view.backgroundColor = self.view.backgroundColor
+        view.backgroundColor = self.currentBackgroundColor
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -86,6 +86,14 @@ public class IMGLYEditorViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
+    
+    var currentBackgroundColor: UIColor {
+        if let customBackgroundColor = options.backgroundColor {
+            return customBackgroundColor
+        }
+        
+        return configuration.backgroundColor
+    }
     
     // MARK: - Initalization
     
@@ -139,14 +147,19 @@ public class IMGLYEditorViewController: UIViewController {
     
     private func configureNavigationItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "tappedDone:")
+        options.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
+        
+        if let leftNavigationItem = navigationItem.leftBarButtonItem {
+            options.leftBarButtonConfigurationClosure(leftNavigationItem)
+        }
     }
     
     private func configureViewHierarchy() {
         if let navBar = self.navigationController?.navigationBar {
-            navBar.barTintColor = self.configuration.backgroundColor
+            navBar.barTintColor = currentBackgroundColor
         }
         
-        view.backgroundColor = self.configuration.backgroundColor
+        view.backgroundColor = currentBackgroundColor
 
         view.addSubview(previewImageView)
         view.addSubview(bottomContainerView)

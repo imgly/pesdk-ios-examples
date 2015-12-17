@@ -133,8 +133,6 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = options.title
-        
         configureButtons()
         configureGradientViews()
         
@@ -167,6 +165,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         
         // Setup button container view
         let buttonContainerView = UIView()
+        buttonContainerView.backgroundColor = currentBackgroundColor
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))

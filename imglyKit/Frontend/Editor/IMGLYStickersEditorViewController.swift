@@ -106,9 +106,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = options.title
-        
+                
         configureStickersCollectionView()
         configureStickersClipView()
         configureGestureRecognizers()
@@ -138,6 +136,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         flowLayout.minimumLineSpacing = 10
         
         let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = currentBackgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self

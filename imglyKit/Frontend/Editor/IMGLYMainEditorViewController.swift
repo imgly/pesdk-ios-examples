@@ -69,14 +69,9 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.view.backgroundColor = options.backgroundColor
-        
-        navigationItem.title = options.title
+                
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
-        
         options.leftBarButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
-        options.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
         
         navigationController?.delegate = self
         
@@ -101,7 +96,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.backgroundColor = options.backgroundColor
+        collectionView.backgroundColor = currentBackgroundColor
         collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCellReuseIdentifier)
         
         let views = [ "collectionView" : collectionView ]

@@ -57,6 +57,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     public private(set) lazy var textColorSelectorView: IMGLYTextColorSelectorView = {
         let view = IMGLYTextColorSelectorView(availableColors: self.options.availableFontColors)
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = self.currentBackgroundColor
         view.menuDelegate = self
         return view
         }()
@@ -117,9 +118,6 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        let bundle = NSBundle(forClass: self.dynamicType)
-        navigationItem.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
-        
         IMGLYInstanceFactory.fontImporter().importFonts()
         
         navigationItem.rightBarButtonItem?.enabled = false
