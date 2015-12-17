@@ -26,6 +26,9 @@ public class IMGLYTextFilter : CIFilter {
     public var fontScaleFactor = CGFloat(1)
     /// The relative frame of the text within the image.
     public var frame = CGRect()
+    
+    public var transform = CGAffineTransformIdentity
+
     /// The color of the text.
     #if os(iOS)
     public var color = UIColor.whiteColor()
@@ -75,8 +78,12 @@ public class IMGLYTextFilter : CIFilter {
         customParagraphStyle.lineBreakMode = NSLineBreakMode.ByClipping
         let font = UIFont(name: fontName, size: fontScaleFactor * imageSize.height)
        // text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width * 1.5, height: frame.size.height * imageSize.width * 2), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
+        let context = UIGraphicsGetCurrentContext()
+        CGContextSaveGState(context)
+        CGContextConcatCTM(context, self.transform)
         text.drawAtPoint(CGPoint(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height), withAttributes:  [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
         let image = UIGraphicsGetImageFromCurrentImageContext()
+        CGContextRestoreGState(context)
         UIGraphicsEndImageContext()
         
         return image
