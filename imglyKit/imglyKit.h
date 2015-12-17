@@ -15,20 +15,6 @@ FOUNDATION_EXPORT const unsigned char imglyKitVersionString[];
 
 #pragma mark - IMGLYMainEditorViewController
 
-// Bitmask for editor action selection in configuration
-typedef NS_OPTIONS(NSInteger, IMGLYMainEditorActionOption) {
-    IMGLYMainEditorActionOptionMagic = 1 << 0,
-    IMGLYMainEditorActionOptionFilter = 1 << 1,
-    IMGLYMainEditorActionOptionStickers = 1 << 2,
-    IMGLYMainEditorActionOptionOrientation = 1 << 3,
-    IMGLYMainEditorActionOptionFocus = 1 << 4,
-    IMGLYMainEditorActionOptionCrop = 1 << 5,
-    IMGLYMainEditorActionOptionBrightness = 1 << 6,
-    IMGLYMainEditorActionOptionContrast = 1 << 7,
-    IMGLYMainEditorActionOptionSaturation = 1 << 8,
-    IMGLYMainEditorActionOptionText = 1 << 9,
-};
-
 // Bitmask for allowed camera positions
 typedef NS_OPTIONS(NSInteger, IMGLYCameraPosition) {
     IMGLYCameraPositionBack =  1 << 0,

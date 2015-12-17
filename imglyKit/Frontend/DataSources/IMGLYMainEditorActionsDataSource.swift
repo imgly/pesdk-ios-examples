@@ -46,12 +46,25 @@ import UIKit
     }
     
     /**
-    Creates a default datasource offering the given editor actions
-    - Parameter availableActionTypes: An array of supported `IMGLYMainEditorActionType`s
+     Creates a default datasource offering the given editor actions. The actions
+     are presented in the given order. Duplicates are not removed.
+     - Parameter availableActionTypes: An array of supported `IMGLYMainEditorActionType`s.
     */
-    public convenience init(availableActionTypes: [IMGLYMainEditorActionOption]) {
+    public convenience init(availableActionTypes: [IMGLYMainEditorActionType]) {
         self.init()
-        self.items = self.itemsForAvailableActions(availableActionTypes)
+        items = self.itemsForAvailableActions(availableActionTypes)
+    }
+    
+    /**
+     This initializer should only be called from Objective-C. It
+     creates a default datasource offering the given actionTypes.
+     - Parameter availableActionTypesAsNSNumbers: An NSOrderedSet
+     containing NSNumbers that wrap the raw value of the corresponding
+     IMGLYMainEditorActionType
+     */
+    public convenience init(availableActionTypesAsNSNumbers: NSOrderedSet) {
+        self.init()
+        
     }
     
     // MARK: IMGLYMainEditorActionsDataSource
@@ -66,59 +79,53 @@ import UIKit
     
     // MARK: Default EditorActions
     
-    private func itemsForAvailableActions(types: [IMGLYMainEditorActionOption]) -> [IMGLYMainEditorAction] {
+    private func itemsForAvailableActions(types:[IMGLYMainEditorActionType]) -> [IMGLYMainEditorAction] {
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         var actions: [IMGLYMainEditorAction] = []
-        if (types.contains(.Magic)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),
-                selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Magic))
-        }
-        if (types.contains(.Filter)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.filter", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_filters", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Filter))
-        }
-        if (types.contains(.Stickers)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.stickers", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Stickers))
-        }
-        if (types.contains(.Orientation)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.orientation", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Orientation))
-        }
-        if (types.contains(.Focus)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.focus", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_focus", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Focus))
-        }
-        if (types.contains(.Crop)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.crop", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_crop", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Crop))
-        }
-        if (types.contains(.Brightness)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.brightness", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_brightness", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Brightness))
-        }
-        if (types.contains(.Contrast)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.contrast", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_contrast", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Contrast))
-        }
-        if (types.contains(.Saturation)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.saturation", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_saturation", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Saturation))
-        }
-        if (types.contains(.Text)) {
-            actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.text", tableName: nil, bundle: bundle, value: "", comment: ""),
-                image: UIImage(named: "icon_option_text", inBundle: bundle, compatibleWithTraitCollection: nil),
-                editorType: .Text))
+        for actionType in types {
+            switch actionType {
+            case .Magic:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Magic))
+            case .Filter:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.filter", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_filters", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Filter))
+            case .Stickers:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.stickers", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Stickers))
+            case .Orientation:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.orientation", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Orientation))
+            case .Focus:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.focus", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_focus", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Focus))
+            case .Crop:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.crop", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_crop", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Crop))
+            case .Brightness:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.brightness", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_brightness", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Brightness))
+            case .Contrast:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.contrast", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_contrast", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Contrast))
+            case .Saturation:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.saturation", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_saturation", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Saturation))
+            case .Text:
+                actions.append(IMGLYMainEditorAction(title: NSLocalizedString("main-editor.button.text", tableName: nil, bundle: bundle, value: "", comment: ""),
+                    image: UIImage(named: "icon_option_text", inBundle: bundle, compatibleWithTraitCollection: nil),
+                    editorType: .Text))
+            }
         }
         
         return actions
