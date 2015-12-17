@@ -15,10 +15,10 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     
     // MARK: Behaviour
     
-    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
-    /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
+    /// An object conforming to the `IMGLYStickersDataSourceProtocol`
+    /// Per default an `IMGLYStickersDataSource` offering all filters
     /// is set.
-    public var dataSource: IMGLYStickersDataSourceProtocol = IMGLYStickersDataSource()
+    public var stickersDataSource: IMGLYStickersDataSourceProtocol = IMGLYStickersDataSource()
     
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true
@@ -307,13 +307,13 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
     }
     
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return options.dataSource.stickerCount
+        return options.stickersDataSource.stickerCount
     }
     
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
         
-        let sticker = options.dataSource.stickerAtIndex(indexPath.item)
+        let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         cell.imageView.image = sticker.thumbnail ?? sticker.image
         
         return cell
@@ -323,7 +323,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
 extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let sticker = options.dataSource.stickerAtIndex(indexPath.item)
+        let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
         imageView.frame.size = initialSizeForStickerImage(sticker.image)
