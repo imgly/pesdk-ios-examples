@@ -18,9 +18,7 @@ public class IMGLYTenderFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Tender
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Tender
     }
 }

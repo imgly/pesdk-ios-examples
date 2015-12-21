@@ -16,7 +16,7 @@ import QuartzCore
 /**
 *  A filter that does nothing. It is used within the fixed-filterstack.
 */
-public class IMGLYNoneFilter : IMGLYResponseFilter {
+public class IMGLYNoneFilter: IMGLYResponseFilter {
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

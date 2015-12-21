@@ -18,9 +18,7 @@ public class IMGLYK2Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.K2
-        }
+    public override var filterType: IMGLYFilterType {
+        return .K2
     }
 }

@@ -18,9 +18,7 @@ public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.SepiaHigh
-        }
+    public override var filterType: IMGLYFilterType {
+        return .SepiaHigh
     }
 }

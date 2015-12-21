@@ -18,9 +18,7 @@ public class IMGLYWinterFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Winter
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Winter
     }
 }

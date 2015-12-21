@@ -18,9 +18,7 @@ public class IMGLYGoblinFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Goblin
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Goblin
     }
 }

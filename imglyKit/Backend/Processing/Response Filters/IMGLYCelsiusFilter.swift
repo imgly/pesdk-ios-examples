@@ -18,9 +18,7 @@ public class IMGLYCelsiusFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Celsius
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Celsius
     }
 }

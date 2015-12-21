@@ -18,9 +18,7 @@ public class IMGLYHighcarbFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Highcarb
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Highcarb
     }
 }

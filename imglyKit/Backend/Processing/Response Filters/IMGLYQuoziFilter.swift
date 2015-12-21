@@ -18,9 +18,7 @@ public class IMGLYQuoziFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Quozi
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Quozi
     }
 }

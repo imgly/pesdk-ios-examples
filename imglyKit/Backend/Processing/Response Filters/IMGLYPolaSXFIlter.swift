@@ -19,8 +19,6 @@ public class IMGLYPolaSXFilter: IMGLYResponseFilter {
     }
 
     public override var filterType: IMGLYFilterType {
-        get {
-            return IMGLYFilterType.PolaSX
-        }
+        return IMGLYFilterType.PolaSX
     }
 }

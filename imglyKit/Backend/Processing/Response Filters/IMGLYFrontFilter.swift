@@ -18,9 +18,7 @@ public class IMGLYFrontFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Front
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Front
     }
 }

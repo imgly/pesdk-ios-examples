@@ -18,9 +18,7 @@ public class IMGLYNoGreenFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.NoGreen
-        }
+    public override var filterType: IMGLYFilterType {
+        return .NoGreen
     }
 }

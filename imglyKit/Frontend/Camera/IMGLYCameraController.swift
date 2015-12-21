@@ -22,11 +22,11 @@ struct IMGLYSDKVersion: Comparable, CustomStringConvertible {
     }
 }
 
-func ==(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+func == (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     return (lhs.majorVersion == rhs.majorVersion) && (lhs.minorVersion == rhs.minorVersion) && (lhs.patchVersion == rhs.patchVersion)
 }
 
-func <(lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+func < (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
     if lhs.majorVersion < rhs.majorVersion {
         return true
     } else if lhs.majorVersion > rhs.majorVersion {
@@ -285,7 +285,7 @@ public class IMGLYCameraController: NSObject {
         if let device = videoDeviceInput?.device {
             let nextPosition: AVCaptureDevicePosition
 
-            switch (device.position) {
+            switch device.position {
             case .Front:
                 nextPosition = .Back
             case .Back:
@@ -345,7 +345,7 @@ public class IMGLYCameraController: NSObject {
     private func setupMaskIndicatorLayer() {
         maskIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
         maskIndicatorLayer.borderWidth = 1
-        maskIndicatorLayer.frame.origin = CGPointMake(0, 0)
+        maskIndicatorLayer.frame.origin = CGPoint(x: 0, y: 0)
         maskIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
         maskIndicatorLayer.hidden = true
         maskIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -354,7 +354,7 @@ public class IMGLYCameraController: NSObject {
 
     private func setupUpperMaskDarkenLayer() {
         upperMaskDarkenLayer.borderWidth = 0
-        upperMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        upperMaskDarkenLayer.frame.origin = CGPoint(x: 0, y: 0)
         upperMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
         upperMaskDarkenLayer.hidden = true
         upperMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -364,7 +364,7 @@ public class IMGLYCameraController: NSObject {
 
     private func setupLowerMaskDarkenLayer() {
         lowerMaskDarkenLayer.borderWidth = 0
-        lowerMaskDarkenLayer.frame.origin = CGPointMake(0, 0)
+        lowerMaskDarkenLayer.frame.origin = CGPoint(x: 0, y: 0)
         lowerMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
         lowerMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -585,13 +585,13 @@ public class IMGLYCameraController: NSObject {
             if let videoPreviewView = videoPreviewView {
                 let focusPointLocation = recognizer.locationInView(videoPreviewView)
                 let scaleFactor = videoPreviewView.contentScaleFactor
-                let videoFrame = CGRectMake(CGRectGetMinX(videoPreviewFrame) / scaleFactor, CGRectGetMinY(videoPreviewFrame) / scaleFactor, CGRectGetWidth(videoPreviewFrame) / scaleFactor, CGRectGetHeight(videoPreviewFrame) / scaleFactor)
+                let videoFrame = CGRect(x: videoPreviewFrame.minX / scaleFactor, y: videoPreviewFrame.minY / scaleFactor, width: videoPreviewFrame.width / scaleFactor, height: videoPreviewFrame.height / scaleFactor)
 
                 if CGRectContainsPoint(videoFrame, focusPointLocation) {
                     let focusIndicatorLocation = recognizer.locationInView(previewView)
                     showFocusIndicatorLayerAtLocation(focusIndicatorLocation)
 
-                    var pointOfInterest = CGPoint(x: focusPointLocation.x / CGRectGetWidth(videoFrame), y: focusPointLocation.y / CGRectGetHeight(videoFrame))
+                    var pointOfInterest = CGPoint(x: focusPointLocation.x / videoFrame.width, y: focusPointLocation.y / videoFrame.height)
                     pointOfInterest.x = 1 - pointOfInterest.x
 
                     if let device = videoDeviceInput?.device where device.position == .Front {
@@ -843,7 +843,7 @@ public class IMGLYCameraController: NSObject {
 
             /// Try to use the equivalent flash/torch mode when switchting recording
             /// modes. Select the next available mode if the equivalent is not allowed.
-            switch(recordingMode) {
+            switch recordingMode {
             case .Photo:
                 if self.flashAvailable {
                     let translatedFlashMode = AVCaptureFlashMode(rawValue: self.torchMode.rawValue)!
@@ -853,7 +853,7 @@ public class IMGLYCameraController: NSObject {
                         self.selectNextFlashMode()
                     }
 
-                    if (self.torchAvailable) {
+                    if self.torchAvailable {
                         self.torchMode = .Off
                     }
                 }
@@ -866,7 +866,7 @@ public class IMGLYCameraController: NSObject {
                         self.selectNextTorchMode()
                     }
 
-                    if (self.flashAvailable) {
+                    if self.flashAvailable {
                         self.flashMode = .Off
                     }
                 }
@@ -1086,7 +1086,7 @@ public class IMGLYCameraController: NSObject {
 
     // MARK: - Still Image Capture
 
-    public func squareTakenImage(image:UIImage) -> UIImage {
+    public func squareTakenImage(image: UIImage) -> UIImage {
         let stack = IMGLYFixedFilterStack()
         var scale = (image.size.width / image.size.height)
         if let captureVideoOrientation = self.captureVideoOrientation {
@@ -1095,7 +1095,7 @@ public class IMGLYCameraController: NSObject {
             }
         }
         let offset = (1.0 - scale) / 2.0
-        stack.orientationCropFilter.cropRect = CGRectMake(offset, 0, scale, 1.0)
+        stack.orientationCropFilter.cropRect = CGRect(x: offset, y: 0, width: scale, height: 1.0)
         return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
     }
 

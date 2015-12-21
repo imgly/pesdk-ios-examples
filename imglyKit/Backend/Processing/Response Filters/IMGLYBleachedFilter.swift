@@ -18,9 +18,7 @@ public class IMGLYBleachedFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Bleached
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Bleached
     }
 }

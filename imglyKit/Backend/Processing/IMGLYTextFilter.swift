@@ -14,8 +14,9 @@ import QuartzCore
 import AppKit
 #endif
 
-public class IMGLYTextFilter : CIFilter {
+public class IMGLYTextFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
+<<<<<<< b0366d9c46357f4bb8802f8abd908397534fe035
     public var inputImage:CIImage?
     
     /// The sticker that should be rendered.
@@ -27,6 +28,9 @@ public class IMGLYTextFilter : CIFilter {
     public var sticker: NSImage?
     #endif
     
+=======
+    public var inputImage: CIImage?
+>>>>>>> SwiftLint fixes
     /// The text that should be rendered.
     public var text = ""
  

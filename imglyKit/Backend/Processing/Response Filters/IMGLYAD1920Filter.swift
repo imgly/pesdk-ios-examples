@@ -18,9 +18,7 @@ public class IMGLYAD1920Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.AD1920
-        }
+    public override var filterType: IMGLYFilterType {
+        return .AD1920
     }
 }

@@ -18,9 +18,7 @@ public class IMGLYSoftFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Soft
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Soft
     }
 }

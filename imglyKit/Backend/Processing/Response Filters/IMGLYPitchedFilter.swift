@@ -18,9 +18,7 @@ public class IMGLYPitchedFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Pitched
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Pitched
     }
 }

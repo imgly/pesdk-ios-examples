@@ -281,7 +281,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
             self.circleGradientView.alpha = 0.0
             },
             completion: { finished in
-                if(finished) {
+                if finished {
                     self.circleGradientView.hidden = true
                 }
             }
@@ -300,7 +300,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
             self.boxGradientView.alpha = 0.0
             },
             completion: { finished in
-                if(finished) {
+                if finished {
                     self.boxGradientView.hidden = true
                 }
             }

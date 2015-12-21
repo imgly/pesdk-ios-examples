@@ -18,9 +18,7 @@ public class IMGLYPola669Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Pola669
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Pola669
     }
 }

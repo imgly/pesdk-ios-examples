@@ -29,10 +29,10 @@ Represents the angle an image should be rotated by.
  This is needed since otherwise the resulting CIImage has no no size due the lack of inforamtion within
  the CIImage.
 */
-public class IMGLYOrientationCropFilter : CIFilter {
+public class IMGLYOrientationCropFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
-    public var inputImage:CIImage?
-    public var cropRect = CGRectMake(0, 0, 1, 1)
+    public var inputImage: CIImage?
+    public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
     private var rotationAngle = IMGLYRotationAngle._0
     private var flipVertical_ = false
@@ -109,7 +109,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     }
 
     private func realNumberForRotationAngle(rotationAngle: IMGLYRotationAngle) -> CGFloat {
-        switch (rotationAngle) {
+        switch rotationAngle {
         case IMGLYRotationAngle._0:
              return 0
         case IMGLYRotationAngle._90:
@@ -126,7 +126,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
         Sets internal flags so that the filtered image will be rotated counter-clock-wise around 90 degrees.
     */
     public func rotateLeft() {
-        switch (rotationAngle) {
+        switch rotationAngle {
         case IMGLYRotationAngle._0:
             rotationAngle = IMGLYRotationAngle._90
         case IMGLYRotationAngle._90:
@@ -143,7 +143,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
         Sets internal flags so that the filtered image will be rotated clock-wise around 90 degrees.
     */
     public func rotateRight() {
-        switch (self.rotationAngle) {
+        switch rotationAngle {
         case IMGLYRotationAngle._0:
             rotationAngle = IMGLYRotationAngle._270
         case IMGLYRotationAngle._90:
@@ -169,47 +169,48 @@ public class IMGLYOrientationCropFilter : CIFilter {
 
     private func rotateCropRectRight() {
         moveCropRectMidToOrigin()
-        let tempRect = self.cropRect
-        self.cropRect.origin.x = -tempRect.origin.y
-        self.cropRect.origin.y = tempRect.origin.x
-        self.cropRect.size.width = -tempRect.size.height
-        self.cropRect.size.height = tempRect.size.width
+        let tempRect = cropRect
+        cropRect.origin.x = -tempRect.origin.y
+        cropRect.origin.y = tempRect.origin.x
+        cropRect.size.width = -tempRect.size.height
+        cropRect.size.height = tempRect.size.width
         moveCropRectTopLeftToOrigin()
         sanitizeCropRect()
     }
 
     private func flipCropRectHorizontal() {
         moveCropRectMidToOrigin()
-        self.cropRect.origin.x = -self.cropRect.origin.x - self.cropRect.size.width
+        cropRect.origin.x = -self.cropRect.origin.x - self.cropRect.size.width
         moveCropRectTopLeftToOrigin()
         sanitizeCropRect()
     }
 
     private func flipCropRectVertical() {
         moveCropRectMidToOrigin()
-        self.cropRect.origin.y = -self.cropRect.origin.y - self.cropRect.size.height
+        cropRect.origin.y = -self.cropRect.origin.y - self.cropRect.size.height
         moveCropRectTopLeftToOrigin()
         sanitizeCropRect()
     }
 
     private func moveCropRectMidToOrigin() {
-        self.cropRect.origin.x -= 0.5
-        self.cropRect.origin.y -= 0.5
+        cropRect.origin.x -= 0.5
+        cropRect.origin.y -= 0.5
     }
 
     private func moveCropRectTopLeftToOrigin() {
-        self.cropRect.origin.x += 0.5
-        self.cropRect.origin.y += 0.5
+        cropRect.origin.x += 0.5
+        cropRect.origin.y += 0.5
     }
 
     private func sanitizeCropRect () {
-        if (self.cropRect.size.width < 0.0) {
-            self.cropRect.size.width *= -1.0
-            self.cropRect.origin.x = self.cropRect.origin.x - self.cropRect.width
+        if cropRect.size.width < 0.0 {
+            cropRect.size.width *= -1.0
+            cropRect.origin.x = cropRect.origin.x - cropRect.width
         }
-        if (self.cropRect.size.height < 0.0) {
-            self.cropRect.size.height *= -1.0
-            self.cropRect.origin.y = self.cropRect.origin.y - self.cropRect.height
+
+        if cropRect.size.height < 0.0 {
+            cropRect.size.height *= -1.0
+            cropRect.origin.y = cropRect.origin.y - cropRect.height
         }
     }
 
@@ -217,7 +218,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     Sets internal flags so that the filtered image will be rotated flipped along the horizontal axis.
     */
     public func flipHorizontal() {
-        if (rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180) {
+        if rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180 {
             flipHorizontal_ = !flipHorizontal_
         } else {
             flipVertical_ = !flipVertical_
@@ -229,7 +230,7 @@ public class IMGLYOrientationCropFilter : CIFilter {
     Sets internal flags so that the filtered image will be rotated flipped along the vertical axis.
     */
     public func flipVertical() {
-        if (rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180) {
+        if rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180 {
             flipVertical_ = !flipVertical_
         } else {
             flipHorizontal_ = !flipHorizontal_

@@ -18,9 +18,7 @@ public class IMGLYPlateFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Plate
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Plate
     }
 }

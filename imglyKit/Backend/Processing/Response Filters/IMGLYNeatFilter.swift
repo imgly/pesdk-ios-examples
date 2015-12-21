@@ -18,9 +18,7 @@ public class IMGLYNeatFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Neat
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Neat
     }
 }

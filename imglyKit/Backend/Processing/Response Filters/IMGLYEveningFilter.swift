@@ -18,9 +18,7 @@ public class IMGLYEveningFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Evening
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Evening
     }
 }

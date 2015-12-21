@@ -18,9 +18,7 @@ public class IMGLYSteelFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Steel
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Steel
     }
 }

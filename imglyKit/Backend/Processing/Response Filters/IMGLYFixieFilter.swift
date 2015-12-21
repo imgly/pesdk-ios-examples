@@ -18,9 +18,7 @@ public class IMGLYFixieFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Fixie
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Fixie
     }
 }

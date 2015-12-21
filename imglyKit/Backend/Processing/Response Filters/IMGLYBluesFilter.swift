@@ -18,9 +18,7 @@ public class IMGLYBluesFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Blues
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Blues
     }
 }

@@ -18,9 +18,7 @@ public class IMGLYSunsetFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Sunset
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Sunset
     }
 }

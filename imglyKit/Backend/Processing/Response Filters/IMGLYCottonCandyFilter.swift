@@ -18,9 +18,7 @@ public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.CottonCandy
-        }
+    public override var filterType: IMGLYFilterType {
+        return .CottonCandy
     }
 }

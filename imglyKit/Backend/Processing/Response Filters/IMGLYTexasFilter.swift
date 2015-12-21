@@ -18,9 +18,7 @@ public class IMGLYTexasFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Texas
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Texas
     }
 }

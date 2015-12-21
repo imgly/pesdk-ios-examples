@@ -11,21 +11,21 @@ import UIKit
 public class IMGLYCropRectComponent {
     public var cropRect = CGRectZero
 
-    private var topLineView_:UIView = UIView(frame: CGRectZero)
-    private var bottomLineView_:UIView = UIView(frame: CGRectZero)
-    private var leftLineView_:UIView = UIView(frame: CGRectZero)
-    private var rightLineView_:UIView = UIView(frame: CGRectZero)
+    private var topLineView_ = UIView(frame: CGRectZero)
+    private var bottomLineView_ = UIView(frame: CGRectZero)
+    private var leftLineView_ = UIView(frame: CGRectZero)
+    private var rightLineView_ = UIView(frame: CGRectZero)
 
-    public var topLeftAnchor_:UIImageView?
-    public var topRightAnchor_:UIImageView?
-    public var bottomLeftAnchor_:UIImageView?
-    public var bottomRightAnchor_:UIImageView?
-    private var transparentView_:UIView?
-    private var parentView_:UIView?
+    public var topLeftAnchor_: UIImageView?
+    public var topRightAnchor_: UIImageView?
+    public var bottomLeftAnchor_: UIImageView?
+    public var bottomRightAnchor_: UIImageView?
+    private var transparentView_: UIView?
+    private var parentView_: UIView?
     private var showAnchors_ = true
 
     // call this in viewDidLoad
-    public func setup(transparentView:UIView, parentView:UIView, showAnchors:Bool) {
+    public func setup(transparentView: UIView, parentView: UIView, showAnchors: Bool) {
         transparentView_ = transparentView
         parentView_ = parentView
         showAnchors_ = showAnchors
@@ -40,22 +40,22 @@ public class IMGLYCropRectComponent {
     }
 
     private func setupLineViews() {
-        cropRect = CGRectMake(100, 100, 150, 100)
+        cropRect = CGRect(x: 100, y: 100, width: 150, height: 100)
         setupLineView(topLineView_)
         setupLineView(bottomLineView_)
         setupLineView(leftLineView_)
         setupLineView(rightLineView_)
     }
 
-    private func setupLineView(lineView:UIView) {
+    private func setupLineView(lineView: UIView) {
         lineView.backgroundColor = UIColor.whiteColor()
         lineView.hidden = true
         parentView_!.addSubview(lineView)
     }
 
     private func addMaskRectView() {
-        let bounds = CGRectMake(0, 0, transparentView_!.frame.size.width,
-            transparentView_!.frame.size.height)
+        let bounds = CGRect(x: 0, y: 0, width: transparentView_!.frame.size.width,
+            height: transparentView_!.frame.size.height)
 
         let maskLayer = CAShapeLayer()
         maskLayer.frame = bounds
@@ -76,10 +76,10 @@ public class IMGLYCropRectComponent {
         bottomRightAnchor_ = createAnchorWithImage(anchorImage)
     }
 
-    private func createAnchorWithImage(image:UIImage?) -> UIImageView {
+    private func createAnchorWithImage(image: UIImage?) -> UIImageView {
         let anchor = UIImageView(image: image!)
         anchor.contentMode = UIViewContentMode.Center
-        anchor.frame = CGRectMake(0, 0, 44, 44)
+        anchor.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         anchor.hidden = true
         transparentView_!.addSubview(anchor)
         return anchor
@@ -100,10 +100,10 @@ public class IMGLYCropRectComponent {
         let width = cropRect.size.width
         let height = cropRect.size.height
 
-        leftLineView_.frame = CGRectMake(left, top, 1, height)
-        rightLineView_.frame = CGRectMake(right, top, 1, height)
-        topLineView_.frame = CGRectMake(left, top, width, 1)
-        bottomLineView_.frame = CGRectMake(left, bottom, width, 1)
+        leftLineView_.frame = CGRect(x: left, y: top, width: 1, height: height)
+        rightLineView_.frame = CGRect(x: right, y: top, width: 1, height: height)
+        topLineView_.frame = CGRect(x: left, y: top, width: width, height: 1)
+        bottomLineView_.frame = CGRect(x: left, y: bottom, width: width, height: 1)
     }
 
     private func layoutAnchors() {
@@ -111,10 +111,10 @@ public class IMGLYCropRectComponent {
         let right = left + cropRect.size.width
         let top = cropRect.origin.y
         let bottom = top + cropRect.size.height
-        topLeftAnchor_!.center = CGPointMake(left, top)
-        topRightAnchor_!.center = CGPointMake(right, top)
-        bottomLeftAnchor_!.center = CGPointMake(left, bottom)
-        bottomRightAnchor_!.center = CGPointMake(right, bottom)
+        topLeftAnchor_!.center = CGPoint(x: left, y: top)
+        topRightAnchor_!.center = CGPoint(x: right, y: top)
+        bottomLeftAnchor_!.center = CGPoint(x: left, y: bottom)
+        bottomRightAnchor_!.center = CGPoint(x: right, y: bottom)
     }
 
     public func showViews() {

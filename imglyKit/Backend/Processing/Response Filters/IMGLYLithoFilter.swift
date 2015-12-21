@@ -18,9 +18,7 @@ public class IMGLYLithoFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Litho
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Litho
     }
 }

@@ -93,7 +93,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         super.viewDidLoad()
 
         configureFilterSelectionController()
-        if (options.showFilterIntensitySlider) {
+        if options.showFilterIntensitySlider {
             configureFilterIntensitySlider()
         }
     }

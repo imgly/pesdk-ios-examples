@@ -18,9 +18,7 @@ public class IMGLYPro400Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Pro400
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Pro400
     }
 }

@@ -63,13 +63,13 @@ public class IMGLYFontSelectorView: UIScrollView {
 
         for var index = 0; index < subviews.count; index++ {
             if let button = subviews[index] as? UIButton {
-                button.frame = CGRectMake(0,
-                    CGFloat(index) * kDistanceBetweenButtons,
-                    frame.size.width,
-                    kDistanceBetweenButtons)
+                button.frame = CGRect(x: 0,
+                    y: CGFloat(index) * kDistanceBetweenButtons,
+                    width: frame.size.width,
+                    height: kDistanceBetweenButtons)
             }
         }
-        contentSize = CGSizeMake(frame.size.width - 1.0, kDistanceBetweenButtons * CGFloat(subviews.count - 2))
+        contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2))
     }
 
     @objc private func buttonTouchedUpInside(button: UIButton) {

@@ -280,32 +280,28 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         anchor.addGestureRecognizer(panGestureRecognizer)
     }
 
-    public func handlePan(recognizer:UIPanGestureRecognizer) {
+    public func handlePan(recognizer: UIPanGestureRecognizer) {
         if recognizer.view!.isEqual(cropRectComponent.topRightAnchor_) {
             handlePanOnTopRight(recognizer)
-        }
-        else if recognizer.view!.isEqual(cropRectComponent.topLeftAnchor_) {
+        } else if recognizer.view!.isEqual(cropRectComponent.topLeftAnchor_) {
             handlePanOnTopLeft(recognizer)
-        }
-        else if recognizer.view!.isEqual(cropRectComponent.bottomLeftAnchor_) {
+        } else if recognizer.view!.isEqual(cropRectComponent.bottomLeftAnchor_) {
             handlePanOnBottomLeft(recognizer)
-        }
-        else if recognizer.view!.isEqual(cropRectComponent.bottomRightAnchor_) {
+        } else if recognizer.view!.isEqual(cropRectComponent.bottomRightAnchor_) {
             handlePanOnBottomRight(recognizer)
-        }
-        else if recognizer.view!.isEqual(transparentRectView) {
+        } else if recognizer.view!.isEqual(transparentRectView) {
             handlePanOnTransparentView(recognizer)
         }
     }
 
-    public func handlePanOnTopLeft(recognizer:UIPanGestureRecognizer) {
+    public func handlePanOnTopLeft(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.bottomRightAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.bottomRightAnchor_!.center.y - location.y
 
         sizeX = CGFloat(Int(sizeX))
         sizeY = CGFloat(Int(sizeY))
-        var size = CGSizeMake(sizeX, sizeY)
+        var size = CGSize(width: sizeX, height: sizeY)
         size = applyMinimumAreaRuleToSize(size)
         size = reCalulateSizeForTopLeftAnchor(size)
         var center = cropRectComponent.topLeftAnchor_!.center
@@ -316,7 +312,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         cropRectComponent.layoutViewsForCropRect()
     }
 
-    private func reCalulateSizeForTopLeftAnchor(size:CGSize) -> CGSize {
+    private func reCalulateSizeForTopLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
         if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
@@ -333,8 +329,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
                 newSize.height = cropRectComponent.bottomRightAnchor_!.center.y - cropRectTopBound
                 newSize.width = newSize.height * selectionRatio
             }
-        }
-        else {
+        } else {
             if (cropRectComponent.bottomRightAnchor_!.center.x - newSize.width) < cropRectLeftBound {
                 newSize.width = cropRectComponent.bottomRightAnchor_!.center.x - cropRectLeftBound
             }
@@ -346,20 +341,20 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
 
     private func recalculateCropRectFromTopLeftAnchor() {
-        cropRectComponent.cropRect = CGRectMake(cropRectComponent.topLeftAnchor_!.center.x,
-            cropRectComponent.topLeftAnchor_!.center.y,
-            cropRectComponent.bottomRightAnchor_!.center.x - cropRectComponent.topLeftAnchor_!.center.x,
-            cropRectComponent.bottomRightAnchor_!.center.y - cropRectComponent.topLeftAnchor_!.center.y)
+        cropRectComponent.cropRect = CGRect(x: cropRectComponent.topLeftAnchor_!.center.x,
+            y: cropRectComponent.topLeftAnchor_!.center.y,
+            width: cropRectComponent.bottomRightAnchor_!.center.x - cropRectComponent.topLeftAnchor_!.center.x,
+            height: cropRectComponent.bottomRightAnchor_!.center.y - cropRectComponent.topLeftAnchor_!.center.y)
     }
 
-    private func handlePanOnTopRight(recognizer:UIPanGestureRecognizer) {
+    private func handlePanOnTopRight(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.bottomLeftAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.bottomLeftAnchor_!.center.y - location.y
 
         sizeX = CGFloat(abs(Int(sizeX)))
         sizeY = CGFloat(abs(Int(sizeY)))
-        var size = CGSizeMake(sizeX, sizeY)
+        var size = CGSize(width: sizeX, height: sizeY)
         size = applyMinimumAreaRuleToSize(size)
         size = reCalulateSizeForTopRightAnchor(size)
         var center = cropRectComponent.topRightAnchor_!.center
@@ -370,7 +365,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         cropRectComponent.layoutViewsForCropRect()
     }
 
-    private func reCalulateSizeForTopRightAnchor(size:CGSize) -> CGSize {
+    private func reCalulateSizeForTopRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
         if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
@@ -385,8 +380,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
                 newSize.height = cropRectComponent.bottomRightAnchor_!.center.y - cropRectTopBound
                 newSize.width = newSize.height * selectionRatio
             }
-        }
-        else {
+        } else {
             if (cropRectComponent.topLeftAnchor_!.center.x + newSize.width) > cropRectRightBound {
                 newSize.width = cropRectRightBound - cropRectComponent.topLeftAnchor_!.center.x
             }
@@ -398,21 +392,21 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
 
     private func recalculateCropRectFromTopRightAnchor() {
-        cropRectComponent.cropRect = CGRectMake(cropRectComponent.bottomLeftAnchor_!.center.x,
-            cropRectComponent.topRightAnchor_!.center.y,
-            cropRectComponent.topRightAnchor_!.center.x - cropRectComponent.bottomLeftAnchor_!.center.x,
-            cropRectComponent.bottomLeftAnchor_!.center.y - cropRectComponent.topRightAnchor_!.center.y)
+        cropRectComponent.cropRect = CGRect(x: cropRectComponent.bottomLeftAnchor_!.center.x,
+            y: cropRectComponent.topRightAnchor_!.center.y,
+            width: cropRectComponent.topRightAnchor_!.center.x - cropRectComponent.bottomLeftAnchor_!.center.x,
+            height: cropRectComponent.bottomLeftAnchor_!.center.y - cropRectComponent.topRightAnchor_!.center.y)
     }
 
 
-    private func handlePanOnBottomLeft(recognizer:UIPanGestureRecognizer) {
+    private func handlePanOnBottomLeft(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.topRightAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.topRightAnchor_!.center.y - location.y
 
         sizeX = CGFloat(abs(Int(sizeX)))
         sizeY = CGFloat(abs(Int(sizeY)))
-        var size = CGSizeMake(sizeX, sizeY)
+        var size = CGSize(width: sizeX, height: sizeY)
         size = applyMinimumAreaRuleToSize(size)
         size = reCalulateSizeForBottomLeftAnchor(size)
         var center = cropRectComponent.bottomLeftAnchor_!.center
@@ -423,11 +417,11 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         cropRectComponent.layoutViewsForCropRect()
     }
 
-    private func reCalulateSizeForBottomLeftAnchor(size:CGSize) -> CGSize {
+    private func reCalulateSizeForBottomLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
         if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
-            if (newSize.height > newSize.width) {
+            if newSize.height > newSize.width {
                 newSize.width = newSize.height
             }
             newSize.height = newSize.width / selectionRatio
@@ -441,8 +435,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
                 newSize.height = cropRectBottomBound - cropRectComponent.topRightAnchor_!.center.y
                 newSize.width = newSize.height * selectionRatio
             }
-        }
-        else {
+        } else {
             if (cropRectComponent.topRightAnchor_!.center.x - newSize.width) < cropRectLeftBound {
                 newSize.width = cropRectComponent.topRightAnchor_!.center.x - cropRectLeftBound
             }
@@ -453,13 +446,13 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return newSize
     }
 
-    private func handlePanOnBottomRight(recognizer:UIPanGestureRecognizer) {
+    private func handlePanOnBottomRight(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         var sizeX = cropRectComponent.topLeftAnchor_!.center.x - location.x
         var sizeY = cropRectComponent.topLeftAnchor_!.center.y - location.y
         sizeX = CGFloat(abs(Int(sizeX)))
         sizeY = CGFloat(abs(Int(sizeY)))
-        var size = CGSizeMake(sizeX, sizeY)
+        var size = CGSize(width: sizeX, height: sizeY)
         size = applyMinimumAreaRuleToSize(size)
         size = reCalulateSizeForBottomRightAnchor(size)
         var center = cropRectComponent.bottomRightAnchor_!.center
@@ -470,7 +463,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         cropRectComponent.layoutViewsForCropRect()
     }
 
-    private func reCalulateSizeForBottomRightAnchor(size:CGSize) -> CGSize {
+    private func reCalulateSizeForBottomRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
         if selectionMode != .Free {
             newSize.height = newSize.height * selectionRatio
@@ -485,8 +478,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
                 newSize.height = cropRectBottomBound - cropRectComponent.topLeftAnchor_!.center.y
                 newSize.width = newSize.height * selectionRatio
             }
-        }
-        else {
+        } else {
             if (cropRectComponent.topLeftAnchor_!.center.x + newSize.width) > cropRectRightBound {
                 newSize.width = cropRectRightBound - cropRectComponent.topLeftAnchor_!.center.x
             }
@@ -513,7 +505,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     private func calculateDragOffsetOnNewDrag(recognizer recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(transparentRectView)
         if recognizer.state == UIGestureRecognizerState.Began {
-            dragOffset = CGPointMake(location.x - cropRectComponent.cropRect.origin.x, location.y - cropRectComponent.cropRect.origin.y)
+            dragOffset = CGPoint(x: location.x - cropRectComponent.cropRect.origin.x, y: location.y - cropRectComponent.cropRect.origin.y)
         }
     }
 
@@ -538,7 +530,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         if bottom > cropRectBottomBound {
             locationY = cropRectBottomBound - cropRectComponent.cropRect.size.height + dragOffset.y
         }
-        return CGPointMake(locationX, locationY)
+        return CGPoint(x: locationX, y: locationY)
     }
 
     private func normalizedCropRect() -> CGRect {
@@ -547,7 +539,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let boundHeight = cropRectBottomBound - cropRectTopBound
         let x = (cropRectComponent.cropRect.origin.x - cropRectLeftBound) / boundWidth
         let y = (cropRectComponent.cropRect.origin.y - cropRectTopBound) / boundHeight
-        return CGRectMake(x, y, cropRectComponent.cropRect.size.width / boundWidth, cropRectComponent.cropRect.size.height / boundHeight)
+        return CGRect(x: x, y: y, width: cropRectComponent.cropRect.size.width / boundWidth, height: cropRectComponent.cropRect.size.height / boundHeight)
     }
 
     private func reCalculateCropRectBounds() {
@@ -559,7 +551,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         cropRectBottomBound = height - cropRectTopBound
     }
 
-    private func applyMinimumAreaRuleToSize(size:CGSize) -> CGSize {
+    private func applyMinimumAreaRuleToSize(size: CGSize) -> CGSize {
         var newSize = size
         if newSize.width < MinimumCropSize {
             newSize.width = MinimumCropSize
@@ -568,6 +560,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         if newSize.height < MinimumCropSize {
             newSize.height = MinimumCropSize
         }
+
         return newSize
     }
 
@@ -577,8 +570,8 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     }
 
     private func setCropRectForSelectionRatio() {
-        let size = CGSizeMake(cropRectRightBound - cropRectLeftBound,
-            cropRectBottomBound - cropRectTopBound)
+        let size = CGSize(width: cropRectRightBound - cropRectLeftBound,
+            height: cropRectBottomBound - cropRectTopBound)
         var rectWidth = size.width
         var rectHeight = rectWidth
         if size.width > size.height {
@@ -590,23 +583,22 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let sizeDeltaX = (size.width - rectWidth) / 2.0
         let sizeDeltaY = (size.height - rectHeight) / 2.0
 
-        cropRectComponent.cropRect = CGRectMake(
-            cropRectLeftBound  + sizeDeltaX,
-            cropRectTopBound + sizeDeltaY,
-            rectWidth,
-            rectHeight)
+        cropRectComponent.cropRect = CGRect(
+            x: cropRectLeftBound  + sizeDeltaX,
+            y: cropRectTopBound + sizeDeltaY,
+            width: rectWidth,
+            height: rectHeight)
     }
 
     private func calculateRatioForSelectionMode() {
         if selectionMode == .FourToThree {
             selectionRatio = 4.0 / 3.0
-        }
-        else if selectionMode == .OneToOne {
+        } else if selectionMode == .OneToOne {
             selectionRatio = 1.0
-        }
-        else if selectionMode == .SixteenToNine {
+        } else if selectionMode == .SixteenToNine {
             selectionRatio = 16.0 / 9.0
         }
+
         if selectionMode != .Free {
             setCropRectForSelectionRatio()
             cropRectComponent.layoutViewsForCropRect()

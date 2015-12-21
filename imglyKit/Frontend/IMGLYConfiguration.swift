@@ -35,7 +35,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
  viewControllers contained in the SDK, edit their options in the corresponding
  `configure*ViewController` method of the `IMGLYConfigurationBuilder`.
 */
-@objc public class IMGLYConfiguration : NSObject {
+@objc public class IMGLYConfiguration: NSObject {
 
     // MARK: Properties
 
@@ -84,8 +84,9 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
 
     /// Used internally to fetch a replacement class for framework classes.
     func getClassForReplacedClass(replacedClass: NSObject.Type) -> NSObject.Type {
-        guard let replacingClassName = classReplacingMap[String(replacedClass)]
-            else { return replacedClass }
+        guard let replacingClassName = classReplacingMap[String(replacedClass)] else {
+            return replacedClass
+        }
 
         return NSClassFromString(replacingClassName) as! NSObject.Type
     }
@@ -99,7 +100,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
  further configure the different viewcontrollers, use the `configureXYZViewController`
  methods to edit the given options.
 */
-@objc public class IMGLYConfigurationBuilder : NSObject {
+@objc public class IMGLYConfigurationBuilder: NSObject {
     public var backgroundColor: UIColor = UIColor.blackColor()
     private var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
     private var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
@@ -195,8 +196,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     - throws: An exception if the replacing class is not a subclass of the replaced class.
     */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
-
-        if (!replacingClass.isSubclassOfClass(builtinClass)) {
+        if !replacingClass.isSubclassOfClass(builtinClass) {
             throw IMGLYConfigurationError.ReplacingClassNotASubclass
         }
 

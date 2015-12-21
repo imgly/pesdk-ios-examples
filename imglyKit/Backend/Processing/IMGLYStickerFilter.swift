@@ -37,7 +37,7 @@ public class IMGLYStickerFilter: CIFilter {
     public var scale = CGFloat(1.0)
 
     /// The crop-create applied to the input image, so we can adjust the sticker position
-    public var cropRect = CGRectMake(0.0, 0.0, 1.0, 1.0)
+    public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
     override init() {
         super.init()
@@ -71,9 +71,11 @@ public class IMGLYStickerFilter: CIFilter {
 
     public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
-        if(imageSize.width > imageSize.height) {
+
+        if imageSize.width > imageSize.height {
             return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
         }
+
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
 

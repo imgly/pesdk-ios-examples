@@ -18,9 +18,7 @@ public class IMGLYSummerFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Summer
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Summer
     }
 }

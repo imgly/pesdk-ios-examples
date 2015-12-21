@@ -10,15 +10,16 @@ public struct Line {
     public let end: CGPoint
 }
 
-public class IMGLYBoxGradientView : UIView {
+public class IMGLYBoxGradientView: UIView {
     public var centerPoint = CGPointZero
     public weak var gradientViewDelegate: IMGLYGradientViewDelegate?
     public var controllPoint1 = CGPointZero
     private var controllPoint2_ = CGPointZero
-    public var controllPoint2:CGPoint {
+    public var controllPoint2: CGPoint {
         get {
             return controllPoint2_
         }
+
         set (point) {
             controllPoint2_ = point
             calculateCenterPointFromOtherControlPoints()
@@ -30,15 +31,15 @@ public class IMGLYBoxGradientView : UIView {
         }
     }
 
-    public var normalizedControlPoint1:CGPoint {
+    public var normalizedControlPoint1: CGPoint {
         get {
-            return CGPointMake(controllPoint1.x / frame.size.width, controllPoint1.y / frame.size.height)
+            return CGPoint(x: controllPoint1.x / frame.size.width, y: controllPoint1.y / frame.size.height)
         }
     }
 
-    public var normalizedControlPoint2:CGPoint {
+    public var normalizedControlPoint2: CGPoint {
         get {
-            return CGPointMake(controllPoint2.x / frame.size.width, controllPoint2.y / frame.size.height)
+            return CGPoint(x: controllPoint2.x / frame.size.width, y: controllPoint2.y / frame.size.height)
         }
     }
 
@@ -47,7 +48,7 @@ public class IMGLYBoxGradientView : UIView {
 
     // MARK:- setup
 
-    public override init(frame:CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()
     }
@@ -71,15 +72,15 @@ public class IMGLYBoxGradientView : UIView {
     }
 
     public func configureControlPoints() {
-        controllPoint1 = CGPointMake(100,100)
-        controllPoint2 = CGPointMake(150,200)
+        controllPoint1 = CGPoint(x: 100, y: 100)
+        controllPoint2 = CGPoint(x: 150, y: 200)
         calculateCenterPointFromOtherControlPoints()
     }
 
     public func configureCrossImageView() {
         crossImageView_.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
         crossImageView_.userInteractionEnabled = true
-        crossImageView_.frame = CGRectMake(0, 0, crossImageView_.image!.size.width, crossImageView_.image!.size.height)
+        crossImageView_.frame = CGRect(x: 0, y: 0, width: crossImageView_.image!.size.width, height: crossImageView_.image!.size.height)
         addSubview(crossImageView_)
     }
 
@@ -107,7 +108,7 @@ public class IMGLYBoxGradientView : UIView {
 
         let diffLength = sqrt(diffX * diffX + diffY  * diffY)
 
-        return CGPointMake( -diffY / diffLength, diffX / diffLength)
+        return CGPoint(x: -diffY / diffLength, y: diffX / diffLength)
     }
 
     public func distanceBetweenControlPoints() -> CGFloat {
@@ -125,25 +126,25 @@ public class IMGLYBoxGradientView : UIView {
     That diagonal is the longest line that can be drawn in the Frame, therefore its a good orientation.
     */
 
-    public func lineForControlPoint(controlPoint:CGPoint) -> Line {
+    public func lineForControlPoint(controlPoint: CGPoint) -> Line {
         let ortogonalVector = normalizedOrtogonalVector()
         let halfDiagonalLengthOfFrame = diagonalLengthOfFrame()
-        let scaledOrthogonalVector = CGPointMake(halfDiagonalLengthOfFrame * ortogonalVector.x,
-            halfDiagonalLengthOfFrame * ortogonalVector.y)
-        let lineStart = CGPointMake(controlPoint.x - scaledOrthogonalVector.x,
-            controlPoint.y - scaledOrthogonalVector.y)
-        let lineEnd = CGPointMake(controlPoint.x + scaledOrthogonalVector.x,
-            controlPoint.y + scaledOrthogonalVector.y)
+        let scaledOrthogonalVector = CGPoint(x: halfDiagonalLengthOfFrame * ortogonalVector.x,
+            y: halfDiagonalLengthOfFrame * ortogonalVector.y)
+        let lineStart = CGPoint(x: controlPoint.x - scaledOrthogonalVector.x,
+            y: controlPoint.y - scaledOrthogonalVector.y)
+        let lineEnd = CGPoint(x: controlPoint.x + scaledOrthogonalVector.x,
+            y: controlPoint.y + scaledOrthogonalVector.y)
         return Line(start: lineStart, end: lineEnd)
     }
 
-    public func addLineForControlPoint1ToPath(path:UIBezierPath) {
+    public func addLineForControlPoint1ToPath(path: UIBezierPath) {
         let line = lineForControlPoint(controllPoint1)
         path.moveToPoint(line.start)
         path.addLineToPoint(line.end)
     }
 
-    public func addLineForControlPoint2ToPath(path:UIBezierPath) {
+    public func addLineForControlPoint2ToPath(path: UIBezierPath) {
         let line = lineForControlPoint(controllPoint2)
         path.moveToPoint(line.start)
         path.addLineToPoint(line.end)
@@ -162,8 +163,8 @@ public class IMGLYBoxGradientView : UIView {
 
     // MARK:- gesture handling
     public func calculateCenterPointFromOtherControlPoints() {
-        centerPoint = CGPointMake((controllPoint1.x + controllPoint2.x) / 2.0,
-            (controllPoint1.y + controllPoint2.y) / 2.0)
+        centerPoint = CGPoint(x: (controllPoint1.x + controllPoint2.x) / 2.0,
+            y: (controllPoint1.y + controllPoint2.y) / 2.0)
     }
 
     public func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
@@ -185,11 +186,11 @@ public class IMGLYBoxGradientView : UIView {
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         let diffX = location.x - centerPoint.x
         let diffY = location.y - centerPoint.y
-        controllPoint1 = CGPointMake(controllPoint1.x + diffX, controllPoint1.y + diffY)
-        controllPoint2 = CGPointMake(controllPoint2.x + diffX, controllPoint2.y + diffY)
+        controllPoint1 = CGPoint(x: controllPoint1.x + diffX, y: controllPoint1.y + diffY)
+        controllPoint2 = CGPoint(x: controllPoint2.x + diffX, y: controllPoint2.y + diffY)
     }
 
-    public func handlePinchGesture(recognizer:UIPinchGestureRecognizer) {
+    public func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
             controllPoint1 = recognizer.locationOfTouch(0, inView:self)
@@ -197,7 +198,7 @@ public class IMGLYBoxGradientView : UIView {
         }
     }
 
-    public func isPoint(point:CGPoint, inRect rect:CGRect) -> Bool {
+    public func isPoint(point: CGPoint, inRect rect: CGRect) -> Bool {
         let top = rect.origin.y
         let bottom = top + rect.size.height
         let left = rect.origin.x
@@ -222,7 +223,7 @@ public class IMGLYBoxGradientView : UIView {
         let x2 = frame.size.width * 0.5
         let y1 = frame.size.height * 0.25
         let y2 = frame.size.height * 0.75
-        controllPoint1 = CGPointMake(x1, y1)
-        controllPoint2 = CGPointMake(x2, y2)
+        controllPoint1 = CGPoint(x: x1, y: y1)
+        controllPoint2 = CGPoint(x: x2, y: y2)
     }
 }

@@ -21,7 +21,7 @@ extension IMGLYInstanceFactory {
     - returns: A viewcontroller according to the button-type.
     */
     public class func viewControllerForEditorActionType(actionType: IMGLYMainEditorActionType, withFixedFilterStack fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYSubEditorViewController? {
-        switch (actionType) {
+        switch actionType {
         case .Filter:
             return filterEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
         case .Stickers:

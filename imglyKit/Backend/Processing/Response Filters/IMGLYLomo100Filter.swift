@@ -18,9 +18,7 @@ public class IMGLYLomo100Filter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Lomo100
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Lomo100
     }
 }

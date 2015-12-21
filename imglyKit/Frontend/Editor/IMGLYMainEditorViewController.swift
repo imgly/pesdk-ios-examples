@@ -120,7 +120,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     // MARK: - Helpers
 
     private func subEditorButtonPressed(actionType: IMGLYMainEditorActionType) {
-        if (actionType == .Magic) {
+        if actionType == .Magic {
             if !updating {
                 fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
                 updatePreviewImage()
@@ -144,10 +144,10 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
     private func generateLowResolutionImage() {
         if let highResolutionImage = self.highResolutionImage {
-            if highResolutionImage.size.width > maxLowResolutionSideLength || highResolutionImage.size.height > maxLowResolutionSideLength  {
+            if highResolutionImage.size.width > maxLowResolutionSideLength || highResolutionImage.size.height > maxLowResolutionSideLength {
                 let scale: CGFloat
 
-                if(highResolutionImage.size.width > highResolutionImage.size.height) {
+                if highResolutionImage.size.width > highResolutionImage.size.height {
                     scale = maxLowResolutionSideLength / highResolutionImage.size.width
                 } else {
                     scale = maxLowResolutionSideLength / highResolutionImage.size.height
@@ -242,9 +242,9 @@ extension IMGLYMainEditorViewController: UICollectionViewDelegate {
 
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         let action = options.editorActionsDataSource.actionAtIndex(indexPath.item)
-        if (action.editorType == .Magic) {
+        if action.editorType == .Magic {
             if let buttonCell = cell as? IMGLYButtonCollectionViewCell, let selectedImage = action.selectedImage {
-                if (fixedFilterStack.enhancementFilter.enabled) {
+                if fixedFilterStack.enhancementFilter.enabled {
                     buttonCell.imageView.image = selectedImage
                 } else {
                     buttonCell.imageView.image = action.image

@@ -18,9 +18,7 @@ public class IMGLYHighContrastFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.HighContrast
-        }
+    public override var filterType: IMGLYFilterType {
+        return .HighContrast
     }
 }

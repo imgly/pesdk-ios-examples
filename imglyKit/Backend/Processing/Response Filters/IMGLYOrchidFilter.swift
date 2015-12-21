@@ -18,9 +18,7 @@ public class IMGLYOrchidFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Orchid
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Orchid
     }
 }

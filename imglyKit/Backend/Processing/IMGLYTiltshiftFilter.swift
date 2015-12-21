@@ -26,9 +26,9 @@ import QuartzCore
     Both, circle and box, are described by the controlPoint1 and controlPoint2 variable, that mark
     either two oppesite points on the radius of the circle, or two points on oppesite sides of the box.
 */
-public class IMGLYTiltshiftFilter : CIFilter {
+public class IMGLYTiltshiftFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
-    public var inputImage:CIImage?
+    public var inputImage: CIImage?
     /// One of the two points, marking the dimension and direction of the box or circle.
     public var controlPoint1 = CGPointZero
     /// One of the two points, marking the dimension and direction of the box or circle.
@@ -38,7 +38,7 @@ public class IMGLYTiltshiftFilter : CIFilter {
     /// The radius that is set to the gaussian filter during the whole process. Default is 4.
     public var blurRadius = CGFloat(4)
 
-    private var center_ = CGPointMake(0.5, 0.5)
+    private var center_ = CGPoint(x: 0.5, y: 0.5)
     private var radius_ = CGFloat(0.1)
     private var scaleVector_ = CGPointZero
     private var imageSize_ = CGSizeZero
@@ -59,11 +59,10 @@ public class IMGLYTiltshiftFilter : CIFilter {
         calcScaleVector()
         calculateCenterAndRadius()
 
-        var maskImage:CIImage?
+        var maskImage: CIImage?
         if tiltShiftType == IMGLYTiltshiftType.Circle {
             maskImage = createRadialMaskImage()
-        }
-        else if tiltShiftType == IMGLYTiltshiftType.Box {
+        } else if tiltShiftType == IMGLYTiltshiftType.Box {
             maskImage = createLinearMaskImage()
         }
 
@@ -81,18 +80,17 @@ public class IMGLYTiltshiftFilter : CIFilter {
 
 
     private func calcScaleVector() {
-        if (imageSize_.height > imageSize_.width) {
-            scaleVector_ = CGPointMake(imageSize_.width / imageSize_.height, 1.0)
-        }
-        else {
-            scaleVector_ = CGPointMake(1.0, imageSize_.height / imageSize_.width)
+        if imageSize_.height > imageSize_.width {
+            scaleVector_ = CGPoint(x: imageSize_.width / imageSize_.height, y: 1.0)
+        } else {
+            scaleVector_ = CGPoint(x: 1.0, y: imageSize_.height / imageSize_.width)
         }
     }
 
     // MARK:- Radial Mask-creation
     private func calculateCenterAndRadius() {
-        center_ = CGPointMake((controlPoint1.x + controlPoint2.x) * 0.5,
-            (controlPoint1.y + controlPoint2.y) * 0.5)
+        center_ = CGPoint(x: (controlPoint1.x + controlPoint2.x) * 0.5,
+            y: (controlPoint1.y + controlPoint2.y) * 0.5)
         let midVectorX = (center_.x - controlPoint1.x) * scaleVector_.x
         let midVectorY = (center_.y - controlPoint1.y) * scaleVector_.y
         radius_ = sqrt(midVectorX * midVectorX + midVectorY * midVectorY)
@@ -110,11 +108,11 @@ public class IMGLYTiltshiftFilter : CIFilter {
         filter.setValue(radiusInPixels, forKey: "inputRadius0")
         filter.setValue(radiusInPixels + fadeWidth, forKey: "inputRadius1")
 
-        let centerInPixels = CIVector(CGPoint: CGPointMake(rect_.width * center_.x, rect_.height * (1.0 - center_.y)))
+        let centerInPixels = CIVector(CGPoint: CGPoint(x: rect_.width * center_.x, y: rect_.height * (1.0 - center_.y)))
         filter.setValue(centerInPixels, forKey: "inputCenter")
 
         let innerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
-        let outerColor = CIColor(red:0, green: 1, blue: 0,alpha: 0)
+        let outerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 0)
         filter.setValue(innerColor, forKey: "inputColor1")
         filter.setValue(outerColor, forKey: "inputColor0")
 
@@ -128,17 +126,17 @@ public class IMGLYTiltshiftFilter : CIFilter {
 
     private func createLinearMaskImage() -> CIImage? {
         let innerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
-        let outerColor = CIColor(red:0, green: 1, blue: 0,alpha: 0)
+        let outerColor = CIColor(red:0, green: 1, blue: 0, alpha: 0)
 
-        let controlPoint1InPixels = CGPointMake(rect_.width * controlPoint1.x, rect_.height * (1.0 - controlPoint1.y))
-        let controlPoint2InPixels = CGPointMake(rect_.width * controlPoint2.x, rect_.height * (1.0 - controlPoint2.y))
+        let controlPoint1InPixels = CGPoint(x: rect_.width * controlPoint1.x, y: rect_.height * (1.0 - controlPoint1.y))
+        let controlPoint2InPixels = CGPoint(x: rect_.width * controlPoint2.x, y: rect_.height * (1.0 - controlPoint2.y))
 
-        let diagonalVector = CGPointMake(controlPoint2InPixels.x - controlPoint1InPixels.x,
-            controlPoint2InPixels.y - controlPoint1InPixels.y)
-        let controlPoint1Extension = CGPointMake(controlPoint1InPixels.x - 0.3 * diagonalVector.x,
-            controlPoint1InPixels.y - 0.3 * diagonalVector.y)
-        let controlPoint2Extension = CGPointMake(controlPoint2InPixels.x + 0.3 * diagonalVector.x,
-            controlPoint2InPixels.y + 0.3 * diagonalVector.y)
+        let diagonalVector = CGPoint(x: controlPoint2InPixels.x - controlPoint1InPixels.x,
+            y: controlPoint2InPixels.y - controlPoint1InPixels.y)
+        let controlPoint1Extension = CGPoint(x: controlPoint1InPixels.x - 0.3 * diagonalVector.x,
+            y: controlPoint1InPixels.y - 0.3 * diagonalVector.y)
+        let controlPoint2Extension = CGPoint(x: controlPoint2InPixels.x + 0.3 * diagonalVector.x,
+            y: controlPoint2InPixels.y + 0.3 * diagonalVector.y)
 
         guard let filter = CIFilter(name: "CILinearGradient"), cropFilter = CIFilter(name: "CICrop"), addFilter = CIFilter(name: "CIAdditionCompositing") else {
             return nil

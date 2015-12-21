@@ -18,9 +18,7 @@ public class IMGLYLucidFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Lucid
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Lucid
     }
 }

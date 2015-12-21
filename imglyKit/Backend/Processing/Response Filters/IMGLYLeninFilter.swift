@@ -18,9 +18,7 @@ public class IMGLYLeninFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Lenin
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Lenin
     }
 }

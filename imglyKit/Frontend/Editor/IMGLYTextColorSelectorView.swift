@@ -88,17 +88,17 @@ public class IMGLYTextColorSelectorView: UIScrollView {
         var xPosition = kButtonXPositionOffset
         for var i = 0; i < colorArray.count; i++ {
             let button = buttonArray[i]
-            button.frame = CGRectMake(xPosition,
-                kButtonYPosition,
-                kButtonSideLength,
-                kButtonSideLength)
+            button.frame = CGRect(x: xPosition,
+                y: kButtonYPosition,
+                width: kButtonSideLength,
+                height: kButtonSideLength)
             xPosition += (kButtonDistance + kButtonSideLength)
         }
         buttonArray[0].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
 
-    @objc private func colorButtonTouchedUpInside(button:UIButton) {
+    @objc private func colorButtonTouchedUpInside(button: UIButton) {
         menuDelegate?.textColorSelectorView(self, didSelectColor: button.backgroundColor!)
     }
 }

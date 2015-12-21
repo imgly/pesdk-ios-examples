@@ -21,7 +21,7 @@ public class IMGLYInstanceFactory {
     - returns: A CIFilter object that realizes the desired filter.
     */
     public class func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
-        switch(type) {
+        switch type {
         case .None:
             return IMGLYNoneFilter()
         case .K1:

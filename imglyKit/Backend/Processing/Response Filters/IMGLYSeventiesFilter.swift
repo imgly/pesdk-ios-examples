@@ -18,9 +18,7 @@ public class IMGLYSeventiesFilter: IMGLYResponseFilter {
         super.init(coder: aDecoder)
     }
 
-    public override var filterType:IMGLYFilterType {
-        get {
-            return IMGLYFilterType.Seventies
-        }
+    public override var filterType: IMGLYFilterType {
+        return .Seventies
     }
 }

@@ -17,13 +17,13 @@ import CoreGraphics
 /**
    Provides a filter to crop images.
 */
-public class IMGLYCropFilter : CIFilter {
+public class IMGLYCropFilter: CIFilter {
     /// A CIImage object that serves as input for the filter.
-    public var inputImage:CIImage?
+    public var inputImage: CIImage?
 
     /// A rect that describes the area that should remain after cropping.
     /// The values are relative.
-    public var cropRect = CGRectMake(0, 0, 1, 1)
+    public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
     override init() {
         super.init()

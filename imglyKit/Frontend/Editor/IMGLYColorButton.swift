@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class IMGLYColorButton : UIButton {
+public class IMGLYColorButton: UIButton {
     public var hasFrame = false {
         didSet {
             styleButton()
