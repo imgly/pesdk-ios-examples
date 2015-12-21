@@ -13,6 +13,44 @@ internal let PhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProces
 @objc public class IMGLYEditorViewControllerOptions: NSObject {
     
     ///  Defaults to 'Editor'
+    public let title: String?
+    
+    /// The viewControllers backgroundColor. Defaults to the configurations
+    /// global background color.
+    public let backgroundColor: UIColor?
+    
+    /**
+     A configuration closure to configure the given left bar button item.
+     Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
+     a navigation controller.
+     */
+    public let leftBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure
+    
+    /**
+     A configuration closure to configure the given done button item.
+     Defaults to 'Editor' in the apps tintColor.
+     */
+    public let rightBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure
+    
+    /// Controls if the user can zoom the preview image. Defaults to **true**.
+    public let allowsPreviewImageZoom: Bool
+    
+    convenience override init() {
+        self.init(editorBuilder: IMGLYEditorViewControllerOptionsBuilder())
+    }
+    
+    init(editorBuilder: IMGLYEditorViewControllerOptionsBuilder) {
+        title = editorBuilder.title
+        backgroundColor = editorBuilder.backgroundColor
+        leftBarButtonConfigurationClosure = editorBuilder.leftBarButtonConfigurationClosure
+        rightBarButtonConfigurationClosure = editorBuilder.rightBarButtonConfigurationClosure
+        allowsPreviewImageZoom = editorBuilder.allowsPreviewImageZoom
+        super.init()
+    }
+}
+
+@objc public class IMGLYEditorViewControllerOptionsBuilder: NSObject {
+    ///  Defaults to 'Editor'
     public lazy var title: String? = "Editor"
     
     /// The viewControllers backgroundColor. Defaults to the configurations

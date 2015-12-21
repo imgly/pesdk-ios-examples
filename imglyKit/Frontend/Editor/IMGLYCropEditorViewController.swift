@@ -10,6 +10,14 @@ import UIKit
 
 public let MinimumCropSize = CGFloat(50)
 
+/**
+ The different crop actions, available in the SDK.
+ 
+ - Free:          The image can be cropped in any way.
+ - OneToOne:      The aspect ratio is locked to 1:1.
+ - FourToThree:   The aspect ratio is locked to 4:3.
+ - SixteenToNine: The aspect ratio is locked to 16:9.
+ */
 @objc public enum IMGLYCropAction: Int {
     case Free
     case OneToOne
@@ -17,13 +25,32 @@ public let MinimumCropSize = CGFloat(50)
     case SixteenToNine
 }
 
+/// Used to configure the crop action buttons. A button and its action are given as parameters.
+public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYCropAction) -> ()
+
 @objc public class IMGLYCropEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// Defines all allowed focus actions. The focus buttons are shown in the given order.
+    /// Defaults to show all available modes. The .Off action is always added. To set this
+    /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
+    public let allowedCropActions: [IMGLYCropAction]
     
-    public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYCropAction) -> ()
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure
+
+    convenience init() {
+        self.init(builder: IMGLYCropEditorViewControllerOptionsBuilder())
+    }
     
-    // MARK: Behaviour
-    
-    /// Defines all allowed focus actions. The focus buttons are always shown in the off -> linear -> radial order.
+    init(builder: IMGLYCropEditorViewControllerOptionsBuilder) {
+        allowedCropActions = builder.allowedCropActions
+        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYCropEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
     public var allowedCropActions: [IMGLYCropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
@@ -42,8 +69,6 @@ public let MinimumCropSize = CGFloat(50)
             self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ IMGLYCropAction(rawValue: $0.integerValue)! })
         }
     }
-    
-    // MARK: Init
     
     public override init() {
         super.init()

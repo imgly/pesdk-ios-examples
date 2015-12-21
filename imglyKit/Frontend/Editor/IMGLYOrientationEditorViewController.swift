@@ -15,13 +15,30 @@ import UIKit
     case FlipVertically
 }
 
-@objc public class IMGLYOrientationEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
-    
-    public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYOrientationAction) -> ()
+public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYOrientationAction) -> ()
 
-    // MARK: Behaviour
+@objc public class IMGLYOrientationEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// Defines all allowed actions. The action buttons are shown in the given order.
+    /// Defaults to show all available actions.
+    public let allowedOrientationActions: [IMGLYOrientationAction]
     
-    /// Defines all allowed actions. The action buttons are always shown in the rotate -> flip order.
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure
+
+    convenience init() {
+        self.init(builder: IMGLYOrientationEditorViewControllerOptionsBuilder())
+    }
+    
+    init(builder: IMGLYOrientationEditorViewControllerOptionsBuilder) {
+        allowedOrientationActions = builder.allowedOrientationActions
+        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYOrientationEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    /// Defines all allowed actions. The action buttons are always shown in the given order.
     /// Defaults to show all available actions. To set this
     /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
     public var allowedOrientationActions: [IMGLYOrientationAction] = [ .RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ]
@@ -29,8 +46,6 @@ import UIKit
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure = { _ in }
-    
-    // MARK: Obj-C Compatibility
     
     /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
@@ -40,8 +55,6 @@ import UIKit
             self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.map({ IMGLYOrientationAction(rawValue: $0.integerValue)! })
         }
     }
-    
-    // MARK: Init
     
     public override init() {
         super.init()

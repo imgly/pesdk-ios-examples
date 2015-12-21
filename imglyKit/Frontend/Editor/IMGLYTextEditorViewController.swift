@@ -14,7 +14,38 @@ private let TextLabelInitialMargin = CGFloat(40)
 private let MinimumFontSize = CGFloat(12.0)
 
 @objc public class IMGLYTextEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// Use this closure to configure the text input field.
+    /// Defaults to an empty implementation.
+    public let textFieldConfigurationClosure: IMGLYTextFieldConfigurationClosure
     
+    /// Defaults to white.
+    public let fontPreviewTextColor: UIColor
+    
+    /// An optional array of custom color values. The user can select a text color
+    /// from the given values. If no colors are passed, a default color set is loaded.
+    public let availableFontColors: [UIColor]?
+    
+    /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
+    public let canModifyTextSize: Bool
+    
+    /// Enables/Disables color changes through the bottom drawer. Defaults to true.
+    public let canModifyTextColor: Bool
+    
+    convenience init() {
+        self.init(builder: IMGLYTextEditorViewControllerOptionsBuilder())
+    }
+    
+    init(builder: IMGLYTextEditorViewControllerOptionsBuilder) {
+        textFieldConfigurationClosure = builder.textFieldConfigurationClosure
+        fontPreviewTextColor = builder.fontPreviewTextColor
+        availableFontColors = builder.availableFontColors
+        canModifyTextSize = builder.canModifyTextSize
+        canModifyTextColor = builder.canModifyTextColor
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYTextEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
     public lazy var textFieldConfigurationClosure: IMGLYTextFieldConfigurationClosure = { _ in }

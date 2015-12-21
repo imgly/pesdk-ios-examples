@@ -12,9 +12,26 @@ let StickersCollectionViewCellSize = CGSize(width: 90, height: 90)
 let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
 @objc public class IMGLYStickersEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// An object conforming to the `IMGLYStickersDataSourceProtocol`
+    /// Per default an `IMGLYStickersDataSource` offering all filters
+    /// is set.
+    public let stickersDataSource: IMGLYStickersDataSourceProtocol
     
-    // MARK: Behaviour
+    /// Disables/Enables the pinch gesture on stickers to change their size.
+    public let canModifyStickerSize: Bool
     
+    convenience init() {
+        self.init(builder: IMGLYStickersEditorViewControllerOptionsBuilder())
+    }
+    
+    init(builder: IMGLYStickersEditorViewControllerOptionsBuilder) {
+        stickersDataSource = builder.stickersDataSource
+        canModifyStickerSize = builder.canModifyStickerSize
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYStickersEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
     /// An object conforming to the `IMGLYStickersDataSourceProtocol`
     /// Per default an `IMGLYStickersDataSource` offering all filters
     /// is set.

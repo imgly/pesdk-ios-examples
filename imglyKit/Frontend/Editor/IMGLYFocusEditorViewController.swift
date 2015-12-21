@@ -8,21 +8,45 @@
 
 import UIKit
 
+/**
+ Represents the different types of focus actions.
+ 
+ - Off:    No focus blur is added. Used to reset other focus settings.
+ - Linear: A blur along a straight line.
+ - Radial: A blur that spreads radial from a central point.
+ */
 @objc public enum IMGLYFocusAction: Int {
     case Off
     case Linear
     case Radial
 }
 
+/// This closure allows the configuration of the given `IMGLYImageCaptionButton`,
+/// depending on the linked focus action.
+public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYFocusAction) -> ()
 
 @objc public class IMGLYFocusEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// Defines all allowed focus actions. The focus buttons are shown in the given order.
+    /// Defaults to show all available modes. The .Off action is always added. To set this
+    /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
+    public let allowedFocusActions: [IMGLYFocusAction]
     
-    /// This closure allows the configuration of the given `IMGLYImageCaptionButton`,
-    /// depending on the linked focus action.
-    public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYFocusAction) -> ()
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure
 
-    // MARK: Behaviour
+    convenience init() {
+        self.init(builder: IMGLYFocusEditorViewControllerOptionsBuilder())
+    }
     
+    init(builder: IMGLYFocusEditorViewControllerOptionsBuilder) {
+        allowedFocusActions = builder.allowedFocusActions
+        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYFocusEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
@@ -38,8 +62,6 @@ import UIKit
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure = { _ in }
     
-    // MARK: Obj-C Compatibility
-    
     /// An array of `IMGLYFocusAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedFocusActions` with the corresponding `IMGLYFocusAction` values.
@@ -48,8 +70,6 @@ import UIKit
             self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ IMGLYFocusAction(rawValue: $0.integerValue)! })
         }
     }
-    
-    // MARK: Init
     
     public override init() {
         super.init()

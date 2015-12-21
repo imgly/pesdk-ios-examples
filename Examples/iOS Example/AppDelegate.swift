@@ -16,9 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        // Start with default configuration
         let configuration = IMGLYConfiguration() { builder in
-            
             builder.configureCameraViewController { options in
                 options.allowedTorchModes = [ .Auto, .Off ]
                 options.showFilters = false

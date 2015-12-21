@@ -9,9 +9,21 @@
 import UIKit
 
 @objc public class IMGLYSliderEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    /// Use this closure to configure the filter intensity slider.
+    /// Defaults to an empty implementation.
+    public let sliderConfigurationClosure: IMGLYSliderConfigurationClosure
     
-    // MARK: UI
+    convenience init() {
+        self.init(builder: IMGLYSliderEditorViewControllerOptionsBuilder())
+    }
     
+    init(builder: IMGLYSliderEditorViewControllerOptionsBuilder) {
+        sliderConfigurationClosure = builder.sliderConfigurationClosure
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYSliderEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public lazy var sliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }

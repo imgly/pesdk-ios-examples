@@ -10,14 +10,25 @@ import UIKit
 
 // Options for configuring the IMGLYMainEditorViewController
 @objc public class IMGLYMainEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
-
-    // MARK: Behaviour
     
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.
-    public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
+    public let editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol
     
-    // MARK: Init
+    convenience init() {
+        self.init(builder: IMGLYMainEditorViewControllerOptionsBuilder())
+    }
+    
+    init(builder: IMGLYMainEditorViewControllerOptionsBuilder) {
+        editorActionsDataSource = builder.editorActionsDataSource
+        super.init(editorBuilder: builder)
+    }
+}
+
+@objc public class IMGLYMainEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    /// Specifies the actions available in the bottom drawer. Defaults to the
+    /// IMGLYMainEditorActionsDataSource providing all editors.
+    public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
     
     public override init() {
         super.init()
