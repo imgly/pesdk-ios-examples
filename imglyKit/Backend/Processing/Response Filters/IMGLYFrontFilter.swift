@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYFrontFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Front")
-        self.imgly_displayName = "Front"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYFrontFilter: EffectFilterType {
+    public var displayName: String {
+        return "Front"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Front
     }
 }

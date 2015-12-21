@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYPlateFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Plate")
-        self.imgly_displayName = "Plate"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYPlateFilter: EffectFilterType {
+    public var displayName: String {
+        return "Plate"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Plate
     }
 }

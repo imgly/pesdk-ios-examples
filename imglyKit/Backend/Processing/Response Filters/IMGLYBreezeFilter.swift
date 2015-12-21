@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYBreezeFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Breeze")
-        self.imgly_displayName = "Breeze"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYBreezeFilter: EffectFilterType {
+    public var displayName: String {
+        return "Breeze"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Breeze
     }
 }

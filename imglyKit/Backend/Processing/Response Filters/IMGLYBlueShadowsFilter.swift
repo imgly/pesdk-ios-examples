@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "BlueShadows")
-        self.imgly_displayName = "Blue Shade"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYBlueShadowsFilter: EffectFilterType {
+    public var displayName: String {
+        return "Blue Shade"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .BlueShadows
     }
 }

@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYLomoFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Lomo")
-        self.imgly_displayName = "Lomo"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYLomoFilter: EffectFilterType {
+    public var displayName: String {
+        return "Lomo"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Lomo
     }
 }

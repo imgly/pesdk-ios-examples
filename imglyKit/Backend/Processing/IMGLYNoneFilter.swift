@@ -17,13 +17,12 @@ import QuartzCore
 *  A filter that does nothing. It is used within the fixed-filterstack.
 */
 public class IMGLYNoneFilter: IMGLYResponseFilter {
+    required public init() {
+        super.init(responseName: "None")
+    }
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-    }
-
-    init() {
-        super.init(responseName: "None")
-        self.imgly_displayName = "None"
     }
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
@@ -33,5 +32,15 @@ public class IMGLYNoneFilter: IMGLYResponseFilter {
         }
 
         return inputImage
+    }
+}
+
+extension IMGLYNoneFilter: EffectFilterType {
+    public var displayName: String {
+        return "None"
+    }
+    
+    public var filterType: IMGLYFilterType {
+        return .None
     }
 }

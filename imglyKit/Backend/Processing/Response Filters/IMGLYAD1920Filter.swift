@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYAD1920Filter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "AD1920")
-        self.imgly_displayName = "AD1920"
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYAD1920Filter: EffectFilterType {
+    public var displayName: String {
+        return "AD1920"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .AD1920
     }
 }

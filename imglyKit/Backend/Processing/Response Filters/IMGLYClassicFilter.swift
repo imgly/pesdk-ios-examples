@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYClassicFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Classic")
-        self.imgly_displayName = "Classic"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYClassicFilter: EffectFilterType {
+    public var displayName: String {
+        return "Classic"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Classic
     }
 }

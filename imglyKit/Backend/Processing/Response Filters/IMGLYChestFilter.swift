@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYChestFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Chest")
-        self.imgly_displayName = "Chest"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYChestFilter: EffectFilterType {
+    public var displayName: String {
+        return "Chest"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Chest
     }
 }

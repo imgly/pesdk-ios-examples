@@ -26,7 +26,7 @@ import QuartzCore
     Both, circle and box, are described by the controlPoint1 and controlPoint2 variable, that mark
     either two oppesite points on the radius of the circle, or two points on oppesite sides of the box.
 */
-public class IMGLYTiltshiftFilter: CIFilter {
+public class IMGLYTiltshiftFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     /// One of the two points, marking the dimension and direction of the box or circle.

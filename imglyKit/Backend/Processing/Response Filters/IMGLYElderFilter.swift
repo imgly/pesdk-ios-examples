@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYElderFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Elder")
-        self.imgly_displayName = "Elder"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYElderFilter: EffectFilterType {
+    public var displayName: String {
+        return "Elder"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Elder
     }
 }

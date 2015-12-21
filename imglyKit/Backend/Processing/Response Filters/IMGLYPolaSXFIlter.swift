@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYPolaSXFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "PolaSX")
-        self.imgly_displayName = "SX"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
-        return IMGLYFilterType.PolaSX
+extension IMGLYPolaSXFilter: EffectFilterType {
+    public var displayName: String {
+        return "SX"
+    }
+    
+    public var filterType: IMGLYFilterType {
+        return .PolaSX
     }
 }

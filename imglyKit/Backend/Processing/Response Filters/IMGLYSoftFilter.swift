@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSoftFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Soft")
-        self.imgly_displayName = "Soft"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSoftFilter: EffectFilterType {
+    public var displayName: String {
+        return "Soft"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Soft
     }
 }

@@ -112,7 +112,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Helpers
 
     private func initialSizeForStickerImage(image: UIImage) -> CGSize {
-        let initialMaxStickerSize = CGRectGetWidth(stickersClipView.bounds) * 0.3
+        let initialMaxStickerSize = stickersClipView.bounds.width * 0.3
         let widthRatio = initialMaxStickerSize / image.size.width
         let heightRatio = initialMaxStickerSize / image.size.height
         let scale = min(widthRatio, heightRatio)
@@ -343,7 +343,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
         imageView.frame.size = initialSizeForStickerImage(sticker.image)
-        imageView.center = CGPoint(x: CGRectGetMidX(stickersClipView.bounds), y: CGRectGetMidY(stickersClipView.bounds))
+        imageView.center = CGPoint(x: stickersClipView.bounds.midX, y: stickersClipView.bounds.midY)
 
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let scaleX = 1.0 / cropRect.width

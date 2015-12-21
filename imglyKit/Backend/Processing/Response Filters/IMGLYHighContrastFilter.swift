@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYHighContrastFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "HighContrast")
-        self.imgly_displayName = "Hicon"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYHighContrastFilter: EffectFilterType {
+    public var displayName: String {
+        return "Hicon"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .HighContrast
     }
 }

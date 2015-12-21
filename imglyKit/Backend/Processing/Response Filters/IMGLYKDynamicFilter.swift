@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYKDynamicFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "KDynamic")
-        self.imgly_displayName = "Dynamic"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYKDynamicFilter: EffectFilterType {
+    public var displayName: String {
+        return "Dynamic"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .KDynamic
     }
 }

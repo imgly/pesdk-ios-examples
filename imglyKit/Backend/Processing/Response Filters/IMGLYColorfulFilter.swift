@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYColorfulFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Colorful")
-        self.imgly_displayName = "Colorful"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYColorfulFilter: EffectFilterType {
+    public var displayName: String {
+        return "Colorful"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Colorful
     }
 }

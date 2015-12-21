@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYTwilightFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Twilight")
-        self.imgly_displayName = "Twilight"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYTwilightFilter: EffectFilterType {
+    public var displayName: String {
+        return "Twilight"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Twilight
     }
 }

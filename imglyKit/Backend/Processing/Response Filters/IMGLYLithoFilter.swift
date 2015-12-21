@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYLithoFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Litho")
-        self.imgly_displayName = "Litho"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYLithoFilter: EffectFilterType {
+    public var displayName: String {
+        return "Litho"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Litho
     }
 }

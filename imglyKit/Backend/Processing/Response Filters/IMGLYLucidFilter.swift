@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYLucidFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Lucid")
-        self.imgly_displayName = "Lucid"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYLucidFilter: EffectFilterType {
+    public var displayName: String {
+        return "Lucid"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Lucid
     }
 }

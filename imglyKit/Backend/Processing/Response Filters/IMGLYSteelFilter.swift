@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSteelFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Steel")
-        self.imgly_displayName = "Steel"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSteelFilter: EffectFilterType {
+    public var displayName: String {
+        return "Steel"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Steel
     }
 }

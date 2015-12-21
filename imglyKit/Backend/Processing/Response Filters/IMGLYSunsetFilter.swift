@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSunsetFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Sunset")
-        self.imgly_displayName = "Sunset"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSunsetFilter: EffectFilterType {
+    public var displayName: String {
+        return "Sunset"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Sunset
     }
 }

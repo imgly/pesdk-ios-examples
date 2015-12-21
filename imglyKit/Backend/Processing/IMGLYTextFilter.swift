@@ -14,7 +14,7 @@ import QuartzCore
 import AppKit
 #endif
 
-public class IMGLYTextFilter: CIFilter {
+public class IMGLYTextFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
 <<<<<<< b0366d9c46357f4bb8802f8abd908397534fe035
     public var inputImage:CIImage?

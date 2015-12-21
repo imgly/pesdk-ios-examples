@@ -31,12 +31,12 @@ public class IMGLYFixedFilterStack: NSObject {
     public var brightnessFilter = IMGLYInstanceFactory.colorAdjustmentFilter()
     public var tiltShiftFilter = IMGLYInstanceFactory.tiltShiftFilter()
     public var textFilter = IMGLYInstanceFactory.textFilter()
-    public var stickerFilters = [CIFilter]()
+    public var stickerFilters = [FilterType]()
 
-    public var activeFilters: [CIFilter] {
+    public var activeFilters: [FilterType] {
         setCropRectForStickerFilters()
         setCropRectForTextFilters()
-        var activeFilters: [CIFilter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
+        var activeFilters: [FilterType] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
         activeFilters += stickerFilters
         return activeFilters
     }
@@ -141,7 +141,6 @@ public class IMGLYFixedFilterStack: NSObject {
         }
     }
 
-
     private func flipRotationHorizontal(stickerFilter: IMGLYStickerFilter) {
         flipRotation(stickerFilter, axisAngle: CGFloat(M_PI))
     }
@@ -219,11 +218,11 @@ extension IMGLYFixedFilterStack: NSCopying {
         let copy = self.dynamicType.init()
         copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
-        copy.effectFilter = effectFilter.copyWithZone(zone) as! IMGLYResponseFilter
+        copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilterType
         copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! IMGLYContrastBrightnessSaturationFilter
         copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! IMGLYTiltshiftFilter
         copy.textFilter = textFilter.copyWithZone(zone) as! IMGLYTextFilter
-        copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [CIFilter]
+        copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [FilterType]
         return copy
     }
 }

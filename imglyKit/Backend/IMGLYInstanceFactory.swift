@@ -13,6 +13,72 @@ import Foundation
   create filters, views, viewcontrollers and such.
 */
 public class IMGLYInstanceFactory {
+    private static let filterTypeToFilter: [IMGLYFilterType: IMGLYResponseFilter.Type] = [
+        .None: IMGLYNoneFilter.self,
+        .K1: IMGLYK1Filter.self,
+        .K2: IMGLYK2Filter.self,
+        .K6: IMGLYK6Filter.self,
+        .KDynamic: IMGLYKDynamicFilter.self,
+        .Fridge: IMGLYFridgeFilter.self,
+        .Breeze: IMGLYBreezeFilter.self,
+        .Orchid: IMGLYOrchidFilter.self,
+        .Chest: IMGLYChestFilter.self,
+        .Front: IMGLYFrontFilter.self,
+        .Fixie: IMGLYFixieFilter.self,
+        .X400: IMGLYX400Filter.self,
+        .BW: IMGLYBWFilter.self,
+        .AD1920: IMGLYAD1920Filter.self,
+        .Lenin: IMGLYLeninFilter.self,
+        .Quozi: IMGLYQuoziFilter.self,
+        .Pola669: IMGLYPola669Filter.self,
+        .PolaSX: IMGLYPolaSXFilter.self,
+        .Food: IMGLYFoodFilter.self,
+        .Glam: IMGLYGlamFilter.self,
+        .Celsius: IMGLYCelsiusFilter.self,
+        .Texas: IMGLYTexasFilter.self,
+        .Lomo: IMGLYLomoFilter.self,
+        .Goblin: IMGLYGoblinFilter.self,
+        .Sin: IMGLYSinFilter.self,
+        .Mellow: IMGLYMellowFilter.self,
+        .Soft: IMGLYSoftFilter.self,
+        .Blues: IMGLYBluesFilter.self,
+        .Elder: IMGLYElderFilter.self,
+        .Sunset: IMGLYSunsetFilter.self,
+        .Evening: IMGLYEveningFilter.self,
+        .Steel: IMGLYSteelFilter.self,
+        .Seventies: IMGLYSeventiesFilter.self,
+        .HighContrast: IMGLYHighContrastFilter.self,
+        .BlueShadows: IMGLYBlueShadowsFilter.self,
+        .Highcarb: IMGLYHighcarbFilter.self,
+        .Eighties: IMGLYEightiesFilter.self,
+        .Colorful: IMGLYColorfulFilter.self,
+        .Lomo100: IMGLYLomo100Filter.self,
+        .Pro400: IMGLYPro400Filter.self,
+        .Twilight: IMGLYTwilightFilter.self,
+        .CottonCandy: IMGLYCottonCandyFilter.self,
+        .Pale: IMGLYPaleFilter.self,
+        .Settled: IMGLYSettledFilter.self,
+        .Cool: IMGLYCoolFilter.self,
+        .Litho: IMGLYLithoFilter.self,
+        .Ancient: IMGLYAncientFilter.self,
+        .Pitched: IMGLYPitchedFilter.self,
+        .Lucid: IMGLYLucidFilter.self,
+        .Creamy: IMGLYCreamyFilter.self,
+        .Keen: IMGLYKeenFilter.self,
+        .Tender: IMGLYTenderFilter.self,
+        .Bleached: IMGLYBleachedFilter.self,
+        .BleachedBlue: IMGLYBleachedBlueFilter.self,
+        .Fall: IMGLYFallFilter.self,
+        .Winter: IMGLYWinterFilter.self,
+        .SepiaHigh: IMGLYSepiaHighFilter.self,
+        .Summer: IMGLYSummerFilter.self,
+        .Classic: IMGLYClassicFilter.self,
+        .NoGreen: IMGLYNoGreenFilter.self,
+        .Neat: IMGLYNeatFilter.self,
+        .Plate: IMGLYPlateFilter.self
+    ]
+
+
     /**
     Creates a response filter with the specified type.
 
@@ -20,133 +86,8 @@ public class IMGLYInstanceFactory {
 
     - returns: A CIFilter object that realizes the desired filter.
     */
-    public class func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
-        switch type {
-        case .None:
-            return IMGLYNoneFilter()
-        case .K1:
-            return IMGLYK1Filter()
-        case .K2:
-            return IMGLYK2Filter()
-        case .K6:
-            return IMGLYK6Filter()
-        case .KDynamic:
-            return IMGLYKDynamicFilter()
-        case .Fridge:
-            return IMGLYFridgeFilter()
-        case .Breeze:
-            return IMGLYBreezeFilter()
-        case .Orchid:
-            return IMGLYOrchidFilter()
-        case .Chest:
-            return IMGLYChestFilter()
-        case .Front:
-            return IMGLYFrontFilter()
-        case .Fixie:
-            return IMGLYFixieFilter()
-        case .X400:
-            return IMGLYX400Filter()
-        case .BW:
-            return IMGLYBWFilter()
-        case .AD1920:
-            return IMGLYAD1920Filter()
-        case .Lenin:
-            return IMGLYLeninFilter()
-        case .Quozi:
-            return IMGLYQuoziFilter()
-        case .Pola669:
-            return IMGLYPola669Filter()
-        case .PolaSX:
-            return IMGLYPolaSXFilter()
-        case .Food:
-            return IMGLYFoodFilter()
-        case .Glam:
-            return IMGLYGlamFilter()
-        case .Celsius:
-            return IMGLYCelsiusFilter()
-        case .Texas:
-            return IMGLYTexasFilter()
-        case .Lomo:
-            return IMGLYLomoFilter()
-        case .Goblin:
-            return IMGLYGoblinFilter()
-        case .Sin:
-            return IMGLYSinFilter()
-        case .Mellow:
-            return IMGLYMellowFilter()
-        case .Soft:
-            return IMGLYSoftFilter()
-        case .Blues:
-            return IMGLYBluesFilter()
-        case .Elder:
-            return IMGLYElderFilter()
-        case .Sunset:
-            return IMGLYSunsetFilter()
-        case .Evening:
-            return IMGLYEveningFilter()
-        case .Steel:
-            return IMGLYSteelFilter()
-        case .Seventies:
-            return IMGLYSeventiesFilter()
-        case .HighContrast:
-            return IMGLYHighContrastFilter()
-        case .BlueShadows:
-            return IMGLYBlueShadowsFilter()
-        case .Highcarb:
-            return IMGLYHighcarbFilter()
-        case .Eighties:
-            return IMGLYEightiesFilter()
-        case .Colorful:
-            return IMGLYColorfulFilter()
-        case .Lomo100:
-            return IMGLYLomo100Filter()
-        case .Pro400:
-            return IMGLYPro400Filter()
-        case .Twilight:
-            return IMGLYTwilightFilter()
-        case .CottonCandy:
-            return IMGLYCottonCandyFilter()
-        case .Pale:
-            return IMGLYPaleFilter()
-        case .Settled:
-            return IMGLYSettledFilter()
-        case .Cool:
-            return IMGLYCoolFilter()
-        case .Litho:
-            return IMGLYLithoFilter()
-        case .Ancient:
-            return IMGLYAncientFilter()
-        case .Pitched:
-            return IMGLYPitchedFilter()
-        case .Lucid:
-            return IMGLYLucidFilter()
-        case .Creamy:
-            return IMGLYCreamyFilter()
-        case .Keen:
-            return IMGLYKeenFilter()
-        case .Tender:
-            return IMGLYTenderFilter()
-        case .Bleached:
-            return IMGLYBleachedFilter()
-        case .BleachedBlue:
-            return IMGLYBleachedBlueFilter()
-        case .Fall:
-            return IMGLYFallFilter()
-        case .Winter:
-            return IMGLYWinterFilter()
-        case .SepiaHigh:
-            return IMGLYSepiaHighFilter()
-        case .Summer:
-            return IMGLYSummerFilter()
-        case .Classic:
-            return IMGLYClassicFilter()
-        case .NoGreen:
-            return IMGLYNoGreenFilter()
-        case .Neat:
-            return IMGLYNeatFilter()
-        case .Plate:
-            return IMGLYPlateFilter()
-        }
+    public class func effectFilterWithType(type: IMGLYFilterType) -> EffectFilterType {
+        return filterTypeToFilter[type]!.init() as! EffectFilterType
     }
 
     /**
@@ -218,70 +159,7 @@ public class IMGLYInstanceFactory {
     - returns: An array of filter types.
     */
     public class var availableFilterList: [IMGLYFilterType] {
-        return [
-            .None,
-            .K1,
-            .K2,
-            .K6,
-            .KDynamic,
-            .Fridge,
-            .Breeze,
-            .Orchid,
-            .Chest,
-            .Front,
-            .Fixie,
-            .X400,
-            .BW,
-            .AD1920,
-            .Lenin,
-            .Quozi,
-            .Pola669,
-            .PolaSX,
-            .Food,
-            .Glam,
-            .Celsius,
-            .Texas,
-            .Lomo,
-            .Goblin,
-            .Sin,
-            .Mellow,
-            .Soft,
-            .Blues,
-            .Elder,
-            .Sunset,
-            .Evening,
-            .Steel,
-            .Seventies,
-            .HighContrast,
-            .BlueShadows,
-            .Highcarb,
-            .Eighties,
-            .Colorful,
-            .Lomo100,
-            .Pro400,
-            .Twilight,
-            .CottonCandy,
-            .Pale,
-            .Settled,
-            .Cool,
-            .Litho,
-            .Ancient,
-            .Pitched,
-            .Lucid,
-            .Creamy,
-            .Keen,
-            .Tender,
-            .Bleached,
-            .BleachedBlue,
-            .Fall,
-            .Winter,
-            .SepiaHigh,
-            .Summer,
-            .Classic,
-            .NoGreen,
-            .Neat,
-            .Plate
-        ]
+        return Array(filterTypeToFilter.keys)
     }
 
     // MARK: - Font Related

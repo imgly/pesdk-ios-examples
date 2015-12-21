@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "SepiaHigh")
-        self.imgly_displayName = "Sepia High"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSepiaHighFilter: EffectFilterType {
+    public var displayName: String {
+        return "Sepia High"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .SepiaHigh
     }
 }

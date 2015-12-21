@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "CottonCandy")
-        self.imgly_displayName = "Candy"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYCottonCandyFilter: EffectFilterType {
+    public var displayName: String {
+        return "Candy"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .CottonCandy
     }
 }

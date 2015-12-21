@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYQuoziFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Quozi")
-        self.imgly_displayName = "Quozi"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYQuoziFilter: EffectFilterType {
+    public var displayName: String {
+        return "Quozi"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Quozi
     }
 }

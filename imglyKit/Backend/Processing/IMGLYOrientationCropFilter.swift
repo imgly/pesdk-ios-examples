@@ -29,7 +29,7 @@ Represents the angle an image should be rotated by.
  This is needed since otherwise the resulting CIImage has no no size due the lack of inforamtion within
  the CIImage.
 */
-public class IMGLYOrientationCropFilter: CIFilter {
+public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
@@ -37,16 +37,6 @@ public class IMGLYOrientationCropFilter: CIFilter {
     private var rotationAngle = IMGLYRotationAngle._0
     private var flipVertical_ = false
     private var flipHorizontal_ = false
-
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        self.imgly_displayName = "OrientationCropFilter"
-    }
-
-    override init() {
-        super.init()
-        self.imgly_displayName = "OrientationCropFilter"
-    }
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {

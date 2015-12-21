@@ -86,7 +86,7 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Properties
 
     /// The response filter that is applied to the live-feed.
-    public var effectFilter: IMGLYResponseFilter = IMGLYNoneFilter()
+    public var effectFilter: EffectFilterType = IMGLYNoneFilter()
     public let previewView: UIView
     public var previewContentMode: UIViewContentMode  = .ScaleAspectFit
     public var tapToFocusEnabled = true

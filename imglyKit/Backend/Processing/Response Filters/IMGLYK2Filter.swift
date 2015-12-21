@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYK2Filter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "K2")
-        self.imgly_displayName = "K2"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYK2Filter: EffectFilterType {
+    public var displayName: String {
+        return "K2"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .K2
     }
 }

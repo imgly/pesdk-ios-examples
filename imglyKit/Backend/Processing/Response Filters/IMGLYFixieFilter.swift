@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYFixieFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Fixie")
-        self.imgly_displayName = "Fixie"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYFixieFilter: EffectFilterType {
+    public var displayName: String {
+        return "Fixie"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Fixie
     }
 }

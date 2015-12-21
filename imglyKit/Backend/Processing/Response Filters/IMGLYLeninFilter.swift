@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYLeninFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Lenin")
-        self.imgly_displayName = "Lenin"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYLeninFilter: EffectFilterType {
+    public var displayName: String {
+        return "Lenin"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Lenin
     }
 }

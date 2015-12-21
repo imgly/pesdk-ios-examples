@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYOrchidFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Orchid")
-        self.imgly_displayName = "Orchid"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYOrchidFilter: EffectFilterType {
+    public var displayName: String {
+        return "Orchid"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Orchid
     }
 }

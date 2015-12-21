@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYTenderFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Tender")
-        self.imgly_displayName = "Tender"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYTenderFilter: EffectFilterType {
+    public var displayName: String {
+        return "Tender"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Tender
     }
 }

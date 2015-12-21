@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSettledFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Settled")
-        self.imgly_displayName = "Settled"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSettledFilter: EffectFilterType {
+    public var displayName: String {
+        return "Settled"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Settled
     }
 }

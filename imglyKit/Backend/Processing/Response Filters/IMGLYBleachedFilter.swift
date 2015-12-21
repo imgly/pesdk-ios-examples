@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYBleachedFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Bleached")
-        self.imgly_displayName = "Bleached"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYBleachedFilter: EffectFilterType {
+    public var displayName: String {
+        return "Bleached"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Bleached
     }
 }

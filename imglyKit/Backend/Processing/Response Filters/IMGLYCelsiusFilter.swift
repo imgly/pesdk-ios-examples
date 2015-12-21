@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYCelsiusFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Celsius")
-        self.imgly_displayName = "Celsius"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYCelsiusFilter: EffectFilterType {
+    public var displayName: String {
+        return "Celsius"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Celsius
     }
 }

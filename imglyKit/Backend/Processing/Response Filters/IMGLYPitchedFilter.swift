@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYPitchedFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Pitched")
-        self.imgly_displayName = "Pitched"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYPitchedFilter: EffectFilterType {
+    public var displayName: String {
+        return "Pitched"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Pitched
     }
 }

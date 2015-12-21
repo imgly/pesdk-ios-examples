@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYGoblinFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Goblin")
-        self.imgly_displayName = "Goblin"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYGoblinFilter: EffectFilterType {
+    public var displayName: String {
+        return "Goblin"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Goblin
     }
 }

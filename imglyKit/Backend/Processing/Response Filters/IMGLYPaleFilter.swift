@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYPaleFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Pale")
-        self.imgly_displayName = "Pale"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYPaleFilter: EffectFilterType {
+    public var displayName: String {
+        return "Pale"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Pale
     }
 }

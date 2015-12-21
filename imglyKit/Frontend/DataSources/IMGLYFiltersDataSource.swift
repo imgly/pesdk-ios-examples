@@ -100,7 +100,7 @@ import UIKit
     }
 
     public func titleForFilterAtIndex(index: Int) -> String {
-        return IMGLYInstanceFactory.effectFilterWithType(availableFilterTypes[index]).imgly_displayName!
+        return IMGLYInstanceFactory.effectFilterWithType(availableFilterTypes[index]).displayName
     }
 
     public func selectedImageForFilterAtIndex(index: Int) -> UIImage {

@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYMellowFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Mellow")
-        self.imgly_displayName = "Mellow"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYMellowFilter: EffectFilterType {
+    public var displayName: String {
+        return "Mellow"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Mellow
     }
 }

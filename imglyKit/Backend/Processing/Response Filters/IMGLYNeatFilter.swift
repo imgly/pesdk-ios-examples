@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYNeatFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Neat")
-        self.imgly_displayName = "Neat"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYNeatFilter: EffectFilterType {
+    public var displayName: String {
+        return "Neat"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Neat
     }
 }

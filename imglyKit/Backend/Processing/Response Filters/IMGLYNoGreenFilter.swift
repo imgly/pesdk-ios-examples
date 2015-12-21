@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYNoGreenFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "NoGreen")
-        self.imgly_displayName = "No Green"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYNoGreenFilter: EffectFilterType {
+    public var displayName: String {
+        return "No Green"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .NoGreen
     }
 }

@@ -13,10 +13,6 @@ import CoreImage
 import QuartzCore
 #endif
 
-@objc public protocol IMGLYFilterTypeProtocol {
-    var filterType: IMGLYFilterType { get }
-}
-
 /**
   A base clase for all response filters. Response filters use a look-up-table to
   map colors around, and create cool effects. These tables are handed over as image
@@ -27,7 +23,7 @@ import QuartzCore
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
-public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
+public class IMGLYResponseFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {
@@ -35,12 +31,8 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
             colorCubeData = nil
         }
     }
+    
     public let responseName: String
-
-    /// Returns the according filter type of the response filter.
-    public var filterType: IMGLYFilterType {
-        return .None
-    }
 
     private var _colorCubeData: NSData?
     private var colorCubeData: NSData? {
@@ -55,6 +47,10 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
         set {
             _colorCubeData = newValue
         }
+    }
+    
+    public required convenience override init() {
+        self.init(responseName: "")
     }
 
     init(responseName: String) {

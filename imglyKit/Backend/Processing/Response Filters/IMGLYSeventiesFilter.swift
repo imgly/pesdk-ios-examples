@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYSeventiesFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Seventies")
-        self.imgly_displayName = "70s"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYSeventiesFilter: EffectFilterType {
+    public var displayName: String {
+        return "70s"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Seventies
     }
 }

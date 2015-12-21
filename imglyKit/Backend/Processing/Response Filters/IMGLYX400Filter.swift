@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYX400Filter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "X400")
-        self.imgly_displayName = "X400"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYX400Filter: EffectFilterType {
+    public var displayName: String {
+        return "X400"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .X400
     }
 }

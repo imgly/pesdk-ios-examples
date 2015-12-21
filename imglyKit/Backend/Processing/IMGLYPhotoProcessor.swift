@@ -84,7 +84,7 @@ All types of response-filters.
 }
 
 public class IMGLYPhotoProcessor {
-    public class func processWithCIImage(image: CIImage, filters: [CIFilter]) -> CIImage? {
+    public class func processWithCIImage(image: CIImage, filters: [FilterType]) -> CIImage? {
         if filters.count == 0 {
             return image
         }
@@ -92,8 +92,7 @@ public class IMGLYPhotoProcessor {
         var currentImage: CIImage? = image
 
         for filter in filters {
-            filter.setValue(currentImage, forKey:kCIInputImageKey)
-
+            filter.inputImage = currentImage
             currentImage = filter.outputImage
         }
 
@@ -106,7 +105,7 @@ public class IMGLYPhotoProcessor {
 
     #if os(iOS)
 
-    public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
+    public class func processWithUIImage(image: UIImage, filters: [FilterType]) -> UIImage? {
         let imageOrientation = image.imageOrientation
         guard let coreImage = CIImage(image: image) else {
             return nil

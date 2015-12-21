@@ -9,16 +9,21 @@
 import Foundation
 
 public class IMGLYTexasFilter: IMGLYResponseFilter {
-    init() {
+    required public init() {
         super.init(responseName: "Texas")
-        self.imgly_displayName = "Texas"
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+}
 
-    public override var filterType: IMGLYFilterType {
+extension IMGLYTexasFilter: EffectFilterType {
+    public var displayName: String {
+        return "Texas"
+    }
+    
+    public var filterType: IMGLYFilterType {
         return .Texas
     }
 }
