@@ -78,7 +78,9 @@ public class IMGLYTextFilter : CIFilter {
         print(originalSize)
         print(cropRect)
         
-        let position = CGPoint(x: frame.origin.x * originalSize.width, y: frame.origin.y * originalSize.height)
+        var position = CGPoint(x: frame.origin.x * originalSize.width, y: frame.origin.y * originalSize.height)
+        position.x -= (cropRect.origin.x * originalSize.width)
+        position.y -= (cropRect.origin.y * originalSize.height)
         
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
