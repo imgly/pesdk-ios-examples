@@ -18,7 +18,92 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
 @objc public class IMGLYCameraViewControllerOptions: NSObject {
     
-    // MARK: UI
+    /// The views background color. In video mode the colors alpha value is reduced to 0.3.
+    /// Defaults to the global background color.
+    public let backgroundColor: UIColor?
+    
+    /// Use this closure to configure the flash button. Defaults to an empty implementation.
+    public let flashButtonConfigurationClosure: IMGLYButtonConfigurationClosure
+    
+    /// Use this closure to configure the switch camera button. Defaults to an empty implementation.
+    public let switchCameraButtonConfigurationClosure: IMGLYButtonConfigurationClosure
+    
+    /// Use this closure to configure the camera roll button. Defaults to an empty implementation.
+    public let cameraRollButtonConfigurationClosure: IMGLYButtonConfigurationClosure
+    
+    /// Use this closure to configure the action button in photo mode. Defaults to an empty implementation.
+    public let photoActionButtonConfigurationClosure: IMGLYButtonConfigurationClosure
+    
+    /// Use this closure to configure the filter selector button. Defaults to an empty implementation.
+    public let filterSelectorButtonConfigurationClosure: IMGLYButtonConfigurationClosure
+    
+    /// Use this closure to configure the timelabel. Defaults to an empty implementation.
+    public let timeLabelConfigurationClosure: IMGLYLabelConfigurationClosure
+    
+    /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
+    public let filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure
+    
+    /// Enable/Disable permanent crop to square.
+    public let cropToSquare: Bool
+    
+    /// Enable/Disable tap to focus on the camera preview image.
+    public let tapToFocusEnabled: Bool
+    
+    /// Show/Hide the camera roll button.
+    public let showCameraRoll: Bool
+    
+    /// Enable/Disable filter bottom drawer.
+    public let showFilters: Bool
+    
+    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
+    public let filterDataSource: IMGLYFiltersDataSourceProtocol
+    
+    /// Enable/Disable filter intensity slider.
+    public var showFilterIntensitySlider: Bool
+    
+    /// Allowed camera positions. Defaults to all available positions
+    /// and falls back to supported position if only one exists.
+    public var allowedCameraPositions: [AVCaptureDevicePosition]
+    
+    /// Allowed flash modes. Defaults to all available modes. Duplicate
+    /// values are not removed and may lead to unexpected behaviour. The
+    /// first option is selected on launch, although the view controller
+    /// tries to match the previous torch mode on record mode changes.
+    public var allowedFlashModes: [AVCaptureFlashMode]
+    
+    /// Allowed torch modes. Defaults to all available modes. Duplicate
+    /// values are not removed and may lead to unexpected behaviour. The
+    /// first option is selected on launch, although the view controller
+    /// tries to match the previous flash mode on record mode changes.
+    public var allowedTorchModes: [AVCaptureTorchMode]
+    
+    convenience override init() {
+        self.init(builder: IMGLYCameraViewControllerOptionsBuilder())
+    }
+    
+    init(builder: IMGLYCameraViewControllerOptionsBuilder) {
+        backgroundColor = builder.backgroundColor
+        flashButtonConfigurationClosure = builder.flashButtonConfigurationClosure
+        switchCameraButtonConfigurationClosure = builder.switchCameraButtonConfigurationClosure
+        cameraRollButtonConfigurationClosure = builder.cameraRollButtonConfigurationClosure
+        photoActionButtonConfigurationClosure = builder.photoActionButtonConfigurationClosure
+        filterSelectorButtonConfigurationClosure = builder.filterSelectorButtonConfigurationClosure
+        timeLabelConfigurationClosure = builder.timeLabelConfigurationClosure
+        filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
+        cropToSquare = builder.cropToSquare
+        tapToFocusEnabled = builder.tapToFocusEnabled
+        showCameraRoll = builder.showCameraRoll
+        showFilters = builder.showFilters
+        filterDataSource = builder.filterDataSource
+        showFilterIntensitySlider = builder.showFilterIntensitySlider
+        allowedCameraPositions = builder.allowedCameraPositions
+        allowedFlashModes = builder.allowedFlashModes
+        allowedTorchModes = builder.allowedTorchModes
+        super.init()
+    }
+}
+
+@objc public class IMGLYCameraViewControllerOptionsBuilder: NSObject {
     
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.
     /// Defaults to the global background color.
@@ -44,8 +129,6 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     
     /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
     public lazy var filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
-    
-    // MARK: Behaviour
     
     /// Enable/Disable permanent crop to square.
     public var cropToSquare = false
@@ -76,15 +159,13 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// tries to match the previous torch mode on record mode changes.
     /// To set  this option from Objc-C see `allowedFlashModesAsNSNumbers`.
     public var allowedFlashModes: [AVCaptureFlashMode] = [ .Auto, .On, .Off ]
-
+    
     /// Allowed torch modes. Defaults to all available modes. Duplicate
     /// values are not removed and may lead to unexpected behaviour. The
     /// first option is selected on launch, although the view controller
     /// tries to match the previous flash mode on record mode changes.
     /// To set  this option from Objc-C see `allowedTorchModesAsNSNumbers`.
     public var allowedTorchModes: [AVCaptureTorchMode] = [ .Auto, .On, .Off ]
-    
-    // MARK: Obj-C Compatibility
     
     /// An array of `AVCaptureDevicePosition` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
@@ -113,6 +194,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 }
+
 
 public class IMGLYCameraViewController: UIViewController {
     

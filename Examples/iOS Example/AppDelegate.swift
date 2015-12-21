@@ -18,15 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Start with default configuration
         let configuration = IMGLYConfiguration() { builder in
-            let cameraViewControllerOptions = IMGLYCameraViewControllerOptions()
-            cameraViewControllerOptions.backgroundColor = UIColor.lightGrayColor()
-            cameraViewControllerOptions.tapToFocusEnabled = false
-            cameraViewControllerOptions.allowedCameraPositions = [ .Front, .Back ]
-            cameraViewControllerOptions.allowedFlashModes = [ .On, .Off ]
-            cameraViewControllerOptions.cropToSquare = false
             
-            builder.cameraViewControllerOptions = cameraViewControllerOptions
+            builder.configureCameraViewController { options in
+                options.allowedTorchModes = [ .Auto, .Off ]
+                options.showFilters = false
+            }
         }
+        
         
         // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
 //        do {

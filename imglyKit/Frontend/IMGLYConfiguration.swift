@@ -29,9 +29,11 @@ public typealias IMGLYSliderConfigurationClosure = (UISlider) -> ()
 public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
 
 /**
-An IMGLYConfiguration defines behaviour and look of all view controllers
-provided by the imglyKit. It uses the builder pattern to create an
-immutable copy via a closure.
+ An IMGLYConfiguration defines behaviour and look of all view controllers
+ provided by the imglyKit. It uses the builder pattern to create an
+ immutable object via a closure. To configure the different editors and
+ viewControllers contained in the SDK, edit their options in the corresponding
+ `configure*ViewController` method of the `IMGLYConfigurationBuilder`.
 */
 @objc public class IMGLYConfiguration : NSObject {
     
@@ -93,11 +95,13 @@ immutable copy via a closure.
 
 /**
  The configuration builder object offers all properties of `IMGLYConfiguration` in
- a mutable version, in order to build an immutable `IMGLYConfiguration` object.
+ a mutable version, in order to build an immutable `IMGLYConfiguration` object. To
+ further configure the different viewcontrollers, use the `configureXYZViewController`
+ methods to edit the given options.
 */
 @objc public class IMGLYConfigurationBuilder : NSObject {
     public var backgroundColor: UIColor = UIColor.blackColor()
-    public var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
+    private var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
     public var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
     public var filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions()
     public var stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions()
@@ -108,6 +112,12 @@ immutable copy via a closure.
     public var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
     public var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
     public var textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions()
+    
+    public func configureCameraViewController(builder: (IMGLYCameraViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = IMGLYCameraViewControllerOptionsBuilder()
+        builder(builderForClosure)
+        cameraViewControllerOptions = IMGLYCameraViewControllerOptions(builder: builderForClosure)
+    }
     
     // MARK: Class replacement
     
