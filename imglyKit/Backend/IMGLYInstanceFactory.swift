@@ -9,15 +9,15 @@
 import Foundation
 
 /**
-  A singleton that is out to create objects. It is used within the SDK to 
+  A singleton that is out to create objects. It is used within the SDK to
   create filters, views, viewcontrollers and such.
 */
 public class IMGLYInstanceFactory {
     /**
     Creates a response filter with the specified type.
-    
+
     - parameter type: The type of the filter that should be created.
-    
+
     - returns: A CIFilter object that realizes the desired filter.
     */
     public class func effectFilterWithType(type: IMGLYFilterType) -> IMGLYResponseFilter {
@@ -148,19 +148,19 @@ public class IMGLYInstanceFactory {
             return IMGLYPlateFilter()
         }
     }
-    
+
     /**
     Creates a text filter.
-    
+
     - returns: A text filter
     */
     public class func textFilter() -> IMGLYTextFilter {
         return IMGLYTextFilter()
     }
-    
+
     /**
     Creates a sticker filter.
-    
+
     - returns: A sticker filter
     */
     public class func stickerFilter() -> IMGLYStickerFilter {
@@ -169,49 +169,49 @@ public class IMGLYInstanceFactory {
 
     /**
     Creates a crop filter.
-    
+
     - returns: A crop filter
     */
     public class func orientationCropFilter() -> IMGLYOrientationCropFilter {
         return IMGLYOrientationCropFilter()
     }
-    
+
     /**
     Creates a tiltshift filter.
-    
+
     - returns: A tiltshift filter.
     */
     public class func tiltShiftFilter() -> IMGLYTiltshiftFilter {
         return IMGLYTiltshiftFilter()
     }
-    
+
     /**
     Creates a color-adjustment filter.
-    
+
     - returns: A color-adjustment filter.
     */
     public class func colorAdjustmentFilter() -> IMGLYContrastBrightnessSaturationFilter {
         return IMGLYContrastBrightnessSaturationFilter()
     }
-    
+
     /**
     Creates an enhancement filter.
-    
+
     - returns: A enhancement filter.
     */
     public class func enhancementFilter() -> IMGLYEnhancementFilter {
         return IMGLYEnhancementFilter()
     }
-    
+
     /**
     Creates an scale filter.
-    
+
     - returns: A scale filter.
     */
     public class func scaleFilter() -> IMGLYScaleFilter {
         return IMGLYScaleFilter()
     }
-    
+
     /**
     Returns the list of filters, that should be available in the dialogs.
     Change this list to select the set of filters you want to present to the user.
@@ -283,13 +283,13 @@ public class IMGLYInstanceFactory {
             .Plate
         ]
     }
-    
+
     // MARK: - Font Related
-    
+
     /**
     Returns a list that determins what fonts will be available within
     the text-dialog.
-    
+
     - returns: An array of fontnames.
     */
     public class var availableFontsList: [String] {
@@ -320,9 +320,9 @@ public class IMGLYInstanceFactory {
             "Vevey"
         ]
     }
-    
+
     public class func fontImporter() -> IMGLYFontImporter {
         return IMGLYFontImporter()
-    }    
+    }
 
 }

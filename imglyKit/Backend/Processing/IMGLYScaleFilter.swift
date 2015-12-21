@@ -16,20 +16,20 @@
 public class IMGLYScaleFilter: CIFilter {
     public var inputImage: CIImage?
     public var scale = Float(1)
-    
+
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
             return nil
         }
-        
+
         guard let filter = CIFilter(name: "CILanczosScaleTransform") else {
             return inputImage
         }
-        
+
         filter.setValue(inputImage, forKey: kCIInputImageKey)
         filter.setValue(scale, forKey: kCIInputScaleKey)
-        
+
         return filter.outputImage
     }
 }

@@ -13,11 +13,11 @@ public class IMGLYSteelFilter: IMGLYResponseFilter {
         super.init(responseName: "Steel")
         self.imgly_displayName = "Steel"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Steel

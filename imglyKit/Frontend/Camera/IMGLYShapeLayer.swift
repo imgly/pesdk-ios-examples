@@ -15,7 +15,7 @@ class IMGLYShapeLayer: CAShapeLayer {
             animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
             return animation
         }
-        
+
         return super.actionForKey(event)
     }
 }

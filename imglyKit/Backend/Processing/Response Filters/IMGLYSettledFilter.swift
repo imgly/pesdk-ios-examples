@@ -13,11 +13,11 @@ public class IMGLYSettledFilter: IMGLYResponseFilter {
         super.init(responseName: "Settled")
         self.imgly_displayName = "Settled"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Settled

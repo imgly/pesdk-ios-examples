@@ -11,7 +11,7 @@ import UIKit
 @objc public class IMGLYSticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
-    
+
     public init(image: UIImage, thumbnail: UIImage?) {
         self.image = image
         self.thumbnail = thumbnail

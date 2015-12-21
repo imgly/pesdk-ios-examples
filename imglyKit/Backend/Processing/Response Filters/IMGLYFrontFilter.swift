@@ -13,11 +13,11 @@ public class IMGLYFrontFilter: IMGLYResponseFilter {
         super.init(responseName: "Front")
         self.imgly_displayName = "Front"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Front

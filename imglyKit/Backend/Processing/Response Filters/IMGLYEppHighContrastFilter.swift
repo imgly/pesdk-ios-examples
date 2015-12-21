@@ -13,11 +13,11 @@ public class IMGLYHighContrastFilter: IMGLYResponseFilter {
         super.init(responseName: "HighContrast")
         self.imgly_displayName = "Hicon"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.HighContrast

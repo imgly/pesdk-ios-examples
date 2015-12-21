@@ -14,11 +14,11 @@ import MobileCoreServices
 @objc public enum IMGLYRecordingMode: Int {
     case Photo
     case Video
-    
+
     var bundle: NSBundle {
         return NSBundle(forClass: IMGLYCameraViewController.self)
     }
-    
+
     var titleForSelectionButton: String {
         switch self {
         case .Photo:
@@ -27,7 +27,7 @@ import MobileCoreServices
             return NSLocalizedString("camera-view-controller.mode.video", tableName: nil, bundle: bundle, value: "", comment: "")
         }
     }
-    
+
     var selectionButton: UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ import MobileCoreServices
         button.setTitleColor(UIColor(red:1, green:0.8, blue:0, alpha:1), forState: .Selected)
         return button
     }
-    
+
     var actionButton: UIControl {
         switch self {
         case .Photo:
@@ -46,12 +46,12 @@ import MobileCoreServices
             button.imageView?.animationImages = [UIImage]()
             button.imageView?.animationRepeatCount = 1
             button.adjustsImageWhenHighlighted = false
-            
+
             for var index = 0; index < 10; index++ {
                 let image = String(format: "LensAperture_ShapeLayer_%05d", index)
                 button.imageView?.animationImages?.append(UIImage(named: image, inBundle: bundle, compatibleWithTraitCollection:nil)!)
             }
-            
+
             return button
         case .Video:
             let button = IMGLYVideoRecordButton()
@@ -59,7 +59,7 @@ import MobileCoreServices
             return button
         }
     }
-    
+
     var actionSelector: Selector {
         switch self {
         case .Photo:
@@ -68,7 +68,7 @@ import MobileCoreServices
             return "recordVideo:"
         }
     }
-    
+
     var sessionPreset: String {
         switch self {
         case .Photo:

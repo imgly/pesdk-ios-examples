@@ -15,21 +15,21 @@ public class IMGLYColorButton : UIButton {
             styleButton()
         }
     }
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     private func commonInit() {
         styleButton()
     }
-    
+
     private func styleButton() {
         selected = false
         layer.cornerRadius = 3

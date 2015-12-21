@@ -13,11 +13,11 @@ public class IMGLYQuoziFilter: IMGLYResponseFilter {
         super.init(responseName: "Quozi")
         self.imgly_displayName = "Quozi"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Quozi

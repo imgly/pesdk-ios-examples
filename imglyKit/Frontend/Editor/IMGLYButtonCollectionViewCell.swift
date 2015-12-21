@@ -11,7 +11,7 @@ import UIKit
 class IMGLYButtonCollectionViewCell: IMGLYImageCaptionCollectionViewCell {
 
     // MARK: - ImageCaptionCollectionViewCell
-    
+
     override var imageSize: CGSize {
         return CGSize(width: 44, height: 44)
     }

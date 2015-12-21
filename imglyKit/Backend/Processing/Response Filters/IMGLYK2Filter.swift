@@ -13,11 +13,11 @@ public class IMGLYK2Filter: IMGLYResponseFilter {
         super.init(responseName: "K2")
         self.imgly_displayName = "K2"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.K2

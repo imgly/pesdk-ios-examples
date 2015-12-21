@@ -13,11 +13,11 @@ public class IMGLYClassicFilter: IMGLYResponseFilter {
         super.init(responseName: "Classic")
         self.imgly_displayName = "Classic"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Classic

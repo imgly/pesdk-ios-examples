@@ -13,11 +13,11 @@ public class IMGLYCelsiusFilter: IMGLYResponseFilter {
         super.init(responseName: "Celsius")
         self.imgly_displayName = "Celsius"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Celsius

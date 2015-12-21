@@ -7,7 +7,7 @@
 //
 
 #if os(OSX)
-    
+
 import Foundation
 
 extension NSAffineTransform {

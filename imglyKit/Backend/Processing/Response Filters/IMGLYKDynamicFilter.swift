@@ -13,11 +13,11 @@ public class IMGLYKDynamicFilter: IMGLYResponseFilter {
         super.init(responseName: "KDynamic")
         self.imgly_displayName = "Dynamic"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.KDynamic

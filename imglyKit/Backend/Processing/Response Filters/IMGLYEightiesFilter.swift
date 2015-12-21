@@ -13,11 +13,11 @@ public class IMGLYEightiesFilter: IMGLYResponseFilter {
         super.init(responseName: "Eighties")
         self.imgly_displayName = "80s"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Eighties

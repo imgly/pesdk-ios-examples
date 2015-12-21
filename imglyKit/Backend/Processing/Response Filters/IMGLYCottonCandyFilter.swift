@@ -13,11 +13,11 @@ public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
         super.init(responseName: "CottonCandy")
         self.imgly_displayName = "Candy"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.CottonCandy

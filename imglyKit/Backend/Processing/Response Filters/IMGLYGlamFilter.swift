@@ -13,11 +13,11 @@ public class IMGLYGlamFilter: IMGLYResponseFilter {
         super.init(responseName: "Glam")
         self.imgly_displayName = "Glam"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Glam

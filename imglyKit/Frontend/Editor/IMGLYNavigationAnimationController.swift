@@ -15,19 +15,19 @@ extension IMGLYNavigationAnimationController: UIViewControllerAnimatedTransition
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.2
     }
-    
+
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         let fromViewController = transitionContext.viewControllerForKey(UITransitionContextFromViewControllerKey)
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey)
-        
+
         if let fromViewController = fromViewController, let toViewController = toViewController {
             let toView = toViewController.view
             let fromView = fromViewController.view
-            
+
             let containerView = transitionContext.containerView()
             containerView?.addSubview(toView)
             containerView?.sendSubviewToBack(toView)
-            
+
             let duration = transitionDuration(transitionContext)
             UIView.animateWithDuration(duration, animations: {
                 fromView.alpha = 0
@@ -38,7 +38,7 @@ extension IMGLYNavigationAnimationController: UIViewControllerAnimatedTransition
                         fromView.removeFromSuperview()
                         fromView.alpha = 1
                     }
-                    
+
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
         }

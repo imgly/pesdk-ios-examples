@@ -13,11 +13,11 @@ public class IMGLYHighcarbFilter: IMGLYResponseFilter {
         super.init(responseName: "Highcarb")
         self.imgly_displayName = "Carb"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Highcarb

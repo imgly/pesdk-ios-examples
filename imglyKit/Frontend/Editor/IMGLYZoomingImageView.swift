@@ -9,14 +9,14 @@
 import UIKit
 
 public class IMGLYZoomingImageView: UIScrollView {
-    
+
     // MARK: - Properties
-    
+
     public var image: UIImage? {
         get {
             return imageView.image
         }
-        
+
         set {
             imageView.image = newValue
             imageView.sizeToFit()
@@ -25,7 +25,7 @@ public class IMGLYZoomingImageView: UIScrollView {
             setNeedsLayout()
         }
     }
-    
+
     private let imageView = UIImageView()
     private var initialZoomScaleWasSet = false
     public lazy var doubleTapGestureRecognizer: UITapGestureRecognizer = {
@@ -33,15 +33,15 @@ public class IMGLYZoomingImageView: UIScrollView {
         gestureRecognizer.numberOfTapsRequired = 2
         return gestureRecognizer
         }()
-    
+
     public var visibleImageFrame: CGRect {
         var visibleImageFrame = bounds
         visibleImageFrame.intersectInPlace(imageView.frame)
         return visibleImageFrame
     }
-    
+
     // MARK: - Initializers
-    
+
     override init(frame: CGRect) {
         super.init(frame: CGRect())
         commonInit()
@@ -51,11 +51,11 @@ public class IMGLYZoomingImageView: UIScrollView {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
+
     private func commonInit() {
         addSubview(imageView)
         addGestureRecognizer(doubleTapGestureRecognizer)
-        
+
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
         maximumZoomScale = 2
@@ -64,12 +64,12 @@ public class IMGLYZoomingImageView: UIScrollView {
         exclusiveTouch = true
         delegate = self
     }
-    
+
     // MARK: - UIView
-    
+
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         if imageView.image != nil {
             if !initialZoomScaleWasSet {
                 minimumZoomScale = min(frame.size.width / imageView.bounds.size.width, frame.size.height / imageView.bounds.size.height)
@@ -78,12 +78,12 @@ public class IMGLYZoomingImageView: UIScrollView {
             }
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @objc private func doubleTapped(gestureRecognizer: UITapGestureRecognizer) {
         let location = gestureRecognizer.locationInView(imageView)
-        
+
         if zoomScale > minimumZoomScale {
             setZoomScale(minimumZoomScale, animated: true)
         } else {
@@ -96,11 +96,11 @@ extension IMGLYZoomingImageView: UIScrollViewDelegate {
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }
-    
+
     public func scrollViewDidZoom(scrollView: UIScrollView) {
         let offsetX = max((bounds.size.width - contentSize.width) * 0.5, 0)
         let offsetY = max((bounds.size.height - contentSize.height) * 0.5, 0)
-        
+
         imageView.center = CGPoint(x: contentSize.width * 0.5 + offsetX, y: contentSize.height * 0.5 + offsetY)
     }
 }

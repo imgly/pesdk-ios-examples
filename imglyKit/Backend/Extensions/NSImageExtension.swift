@@ -7,7 +7,7 @@
 //
 
 #if os(OSX)
-    
+
 import AppKit
 import CoreGraphics
 

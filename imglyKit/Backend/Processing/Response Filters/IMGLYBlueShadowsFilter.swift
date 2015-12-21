@@ -13,11 +13,11 @@ public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
         super.init(responseName: "BlueShadows")
         self.imgly_displayName = "Blue Shade"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.BlueShadows

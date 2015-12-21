@@ -42,10 +42,11 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
     /// Defaults to show all available actions. To set this
     /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
     public var allowedOrientationActions: [IMGLYOrientationAction] = [ .RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ]
-    
+
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure = { _ in }
+
     
     /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
@@ -56,18 +57,19 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
         }
     }
     
+
     public override init() {
         super.init()
-        
+
         /// Override inherited properties with default values
         self.title = NSLocalizedString("orientation-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
     }
 }
 
 public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController {
-    
+
     // MARK: - Properties
-    
+
     public private(set) lazy var rotateLeftButton: IMGLYImageCaptionButton = {
         let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
@@ -78,7 +80,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         self.options.actionButtonConfigurationClosure(button, .RotateLeft)
         return button
         }()
-    
+
     public private(set) lazy var rotateRightButton: IMGLYImageCaptionButton = {
         let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
@@ -89,7 +91,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         self.options.actionButtonConfigurationClosure(button, .RotateRight)
         return button
         }()
-    
+
     public private(set) lazy var flipHorizontallyButton: IMGLYImageCaptionButton = {
         let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
@@ -100,7 +102,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         self.options.actionButtonConfigurationClosure(button, .FlipHorizontally)
         return button
         }()
-    
+
     public private(set) lazy var flipVerticallyButton: IMGLYImageCaptionButton = {
         let bundle = NSBundle(forClass: IMGLYOrientationEditorViewController.self)
         let button = IMGLYImageCaptionButton()
@@ -111,19 +113,19 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         self.options.actionButtonConfigurationClosure(button, .FlipVertically)
         return button
         }()
-    
-    
+
+
     // MARK: - UIViewController
-    
+
     override public func viewDidLoad() {
         super.viewDidLoad()
-        
+
         configureButtons()
     }
-    
+
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         let cropRect = fixedFilterStack.orientationCropFilter.cropRect
         if cropRect.origin.x != 0 || cropRect.origin.y != 0 ||
             cropRect.size.width != 1.0 || cropRect.size.height != 1.0 {
@@ -132,27 +134,27 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
                 }
         }
     }
-    
+
     public override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
-    
+
     // MARK: - IMGLYEditorViewController
-    
+
     public override var options: IMGLYOrientationEditorViewControllerOptions {
         return self.configuration.orientationEditorViewControllerOptions
     }
-    
+
     // MARK: - SubEditorViewController
-    
+
     public override func tappedDone(sender: UIBarButtonItem?) {
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
     }
-    
+
     // MARK: - Configuration
-    
+
     private func configureButtons() {
         // Map actions and buttons
         let actionToButtonMap: [IMGLYOrientationAction: IMGLYImageCaptionButton] = [
@@ -161,7 +163,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
             .FlipHorizontally: flipHorizontallyButton,
             .FlipVertically: flipVerticallyButton
         ]
-        
+
         // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.backgroundColor = currentBackgroundColor
@@ -169,7 +171,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         bottomContainerView.addSubview(buttonContainerView)
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
-        
+
         var views = [String: UIView]()
         var viewNames = [String]()
         for action in options.allowedOrientationActions {
@@ -180,24 +182,24 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
             views[viewName] = button
             buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
-        
+
         // Button Constraints
         let visualFormatString = viewNames.reduce("") { (acc, name) -> String in
             return acc + "[\(name)(==buttonWidth)]"
         }
         buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
     }
-    
+
     // MARK: - Helpers
-    
+
     private func updatePreviewImageWithoutCropWithCompletion(completionHandler: IMGLYPreviewImageGenerationCompletionBlock?) {
         updatePreviewImageWithCompletion { () -> (Void) in
             completionHandler?()
         }
     }
-    
+
     // MARK: - Actions
-    
+
     @objc private func rotateLeft(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.rotateLeft()
         fixedFilterStack.rotateStickersLeft()
@@ -206,7 +208,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
             self.view.layoutIfNeeded()
         }
     }
-    
+
     @objc private func rotateRight(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.rotateRight()
         fixedFilterStack.rotateStickersRight()
@@ -215,7 +217,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
             self.view.layoutIfNeeded()
         }
     }
-    
+
     @objc private func flipHorizontally(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.flipHorizontal()
         fixedFilterStack.flipStickersHorizontal()
@@ -223,7 +225,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
         updatePreviewImageWithoutCropWithCompletion {
         }
     }
-    
+
     @objc private func flipVertically(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.flipVertical()
         fixedFilterStack.flipStickersVertical()

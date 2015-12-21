@@ -88,24 +88,24 @@ public class IMGLYPhotoProcessor {
         if filters.count == 0 {
             return image
         }
-        
+
         var currentImage: CIImage? = image
-        
+
         for filter in filters {
             filter.setValue(currentImage, forKey:kCIInputImageKey)
-            
+
             currentImage = filter.outputImage
         }
-        
+
         if let currentImage = currentImage where CGRectIsEmpty(currentImage.extent) {
             return nil
         }
-        
+
         return currentImage
     }
-    
+
     #if os(iOS)
-    
+
     public class func processWithUIImage(image: UIImage, filters: [CIFilter]) -> UIImage? {
         let imageOrientation = image.imageOrientation
         guard let coreImage = CIImage(image: image) else {
@@ -116,18 +116,18 @@ public class IMGLYPhotoProcessor {
         if let colorspace = CGColorSpaceCreateDeviceRGB() {
             options = [kCIContextWorkingColorSpace: colorspace]
         }
-        
+
         let filteredCIImage = processWithCIImage(coreImage, filters: filters)
         let filteredCGImage = CIContext(options: options).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent)
         return UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
     }
-    
+
     #elseif os(OSX)
 
     public class func processWithNSImage(image: NSImage, filters: [CIFilter]) -> NSImage? {
         if let tiffRepresentation = image.TIFFRepresentation, image = CIImage(data: tiffRepresentation) {
             let filteredCIImage = processWithCIImage(image, filters: filters)
-            
+
             if let filteredCIImage = filteredCIImage {
                 let rep = NSCIImageRep(CIImage: filteredCIImage)
                 let image = NSImage(size: NSSize(width: filteredCIImage.extent.size.width, height: filteredCIImage.extent.size.height))
@@ -135,9 +135,9 @@ public class IMGLYPhotoProcessor {
                 return image
             }
         }
-        
+
         return nil
     }
-    
+
     #endif
 }

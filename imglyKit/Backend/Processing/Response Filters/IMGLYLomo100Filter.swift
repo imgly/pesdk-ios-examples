@@ -13,11 +13,11 @@ public class IMGLYLomo100Filter: IMGLYResponseFilter {
         super.init(responseName: "Lomo100")
         self.imgly_displayName = "Lomo 100"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Lomo100

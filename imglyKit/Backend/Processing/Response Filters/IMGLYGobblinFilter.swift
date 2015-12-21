@@ -13,11 +13,11 @@ public class IMGLYGoblinFilter: IMGLYResponseFilter {
         super.init(responseName: "Goblin")
         self.imgly_displayName = "Goblin"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Goblin

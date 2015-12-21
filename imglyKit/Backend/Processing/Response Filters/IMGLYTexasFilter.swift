@@ -13,11 +13,11 @@ public class IMGLYTexasFilter: IMGLYResponseFilter {
         super.init(responseName: "Texas")
         self.imgly_displayName = "Texas"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Texas

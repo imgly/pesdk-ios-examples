@@ -41,39 +41,39 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
     public var filterType: IMGLYFilterType {
         return .None
     }
-    
+
     private var _colorCubeData: NSData?
     private var colorCubeData: NSData? {
         get {
             if _colorCubeData == nil {
                 _colorCubeData = LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
             }
-            
+
             return _colorCubeData
         }
-        
+
         set {
             _colorCubeData = newValue
         }
     }
-    
+
     init(responseName: String) {
         self.responseName = responseName
         super.init()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         self.responseName = ""
         super.init(coder: aDecoder)
     }
-    
+
     public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
             return nil
         }
-        
+
         var outputImage: CIImage?
-        
+
         autoreleasepool {
             if let colorCubeData = colorCubeData, filter = CIFilter(name: "CIColorCube") {
                 filter.setValue(colorCubeData, forKey: "inputCubeData")
@@ -84,7 +84,7 @@ public class IMGLYResponseFilter: CIFilter, IMGLYFilterTypeProtocol {
                 outputImage = inputImage
             }
         }
-        
+
         return outputImage
     }
 }

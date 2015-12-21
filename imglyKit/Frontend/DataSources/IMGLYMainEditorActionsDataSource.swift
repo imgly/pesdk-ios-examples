@@ -15,10 +15,10 @@ import UIKit
  are defined in the IMGLYMainEditorActionOption option set.
  */
 @objc public protocol IMGLYMainEditorActionsDataSourceProtocol {
-    
+
     /// The total count of all actions.
     var actionCount: Int { get }
-    
+
     /**
      - parameter index: The index of the requested action.
      - returns: An `IMGLYMainEditorAction`
@@ -32,11 +32,11 @@ import UIKit
  By using the `init(availableActionTypes:)` you can specify the available editors.
 */
 @objc public class IMGLYMainEditorActionsDataSource : NSObject, IMGLYMainEditorActionsDataSourceProtocol {
-    
+
     private var items: [IMGLYMainEditorAction] = []
-    
+
     // MARK: Init
-    
+
     /**
     Creates a default datasource offering all available editors.
     */
@@ -44,7 +44,7 @@ import UIKit
         super.init()
         items = self.itemsForAvailableActions([ .Magic, .Filter, .Stickers, .Orientation, .Focus, .Crop, .Brightness, .Contrast, .Saturation, .Text ])
     }
-    
+
     /**
      Creates a default datasource offering the given editor actions. The actions
      are presented in the given order. Duplicates are not removed.
@@ -54,7 +54,7 @@ import UIKit
         self.init()
         items = self.itemsForAvailableActions(availableActionTypes)
     }
-    
+
     /**
      This initializer should only be called from Objective-C. It
      creates a default datasource offering the given actionTypes.
@@ -64,11 +64,11 @@ import UIKit
      */
     public convenience init(availableActionTypesAsNSNumbers: NSOrderedSet) {
         self.init()
-        
+
     }
-    
+
     // MARK: IMGLYMainEditorActionsDataSource
-    
+
     public var actionCount: Int {
         return items.count
     }
@@ -76,9 +76,9 @@ import UIKit
     public func actionAtIndex(index: Int) -> IMGLYMainEditorAction {
         return items[index]
     }
-    
+
     // MARK: Default EditorActions
-    
+
     private func itemsForAvailableActions(types:[IMGLYMainEditorActionType]) -> [IMGLYMainEditorAction] {
         let bundle = NSBundle(forClass: IMGLYMainEditorViewController.self)
         var actions: [IMGLYMainEditorAction] = []
@@ -127,7 +127,7 @@ import UIKit
                     editorType: .Text))
             }
         }
-        
+
         return actions
     }
 }

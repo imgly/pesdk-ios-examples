@@ -13,11 +13,11 @@ public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
         super.init(responseName: "SepiaHigh")
         self.imgly_displayName = "Sepia High"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.SepiaHigh

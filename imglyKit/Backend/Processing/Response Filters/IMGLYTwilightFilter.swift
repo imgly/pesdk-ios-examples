@@ -13,11 +13,11 @@ public class IMGLYTwilightFilter: IMGLYResponseFilter {
         super.init(responseName: "Twilight")
         self.imgly_displayName = "Twilight"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Twilight

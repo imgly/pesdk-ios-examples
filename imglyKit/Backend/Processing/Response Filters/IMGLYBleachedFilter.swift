@@ -13,11 +13,11 @@ public class IMGLYBleachedFilter: IMGLYResponseFilter {
         super.init(responseName: "Bleached")
         self.imgly_displayName = "Bleached"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Bleached

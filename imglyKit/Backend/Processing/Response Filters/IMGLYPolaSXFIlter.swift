@@ -13,11 +13,11 @@ public class IMGLYPolaSXFilter: IMGLYResponseFilter {
         super.init(responseName: "PolaSX")
         self.imgly_displayName = "SX"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType: IMGLYFilterType {
         get {
             return IMGLYFilterType.PolaSX

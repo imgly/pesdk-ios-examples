@@ -21,7 +21,7 @@ public extension CIFilter {
         get {
             return objc_getAssociatedObject(self, &displayNameAssociationKey) as? String
         }
-        
+
         set(newValue) {
             objc_setAssociatedObject(self, &displayNameAssociationKey, newValue, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN)
         }

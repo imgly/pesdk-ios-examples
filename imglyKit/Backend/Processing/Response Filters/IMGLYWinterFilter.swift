@@ -13,11 +13,11 @@ public class IMGLYWinterFilter: IMGLYResponseFilter {
         super.init(responseName: "Winter")
         self.imgly_displayName = "Winter"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Winter

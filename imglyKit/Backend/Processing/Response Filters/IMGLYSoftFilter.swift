@@ -13,11 +13,11 @@ public class IMGLYSoftFilter: IMGLYResponseFilter {
         super.init(responseName: "Soft")
         self.imgly_displayName = "Soft"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Soft

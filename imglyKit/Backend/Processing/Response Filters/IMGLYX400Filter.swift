@@ -13,11 +13,11 @@ public class IMGLYX400Filter: IMGLYResponseFilter {
         super.init(responseName: "X400")
         self.imgly_displayName = "X400"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.X400

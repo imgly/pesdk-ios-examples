@@ -13,11 +13,11 @@ public class IMGLYCreamyFilter: IMGLYResponseFilter {
         super.init(responseName: "Creamy")
         self.imgly_displayName = "Creamy"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Creamy

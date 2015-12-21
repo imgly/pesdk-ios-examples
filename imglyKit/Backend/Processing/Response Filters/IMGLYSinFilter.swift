@@ -13,11 +13,11 @@ public class IMGLYSinFilter: IMGLYResponseFilter {
         super.init(responseName: "Sin")
         self.imgly_displayName = "Sin"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.Sin

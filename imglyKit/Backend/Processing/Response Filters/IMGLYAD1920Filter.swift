@@ -13,11 +13,11 @@ public class IMGLYAD1920Filter: IMGLYResponseFilter {
         super.init(responseName: "AD1920")
         self.imgly_displayName = "AD1920"
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     public override var filterType:IMGLYFilterType {
         get {
             return IMGLYFilterType.AD1920

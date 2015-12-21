@@ -36,15 +36,15 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
  `configure*ViewController` method of the `IMGLYConfigurationBuilder`.
 */
 @objc public class IMGLYConfiguration : NSObject {
-    
+
     // MARK: Properties
-    
+
     /// Defaults to black.
     public let backgroundColor: UIColor
-    
+
     /// Camera View Controller
     public let cameraViewControllerOptions: IMGLYCameraViewControllerOptions
-    
+
     // Editor View Controller options
     public let mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions
     public let filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions
@@ -56,13 +56,13 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     public let contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
     public let saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
     public let textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions
-    
+
     //  MARK: Initialization
-    
+
     override convenience init() {
         self.init(builder: { _ in })
     }
-    
+
     public init(builder: (IMGLYConfigurationBuilder -> Void)) {
         let builderForClosure = IMGLYConfigurationBuilder()
         builder(builderForClosure)
@@ -81,7 +81,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
         self.classReplacingMap = builderForClosure.classReplacingMap
         super.init()
     }
-    
+
     /// Used internally to fetch a replacement class for framework classes.
     func getClassForReplacedClass(replacedClass: NSObject.Type) -> NSObject.Type {
         guard let replacingClassName = classReplacingMap[String(replacedClass)]
@@ -178,9 +178,9 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
         builder(builderForClosure)
         textEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     // MARK: Class replacement
-    
+
     /**
     Use this to use a specific subclass instead of the default imglyKit **view controller** classes. This works
     across all the whole framework and allows you to subclass all usages of a class. As of now, only **view
@@ -195,19 +195,19 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     - throws: An exception if the replacing class is not a subclass of the replaced class.
     */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
-        
+
         if (!replacingClass.isSubclassOfClass(builtinClass)) {
             throw IMGLYConfigurationError.ReplacingClassNotASubclass
         }
-        
+
         let builtinClassName = String(builtinClass)
         let replacingClassName = "\(namespace).\(String(replacingClass))"
-        
+
         classReplacingMap[builtinClassName] = replacingClassName
         print("imglyKit: Using \(replacingClassName) instead of \(builtinClassName)")
     }
-    
+
     // MARK: Private properties
-    
+
     var classReplacingMap: [String: String] = [:]
 }

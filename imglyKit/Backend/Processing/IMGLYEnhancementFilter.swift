@@ -22,48 +22,48 @@ import QuartzCore
 public class IMGLYEnhancementFilter : CIFilter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage:CIImage?
-    
+
     #if os(iOS)
     /// If this is set to false, the original image is returned.
     public var enabled = true
     #endif
-    
+
     /// If this is set to true, the enhanced image is kept until reset is called.
     public var storeEnhancedImage = false
-    
+
     private var enhancedImage: CIImage? = nil
-    
+
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
             return nil
         }
-        
+
         if !enabled {
             return inputImage
         }
-        
+
         if storeEnhancedImage {
             if enhancedImage != nil {
                 return enhancedImage
             }
         }
-        
-        
+
+
         var intermediateImage: CIImage? = inputImage
         let filters = intermediateImage?.autoAdjustmentFiltersWithOptions([kCIImageAutoAdjustRedEye:NSNumber(bool: false)])
         for filter in filters ?? [] {
             filter.setValue(inputImage, forKey: kCIInputImageKey)
             intermediateImage = filter.outputImage
         }
-        
+
         if storeEnhancedImage {
             enhancedImage = intermediateImage
         }
-        
+
         return intermediateImage
     }
-    
+
     public func reset() {
         enhancedImage = nil
     }

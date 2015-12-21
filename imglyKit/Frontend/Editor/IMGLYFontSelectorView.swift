@@ -14,11 +14,11 @@ public protocol IMGLYFontSelectorViewDelegate: class {
 
 public class IMGLYFontSelectorView: UIScrollView {
     public weak var selectorDelegate: IMGLYFontSelectorViewDelegate?
-    
+
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)
     private var fontNames = [String]()
-    
+
     public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
         didSet {
             for subview in self.subviews {
@@ -39,18 +39,18 @@ public class IMGLYFontSelectorView: UIScrollView {
         super.init(coder: aDecoder)
         commonInit()
     }
-    
-    private func commonInit() {       
+
+    private func commonInit() {
         fontNames = IMGLYInstanceFactory.availableFontsList
         configureFontButtons()
     }
-    
+
     private func configureFontButtons() {
         for fontName in fontNames {
             let button = UIButton(type: UIButtonType.Custom)
             button.setTitle(fontName, forState:UIControlState.Normal)
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-            
+
             if let font = UIFont(name: fontName, size: kFontSize) {
                 button.titleLabel?.font = font
                 addSubview(button)
@@ -60,7 +60,7 @@ public class IMGLYFontSelectorView: UIScrollView {
     }
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         for var index = 0; index < subviews.count; index++ {
             if let button = subviews[index] as? UIButton {
                 button.frame = CGRectMake(0,
@@ -71,7 +71,7 @@ public class IMGLYFontSelectorView: UIScrollView {
         }
         contentSize = CGSizeMake(frame.size.width - 1.0, kDistanceBetweenButtons * CGFloat(subviews.count - 2))
     }
-    
+
     @objc private func buttonTouchedUpInside(button: UIButton) {
         selectorDelegate?.fontSelectorView(self, didSelectFontWithName: button.titleLabel!.text!)
     }
