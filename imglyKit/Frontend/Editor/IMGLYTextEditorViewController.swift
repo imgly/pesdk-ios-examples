@@ -112,16 +112,45 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     // MARK: - SubEditorViewController
     
     public override func tappedDone(sender: UIBarButtonItem?) {
-        fixedFilterStack.textFilter.text = textLabel.text ?? ""
-        fixedFilterStack.textFilter.color = textColor
-        fixedFilterStack.textFilter.fontName = fontName
-        fixedFilterStack.textFilter.frame = transformedTextFrame()
-        fixedFilterStack.textFilter.transform = textLabel.transform
-        fixedFilterStack.textFilter.fontScaleFactor = currentTextSize / previewImageView.visibleImageFrame.size.height
+        let textFilter = fixedFilterStack.textFilter
+        textFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+        let cropRect = textFilter.cropRect
+        let completeSize = textClipView.bounds.size
+        var center = CGPoint(x: textLabel.center.x / completeSize.width,
+            y: textLabel.center.y / completeSize.height)
+        center.x *= cropRect.width
+        center.y *= cropRect.height
+        center.x += cropRect.origin.x
+        center.y += cropRect.origin.y
+//        var size = textFilter.textImageSize()
+        textFilter.fontName = fontName
+        textFilter.text = textLabel.text ?? ""
+        textFilter.intialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
+        var size = initialSizeForStickerImage(textFilter.textImageSize())
+        print(size)
+        size.width = size.width / completeSize.width
+        size.height = size.height / completeSize.height
+        
+        textFilter.color = textColor
+        textFilter.transform = textLabel.transform
+        textFilter.center = center
+        textFilter.scale = size.width
+        print(textFilter.scale)
+        print(textFilter.center)
+ //       print(center)
+ //       print(textFilter.transform)
         
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
+    }
+    
+    private func initialSizeForStickerImage(size: CGSize) -> CGSize {
+        let initialMaxStickerSize = CGRectGetWidth(textClipView.bounds) * 0.3
+        let widthRatio = initialMaxStickerSize / size.width
+        let heightRatio = initialMaxStickerSize / size.height
+        let scale = min(widthRatio, heightRatio)
+        return CGSize(width: size.width * scale, height: size.height * scale)
     }
     
     // MARK: - Configuration
@@ -302,29 +331,13 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
                     currentTextSize += 1.0
                     let font = UIFont(name: fontName, size: currentTextSize)
                     size = text.sizeWithAttributes([ NSFontAttributeName: font as! AnyObject ])
-                } while (size.width < (view.frame.size.width - TextLabelInitialMargin))
-            }
-        }
-    }
-    
-    private func calculateMaximumFontSize() {
-        var size = CGSizeZero
-        
-        if let text = textLabel.text {
-            if !text.isEmpty {
-                maximumFontSize = currentTextSize
-                repeat {
-                    maximumFontSize += 1.0
-                    let font = UIFont(name: fontName, size: maximumFontSize)
-                    size = text.sizeWithAttributes([ NSFontAttributeName: font as! AnyObject ])
-                } while (size.width < self.view.frame.size.width)
+                } while ((size.width < (view.frame.size.width - TextLabelInitialMargin)) && (size.height < (view.frame.size.height - TextLabelInitialMargin)))
             }
         }
     }
     
     private func setInitialTextLabelSize() {
         calculateInitialFontSize()
-        calculateMaximumFontSize()
         
         textLabel.font = UIFont(name: fontName, size: currentTextSize)
         textLabel.sizeToFit()
