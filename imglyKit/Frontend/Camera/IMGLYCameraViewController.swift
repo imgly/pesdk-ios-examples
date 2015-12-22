@@ -16,6 +16,10 @@ private let FilterSelectionViewHeight = 100
 private let BottomControlSize = CGSize(width: 47, height: 47)
 public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
+/// A closure that allows the configuration of the given recording mode button.
+/// The second parameter contains the state, the button represents.
+public typealias IMGLYRecordingModeButtonConfigurationClosure = (UIButton, IMGLYRecordingMode) -> ()
+
 @objc public class IMGLYCameraViewControllerOptions: NSObject {
     
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.
@@ -43,16 +47,20 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
     public let filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure
     
-    /// Enable/Disable permanent crop to square.
+    /// Use this closure to configure the given recording mode button. By default the buttons
+    /// light up in yellow, when selected.
+    public let recordingModeButtonConfigurationClosure: IMGLYRecordingModeButtonConfigurationClosure
+    
+    /// Enable/Disable permanent crop to square. Disabled by default.
     public let cropToSquare: Bool
     
-    /// Enable/Disable tap to focus on the camera preview image.
+    /// Enable/Disable tap to focus on the camera preview image. Enabled by default.
     public let tapToFocusEnabled: Bool
     
-    /// Show/Hide the camera roll button.
+    /// Show/Hide the camera roll button. Enabled by default.
     public let showCameraRoll: Bool
     
-    /// Enable/Disable filter bottom drawer.
+    /// Enable/Disable filter bottom drawer. Enabled by default.
     public let showFilters: Bool
     
     /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
@@ -88,6 +96,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         cameraRollButtonConfigurationClosure = builder.cameraRollButtonConfigurationClosure
         photoActionButtonConfigurationClosure = builder.photoActionButtonConfigurationClosure
         filterSelectorButtonConfigurationClosure = builder.filterSelectorButtonConfigurationClosure
+        recordingModeButtonConfigurationClosure = builder.recordingModeButtonConfigurationClosure
         timeLabelConfigurationClosure = builder.timeLabelConfigurationClosure
         filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
         cropToSquare = builder.cropToSquare
@@ -130,16 +139,20 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
     public lazy var filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
     
-    /// Enable/Disable permanent crop to square.
+    /// Use this closure to configure the given recording mode button. By default the buttons
+    /// light up in yellow, when selected.
+    public lazy var recordingModeButtonConfigurationClosure: IMGLYRecordingModeButtonConfigurationClosure = { _ in }
+    
+    /// Enable/Disable permanent crop to square. Disabled by default.
     public var cropToSquare = false
     
-    /// Enable/Disable tap to focus on the camera preview image.
+    /// Enable/Disable tap to focus on the camera preview image. Enabled by default.
     public var tapToFocusEnabled = true
     
-    /// Show/Hide the camera roll button.
+    /// Show/Hide the camera roll button. Enabled by default.
     public var showCameraRoll = true
     
-    /// Enable/Disable filter bottom drawer.
+    /// Enable/Disable filter bottom drawer. Enabled by default.
     public var showFilters = true
     
     /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
@@ -284,7 +297,7 @@ public class IMGLYCameraViewController: UIViewController {
         }()
     
     private lazy var flashButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let buttonImage = UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -297,7 +310,7 @@ public class IMGLYCameraViewController: UIViewController {
         }()
     
     private lazy var switchCameraButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         let buttonImage = UIImage(named: "cam_switch", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -310,7 +323,7 @@ public class IMGLYCameraViewController: UIViewController {
         }()
     
     private lazy var cameraRollButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
@@ -341,10 +354,10 @@ public class IMGLYCameraViewController: UIViewController {
     public private(set) var actionButton: UIControl?
     
     public private(set) lazy var filterSelectionButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(named: "show_filter", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "show_filter", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
         button.addTarget(self, action: "toggleFilters:", forControlEvents: .TouchUpInside)
@@ -354,7 +367,7 @@ public class IMGLYCameraViewController: UIViewController {
         }()
     
     public private(set) lazy var filterIntensitySlider: UISlider = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 0
@@ -370,6 +383,7 @@ public class IMGLYCameraViewController: UIViewController {
         slider.setThumbImage(sliderThumbImage, forState: .Normal)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
         
+        slider.hidden = !self.options.showFilterIntensitySlider
         self.options.filterIntensitySliderConfigurationClosure(slider)
         
         return slider
@@ -541,6 +555,7 @@ public class IMGLYCameraViewController: UIViewController {
         view.addSubview(filterSelectionController.view)
         
         topControlsView.addSubview(flashButton)
+
         topControlsView.addSubview(switchCameraButton)
         
         bottomControlsView.addSubview(actionButtonContainer)
@@ -555,11 +570,10 @@ public class IMGLYCameraViewController: UIViewController {
         
         for recordingModeSelectionButton in recordingModeSelectionButtons {
             bottomControlsView.addSubview(recordingModeSelectionButton)
+            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, recordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
         }
         
-        if options.showFilterIntensitySlider {
-            backgroundContainerView.addSubview(filterIntensitySlider)
-        }
+        backgroundContainerView.addSubview(filterIntensitySlider)
     }
     
     private func configureViewConstraints() {
@@ -769,29 +783,29 @@ public class IMGLYCameraViewController: UIViewController {
     
     private func updateFlashButton() {
         if let cameraController = cameraController {
-            let bundle = NSBundle(forClass: self.dynamicType)
+            let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
 
             if currentRecordingMode == .Photo {
                 flashButton.hidden = !cameraController.flashAvailable
                 
                 switch(cameraController.flashMode) {
                 case .Auto:
-                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 case .On:
-                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 case .Off:
-                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 }
             } else if currentRecordingMode == .Video {
                 flashButton.hidden = !cameraController.torchAvailable
                 
                 switch(cameraController.torchMode) {
                 case .Auto:
-                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 case .On:
-                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 case .Off:
-                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil), forState: UIControlState.Normal)
+                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
                 }
             }
         } else {
@@ -828,7 +842,7 @@ public class IMGLYCameraViewController: UIViewController {
             }) { success, error in
                 if let error = error {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let bundle = NSBundle(forClass: self.dynamicType)
+                        let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
                         
                         let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.error-saving-video.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
                         let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.error-saving-video.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
@@ -1026,7 +1040,7 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
     
     public func cameraControllerDidFailAuthorization(cameraController: IMGLYCameraController) {
         dispatch_async(dispatch_get_main_queue()) {
-            let bundle = NSBundle(forClass: self.dynamicType)
+            let bundle = NSBundle(forClass: IMGLYCameraViewController.self)
 
             let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
             

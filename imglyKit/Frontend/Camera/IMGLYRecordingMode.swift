@@ -42,7 +42,7 @@ import MobileCoreServices
         case .Photo:
             let button = UIButton()
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.setImage(UIImage(named: "LensAperture_ShapeLayer_00000", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+            button.setImage(UIImage(named: "LensAperture_ShapeLayer_00000", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
             button.imageView?.animationImages = [UIImage]()
             button.imageView?.animationRepeatCount = 1
             button.adjustsImageWhenHighlighted = false
