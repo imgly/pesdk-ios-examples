@@ -12,6 +12,7 @@
 		2BF4D7881AF11E2E00C801B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D7871AF11E2E00C801B2 /* Images.xcassets */; };
 		2BF4D78B1AF11E2E00C801B2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D7891AF11E2E00C801B2 /* LaunchScreen.xib */; };
 		2BF4D7C01AF11F7200C801B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D7BF1AF11F7200C801B2 /* AppDelegate.swift */; };
+		E929C6AC1C288C2500CD71FB /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929C6AB1C288C2500CD71FB /* SampleViewController.swift */; };
 		E9D550F11C05F53C00CE72C3 /* IMGLYMainEditorSubclassViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D550F01C05F53C00CE72C3 /* IMGLYMainEditorSubclassViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		2BF4D78A1AF11E2E00C801B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		2BF4D7B41AF11ED100C801B2 /* imglyKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imglyKit.xcodeproj; path = ../imglyKit.xcodeproj; sourceTree = "<group>"; };
 		2BF4D7BF1AF11F7200C801B2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E929C6AB1C288C2500CD71FB /* SampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
 		E9D550F01C05F53C00CE72C3 /* IMGLYMainEditorSubclassViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMGLYMainEditorSubclassViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +111,7 @@
 				2BF4D7891AF11E2E00C801B2 /* LaunchScreen.xib */,
 				2BF4D77E1AF11E2E00C801B2 /* Supporting Files */,
 				E9D550F01C05F53C00CE72C3 /* IMGLYMainEditorSubclassViewController.swift */,
+				E929C6AB1C288C2500CD71FB /* SampleViewController.swift */,
 			);
 			path = "iOS Example";
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 			files = (
 				2BF4D7C01AF11F7200C801B2 /* AppDelegate.swift in Sources */,
 				E9D550F11C05F53C00CE72C3 /* IMGLYMainEditorSubclassViewController.swift in Sources */,
+				E929C6AC1C288C2500CD71FB /* SampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

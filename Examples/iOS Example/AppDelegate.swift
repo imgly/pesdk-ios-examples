@@ -15,27 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        let configuration = IMGLYConfiguration() { builder in
-            builder.configureCameraViewController { options in
-                options.allowedTorchModes = [ .Auto, .Off ]
-                options.showFilters = false
-            }
-        }
-        
-        
-        // Replace IMGLYMainEditorViewController with IMGLYMainEditorSubclassViewController
-//        do {
-//            try configuration.replaceClass(IMGLYMainEditorViewController.self, replacingClass: IMGLYMainEditorSubclassViewController.self, namespace: "iOS_Example")
-//        } catch {
-//            print("Couldn't replace class")
-//        }
-        
-        let cameraViewController = IMGLYCameraViewController(configuration: configuration)
-        cameraViewController.maximumVideoLength = 15
-        
         window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        window?.rootViewController = cameraViewController
+        window?.rootViewController = SampleViewController()
         window?.makeKeyAndVisible()
         return true
     }
