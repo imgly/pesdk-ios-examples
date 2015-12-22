@@ -56,7 +56,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     public let showFilters: Bool
     
     /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
-    public let filterDataSource: IMGLYFiltersDataSourceProtocol
+    public let filtersDataSource: IMGLYFiltersDataSourceProtocol
     
     /// Enable/Disable filter intensity slider.
     public var showFilterIntensitySlider: Bool
@@ -94,7 +94,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         tapToFocusEnabled = builder.tapToFocusEnabled
         showCameraRoll = builder.showCameraRoll
         showFilters = builder.showFilters
-        filterDataSource = builder.filterDataSource
+        filtersDataSource = builder.filtersDataSource
         showFilterIntensitySlider = builder.showFilterIntensitySlider
         allowedCameraPositions = builder.allowedCameraPositions
         allowedFlashModes = builder.allowedFlashModes
@@ -143,7 +143,7 @@ public typealias IMGLYCameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     public var showFilters = true
     
     /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
-    public var filterDataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
+    public var filtersDataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
     
     /// Enable/Disable filter intensity slider.
     public var showFilterIntensitySlider = true
@@ -675,7 +675,7 @@ public class IMGLYCameraViewController: UIViewController {
     }
     
     private func configureFilterSelectionController() {
-        filterSelectionController.dataSource = self.options.filterDataSource
+        filterSelectionController.dataSource = self.options.filtersDataSource
         filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
             if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
                 cameraController.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
