@@ -39,6 +39,7 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
         
         view.translatesAutoresizingMaskIntoConstraints = false
         collectionView?.registerClass(IMGLYFilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCellReuseIdentifier)
+        collectionView?.backgroundColor = UIColor.clearColor()
     }
 
     required public init?(coder aDecoder: NSCoder) {

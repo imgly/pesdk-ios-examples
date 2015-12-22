@@ -173,6 +173,12 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
         contrastEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
     }
     
+    public func configureTextEditorViewController(builder: (IMGLYTextEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = IMGLYTextEditorViewControllerOptionsBuilder()
+        builder(builderForClosure)
+        textEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions(builder: builderForClosure)
+    }
+    
     // MARK: Class replacement
     
     /**

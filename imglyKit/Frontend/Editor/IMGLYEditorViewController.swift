@@ -159,7 +159,9 @@ public class IMGLYEditorViewController: UIViewController {
     
     override public func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationItem.title = options.title
+        
         configureNavigationItems()
         configureViewHierarchy()
         configureViewConstraints()
