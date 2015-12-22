@@ -518,7 +518,7 @@ public class IMGLYCameraController: NSObject {
                 var error: NSError?
                 self.session.beginConfiguration()
                 
-                if let device = self.videoDeviceInput?.device {
+                if let device = self.videoDeviceInput?.device where device.isTorchModeSupported(newValue) {
                     do {
                         try device.lockForConfiguration()
                     } catch let error1 as NSError {
