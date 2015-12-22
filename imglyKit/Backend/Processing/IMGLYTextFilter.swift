@@ -75,9 +75,13 @@ public class IMGLYTextFilter : CIFilter {
         let imageSize = rect.size
         
         let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
-        print(originalSize)
-        print(cropRect)
-        
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        customParagraphStyle.lineBreakMode = .ByClipping
+        let font = UIFont(name: fontName, size: fontScaleFactor * originalSize.height)
+
+        let textSize = text.sizeWithAttributes([NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
+        print(textSize)
+        print(fontScaleFactor * originalSize.height)
         var position = CGPoint(x: frame.origin.x * originalSize.width, y: frame.origin.y * originalSize.height)
         position.x -= (cropRect.origin.x * originalSize.width)
         position.y -= (cropRect.origin.y * originalSize.height)
@@ -85,12 +89,17 @@ public class IMGLYTextFilter : CIFilter {
         UIGraphicsBeginImageContext(imageSize)
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
-        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        customParagraphStyle.lineBreakMode = NSLineBreakMode.ByClipping
-        let font = UIFont(name: fontName, size: fontScaleFactor * originalSize.height)
         let context = UIGraphicsGetCurrentContext()
         CGContextSaveGState(context)
+        // Move center to origin
+        CGContextTranslateCTM(context, position.x, position.y)
+        // Apply the transform
         CGContextConcatCTM(context, self.transform)
+        // Move the origin back by half
+        CGContextTranslateCTM(context, frame.size.width * -0.5, frame.size.height * originalSize.height * -0.5)
+        
+        print(self.transform)
+        
         text.drawAtPoint(position, withAttributes:  [NSFontAttributeName: font!, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: customParagraphStyle.copy() as! NSParagraphStyle])
         let image = UIGraphicsGetImageFromCurrentImageContext()
         CGContextRestoreGState(context)
@@ -130,6 +139,7 @@ extension IMGLYTextFilter {
         copy.fontScaleFactor = fontScaleFactor
         copy.cropRect = cropRect
         copy.frame = frame
+        copy.transform = transform
         #if os(iOS)
         copy.color = color.copyWithZone(zone) as! UIColor
         #elseif os(OSX)

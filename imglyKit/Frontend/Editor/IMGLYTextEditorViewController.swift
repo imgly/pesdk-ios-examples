@@ -116,7 +116,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         fixedFilterStack.textFilter.color = textColor
         fixedFilterStack.textFilter.fontName = fontName
         fixedFilterStack.textFilter.frame = transformedTextFrame()
-        fixedFilterStack.textFilter.transform = view.transform
+        fixedFilterStack.textFilter.transform = textLabel.transform
         fixedFilterStack.textFilter.fontScaleFactor = currentTextSize / previewImageView.visibleImageFrame.size.height
         
         updatePreviewImageWithCompletion {
@@ -218,24 +218,16 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
 
             switch recognizer.state {
             case .Began:
-//                fontSizeAtPinchBegin = currentTextSize
                 if draggedView == nil {
                     draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
                 }
                 
                 if let draggedView = draggedView {
                     textClipView.bringSubviewToFront(draggedView)
- //                   distanceAtPinchBegin = calculateNewFontSizeBasedOnDistanceBetweenPoint(point1, and: point2)
               }
             case .Changed:
                 if let draggedView = draggedView {
                     draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
-  //                 let distance = calculateNewFontSizeBasedOnDistanceBetweenPoint(point1, and: point2)
-   //                 currentTextSize = fontSizeAtPinchBegin - (distanceAtPinchBegin - distance) / 2.0
-     //               currentTextSize = max(MinimumFontSize, currentTextSize)
-      //              currentTextSize = min(maximumFontSize, currentTextSize)
-       //             draggedView.font = UIFont(name:fontName, size: currentTextSize)
-         //           updateTextLabelFrameForCurrentFont()
                 }
                 recognizer.scale = 1
             case .Cancelled, .Ended:
