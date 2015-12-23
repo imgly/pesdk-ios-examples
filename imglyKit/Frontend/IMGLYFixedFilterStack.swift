@@ -108,6 +108,14 @@ public class IMGLYFixedFilterStack: NSObject {
     public func flipStickersVertical () {
         flipStickers(false)
     }
+
+    public func flipTextHorizontal () {
+        flipText(true)
+    }
+    
+    public func flipTextVertical () {
+        flipText(false)
+    }
     
     private func flipStickers(horizontal:Bool) {
         for filter in self.activeFilters {
@@ -131,7 +139,7 @@ public class IMGLYFixedFilterStack: NSObject {
             }
         }
     }
-
+   
     private func flipRotationHorizontal (stickerFilter:IMGLYStickerFilter) {
         flipRotation(stickerFilter, axisAngle: CGFloat(M_PI))
     }
@@ -154,7 +162,47 @@ public class IMGLYFixedFilterStack: NSObject {
         stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, delta * 2.0)
     }
 
-    // MARK: - Initializers
+    private func flipText(horizontal:Bool) {
+        for filter in self.activeFilters {
+            if let stickerFilter = filter as? IMGLYTextFilter {
+                stickerFilter.center.x -= 0.5
+                stickerFilter.center.y -= 0.5
+                let center = stickerFilter.center
+                if (horizontal) {
+                    flipRotationHorizontal(stickerFilter)
+                    stickerFilter.center.x = -center.x
+                } else {
+                    flipRotationVertical(stickerFilter)
+                    stickerFilter.center.y = -center.y
+                }
+                stickerFilter.center.x += 0.5
+                stickerFilter.center.y += 0.5
+            }
+        }
+    }
+    
+    private func flipRotationHorizontal (textFilter:IMGLYTextFilter) {
+        flipRotation(textFilter, axisAngle: CGFloat(M_PI))
+    }
+    
+    private func flipRotationVertical (textFilter:IMGLYTextFilter) {
+        flipRotation(textFilter, axisAngle: CGFloat(M_PI_2))
+    }
+
+    private func flipRotation (textFilter:IMGLYTextFilter, axisAngle:CGFloat) {
+        var angle = atan2(textFilter.transform.b, textFilter.transform.a)
+        let twoPI = CGFloat(M_PI * 2.0)
+        // normalize angle
+        while (angle >= twoPI) {
+            angle -= twoPI
+        }
+        while (angle < 0) {
+            angle += twoPI
+        }
+        let delta = axisAngle - angle
+        textFilter.transform = CGAffineTransformRotate(textFilter.transform, delta * 2.0)
+    }
+   // MARK: - Initializers
     required override public init () {
         super.init()
     }
