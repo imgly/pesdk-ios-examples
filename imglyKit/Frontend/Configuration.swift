@@ -1,5 +1,5 @@
 //
-//  IMGLYConfiguration.swift
+//  Configuration.swift
 //  imglyKit
 //
 //  Created by Malte Baumann on 25/11/15.
@@ -9,33 +9,33 @@
 import Foundation
 import UIKit
 
-public enum IMGLYConfigurationError: ErrorType {
+public enum ConfigurationError: ErrorType {
     case ReplacingClassNotASubclass
 }
 
 /// This closure allows the configuration of the given barbutton item.
-public typealias IMGLYBarButtonItemConfigurationClosure = (UIBarButtonItem) -> ()
+public typealias BarButtonItemConfigurationClosure = (UIBarButtonItem) -> ()
 
 /// This closure allows the configuration of the given button.
-public typealias IMGLYButtonConfigurationClosure = (UIButton) -> ()
+public typealias ButtonConfigurationClosure = (UIButton) -> ()
 
 /// This closure allows the configuration of the given label.
-public typealias IMGLYLabelConfigurationClosure = (UILabel) -> ()
+public typealias LabelConfigurationClosure = (UILabel) -> ()
 
 /// This closure allows the configuration of the given slider.
-public typealias IMGLYSliderConfigurationClosure = (UISlider) -> ()
+public typealias SliderConfigurationClosure = (UISlider) -> ()
 
 /// This closure allows the configuration of the given text field.
-public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
+public typealias TextFieldConfigurationClosure = (UITextField) -> ()
 
 /**
- An IMGLYConfiguration defines behaviour and look of all view controllers
+ An Configuration defines behaviour and look of all view controllers
  provided by the imglyKit. It uses the builder pattern to create an
  immutable object via a closure. To configure the different editors and
  viewControllers contained in the SDK, edit their options in the corresponding
- `configure*ViewController` method of the `IMGLYConfigurationBuilder`.
+ `configure*ViewController` method of the `ConfigurationBuilder`.
 */
-@objc public class IMGLYConfiguration: NSObject {
+@objc public class Configuration: NSObject {
 
     // MARK: Properties
 
@@ -43,19 +43,19 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     public let backgroundColor: UIColor
 
     /// Camera View Controller
-    public let cameraViewControllerOptions: IMGLYCameraViewControllerOptions
+    public let cameraViewControllerOptions: CameraViewControllerOptions
 
     // Editor View Controller options
-    public let mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions
-    public let filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions
-    public let stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions
-    public let orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions
-    public let focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions
-    public let cropEditorViewControllerOptions: IMGLYCropEditorViewControllerOptions
-    public let brightnessEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
-    public let contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
-    public let saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions
-    public let textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions
+    public let mainEditorViewControllerOptions: MainEditorViewControllerOptions
+    public let filterEditorViewControllerOptions: FilterEditorViewControllerOptions
+    public let stickersEditorViewControllerOptions: StickersEditorViewControllerOptions
+    public let orientationEditorViewControllerOptions: OrientationEditorViewControllerOptions
+    public let focusEditorViewControllerOptions: FocusEditorViewControllerOptions
+    public let cropEditorViewControllerOptions: CropEditorViewControllerOptions
+    public let brightnessEditorViewControllerOptions: SliderEditorViewControllerOptions
+    public let contrastEditorViewControllerOptions: SliderEditorViewControllerOptions
+    public let saturationEditorViewControllerOptions: SliderEditorViewControllerOptions
+    public let textEditorViewControllerOptions: TextEditorViewControllerOptions
 
     //  MARK: Initialization
 
@@ -63,8 +63,8 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
         self.init(builder: { _ in })
     }
 
-    public init(builder: (IMGLYConfigurationBuilder -> Void)) {
-        let builderForClosure = IMGLYConfigurationBuilder()
+    public init(builder: (ConfigurationBuilder -> Void)) {
+        let builderForClosure = ConfigurationBuilder()
         builder(builderForClosure)
         self.backgroundColor = builderForClosure.backgroundColor
         self.cameraViewControllerOptions = builderForClosure.cameraViewControllerOptions
@@ -97,89 +97,89 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
 }
 
 /**
- The configuration builder object offers all properties of `IMGLYConfiguration` in
- a mutable version, in order to build an immutable `IMGLYConfiguration` object. To
+ The configuration builder object offers all properties of `Configuration` in
+ a mutable version, in order to build an immutable `Configuration` object. To
  further configure the different viewcontrollers, use the `configureXYZViewController`
  methods to edit the given options.
 */
-@objc public class IMGLYConfigurationBuilder: NSObject {
+@objc public class ConfigurationBuilder: NSObject {
     public var backgroundColor: UIColor = UIColor.blackColor()
-    private var cameraViewControllerOptions: IMGLYCameraViewControllerOptions = IMGLYCameraViewControllerOptions()
-    private var mainEditorViewControllerOptions: IMGLYMainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions()
-    private var filterEditorViewControllerOptions: IMGLYFilterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions()
-    private var stickersEditorViewControllerOptions: IMGLYStickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions()
-    private var orientationEditorViewControllerOptions: IMGLYOrientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions()
-    private var focusEditorViewControllerOptions: IMGLYFocusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions()
-    private var cropEditorViewControllerOptions: IMGLYCropEditorViewControllerOptions = IMGLYCropEditorViewControllerOptions()
-    private var brightnessEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    private var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    private var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
-    private var textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions()
+    private var cameraViewControllerOptions: CameraViewControllerOptions = CameraViewControllerOptions()
+    private var mainEditorViewControllerOptions: MainEditorViewControllerOptions = MainEditorViewControllerOptions()
+    private var filterEditorViewControllerOptions: FilterEditorViewControllerOptions = FilterEditorViewControllerOptions()
+    private var stickersEditorViewControllerOptions: StickersEditorViewControllerOptions = StickersEditorViewControllerOptions()
+    private var orientationEditorViewControllerOptions: OrientationEditorViewControllerOptions = OrientationEditorViewControllerOptions()
+    private var focusEditorViewControllerOptions: FocusEditorViewControllerOptions = FocusEditorViewControllerOptions()
+    private var cropEditorViewControllerOptions: CropEditorViewControllerOptions = CropEditorViewControllerOptions()
+    private var brightnessEditorViewControllerOptions: SliderEditorViewControllerOptions = SliderEditorViewControllerOptions()
+    private var contrastEditorViewControllerOptions: SliderEditorViewControllerOptions = SliderEditorViewControllerOptions()
+    private var saturationEditorViewControllerOptions: SliderEditorViewControllerOptions = SliderEditorViewControllerOptions()
+    private var textEditorViewControllerOptions: TextEditorViewControllerOptions = TextEditorViewControllerOptions()
 
-    public func configureCameraViewController(builder: (IMGLYCameraViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYCameraViewControllerOptionsBuilder()
+    public func configureCameraViewController(builder: (CameraViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = CameraViewControllerOptionsBuilder()
         builder(builderForClosure)
-        cameraViewControllerOptions = IMGLYCameraViewControllerOptions(builder: builderForClosure)
+        cameraViewControllerOptions = CameraViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureMainEditorViewController(builder: (IMGLYMainEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYMainEditorViewControllerOptionsBuilder()
+    public func configureMainEditorViewController(builder: (MainEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = MainEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        mainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions(builder: builderForClosure)
+        mainEditorViewControllerOptions = MainEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureFilterEditorViewController(builder: (IMGLYFilterEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYFilterEditorViewControllerOptionsBuilder()
+    public func configureFilterEditorViewController(builder: (FilterEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = FilterEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        filterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions(builder: builderForClosure)
+        filterEditorViewControllerOptions = FilterEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureStickersEditorViewController(builder: (IMGLYStickersEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYStickersEditorViewControllerOptionsBuilder()
+    public func configureStickersEditorViewController(builder: (StickersEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = StickersEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        stickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions(builder: builderForClosure)
+        stickersEditorViewControllerOptions = StickersEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureOrientationEditorViewController(builder: (IMGLYOrientationEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYOrientationEditorViewControllerOptionsBuilder()
+    public func configureOrientationEditorViewController(builder: (OrientationEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = OrientationEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        orientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions(builder: builderForClosure)
+        orientationEditorViewControllerOptions = OrientationEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureFocusEditorViewController(builder: (IMGLYFocusEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYFocusEditorViewControllerOptionsBuilder()
+    public func configureFocusEditorViewController(builder: (FocusEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = FocusEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        focusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions(builder: builderForClosure)
+        focusEditorViewControllerOptions = FocusEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureCropEditorViewController(builder: (IMGLYCropEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYCropEditorViewControllerOptionsBuilder()
+    public func configureCropEditorViewController(builder: (CropEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = CropEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        cropEditorViewControllerOptions = IMGLYCropEditorViewControllerOptions(builder: builderForClosure)
+        cropEditorViewControllerOptions = CropEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureBrightnessEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
+    public func configureBrightnessEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        brightnessEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
+        brightnessEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureSaturationEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
+    public func configureSaturationEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        saturationEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
+        saturationEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureContrastEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
+    public func configureContrastEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        contrastEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
+        contrastEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
-    public func configureTextEditorViewController(builder: (IMGLYTextEditorViewControllerOptionsBuilder -> Void)) {
-        let builderForClosure = IMGLYTextEditorViewControllerOptionsBuilder()
+    public func configureTextEditorViewController(builder: (TextEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = TextEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
-        textEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions(builder: builderForClosure)
+        textEditorViewControllerOptions = TextEditorViewControllerOptions(builder: builderForClosure)
     }
 
     // MARK: Class replacement
@@ -199,7 +199,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
         if !replacingClass.isSubclassOfClass(builtinClass) {
-            throw IMGLYConfigurationError.ReplacingClassNotASubclass
+            throw ConfigurationError.ReplacingClassNotASubclass
         }
 
         let builtinClassName = String(builtinClass)

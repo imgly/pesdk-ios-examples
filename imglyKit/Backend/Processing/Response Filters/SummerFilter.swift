@@ -1,5 +1,5 @@
 //
-//  IMGLYSummerFilter.swift
+//  SummerFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSummerFilter: IMGLYResponseFilter {
+public class SummerFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Summer")
     }
@@ -18,12 +18,12 @@ public class IMGLYSummerFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSummerFilter: EffectFilterType {
+extension SummerFilter: EffectFilter {
     public var displayName: String {
         return "Summer"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Summer
     }
 }

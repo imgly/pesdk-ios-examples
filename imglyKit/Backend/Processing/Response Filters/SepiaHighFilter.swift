@@ -1,5 +1,5 @@
 //
-//  IMGLYSepiaHighFilter.swift
+//  SepiaHighFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
+public class SepiaHighFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "SepiaHigh")
     }
@@ -18,12 +18,12 @@ public class IMGLYSepiaHighFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSepiaHighFilter: EffectFilterType {
+extension SepiaHighFilter: EffectFilter {
     public var displayName: String {
         return "Sepia High"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .SepiaHigh
     }
 }

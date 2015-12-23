@@ -1,5 +1,5 @@
 //
-//  IMGLYNoneFilter.swift
+//  NoneFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 05/02/15.
@@ -16,7 +16,7 @@ import QuartzCore
 /**
 *  A filter that does nothing. It is used within the fixed-filterstack.
 */
-public class IMGLYNoneFilter: IMGLYResponseFilter {
+public class NoneFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "None")
     }
@@ -35,12 +35,12 @@ public class IMGLYNoneFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYNoneFilter: EffectFilterType {
+extension NoneFilter: EffectFilter {
     public var displayName: String {
         return "None"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .None
     }
 }

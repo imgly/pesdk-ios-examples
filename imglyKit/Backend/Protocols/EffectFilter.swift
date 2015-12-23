@@ -1,5 +1,5 @@
 //
-//  EffectFilterType.swift
+//  EffectFilter.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 21/12/15.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-@objc public protocol EffectFilterType: FilterType {
-    var filterType: IMGLYFilterType { get }
+@objc public protocol EffectFilter: Filter {
+    var filterType: FilterType { get }
     var displayName: String { get }
     var inputIntensity: NSNumber { get set }
 }

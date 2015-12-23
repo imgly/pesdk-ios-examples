@@ -1,5 +1,5 @@
 //
-//  IMGLYTextColorSelectorView.swift
+//  TextColorSelectorView.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 05/03/15.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-public protocol IMGLYTextColorSelectorViewDelegate: class {
-    func textColorSelectorView(selectorView: IMGLYTextColorSelectorView, didSelectColor color: UIColor)
+public protocol TextColorSelectorViewDelegate: class {
+    func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor)
 }
 
-public class IMGLYTextColorSelectorView: UIScrollView {
-    public weak var menuDelegate: IMGLYTextColorSelectorViewDelegate?
+public class TextColorSelectorView: UIScrollView {
+    public weak var menuDelegate: TextColorSelectorViewDelegate?
 
     private var colorArray: [UIColor] = []
-    private var buttonArray = [IMGLYColorButton]()
+    private var buttonArray = [ColorButton]()
 
     private let kButtonYPosition = CGFloat(22)
     private let kButtonXPositionOffset = CGFloat(5)
@@ -70,7 +70,7 @@ public class IMGLYTextColorSelectorView: UIScrollView {
 
     private func configureColorButtons() {
         for color in colorArray {
-            let button = IMGLYColorButton()
+            let button = ColorButton()
             self.addSubview(button)
             button.addTarget(self, action: "colorButtonTouchedUpInside:", forControlEvents: .TouchUpInside)
             buttonArray.append(button)

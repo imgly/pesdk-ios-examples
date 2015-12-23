@@ -1,5 +1,5 @@
 //
-//  IMGLYGlamFilter.swift
+//  GlamFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYGlamFilter: IMGLYResponseFilter {
+public class GlamFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Glam")
     }
@@ -18,12 +18,12 @@ public class IMGLYGlamFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYGlamFilter: EffectFilterType {
+extension GlamFilter: EffectFilter {
     public var displayName: String {
         return "Glam"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Glam
     }
 }

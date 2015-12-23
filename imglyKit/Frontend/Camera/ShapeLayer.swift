@@ -1,5 +1,5 @@
 //
-//  IMGLYShapeLayer.swift
+//  ShapeLayer.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 26/06/15.
@@ -8,7 +8,7 @@
 
 import QuartzCore
 
-class IMGLYShapeLayer: CAShapeLayer {
+class ShapeLayer: CAShapeLayer {
     override func actionForKey(event: String) -> CAAction? {
         if event == "path" {
             let animation = CABasicAnimation(keyPath: event)

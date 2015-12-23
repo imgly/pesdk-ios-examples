@@ -1,5 +1,5 @@
 //
-//  IMGLYSoftFilter.swift
+//  SoftFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSoftFilter: IMGLYResponseFilter {
+public class SoftFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Soft")
     }
@@ -18,12 +18,12 @@ public class IMGLYSoftFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSoftFilter: EffectFilterType {
+extension SoftFilter: EffectFilter {
     public var displayName: String {
         return "Soft"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Soft
     }
 }

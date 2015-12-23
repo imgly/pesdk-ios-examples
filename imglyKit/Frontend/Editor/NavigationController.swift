@@ -1,5 +1,5 @@
 //
-//  IMGLYNavigationController.swift
+//  NavigationController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 13/04/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IMGLYNavigationController: UINavigationController {
+public class NavigationController: UINavigationController {
 
     // MARK: - UIViewController
 

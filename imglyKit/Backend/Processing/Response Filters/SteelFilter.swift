@@ -1,5 +1,5 @@
 //
-//  IMGLYSteelFilter.swift
+//  SteelFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 29/01/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSteelFilter: IMGLYResponseFilter {
+public class SteelFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Steel")
     }
@@ -18,12 +18,12 @@ public class IMGLYSteelFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSteelFilter: EffectFilterType {
+extension SteelFilter: EffectFilter {
     public var displayName: String {
         return "Steel"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Steel
     }
 }

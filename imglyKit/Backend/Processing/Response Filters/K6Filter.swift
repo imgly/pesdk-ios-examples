@@ -1,5 +1,5 @@
 //
-//  IMGLYK6Filter.swift
+//  K6Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYK6Filter: IMGLYResponseFilter {
+public class K6Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "K6")
     }
@@ -18,12 +18,12 @@ public class IMGLYK6Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYK6Filter: EffectFilterType {
+extension K6Filter: EffectFilter {
     public var displayName: String {
         return "K6"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .K6
     }
 }

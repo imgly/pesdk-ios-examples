@@ -1,5 +1,5 @@
 //
-//  IMGLYNeatFilter.swift
+//  NeatFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYNeatFilter: IMGLYResponseFilter {
+public class NeatFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Neat")
     }
@@ -18,12 +18,12 @@ public class IMGLYNeatFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYNeatFilter: EffectFilterType {
+extension NeatFilter: EffectFilter {
     public var displayName: String {
         return "Neat"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Neat
     }
 }

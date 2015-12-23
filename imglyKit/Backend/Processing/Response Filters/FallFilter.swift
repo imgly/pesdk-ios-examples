@@ -1,5 +1,5 @@
 //
-//  IMGLYFallFilter.swift
+//  FallFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYFallFilter: IMGLYResponseFilter {
+public class FallFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Fall")
     }
@@ -18,12 +18,12 @@ public class IMGLYFallFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYFallFilter: EffectFilterType {
+extension FallFilter: EffectFilter {
     public var displayName: String {
         return "Fall"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Fall
     }
 }

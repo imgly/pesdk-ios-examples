@@ -1,5 +1,5 @@
 //
-//  IMGLYLucidFilter.swift
+//  LucidFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYLucidFilter: IMGLYResponseFilter {
+public class LucidFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lucid")
     }
@@ -18,12 +18,12 @@ public class IMGLYLucidFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYLucidFilter: EffectFilterType {
+extension LucidFilter: EffectFilter {
     public var displayName: String {
         return "Lucid"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Lucid
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYX400Filter.swift
+//  X400Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYX400Filter: IMGLYResponseFilter {
+public class X400Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "X400")
     }
@@ -18,12 +18,12 @@ public class IMGLYX400Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYX400Filter: EffectFilterType {
+extension X400Filter: EffectFilter {
     public var displayName: String {
         return "X400"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .X400
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYTwilightFilter.swift
+//  TwilightFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYTwilightFilter: IMGLYResponseFilter {
+public class TwilightFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Twilight")
     }
@@ -18,12 +18,12 @@ public class IMGLYTwilightFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYTwilightFilter: EffectFilterType {
+extension TwilightFilter: EffectFilter {
     public var displayName: String {
         return "Twilight"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Twilight
     }
 }

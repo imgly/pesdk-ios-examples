@@ -1,5 +1,5 @@
 //
-//  IMGLYFridgeFilter.swift
+//  FridgeFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYFridgeFilter: IMGLYResponseFilter {
+public class FridgeFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Fridge")
     }
@@ -18,12 +18,12 @@ public class IMGLYFridgeFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYFridgeFilter: EffectFilterType {
+extension FridgeFilter: EffectFilter {
     public var displayName: String {
         return "Fridge"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Fridge
     }
 }

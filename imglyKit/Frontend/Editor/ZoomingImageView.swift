@@ -1,5 +1,5 @@
 //
-//  IMGLYZoomingImageView.swift
+//  ZoomingImageView.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 13/05/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IMGLYZoomingImageView: UIScrollView {
+public class ZoomingImageView: UIScrollView {
 
     // MARK: - Properties
 
@@ -92,7 +92,7 @@ public class IMGLYZoomingImageView: UIScrollView {
     }
 }
 
-extension IMGLYZoomingImageView: UIScrollViewDelegate {
+extension ZoomingImageView: UIScrollViewDelegate {
     public func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return imageView
     }

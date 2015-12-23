@@ -1,5 +1,5 @@
 //
-//  IMGLYPola669Filter.swift
+//  Pola669Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPola669Filter: IMGLYResponseFilter {
+public class Pola669Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "Pola669")
     }
@@ -18,12 +18,12 @@ public class IMGLYPola669Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPola669Filter: EffectFilterType {
+extension Pola669Filter: EffectFilter {
     public var displayName: String {
         return "669"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Pola669
     }
 }

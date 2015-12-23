@@ -1,5 +1,5 @@
 //
-//  IMGLYImageCaptionButton.swift
+//  ImageCaptionButton.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 13/04/15.
@@ -11,7 +11,7 @@ import UIKit
 private let kImageSize = CGSize(width: 36, height: 36)
 private let kImageCaptionMargin = 2
 
-public class IMGLYImageCaptionButton: UIControl {
+public class ImageCaptionButton: UIControl {
 
     // MARK: - Properties
 

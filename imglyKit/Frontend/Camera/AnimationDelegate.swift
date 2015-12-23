@@ -1,5 +1,5 @@
 //
-//  IMGLYAnimationDelegate.swift
+//  AnimationDelegate.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 11/05/15.
@@ -8,17 +8,17 @@
 
 import QuartzCore
 
-public typealias IMGLYAnimationDelegateBlock = (Bool) -> (Void)
+public typealias AnimationDelegateBlock = (Bool) -> (Void)
 
-public class IMGLYAnimationDelegate: NSObject {
+public class AnimationDelegate: NSObject {
 
     // MARK: - Properties
 
-    public let block: IMGLYAnimationDelegateBlock
+    public let block: AnimationDelegateBlock
 
     // MARK: - Initializers
 
-    init(block: IMGLYAnimationDelegateBlock) {
+    init(block: AnimationDelegateBlock) {
         self.block = block
     }
 

@@ -1,5 +1,5 @@
 //
-//  IMGLYScaleFilter.swift
+//  ScaleFilter.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 24/06/15.
@@ -13,7 +13,7 @@
     import QuartzCore
 #endif
 
-public class IMGLYScaleFilter: CIFilter, FilterType {
+public class ScaleFilter: CIFilter, Filter {
     public var inputImage: CIImage?
     public var scale = Float(1)
 
@@ -34,10 +34,10 @@ public class IMGLYScaleFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYScaleFilter {
+extension ScaleFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYScaleFilter
+        let copy = super.copyWithZone(zone) as! ScaleFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.scale = scale

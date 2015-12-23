@@ -1,5 +1,5 @@
 //
-//  IMGLYCoolFilter.swift
+//  CoolFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYCoolFilter: IMGLYResponseFilter {
+public class CoolFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Cool")
     }
@@ -18,12 +18,12 @@ public class IMGLYCoolFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYCoolFilter: EffectFilterType {
+extension CoolFilter: EffectFilter {
     public var displayName: String {
         return "Cool"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Cool
     }
 }

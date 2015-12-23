@@ -1,5 +1,5 @@
 //
-//  IMGLYTexasFilter.swift
+//  TexasFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYTexasFilter: IMGLYResponseFilter {
+public class TexasFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Texas")
     }
@@ -18,12 +18,12 @@ public class IMGLYTexasFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYTexasFilter: EffectFilterType {
+extension TexasFilter: EffectFilter {
     public var displayName: String {
         return "Texas"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Texas
     }
 }

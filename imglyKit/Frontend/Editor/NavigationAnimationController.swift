@@ -1,5 +1,5 @@
 //
-//  IMGLYNavigationAnimationController.swift
+//  NavigationAnimationController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 08/04/15.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class IMGLYNavigationAnimationController: NSObject {
+class NavigationAnimationController: NSObject {
 }
 
-extension IMGLYNavigationAnimationController: UIViewControllerAnimatedTransitioning {
+extension NavigationAnimationController: UIViewControllerAnimatedTransitioning {
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return 0.2
     }

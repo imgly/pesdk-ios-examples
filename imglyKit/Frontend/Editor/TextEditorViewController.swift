@@ -13,10 +13,10 @@ private let kTextFieldHeight = CGFloat(40)
 private let kTextLabelInitialMargin = CGFloat(40)
 private let kMinimumFontSize = CGFloat(12.0)
 
-@objc public class IMGLYTextEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+@objc public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
-    public let textFieldConfigurationClosure: IMGLYTextFieldConfigurationClosure
+    public let textFieldConfigurationClosure: TextFieldConfigurationClosure
 
     /// Defaults to white.
     public let fontPreviewTextColor: UIColor
@@ -32,10 +32,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     public let canModifyTextColor: Bool
 
     convenience init() {
-        self.init(builder: IMGLYTextEditorViewControllerOptionsBuilder())
+        self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYTextEditorViewControllerOptionsBuilder) {
+    init(builder: TextEditorViewControllerOptionsBuilder) {
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
         fontPreviewTextColor = builder.fontPreviewTextColor
         availableFontColors = builder.availableFontColors
@@ -46,12 +46,12 @@ private let kMinimumFontSize = CGFloat(12.0)
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYTextEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class TextEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
-    public lazy var textFieldConfigurationClosure: IMGLYTextFieldConfigurationClosure = { _ in }
+    public lazy var textFieldConfigurationClosure: TextFieldConfigurationClosure = { _ in }
 
     /// Defaults to white.
     public var fontPreviewTextColor: UIColor = UIColor.whiteColor()
@@ -70,11 +70,11 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
+public class TextEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
@@ -88,8 +88,8 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     private var beganTwoFingerPitch = false
     private var draggedView: UILabel?
 
-    public private(set) lazy var textColorSelectorView: IMGLYTextColorSelectorView = {
-        let view = IMGLYTextColorSelectorView(availableColors: self.options.availableFontColors)
+    public private(set) lazy var textColorSelectorView: TextColorSelectorView = {
+        let view = TextColorSelectorView(availableColors: self.options.availableFontColors)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = self.currentBackgroundColor
         view.menuDelegate = self
@@ -133,8 +133,8 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         return view
     }()
 
-    public private(set) lazy var fontSelectorView: IMGLYFontSelectorView = {
-        let selector = IMGLYFontSelectorView()
+    public private(set) lazy var fontSelectorView: FontSelectorView = {
+        let selector = FontSelectorView()
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
         selector.fontPreviewTextColor = self.options.fontPreviewTextColor
@@ -152,7 +152,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        IMGLYInstanceFactory.fontImporter().importFonts()
+        InstanceFactory.fontImporter().importFonts()
 
         navigationItem.rightBarButtonItem?.enabled = false
 
@@ -174,9 +174,9 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         textClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
     }
 
-    // MARK: - IMGLYEditorViewController
+    // MARK: - EditorViewController
 
-    public override var options: IMGLYTextEditorViewControllerOptions {
+    public override var options: TextEditorViewControllerOptions {
         return self.configuration.textEditorViewControllerOptions
     }
 
@@ -440,15 +440,15 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     }
 }
 
-extension IMGLYTextEditorViewController: IMGLYTextColorSelectorViewDelegate {
-    public func textColorSelectorView(selectorView: IMGLYTextColorSelectorView, didSelectColor color: UIColor) {
+extension TextEditorViewController: TextColorSelectorViewDelegate {
+    public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {
         textColor = color
         textField.textColor = color
         textLabel.textColor = color
     }
 }
 
-extension IMGLYTextEditorViewController: UITextFieldDelegate {
+extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         return true
     }
@@ -469,8 +469,8 @@ extension IMGLYTextEditorViewController: UITextFieldDelegate {
     }
 }
 
-extension IMGLYTextEditorViewController: IMGLYFontSelectorViewDelegate {
-    public func fontSelectorView(fontSelectorView: IMGLYFontSelectorView, didSelectFontWithName fontName: String) {
+extension TextEditorViewController: FontSelectorViewDelegate {
+    public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
         fontSelectorContainerView.removeFromSuperview()
         self.fontName = fontName
         textField.font = UIFont(name: fontName, size: kFontSizeInTextField)

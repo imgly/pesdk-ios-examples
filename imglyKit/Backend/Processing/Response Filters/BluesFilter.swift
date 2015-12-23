@@ -1,5 +1,5 @@
 //
-//  IMGLYBluesFilter.swift
+//  BluesFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBluesFilter: IMGLYResponseFilter {
+public class BluesFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Blues")
     }
@@ -18,12 +18,12 @@ public class IMGLYBluesFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBluesFilter: EffectFilterType {
+extension BluesFilter: EffectFilter {
     public var displayName: String {
         return "Blues"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Blues
     }
 }

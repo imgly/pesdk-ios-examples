@@ -1,5 +1,5 @@
 //
-//  IMGLYPlateFilter.swift
+//  PlateFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPlateFilter: IMGLYResponseFilter {
+public class PlateFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Plate")
     }
@@ -18,12 +18,12 @@ public class IMGLYPlateFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPlateFilter: EffectFilterType {
+extension PlateFilter: EffectFilter {
     public var displayName: String {
         return "Plate"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Plate
     }
 }

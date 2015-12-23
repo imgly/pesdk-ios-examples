@@ -1,5 +1,5 @@
 //
-//  IMGLYStickersDataSource.swift
+//  StickersDataSource.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 23/03/15.
@@ -8,18 +8,18 @@
 
 import UIKit
 
-@objc public protocol IMGLYStickersDataSourceProtocol {
+@objc public protocol StickersDataSourceProtocol {
     /// The total count of all available stickers.
     var stickerCount: Int { get }
 
     /// The sticker at the given index.
-    func stickerAtIndex(index: Int) -> IMGLYSticker
+    func stickerAtIndex(index: Int) -> Sticker
 }
 
 
-@objc public class IMGLYStickersDataSource: NSObject, IMGLYStickersDataSourceProtocol {
+@objc public class StickersDataSource: NSObject, StickersDataSourceProtocol {
 
-    private let stickers: [IMGLYSticker]
+    private let stickers: [Sticker]
 
     // MARK: Init
 
@@ -47,10 +47,10 @@ import UIKit
             "star"
         ]
 
-        stickers = stickerFiles.map { (file: String) -> IMGLYSticker? in
-            if let image = UIImage(named: file, inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil) {
-                let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: IMGLYStickersDataSource.self), compatibleWithTraitCollection: nil)
-                return IMGLYSticker(image: image, thumbnail: thumbnail)
+        stickers = stickerFiles.map { (file: String) -> Sticker? in
+            if let image = UIImage(named: file, inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil) {
+                let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil)
+                return Sticker(image: image, thumbnail: thumbnail)
             }
 
             return nil
@@ -62,12 +62,12 @@ import UIKit
     /**
      Creates a custom datasource offering the given stickers.
     */
-    public init(stickers: [IMGLYSticker]) {
+    public init(stickers: [Sticker]) {
         self.stickers = stickers
         super.init()
     }
 
-    // MARK:- IMGLYStickersDataSource
+    // MARK:- StickersDataSource
 
     public var stickerCount: Int {
         get {
@@ -75,7 +75,7 @@ import UIKit
         }
     }
 
-    public func stickerAtIndex(index: Int) -> IMGLYSticker {
+    public func stickerAtIndex(index: Int) -> Sticker {
         return stickers[index]
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYCameraController.swift
+//  CameraController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 15/05/15.
@@ -12,7 +12,7 @@ import OpenGLES
 import GLKit
 import CoreMotion
 
-struct IMGLYSDKVersion: Comparable, CustomStringConvertible {
+struct SDKVersion: Comparable, CustomStringConvertible {
     let majorVersion: Int
     let minorVersion: Int
     let patchVersion: Int
@@ -22,11 +22,11 @@ struct IMGLYSDKVersion: Comparable, CustomStringConvertible {
     }
 }
 
-func == (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+func == (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
     return (lhs.majorVersion == rhs.majorVersion) && (lhs.minorVersion == rhs.minorVersion) && (lhs.patchVersion == rhs.patchVersion)
 }
 
-func < (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
+func < (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
     if lhs.majorVersion < rhs.majorVersion {
         return true
     } else if lhs.majorVersion > rhs.majorVersion {
@@ -50,43 +50,43 @@ func < (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
 
 let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 4, patchVersion: 1)
 
-private let kIMGLYIndicatorSize = CGFloat(75)
+private let kIndicatorSize = CGFloat(75)
 private var capturingStillImageContext = 0
 private var sessionRunningAndDeviceAuthorizedContext = 0
 private var focusAndExposureContext = 0
 
-@objc public protocol IMGLYCameraControllerDelegate: class {
-    optional func cameraControllerDidStartCamera(cameraController: IMGLYCameraController)
-    optional func cameraControllerDidStopCamera(cameraController: IMGLYCameraController)
-    optional func cameraControllerDidStartStillImageCapture(cameraController: IMGLYCameraController)
-    optional func cameraControllerDidFailAuthorization(cameraController: IMGLYCameraController)
-    optional func cameraController(cameraController: IMGLYCameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode)
-    optional func cameraController(cameraController: IMGLYCameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode)
-    optional func cameraControllerDidCompleteSetup(cameraController: IMGLYCameraController)
-    optional func cameraController(cameraController: IMGLYCameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
-    optional func cameraController(cameraController: IMGLYCameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
-    optional func cameraController(cameraController: IMGLYCameraController, willSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
-    optional func cameraController(cameraController: IMGLYCameraController, didSwitchToRecordingMode recordingMode: IMGLYRecordingMode)
-    optional func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
-    optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: IMGLYCameraController) -> (() -> Void)
-    optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: IMGLYCameraController) -> (() -> Void)
-    optional func cameraControllerDidStartRecording(cameraController: IMGLYCameraController)
-    optional func cameraController(cameraController: IMGLYCameraController, recordedSeconds seconds: Int)
-    optional func cameraControllerDidFinishRecording(cameraController: IMGLYCameraController, fileURL: NSURL)
-    optional func cameraControllerDidFailRecording(cameraController: IMGLYCameraController, error: NSError?)
+@objc public protocol CameraControllerDelegate: class {
+    optional func cameraControllerDidStartCamera(cameraController: CameraController)
+    optional func cameraControllerDidStopCamera(cameraController: CameraController)
+    optional func cameraControllerDidStartStillImageCapture(cameraController: CameraController)
+    optional func cameraControllerDidFailAuthorization(cameraController: CameraController)
+    optional func cameraController(cameraController: CameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode)
+    optional func cameraController(cameraController: CameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode)
+    optional func cameraControllerDidCompleteSetup(cameraController: CameraController)
+    optional func cameraController(cameraController: CameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
+    optional func cameraController(cameraController: CameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition)
+    optional func cameraController(cameraController: CameraController, willSwitchToRecordingMode recordingMode: RecordingMode)
+    optional func cameraController(cameraController: CameraController, didSwitchToRecordingMode recordingMode: RecordingMode)
+    optional func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void)
+    optional func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void)
+    optional func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: CameraController) -> (() -> Void)
+    optional func cameraControllerDidStartRecording(cameraController: CameraController)
+    optional func cameraController(cameraController: CameraController, recordedSeconds seconds: Int)
+    optional func cameraControllerDidFinishRecording(cameraController: CameraController, fileURL: NSURL)
+    optional func cameraControllerDidFailRecording(cameraController: CameraController, error: NSError?)
 }
 
-public typealias IMGLYTakePhotoBlock = (UIImage?, NSError?) -> Void
-public typealias IMGLYRecordVideoBlock = (NSURL?, NSError?) -> Void
+public typealias TakePhotoBlock = (UIImage?, NSError?) -> Void
+public typealias RecordVideoBlock = (NSURL?, NSError?) -> Void
 
 private let kTempVideoFilename = "recording.mov"
 
-public class IMGLYCameraController: NSObject {
+public class CameraController: NSObject {
 
     // MARK: - Properties
 
     /// The response filter that is applied to the live-feed.
-    public var effectFilter: EffectFilterType = IMGLYNoneFilter()
+    public var effectFilter: EffectFilter = NoneFilter()
     public let previewView: UIView
     public var previewContentMode: UIViewContentMode  = .ScaleAspectFit
     public var tapToFocusEnabled = true
@@ -130,7 +130,7 @@ public class IMGLYCameraController: NSObject {
         }
     }
 
-    public weak var delegate: IMGLYCameraControllerDelegate?
+    public weak var delegate: CameraControllerDelegate?
     public let tapGestureRecognizer = UITapGestureRecognizer()
 
     dynamic private let session = AVCaptureSession()
@@ -245,7 +245,7 @@ public class IMGLYCameraController: NSObject {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
 
                         if let json = json, version = json["version"] as? String, versionComponents = self.versionComponentsFromString(version) {
-                            let remoteVersion = IMGLYSDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
+                            let remoteVersion = SDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
 
                             if kCurrentSDKVersion < remoteVersion {
                                 print("Your version of the img.ly SDK is outdated. You are using version \(kCurrentSDKVersion), the latest available version is \(remoteVersion). Please consider updating.")
@@ -348,7 +348,7 @@ public class IMGLYCameraController: NSObject {
         maskIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
         maskIndicatorLayer.borderWidth = 1
         maskIndicatorLayer.frame.origin = CGPoint(x: 0, y: 0)
-        maskIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        maskIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
         maskIndicatorLayer.hidden = true
         maskIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         previewView.layer.addSublayer(maskIndicatorLayer)
@@ -357,7 +357,7 @@ public class IMGLYCameraController: NSObject {
     private func setupUpperMaskDarkenLayer() {
         upperMaskDarkenLayer.borderWidth = 0
         upperMaskDarkenLayer.frame.origin = CGPoint(x: 0, y: 0)
-        upperMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        upperMaskDarkenLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
         upperMaskDarkenLayer.hidden = true
         upperMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         upperMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
@@ -367,7 +367,7 @@ public class IMGLYCameraController: NSObject {
     private func setupLowerMaskDarkenLayer() {
         lowerMaskDarkenLayer.borderWidth = 0
         lowerMaskDarkenLayer.frame.origin = CGPoint(x: 0, y: 0)
-        lowerMaskDarkenLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        lowerMaskDarkenLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
         lowerMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         lowerMaskDarkenLayer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
@@ -549,7 +549,7 @@ public class IMGLYCameraController: NSObject {
     private func setupFocusIndicator() {
         focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
         focusIndicatorLayer.borderWidth = 1
-        focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
         focusIndicatorLayer.hidden = true
         focusIndicatorLayer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         previewView.layer.addSublayer(focusIndicatorLayer)
@@ -570,7 +570,7 @@ public class IMGLYCameraController: NSObject {
         focusIndicatorLayer.opacity = 1
         focusIndicatorLayer.hidden = false
         focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
-        focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+        focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
         focusIndicatorLayer.position = location
         focusIndicatorLayer.transform = CATransform3DIdentity
         focusIndicatorLayer.removeAllAnimations()
@@ -683,7 +683,7 @@ public class IMGLYCameraController: NSObject {
                 CATransaction.begin()
                 CATransaction.setDisableActions(true)
                 focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
-                focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize * 2, height: kIMGLYIndicatorSize * 2)
+                focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize * 2, height: kIndicatorSize * 2)
                 focusIndicatorLayer.transform = CATransform3DIdentity
                 focusIndicatorLayer.position = previewView.center
 
@@ -692,7 +692,7 @@ public class IMGLYCameraController: NSObject {
                 let resizeAnimation = CABasicAnimation(keyPath: "transform")
                 resizeAnimation.duration = 0.25
                 resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
-                resizeAnimation.delegate = IMGLYAnimationDelegate(block: { finished in
+                resizeAnimation.delegate = AnimationDelegate(block: { finished in
                     if finished {
                         self.focusIndicatorFadeOutTimer = NSTimer.after(0.85) { [unowned self] in
                             self.focusIndicatorLayer.opacity = 0
@@ -700,13 +700,13 @@ public class IMGLYCameraController: NSObject {
                             let fadeAnimation = CABasicAnimation(keyPath: "opacity")
                             fadeAnimation.duration = 0.25
                             fadeAnimation.fromValue = 1
-                            fadeAnimation.delegate = IMGLYAnimationDelegate(block: { finished in
+                            fadeAnimation.delegate = AnimationDelegate(block: { finished in
                                 if finished {
                                     CATransaction.begin()
                                     CATransaction.setDisableActions(true)
                                     self.focusIndicatorLayer.hidden = true
                                     self.focusIndicatorLayer.opacity = 1
-                                    self.focusIndicatorLayer.frame.size = CGSize(width: kIMGLYIndicatorSize, height: kIMGLYIndicatorSize)
+                                    self.focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
                                     CATransaction.commit()
                                     self.focusIndicatorAnimating = false
                                 }
@@ -740,7 +740,7 @@ public class IMGLYCameraController: NSObject {
 
      - parameter recordingMode: The supported recording modes.
      */
-    public func setupWithInitialRecordingMode(recordingMode: IMGLYRecordingMode) {
+    public func setupWithInitialRecordingMode(recordingMode: RecordingMode) {
         if setupComplete {
             return
         }
@@ -801,11 +801,11 @@ public class IMGLYCameraController: NSObject {
         setupComplete = true
     }
 
-    public func switchToRecordingMode(recordingMode: IMGLYRecordingMode) {
+    public func switchToRecordingMode(recordingMode: RecordingMode) {
         switchToRecordingMode(recordingMode, animated: true)
     }
 
-    public func switchToRecordingMode(recordingMode: IMGLYRecordingMode, animated: Bool) {
+    public func switchToRecordingMode(recordingMode: RecordingMode, animated: Bool) {
         delegate?.cameraController?(self, willSwitchToRecordingMode: recordingMode)
 
         focusIndicatorLayer.hidden = true
@@ -893,7 +893,7 @@ public class IMGLYCameraController: NSObject {
     private func setupVideoInputsForPreferredCameraPosition(cameraPosition: AVCaptureDevicePosition) {
         var error: NSError?
 
-        let videoDevice = IMGLYCameraController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPosition)
+        let videoDevice = CameraController.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPosition)
         let videoDeviceInput: AVCaptureDeviceInput!
         do {
             videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
@@ -927,7 +927,7 @@ public class IMGLYCameraController: NSObject {
     private func setupAudioInputs() {
         var error: NSError?
 
-        let audioDevice = IMGLYCameraController.deviceWithMediaType(AVMediaTypeAudio, preferringPosition: nil)
+        let audioDevice = CameraController.deviceWithMediaType(AVMediaTypeAudio, preferringPosition: nil)
         let audioDeviceInput: AVCaptureDeviceInput!
         do {
             audioDeviceInput = try AVCaptureDeviceInput(device: audioDevice)
@@ -1091,7 +1091,7 @@ public class IMGLYCameraController: NSObject {
     // MARK: - Still Image Capture
 
     public func squareTakenImage(image: UIImage) -> UIImage {
-        let stack = IMGLYFixedFilterStack()
+        let stack = FixedFilterStack()
         var scale = (image.size.width / image.size.height)
         if let captureVideoOrientation = self.captureVideoOrientation {
             if captureVideoOrientation == .LandscapeRight || captureVideoOrientation == .LandscapeLeft {
@@ -1100,7 +1100,7 @@ public class IMGLYCameraController: NSObject {
         }
         let offset = (1.0 - scale) / 2.0
         stack.orientationCropFilter.cropRect = CGRect(x: offset, y: 0, width: scale, height: 1.0)
-        return IMGLYPhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
+        return PhotoProcessor.processWithUIImage(image, filters: stack.activeFilters)!
     }
 
     /**
@@ -1109,7 +1109,7 @@ public class IMGLYCameraController: NSObject {
     - parameter completion: A completion block that has an image and an error as parameters.
     If the image was taken sucessfully the error is nil.
     */
-    public func takePhoto(completion: IMGLYTakePhotoBlock) {
+    public func takePhoto(completion: TakePhotoBlock) {
         if let stillImageOutput = self.stillImageOutput {
             dispatch_async(sessionQueue) {
                 let connection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
@@ -1377,7 +1377,7 @@ public class IMGLYCameraController: NSObject {
     }
 }
 
-extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
+extension CameraController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
     public func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         guard let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer) else {
             return
@@ -1413,10 +1413,10 @@ extension IMGLYCameraController: AVCaptureVideoDataOutputSampleBufferDelegate, A
 
         let filteredImage: CIImage?
 
-        if effectFilter is IMGLYNoneFilter {
+        if effectFilter is NoneFilter {
             filteredImage = sourceImage
         } else {
-            filteredImage = IMGLYPhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter])
+            filteredImage = PhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter])
         }
 
         let sourceExtent = sourceImage.extent

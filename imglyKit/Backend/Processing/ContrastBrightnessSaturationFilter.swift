@@ -1,5 +1,5 @@
 //
-//  IMGLYContrastBrightnessSaturationFilter.swift
+//  ContrastBrightnessSaturationFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 04/02/15.
@@ -14,7 +14,7 @@ import CoreImage
 import QuartzCore
 #endif
 
-public class IMGLYContrastBrightnessSaturationFilter: CIFilter, FilterType {
+public class ContrastBrightnessSaturationFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 
@@ -40,10 +40,10 @@ public class IMGLYContrastBrightnessSaturationFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYContrastBrightnessSaturationFilter {
+extension ContrastBrightnessSaturationFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYContrastBrightnessSaturationFilter
+        let copy = super.copyWithZone(zone) as! ContrastBrightnessSaturationFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.contrast = contrast

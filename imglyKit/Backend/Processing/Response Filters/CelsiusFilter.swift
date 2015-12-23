@@ -1,5 +1,5 @@
 //
-//  IMGLYCelsiusFilter.swift
+//  CelsiusFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYCelsiusFilter: IMGLYResponseFilter {
+public class CelsiusFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Celsius")
     }
@@ -18,12 +18,12 @@ public class IMGLYCelsiusFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYCelsiusFilter: EffectFilterType {
+extension CelsiusFilter: EffectFilter {
     public var displayName: String {
         return "Celsius"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Celsius
     }
 }

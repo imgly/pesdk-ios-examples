@@ -1,5 +1,5 @@
 //
-//  IMGLYK1Filter.swift
+//  K1Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYK1Filter: IMGLYResponseFilter {
+public class K1Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "K1")
     }
@@ -18,12 +18,12 @@ public class IMGLYK1Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYK1Filter: EffectFilterType {
+extension K1Filter: EffectFilter {
     public var displayName: String {
         return "K1"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .K1
     }
 }

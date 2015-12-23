@@ -1,5 +1,5 @@
 //
-//  IMGLYPhotoProcessor.swift
+//  PhotoProcessor.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 03/02/15.
@@ -20,7 +20,7 @@ All types of response-filters.
 */
 
 // swiftlint:disable type_name
-@objc public enum IMGLYFilterType: Int {
+@objc public enum FilterType: Int {
     case None,
     K1,
     K2,
@@ -86,8 +86,8 @@ All types of response-filters.
 }
 // swiftlint:enable type_name
 
-public class IMGLYPhotoProcessor {
-    public class func processWithCIImage(image: CIImage, filters: [FilterType]) -> CIImage? {
+public class PhotoProcessor {
+    public class func processWithCIImage(image: CIImage, filters: [Filter]) -> CIImage? {
         if filters.count == 0 {
             return image
         }
@@ -108,7 +108,7 @@ public class IMGLYPhotoProcessor {
 
     #if os(iOS)
 
-    public class func processWithUIImage(image: UIImage, filters: [FilterType]) -> UIImage? {
+    public class func processWithUIImage(image: UIImage, filters: [Filter]) -> UIImage? {
         let imageOrientation = image.imageOrientation
         guard let coreImage = CIImage(image: image) else {
             return nil

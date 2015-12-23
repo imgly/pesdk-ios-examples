@@ -1,5 +1,5 @@
 //
-//  IMGLYResponseFilter.swift
+//  ResponseFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 28/01/15.
@@ -23,7 +23,7 @@ import QuartzCore
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
-public class IMGLYResponseFilter: CIFilter, FilterType {
+public class ResponseFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {
@@ -85,10 +85,10 @@ public class IMGLYResponseFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYResponseFilter {
+extension ResponseFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYResponseFilter
+        let copy = super.copyWithZone(zone) as! ResponseFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.inputIntensity = inputIntensity

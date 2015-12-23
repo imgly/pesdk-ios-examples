@@ -1,5 +1,5 @@
 //
-//  IMGLYEnhancementFilter.swift
+//  EnhancementFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 09/03/15.
@@ -19,7 +19,7 @@ import QuartzCore
   and a recalculation is foced. This behaviour is inactive by default, and
   can be activated by setting 'storeEnhancedImage' to true.
 */
-public class IMGLYEnhancementFilter: CIFilter, FilterType {
+public class EnhancementFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 
@@ -69,10 +69,10 @@ public class IMGLYEnhancementFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYEnhancementFilter {
+extension EnhancementFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYEnhancementFilter
+        let copy = super.copyWithZone(zone) as! EnhancementFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.enabled = enabled

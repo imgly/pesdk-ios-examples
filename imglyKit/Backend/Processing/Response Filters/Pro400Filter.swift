@@ -1,5 +1,5 @@
 //
-//  IMGLYPro400Filter.swift
+//  Pro400Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPro400Filter: IMGLYResponseFilter {
+public class Pro400Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "Pro400")
     }
@@ -18,12 +18,12 @@ public class IMGLYPro400Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPro400Filter: EffectFilterType {
+extension Pro400Filter: EffectFilter {
     public var displayName: String {
         return "Pro 400"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Pro400
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYPolaSXFIlter.swift
+//  PolaSXFIlter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPolaSXFilter: IMGLYResponseFilter {
+public class PolaSXFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "PolaSX")
     }
@@ -18,12 +18,12 @@ public class IMGLYPolaSXFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPolaSXFilter: EffectFilterType {
+extension PolaSXFilter: EffectFilter {
     public var displayName: String {
         return "SX"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .PolaSX
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYStickerFilter.swift
+//  StickerFilter.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 24/03/15.
@@ -16,7 +16,7 @@ import QuartzCore
 
 import CoreGraphics
 
-public class IMGLYStickerFilter: CIFilter, FilterType {
+public class StickerFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 
@@ -142,10 +142,10 @@ public class IMGLYStickerFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYStickerFilter {
+extension StickerFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYStickerFilter
+        let copy = super.copyWithZone(zone) as! StickerFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.sticker = sticker

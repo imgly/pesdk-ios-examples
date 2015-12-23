@@ -1,5 +1,5 @@
 //
-//  IMGLYAD1920Filter.swift
+//  AD1920Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYAD1920Filter: IMGLYResponseFilter {
+public class AD1920Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "AD1920")
     }
@@ -18,12 +18,12 @@ public class IMGLYAD1920Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYAD1920Filter: EffectFilterType {
+extension AD1920Filter: EffectFilter {
     public var displayName: String {
         return "AD1920"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .AD1920
     }
 }

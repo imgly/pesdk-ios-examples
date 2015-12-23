@@ -1,5 +1,5 @@
 //
-//  IMGLYStickerCollectionViewCell.swift
+//  StickerCollectionViewCell.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 23/03/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IMGLYStickerCollectionViewCell: UICollectionViewCell {
+class StickerCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 

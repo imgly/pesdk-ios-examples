@@ -1,5 +1,5 @@
 //
-//  IMGLYMainEditorViewController.swift
+//  MainEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 07/04/15.
@@ -8,46 +8,46 @@
 
 import UIKit
 
-// Options for configuring the IMGLYMainEditorViewController
-@objc public class IMGLYMainEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+// Options for configuring the MainEditorViewController
+@objc public class MainEditorViewControllerOptions: EditorViewControllerOptions {
 
     /// Specifies the actions available in the bottom drawer. Defaults to the
-    /// IMGLYMainEditorActionsDataSource providing all editors.
-    public let editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol
+    /// MainEditorActionsDataSource providing all editors.
+    public let editorActionsDataSource: MainEditorActionsDataSourceProtocol
 
     convenience init() {
-        self.init(builder: IMGLYMainEditorViewControllerOptionsBuilder())
+        self.init(builder: MainEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYMainEditorViewControllerOptionsBuilder) {
+    init(builder: MainEditorViewControllerOptionsBuilder) {
         editorActionsDataSource = builder.editorActionsDataSource
         super.init(editorBuilder: builder)
     }
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYMainEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class MainEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Specifies the actions available in the bottom drawer. Defaults to the
-    /// IMGLYMainEditorActionsDataSource providing all editors.
-    public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
+    /// MainEditorActionsDataSource providing all editors.
+    public var editorActionsDataSource: MainEditorActionsDataSourceProtocol = MainEditorActionsDataSource()
 
 
     public override init() {
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("main-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-@objc public enum IMGLYEditorResult: Int {
+@objc public enum EditorResult: Int {
     case Done
     case Cancel
 }
 
-@objc public enum IMGLYMainEditorActionType: Int {
+@objc public enum MainEditorActionType: Int {
     case Magic
     case Filter
     case Stickers
@@ -60,18 +60,18 @@ import UIKit
     case Text
 }
 
-public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult, UIImage?) -> Void
+public typealias EditorCompletionBlock = (EditorResult, UIImage?) -> Void
 
 private let kButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
 private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
-public class IMGLYMainEditorViewController: IMGLYEditorViewController {
+public class MainEditorViewController: EditorViewController {
 
     // MARK: - Properties
-    public var completionBlock: IMGLYEditorCompletionBlock?
-    public var initialFilterType = IMGLYFilterType.None
+    public var completionBlock: EditorCompletionBlock?
+    public var initialFilterType = FilterType.None
     public var initialFilterIntensity = NSNumber(double: 0.75)
-    public private(set) var fixedFilterStack = IMGLYFixedFilterStack()
+    public private(set) var fixedFilterStack = FixedFilterStack()
 
     private let maxLowResolutionSideLength = CGFloat(1600)
     public var highResolutionImage: UIImage? {
@@ -90,7 +90,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
         navigationController?.delegate = self
 
-        fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(initialFilterType)
+        fixedFilterStack.effectFilter = InstanceFactory.effectFilterWithType(initialFilterType)
         fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
 
         updatePreviewImage()
@@ -112,7 +112,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = currentBackgroundColor
-        collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: kButtonCollectionViewCellReuseIdentifier)
+        collectionView.registerClass(ButtonCollectionViewCell.self, forCellWithReuseIdentifier: kButtonCollectionViewCellReuseIdentifier)
 
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
@@ -122,7 +122,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
     // MARK: - Helpers
 
-    private func subEditorButtonPressed(actionType: IMGLYMainEditorActionType) {
+    private func subEditorButtonPressed(actionType: MainEditorActionType) {
         if actionType == .Magic {
             if !updating {
                 fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
@@ -130,7 +130,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
             }
         } else {
-            if let viewController = IMGLYInstanceFactory.viewControllerForEditorActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
+            if let viewController = InstanceFactory.viewControllerForEditorActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
                 viewController.lowResolutionImage = lowResolutionImage
                 viewController.previewImageView.image = previewImageView.image
                 viewController.completionHandler = subEditorDidComplete
@@ -140,7 +140,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         }
     }
 
-    private func subEditorDidComplete(image: UIImage?, fixedFilterStack: IMGLYFixedFilterStack) {
+    private func subEditorDidComplete(image: UIImage?, fixedFilterStack: FixedFilterStack) {
         previewImageView.image = image
         self.fixedFilterStack = fixedFilterStack
     }
@@ -169,7 +169,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
             dispatch_async(kPhotoProcessorQueue) {
-                let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                let processedImage = PhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.previewImageView.image = processedImage
@@ -181,7 +181,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
     // MARK: - EditorViewController
 
-    public override var options: IMGLYMainEditorViewControllerOptions {
+    public override var options: MainEditorViewControllerOptions {
         return self.configuration.mainEditorViewControllerOptions
     }
 
@@ -193,7 +193,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
             if let highResolutionImage = self.highResolutionImage {
                 sender?.enabled = false
                 dispatch_async(kPhotoProcessorQueue) {
-                    filteredHighResolutionImage = IMGLYPhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                    filteredHighResolutionImage = PhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                     dispatch_async(dispatch_get_main_queue()) {
                         completionBlock(.Done, filteredHighResolutionImage)
@@ -217,7 +217,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     }
 }
 
-extension IMGLYMainEditorViewController: UICollectionViewDataSource {
+extension MainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return options.editorActionsDataSource.actionCount
     }
@@ -225,7 +225,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath)
 
-        if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
+        if let buttonCell = cell as? ButtonCollectionViewCell {
             let dataSource = options.editorActionsDataSource
             let action = dataSource.actionAtIndex(indexPath.item)
             buttonCell.textLabel.text = action.title
@@ -236,7 +236,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     }
 }
 
-extension IMGLYMainEditorViewController: UICollectionViewDelegate {
+extension MainEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let action = options.editorActionsDataSource.actionAtIndex(indexPath.item)
         subEditorButtonPressed(action.editorType)
@@ -246,7 +246,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, willDisplayCell cell: UICollectionViewCell, forItemAtIndexPath indexPath: NSIndexPath) {
         let action = options.editorActionsDataSource.actionAtIndex(indexPath.item)
         if action.editorType == .Magic {
-            if let buttonCell = cell as? IMGLYButtonCollectionViewCell, let selectedImage = action.selectedImage {
+            if let buttonCell = cell as? ButtonCollectionViewCell, let selectedImage = action.selectedImage {
                 if fixedFilterStack.enhancementFilter.enabled {
                     buttonCell.imageView.image = selectedImage
                 } else {
@@ -257,8 +257,8 @@ extension IMGLYMainEditorViewController: UICollectionViewDelegate {
     }
 }
 
-extension IMGLYMainEditorViewController: UINavigationControllerDelegate {
+extension MainEditorViewController: UINavigationControllerDelegate {
     public func navigationController(navigationController: UINavigationController, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController, toViewController toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return IMGLYNavigationAnimationController()
+        return NavigationAnimationController()
     }
 }

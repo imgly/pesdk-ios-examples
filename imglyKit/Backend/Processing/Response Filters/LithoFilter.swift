@@ -1,5 +1,5 @@
 //
-//  IMGLYLithoFilter.swift
+//  LithoFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYLithoFilter: IMGLYResponseFilter {
+public class LithoFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Litho")
     }
@@ -18,12 +18,12 @@ public class IMGLYLithoFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYLithoFilter: EffectFilterType {
+extension LithoFilter: EffectFilter {
     public var displayName: String {
         return "Litho"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Litho
     }
 }

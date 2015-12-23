@@ -1,5 +1,5 @@
 //
-//  IMGLYColorPhotoFilter.swift
+//  ColorPhotoFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYEveningFilter: IMGLYResponseFilter {
+public class EveningFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Evening")
     }
@@ -18,12 +18,12 @@ public class IMGLYEveningFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYEveningFilter: EffectFilterType {
+extension EveningFilter: EffectFilter {
     public var displayName: String {
         return "Evening"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Evening
     }
 }

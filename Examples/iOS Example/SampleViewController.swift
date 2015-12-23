@@ -28,7 +28,7 @@ class SampleViewController: UIViewController {
 
         UINavigationBar.appearance().tintColor = UIColor.blueColor()
 
-        let cameraViewController = IMGLYCameraViewController()
+        let cameraViewController = CameraViewController()
         cameraViewController.maximumVideoLength = 15
         presentViewController(cameraViewController, animated: true, completion: nil)
     }
@@ -40,10 +40,10 @@ class SampleViewController: UIViewController {
         }
 
         let sampleImage = UIImage(named: "sample_image")
-        let mainEditorViewController = IMGLYMainEditorViewController()
+        let mainEditorViewController = MainEditorViewController()
         mainEditorViewController.highResolutionImage = sampleImage
 
-        let navigationController = IMGLYNavigationController(rootViewController: mainEditorViewController)
+        let navigationController = NavigationController(rootViewController: mainEditorViewController)
         navigationController.navigationBar.barStyle = .Black
         navigationController.navigationBar.translucent = false
         navigationController.navigationBar.tintColor = defaultBlue
@@ -55,13 +55,13 @@ class SampleViewController: UIViewController {
         let redColor = UIColor(red:0.988, green:0.173, blue:0.357, alpha:1)
         let blueColor = UIColor(red:0.243, green:0.769, blue:0.831, alpha:1)
 
-        let configuration = IMGLYConfiguration() { builder in
+        let configuration = Configuration() { builder in
             // Setup global colors
             builder.backgroundColor = whiteColor
 
-            // This replaces the SDKs IMGLYFilterEditorViewController, with our own sample subclass
+            // This replaces the SDKs FilterEditorViewController, with our own sample subclass
             do {
-                try builder.replaceClass(IMGLYStickersEditorViewController.self, replacingClass: SampleStickersEditorSubclass.self, namespace: "iOS_Example")
+                try builder.replaceClass(StickersEditorViewController.self, replacingClass: SampleStickersEditorSubclass.self, namespace: "iOS_Example")
             } catch {
                 print("Class replacement failed.")
             }
@@ -72,7 +72,7 @@ class SampleViewController: UIViewController {
 
             builder.configureCameraViewController { options in
                 // Setup a customized datasource, that offers a subset of all available filters
-                options.filtersDataSource = IMGLYFiltersDataSource(availableFilters: [ .None, .Orchid, .Pale, .Summer ])
+                options.filtersDataSource = FiltersDataSource(availableFilters: [ .None, .Orchid, .Pale, .Summer ])
 
                 // Enable/Disable some features
                 options.cropToSquare = true
@@ -105,7 +105,7 @@ class SampleViewController: UIViewController {
             builder.configureMainEditorViewController { options in
                 options.title = "Selfie-Editor"
                 options.allowsPreviewImageZoom = false
-                options.editorActionsDataSource = IMGLYMainEditorActionsDataSource(availableActionTypes: [ .Filter, .Stickers, .Orientation, .Contrast, .Text])
+                options.editorActionsDataSource = MainEditorActionsDataSource(availableActionTypes: [ .Filter, .Stickers, .Orientation, .Contrast, .Text])
             }
 
             // Customize the orientation editors action buttons
@@ -128,7 +128,7 @@ class SampleViewController: UIViewController {
             }
         }
 
-        let cameraViewController = IMGLYCameraViewController(configuration: configuration)
+        let cameraViewController = CameraViewController(configuration: configuration)
 
         // Set a global tint color, that gets inherited by all views
         if let window = UIApplication.sharedApplication().delegate?.window! {

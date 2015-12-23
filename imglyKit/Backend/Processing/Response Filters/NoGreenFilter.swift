@@ -1,5 +1,5 @@
 //
-// IMGLYNoGreenFilter.swift
+// NoGreenFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 28/01/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYNoGreenFilter: IMGLYResponseFilter {
+public class NoGreenFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "NoGreen")
     }
@@ -18,12 +18,12 @@ public class IMGLYNoGreenFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYNoGreenFilter: EffectFilterType {
+extension NoGreenFilter: EffectFilter {
     public var displayName: String {
         return "No Green"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .NoGreen
     }
 }

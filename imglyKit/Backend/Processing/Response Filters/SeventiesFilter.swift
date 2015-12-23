@@ -1,5 +1,5 @@
 //
-//  IMGLYSeventiesFilter.swift
+//  SeventiesFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSeventiesFilter: IMGLYResponseFilter {
+public class SeventiesFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Seventies")
     }
@@ -18,12 +18,12 @@ public class IMGLYSeventiesFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSeventiesFilter: EffectFilterType {
+extension SeventiesFilter: EffectFilter {
     public var displayName: String {
         return "70s"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Seventies
     }
 }

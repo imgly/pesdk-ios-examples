@@ -5,9 +5,9 @@
 
 import UIKit
 
-public class IMGLYCircleGradientView: UIView {
+public class CircleGradientView: UIView {
     public var centerPoint = CGPointZero
-    public weak var gradientViewDelegate: IMGLYGradientViewDelegate?
+    public weak var gradientViewDelegate: GradientViewDelegate?
     public var controlPoint1 = CGPointZero
     public var controlPoint2 = CGPointZero {
         didSet {

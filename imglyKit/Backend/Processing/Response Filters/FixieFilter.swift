@@ -1,5 +1,5 @@
 //
-//  IMGLYFixieFilter.swift
+//  FixieFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYFixieFilter: IMGLYResponseFilter {
+public class FixieFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Fixie")
     }
@@ -18,12 +18,12 @@ public class IMGLYFixieFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYFixieFilter: EffectFilterType {
+extension FixieFilter: EffectFilter {
     public var displayName: String {
         return "Fixie"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Fixie
     }
 }

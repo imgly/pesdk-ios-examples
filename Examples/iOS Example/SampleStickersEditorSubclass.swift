@@ -1,5 +1,5 @@
 //
-//  IMGLYFilterEditorSubclassViewController.swift
+//  FilterEditorSubclassViewController.swift
 //  iOS Example
 //
 //  Created by Malte Baumann on 23/12/15.
@@ -9,7 +9,7 @@
 import imglyKit
 import UIKit
 
-class SampleStickersEditorSubclass: IMGLYStickersEditorViewController {
+class SampleStickersEditorSubclass: StickersEditorViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 

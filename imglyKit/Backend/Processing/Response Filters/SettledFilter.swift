@@ -1,5 +1,5 @@
 //
-//  IMGLYSettledFilter.swift
+//  SettledFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSettledFilter: IMGLYResponseFilter {
+public class SettledFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Settled")
     }
@@ -18,12 +18,12 @@ public class IMGLYSettledFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSettledFilter: EffectFilterType {
+extension SettledFilter: EffectFilter {
     public var displayName: String {
         return "Settled"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Settled
     }
 }

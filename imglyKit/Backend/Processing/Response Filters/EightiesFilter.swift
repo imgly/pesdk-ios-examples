@@ -1,5 +1,5 @@
 //
-//  IMGLYEightiesFilter.swift
+//  EightiesFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYEightiesFilter: IMGLYResponseFilter {
+public class EightiesFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Eighties")
     }
@@ -18,12 +18,12 @@ public class IMGLYEightiesFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYEightiesFilter: EffectFilterType {
+extension EightiesFilter: EffectFilter {
     public var displayName: String {
         return "80s"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Eighties
     }
 }

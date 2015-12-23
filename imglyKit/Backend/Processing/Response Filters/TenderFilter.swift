@@ -1,5 +1,5 @@
 //
-//  IMGLYTenderFilter.swift
+//  TenderFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYTenderFilter: IMGLYResponseFilter {
+public class TenderFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Tender")
     }
@@ -18,12 +18,12 @@ public class IMGLYTenderFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYTenderFilter: EffectFilterType {
+extension TenderFilter: EffectFilter {
     public var displayName: String {
         return "Tender"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Tender
     }
 }

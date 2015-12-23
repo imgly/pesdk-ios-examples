@@ -1,5 +1,5 @@
 //
-//  IMGLYSliderEditorViewController.swift
+//  SliderEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 10/04/15.
@@ -8,31 +8,31 @@
 
 import UIKit
 
-@objc public class IMGLYSliderEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+@objc public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public let sliderConfigurationClosure: IMGLYSliderConfigurationClosure
+    public let sliderConfigurationClosure: SliderConfigurationClosure
 
     convenience init() {
-        self.init(builder: IMGLYSliderEditorViewControllerOptionsBuilder())
+        self.init(builder: SliderEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYSliderEditorViewControllerOptionsBuilder) {
+    init(builder: SliderEditorViewControllerOptionsBuilder) {
         sliderConfigurationClosure = builder.sliderConfigurationClosure
         super.init(editorBuilder: builder)
     }
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYSliderEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class SliderEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public lazy var sliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
+    public lazy var sliderConfigurationClosure: SliderConfigurationClosure = { _ in }
 }
 
-public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
+public class SliderEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
@@ -64,9 +64,9 @@ public class IMGLYSliderEditorViewController: IMGLYSubEditorViewController {
         return 0
     }
 
-    public override var options: IMGLYSliderEditorViewControllerOptions {
+    public override var options: SliderEditorViewControllerOptions {
         // Subclasses should override this
-        return IMGLYSliderEditorViewControllerOptions()
+        return SliderEditorViewControllerOptions()
     }
 
     private var changeTimer: NSTimer?

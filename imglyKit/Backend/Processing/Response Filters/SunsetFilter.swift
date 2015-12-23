@@ -1,5 +1,5 @@
 //
-//  IMGLYSunsetFilter.swift
+//  SunsetFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSunsetFilter: IMGLYResponseFilter {
+public class SunsetFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Sunset")
     }
@@ -18,12 +18,12 @@ public class IMGLYSunsetFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSunsetFilter: EffectFilterType {
+extension SunsetFilter: EffectFilter {
     public var displayName: String {
         return "Sunset"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Sunset
     }
 }

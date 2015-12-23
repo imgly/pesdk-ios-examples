@@ -1,5 +1,5 @@
 //
-//  IMGLYCropEditorViewController.swift
+//  CropEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 13/04/15.
@@ -18,7 +18,7 @@ public let kMinimumCropSize = CGFloat(50)
  - FourToThree:   The aspect ratio is locked to 4:3.
  - SixteenToNine: The aspect ratio is locked to 16:9.
  */
-@objc public enum IMGLYCropAction: Int {
+@objc public enum CropAction: Int {
     case Free
     case OneToOne
     case FourToThree
@@ -26,23 +26,23 @@ public let kMinimumCropSize = CGFloat(50)
 }
 
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
-public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYCropAction) -> ()
+public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropAction) -> ()
 
-@objc public class IMGLYCropEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+@objc public class CropEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
-    public let allowedCropActions: [IMGLYCropAction]
+    public let allowedCropActions: [CropAction]
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure
+    public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure
 
     convenience init() {
-        self.init(builder: IMGLYCropEditorViewControllerOptionsBuilder())
+        self.init(builder: CropEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYCropEditorViewControllerOptionsBuilder) {
+    init(builder: CropEditorViewControllerOptionsBuilder) {
         allowedCropActions = builder.allowedCropActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)
@@ -50,26 +50,26 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYCropEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class CropEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
-    public var allowedCropActions: [IMGLYCropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
+    public var allowedCropActions: [CropAction] = [ .Free, .OneToOne, .FourToThree, .SixteenToNine ]
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure = { _ in }
+    public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure = { _ in }
 
     // MARK: Obj-C Compatibility
 
-    /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
+    /// An array of `OrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
-    /// `allowedOrientationActions` with the corresponding `IMGLYFocusAction` values.
-    public var allowedCropActionsAsNSNumbers: [NSNumber] = [ IMGLYCropAction.Free, .OneToOne, .FourToThree, .SixteenToNine ].map({ NSNumber(integer: $0.rawValue) }) {
+    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
+    public var allowedCropActionsAsNSNumbers: [NSNumber] = [ CropAction.Free, .OneToOne, .FourToThree, .SixteenToNine ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ IMGLYCropAction(rawValue: $0.integerValue)! })
+            self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ CropAction(rawValue: $0.integerValue)! })
         }
     }
 
@@ -78,17 +78,17 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("crop-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("crop-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
+public class CropEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
-    public private(set) lazy var freeRatioButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var freeRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.free", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -97,9 +97,9 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    public private(set) lazy var oneToOneRatioButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var oneToOneRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.1-to-1", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -108,9 +108,9 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    public private(set) lazy var fourToThreeRatioButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var fourToThreeRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.4-to-3", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -119,9 +119,9 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    public private(set) lazy var sixteenToNineRatioButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var sixteenToNineRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("crop-editor.16-to-9", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -130,7 +130,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    private var selectedButton: IMGLYImageCaptionButton? {
+    private var selectedButton: ImageCaptionButton? {
         willSet(newSelectedButton) {
             self.selectedButton?.selected = false
         }
@@ -146,8 +146,8 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         return view
         }()
 
-    private let cropRectComponent = IMGLYInstanceFactory.cropRectComponent()
-    public var selectionMode = IMGLYCropAction.Free
+    private let cropRectComponent = InstanceFactory.cropRectComponent()
+    public var selectionMode = CropAction.Free
     public var selectionRatio = CGFloat(1.0)
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
@@ -191,9 +191,9 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         reCalculateCropRectBounds()
     }
 
-    // MARK: - IMGLYEditorViewController
+    // MARK: - EditorViewController
 
-    public override var options: IMGLYCropEditorViewControllerOptions {
+    public override var options: CropEditorViewControllerOptions {
         return self.configuration.cropEditorViewControllerOptions
     }
 
@@ -211,7 +211,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
 
     private func configureButtons() {
         // Map actions and buttons
-        let actionToButtonMap: [IMGLYCropAction: IMGLYImageCaptionButton] = [
+        let actionToButtonMap: [CropAction: ImageCaptionButton] = [
             .Free: freeRatioButton,
             .OneToOne: oneToOneRatioButton,
             .FourToThree: fourToThreeRatioButton,
@@ -253,7 +253,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
 
     // MARK: - Helpers
 
-    private func updatePreviewImageWithoutCropWithCompletion(completionHandler: IMGLYPreviewImageGenerationCompletionBlock?) {
+    private func updatePreviewImageWithoutCropWithCompletion(completionHandler: PreviewImageGenerationCompletionBlock?) {
         let oldCropRect = fixedFilterStack.orientationCropFilter.cropRect
         fixedFilterStack.orientationCropFilter.cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
         updatePreviewImageWithCompletion { () -> (Void) in
@@ -610,7 +610,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
 
     // MARK: - Actions
 
-    @objc private func activateFreeRatio(sender: IMGLYImageCaptionButton) {
+    @objc private func activateFreeRatio(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -621,7 +621,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         selectedButton = sender
     }
 
-    @objc private func activateOneToOneRatio(sender: IMGLYImageCaptionButton) {
+    @objc private func activateOneToOneRatio(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -632,7 +632,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         selectedButton = sender
     }
 
-    @objc private func activateFourToThreeRatio(sender: IMGLYImageCaptionButton) {
+    @objc private func activateFourToThreeRatio(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -643,7 +643,7 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         selectedButton = sender
     }
 
-    @objc private func activateSixteenToNineRatio(sender: IMGLYImageCaptionButton) {
+    @objc private func activateSixteenToNineRatio(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }

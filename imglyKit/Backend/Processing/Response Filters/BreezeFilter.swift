@@ -1,5 +1,5 @@
 //
-//  IMGLYBreezeFilter.swift
+//  BreezeFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBreezeFilter: IMGLYResponseFilter {
+public class BreezeFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Breeze")
     }
@@ -18,12 +18,12 @@ public class IMGLYBreezeFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBreezeFilter: EffectFilterType {
+extension BreezeFilter: EffectFilter {
     public var displayName: String {
         return "Breeze"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Breeze
     }
 }

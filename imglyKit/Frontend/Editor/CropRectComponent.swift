@@ -1,5 +1,5 @@
 //
-//  IMGLYCropRectComponent.swift
+//  CropRectComponent.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 23/02/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IMGLYCropRectComponent {
+public class CropRectComponent {
     public var cropRect = CGRectZero
 
     private var topLineView = UIView(frame: CGRectZero)

@@ -1,5 +1,5 @@
 //
-//  IMGLYPaleFilter.swift
+//  PaleFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPaleFilter: IMGLYResponseFilter {
+public class PaleFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Pale")
     }
@@ -18,12 +18,12 @@ public class IMGLYPaleFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPaleFilter: EffectFilterType {
+extension PaleFilter: EffectFilter {
     public var displayName: String {
         return "Pale"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Pale
     }
 }

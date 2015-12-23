@@ -1,5 +1,5 @@
 //
-//  IMGLYRecordingMode.swift
+//  RecordingMode.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 29/06/15.
@@ -11,12 +11,12 @@ import AVFoundation
 import Photos
 import MobileCoreServices
 
-@objc public enum IMGLYRecordingMode: Int {
+@objc public enum RecordingMode: Int {
     case Photo
     case Video
 
     var bundle: NSBundle {
-        return NSBundle(forClass: IMGLYCameraViewController.self)
+        return NSBundle(forClass: CameraViewController.self)
     }
 
     var titleForSelectionButton: String {
@@ -54,7 +54,7 @@ import MobileCoreServices
 
             return button
         case .Video:
-            let button = IMGLYVideoRecordButton()
+            let button = VideoRecordButton()
             button.translatesAutoresizingMaskIntoConstraints = false
             return button
         }

@@ -1,5 +1,5 @@
 //
-//  FilterType.swift
+//  Filter.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 21/12/15.
@@ -13,7 +13,7 @@ import CoreImage
 import QuartzCore
 #endif
 
-@objc public protocol FilterType: NSCopying {
+@objc public protocol Filter: NSCopying {
     var inputImage: CIImage? { get set }
     var outputImage: CIImage? { get }
 }

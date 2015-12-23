@@ -1,5 +1,5 @@
 //
-//  IMGLYFontImporter.swift
+//  FontImporter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 09/03/15.
@@ -14,17 +14,17 @@ import CoreText
   Provides functions to import font added as resource. It also registers them,
   so that the application can load them like any other pre-installed font.
 */
-public class IMGLYFontImporter {
+public class FontImporter {
     private static var fontsRegistered = false
 
     /**
     Imports all fonts added as resource. Supported formats are TTF and OTF.
     */
     public func importFonts() {
-        if !IMGLYFontImporter.fontsRegistered {
+        if !FontImporter.fontsRegistered {
             importFontsWithExtension("ttf")
             importFontsWithExtension("otf")
-            IMGLYFontImporter.fontsRegistered = true
+            FontImporter.fontsRegistered = true
         }
     }
 

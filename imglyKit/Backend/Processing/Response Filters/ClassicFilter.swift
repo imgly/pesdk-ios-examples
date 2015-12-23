@@ -1,5 +1,5 @@
 //
-//  IMGLYClassicFilter.swift
+//  ClassicFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYClassicFilter: IMGLYResponseFilter {
+public class ClassicFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Classic")
     }
@@ -18,12 +18,12 @@ public class IMGLYClassicFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYClassicFilter: EffectFilterType {
+extension ClassicFilter: EffectFilter {
     public var displayName: String {
         return "Classic"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Classic
     }
 }

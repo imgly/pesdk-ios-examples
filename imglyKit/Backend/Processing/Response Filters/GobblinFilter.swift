@@ -1,5 +1,5 @@
 //
-//  IMGLYGobblinFilter.swift
+//  GobblinFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYGoblinFilter: IMGLYResponseFilter {
+public class GoblinFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Goblin")
     }
@@ -18,12 +18,12 @@ public class IMGLYGoblinFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYGoblinFilter: EffectFilterType {
+extension GoblinFilter: EffectFilter {
     public var displayName: String {
         return "Goblin"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Goblin
     }
 }

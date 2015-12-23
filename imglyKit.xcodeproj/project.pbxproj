@@ -169,10 +169,10 @@
 		2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */; };
 		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
 		2B25F1BC1B03AC8E0081032D /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */; };
-		2B50239E1C286B0400CE9AD3 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* FilterType.swift */; };
-		2B54A0A01C2AEA6100E82DC6 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* FilterType.swift */; };
-		2B5728061C28594E0003EF8F /* EffectFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilterType.swift */; };
-		2B5728071C2859520003EF8F /* EffectFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilterType.swift */; };
+		2B50239E1C286B0400CE9AD3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
+		2B54A0A01C2AEA6100E82DC6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
+		2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
+		2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */; };
@@ -385,21 +385,21 @@
 		2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAffineTransformExtension.swift; sourceTree = "<group>"; };
 		2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
-		2B50239D1C286B0400CE9AD3 /* FilterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterType.swift; sourceTree = "<group>"; };
-		2B5728051C28594E0003EF8F /* EffectFilterType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilterType.swift; sourceTree = "<group>"; };
+		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		2B5728051C28594E0003EF8F /* EffectFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilter.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
 		2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRecordButton.swift; sourceTree = "<group>"; };
-		2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimationDelegate.swift; sourceTree = "<group>"; };
-		2BEE5B311B063E7800FDF0F7 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BEE5B311B063E7800FDF0F7 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CameraController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D3891AF1139600C801B2 /* imglyKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imglyKit.h; sourceTree = "<group>"; };
 		2BF4D3A71AF114F000C801B2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CameraViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3AD1AF1150400C801B2 /* MainEditorAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorAction.swift; sourceTree = "<group>"; };
-		2BF4D3AE1AF1150400C801B2 /* BoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxGradientView.swift; sourceTree = "<group>"; };
-		2BF4D3AF1AF1150400C801B2 /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessEditorViewController.swift; sourceTree = "<group>"; };
-		2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; };
+		2BF4D3AE1AF1150400C801B2 /* BoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BoxGradientView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D3AF1AF1150400C801B2 /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BrightnessEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3B11AF1150400C801B2 /* CircleGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleGradientView.swift; sourceTree = "<group>"; };
 		2BF4D3B21AF1150400C801B2 /* ColorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
 		2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContrastEditorViewController.swift; sourceTree = "<group>"; };
@@ -519,14 +519,14 @@
 		2BF4D4A61AF1154B00C801B2 /* StickerFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerFilter.swift; sourceTree = "<group>"; };
 		2BF4D4A71AF1154B00C801B2 /* TextFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFilter.swift; sourceTree = "<group>"; };
 		2BF4D4A81AF1154B00C801B2 /* TiltshiftFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TiltshiftFilter.swift; sourceTree = "<group>"; };
-		2BF4D4B41AF1155D00C801B2 /* AD1920Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AD1920Filter.swift; sourceTree = "<group>"; };
-		2BF4D4B51AF1155D00C801B2 /* AncientFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AncientFilter.swift; sourceTree = "<group>"; };
-		2BF4D4B61AF1155D00C801B2 /* BleachedBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleachedBlueFilter.swift; sourceTree = "<group>"; };
-		2BF4D4B71AF1155D00C801B2 /* BleachedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BleachedFilter.swift; sourceTree = "<group>"; };
-		2BF4D4B91AF1155D00C801B2 /* BluesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluesFilter.swift; sourceTree = "<group>"; };
-		2BF4D4BA1AF1155D00C801B2 /* BlueShadowsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlueShadowsFilter.swift; sourceTree = "<group>"; };
-		2BF4D4BB1AF1155D00C801B2 /* BreezeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BreezeFilter.swift; sourceTree = "<group>"; };
-		2BF4D4BC1AF1155D00C801B2 /* BWFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BWFilter.swift; sourceTree = "<group>"; };
+		2BF4D4B41AF1155D00C801B2 /* AD1920Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AD1920Filter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4B51AF1155D00C801B2 /* AncientFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AncientFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4B61AF1155D00C801B2 /* BleachedBlueFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BleachedBlueFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4B71AF1155D00C801B2 /* BleachedFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BleachedFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4B91AF1155D00C801B2 /* BluesFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BluesFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4BA1AF1155D00C801B2 /* BlueShadowsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BlueShadowsFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4BB1AF1155D00C801B2 /* BreezeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BreezeFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF4D4BC1AF1155D00C801B2 /* BWFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = BWFilter.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D4BD1AF1155D00C801B2 /* CelsiusFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CelsiusFilter.swift; sourceTree = "<group>"; };
 		2BF4D4BE1AF1155D00C801B2 /* ChestFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChestFilter.swift; sourceTree = "<group>"; };
 		2BF4D4BF1AF1155D00C801B2 /* ClassicFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicFilter.swift; sourceTree = "<group>"; };
@@ -662,8 +662,8 @@
 		2B5728041C2859310003EF8F /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				2B5728051C28594E0003EF8F /* EffectFilterType.swift */,
-				2B50239D1C286B0400CE9AD3 /* FilterType.swift */,
+				2B5728051C28594E0003EF8F /* EffectFilter.swift */,
+				2B50239D1C286B0400CE9AD3 /* Filter.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1318,12 +1318,12 @@
 				2B1ADAD01B19C8EE00C98522 /* QuoziFilter.swift in Sources */,
 				2B1ADADB1B19C8EE00C98522 /* TenderFilter.swift in Sources */,
 				2B1ADAAB1B19C8EE00C98522 /* CottonCandyFilter.swift in Sources */,
-				2B54A0A01C2AEA6100E82DC6 /* FilterType.swift in Sources */,
+				2B54A0A01C2AEA6100E82DC6 /* Filter.swift in Sources */,
 				2B1ADAB21B19C8EE00C98522 /* FixieFilter.swift in Sources */,
 				2B1ADAD51B19C8EE00C98522 /* SinFilter.swift in Sources */,
 				2B1ADAD11B19C8EE00C98522 /* ResponseFilter.swift in Sources */,
 				2B1ADAC01B19C8EE00C98522 /* Lomo100Filter.swift in Sources */,
-				2B5728071C2859520003EF8F /* EffectFilterType.swift in Sources */,
+				2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */,
 				2B1ADABD1B19C8EE00C98522 /* KeenFilter.swift in Sources */,
 				2B1ADAB91B19C8EE00C98522 /* K1Filter.swift in Sources */,
 				2B1ADAAF1B19C8EE00C98522 /* HighContrastFilter.swift in Sources */,
@@ -1372,7 +1372,7 @@
 				2BF4D3AC1AF114FA00C801B2 /* CameraViewController.swift in Sources */,
 				2BF4D52B1AF1155E00C801B2 /* QuoziFilter.swift in Sources */,
 				2BF4D4AB1AF1154B00C801B2 /* EnhancementFilter.swift in Sources */,
-				2B5728061C28594E0003EF8F /* EffectFilterType.swift in Sources */,
+				2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */,
 				2BF4D3E51AF1150500C801B2 /* StickerCollectionViewCell.swift in Sources */,
 				2BF4D3E71AF1150500C801B2 /* StickersEditorViewController.swift in Sources */,
 				2BF4D5431AF1159D00C801B2 /* FontImporter.swift in Sources */,
@@ -1411,7 +1411,7 @@
 				2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */,
 				2BF4D3E11AF1150500C801B2 /* OrientationEditorViewController.swift in Sources */,
 				2BF4D3CC1AF1150400C801B2 /* MainEditorAction.swift in Sources */,
-				2B50239E1C286B0400CE9AD3 /* FilterType.swift in Sources */,
+				2B50239E1C286B0400CE9AD3 /* Filter.swift in Sources */,
 				2BF4D50E1AF1155E00C801B2 /* FoodFilter.swift in Sources */,
 				2BF4D3D21AF1150500C801B2 /* ContrastEditorViewController.swift in Sources */,
 				2BF4D5141AF1155E00C801B2 /* K1Filter.swift in Sources */,

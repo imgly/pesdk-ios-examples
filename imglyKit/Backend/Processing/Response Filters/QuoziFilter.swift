@@ -1,5 +1,5 @@
 //
-//  IMGLYQuoziFilter.swift
+//  QuoziFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYQuoziFilter: IMGLYResponseFilter {
+public class QuoziFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Quozi")
     }
@@ -18,12 +18,12 @@ public class IMGLYQuoziFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYQuoziFilter: EffectFilterType {
+extension QuoziFilter: EffectFilter {
     public var displayName: String {
         return "Quozi"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Quozi
     }
 }

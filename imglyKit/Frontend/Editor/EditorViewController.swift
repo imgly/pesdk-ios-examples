@@ -1,5 +1,5 @@
 //
-//  IMGLYEditorViewController.swift
+//  EditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 07/04/15.
@@ -10,7 +10,7 @@ import UIKit
 
 internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
 
-@objc public class IMGLYEditorViewControllerOptions: NSObject {
+@objc public class EditorViewControllerOptions: NSObject {
 
     ///  Defaults to 'Editor'
     public let title: String?
@@ -24,22 +24,22 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
      Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
      a navigation controller.
      */
-    public let leftBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure
+    public let leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure
 
     /**
      A configuration closure to configure the given done button item.
      Defaults to 'Editor' in the apps tintColor.
      */
-    public let rightBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure
+    public let rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure
 
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public let allowsPreviewImageZoom: Bool
 
     convenience override init() {
-        self.init(editorBuilder: IMGLYEditorViewControllerOptionsBuilder())
+        self.init(editorBuilder: EditorViewControllerOptionsBuilder())
     }
 
-    init(editorBuilder: IMGLYEditorViewControllerOptionsBuilder) {
+    init(editorBuilder: EditorViewControllerOptionsBuilder) {
         title = editorBuilder.title
         backgroundColor = editorBuilder.backgroundColor
         leftBarButtonConfigurationClosure = editorBuilder.leftBarButtonConfigurationClosure
@@ -49,7 +49,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
     }
 }
 
-@objc public class IMGLYEditorViewControllerOptionsBuilder: NSObject {
+@objc public class EditorViewControllerOptionsBuilder: NSObject {
     ///  Defaults to 'Editor'
     public lazy var title: String? = "Editor"
 
@@ -62,29 +62,29 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
      Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
      a navigation controller.
      */
-    public lazy var leftBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { _ in }
+    public lazy var leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure = { _ in }
 
     /**
      A configuration closure to configure the given done button item.
      Defaults to 'Editor' in the apps tintColor.
      */
-    public lazy var rightBarButtonConfigurationClosure: IMGLYBarButtonItemConfigurationClosure = { _ in }
+    public lazy var rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure = { _ in }
 
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public lazy var allowsPreviewImageZoom = true
 }
 
-public class IMGLYEditorViewController: UIViewController {
+public class EditorViewController: UIViewController {
 
     // MARK: - Properties
 
-    var configuration: IMGLYConfiguration = IMGLYConfiguration()
+    var configuration: Configuration = Configuration()
 
     public var shouldShowActivityIndicator = true
 
-    var options: IMGLYEditorViewControllerOptions {
+    var options: EditorViewControllerOptions {
         // Must be implemented in subclass
-        return IMGLYEditorViewControllerOptions()
+        return EditorViewControllerOptions()
     }
 
     public var updating = false {
@@ -103,8 +103,8 @@ public class IMGLYEditorViewController: UIViewController {
 
     public var lowResolutionImage: UIImage?
 
-    public private(set) lazy var previewImageView: IMGLYZoomingImageView = {
-        let imageView = IMGLYZoomingImageView()
+    public private(set) lazy var previewImageView: ZoomingImageView = {
+        let imageView = ZoomingImageView()
         imageView.backgroundColor = self.currentBackgroundColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
@@ -136,13 +136,13 @@ public class IMGLYEditorViewController: UIViewController {
     // MARK: - Initalization
 
     /**
-    This is the designated initializer that accepts an IMGLYConfiguration
+    This is the designated initializer that accepts an Configuration
 
-    - parameter configuration: An IMGLYConfiguration object
+    - parameter configuration: An Configuration object
 
     - returns: An initialized EditorViewController
     */
-    init(configuration: IMGLYConfiguration) {
+    init(configuration: Configuration) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration
     }

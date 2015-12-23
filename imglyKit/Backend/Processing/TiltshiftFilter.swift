@@ -1,5 +1,5 @@
 //
-//  IMGLYTiltshiftFilter.swift
+//  TiltshiftFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 03/03/15.
@@ -13,7 +13,7 @@ import CoreImage
 import QuartzCore
 #endif
 
-@objc public enum IMGLYTiltshiftType: Int {
+@objc public enum TiltshiftType: Int {
     case Off
     case Box
     case Circle
@@ -26,7 +26,7 @@ import QuartzCore
     Both, circle and box, are described by the controlPoint1 and controlPoint2 variable, that mark
     either two oppesite points on the radius of the circle, or two points on oppesite sides of the box.
 */
-public class IMGLYTiltshiftFilter: CIFilter, FilterType {
+public class TiltshiftFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     /// One of the two points, marking the dimension and direction of the box or circle.
@@ -34,7 +34,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
     /// One of the two points, marking the dimension and direction of the box or circle.
     public var controlPoint2 = CGPointZero
     /// Defines the mode the filter operates in. Possible values are Box, Circle, and Off.
-    public var tiltShiftType = IMGLYTiltshiftType.Off
+    public var tiltShiftType = TiltshiftType.Off
     /// The radius that is set to the gaussian filter during the whole process. Default is 4.
     public var blurRadius = CGFloat(4)
 
@@ -50,7 +50,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
             return nil
         }
 
-        if tiltShiftType == IMGLYTiltshiftType.Off {
+        if tiltShiftType == TiltshiftType.Off {
             return inputImage
         }
 
@@ -60,9 +60,9 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         calculateCenterAndRadius()
 
         var maskImage: CIImage?
-        if tiltShiftType == IMGLYTiltshiftType.Circle {
+        if tiltShiftType == TiltshiftType.Circle {
             maskImage = createRadialMaskImage()
-        } else if tiltShiftType == IMGLYTiltshiftType.Box {
+        } else if tiltShiftType == TiltshiftType.Box {
             maskImage = createLinearMaskImage()
         }
 
@@ -186,10 +186,10 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYTiltshiftFilter {
+extension TiltshiftFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYTiltshiftFilter
+        let copy = super.copyWithZone(zone) as! TiltshiftFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.controlPoint1 = controlPoint1

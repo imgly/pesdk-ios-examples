@@ -1,5 +1,5 @@
 //
-//  IMGLYContrastEditorViewController.swift
+//  ContrastEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 10/04/15.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-public class IMGLYContrastEditorViewController: IMGLYSliderEditorViewController {
+public class ContrastEditorViewController: SliderEditorViewController {
 
     // MARK: - UIViewController
 
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        let bundle = NSBundle(forClass: IMGLYBrightnessEditorViewController.self)
+        let bundle = NSBundle(forClass: BrightnessEditorViewController.self)
         let defaultTitle = NSLocalizedString("contrast-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
         if let title = options.title {
             if title != defaultTitle {
@@ -28,7 +28,7 @@ public class IMGLYContrastEditorViewController: IMGLYSliderEditorViewController 
 
     // MARK: - SliderEditorViewController
 
-    override public var options: IMGLYSliderEditorViewControllerOptions {
+    override public var options: SliderEditorViewControllerOptions {
         return self.configuration.contrastEditorViewControllerOptions
     }
 

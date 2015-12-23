@@ -1,5 +1,5 @@
 //
-//  IMGLYCropFilter.swift
+//  CropFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 17/02/15.
@@ -17,7 +17,7 @@ import CoreGraphics
 /**
    Provides a filter to crop images.
 */
-public class IMGLYCropFilter: CIFilter, FilterType {
+public class CropFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 
@@ -59,10 +59,10 @@ public class IMGLYCropFilter: CIFilter, FilterType {
     }
 }
 
-extension IMGLYCropFilter {
+extension CropFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYCropFilter
+        let copy = super.copyWithZone(zone) as! CropFilter
         // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.cropRect = cropRect

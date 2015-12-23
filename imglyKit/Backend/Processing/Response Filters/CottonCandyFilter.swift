@@ -1,5 +1,5 @@
 //
-//  IMGLYCottonCandyFilter.swift
+//  CottonCandyFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
+public class CottonCandyFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "CottonCandy")
     }
@@ -18,12 +18,12 @@ public class IMGLYCottonCandyFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYCottonCandyFilter: EffectFilterType {
+extension CottonCandyFilter: EffectFilter {
     public var displayName: String {
         return "Candy"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .CottonCandy
     }
 }

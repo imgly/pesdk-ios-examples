@@ -1,5 +1,5 @@
 //
-//  IMGLYWinterFilter.swift
+//  WinterFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYWinterFilter: IMGLYResponseFilter {
+public class WinterFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Winter")
     }
@@ -18,12 +18,12 @@ public class IMGLYWinterFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYWinterFilter: EffectFilterType {
+extension WinterFilter: EffectFilter {
     public var displayName: String {
         return "Winter"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Winter
     }
 }

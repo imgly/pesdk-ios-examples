@@ -1,5 +1,5 @@
 //
-//  IMGLYBleachedFilter.swift
+//  BleachedFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBleachedFilter: IMGLYResponseFilter {
+public class BleachedFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Bleached")
     }
@@ -18,12 +18,12 @@ public class IMGLYBleachedFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBleachedFilter: EffectFilterType {
+extension BleachedFilter: EffectFilter {
     public var displayName: String {
         return "Bleached"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Bleached
     }
 }

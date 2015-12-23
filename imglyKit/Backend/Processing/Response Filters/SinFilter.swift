@@ -1,5 +1,5 @@
 //
-//  IMGLYSinFilter.swift
+//  SinFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYSinFilter: IMGLYResponseFilter {
+public class SinFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Sin")
     }
@@ -18,12 +18,12 @@ public class IMGLYSinFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYSinFilter: EffectFilterType {
+extension SinFilter: EffectFilter {
     public var displayName: String {
         return "Sin"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Sin
     }
 }

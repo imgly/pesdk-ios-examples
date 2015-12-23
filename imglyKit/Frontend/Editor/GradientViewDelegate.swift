@@ -5,7 +5,7 @@
 
 import Foundation
 
-public protocol IMGLYGradientViewDelegate: class {
+public protocol GradientViewDelegate: class {
     func userInteractionStarted()
     func userInteractionEnded()
     func controlPointChanged()

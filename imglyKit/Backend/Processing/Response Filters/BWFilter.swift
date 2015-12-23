@@ -1,5 +1,5 @@
 //
-//  IMGLYBWFilter.swift
+//  BWFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBWFilter: IMGLYResponseFilter {
+public class BWFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "BW")
     }
@@ -18,12 +18,12 @@ public class IMGLYBWFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBWFilter: EffectFilterType {
+extension BWFilter: EffectFilter {
     public var displayName: String {
         return "BW"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .BW
     }
 }

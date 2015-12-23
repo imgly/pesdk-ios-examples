@@ -1,5 +1,5 @@
 //
-//  IMGLYFrontFilter.swift
+//  FrontFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYFrontFilter: IMGLYResponseFilter {
+public class FrontFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Front")
     }
@@ -18,12 +18,12 @@ public class IMGLYFrontFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYFrontFilter: EffectFilterType {
+extension FrontFilter: EffectFilter {
     public var displayName: String {
         return "Front"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Front
     }
 }

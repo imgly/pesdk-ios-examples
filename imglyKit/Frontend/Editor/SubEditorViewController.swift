@@ -1,5 +1,5 @@
 //
-//  IMGLYSubEditorViewController.swift
+//  SubEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 08/04/15.
@@ -8,21 +8,21 @@
 
 import UIKit
 
-public typealias IMGLYSubEditorCompletionBlock = (UIImage?, IMGLYFixedFilterStack) -> (Void)
-public typealias IMGLYPreviewImageGenerationCompletionBlock = () -> (Void)
+public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> (Void)
+public typealias PreviewImageGenerationCompletionBlock = () -> (Void)
 
-public class IMGLYSubEditorViewController: IMGLYEditorViewController {
+public class SubEditorViewController: EditorViewController {
 
     // MARK: - Properties
 
-    public var fixedFilterStack: IMGLYFixedFilterStack = IMGLYFixedFilterStack()
-    public var completionHandler: IMGLYSubEditorCompletionBlock?
+    public var fixedFilterStack: FixedFilterStack = FixedFilterStack()
+    public var completionHandler: SubEditorCompletionBlock?
 
     // MARK: - Initializers
 
-    public init(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) {
+    public init(fixedFilterStack: FixedFilterStack, configuration: Configuration) {
         // swiftlint:disable force_cast
-        self.fixedFilterStack = fixedFilterStack.copy() as! IMGLYFixedFilterStack
+        self.fixedFilterStack = fixedFilterStack.copy() as! FixedFilterStack
         // swiftlint:enable force_cast
 
         super.init(configuration: configuration)
@@ -45,11 +45,11 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
 
     // MARK: - Helpers
 
-    public func updatePreviewImageWithCompletion(completionHandler: IMGLYPreviewImageGenerationCompletionBlock?) {
+    public func updatePreviewImageWithCompletion(completionHandler: PreviewImageGenerationCompletionBlock?) {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
             dispatch_async(kPhotoProcessorQueue) {
-                let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
+                let processedImage = PhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.previewImageView.image = processedImage

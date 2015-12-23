@@ -1,5 +1,5 @@
 //
-//  IMGLYFontSelectorView.swift
+//  FontSelectorView.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 06/03/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-public protocol IMGLYFontSelectorViewDelegate: class {
-    func fontSelectorView(fontSelectorView: IMGLYFontSelectorView, didSelectFontWithName fontName: String)
+public protocol FontSelectorViewDelegate: class {
+    func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String)
 }
 
-public class IMGLYFontSelectorView: UIScrollView {
-    public weak var selectorDelegate: IMGLYFontSelectorViewDelegate?
+public class FontSelectorView: UIScrollView {
+    public weak var selectorDelegate: FontSelectorViewDelegate?
 
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)
@@ -41,7 +41,7 @@ public class IMGLYFontSelectorView: UIScrollView {
     }
 
     private func commonInit() {
-        fontNames = IMGLYInstanceFactory.availableFontsList
+        fontNames = InstanceFactory.availableFontsList
         configureFontButtons()
     }
 

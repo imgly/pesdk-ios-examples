@@ -1,5 +1,5 @@
 //
-//  IMGLYAncientFilter.swift
+//  AncientFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYAncientFilter: IMGLYResponseFilter {
+public class AncientFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Ancient")
     }
@@ -18,12 +18,12 @@ public class IMGLYAncientFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYAncientFilter: EffectFilterType {
+extension AncientFilter: EffectFilter {
     public var displayName: String {
         return "Ancient"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Ancient
     }
 }

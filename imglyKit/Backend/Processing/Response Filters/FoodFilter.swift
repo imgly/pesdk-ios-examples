@@ -1,5 +1,5 @@
 //
-//  IMGLYFoodFilter.swift
+//  FoodFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYFoodFilter: IMGLYResponseFilter {
+public class FoodFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Food")
     }
@@ -18,12 +18,12 @@ public class IMGLYFoodFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYFoodFilter: EffectFilterType {
+extension FoodFilter: EffectFilter {
     public var displayName: String {
         return "Food"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Food
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYLeninFilter.swift
+//  LeninFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYLeninFilter: IMGLYResponseFilter {
+public class LeninFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lenin")
     }
@@ -18,12 +18,12 @@ public class IMGLYLeninFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYLeninFilter: EffectFilterType {
+extension LeninFilter: EffectFilter {
     public var displayName: String {
         return "Lenin"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Lenin
     }
 }

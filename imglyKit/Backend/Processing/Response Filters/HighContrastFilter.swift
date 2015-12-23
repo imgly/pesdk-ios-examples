@@ -1,5 +1,5 @@
 //
-//  IMGLYHighContrastFilter.swift
+//  HighContrastFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYHighContrastFilter: IMGLYResponseFilter {
+public class HighContrastFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "HighContrast")
     }
@@ -18,12 +18,12 @@ public class IMGLYHighContrastFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYHighContrastFilter: EffectFilterType {
+extension HighContrastFilter: EffectFilter {
     public var displayName: String {
         return "Hicon"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .HighContrast
     }
 }

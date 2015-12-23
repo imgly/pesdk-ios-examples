@@ -1,5 +1,5 @@
 //
-//  IMGLYBleachedBlueFilter.swift
+//  BleachedBlueFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBleachedBlueFilter: IMGLYResponseFilter {
+public class BleachedBlueFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "BleachedBlue")
     }
@@ -18,12 +18,12 @@ public class IMGLYBleachedBlueFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBleachedBlueFilter: EffectFilterType {
+extension BleachedBlueFilter: EffectFilter {
     public var displayName: String {
         return "B-Blue"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .BleachedBlue
     }
 }

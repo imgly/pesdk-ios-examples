@@ -1,5 +1,5 @@
 //
-//  IMGLYKDynamicFilter.swift
+//  KDynamicFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYKDynamicFilter: IMGLYResponseFilter {
+public class KDynamicFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "KDynamic")
     }
@@ -18,12 +18,12 @@ public class IMGLYKDynamicFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYKDynamicFilter: EffectFilterType {
+extension KDynamicFilter: EffectFilter {
     public var displayName: String {
         return "Dynamic"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .KDynamic
     }
 }

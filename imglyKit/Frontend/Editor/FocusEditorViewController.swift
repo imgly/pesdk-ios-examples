@@ -1,5 +1,5 @@
 //
-//  IMGLYFocusEditorViewController.swift
+//  FocusEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 13/04/15.
@@ -15,31 +15,31 @@ import UIKit
  - Linear: A blur along a straight line.
  - Radial: A blur that spreads radial from a central point.
  */
-@objc public enum IMGLYFocusAction: Int {
+@objc public enum FocusAction: Int {
     case Off
     case Linear
     case Radial
 }
 
-/// This closure allows the configuration of the given `IMGLYImageCaptionButton`,
+/// This closure allows the configuration of the given `ImageCaptionButton`,
 /// depending on the linked focus action.
-public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYFocusAction) -> ()
+public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, FocusAction) -> ()
 
-@objc public class IMGLYFocusEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+@objc public class FocusEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
-    public let allowedFocusActions: [IMGLYFocusAction]
+    public let allowedFocusActions: [FocusAction]
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure
+    public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure
 
     convenience init() {
-        self.init(builder: IMGLYFocusEditorViewControllerOptionsBuilder())
+        self.init(builder: FocusEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYFocusEditorViewControllerOptionsBuilder) {
+    init(builder: FocusEditorViewControllerOptionsBuilder) {
         allowedFocusActions = builder.allowedFocusActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)
@@ -47,13 +47,13 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYFocusEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class FocusEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
-    public var allowedFocusActions: [IMGLYFocusAction] = [ .Off, .Linear, .Radial ] {
+    public var allowedFocusActions: [FocusAction] = [ .Off, .Linear, .Radial ] {
         didSet {
             if !allowedFocusActions.contains(.Off) {
                 allowedFocusActions.append(.Off)
@@ -63,15 +63,15 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure = { _ in }
+    public var actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure = { _ in }
 
 
-    /// An array of `IMGLYFocusAction` raw values wrapped in NSNumbers.
+    /// An array of `FocusAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
-    /// `allowedFocusActions` with the corresponding `IMGLYFocusAction` values.
-    public var allowedFocusActionsAsNSNumbers: [NSNumber] = [ IMGLYFocusAction.Off, .Linear, .Radial ].map({ NSNumber(integer: $0.rawValue) }) {
+    /// `allowedFocusActions` with the corresponding `FocusAction` values.
+    public var allowedFocusActionsAsNSNumbers: [NSNumber] = [ FocusAction.Off, .Linear, .Radial ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ IMGLYFocusAction(rawValue: $0.integerValue)! })
+            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ FocusAction(rawValue: $0.integerValue)! })
         }
     }
 
@@ -80,17 +80,17 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("focus-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("focus-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
+public class FocusEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
-    public private(set) lazy var offButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var offButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.off", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -99,9 +99,9 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    public private(set) lazy var linearButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var linearButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.linear", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -110,9 +110,9 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    public private(set) lazy var radialButton: IMGLYImageCaptionButton = {
+    public private(set) lazy var radialButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = IMGLYImageCaptionButton()
+        let button = ImageCaptionButton()
         button.textLabel.text = NSLocalizedString("focus-editor.radial", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -121,7 +121,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         return button
         }()
 
-    private var selectedButton: IMGLYImageCaptionButton? {
+    private var selectedButton: ImageCaptionButton? {
         willSet(newSelectedButton) {
             self.selectedButton?.selected = false
         }
@@ -131,25 +131,25 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         }
     }
 
-    private lazy var circleGradientView: IMGLYCircleGradientView = {
-        let view = IMGLYCircleGradientView()
+    private lazy var circleGradientView: CircleGradientView = {
+        let view = CircleGradientView()
         view.gradientViewDelegate = self
         view.hidden = true
         view.alpha = 0
         return view
         }()
 
-    private lazy var boxGradientView: IMGLYBoxGradientView = {
-        let view = IMGLYBoxGradientView()
+    private lazy var boxGradientView: BoxGradientView = {
+        let view = BoxGradientView()
         view.gradientViewDelegate = self
         view.hidden = true
         view.alpha = 0
         return view
         }()
 
-    // MARK: - IMGLYEditorViewController
+    // MARK: - EditorViewController
 
-    public override var options: IMGLYFocusEditorViewControllerOptions {
+    public override var options: FocusEditorViewControllerOptions {
         return self.configuration.focusEditorViewControllerOptions
     }
 
@@ -182,7 +182,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
 
     private func configureButtons() {
         // Map actions and buttons
-        let actionToButtonMap: [IMGLYFocusAction: IMGLYImageCaptionButton] = [
+        let actionToButtonMap: [FocusAction: ImageCaptionButton] = [
             .Off: offButton,
             .Linear: linearButton,
             .Radial: radialButton
@@ -221,7 +221,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
 
     // MARK: - Actions
 
-    @objc private func turnOff(sender: IMGLYImageCaptionButton) {
+    @objc private func turnOff(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -232,7 +232,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         updateFilterTypeAndPreview()
     }
 
-    @objc private func activateLinear(sender: IMGLYImageCaptionButton) {
+    @objc private func activateLinear(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -243,7 +243,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
         updateFilterTypeAndPreview()
     }
 
-    @objc private func activateRadial(sender: IMGLYImageCaptionButton) {
+    @objc private func activateRadial(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
@@ -312,7 +312,7 @@ public class IMGLYFocusEditorViewController: IMGLYSubEditorViewController {
 
 }
 
-extension IMGLYFocusEditorViewController: IMGLYGradientViewDelegate {
+extension FocusEditorViewController: GradientViewDelegate {
     public func userInteractionStarted() {
         fixedFilterStack.tiltShiftFilter.tiltShiftType = .Off
         updatePreviewImage()

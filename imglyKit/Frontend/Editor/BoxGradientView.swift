@@ -10,9 +10,9 @@ public struct Line {
     public let end: CGPoint
 }
 
-public class IMGLYBoxGradientView: UIView {
+public class BoxGradientView: UIView {
     public var centerPoint = CGPointZero
-    public weak var gradientViewDelegate: IMGLYGradientViewDelegate?
+    public weak var gradientViewDelegate: GradientViewDelegate?
     public var controlPoint1 = CGPointZero
     public var controlPoint2 = CGPointZero {
         didSet {

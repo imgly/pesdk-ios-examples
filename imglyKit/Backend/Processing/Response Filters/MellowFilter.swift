@@ -1,5 +1,5 @@
 //
-//  IMGLYMellowFilter.swift
+//  MellowFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYMellowFilter: IMGLYResponseFilter {
+public class MellowFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Mellow")
     }
@@ -18,12 +18,12 @@ public class IMGLYMellowFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYMellowFilter: EffectFilterType {
+extension MellowFilter: EffectFilter {
     public var displayName: String {
         return "Mellow"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Mellow
     }
 }

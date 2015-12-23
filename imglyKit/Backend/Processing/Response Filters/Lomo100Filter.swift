@@ -1,5 +1,5 @@
 //
-//  IMGLYLomo100Filter.swift
+//  Lomo100Filter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYLomo100Filter: IMGLYResponseFilter {
+public class Lomo100Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lomo100")
     }
@@ -18,12 +18,12 @@ public class IMGLYLomo100Filter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYLomo100Filter: EffectFilterType {
+extension Lomo100Filter: EffectFilter {
     public var displayName: String {
         return "Lomo 100"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Lomo100
     }
 }

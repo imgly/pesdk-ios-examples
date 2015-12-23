@@ -1,5 +1,5 @@
 //
-//  IMGLYOrchidFilter.swift
+//  OrchidFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYOrchidFilter: IMGLYResponseFilter {
+public class OrchidFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Orchid")
     }
@@ -18,12 +18,12 @@ public class IMGLYOrchidFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYOrchidFilter: EffectFilterType {
+extension OrchidFilter: EffectFilter {
     public var displayName: String {
         return "Orchid"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Orchid
     }
 }

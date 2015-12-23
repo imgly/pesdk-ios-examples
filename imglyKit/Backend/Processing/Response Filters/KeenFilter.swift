@@ -1,5 +1,5 @@
 //
-//  IMGLYKeenFilter.swift
+//  KeenFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYKeenFilter: IMGLYResponseFilter {
+public class KeenFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Keen")
     }
@@ -18,12 +18,12 @@ public class IMGLYKeenFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYKeenFilter: EffectFilterType {
+extension KeenFilter: EffectFilter {
     public var displayName: String {
         return "Keen"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Keen
     }
 }

@@ -1,5 +1,5 @@
 //
-//  IMGLYTextFilter.swift
+//  TextFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 05/03/15.
@@ -14,7 +14,7 @@ import QuartzCore
 import AppKit
 #endif
 
-public class IMGLYTextFilter: CIFilter, FilterType {
+public class TextFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
 <<<<<<< b0366d9c46357f4bb8802f8abd908397534fe035
     public var inputImage:CIImage?
@@ -196,10 +196,10 @@ public class IMGLYTextFilter: CIFilter, FilterType {
 
   }
 
-extension IMGLYTextFilter {
+extension TextFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
-        let copy = super.copyWithZone(zone) as! IMGLYTextFilter
+        let copy = super.copyWithZone(zone) as! TextFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.text = (text as NSString).copyWithZone(zone) as! String
         copy.fontName = (fontName as NSString).copyWithZone(zone) as! String

@@ -1,5 +1,5 @@
 //
-//  IMGLYChestFilter.swift
+//  ChestFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYChestFilter: IMGLYResponseFilter {
+public class ChestFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Chest")
     }
@@ -18,12 +18,12 @@ public class IMGLYChestFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYChestFilter: EffectFilterType {
+extension ChestFilter: EffectFilter {
     public var displayName: String {
         return "Chest"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Chest
     }
 }

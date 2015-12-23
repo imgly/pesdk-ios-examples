@@ -1,5 +1,5 @@
 //
-//  IMGLYVideoRecordButton.swift
+//  VideoRecordButton.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 26/06/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-public final class IMGLYVideoRecordButton: UIControl {
+public final class VideoRecordButton: UIControl {
 
     // MARK: - Properties
 
@@ -28,8 +28,8 @@ public final class IMGLYVideoRecordButton: UIControl {
         return layer
         }()
 
-    private lazy var innerLayer: IMGLYShapeLayer = {
-        let layer = IMGLYShapeLayer()
+    private lazy var innerLayer: ShapeLayer = {
+        let layer = ShapeLayer()
         layer.fillColor = recordingColor.CGColor
         return layer
         }()
@@ -53,7 +53,7 @@ public final class IMGLYVideoRecordButton: UIControl {
     // MARK: - Helpers
 
     private func updateOuterLayer() {
-        let outerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth, dy: IMGLYVideoRecordButton.lineWidth)
+        let outerRect = bounds.insetBy(dx: VideoRecordButton.lineWidth, dy: VideoRecordButton.lineWidth)
         outerLayer.frame = bounds
         outerLayer.path = UIBezierPath(ovalInRect: outerRect).CGPath
     }
@@ -64,7 +64,7 @@ public final class IMGLYVideoRecordButton: UIControl {
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: 4).CGPath
         } else {
-            let innerRect = bounds.insetBy(dx: IMGLYVideoRecordButton.lineWidth * 2.5, dy: IMGLYVideoRecordButton.lineWidth * 2.5)
+            let innerRect = bounds.insetBy(dx: VideoRecordButton.lineWidth * 2.5, dy: VideoRecordButton.lineWidth * 2.5)
             innerLayer.frame = bounds
             innerLayer.path = UIBezierPath(roundedRect: innerRect, cornerRadius: innerRect.size.width / 2).CGPath
         }
@@ -87,17 +87,17 @@ public final class IMGLYVideoRecordButton: UIControl {
             return false
         }
 
-        innerLayer.fillColor = IMGLYVideoRecordButton.recordingColor.colorWithAlphaComponent(0.3).CGColor
+        innerLayer.fillColor = VideoRecordButton.recordingColor.colorWithAlphaComponent(0.3).CGColor
         return true
     }
 
     public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
         recording = !recording
-        innerLayer.fillColor = IMGLYVideoRecordButton.recordingColor.CGColor
+        innerLayer.fillColor = VideoRecordButton.recordingColor.CGColor
         sendActionsForControlEvents(.TouchUpInside)
     }
 
     public override func cancelTrackingWithEvent(event: UIEvent?) {
-        innerLayer.fillColor = IMGLYVideoRecordButton.recordingColor.CGColor
+        innerLayer.fillColor = VideoRecordButton.recordingColor.CGColor
     }
 }

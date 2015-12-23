@@ -15,36 +15,36 @@ import CoreImage
 *   That way we make sure the order of filters stays the same, and we don't need to take
 *   care about creating the single filters.
 */
-public class IMGLYFixedFilterStack: NSObject {
+public class FixedFilterStack: NSObject {
 
     // MARK: - Properties
 
-    public var enhancementFilter: IMGLYEnhancementFilter = {
-        let filter = IMGLYInstanceFactory.enhancementFilter()
+    public var enhancementFilter: EnhancementFilter = {
+        let filter = InstanceFactory.enhancementFilter()
         filter.enabled = false
         filter.storeEnhancedImage = true
         return filter
         }()
 
-    public var orientationCropFilter = IMGLYInstanceFactory.orientationCropFilter()
-    public var effectFilter = IMGLYInstanceFactory.effectFilterWithType(IMGLYFilterType.None)
-    public var brightnessFilter = IMGLYInstanceFactory.colorAdjustmentFilter()
-    public var tiltShiftFilter = IMGLYInstanceFactory.tiltShiftFilter()
-    public var textFilter = IMGLYInstanceFactory.textFilter()
-    public var stickerFilters = [FilterType]()
+    public var orientationCropFilter = InstanceFactory.orientationCropFilter()
+    public var effectFilter = InstanceFactory.effectFilterWithType(FilterType.None)
+    public var brightnessFilter = InstanceFactory.colorAdjustmentFilter()
+    public var tiltShiftFilter = InstanceFactory.tiltShiftFilter()
+    public var textFilter = InstanceFactory.textFilter()
+    public var stickerFilters = [Filter]()
 
-    public var activeFilters: [FilterType] {
+    public var activeFilters: [Filter] {
         setCropRectForStickerFilters()
         setCropRectForTextFilters()
-        var activeFilters: [FilterType] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
+        var activeFilters: [Filter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
         activeFilters += stickerFilters
         return activeFilters
     }
 
     private func setCropRectForStickerFilters () {
-        for stickerFilter in stickerFilters where stickerFilter is IMGLYStickerFilter {
+        for stickerFilter in stickerFilters where stickerFilter is StickerFilter {
             // swiftlint:disable force_cast
-            (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
+            (stickerFilter as! StickerFilter).cropRect = orientationCropFilter.cropRect
             // swiftlint:enable force_fast
         }
     }
@@ -77,7 +77,7 @@ public class IMGLYFixedFilterStack: NSObject {
         let yFactor: CGFloat = negateY ? -1.0 : 1.0
 
         for filter in self.activeFilters {
-            if let stickerFilter = filter as? IMGLYStickerFilter {
+            if let stickerFilter = filter as? StickerFilter {
                 stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, angle)
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
@@ -122,7 +122,7 @@ public class IMGLYFixedFilterStack: NSObject {
     
     private func flipStickers(horizontal: Bool) {
         for filter in self.activeFilters {
-            if let stickerFilter = filter as? IMGLYStickerFilter {
+            if let stickerFilter = filter as? StickerFilter {
                 if let sticker = stickerFilter.sticker {
                     let flippedOrientation = UIImageOrientation(rawValue:(sticker.imageOrientation.rawValue + 4) % 8)
                     stickerFilter.sticker = UIImage(CGImage: sticker.CGImage!, scale: sticker.scale, orientation: flippedOrientation!)
@@ -143,15 +143,15 @@ public class IMGLYFixedFilterStack: NSObject {
         }
     }
 
-    private func flipRotationHorizontal(stickerFilter: IMGLYStickerFilter) {
+    private func flipRotationHorizontal(stickerFilter: StickerFilter) {
         flipRotation(stickerFilter, axisAngle: CGFloat(M_PI))
     }
 
-    private func flipRotationVertical(stickerFilter: IMGLYStickerFilter) {
+    private func flipRotationVertical(stickerFilter: StickerFilter) {
         flipRotation(stickerFilter, axisAngle: CGFloat(M_PI_2))
     }
 
-    private func flipRotation(stickerFilter: IMGLYStickerFilter, axisAngle: CGFloat) {
+    private func flipRotation(stickerFilter: StickerFilter, axisAngle: CGFloat) {
         var angle = atan2(stickerFilter.transform.b, stickerFilter.transform.a)
         let twoPI = CGFloat(M_PI * 2.0)
         // normalize angle
@@ -215,17 +215,17 @@ public class IMGLYFixedFilterStack: NSObject {
 
 }
 
-extension IMGLYFixedFilterStack: NSCopying {
+extension FixedFilterStack: NSCopying {
     public func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = self.dynamicType.init()
         // swiftlint:disable force_cast
-        copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
-        copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
-        copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilterType
-        copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! IMGLYContrastBrightnessSaturationFilter
-        copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! IMGLYTiltshiftFilter
-        copy.textFilter = textFilter.copyWithZone(zone) as! IMGLYTextFilter
-        copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [FilterType]
+        copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! EnhancementFilter
+        copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! OrientationCropFilter
+        copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilter
+        copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! ContrastBrightnessSaturationFilter
+        copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! TiltshiftFilter
+        copy.textFilter = textFilter.copyWithZone(zone) as! TextFilter
+        copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [Filter]
         // swiftlint:enable force_cast
         return copy
     }

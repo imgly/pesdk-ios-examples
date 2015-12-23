@@ -1,5 +1,5 @@
 //
-//  IMGLYCreamyFilter.swift
+//  CreamyFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYCreamyFilter: IMGLYResponseFilter {
+public class CreamyFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Creamy")
     }
@@ -18,12 +18,12 @@ public class IMGLYCreamyFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYCreamyFilter: EffectFilterType {
+extension CreamyFilter: EffectFilter {
     public var displayName: String {
         return "Creamy"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Creamy
     }
 }

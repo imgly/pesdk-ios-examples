@@ -1,5 +1,5 @@
 //
-//  IMGLYFilterEditorViewController.swift
+//  FilterEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 08/04/15.
@@ -8,29 +8,29 @@
 
 import UIKit
 
-@objc public class IMGLYFilterEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+@objc public class FilterEditorViewControllerOptions: EditorViewControllerOptions {
 
     // MARK: UI
 
     // swiftlint:disable variable_name_max_length
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public let filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure
+    public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure
     // swiftlint:enable variable_name_max_length
 
-    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
-    /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
+    /// An object conforming to the `FiltersDataSourceProtocol`
+    /// Per default an `FilterSelectionControllerDataSource` offering all filters
     /// is set.
-    public let filterDataSource: IMGLYFiltersDataSourceProtocol
+    public let filterDataSource: FiltersDataSourceProtocol
 
     /// Enable/Disable the filter intensity slider. Defaults to true.
     public let showFilterIntensitySlider: Bool
 
     convenience init() {
-        self.init(builder: IMGLYFilterEditorViewControllerOptionsBuilder())
+        self.init(builder: FilterEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYFilterEditorViewControllerOptionsBuilder) {
+    init(builder: FilterEditorViewControllerOptionsBuilder) {
         filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
         filterDataSource = builder.filterDataSource
         showFilterIntensitySlider = builder.showFilterIntensitySlider
@@ -39,19 +39,19 @@ import UIKit
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYFilterEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class FilterEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     // swiftlint:disable variable_name_max_length
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public var filterIntensitySliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }
+    public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure = { _ in }
     // swiftlint:enable variable_name_max_length
 
-    /// An object conforming to the `IMGLYFiltersDataSourceProtocol`
-    /// Per default an `IMGLYFilterSelectionControllerDataSource` offering all filters
+    /// An object conforming to the `FiltersDataSourceProtocol`
+    /// Per default an `FilterSelectionControllerDataSource` offering all filters
     /// is set.
-    public var filterDataSource: IMGLYFiltersDataSourceProtocol = IMGLYFiltersDataSource()
+    public var filterDataSource: FiltersDataSourceProtocol = FiltersDataSource()
 
     /// Enable/Disable the filter intensity slider. Defaults to true.
     public var showFilterIntensitySlider = true
@@ -60,18 +60,18 @@ import UIKit
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
+public class FilterEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
-    public let filterSelectionController = IMGLYFilterSelectionController()
+    public let filterSelectionController = FilterSelectionController()
 
     public private(set) lazy var filterIntensitySlider: UISlider = {
-        let bundle = NSBundle(forClass: IMGLYFilterEditorViewController.self)
+        let bundle = NSBundle(forClass: FilterEditorViewController.self)
         let slider = UISlider()
         slider.translatesAutoresizingMaskIntoConstraints = false
         slider.minimumValue = 0
@@ -105,9 +105,9 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
         }
     }
 
-    // MARK: - IMGLYEditorViewController
+    // MARK: - EditorViewController
 
-    public override var options: IMGLYFilterEditorViewControllerOptions {
+    public override var options: FilterEditorViewControllerOptions {
         return self.configuration.filterEditorViewControllerOptions
     }
 
@@ -130,7 +130,7 @@ public class IMGLYFilterEditorViewController: IMGLYSubEditorViewController {
             }
 
             if let fixedFilterStack = self?.fixedFilterStack where filterType != fixedFilterStack.effectFilter.filterType {
-                fixedFilterStack.effectFilter = IMGLYInstanceFactory.effectFilterWithType(filterType)
+                fixedFilterStack.effectFilter = InstanceFactory.effectFilterWithType(filterType)
                 fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
                 self?.filterIntensitySlider.value = initialFilterIntensity
             }

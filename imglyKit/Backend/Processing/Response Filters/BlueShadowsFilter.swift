@@ -1,5 +1,5 @@
 //
-//  IMGLYBlueShadowsFilter.swift
+//  BlueShadowsFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
+public class BlueShadowsFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "BlueShadows")
     }
@@ -18,12 +18,12 @@ public class IMGLYBlueShadowsFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYBlueShadowsFilter: EffectFilterType {
+extension BlueShadowsFilter: EffectFilter {
     public var displayName: String {
         return "Blue Shade"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .BlueShadows
     }
 }

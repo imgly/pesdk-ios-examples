@@ -1,5 +1,5 @@
 //
-//  IMGLYPitchedFilter.swift
+//  PitchedFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYPitchedFilter: IMGLYResponseFilter {
+public class PitchedFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Pitched")
     }
@@ -18,12 +18,12 @@ public class IMGLYPitchedFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYPitchedFilter: EffectFilterType {
+extension PitchedFilter: EffectFilter {
     public var displayName: String {
         return "Pitched"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Pitched
     }
 }

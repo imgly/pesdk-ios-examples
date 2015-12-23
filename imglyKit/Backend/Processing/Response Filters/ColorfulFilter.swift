@@ -1,5 +1,5 @@
 //
-//  IMGLYColorfulilter.swift
+//  Colorfulilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYColorfulFilter: IMGLYResponseFilter {
+public class ColorfulFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Colorful")
     }
@@ -18,12 +18,12 @@ public class IMGLYColorfulFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYColorfulFilter: EffectFilterType {
+extension ColorfulFilter: EffectFilter {
     public var displayName: String {
         return "Colorful"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Colorful
     }
 }

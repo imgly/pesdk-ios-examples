@@ -1,5 +1,5 @@
 //
-//  IMGLYHighcarbFilter.swift
+//  HighcarbFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 24/02/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class IMGLYHighcarbFilter: IMGLYResponseFilter {
+public class HighcarbFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Highcarb")
     }
@@ -18,12 +18,12 @@ public class IMGLYHighcarbFilter: IMGLYResponseFilter {
     }
 }
 
-extension IMGLYHighcarbFilter: EffectFilterType {
+extension HighcarbFilter: EffectFilter {
     public var displayName: String {
         return "Carb"
     }
 
-    public var filterType: IMGLYFilterType {
+    public var filterType: FilterType {
         return .Highcarb
     }
 }

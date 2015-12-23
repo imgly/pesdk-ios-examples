@@ -1,5 +1,5 @@
 //
-//  IMGLYColorButton.swift
+//  ColorButton.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 05/03/15.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public class IMGLYColorButton: UIButton {
+public class ColorButton: UIButton {
     public var hasFrame = false {
         didSet {
             styleButton()

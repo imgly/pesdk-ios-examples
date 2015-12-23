@@ -1,5 +1,5 @@
 //
-//  IMGLYFilterCollectionViewCell.swift
+//  FilterCollectionViewCell.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 08/04/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class IMGLYFilterCollectionViewCell: IMGLYImageCaptionCollectionViewCell {
+class FilterCollectionViewCell: ImageCaptionCollectionViewCell {
 
     // MARK: - Properties
 

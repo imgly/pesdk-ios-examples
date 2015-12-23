@@ -1,5 +1,5 @@
 //
-//  IMGLYStickersEditorViewController.swift
+//  StickersEditorViewController.swift
 //  imglyKit
 //
 //  Created by Sascha Schwabbauer on 10/04/15.
@@ -13,20 +13,20 @@ let kStickersCollectionViewCellSize = CGSize(width: 90, height: 90)
 let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 // swiftlint:enable variable_name_max_length
 
-@objc public class IMGLYStickersEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
-    /// An object conforming to the `IMGLYStickersDataSourceProtocol`
-    /// Per default an `IMGLYStickersDataSource` offering all filters
+@objc public class StickersEditorViewControllerOptions: EditorViewControllerOptions {
+    /// An object conforming to the `StickersDataSourceProtocol`
+    /// Per default an `StickersDataSource` offering all filters
     /// is set.
-    public let stickersDataSource: IMGLYStickersDataSourceProtocol
+    public let stickersDataSource: StickersDataSourceProtocol
 
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
 
     convenience init() {
-        self.init(builder: IMGLYStickersEditorViewControllerOptionsBuilder())
+        self.init(builder: StickersEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: IMGLYStickersEditorViewControllerOptionsBuilder) {
+    init(builder: StickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
         super.init(editorBuilder: builder)
@@ -34,13 +34,13 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 }
 
 // swiftlint:disable type_name
-@objc public class IMGLYStickersEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+@objc public class StickersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
-    /// An object conforming to the `IMGLYStickersDataSourceProtocol`
-    /// Per default an `IMGLYStickersDataSource` offering all filters
+    /// An object conforming to the `StickersDataSourceProtocol`
+    /// Per default an `StickersDataSource` offering all filters
     /// is set.
-    public var stickersDataSource: IMGLYStickersDataSourceProtocol = IMGLYStickersDataSource()
+    public var stickersDataSource: StickersDataSourceProtocol = StickersDataSource()
 
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true
@@ -49,15 +49,15 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("stickers-editor.title", tableName: nil, bundle: NSBundle(forClass: IMGLYMainEditorViewController.self), value: "", comment: "")
+        self.title = NSLocalizedString("stickers-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
     }
 }
 
-public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
+public class StickersEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 
-    public var stickersDataSource = IMGLYStickersDataSource()
+    public var stickersDataSource = StickersDataSource()
     public private(set) lazy var stickersClipView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -65,11 +65,11 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         }()
 
     private var draggedView: UIView?
-    private var tempStickerCopy = [FilterType]()
+    private var tempStickerCopy = [Filter]()
 
-    // MARK: - IMGLYEditorViewController
+    // MARK: - EditorViewController
 
-    public override var options: IMGLYStickersEditorViewControllerOptions {
+    public override var options: StickersEditorViewControllerOptions {
         return self.configuration.stickersEditorViewControllerOptions
     }
 
@@ -81,7 +81,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         for view in stickersClipView.subviews {
             if let view = view as? UIImageView {
                 if let image = view.image {
-                    let stickerFilter = IMGLYInstanceFactory.stickerFilter()
+                    let stickerFilter = InstanceFactory.stickerFilter()
                     stickerFilter.sticker = image
                     stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
                     let cropRect = stickerFilter.cropRect
@@ -162,7 +162,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(IMGLYStickerCollectionViewCell.self, forCellWithReuseIdentifier: kStickersCollectionViewCellReuseIdentifier)
+        collectionView.registerClass(StickerCollectionViewCell.self, forCellWithReuseIdentifier: kStickersCollectionViewCellReuseIdentifier)
 
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
@@ -293,9 +293,9 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     * to the full image.
     * When we are done we must revoke that extra transformation.
     */
-    private func addStickerImagesFromStickerFilters(stickerFilters: [FilterType]) {
+    private func addStickerImagesFromStickerFilters(stickerFilters: [Filter]) {
         for element in stickerFilters {
-            guard let stickerFilter = element as? IMGLYStickerFilter else {
+            guard let stickerFilter = element as? StickerFilter else {
                 return
             }
             let imageView = UIImageView(image: stickerFilter.sticker)
@@ -322,7 +322,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     }
 }
 
-extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
+extension StickersEditorViewController: UICollectionViewDataSource {
     public func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -333,7 +333,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! StickerCollectionViewCell
         // swiftlint:enable force_cast
 
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
@@ -343,7 +343,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
     }
 }
 
-extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
+extension StickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
@@ -368,7 +368,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
     }
 }
 
-extension IMGLYStickersEditorViewController: UIGestureRecognizerDelegate {
+extension StickersEditorViewController: UIGestureRecognizerDelegate {
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if (gestureRecognizer is UIPinchGestureRecognizer && otherGestureRecognizer is UIRotationGestureRecognizer) || (gestureRecognizer is UIRotationGestureRecognizer && otherGestureRecognizer is UIPinchGestureRecognizer) {
             return true
