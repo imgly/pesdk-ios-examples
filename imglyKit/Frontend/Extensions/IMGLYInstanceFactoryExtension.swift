@@ -46,63 +46,81 @@ extension IMGLYInstanceFactory {
     }
 
     public class func filterEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYFilterEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYFilterEditorViewController.self).init() as! IMGLYFilterEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func stickersEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYStickersEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYStickersEditorViewController.self).init() as! IMGLYStickersEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func orientationEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYOrientationEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYOrientationEditorViewController.self).init() as! IMGLYOrientationEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func focusEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYFocusEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYFocusEditorViewController.self).init() as! IMGLYFocusEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func cropEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYCropEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYCropEditorViewController.self).init() as! IMGLYCropEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func brightnessEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYBrightnessEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYBrightnessEditorViewController.self).init() as! IMGLYBrightnessEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func contrastEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYContrastEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYContrastEditorViewController.self).init() as! IMGLYContrastEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYSaturationEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYSaturationEditorViewController.self).init() as! IMGLYSaturationEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc
     }
 
     public class func textEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYTextEditorViewController {
+        // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(IMGLYTextEditorViewController.self).init() as! IMGLYTextEditorViewController
+        // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
         return vc

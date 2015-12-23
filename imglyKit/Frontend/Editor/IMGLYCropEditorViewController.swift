@@ -12,7 +12,7 @@ public let kMinimumCropSize = CGFloat(50)
 
 /**
  The different crop actions, available in the SDK.
- 
+
  - Free:          The image can be cropped in any way.
  - OneToOne:      The aspect ratio is locked to 1:1.
  - FourToThree:   The aspect ratio is locked to 4:3.
@@ -33,7 +33,7 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
     public let allowedCropActions: [IMGLYCropAction]
-    
+
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: IMGLYCropActionButtonConfigurationClosure
@@ -41,7 +41,7 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
     convenience init() {
         self.init(builder: IMGLYCropEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYCropEditorViewControllerOptionsBuilder) {
         allowedCropActions = builder.allowedCropActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -49,7 +49,10 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYCropEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
@@ -69,7 +72,7 @@ public typealias IMGLYCropActionButtonConfigurationClosure = (IMGLYImageCaptionB
             self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ IMGLYCropAction(rawValue: $0.integerValue)! })
         }
     }
-    
+
 
     public override init() {
         super.init()

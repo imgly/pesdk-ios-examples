@@ -8,22 +8,24 @@
 
 import UIKit
 
-let StickersCollectionViewCellSize = CGSize(width: 90, height: 90)
-let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
+let kStickersCollectionViewCellSize = CGSize(width: 90, height: 90)
+// swiftlint:disable variable_name_max_length
+let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
+// swiftlint:enable variable_name_max_length
 
 @objc public class IMGLYStickersEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
     /// An object conforming to the `IMGLYStickersDataSourceProtocol`
     /// Per default an `IMGLYStickersDataSource` offering all filters
     /// is set.
     public let stickersDataSource: IMGLYStickersDataSourceProtocol
-    
+
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
-    
+
     convenience init() {
         self.init(builder: IMGLYStickersEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYStickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
@@ -31,7 +33,10 @@ let StickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYStickersEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// An object conforming to the `IMGLYStickersDataSourceProtocol`
     /// Per default an `IMGLYStickersDataSource` offering all filters
     /// is set.
@@ -146,7 +151,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
 
     private func configureStickersCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = StickersCollectionViewCellSize
+        flowLayout.itemSize = kStickersCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         flowLayout.minimumInteritemSpacing = 0
@@ -157,7 +162,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.registerClass(IMGLYStickerCollectionViewCell.self, forCellWithReuseIdentifier: StickersCollectionViewCellReuseIdentifier)
+        collectionView.registerClass(IMGLYStickerCollectionViewCell.self, forCellWithReuseIdentifier: kStickersCollectionViewCellReuseIdentifier)
 
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
@@ -328,7 +333,7 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
         // swiftlint:enable force_cast
 
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)

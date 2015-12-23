@@ -170,6 +170,7 @@
 		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
 		2B25F1BC1B03AC8E0081032D /* IMGLYZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* IMGLYZoomingImageView.swift */; };
 		2B50239E1C286B0400CE9AD3 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* FilterType.swift */; };
+		2B54A0A01C2AEA6100E82DC6 /* FilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* FilterType.swift */; };
 		2B5728061C28594E0003EF8F /* EffectFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilterType.swift */; };
 		2B5728071C2859520003EF8F /* EffectFilterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilterType.swift */; };
 		2BB88C3E1B69127400D23A2F /* IMGLYScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* IMGLYScaleFilter.swift */; };
@@ -1317,6 +1318,7 @@
 				2B1ADAD01B19C8EE00C98522 /* IMGLYQuoziFilter.swift in Sources */,
 				2B1ADADB1B19C8EE00C98522 /* IMGLYTenderFilter.swift in Sources */,
 				2B1ADAAB1B19C8EE00C98522 /* IMGLYCottonCandyFilter.swift in Sources */,
+				2B54A0A01C2AEA6100E82DC6 /* FilterType.swift in Sources */,
 				2B1ADAB21B19C8EE00C98522 /* IMGLYFixieFilter.swift in Sources */,
 				2B1ADAD51B19C8EE00C98522 /* IMGLYSinFilter.swift in Sources */,
 				2B1ADAD11B19C8EE00C98522 /* IMGLYResponseFilter.swift in Sources */,

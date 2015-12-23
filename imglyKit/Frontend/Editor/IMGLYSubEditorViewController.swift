@@ -14,7 +14,7 @@ public typealias IMGLYPreviewImageGenerationCompletionBlock = () -> (Void)
 public class IMGLYSubEditorViewController: IMGLYEditorViewController {
 
     // MARK: - Properties
-    
+
     public var fixedFilterStack: IMGLYFixedFilterStack = IMGLYFixedFilterStack()
     public var completionHandler: IMGLYSubEditorCompletionBlock?
 
@@ -31,7 +31,7 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     required public override init(nibName: String?, bundle: NSBundle?) {
         super.init(nibName: nibName, bundle: bundle)
     }
@@ -48,7 +48,7 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     public func updatePreviewImageWithCompletion(completionHandler: IMGLYPreviewImageGenerationCompletionBlock?) {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
-            dispatch_async(PhotoProcessorQueue) {
+            dispatch_async(kPhotoProcessorQueue) {
                 let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                 dispatch_async(dispatch_get_main_queue()) {

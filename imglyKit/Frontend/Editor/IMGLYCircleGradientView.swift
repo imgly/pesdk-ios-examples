@@ -8,33 +8,25 @@ import UIKit
 public class IMGLYCircleGradientView: UIView {
     public var centerPoint = CGPointZero
     public weak var gradientViewDelegate: IMGLYGradientViewDelegate?
-    public var controllPoint1 = CGPointZero
-    private var controllPoint2_ = CGPointZero
-    public var controllPoint2: CGPoint {
-        get {
-            return controllPoint2_
-        }
-
-        set (point) {
-            controllPoint2_ = point
+    public var controlPoint1 = CGPointZero
+    public var controlPoint2 = CGPointZero {
+        didSet {
             calculateCenterPointFromOtherControlPoints()
             layoutCrosshair()
             setNeedsDisplay()
-            if gradientViewDelegate != nil {
-                gradientViewDelegate!.controlPointChanged()
-            }
+            gradientViewDelegate?.controlPointChanged()
         }
     }
 
     public var normalizedControlPoint1: CGPoint {
-        return CGPoint(x: controllPoint1.x / frame.size.width, y: controllPoint1.y / frame.size.height)
+        return CGPoint(x: controlPoint1.x / frame.size.width, y: controlPoint1.y / frame.size.height)
     }
 
     public var normalizedControlPoint2: CGPoint {
-        return CGPoint(x: controllPoint2.x / frame.size.width, y: controllPoint2.y / frame.size.height)
+        return CGPoint(x: controlPoint2.x / frame.size.width, y: controlPoint2.y / frame.size.height)
     }
 
-    private var crossImageView_ = UIImageView()
+    private var crossImageView = UIImageView()
     private var setup = false
 
     public override init(frame: CGRect) {
@@ -61,22 +53,22 @@ public class IMGLYCircleGradientView: UIView {
     }
 
     public func configureControlPoints() {
-        controllPoint1 = CGPoint(x: 100, y: 100)
-        controllPoint2 = CGPoint(x: 150, y: 200)
+        controlPoint1 = CGPoint(x: 100, y: 100)
+        controlPoint2 = CGPoint(x: 150, y: 200)
         calculateCenterPointFromOtherControlPoints()
     }
 
     public func configureCrossImageView() {
-        crossImageView_.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
-        crossImageView_.userInteractionEnabled = true
-        crossImageView_.frame = CGRect(x: 0, y: 0, width: crossImageView_.image!.size.width, height: crossImageView_.image!.size.height)
-        addSubview(crossImageView_)
+        crossImageView.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
+        crossImageView.userInteractionEnabled = true
+        crossImageView.frame = CGRect(x: 0, y: 0, width: crossImageView.image!.size.width, height: crossImageView.image!.size.height)
+        addSubview(crossImageView)
     }
 
     public func configurePanGestureRecognizer() {
         let panGestureRecognizer = UIPanGestureRecognizer(target:self, action:"handlePanGesture:")
         addGestureRecognizer(panGestureRecognizer)
-        crossImageView_.addGestureRecognizer(panGestureRecognizer)
+        crossImageView.addGestureRecognizer(panGestureRecognizer)
     }
 
     public func configurePinchGestureRecognizer() {
@@ -103,15 +95,15 @@ public class IMGLYCircleGradientView: UIView {
     }
 
     public func distanceBetweenControlPoints() -> CGFloat {
-        let diffX = controllPoint2.x - controllPoint1.x
-        let diffY = controllPoint2.y - controllPoint1.y
+        let diffX = controlPoint2.x - controlPoint1.x
+        let diffY = controlPoint2.y - controlPoint1.y
 
         return sqrt(diffX * diffX + diffY  * diffY)
     }
 
     public func calculateCenterPointFromOtherControlPoints() {
-        centerPoint = CGPoint(x: (controllPoint1.x + controllPoint2.x) / 2.0,
-            y: (controllPoint1.y + controllPoint2.y) / 2.0)
+        centerPoint = CGPoint(x: (controlPoint1.x + controlPoint2.x) / 2.0,
+            y: (controlPoint1.y + controlPoint2.y) / 2.0)
     }
 
     public func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
@@ -132,15 +124,15 @@ public class IMGLYCircleGradientView: UIView {
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         let diffX = location.x - centerPoint.x
         let diffY = location.y - centerPoint.y
-        controllPoint1 = CGPoint(x: controllPoint1.x + diffX, y: controllPoint1.y + diffY)
-        controllPoint2 = CGPoint(x: controllPoint2.x + diffX, y: controllPoint2.y + diffY)
+        controlPoint1 = CGPoint(x: controlPoint1.x + diffX, y: controlPoint1.y + diffY)
+        controlPoint2 = CGPoint(x: controlPoint2.x + diffX, y: controlPoint2.y + diffY)
     }
 
     public func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
-            controllPoint1 = recognizer.locationOfTouch(0, inView:self)
-            controllPoint2 = recognizer.locationOfTouch(1, inView:self)
+            controlPoint1 = recognizer.locationOfTouch(0, inView:self)
+            controlPoint2 = recognizer.locationOfTouch(1, inView:self)
         }
     }
 
@@ -151,7 +143,7 @@ public class IMGLYCircleGradientView: UIView {
     }
 
     public func layoutCrosshair() {
-        crossImageView_.center = centerPoint
+        crossImageView.center = centerPoint
     }
 
     public func centerGUIElements() {
@@ -159,7 +151,7 @@ public class IMGLYCircleGradientView: UIView {
         let x2 = frame.size.width * 0.75
         let y1 = frame.size.height * 0.25
         let y2 = frame.size.height * 0.75
-        controllPoint1 = CGPoint(x: x1, y: y1)
-        controllPoint2 = CGPoint(x: x2, y: y2)
+        controlPoint1 = CGPoint(x: x1, y: y1)
+        controlPoint2 = CGPoint(x: x2, y: y2)
     }
 }

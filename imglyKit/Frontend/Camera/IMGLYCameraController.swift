@@ -173,7 +173,9 @@ public class IMGLYCameraController: NSObject {
     private var assetWriterVideoInput: AVAssetWriterInput?
     private var assetWriterInputPixelBufferAdaptor: AVAssetWriterInputPixelBufferAdaptor?
     private var currentVideoDimensions: CMVideoDimensions?
+    // swiftlint:disable variable_name_max_length
     private var currentAudioSampleBufferFormatDescription: CMFormatDescriptionRef?
+    // swiftlint:enable variable_name_max_length
     private var backgroundRecordingID: UIBackgroundTaskIdentifier?
     private var videoWritingStarted = false
     private var videoWritingStartTime: CMTime?
@@ -517,7 +519,7 @@ public class IMGLYCameraController: NSObject {
             dispatch_async(sessionQueue) {
                 var error: NSError?
                 self.session.beginConfiguration()
-                
+
                 if let device = self.videoDeviceInput?.device where device.isTorchModeSupported(newValue) {
                     do {
                         try device.lockForConfiguration()
@@ -733,9 +735,11 @@ public class IMGLYCameraController: NSObject {
         setupWithInitialRecordingMode(.Photo)
     }
 
-    /**
-    Initializes the camera and has to be called before calling `startCamera()` / `stopCamera()`
-    */
+     /**
+     Initializes the camera and has to be called before calling `startCamera()` / `stopCamera()`
+
+     - parameter recordingMode: The supported recording modes.
+     */
     public func setupWithInitialRecordingMode(recordingMode: IMGLYRecordingMode) {
         if setupComplete {
             return

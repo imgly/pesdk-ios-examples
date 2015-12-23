@@ -126,7 +126,7 @@ public class IMGLYPhotoProcessor {
 
     #elseif os(OSX)
 
-    public class func processWithNSImage(image: NSImage, filters: [CIFilter]) -> NSImage? {
+    public class func processWithNSImage(image: NSImage, filters: [FilterType]) -> NSImage? {
         if let tiffRepresentation = image.TIFFRepresentation, image = CIImage(data: tiffRepresentation) {
             let filteredCIImage = processWithCIImage(image, filters: filters)
 

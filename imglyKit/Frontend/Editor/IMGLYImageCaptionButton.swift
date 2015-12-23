@@ -8,8 +8,8 @@
 
 import UIKit
 
-private let ImageSize = CGSize(width: 36, height: 36)
-private let ImageCaptionMargin = 2
+private let kImageSize = CGSize(width: 36, height: 36)
+private let kImageCaptionMargin = 2
 
 public class IMGLYImageCaptionButton: UIControl {
 
@@ -84,9 +84,9 @@ public class IMGLYImageCaptionButton: UIControl {
         ]
 
         let metrics: [ String: AnyObject ] = [
-            "imageHeight" : ImageSize.height,
-            "imageWidth" : ImageSize.width,
-            "imageCaptionMargin" : ImageCaptionMargin
+            "imageHeight" : kImageSize.height,
+            "imageWidth" : kImageSize.width,
+            "imageCaptionMargin" : kImageCaptionMargin
         ]
 
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(

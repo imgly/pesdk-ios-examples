@@ -10,26 +10,29 @@ import UIKit
 
 // Options for configuring the IMGLYMainEditorViewController
 @objc public class IMGLYMainEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
-    
+
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.
     public let editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol
-    
+
     convenience init() {
         self.init(builder: IMGLYMainEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYMainEditorViewControllerOptionsBuilder) {
         editorActionsDataSource = builder.editorActionsDataSource
         super.init(editorBuilder: builder)
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYMainEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// IMGLYMainEditorActionsDataSource providing all editors.
     public var editorActionsDataSource: IMGLYMainEditorActionsDataSourceProtocol = IMGLYMainEditorActionsDataSource()
-    
+
 
     public override init() {
         super.init()
@@ -59,8 +62,8 @@ import UIKit
 
 public typealias IMGLYEditorCompletionBlock = (IMGLYEditorResult, UIImage?) -> Void
 
-private let ButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
-private let ButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
+private let kButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
+private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
 public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
@@ -98,7 +101,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
     private func configureMenuCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = ButtonCollectionViewCellSize
+        flowLayout.itemSize = kButtonCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         flowLayout.minimumInteritemSpacing = 0
@@ -109,7 +112,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = currentBackgroundColor
-        collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: ButtonCollectionViewCellReuseIdentifier)
+        collectionView.registerClass(IMGLYButtonCollectionViewCell.self, forCellWithReuseIdentifier: kButtonCollectionViewCellReuseIdentifier)
 
         let views = [ "collectionView" : collectionView ]
         bottomContainerView.addSubview(collectionView)
@@ -165,7 +168,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     private func updatePreviewImage() {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
-            dispatch_async(PhotoProcessorQueue) {
+            dispatch_async(kPhotoProcessorQueue) {
                 let processedImage = IMGLYPhotoProcessor.processWithUIImage(lowResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -189,7 +192,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
 
             if let highResolutionImage = self.highResolutionImage {
                 sender?.enabled = false
-                dispatch_async(PhotoProcessorQueue) {
+                dispatch_async(kPhotoProcessorQueue) {
                     filteredHighResolutionImage = IMGLYPhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                     dispatch_async(dispatch_get_main_queue()) {
@@ -220,7 +223,7 @@ extension IMGLYMainEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(ButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kButtonCollectionViewCellReuseIdentifier, forIndexPath: indexPath)
 
         if let buttonCell = cell as? IMGLYButtonCollectionViewCell {
             let dataSource = options.editorActionsDataSource

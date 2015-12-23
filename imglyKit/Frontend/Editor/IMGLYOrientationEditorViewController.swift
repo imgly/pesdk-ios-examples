@@ -17,11 +17,14 @@ import UIKit
 
 public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageCaptionButton, IMGLYOrientationAction) -> ()
 
+// swiftlint:disable type_name
 @objc public class IMGLYOrientationEditorViewControllerOptions: IMGLYEditorViewControllerOptions {
+    // swiftlint:enable type_name
+
     /// Defines all allowed actions. The action buttons are shown in the given order.
     /// Defaults to show all available actions.
     public let allowedOrientationActions: [IMGLYOrientationAction]
-    
+
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure
@@ -29,7 +32,7 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
     convenience init() {
         self.init(builder: IMGLYOrientationEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYOrientationEditorViewControllerOptionsBuilder) {
         allowedOrientationActions = builder.allowedOrientationActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -37,7 +40,10 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYOrientationEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// Defines all allowed actions. The action buttons are always shown in the given order.
     /// Defaults to show all available actions. To set this
     /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
@@ -47,7 +53,7 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYOrientationActionButtonConfigurationClosure = { _ in }
 
-    
+
     /// An array of `IMGLYOrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedOrientationActions` with the corresponding `IMGLYFocusAction` values.
@@ -56,7 +62,7 @@ public typealias IMGLYOrientationActionButtonConfigurationClosure = (IMGLYImageC
             self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.map({ IMGLYOrientationAction(rawValue: $0.integerValue)! })
         }
     }
-    
+
 
     public override init() {
         super.init()

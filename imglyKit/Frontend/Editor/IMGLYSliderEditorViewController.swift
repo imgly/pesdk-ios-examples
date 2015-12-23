@@ -12,18 +12,21 @@ import UIKit
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public let sliderConfigurationClosure: IMGLYSliderConfigurationClosure
-    
+
     convenience init() {
         self.init(builder: IMGLYSliderEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYSliderEditorViewControllerOptionsBuilder) {
         sliderConfigurationClosure = builder.sliderConfigurationClosure
         super.init(editorBuilder: builder)
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYSliderEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public lazy var sliderConfigurationClosure: IMGLYSliderConfigurationClosure = { _ in }

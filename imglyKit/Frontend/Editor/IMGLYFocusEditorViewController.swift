@@ -10,7 +10,7 @@ import UIKit
 
 /**
  Represents the different types of focus actions.
- 
+
  - Off:    No focus blur is added. Used to reset other focus settings.
  - Linear: A blur along a straight line.
  - Radial: A blur that spreads radial from a central point.
@@ -30,7 +30,7 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
     public let allowedFocusActions: [IMGLYFocusAction]
-    
+
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure
@@ -38,7 +38,7 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
     convenience init() {
         self.init(builder: IMGLYFocusEditorViewControllerOptionsBuilder())
     }
-    
+
     init(builder: IMGLYFocusEditorViewControllerOptionsBuilder) {
         allowedFocusActions = builder.allowedFocusActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -46,7 +46,10 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
     }
 }
 
+// swiftlint:disable type_name
 @objc public class IMGLYFocusEditorViewControllerOptionsBuilder: IMGLYEditorViewControllerOptionsBuilder {
+    // swiftlint:enable type_name
+
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
@@ -62,7 +65,7 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: IMGLYFocusActionButtonConfigurationClosure = { _ in }
 
-    
+
     /// An array of `IMGLYFocusAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedFocusActions` with the corresponding `IMGLYFocusAction` values.
@@ -71,7 +74,7 @@ public typealias IMGLYFocusActionButtonConfigurationClosure = (IMGLYImageCaption
             self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ IMGLYFocusAction(rawValue: $0.integerValue)! })
         }
     }
-    
+
 
     public override init() {
         super.init()

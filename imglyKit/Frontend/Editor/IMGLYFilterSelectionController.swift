@@ -74,7 +74,7 @@ extension IMGLYFilterSelectionController {
                 filterCell.activityIndicator.startAnimating()
 
                 // Create filterPreviewImage
-                dispatch_async(PhotoProcessorQueue) {
+                dispatch_async(kPhotoProcessorQueue) {
                     let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(self.dataSource.previewImageForFilterAtIndex(indexPath.item), filters: [filter])
 
                     dispatch_async(dispatch_get_main_queue()) {

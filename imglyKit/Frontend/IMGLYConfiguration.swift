@@ -88,7 +88,9 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
             return replacedClass
         }
 
+        // swiftlint:disable force_cast
         return NSClassFromString(replacingClassName) as! NSObject.Type
+        // swiftlint:enable force_cast
     }
 
     private let classReplacingMap: [String: String]
@@ -113,67 +115,67 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     private var contrastEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
     private var saturationEditorViewControllerOptions: IMGLYSliderEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions()
     private var textEditorViewControllerOptions: IMGLYTextEditorViewControllerOptions = IMGLYTextEditorViewControllerOptions()
-    
+
     public func configureCameraViewController(builder: (IMGLYCameraViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYCameraViewControllerOptionsBuilder()
         builder(builderForClosure)
         cameraViewControllerOptions = IMGLYCameraViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureMainEditorViewController(builder: (IMGLYMainEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYMainEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         mainEditorViewControllerOptions = IMGLYMainEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureFilterEditorViewController(builder: (IMGLYFilterEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYFilterEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         filterEditorViewControllerOptions = IMGLYFilterEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureStickersEditorViewController(builder: (IMGLYStickersEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYStickersEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         stickersEditorViewControllerOptions = IMGLYStickersEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureOrientationEditorViewController(builder: (IMGLYOrientationEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYOrientationEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         orientationEditorViewControllerOptions = IMGLYOrientationEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureFocusEditorViewController(builder: (IMGLYFocusEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYFocusEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         focusEditorViewControllerOptions = IMGLYFocusEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureCropEditorViewController(builder: (IMGLYCropEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYCropEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         cropEditorViewControllerOptions = IMGLYCropEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureBrightnessEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         brightnessEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureSaturationEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         saturationEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureContrastEditorViewController(builder: (IMGLYSliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYSliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         contrastEditorViewControllerOptions = IMGLYSliderEditorViewControllerOptions(builder: builderForClosure)
     }
-    
+
     public func configureTextEditorViewController(builder: (IMGLYTextEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = IMGLYTextEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
@@ -186,13 +188,13 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     Use this to use a specific subclass instead of the default imglyKit **view controller** classes. This works
     across all the whole framework and allows you to subclass all usages of a class. As of now, only **view
     controller** can be replaced!
-    
+
     - parameter builtinClass:   The built in class, that should be replaced.
     - parameter replacingClass: The class that replaces the builtin class.
     - parameter namespace:      The namespace of the replacing class (e.g. Your_App). Usually
                                 the module name of your app. Can be found under 'Product Module Name'
                                 in your app targets build settings.
-    
+
     - throws: An exception if the replacing class is not a subclass of the replaced class.
     */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
