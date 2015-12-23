@@ -17,7 +17,7 @@ import CoreGraphics
 /**
    Provides a filter to crop images.
 */
-public class IMGLYCropFilter: CIFilter {
+public class IMGLYCropFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 

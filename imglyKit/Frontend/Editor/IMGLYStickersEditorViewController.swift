@@ -60,7 +60,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         }()
 
     private var draggedView: UIView?
-    private var tempStickerCopy = [CIFilter]()
+    private var tempStickerCopy = [FilterType]()
 
     // MARK: - IMGLYEditorViewController
 
@@ -288,7 +288,7 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     * to the full image.
     * When we are done we must revoke that extra transformation.
     */
-    private func addStickerImagesFromStickerFilters(stickerFilters: [CIFilter]) {
+    private func addStickerImagesFromStickerFilters(stickerFilters: [FilterType]) {
         for element in stickerFilters {
             guard let stickerFilter = element as? IMGLYStickerFilter else {
                 return

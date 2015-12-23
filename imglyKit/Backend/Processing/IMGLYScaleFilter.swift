@@ -13,7 +13,7 @@
     import QuartzCore
 #endif
 
-public class IMGLYScaleFilter: CIFilter {
+public class IMGLYScaleFilter: CIFilter, FilterType {
     public var inputImage: CIImage?
     public var scale = Float(1)
 

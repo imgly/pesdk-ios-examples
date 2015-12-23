@@ -16,7 +16,7 @@ import QuartzCore
 
 import CoreGraphics
 
-public class IMGLYStickerFilter: CIFilter {
+public class IMGLYStickerFilter: CIFilter, FilterType {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 
