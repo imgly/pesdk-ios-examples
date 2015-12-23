@@ -126,7 +126,7 @@ All types of response-filters.
 
     #elseif os(OSX)
 
-    public class func processWithNSImage(image: NSImage, filters: [FilterType]) -> NSImage? {
+    public class func processWithNSImage(image: NSImage, filters: [Filter]) -> NSImage? {
         if let tiffRepresentation = image.TIFFRepresentation, image = CIImage(data: tiffRepresentation) {
             let filteredCIImage = processWithCIImage(image, filters: filters)
 
