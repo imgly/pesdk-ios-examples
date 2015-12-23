@@ -182,11 +182,18 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
     // MARK: Class replacement
     
     /**
-     Use this to use a specific subclass instead of the default imglyKit classes. This works
-     across all the whole framework and allows you to subclass all usages of a class.
-     
-     - Throws: An exception if the replacing class is not a subclass of the replaced class.
-     */
+    Use this to use a specific subclass instead of the default imglyKit **view controller** classes. This works
+    across all the whole framework and allows you to subclass all usages of a class. As of now, only **view
+    controller** can be replaced!
+    
+    - parameter builtinClass:   The built in class, that should be replaced.
+    - parameter replacingClass: The class that replaces the builtin class.
+    - parameter namespace:      The namespace of the replacing class (e.g. Your_App). Usually
+                                the module name of your app. Can be found under 'Product Module Name'
+                                in your app targets build settings.
+    
+    - throws: An exception if the replacing class is not a subclass of the replaced class.
+    */
     public func replaceClass(builtinClass: NSObject.Type, replacingClass: NSObject.Type, namespace: String) throws {
         
         if (!replacingClass.isSubclassOfClass(builtinClass)) {
@@ -197,7 +204,7 @@ public typealias IMGLYTextFieldConfigurationClosure = (UITextField) -> ()
         let replacingClassName = "\(namespace).\(String(replacingClass))"
         
         classReplacingMap[builtinClassName] = replacingClassName
-        print("Using \(replacingClassName) instead of \(builtinClassName)")
+        print("imglyKit: Using \(replacingClassName) instead of \(builtinClassName)")
     }
     
     // MARK: Private properties

@@ -15,7 +15,7 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     
     // MARK: - Properties
     
-    public let fixedFilterStack: IMGLYFixedFilterStack
+    public var fixedFilterStack: IMGLYFixedFilterStack = IMGLYFixedFilterStack()
     public var completionHandler: IMGLYSubEditorCompletionBlock?
     
     // MARK: - Initializers
@@ -27,6 +27,10 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
 
     required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    required public override init(nibName: String?, bundle: NSBundle?) {
+        super.init(nibName: nibName, bundle: bundle)
     }
     
     // MARK: - EditorViewController

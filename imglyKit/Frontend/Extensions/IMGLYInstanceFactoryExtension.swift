@@ -46,39 +46,66 @@ extension IMGLYInstanceFactory {
     }
     
     public class func filterEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYFilterEditorViewController {
-        return IMGLYFilterEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYFilterEditorViewController.self).init() as! IMGLYFilterEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func stickersEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYStickersEditorViewController {
-        return IMGLYStickersEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYStickersEditorViewController.self).init() as! IMGLYStickersEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func orientationEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYOrientationEditorViewController {
-        return IMGLYOrientationEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYOrientationEditorViewController.self).init() as! IMGLYOrientationEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func focusEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYFocusEditorViewController {
-        return IMGLYFocusEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYFocusEditorViewController.self).init() as! IMGLYFocusEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func cropEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYCropEditorViewController {
-        return IMGLYCropEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYCropEditorViewController.self).init() as! IMGLYCropEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func brightnessEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYBrightnessEditorViewController {
-        return IMGLYBrightnessEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYBrightnessEditorViewController.self).init() as! IMGLYBrightnessEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func contrastEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYContrastEditorViewController {
-        return IMGLYContrastEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYContrastEditorViewController.self).init() as! IMGLYContrastEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYSaturationEditorViewController {
-        return IMGLYSaturationEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYSaturationEditorViewController.self).init() as! IMGLYSaturationEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     public class func textEditorViewControllerWithFixedFilterStack(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) -> IMGLYTextEditorViewController {
-        return IMGLYTextEditorViewController(fixedFilterStack: fixedFilterStack, configuration: configuration)
+        let vc = configuration.getClassForReplacedClass(IMGLYTextEditorViewController.self).init() as! IMGLYTextEditorViewController
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
     }
     
     // MARK: - Gradient Views
