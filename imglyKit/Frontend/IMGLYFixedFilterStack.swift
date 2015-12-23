@@ -62,6 +62,14 @@ public class IMGLYFixedFilterStack: NSObject {
         rotateStickers(CGFloat(-M_PI_2), negateX: false, negateY: true)
     }
     
+    public func rotateTextRight () {
+        rotateText(CGFloat(M_PI_2), negateX: true, negateY: false)
+    }
+    
+    public func rotateTextLeft () {
+        rotateText(CGFloat(-M_PI_2), negateX: false, negateY: true)
+    }
+    
     private func rotateStickers (angle:CGFloat, negateX:Bool ,negateY:Bool) {
         let xFactor:CGFloat = negateX ? -1.0 : 1.0
         let yFactor:CGFloat = negateY ? -1.0 : 1.0
@@ -79,6 +87,20 @@ public class IMGLYFixedFilterStack: NSObject {
         }
     }
 
+    private func rotateText (angle:CGFloat, negateX:Bool ,negateY:Bool) {
+        let xFactor:CGFloat = negateX ? -1.0 : 1.0
+        let yFactor:CGFloat = negateY ? -1.0 : 1.0
+        textFilter.transform = CGAffineTransformRotate(textFilter.transform, angle)
+        textFilter.center.x -= 0.5
+        textFilter.center.y -= 0.5
+        let center = textFilter.center
+        textFilter.center.x = xFactor * center.y
+        textFilter.center.y = yFactor * center.x
+        textFilter.center.x += 0.5
+        textFilter.center.y += 0.5
+    }
+
+    
     public func flipStickersHorizontal () {
         flipStickers(true)
     }

@@ -145,6 +145,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     @objc private func rotateLeft(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.rotateLeft()
         fixedFilterStack.rotateStickersLeft()
+        fixedFilterStack.rotateTextLeft()
         updatePreviewImageWithoutCropWithCompletion {
             self.view.layoutIfNeeded()
         }
@@ -153,6 +154,7 @@ public class IMGLYOrientationEditorViewController: IMGLYSubEditorViewController 
     @objc private func rotateRight(sender: IMGLYImageCaptionButton) {
         fixedFilterStack.orientationCropFilter.rotateRight()
         fixedFilterStack.rotateStickersRight()
+        fixedFilterStack.rotateTextRight()
         updatePreviewImageWithoutCropWithCompletion {
             self.view.layoutIfNeeded()
         }
