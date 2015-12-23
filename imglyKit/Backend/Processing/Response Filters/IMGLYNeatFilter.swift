@@ -12,7 +12,7 @@ public class IMGLYNeatFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Neat")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYNeatFilter: EffectFilterType {
     public var displayName: String {
         return "Neat"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Neat
     }

@@ -54,7 +54,7 @@ import UIKit
 */
 @objc public class IMGLYFiltersDataSource: NSObject, IMGLYFiltersDataSourceProtocol {
 
-    let InitialFilterIntensity = Float(0.75)
+    let initialFilterIntensity = Float(0.75)
 
     private var availableFilterTypes: [IMGLYFilterType] = IMGLYInstanceFactory.availableFilterList
 
@@ -109,6 +109,6 @@ import UIKit
     }
 
     public func initialIntensityForFilterAtIndex(index: Int) -> Float {
-        return InitialFilterIntensity
+        return initialFilterIntensity
     }
 }

@@ -18,6 +18,8 @@ import AppKit
 /**
 All types of response-filters.
 */
+
+// swiftlint:disable type_name
 @objc public enum IMGLYFilterType: Int {
     case None,
     K1,
@@ -82,6 +84,7 @@ All types of response-filters.
     Neat,
     Plate
 }
+// swiftlint:enable type_name
 
 public class IMGLYPhotoProcessor {
     public class func processWithCIImage(image: CIImage, filters: [FilterType]) -> CIImage? {

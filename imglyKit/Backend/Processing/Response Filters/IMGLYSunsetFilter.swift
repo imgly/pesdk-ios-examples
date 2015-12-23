@@ -12,7 +12,7 @@ public class IMGLYSunsetFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Sunset")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSunsetFilter: EffectFilterType {
     public var displayName: String {
         return "Sunset"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Sunset
     }

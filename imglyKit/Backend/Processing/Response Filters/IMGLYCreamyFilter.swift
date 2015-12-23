@@ -12,7 +12,7 @@ public class IMGLYCreamyFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Creamy")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYCreamyFilter: EffectFilterType {
     public var displayName: String {
         return "Creamy"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Creamy
     }

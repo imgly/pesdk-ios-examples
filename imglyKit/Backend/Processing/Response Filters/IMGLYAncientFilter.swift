@@ -12,7 +12,7 @@ public class IMGLYAncientFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Ancient")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYAncientFilter: EffectFilterType {
     public var displayName: String {
         return "Ancient"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Ancient
     }

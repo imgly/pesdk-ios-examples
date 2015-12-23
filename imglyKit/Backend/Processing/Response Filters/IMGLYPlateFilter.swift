@@ -12,7 +12,7 @@ public class IMGLYPlateFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Plate")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYPlateFilter: EffectFilterType {
     public var displayName: String {
         return "Plate"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Plate
     }

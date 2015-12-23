@@ -12,7 +12,7 @@ public class IMGLYFallFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Fall")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYFallFilter: EffectFilterType {
     public var displayName: String {
         return "Fall"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Fall
     }

@@ -12,7 +12,7 @@ public class IMGLYFridgeFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Fridge")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYFridgeFilter: EffectFilterType {
     public var displayName: String {
         return "Fridge"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Fridge
     }

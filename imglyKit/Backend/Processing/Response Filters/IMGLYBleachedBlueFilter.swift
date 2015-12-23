@@ -12,7 +12,7 @@ public class IMGLYBleachedBlueFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "BleachedBlue")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYBleachedBlueFilter: EffectFilterType {
     public var displayName: String {
         return "B-Blue"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .BleachedBlue
     }

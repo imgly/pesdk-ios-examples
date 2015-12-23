@@ -12,7 +12,7 @@ public class IMGLYSeventiesFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Seventies")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSeventiesFilter: EffectFilterType {
     public var displayName: String {
         return "70s"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Seventies
     }

@@ -12,7 +12,7 @@ public class IMGLYCelsiusFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Celsius")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYCelsiusFilter: EffectFilterType {
     public var displayName: String {
         return "Celsius"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Celsius
     }

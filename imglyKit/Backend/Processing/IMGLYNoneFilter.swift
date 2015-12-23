@@ -20,7 +20,7 @@ public class IMGLYNoneFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "None")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -39,7 +39,7 @@ extension IMGLYNoneFilter: EffectFilterType {
     public var displayName: String {
         return "None"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .None
     }

@@ -12,7 +12,7 @@ public class IMGLYHighcarbFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Highcarb")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYHighcarbFilter: EffectFilterType {
     public var displayName: String {
         return "Carb"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Highcarb
     }

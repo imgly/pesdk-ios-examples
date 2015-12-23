@@ -12,7 +12,7 @@ public class IMGLYSinFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Sin")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSinFilter: EffectFilterType {
     public var displayName: String {
         return "Sin"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Sin
     }

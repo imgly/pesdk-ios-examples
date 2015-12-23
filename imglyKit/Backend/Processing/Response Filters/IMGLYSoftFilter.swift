@@ -12,7 +12,7 @@ public class IMGLYSoftFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Soft")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSoftFilter: EffectFilterType {
     public var displayName: String {
         return "Soft"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Soft
     }

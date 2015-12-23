@@ -17,10 +17,10 @@ import QuartzCore
 Represents the angle an image should be rotated by.
 */
 @objc public enum IMGLYRotationAngle: Int {
-    case _0
-    case _90
-    case _180
-    case _270
+    case Deg0
+    case Deg90
+    case Deg180
+    case Deg270
 }
 
 /**
@@ -34,9 +34,9 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     public var inputImage: CIImage?
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
-    private var rotationAngle = IMGLYRotationAngle._0
-    private var flipVertical_ = false
-    private var flipHorizontal_ = false
+    private var rotationAngle = IMGLYRotationAngle.Deg0
+    private var flippedVertically = false
+    private var flippedHorizontally = false
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {
@@ -46,8 +46,8 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
 
         let radiant = realNumberForRotationAngle(rotationAngle)
         let rotationTransformation = CGAffineTransformMakeRotation(radiant)
-        let flipH: CGFloat = flipHorizontal_ ? -1 : 1
-        let flipV: CGFloat = flipVertical_ ? -1 : 1
+        let flipH: CGFloat = flippedHorizontally ? -1 : 1
+        let flipV: CGFloat = flippedVertically ? -1 : 1
         var flipTransformation = CGAffineTransformScale(rotationTransformation, flipH, flipV)
 
         guard let filter = CIFilter(name: "CIAffineTransform") else {
@@ -64,7 +64,7 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
 
         #if os(iOS)
             let transform = NSValue(CGAffineTransform: flipTransformation)
-            #elseif os(OSX)
+        #elseif os(OSX)
             let transform = NSAffineTransform(CGAffineTransform: flipTransformation)
         #endif
 
@@ -100,13 +100,13 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
 
     private func realNumberForRotationAngle(rotationAngle: IMGLYRotationAngle) -> CGFloat {
         switch rotationAngle {
-        case IMGLYRotationAngle._0:
+        case IMGLYRotationAngle.Deg0:
              return 0
-        case IMGLYRotationAngle._90:
+        case IMGLYRotationAngle.Deg90:
             return CGFloat(M_PI_2)
-        case IMGLYRotationAngle._180:
+        case IMGLYRotationAngle.Deg180:
             return CGFloat(M_PI)
-        case IMGLYRotationAngle._270:
+        case IMGLYRotationAngle.Deg270:
             return CGFloat(M_PI_2 + M_PI)
         }
     }
@@ -117,15 +117,16 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     */
     public func rotateLeft() {
         switch rotationAngle {
-        case IMGLYRotationAngle._0:
-            rotationAngle = IMGLYRotationAngle._90
-        case IMGLYRotationAngle._90:
-            rotationAngle = IMGLYRotationAngle._180
-        case IMGLYRotationAngle._180:
-            rotationAngle = IMGLYRotationAngle._270
-        case IMGLYRotationAngle._270:
-            rotationAngle = IMGLYRotationAngle._0
+        case IMGLYRotationAngle.Deg0:
+            rotationAngle = IMGLYRotationAngle.Deg90
+        case IMGLYRotationAngle.Deg90:
+            rotationAngle = IMGLYRotationAngle.Deg180
+        case IMGLYRotationAngle.Deg180:
+            rotationAngle = IMGLYRotationAngle.Deg270
+        case IMGLYRotationAngle.Deg270:
+            rotationAngle = IMGLYRotationAngle.Deg0
         }
+
         rotateCropRectLeft()
     }
 
@@ -134,15 +135,16 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     */
     public func rotateRight() {
         switch rotationAngle {
-        case IMGLYRotationAngle._0:
-            rotationAngle = IMGLYRotationAngle._270
-        case IMGLYRotationAngle._90:
-            rotationAngle = IMGLYRotationAngle._0
-        case IMGLYRotationAngle._180:
-            rotationAngle = IMGLYRotationAngle._90
-        case IMGLYRotationAngle._270:
-            rotationAngle = IMGLYRotationAngle._180
+        case IMGLYRotationAngle.Deg0:
+            rotationAngle = IMGLYRotationAngle.Deg270
+        case IMGLYRotationAngle.Deg90:
+            rotationAngle = IMGLYRotationAngle.Deg0
+        case IMGLYRotationAngle.Deg180:
+            rotationAngle = IMGLYRotationAngle.Deg90
+        case IMGLYRotationAngle.Deg270:
+            rotationAngle = IMGLYRotationAngle.Deg180
         }
+
         rotateCropRectRight()
     }
 
@@ -208,11 +210,12 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     Sets internal flags so that the filtered image will be rotated flipped along the horizontal axis.
     */
     public func flipHorizontal() {
-        if rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180 {
-            flipHorizontal_ = !flipHorizontal_
+        if rotationAngle == IMGLYRotationAngle.Deg0 || rotationAngle == IMGLYRotationAngle.Deg180 {
+            flippedHorizontally = !flippedHorizontally
         } else {
-            flipVertical_ = !flipVertical_
+            flippedVertically = !flippedVertically
         }
+
         flipCropRectHorizontal()
     }
 
@@ -220,23 +223,26 @@ public class IMGLYOrientationCropFilter: CIFilter, FilterType {
     Sets internal flags so that the filtered image will be rotated flipped along the vertical axis.
     */
     public func flipVertical() {
-        if rotationAngle == IMGLYRotationAngle._0 || rotationAngle == IMGLYRotationAngle._180 {
-            flipVertical_ = !flipVertical_
+        if rotationAngle == IMGLYRotationAngle.Deg0 || rotationAngle == IMGLYRotationAngle.Deg180 {
+            flippedVertically = !flippedVertically
         } else {
-            flipHorizontal_ = !flipHorizontal_
+            flippedHorizontally = !flippedHorizontally
         }
+
         flipCropRectVertical()
     }
 }
 
 extension IMGLYOrientationCropFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYOrientationCropFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.cropRect = cropRect
         copy.rotationAngle = rotationAngle
-        copy.flipVertical_ = flipVertical_
-        copy.flipHorizontal_ = flipHorizontal_
+        copy.flippedVertically = flippedVertically
+        copy.flippedHorizontally = flippedHorizontally
         return copy
     }
 }

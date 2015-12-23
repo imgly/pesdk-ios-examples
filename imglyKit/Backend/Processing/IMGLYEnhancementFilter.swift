@@ -71,7 +71,9 @@ public class IMGLYEnhancementFilter: CIFilter, FilterType {
 
 extension IMGLYEnhancementFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYEnhancementFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.enabled = enabled
         copy.storeEnhancedImage = storeEnhancedImage

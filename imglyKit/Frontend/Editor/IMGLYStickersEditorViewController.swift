@@ -327,7 +327,9 @@ extension IMGLYStickersEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(StickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! IMGLYStickerCollectionViewCell
+        // swiftlint:enable force_cast
 
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         cell.imageView.image = sticker.thumbnail ?? sticker.image

@@ -36,7 +36,9 @@ public class IMGLYScaleFilter: CIFilter, FilterType {
 
 extension IMGLYScaleFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYScaleFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.scale = scale
         return copy

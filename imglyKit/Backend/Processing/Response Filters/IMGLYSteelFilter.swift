@@ -12,7 +12,7 @@ public class IMGLYSteelFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Steel")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSteelFilter: EffectFilterType {
     public var displayName: String {
         return "Steel"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Steel
     }

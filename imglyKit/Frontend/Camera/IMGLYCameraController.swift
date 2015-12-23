@@ -51,9 +51,9 @@ func < (lhs: IMGLYSDKVersion, rhs: IMGLYSDKVersion) -> Bool {
 let CurrentSDKVersion = IMGLYSDKVersion(majorVersion: 2, minorVersion: 4, patchVersion: 1)
 
 private let kIMGLYIndicatorSize = CGFloat(75)
-private var CapturingStillImageContext = 0
-private var SessionRunningAndDeviceAuthorizedContext = 0
-private var FocusAndExposureContext = 0
+private var capturingStillImageContext = 0
+private var sessionRunningAndDeviceAuthorizedContext = 0
+private var focusAndExposureContext = 0
 
 @objc public protocol IMGLYCameraControllerDelegate: class {
     optional func cameraControllerDidStartCamera(cameraController: IMGLYCameraController)
@@ -196,13 +196,13 @@ public class IMGLYCameraController: NSObject {
     }
 
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
-        if context == &CapturingStillImageContext {
+        if context == &capturingStillImageContext {
             let capturingStillImage = change?[NSKeyValueChangeNewKey]?.boolValue
 
             if let isCapturingStillImage = capturingStillImage where isCapturingStillImage {
                 self.delegate?.cameraControllerDidStartStillImageCapture?(self)
             }
-        } else if context == &SessionRunningAndDeviceAuthorizedContext {
+        } else if context == &sessionRunningAndDeviceAuthorizedContext {
             let running = change?[NSKeyValueChangeNewKey]?.boolValue
 
             if let isRunning = running {
@@ -212,7 +212,7 @@ public class IMGLYCameraController: NSObject {
                     self.delegate?.cameraControllerDidStopCamera?(self)
                 }
             }
-        } else if context == &FocusAndExposureContext {
+        } else if context == &focusAndExposureContext {
             dispatch_async(dispatch_get_main_queue()) {
                 self.updateFocusIndicatorLayer()
             }
@@ -245,8 +245,8 @@ public class IMGLYCameraController: NSObject {
                         if let json = json, version = json["version"] as? String, versionComponents = self.versionComponentsFromString(version) {
                             let remoteVersion = IMGLYSDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
 
-                            if CurrentSDKVersion < remoteVersion {
-                                print("Your version of the img.ly SDK is outdated. You are using version \(CurrentSDKVersion), the latest available version is \(remoteVersion). Please consider updating.")
+                            if kCurrentSDKVersion < remoteVersion {
+                                print("Your version of the img.ly SDK is outdated. You are using version \(kCurrentSDKVersion), the latest available version is \(remoteVersion). Please consider updating.")
                             }
                         }
                     } catch {
@@ -1002,8 +1002,8 @@ public class IMGLYCameraController: NSObject {
 
     private func startCameraWithCompletion(completion: (() -> (Void))?) {
         dispatch_async(sessionQueue) {
-            self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old, .New], context: &SessionRunningAndDeviceAuthorizedContext)
-            self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options: [.Old, .New], context: &CapturingStillImageContext)
+            self.addObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", options: [.Old, .New], context: &sessionRunningAndDeviceAuthorizedContext)
+            self.addObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", options: [.Old, .New], context: &capturingStillImageContext)
 
             self.addObserversToInputDevice()
 
@@ -1020,8 +1020,8 @@ public class IMGLYCameraController: NSObject {
 
     private func addObserversToInputDevice() {
         if let device = self.videoDeviceInput?.device {
-            device.addObserver(self, forKeyPath: "focusMode", options: [.Old, .New], context: &FocusAndExposureContext)
-            device.addObserver(self, forKeyPath: "exposureMode", options: [.Old, .New], context: &FocusAndExposureContext)
+            device.addObserver(self, forKeyPath: "focusMode", options: [.Old, .New], context: &focusAndExposureContext)
+            device.addObserver(self, forKeyPath: "exposureMode", options: [.Old, .New], context: &focusAndExposureContext)
         }
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "subjectAreaDidChange:", name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput?.device)
@@ -1029,8 +1029,8 @@ public class IMGLYCameraController: NSObject {
 
     private func removeObserversFromInputDevice() {
         if let device = self.videoDeviceInput?.device {
-            device.removeObserver(self, forKeyPath: "focusMode", context: &FocusAndExposureContext)
-            device.removeObserver(self, forKeyPath: "exposureMode", context: &FocusAndExposureContext)
+            device.removeObserver(self, forKeyPath: "focusMode", context: &focusAndExposureContext)
+            device.removeObserver(self, forKeyPath: "exposureMode", context: &focusAndExposureContext)
         }
 
         NSNotificationCenter.defaultCenter().removeObserver(self, name: AVCaptureDeviceSubjectAreaDidChangeNotification, object: self.videoDeviceInput?.device)
@@ -1060,8 +1060,8 @@ public class IMGLYCameraController: NSObject {
                 NSNotificationCenter.defaultCenter().removeObserver(runtimeErrorHandlingObserver)
             }
 
-            self.removeObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", context: &SessionRunningAndDeviceAuthorizedContext)
-            self.removeObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", context: &CapturingStillImageContext)
+            self.removeObserver(self, forKeyPath: "sessionRunningAndDeviceAuthorized", context: &sessionRunningAndDeviceAuthorizedContext)
+            self.removeObserver(self, forKeyPath: "stillImageOutput.capturingStillImage", context: &capturingStillImageContext)
             completion?()
         }
     }
@@ -1355,7 +1355,9 @@ public class IMGLYCameraController: NSObject {
     }
 
     class func deviceWithMediaType(mediaType: String, preferringPosition position: AVCaptureDevicePosition?) -> AVCaptureDevice? {
+        // swiftlint:disable force_cast
         let devices = AVCaptureDevice.devicesWithMediaType(mediaType) as! [AVCaptureDevice]
+        // swiftlint:enable force_cast
         var captureDevice = devices.first
 
         if let position = position {

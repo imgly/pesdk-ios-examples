@@ -42,8 +42,10 @@ public class IMGLYFixedFilterStack: NSObject {
     }
 
     private func setCropRectForStickerFilters () {
-        for stickerFilter in stickerFilters {
+        for stickerFilter in stickerFilters where stickerFilter is IMGLYStickerFilter {
+            // swiftlint:disable force_cast
             (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
+            // swiftlint:enable force_fast
         }
     }
     
@@ -216,6 +218,7 @@ public class IMGLYFixedFilterStack: NSObject {
 extension IMGLYFixedFilterStack: NSCopying {
     public func copyWithZone(zone: NSZone) -> AnyObject {
         let copy = self.dynamicType.init()
+        // swiftlint:disable force_cast
         copy.enhancementFilter = enhancementFilter.copyWithZone(zone) as! IMGLYEnhancementFilter
         copy.orientationCropFilter = orientationCropFilter.copyWithZone(zone) as! IMGLYOrientationCropFilter
         copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilterType
@@ -223,6 +226,7 @@ extension IMGLYFixedFilterStack: NSCopying {
         copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! IMGLYTiltshiftFilter
         copy.textFilter = textFilter.copyWithZone(zone) as! IMGLYTextFilter
         copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [FilterType]
+        // swiftlint:enable force_cast
         return copy
     }
 }

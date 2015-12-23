@@ -8,11 +8,11 @@
 
 import UIKit
 
-private let FilterCollectionViewCellReuseIdentifier = "FilterCollectionViewCell"
-private let FilterCollectionViewCellSize = CGSize(width: 60, height: 90)
-private let FilterActivationDuration = NSTimeInterval(0.15)
+private let kFilterCollectionViewCellReuseIdentifier = "FilterCollectionViewCell"
+private let kFilterCollectionViewCellSize = CGSize(width: 60, height: 90)
+private let kFilterActivationDuration = NSTimeInterval(0.15)
 
-private var FilterPreviews = [IMGLYFilterType : UIImage]()
+private var filterPreviews = [IMGLYFilterType : UIImage]()
 
 public typealias IMGLYFilterTypeSelectedBlock = (IMGLYFilterType, Float) -> (Void)
 public typealias IMGLYFilterTypeActiveBlock = () -> (IMGLYFilterType?)
@@ -30,7 +30,7 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
 
     init() {
         let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.itemSize = FilterCollectionViewCellSize
+        flowLayout.itemSize = kFilterCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
         flowLayout.minimumInteritemSpacing = 7
@@ -38,7 +38,7 @@ public class IMGLYFilterSelectionController: UICollectionViewController {
         super.init(collectionViewLayout: flowLayout)
 
         view.translatesAutoresizingMaskIntoConstraints = false
-        collectionView?.registerClass(IMGLYFilterCollectionViewCell.self, forCellWithReuseIdentifier: FilterCollectionViewCellReuseIdentifier)
+        collectionView?.registerClass(IMGLYFilterCollectionViewCell.self, forCellWithReuseIdentifier: kFilterCollectionViewCellReuseIdentifier)
         collectionView?.backgroundColor = UIColor.clearColor()
     }
 
@@ -53,7 +53,7 @@ extension IMGLYFilterSelectionController {
     }
 
     public override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(FilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kFilterCollectionViewCellReuseIdentifier, forIndexPath: indexPath)
 
         if let filterCell = cell as? IMGLYFilterCollectionViewCell {
             let filterType = dataSource.filterTypeAtIndex(indexPath.item)
@@ -67,7 +67,7 @@ extension IMGLYFilterSelectionController {
             filterCell.tickImageView.image = self.dataSource.selectedImageForFilterAtIndex(indexPath.item)
             filterCell.hideTick()
 
-            if let filterPreviewImage = FilterPreviews[filterType] {
+            if let filterPreviewImage = filterPreviews[filterType] {
                 self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filterType, forImage: filterPreviewImage)
                 filterCell.activityIndicator.stopAnimating()
             } else {
@@ -78,7 +78,7 @@ extension IMGLYFilterSelectionController {
                     let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(self.dataSource.previewImageForFilterAtIndex(indexPath.item), filters: [filter])
 
                     dispatch_async(dispatch_get_main_queue()) {
-                        FilterPreviews[filterType] = filterPreviewImage
+                        filterPreviews[filterType] = filterPreviewImage
                         if let filterCell = collectionView.cellForItemAtIndexPath(indexPath) as? IMGLYFilterCollectionViewCell {
                             self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
                             filterCell.activityIndicator.stopAnimating()
@@ -119,7 +119,7 @@ extension IMGLYFilterSelectionController {
 
         // get cell of previously selected filter if visible
         if let selectedCellIndex = self.selectedCellIndex, let cell = collectionView.cellForItemAtIndexPath(NSIndexPath(forItem: selectedCellIndex, inSection: 0)) as? IMGLYFilterCollectionViewCell {
-            UIView.animateWithDuration(FilterActivationDuration, animations: { () -> Void in
+            UIView.animateWithDuration(kFilterActivationDuration, animations: { () -> Void in
                 cell.hideTick()
             })
         }
@@ -130,7 +130,7 @@ extension IMGLYFilterSelectionController {
         if let cell = collectionView.cellForItemAtIndexPath(indexPath) as? IMGLYFilterCollectionViewCell {
             selectedCellIndex = indexPath.item
 
-            UIView.animateWithDuration(FilterActivationDuration, animations: { () -> Void in
+            UIView.animateWithDuration(kFilterActivationDuration, animations: { () -> Void in
                 cell.showTick()
             })
         }

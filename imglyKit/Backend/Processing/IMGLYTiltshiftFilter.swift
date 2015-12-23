@@ -38,11 +38,11 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
     /// The radius that is set to the gaussian filter during the whole process. Default is 4.
     public var blurRadius = CGFloat(4)
 
-    private var center_ = CGPoint(x: 0.5, y: 0.5)
-    private var radius_ = CGFloat(0.1)
-    private var scaleVector_ = CGPointZero
-    private var imageSize_ = CGSizeZero
-    private var rect_ = CGRectZero
+    private var center = CGPoint(x: 0.5, y: 0.5)
+    private var radius = CGFloat(0.1)
+    private var scaleVector = CGPointZero
+    private var imageSize = CGSizeZero
+    private var rect = CGRectZero
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {
@@ -54,8 +54,8 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
             return inputImage
         }
 
-        rect_ = inputImage.extent
-        imageSize_ = rect_.size
+        rect = inputImage.extent
+        imageSize = rect.size
         calcScaleVector()
         calculateCenterAndRadius()
 
@@ -80,25 +80,25 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
 
 
     private func calcScaleVector() {
-        if imageSize_.height > imageSize_.width {
-            scaleVector_ = CGPoint(x: imageSize_.width / imageSize_.height, y: 1.0)
+        if imageSize.height > imageSize.width {
+            scaleVector = CGPoint(x: imageSize.width / imageSize.height, y: 1.0)
         } else {
-            scaleVector_ = CGPoint(x: 1.0, y: imageSize_.height / imageSize_.width)
+            scaleVector = CGPoint(x: 1.0, y: imageSize.height / imageSize.width)
         }
     }
 
     // MARK:- Radial Mask-creation
     private func calculateCenterAndRadius() {
-        center_ = CGPoint(x: (controlPoint1.x + controlPoint2.x) * 0.5,
+        center = CGPoint(x: (controlPoint1.x + controlPoint2.x) * 0.5,
             y: (controlPoint1.y + controlPoint2.y) * 0.5)
-        let midVectorX = (center_.x - controlPoint1.x) * scaleVector_.x
-        let midVectorY = (center_.y - controlPoint1.y) * scaleVector_.y
-        radius_ = sqrt(midVectorX * midVectorX + midVectorY * midVectorY)
+        let midVectorX = (center.x - controlPoint1.x) * scaleVector.x
+        let midVectorY = (center.y - controlPoint1.y) * scaleVector.y
+        radius = sqrt(midVectorX * midVectorX + midVectorY * midVectorY)
     }
 
     private func createRadialMaskImage() -> CIImage? {
-        let factor = imageSize_.width > imageSize_.height ? imageSize_.width : imageSize_.height
-        let radiusInPixels = factor * radius_
+        let factor = imageSize.width > imageSize.height ? imageSize.width : imageSize.height
+        let radiusInPixels = factor * radius
         let fadeWidth = radiusInPixels * 0.4
 
         guard let filter = CIFilter(name: "CIRadialGradient"), cropFilter = CIFilter(name: "CICrop") else {
@@ -108,7 +108,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         filter.setValue(radiusInPixels, forKey: "inputRadius0")
         filter.setValue(radiusInPixels + fadeWidth, forKey: "inputRadius1")
 
-        let centerInPixels = CIVector(CGPoint: CGPoint(x: rect_.width * center_.x, y: rect_.height * (1.0 - center_.y)))
+        let centerInPixels = CIVector(CGPoint: CGPoint(x: rect.width * center.x, y: rect.height * (1.0 - center.y)))
         filter.setValue(centerInPixels, forKey: "inputCenter")
 
         let innerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
@@ -117,7 +117,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         filter.setValue(outerColor, forKey: "inputColor0")
 
         // somehow a CIRadialGradient demands cropping afterwards
-        let rectAsVector = CIVector(CGRect: rect_)
+        let rectAsVector = CIVector(CGRect: rect)
         cropFilter.setValue(filter.outputImage, forKey: kCIInputImageKey)
         cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
 
@@ -128,8 +128,8 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         let innerColor = CIColor(red: 0, green: 1, blue: 0, alpha: 1)
         let outerColor = CIColor(red:0, green: 1, blue: 0, alpha: 0)
 
-        let controlPoint1InPixels = CGPoint(x: rect_.width * controlPoint1.x, y: rect_.height * (1.0 - controlPoint1.y))
-        let controlPoint2InPixels = CGPoint(x: rect_.width * controlPoint2.x, y: rect_.height * (1.0 - controlPoint2.y))
+        let controlPoint1InPixels = CGPoint(x: rect.width * controlPoint1.x, y: rect.height * (1.0 - controlPoint1.y))
+        let controlPoint2InPixels = CGPoint(x: rect.width * controlPoint2.x, y: rect.height * (1.0 - controlPoint2.y))
 
         let diagonalVector = CGPoint(x: controlPoint2InPixels.x - controlPoint1InPixels.x,
             y: controlPoint2InPixels.y - controlPoint1InPixels.y)
@@ -148,7 +148,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         filter.setValue(CIVector(CGPoint: controlPoint1InPixels), forKey: "inputPoint1")
 
         // somehow a CILinearGradient demands cropping afterwards
-        let rectAsVector = CIVector(CGRect: rect_)
+        let rectAsVector = CIVector(CGRect: rect)
         cropFilter.setValue(filter.outputImage, forKey: kCIInputImageKey)
         cropFilter.setValue(rectAsVector, forKey: "inputRectangle")
         let gradient1 = cropFilter.outputImage
@@ -175,7 +175,7 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
         blurFilter.setValue(inputImage!, forKey: kCIInputImageKey)
         blurFilter.setValue(blurRadius, forKey: "inputRadius")
 
-        let blurRect = rect_
+        let blurRect = rect
        // blurRect.origin.x += blurRadius / 2.0
       //  blurRect.origin.y += blurRadius / 2.0
 
@@ -188,17 +188,19 @@ public class IMGLYTiltshiftFilter: CIFilter, FilterType {
 
 extension IMGLYTiltshiftFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYTiltshiftFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.controlPoint1 = controlPoint1
         copy.controlPoint2 = controlPoint2
         copy.tiltShiftType = tiltShiftType
         copy.blurRadius = blurRadius
-        copy.center_ = center_
-        copy.radius_ = radius_
-        copy.scaleVector_ = scaleVector_
-        copy.imageSize_ = imageSize_
-        copy.rect_ = rect_
+        copy.center = center
+        copy.radius = radius
+        copy.scaleVector = scaleVector
+        copy.imageSize = imageSize
+        copy.rect = rect
         return copy
     }
 }

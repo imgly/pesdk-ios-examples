@@ -12,7 +12,7 @@ public class IMGLYEveningFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Evening")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYEveningFilter: EffectFilterType {
     public var displayName: String {
         return "Evening"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Evening
     }

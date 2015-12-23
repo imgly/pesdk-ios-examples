@@ -12,7 +12,7 @@ public class IMGLYOrchidFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Orchid")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYOrchidFilter: EffectFilterType {
     public var displayName: String {
         return "Orchid"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Orchid
     }

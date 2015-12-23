@@ -144,7 +144,9 @@ public class IMGLYStickerFilter: CIFilter, FilterType {
 
 extension IMGLYStickerFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYStickerFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.sticker = sticker
         copy.center = center

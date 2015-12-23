@@ -31,7 +31,7 @@ public class IMGLYResponseFilter: CIFilter, FilterType {
             colorCubeData = nil
         }
     }
-    
+
     public let responseName: String
 
     private var _colorCubeData: NSData?
@@ -48,7 +48,7 @@ public class IMGLYResponseFilter: CIFilter, FilterType {
             _colorCubeData = newValue
         }
     }
-    
+
     public required convenience override init() {
         self.init(responseName: "")
     }
@@ -87,7 +87,9 @@ public class IMGLYResponseFilter: CIFilter, FilterType {
 
 extension IMGLYResponseFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYResponseFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.inputIntensity = inputIntensity
         return copy

@@ -21,11 +21,11 @@ public class IMGLYFontSelectorView: UIScrollView {
 
     public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
         didSet {
-            for subview in self.subviews {
-                if subview is UIButton {
-                    let button = subview as! UIButton
-                    button.setTitleColor(fontPreviewTextColor, forState: .Normal)
-                }
+            for subview in self.subviews where subview is UIButton {
+                // swiftlint:disable force_cast
+                let button = subview as! UIButton
+                // swiftlint:enable force_cast
+                button.setTitleColor(fontPreviewTextColor, forState: .Normal)
             }
         }
     }

@@ -12,7 +12,7 @@ public class IMGLYTexasFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Texas")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYTexasFilter: EffectFilterType {
     public var displayName: String {
         return "Texas"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Texas
     }

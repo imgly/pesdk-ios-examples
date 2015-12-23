@@ -12,7 +12,7 @@ public class IMGLYSettledFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Settled")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSettledFilter: EffectFilterType {
     public var displayName: String {
         return "Settled"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Settled
     }

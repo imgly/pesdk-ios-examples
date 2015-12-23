@@ -12,7 +12,7 @@ public class IMGLYCoolFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Cool")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYCoolFilter: EffectFilterType {
     public var displayName: String {
         return "Cool"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Cool
     }

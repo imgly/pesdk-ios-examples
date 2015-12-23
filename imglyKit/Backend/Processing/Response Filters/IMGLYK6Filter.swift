@@ -12,7 +12,7 @@ public class IMGLYK6Filter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "K6")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYK6Filter: EffectFilterType {
     public var displayName: String {
         return "K6"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .K6
     }

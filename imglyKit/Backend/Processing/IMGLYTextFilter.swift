@@ -198,6 +198,7 @@ public class IMGLYTextFilter: CIFilter, FilterType {
 
 extension IMGLYTextFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYTextFilter
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.text = (text as NSString).copyWithZone(zone) as! String
@@ -212,6 +213,7 @@ extension IMGLYTextFilter {
         #elseif os(OSX)
         copy.color = color.copyWithZone(zone) as! NSColor
         #endif
+        // swiftlint:enable force_cast
 
         return copy
     }

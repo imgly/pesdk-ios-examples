@@ -12,7 +12,7 @@ public class IMGLYLucidFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Lucid")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYLucidFilter: EffectFilterType {
     public var displayName: String {
         return "Lucid"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Lucid
     }

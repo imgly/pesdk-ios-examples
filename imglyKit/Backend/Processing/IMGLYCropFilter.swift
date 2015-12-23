@@ -61,7 +61,9 @@ public class IMGLYCropFilter: CIFilter, FilterType {
 
 extension IMGLYCropFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
+        // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! IMGLYCropFilter
+        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.cropRect = cropRect
         return copy

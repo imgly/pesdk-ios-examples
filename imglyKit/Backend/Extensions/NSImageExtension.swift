@@ -12,10 +12,12 @@ import AppKit
 import CoreGraphics
 
 public extension NSImage {
+    // swiftlint:disable variable_name
     var CGImage: CoreGraphics.CGImage? {
         let cgImage = CGImageForProposedRect(nil, context: nil, hints: nil)
         return cgImage
     }
+    // swiftlint:enable variable?name
 }
 
 #endif

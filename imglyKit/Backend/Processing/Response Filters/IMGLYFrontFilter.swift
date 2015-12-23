@@ -12,7 +12,7 @@ public class IMGLYFrontFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Front")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYFrontFilter: EffectFilterType {
     public var displayName: String {
         return "Front"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Front
     }

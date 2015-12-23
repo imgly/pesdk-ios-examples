@@ -12,7 +12,7 @@ public class IMGLYPaleFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Pale")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYPaleFilter: EffectFilterType {
     public var displayName: String {
         return "Pale"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Pale
     }

@@ -12,7 +12,7 @@ public class IMGLYTwilightFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Twilight")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYTwilightFilter: EffectFilterType {
     public var displayName: String {
         return "Twilight"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Twilight
     }

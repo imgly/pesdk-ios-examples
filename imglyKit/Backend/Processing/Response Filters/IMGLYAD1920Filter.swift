@@ -22,7 +22,7 @@ extension IMGLYAD1920Filter: EffectFilterType {
     public var displayName: String {
         return "AD1920"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .AD1920
     }

@@ -12,7 +12,7 @@ public class IMGLYFixieFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Fixie")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYFixieFilter: EffectFilterType {
     public var displayName: String {
         return "Fixie"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Fixie
     }

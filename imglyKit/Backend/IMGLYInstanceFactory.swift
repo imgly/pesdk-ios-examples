@@ -87,7 +87,9 @@ public class IMGLYInstanceFactory {
     - returns: A CIFilter object that realizes the desired filter.
     */
     public class func effectFilterWithType(type: IMGLYFilterType) -> EffectFilterType {
+        // swiftlint:disable force_cast
         return filterTypeToFilter[type]!.init() as! EffectFilterType
+        // swiftlint:enable force_cast
     }
 
     /**

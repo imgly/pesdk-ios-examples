@@ -12,7 +12,7 @@ public class IMGLYGoblinFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Goblin")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYGoblinFilter: EffectFilterType {
     public var displayName: String {
         return "Goblin"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Goblin
     }

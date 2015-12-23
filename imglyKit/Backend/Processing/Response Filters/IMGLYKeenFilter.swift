@@ -12,7 +12,7 @@ public class IMGLYKeenFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Keen")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYKeenFilter: EffectFilterType {
     public var displayName: String {
         return "Keen"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Keen
     }

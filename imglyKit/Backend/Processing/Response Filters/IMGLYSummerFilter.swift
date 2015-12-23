@@ -12,7 +12,7 @@ public class IMGLYSummerFilter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "Summer")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYSummerFilter: EffectFilterType {
     public var displayName: String {
         return "Summer"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .Summer
     }

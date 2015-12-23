@@ -12,7 +12,7 @@ public class IMGLYX400Filter: IMGLYResponseFilter {
     required public init() {
         super.init(responseName: "X400")
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -22,7 +22,7 @@ extension IMGLYX400Filter: EffectFilterType {
     public var displayName: String {
         return "X400"
     }
-    
+
     public var filterType: IMGLYFilterType {
         return .X400
     }

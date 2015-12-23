@@ -21,7 +21,10 @@ public class IMGLYSubEditorViewController: IMGLYEditorViewController {
     // MARK: - Initializers
 
     public init(fixedFilterStack: IMGLYFixedFilterStack, configuration: IMGLYConfiguration) {
+        // swiftlint:disable force_cast
         self.fixedFilterStack = fixedFilterStack.copy() as! IMGLYFixedFilterStack
+        // swiftlint:enable force_cast
+
         super.init(configuration: configuration)
     }
 
