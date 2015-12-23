@@ -11,7 +11,7 @@ import UIKit
 private let kImageSize = CGSize(width: 36, height: 36)
 private let kImageCaptionMargin = 2
 
-public class ImageCaptionButton: UIControl {
+@objc(IMGLYImageCaptionButton) public class ImageCaptionButton: UIControl {
 
     // MARK: - Properties
 

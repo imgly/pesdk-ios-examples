@@ -52,7 +52,7 @@ import UIKit
  can be set in the initializer. Per default all filters
  currently included with the SDK are offered.
 */
-@objc public class FiltersDataSource: NSObject, FiltersDataSourceProtocol {
+@objc(IMGLYFiltersDataSource) public class FiltersDataSource: NSObject, FiltersDataSourceProtocol {
 
     let initialFilterIntensity = Float(0.75)
 

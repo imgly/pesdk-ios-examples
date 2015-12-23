@@ -10,7 +10,7 @@ import QuartzCore
 
 public typealias AnimationDelegateBlock = (Bool) -> (Void)
 
-public class AnimationDelegate: NSObject {
+@objc(IMGLYAnimationDelegate) public class AnimationDelegate: NSObject {
 
     // MARK: - Properties
 

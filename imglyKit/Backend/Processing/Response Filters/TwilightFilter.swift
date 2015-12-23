@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TwilightFilter: ResponseFilter {
+@objc(IMGLYTwilightFilter) public class TwilightFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Twilight")
     }

@@ -17,7 +17,7 @@ private var filterPreviews = [FilterType : UIImage]()
 public typealias FilterTypeSelectedBlock = (FilterType, Float) -> (Void)
 public typealias FilterTypeActiveBlock = () -> (FilterType?)
 
-public class FilterSelectionController: UICollectionViewController {
+@objc(IMGLYFilterSelectionController) public class FilterSelectionController: UICollectionViewController {
 
     // MARK: - Properties
 

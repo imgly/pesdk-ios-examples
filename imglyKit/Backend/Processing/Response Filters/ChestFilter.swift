@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class ChestFilter: ResponseFilter {
+@objc(IMGLYChestFilter) public class ChestFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Chest")
     }

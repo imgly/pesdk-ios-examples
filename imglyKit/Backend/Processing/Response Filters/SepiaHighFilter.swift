@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class SepiaHighFilter: ResponseFilter {
+@objc(IMGLYSepiaHighFilter) public class SepiaHighFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "SepiaHigh")
     }

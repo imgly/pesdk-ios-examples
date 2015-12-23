@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PolaSXFilter: ResponseFilter {
+@objc(IMGLYPolaSXFilter) public class PolaSXFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "PolaSX")
     }

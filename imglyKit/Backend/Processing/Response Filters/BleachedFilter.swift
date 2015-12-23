@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class BleachedFilter: ResponseFilter {
+@objc(IMGLYBleachedFilter) public class BleachedFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Bleached")
     }

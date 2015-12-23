@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class AD1920Filter: ResponseFilter {
+@objc(IMGLYAD1920Filter) public class AD1920Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "AD1920")
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class SaturationEditorViewController: SliderEditorViewController {
+@objc(IMGLYSaturationEditorViewController) public class SaturationEditorViewController: SliderEditorViewController {
 
     // MARK: - UIViewController
 

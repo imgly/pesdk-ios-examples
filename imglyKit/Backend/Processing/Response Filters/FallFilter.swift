@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class FallFilter: ResponseFilter {
+@objc(IMGLYFallFilter) public class FallFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Fall")
     }

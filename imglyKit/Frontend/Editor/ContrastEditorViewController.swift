@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ContrastEditorViewController: SliderEditorViewController {
+@objc(IMGLYContrastEditorViewController) public class ContrastEditorViewController: SliderEditorViewController {
 
     // MARK: - UIViewController
 

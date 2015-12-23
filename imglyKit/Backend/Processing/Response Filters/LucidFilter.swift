@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class LucidFilter: ResponseFilter {
+@objc(IMGLYLucidFilter) public class LucidFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lucid")
     }

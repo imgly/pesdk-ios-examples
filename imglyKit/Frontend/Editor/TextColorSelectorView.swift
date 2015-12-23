@@ -12,7 +12,7 @@ import UIKit
     func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor)
 }
 
-public class TextColorSelectorView: UIScrollView {
+@objc(IMGLYTextColorSelectorView) public class TextColorSelectorView: UIScrollView {
     public weak var menuDelegate: TextColorSelectorViewDelegate?
 
     private var colorArray: [UIColor] = []

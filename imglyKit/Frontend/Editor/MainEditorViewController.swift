@@ -9,7 +9,7 @@
 import UIKit
 
 // Options for configuring the MainEditorViewController
-@objc public class MainEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYMainEditorViewControllerOptions) public class MainEditorViewControllerOptions: EditorViewControllerOptions {
 
     /// Specifies the actions available in the bottom drawer. Defaults to the
     /// MainEditorActionsDataSource providing all editors.
@@ -26,7 +26,7 @@ import UIKit
 }
 
 // swiftlint:disable type_name
-@objc public class MainEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYMainEditorViewControllerOptionsBuilder) public class MainEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Specifies the actions available in the bottom drawer. Defaults to the
@@ -65,7 +65,7 @@ public typealias EditorCompletionBlock = (EditorResult, UIImage?) -> Void
 private let kButtonCollectionViewCellReuseIdentifier = "ButtonCollectionViewCell"
 private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
-public class MainEditorViewController: EditorViewController {
+@objc(IMGLYMainEditorViewController) public class MainEditorViewController: EditorViewController {
 
     // MARK: - Properties
     public var completionBlock: EditorCompletionBlock?

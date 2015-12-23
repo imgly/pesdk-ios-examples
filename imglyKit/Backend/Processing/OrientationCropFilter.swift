@@ -29,7 +29,7 @@ Represents the angle an image should be rotated by.
  This is needed since otherwise the resulting CIImage has no no size due the lack of inforamtion within
  the CIImage.
 */
-public class OrientationCropFilter: CIFilter, Filter {
+@objc(IMGLYOrientationCropFilter) public class OrientationCropFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)

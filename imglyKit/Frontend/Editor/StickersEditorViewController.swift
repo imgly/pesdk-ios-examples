@@ -13,7 +13,7 @@ let kStickersCollectionViewCellSize = CGSize(width: 90, height: 90)
 let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 // swiftlint:enable variable_name_max_length
 
-@objc public class StickersEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYStickersEditorViewControllerOptions) public class StickersEditorViewControllerOptions: EditorViewControllerOptions {
     /// An object conforming to the `StickersDataSourceProtocol`
     /// Per default an `StickersDataSource` offering all filters
     /// is set.
@@ -34,7 +34,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 }
 
 // swiftlint:disable type_name
-@objc public class StickersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYStickersEditorViewControllerOptionsBuilder) public class StickersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// An object conforming to the `StickersDataSourceProtocol`
@@ -53,7 +53,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }
 }
 
-public class StickersEditorViewController: SubEditorViewController {
+@objc(IMGLYStickersEditorViewController) public class StickersEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class HighcarbFilter: ResponseFilter {
+@objc(IMGLYHighcarbFilter) public class HighcarbFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Highcarb")
     }

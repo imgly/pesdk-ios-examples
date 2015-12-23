@@ -13,7 +13,7 @@ private let kTextFieldHeight = CGFloat(40)
 private let kTextLabelInitialMargin = CGFloat(40)
 private let kMinimumFontSize = CGFloat(12.0)
 
-@objc public class TextEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
     public let textFieldConfigurationClosure: TextFieldConfigurationClosure
@@ -46,7 +46,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 }
 
 // swiftlint:disable type_name
-@objc public class TextEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYTextEditorViewControllerOptionsBuilder) public class TextEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Use this closure to configure the text input field.
@@ -74,7 +74,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 }
 
-public class TextEditorViewController: SubEditorViewController {
+@objc(IMGLYTextEditorViewController) public class TextEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

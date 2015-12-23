@@ -14,7 +14,7 @@ import CoreImage
 import QuartzCore
 #endif
 
-public class ContrastBrightnessSaturationFilter: CIFilter, Filter {
+@objc(IMGLYContrastBrightnessSaturationFilter) public class ContrastBrightnessSaturationFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 

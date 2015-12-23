@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public class Sticker: NSObject {
+@objc(IMGLYSticker) public class Sticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
 

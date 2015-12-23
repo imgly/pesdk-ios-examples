@@ -9,7 +9,7 @@
 import UIKit
 
 /// An available editor action for the main editor
-@objc public class MainEditorAction: NSObject {
+@objc(IMGLYMainEditorAction) public class MainEditorAction: NSObject {
     let title: String?
     let image: UIImage?
     let selectedImage: UIImage?

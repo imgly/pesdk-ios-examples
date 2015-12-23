@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class TenderFilter: ResponseFilter {
+@objc(IMGLYTenderFilter) public class TenderFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Tender")
     }

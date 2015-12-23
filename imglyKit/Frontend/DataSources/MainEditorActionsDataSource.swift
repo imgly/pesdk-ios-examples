@@ -31,7 +31,7 @@ import UIKit
  The default initializer creates an object, that provides all available editors.
  By using the `init(availableActionTypes:)` you can specify the available editors.
 */
-@objc public class MainEditorActionsDataSource: NSObject, MainEditorActionsDataSourceProtocol {
+@objc(IMGLYMainEditorActionsDataSource) public class MainEditorActionsDataSource: NSObject, MainEditorActionsDataSourceProtocol {
 
     private var items: [MainEditorAction] = []
 

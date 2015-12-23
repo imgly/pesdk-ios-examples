@@ -18,7 +18,7 @@ import UIKit
 public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButton, OrientationAction) -> ()
 
 // swiftlint:disable type_name
-@objc public class OrientationEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYOrientationEditorViewControllerOptions) public class OrientationEditorViewControllerOptions: EditorViewControllerOptions {
     // swiftlint:enable type_name
 
     /// Defines all allowed actions. The action buttons are shown in the given order.
@@ -41,7 +41,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
 }
 
 // swiftlint:disable type_name
-@objc public class OrientationEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYOrientationEditorViewControllerOptionsBuilder) public class OrientationEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Defines all allowed actions. The action buttons are always shown in the given order.
@@ -72,7 +72,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     }
 }
 
-public class OrientationEditorViewController: SubEditorViewController {
+@objc(IMGLYOrientationEditorViewController) public class OrientationEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

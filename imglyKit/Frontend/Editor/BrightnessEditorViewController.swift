@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class BrightnessEditorViewController: SliderEditorViewController {
+@objc(IMGLYBrightnessEditorViewController) public class BrightnessEditorViewController: SliderEditorViewController {
 
     // MARK: - UIViewController
 

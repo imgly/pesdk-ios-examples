@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class LithoFilter: ResponseFilter {
+@objc(IMGLYLithoFilter) public class LithoFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Litho")
     }

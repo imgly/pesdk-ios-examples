@@ -10,7 +10,7 @@ import UIKit
 
 internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProcessor", DISPATCH_QUEUE_SERIAL)
 
-@objc public class EditorViewControllerOptions: NSObject {
+@objc(IMGLYEditorViewControllerOptions) public class EditorViewControllerOptions: NSObject {
 
     ///  Defaults to 'Editor'
     public let title: String?
@@ -49,7 +49,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
     }
 }
 
-@objc public class EditorViewControllerOptionsBuilder: NSObject {
+@objc(IMGLYEditorViewControllerOptionsBuilder) public class EditorViewControllerOptionsBuilder: NSObject {
     ///  Defaults to 'Editor'
     public lazy var title: String? = "Editor"
 
@@ -74,7 +74,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
     public lazy var allowsPreviewImageZoom = true
 }
 
-public class EditorViewController: UIViewController {
+@objc(IMGLYEditorViewController) public class EditorViewController: UIViewController {
 
     // MARK: - Properties
 

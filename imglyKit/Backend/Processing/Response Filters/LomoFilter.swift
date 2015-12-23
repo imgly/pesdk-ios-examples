@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class LomoFilter: ResponseFilter {
+@objc(IMGLYLomoFilter) public class LomoFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lomo")
     }

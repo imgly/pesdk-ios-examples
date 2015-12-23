@@ -28,7 +28,7 @@ public let kMinimumCropSize = CGFloat(50)
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
 public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropAction) -> ()
 
-@objc public class CropEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYCropEditorViewControllerOptions) public class CropEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedCropActionsAsNSNumbers` property.
@@ -50,7 +50,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 }
 
 // swiftlint:disable type_name
-@objc public class CropEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYCropEditorViewControllerOptionsBuilder) public class CropEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
@@ -82,7 +82,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     }
 }
 
-public class CropEditorViewController: SubEditorViewController {
+@objc(IMGLYCropEditorViewController) public class CropEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

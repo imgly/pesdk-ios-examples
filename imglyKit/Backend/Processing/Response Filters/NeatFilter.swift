@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NeatFilter: ResponseFilter {
+@objc(IMGLYNeatFilter) public class NeatFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Neat")
     }

@@ -11,7 +11,7 @@ import UIKit
 public typealias SubEditorCompletionBlock = (UIImage?, FixedFilterStack) -> (Void)
 public typealias PreviewImageGenerationCompletionBlock = () -> (Void)
 
-public class SubEditorViewController: EditorViewController {
+@objc(IMGLYSubEditorViewController) public class SubEditorViewController: EditorViewController {
 
     // MARK: - Properties
 

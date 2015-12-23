@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class NoGreenFilter: ResponseFilter {
+@objc(IMGLYNoGreenFilter) public class NoGreenFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "NoGreen")
     }

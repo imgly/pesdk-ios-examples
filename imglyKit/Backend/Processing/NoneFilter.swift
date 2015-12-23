@@ -16,7 +16,7 @@ import QuartzCore
 /**
 *  A filter that does nothing. It is used within the fixed-filterstack.
 */
-public class NoneFilter: ResponseFilter {
+@objc(IMGLYNoneFilter) public class NoneFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "None")
     }

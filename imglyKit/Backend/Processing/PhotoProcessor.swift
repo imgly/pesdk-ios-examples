@@ -86,7 +86,7 @@ All types of response-filters.
 }
 // swiftlint:enable type_name
 
-public class PhotoProcessor {
+@objc(IMGLYPhotoProcessor) public class PhotoProcessor: NSObject {
     public class func processWithCIImage(image: CIImage, filters: [Filter]) -> CIImage? {
         if filters.count == 0 {
             return image

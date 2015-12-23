@@ -81,7 +81,7 @@ public typealias RecordVideoBlock = (NSURL?, NSError?) -> Void
 
 private let kTempVideoFilename = "recording.mov"
 
-public class CameraController: NSObject {
+@objc(IMGLYCameraController) public class CameraController: NSObject {
 
     // MARK: - Properties
 

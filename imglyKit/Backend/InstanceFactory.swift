@@ -12,7 +12,7 @@ import Foundation
   A singleton that is out to create objects. It is used within the SDK to
   create filters, views, viewcontrollers and such.
 */
-public class InstanceFactory {
+@objc(IMGLYInstanceFactory) public class InstanceFactory: NSObject {
     private static let filterTypeToFilter: [FilterType: ResponseFilter.Type] = [
         .None: NoneFilter.self,
         .K1: K1Filter.self,

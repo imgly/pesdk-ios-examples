@@ -15,7 +15,7 @@ import CoreImage
 *   That way we make sure the order of filters stays the same, and we don't need to take
 *   care about creating the single filters.
 */
-public class FixedFilterStack: NSObject {
+@objc(IMGLYFixedFilterStack) public class FixedFilterStack: NSObject {
 
     // MARK: - Properties
 

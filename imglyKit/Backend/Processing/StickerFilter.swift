@@ -16,7 +16,7 @@ import QuartzCore
 
 import CoreGraphics
 
-public class StickerFilter: CIFilter, Filter {
+@objc(IMGLYStickerFilter) public class StickerFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 

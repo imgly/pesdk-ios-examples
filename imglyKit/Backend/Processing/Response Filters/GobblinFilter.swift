@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class GoblinFilter: ResponseFilter {
+@objc(IMGLYGoblinFilter) public class GoblinFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Goblin")
     }

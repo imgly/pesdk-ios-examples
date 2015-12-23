@@ -25,7 +25,7 @@ import UIKit
 /// depending on the linked focus action.
 public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, FocusAction) -> ()
 
-@objc public class FocusEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYFocusEditorViewControllerOptions) public class FocusEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
     /// property from Obj-C, see the `allowedFocusActionsAsNSNumbers` property.
@@ -47,7 +47,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
 }
 
 // swiftlint:disable type_name
-@objc public class FocusEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYFocusEditorViewControllerOptionsBuilder) public class FocusEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
@@ -84,7 +84,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     }
 }
 
-public class FocusEditorViewController: SubEditorViewController {
+@objc(IMGLYFocusEditorViewController) public class FocusEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

@@ -12,7 +12,7 @@ import UIKit
     func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String)
 }
 
-public class FontSelectorView: UIScrollView {
+@objc(IMGLYFontSelectorView) public class FontSelectorView: UIScrollView {
     public weak var selectorDelegate: FontSelectorViewDelegate?
 
     private let kDistanceBetweenButtons = CGFloat(60)

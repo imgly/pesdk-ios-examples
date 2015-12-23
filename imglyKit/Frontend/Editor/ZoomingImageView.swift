@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class ZoomingImageView: UIScrollView {
+@objc(IMGLYZoomingImageView) public class ZoomingImageView: UIScrollView {
 
     // MARK: - Properties
 

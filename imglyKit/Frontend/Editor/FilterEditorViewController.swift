@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public class FilterEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYFilterEditorViewControllerOptions) public class FilterEditorViewControllerOptions: EditorViewControllerOptions {
 
     // MARK: UI
 
@@ -39,7 +39,7 @@ import UIKit
 }
 
 // swiftlint:disable type_name
-@objc public class FilterEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYFilterEditorViewControllerOptionsBuilder) public class FilterEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     // swiftlint:disable variable_name_max_length
@@ -64,7 +64,7 @@ import UIKit
     }
 }
 
-public class FilterEditorViewController: SubEditorViewController {
+@objc(IMGLYFilterEditorViewController) public class FilterEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

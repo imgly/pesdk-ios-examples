@@ -10,7 +10,7 @@ public struct Line {
     public let end: CGPoint
 }
 
-public class BoxGradientView: UIView {
+@objc(IMGLYBoxGradientView) public class BoxGradientView: UIView {
     public var centerPoint = CGPointZero
     public weak var gradientViewDelegate: GradientViewDelegate?
     public var controlPoint1 = CGPointZero

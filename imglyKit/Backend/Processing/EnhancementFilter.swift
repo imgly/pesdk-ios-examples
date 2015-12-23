@@ -19,7 +19,7 @@ import QuartzCore
   and a recalculation is foced. This behaviour is inactive by default, and
   can be activated by setting 'storeEnhancedImage' to true.
 */
-public class EnhancementFilter: CIFilter, Filter {
+@objc(IMGLYEnhancementFilter) public class EnhancementFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
 

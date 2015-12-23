@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class BWFilter: ResponseFilter {
+@objc(IMGLYBWFilter) public class BWFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "BW")
     }

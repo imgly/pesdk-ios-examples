@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class KeenFilter: ResponseFilter {
+@objc(IMGLYKeenFilter) public class KeenFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Keen")
     }

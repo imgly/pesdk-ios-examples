@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class NavigationController: UINavigationController {
+@objc(IMGLYNavigationController) public class NavigationController: UINavigationController {
 
     // MARK: - UIViewController
 

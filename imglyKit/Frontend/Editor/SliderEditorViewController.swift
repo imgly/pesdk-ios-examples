@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
+@objc(IMGLYSliderEditorViewControllerOptions) public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public let sliderConfigurationClosure: SliderConfigurationClosure
@@ -24,7 +24,7 @@ import UIKit
 }
 
 // swiftlint:disable type_name
-@objc public class SliderEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYSliderEditorViewControllerOptionsBuilder) public class SliderEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// Use this closure to configure the filter intensity slider.
@@ -32,7 +32,7 @@ import UIKit
     public lazy var sliderConfigurationClosure: SliderConfigurationClosure = { _ in }
 }
 
-public class SliderEditorViewController: SubEditorViewController {
+@objc(IMGLYSliderEditorViewController) public class SliderEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
 

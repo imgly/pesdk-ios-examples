@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class PlateFilter: ResponseFilter {
+@objc(IMGLYPlateFilter) public class PlateFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Plate")
     }

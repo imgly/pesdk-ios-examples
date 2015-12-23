@@ -23,7 +23,7 @@ import QuartzCore
   In order to use the filter, the response-image is tranfered into a color-cube-map, that then
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
-public class ResponseFilter: CIFilter, Filter {
+@objc(IMGLYResponseFilter) public class ResponseFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {

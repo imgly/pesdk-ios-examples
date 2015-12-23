@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class QuoziFilter: ResponseFilter {
+@objc(IMGLYQuoziFilter) public class QuoziFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Quozi")
     }

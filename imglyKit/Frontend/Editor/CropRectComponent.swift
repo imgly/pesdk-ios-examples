@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class CropRectComponent {
+@objc(IMGLYCropRectComponent) public class CropRectComponent: NSObject {
     public var cropRect = CGRectZero
 
     private var topLineView = UIView(frame: CGRectZero)

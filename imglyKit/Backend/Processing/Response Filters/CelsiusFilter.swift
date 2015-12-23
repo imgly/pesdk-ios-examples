@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class CelsiusFilter: ResponseFilter {
+@objc(IMGLYCelsiusFilter) public class CelsiusFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Celsius")
     }

@@ -35,7 +35,7 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
  viewControllers contained in the SDK, edit their options in the corresponding
  `configure*ViewController` method of the `ConfigurationBuilder`.
 */
-@objc public class Configuration: NSObject {
+@objc(IMGLYConfiguration) public class Configuration: NSObject {
 
     // MARK: Properties
 
@@ -102,7 +102,7 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
  further configure the different viewcontrollers, use the `configureXYZViewController`
  methods to edit the given options.
 */
-@objc public class ConfigurationBuilder: NSObject {
+@objc(IMGLYConfigurationBuilder) public class ConfigurationBuilder: NSObject {
     public var backgroundColor: UIColor = UIColor.blackColor()
     private var cameraViewControllerOptions: CameraViewControllerOptions = CameraViewControllerOptions()
     private var mainEditorViewControllerOptions: MainEditorViewControllerOptions = MainEditorViewControllerOptions()

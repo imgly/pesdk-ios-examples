@@ -17,7 +17,7 @@ import UIKit
 }
 
 
-@objc public class StickersDataSource: NSObject, StickersDataSourceProtocol {
+@objc(IMGLYStickersDataSource) public class StickersDataSource: NSObject, StickersDataSourceProtocol {
 
     private let stickers: [Sticker]
 
