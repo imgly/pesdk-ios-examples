@@ -11,35 +11,16 @@ import UIKit
 import imglyKit
 
 class SampleViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let showDefaultButton = UIButton()
-        showDefaultButton.translatesAutoresizingMaskIntoConstraints = false
-        showDefaultButton.setTitle("Show default PhotoEditor", forState: .Normal)
-        showDefaultButton.addTarget(self, action: "showDefault", forControlEvents: .TouchUpInside)
-        view.addSubview(showDefaultButton)
-        
-        let showCustomizedButton = UIButton()
-        showCustomizedButton.translatesAutoresizingMaskIntoConstraints = false
-        showCustomizedButton.setTitle("Show customized PhotoEditor", forState: .Normal)
-        showCustomizedButton.addTarget(self, action: "showCustomized", forControlEvents: .TouchUpInside)
-        view.addSubview(showCustomizedButton)
-        
-        let views = [
-            "showDefaultButton": showDefaultButton,
-            "showCustomizedButton": showCustomizedButton
-        ]
-        
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[showDefaultButton]-20-|", options:[], metrics:nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[showCustomizedButton]-20-|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-40-[showDefaultButton]-40-[showCustomizedButton]", options: [], metrics: nil, views: views))
-        
-        view.backgroundColor = UIColor.lightGrayColor()
     }
     
-    func showDefault() {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        view.tintColor = UIColor(red:0,  green:0.569,  blue:1, alpha:1)
+    }
+    
+    @IBAction func showDefaultCamera(sender: UIButton) {
         // Set a global tint color, that gets inherited by all views
         if let window = UIApplication.sharedApplication().delegate?.window! {
             window.tintColor = UIColor.whiteColor()
@@ -52,7 +33,24 @@ class SampleViewController: UIViewController {
         presentViewController(cameraViewController, animated: true, completion: nil)
     }
     
-    func showCustomized() {
+    @IBAction func showDefaultEditor(sender: UIButton) {
+        let defaultBlue = view.tintColor
+        if let window = UIApplication.sharedApplication().delegate?.window! {
+            window.tintColor = UIColor.whiteColor()
+        }
+        
+        let sampleImage = UIImage(named: "sample_image")
+        let mainEditorViewController = IMGLYMainEditorViewController()
+        mainEditorViewController.highResolutionImage = sampleImage
+
+        let navigationController = IMGLYNavigationController(rootViewController: mainEditorViewController)
+        navigationController.navigationBar.barStyle = .Black
+        navigationController.navigationBar.translucent = false
+        navigationController.navigationBar.tintColor = defaultBlue
+        presentViewController(navigationController, animated: true, completion: nil)
+    }
+    
+    @IBAction func showCustomized(sender: UIButton) {
         let whiteColor = UIColor(red:0.941, green:0.980, blue:0.988, alpha:1)
         let redColor = UIColor(red:0.988, green:0.173, blue:0.357, alpha:1)
         let blueColor = UIColor(red:0.243, green:0.769, blue:0.831, alpha:1)
@@ -60,6 +58,13 @@ class SampleViewController: UIViewController {
         let configuration = IMGLYConfiguration() { builder in
             // Setup global colors
             builder.backgroundColor = whiteColor
+            
+            // This replaces the SDKs IMGLYFilterEditorViewController, with our own sample subclass
+            do {
+                try builder.replaceClass(IMGLYStickersEditorViewController.self, replacingClass: SampleStickersEditorSubclass.self, namespace: "iOS_Example")
+            } catch {
+                print("Class replacement failed.")
+            }
             
             // Customize the navigation bar using UIAppearance
             UINavigationBar.appearance().titleTextAttributes = [ NSForegroundColorAttributeName: blueColor,
