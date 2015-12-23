@@ -13,7 +13,7 @@ import CoreImage
 import QuartzCore
 #endif
 
-@objc public protocol Filter: NSCopying {
+@objc(IMGLYFilter) public protocol Filter: NSCopying {
     var inputImage: CIImage? { get set }
     var outputImage: CIImage? { get }
 }

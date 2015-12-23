@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc public protocol StickersDataSourceProtocol {
+@objc(IMGLYStickersDataSourceProtocol) public protocol StickersDataSourceProtocol {
     /// The total count of all available stickers.
     var stickerCount: Int { get }
 

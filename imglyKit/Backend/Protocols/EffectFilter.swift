@@ -8,7 +8,7 @@
 
 import Foundation
 
-@objc public protocol EffectFilter: Filter {
+@objc(IMGLYEffectFilter) public protocol EffectFilter: Filter {
     var filterType: FilterType { get }
     var displayName: String { get }
     var inputIntensity: NSNumber { get set }

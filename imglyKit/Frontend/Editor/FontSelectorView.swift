@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol FontSelectorViewDelegate: class {
+@objc(IMGLYFontSelectorViewDelegate) public protocol FontSelectorViewDelegate {
     func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String)
 }
 

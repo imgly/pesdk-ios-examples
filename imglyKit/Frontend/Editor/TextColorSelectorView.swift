@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol TextColorSelectorViewDelegate: class {
+@objc(IMGLYTextColorSelectorViewDelegate) public protocol TextColorSelectorViewDelegate {
     func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor)
 }
 

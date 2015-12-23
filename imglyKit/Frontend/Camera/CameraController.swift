@@ -55,7 +55,7 @@ private var capturingStillImageContext = 0
 private var sessionRunningAndDeviceAuthorizedContext = 0
 private var focusAndExposureContext = 0
 
-@objc public protocol CameraControllerDelegate: class {
+@objc(IMGLYCameraControllerDelegate) public protocol CameraControllerDelegate: class {
     optional func cameraControllerDidStartCamera(cameraController: CameraController)
     optional func cameraControllerDidStopCamera(cameraController: CameraController)
     optional func cameraControllerDidStartStillImageCapture(cameraController: CameraController)

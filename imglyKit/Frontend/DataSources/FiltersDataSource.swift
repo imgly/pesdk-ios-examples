@@ -13,7 +13,7 @@ import UIKit
  This protocol describes an object that can act as
  a datasource for an `FilterSelectionController`.
 */
-@objc public protocol FiltersDataSourceProtocol {
+@objc(IMGLYFiltersDataSourceProtocol) public protocol FiltersDataSourceProtocol {
 
     /// The total count of all available filters.
     var filterCount: Int { get }

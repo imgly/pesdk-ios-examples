@@ -14,7 +14,7 @@ import UIKit
  editor buttons in the bottom drawer of the main editor. The available types
  are defined in the MainEditorActionOption option set.
  */
-@objc public protocol MainEditorActionsDataSourceProtocol {
+@objc(IMGLYMainEditorActionsDataSourceProtocol) public protocol MainEditorActionsDataSourceProtocol {
 
     /// The total count of all actions.
     var actionCount: Int { get }
