@@ -122,12 +122,10 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         center.y *= cropRect.height
         center.x += cropRect.origin.x
         center.y += cropRect.origin.y
-//        var size = textFilter.textImageSize()
         textFilter.fontName = fontName
         textFilter.text = textLabel.text ?? ""
         textFilter.intialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
         var size = initialSizeForStickerImage(textFilter.textImageSize())
-        print(size)
         size.width = size.width / completeSize.width
         size.height = size.height / completeSize.height
         
@@ -135,10 +133,6 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
         textFilter.transform = textLabel.transform
         textFilter.center = center
         textFilter.scale = size.width
-        print(textFilter.scale)
-        print(textFilter.center)
- //       print(center)
- //       print(textFilter.transform)
         
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
@@ -146,7 +140,7 @@ public class IMGLYTextEditorViewController: IMGLYSubEditorViewController {
     }
     
     private func initialSizeForStickerImage(size: CGSize) -> CGSize {
-        let initialMaxStickerSize = CGRectGetWidth(textClipView.bounds) * 0.3
+        let initialMaxStickerSize = (CGRectGetWidth(textClipView.bounds) - TextLabelInitialMargin) * self.fixedFilterStack.orientationCropFilter.cropRect.width
         let widthRatio = initialMaxStickerSize / size.width
         let heightRatio = initialMaxStickerSize / size.height
         let scale = min(widthRatio, heightRatio)
