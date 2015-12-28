@@ -24,7 +24,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
     
     private var draggedView: UIView?
     private var tempStickerCopy = [CIFilter]()
-    
     // MARK: - SubEditorViewController
     
     public override func tappedDone(sender: UIBarButtonItem?) {
@@ -35,12 +34,18 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
                 if let image = view.image {
                     let stickerFilter = IMGLYInstanceFactory.stickerFilter()
                     stickerFilter.sticker = image
-                    let center = CGPoint(x: view.center.x / stickersClipView.frame.size.width,
-                                         y: view.center.y / stickersClipView.frame.size.height)
-                    
+                    stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+                    let cropRect = stickerFilter.cropRect
+                    let completeSize = stickersClipView.bounds.size
+                    var center = CGPoint(x: view.center.x / completeSize.width,
+                                         y: view.center.y / completeSize.height)
+                    center.x *= cropRect.width
+                    center.y *= cropRect.height
+                    center.x += cropRect.origin.x
+                    center.y += cropRect.origin.y
                     var size = initialSizeForStickerImage(image)
-                    size.width = size.width / stickersClipView.bounds.size.width
-                    size.height = size.height / stickersClipView.bounds.size.height
+                    size.width = size.width / completeSize.width
+                    size.height = size.height / completeSize.height
                     stickerFilter.center = center
                     stickerFilter.scale = size.width
                     stickerFilter.transform = view.transform
@@ -67,7 +72,6 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
         let widthRatio = initialMaxStickerSize / image.size.width
         let heightRatio = initialMaxStickerSize / image.size.height
         let scale = min(widthRatio, heightRatio)
-        
         return CGSize(width: image.size.width * scale, height: image.size.height * scale)
     }
     
@@ -231,21 +235,33 @@ public class IMGLYStickersEditorViewController: IMGLYSubEditorViewController {
             self.addStickerImagesFromStickerFilters(self.tempStickerCopy)
         }
     }
-    
+ 
+    /* 
+    * in this method we do some calculations to re calculate the
+    * sticker position in relation to the crop region.
+    * Therefore we calculte the position and size within the non-cropped image
+    * and apply the translation and scaling that comes with cropping in relation
+    * to the full image.
+    * When we are done we must revoke that extra transformation.
+    */
     private func addStickerImagesFromStickerFilters(stickerFilters: [CIFilter]) {
         for element in stickerFilters {
             guard let stickerFilter = element as? IMGLYStickerFilter else {
                 return
             }
-            
             let imageView = UIImageView(image: stickerFilter.sticker)
             imageView.userInteractionEnabled = true
-            
-            let size = stickerFilter.absolutStickerSizeForImageSize(stickersClipView.bounds.size)
+            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+            var completeSize = stickersClipView.bounds.size
+            completeSize.width *= 1.0 / cropRect.width
+            completeSize.height *= 1.0 / cropRect.height
+            let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
             imageView.frame.size = size
-            
-            let center = CGPoint(x: stickerFilter.center.x * stickersClipView.frame.size.width,
-                                 y: stickerFilter.center.y * stickersClipView.frame.size.height)
+            print(stickerFilter.center)
+            var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
+                                 y: stickerFilter.center.y * completeSize.height)
+            center.x -= (cropRect.origin.x * completeSize.width)
+            center.y -= (cropRect.origin.y * completeSize.height)
             imageView.center = center
             imageView.transform = stickerFilter.transform
             stickersClipView.addSubview(imageView)
@@ -265,11 +281,19 @@ extension IMGLYStickersEditorViewController: UICollectionViewDelegate {
         imageView.userInteractionEnabled = true
         imageView.frame.size = initialSizeForStickerImage(sticker.image)
         imageView.center = CGPoint(x: CGRectGetMidX(stickersClipView.bounds), y: CGRectGetMidY(stickersClipView.bounds))
+        
+        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+        let scaleX = 1.0 / cropRect.width
+        let scaleY = 1.0 / cropRect.height
+        let scale = min(scaleX, scaleY)
+        imageView.frame.size.width *= scale
+        imageView.frame.size.height *= scale
+
         stickersClipView.addSubview(imageView)
         imageView.transform = CGAffineTransformMakeScale(0, 0)
-        
+
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-            imageView.transform = CGAffineTransformIdentity
+            imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
             }, completion: nil)
     }
 }

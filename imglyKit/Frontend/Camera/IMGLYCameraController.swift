@@ -714,7 +714,12 @@ public class IMGLYCameraController: NSObject {
         previewView.addSubview(videoPreviewView!)
         previewView.sendSubviewToBack(videoPreviewView!)
         
-        ciContext = CIContext(EAGLContext: glContext)
+        var options = [String: AnyObject]()
+        
+        if let colorspace = CGColorSpaceCreateDeviceRGB() {
+            options = [kCIContextWorkingColorSpace: colorspace]
+        }
+        ciContext = CIContext(EAGLContext: glContext, options: options)
         videoPreviewView!.bindDrawable()
         
         setupWithPreferredCameraPosition(.Back) {
