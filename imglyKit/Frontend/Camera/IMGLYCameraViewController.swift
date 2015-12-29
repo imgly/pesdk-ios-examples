@@ -595,6 +595,7 @@ public class IMGLYCameraViewController: UIViewController {
         if let cameraController = cameraController {
             editorViewController.initialFilterType = cameraController.effectFilter.filterType
             editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
+            editorViewController.squareMode = cameraController.squareMode
         }
         editorViewController.completionBlock = editorCompletionBlock
         
