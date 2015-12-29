@@ -15,6 +15,39 @@ import UIKit
     case SixteenToNine
 }
 
+public enum IMGLYSelectionModeForcing {
+    case NoForcing
+    case Forcing(IMGLYSelectionMode)
+    
+    //extract the forced IMGLYSelectionMode value
+    func forcedSelectionMode() -> IMGLYSelectionMode? {
+        switch self {
+        case .Forcing(let selectionMode):
+            return selectionMode
+            
+        case .NoForcing:
+            return nil
+        }
+    }
+}
+
+extension IMGLYSelectionModeForcing : Equatable {}
+
+public func ==(lhs: IMGLYSelectionModeForcing, rhs: IMGLYSelectionModeForcing ) -> Bool {
+    
+    switch (lhs, rhs) {
+    case ( .NoForcing, .NoForcing ):
+        return true
+        
+    case ( let .Forcing(selectionMode1), let .Forcing(selectionMode2) ):
+        return selectionMode1 == selectionMode2
+        
+    default:
+        return false
+        
+    }
+}
+
 public let MinimumCropSize = CGFloat(50)
 
 public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
@@ -78,13 +111,41 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         }()
     
     private let cropRectComponent = IMGLYInstanceFactory.cropRectComponent()
-    public var selectionMode = IMGLYSelectionMode.Free
+    
+    //In selectionMode we centralize the functional behavior and the UI for each mode. this way we avoid missing something by accident. when self.selectionMode is set, everything is configured for that selecyionMode accordingly as it would be expected
+    public var selectionMode = IMGLYSelectionMode.Free {
+        didSet {
+            
+            //1) apply proper ratio
+            calculateRatioForSelectionMode(selectionMode)
+            
+            //2) update selected button
+            switch selectionMode {
+            case .Free:
+                self.selectedButton = freeRatioButton
+                
+            case .OneToOne:
+                self.selectedButton = oneToOneRatioButton
+
+            case .FourToThree:
+                self.selectedButton = fourToThreeRatioButton
+
+            case .SixteenToNine:
+                self.selectedButton = sixteenToNineRatioButton
+
+            }
+            
+        }
+    }
     public var selectionRatio = CGFloat(1.0)
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
     private var cropRectTopBound = CGFloat(0)
     private var cropRectBottomBound = CGFloat(0)
     private var dragOffset = CGPointZero
+    
+    //configurable property to limit cropping to a single IMGLYSelectionMode (useful for forcing images to be square, for instance)
+    public var selectionModeForcing = IMGLYSelectionModeForcing.NoForcing
 
     // MARK: - UIViewController
     
@@ -96,7 +157,10 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         
         configureButtons()
         configureCropRect()
-        selectedButton = freeRatioButton
+        //configure for initial selectionMode
+        self.selectionMode = .Free
+        //when Forcing a SelectionMode, configure ViewController for it
+        self.configureForSelectionModeForcing(self.selectionModeForcing)
     }
     
     public override func viewDidAppear(animated: Bool) {
@@ -140,31 +204,50 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
         bottomContainerView.addSubview(buttonContainerView)
+        let views: [String : UIView]
         
-        buttonContainerView.addSubview(freeRatioButton)
-        buttonContainerView.addSubview(oneToOneRatioButton)
-        buttonContainerView.addSubview(fourToThreeRatioButton)
-        buttonContainerView.addSubview(sixteenToNineRatioButton)
-        
-        let views = [
-            "buttonContainerView" : buttonContainerView,
-            "freeRatioButton" : freeRatioButton,
-            "oneToOneRatioButton" : oneToOneRatioButton,
-            "fourToThreeRatioButton" : fourToThreeRatioButton,
-            "sixteenToNineRatioButton" : sixteenToNineRatioButton
-        ]
-        
-        let metrics = [
-            "buttonWidth" : 70
-        ]
-        
-        // Button Constraints
-        
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[freeRatioButton(==buttonWidth)][oneToOneRatioButton(==freeRatioButton)][fourToThreeRatioButton(==freeRatioButton)][sixteenToNineRatioButton(==freeRatioButton)]|", options: [], metrics: metrics, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[freeRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[oneToOneRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fourToThreeRatioButton]|", options: [], metrics: nil, views: views))
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[sixteenToNineRatioButton]|", options: [], metrics: nil, views: views))
+        if let forcingbutton = self.buttonForSelectionModeForcing(self.selectionModeForcing) { //Crop Forcing enabled => only add the required button
+            
+            buttonContainerView.addSubview(forcingbutton)
+            views = [
+                "buttonContainerView" : buttonContainerView,
+                "forcingButton" : forcingbutton
+            ]
+            
+            let metrics = ["buttonWidth" : 70]
+            
+            // Button Constraints
+            
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[forcingButton(==buttonWidth)]|", options: [], metrics: metrics, views: views))
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[forcingButton]|", options: [], metrics: nil, views: views))
+            
+        }else { //Do not force cropping
+            
+            buttonContainerView.addSubview(freeRatioButton)
+            buttonContainerView.addSubview(oneToOneRatioButton)
+            buttonContainerView.addSubview(fourToThreeRatioButton)
+            buttonContainerView.addSubview(sixteenToNineRatioButton)
+            
+            views = [
+                "buttonContainerView" : buttonContainerView,
+                "freeRatioButton" : freeRatioButton,
+                "oneToOneRatioButton" : oneToOneRatioButton,
+                "fourToThreeRatioButton" : fourToThreeRatioButton,
+                "sixteenToNineRatioButton" : sixteenToNineRatioButton
+            ]
+            
+            let metrics = [
+                "buttonWidth" : 70
+            ]
+            
+            // Button Constraints
+            
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[freeRatioButton(==buttonWidth)][oneToOneRatioButton(==freeRatioButton)][fourToThreeRatioButton(==freeRatioButton)][sixteenToNineRatioButton(==freeRatioButton)]|", options: [], metrics: metrics, views: views))
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[freeRatioButton]|", options: [], metrics: nil, views: views))
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[oneToOneRatioButton]|", options: [], metrics: nil, views: views))
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fourToThreeRatioButton]|", options: [], metrics: nil, views: views))
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[sixteenToNineRatioButton]|", options: [], metrics: nil, views: views))
+        }
         
         // Container Constraints
         
@@ -179,6 +262,49 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
         addGestureRecognizerToTransparentView()
         addGestureRecognizerToAnchors()
     }
+    
+    // MARK: --Selection Mode Forcing
+    
+    private func configureForSelectionModeForcing(selectionModeForcing : IMGLYSelectionModeForcing) {
+        
+        if selectionModeForcing != IMGLYSelectionModeForcing.NoForcing {
+            //crop forcing enabled? => hide "back" button so users MUST CROP
+            self.navigationItem.setHidesBackButton(true, animated: false)
+            
+            //set the selectionMode to the one being forced
+            if let selectionMode = selectionModeForcing.forcedSelectionMode() {
+                self.selectionMode = selectionMode
+            }
+            
+        }
+    }
+    
+    private func buttonForSelectionModeForcing(selectionModeForcing: IMGLYSelectionModeForcing) -> IMGLYImageCaptionButton? {
+        
+        switch selectionModeForcing {
+            
+        case .NoForcing:
+            return nil
+            
+        case .Forcing(let selectionMode):
+            switch selectionMode {
+            case .Free:
+                return freeRatioButton
+                
+            case .OneToOne:
+                return oneToOneRatioButton
+                
+            case .FourToThree:
+                return fourToThreeRatioButton
+                
+            case .SixteenToNine:
+                return sixteenToNineRatioButton
+            }
+            
+        }
+        
+    }
+    
     
     // MARK: - Helpers
     
@@ -529,7 +655,8 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
             rectHeight)
     }
     
-    private func calculateRatioForSelectionMode() {
+    private func calculateRatioForSelectionMode(selectionMode: IMGLYSelectionMode) {
+        
         if selectionMode == IMGLYSelectionMode.FourToThree {
             selectionRatio = 4.0 / 3.0
         }
@@ -548,47 +675,39 @@ public class IMGLYCropEditorViewController: IMGLYSubEditorViewController {
     // MARK: - Actions
     
     @objc private func activateFreeRatio(sender: IMGLYImageCaptionButton) {
-        if selectedButton == sender {
+        if self.selectionMode == .Free {
             return
         }
         
+        //selectionMode->didSet takes care of applying proper ratio and selecting proper button
         selectionMode = IMGLYSelectionMode.Free
-        calculateRatioForSelectionMode()
-        
-        selectedButton = sender
     }
     
     @objc private func activateOneToOneRatio(sender: IMGLYImageCaptionButton) {
-        if selectedButton == sender {
+        if self.selectionMode == .OneToOne {
             return
         }
         
+        //selectionMode->didSet takes care of applying proper ratio and selecting proper button
         selectionMode = IMGLYSelectionMode.OneToOne
-        calculateRatioForSelectionMode()
-        
-        selectedButton = sender
     }
     
     @objc private func activateFourToThreeRatio(sender: IMGLYImageCaptionButton) {
-        if selectedButton == sender {
+        if self.selectionMode == .FourToThree {
             return
         }
         
+        //selectionMode->didSet takes care of applying proper ratio and selecting proper button
         selectionMode = IMGLYSelectionMode.FourToThree
-        calculateRatioForSelectionMode()
-        
-        selectedButton = sender
     }
     
     @objc private func activateSixteenToNineRatio(sender: IMGLYImageCaptionButton) {
-        if selectedButton == sender {
+        if self.selectionMode == .SixteenToNine {
             return
         }
         
+        //selectionMode->didSet takes care of applying proper ratio and selecting proper button
         selectionMode = IMGLYSelectionMode.SixteenToNine
-        calculateRatioForSelectionMode()
-        
-        selectedButton = sender
     }
 }
 
