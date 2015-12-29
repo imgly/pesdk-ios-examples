@@ -110,6 +110,7 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     public var initialFilterType = IMGLYFilterType.None
     public var initialFilterIntensity = NSNumber(double: 0.75)
     public private(set) var fixedFilterStack = IMGLYFixedFilterStack()
+    public var squareMode : Bool = true
     
     private let maxLowResolutionSideLength = CGFloat(1600)
     public var highResolutionImage: UIImage? {
@@ -134,6 +135,18 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
         
         updatePreviewImage()
         configureMenuCollectionView()
+    }
+    
+    
+    private var wasCropEditorShown : Bool = false
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if squareMode && !wasCropEditorShown {
+            self.subEditorButtonPressed(.Crop)
+            wasCropEditorShown = true
+        }
+
     }
     
     // MARK: - Configuration
@@ -161,12 +174,28 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
     // MARK: - Helpers
     
     private func subEditorButtonPressed(buttonType: IMGLYMainMenuButtonType) {
-        if (buttonType == IMGLYMainMenuButtonType.Magic) {
+        
+        switch buttonType {
+        case .Magic:
             if !updating {
                 fixedFilterStack.enhancementFilter.enabled = !fixedFilterStack.enhancementFilter.enabled
                 updatePreviewImage()
             }
-        } else {
+            
+        case .Crop:
+            if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
+                let cropController = viewController as! IMGLYCropEditorViewController
+                
+                cropController.lowResolutionImage = lowResolutionImage
+                cropController.previewImageView.image = previewImageView.image
+                cropController.completionHandler = subEditorDidComplete
+                //if we are on squareMode
+                if self.squareMode { cropController.selectionModeForcing = .Forcing(.OneToOne) }
+                
+                showViewController(cropController, sender: self)
+            }
+            
+        default:
             if let viewController = IMGLYInstanceFactory.viewControllerForButtonType(buttonType, withFixedFilterStack: fixedFilterStack) {
                 viewController.lowResolutionImage = lowResolutionImage
                 viewController.previewImageView.image = previewImageView.image
@@ -174,7 +203,9 @@ public class IMGLYMainEditorViewController: IMGLYEditorViewController {
                 
                 showViewController(viewController, sender: self)
             }
+            
         }
+        
     }
     
     private func subEditorDidComplete(image: UIImage?, fixedFilterStack: IMGLYFixedFilterStack) {
