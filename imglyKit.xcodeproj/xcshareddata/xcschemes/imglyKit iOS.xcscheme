@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "2BE0C4491C3ABB3B00F1F5E4"
+               BuildableName = "imglyKit iOS Tests.xctest"
+               BlueprintName = "imglyKit iOS Tests"
+               ReferencedContainer = "container:imglyKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "2BF4D3831AF1139600C801B2"
+            BuildableName = "imglyKit.framework"
+            BlueprintName = "imglyKit iOS"
+            ReferencedContainer = "container:imglyKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
