@@ -268,17 +268,17 @@ private let kMinimumFontSize = CGFloat(12.0)
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         panGestureRecognizer.minimumNumberOfTouches = 1
         panGestureRecognizer.maximumNumberOfTouches = 1
-        textLabel.addGestureRecognizer(panGestureRecognizer)
+        textClipView.addGestureRecognizer(panGestureRecognizer)
 
         if options.canModifyTextSize {
             let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
             pinchGestureRecognizer.delegate = self
-            textLabel.addGestureRecognizer(pinchGestureRecognizer)
+            textClipView.addGestureRecognizer(pinchGestureRecognizer)
         }
 
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
-        textLabel.addGestureRecognizer(rotationGestureRecognizer)
+        textClipView.addGestureRecognizer(rotationGestureRecognizer)
     }
 
     // MARK: - Gesture Handling
