@@ -249,8 +249,10 @@ extension MainEditorViewController: UICollectionViewDelegate {
             if let buttonCell = cell as? ButtonCollectionViewCell, let selectedImage = action.selectedImage {
                 if fixedFilterStack.enhancementFilter.enabled {
                     buttonCell.imageView.image = selectedImage
+                    buttonCell.imageView.tintAdjustmentMode = .Dimmed
                 } else {
                     buttonCell.imageView.image = action.image
+                    buttonCell.imageView.tintAdjustmentMode = .Normal
                 }
             }
         }
