@@ -114,7 +114,7 @@ All types of response-filters.
             return nil
         }
         var options = [String: AnyObject]()
-        
+
         if let colorspace = CGColorSpaceCreateDeviceRGB() {
             options = [kCIContextWorkingColorSpace: colorspace]
         }

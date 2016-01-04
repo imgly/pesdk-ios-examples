@@ -287,8 +287,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
                 if finished {
                     self.circleGradientView.hidden = true
                 }
-            }
-        )
+            })
     }
 
     private func showBoxGradientView() {
@@ -306,8 +305,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
                 if finished {
                     self.boxGradientView.hidden = true
                 }
-            }
-        )
+            })
     }
 
 }

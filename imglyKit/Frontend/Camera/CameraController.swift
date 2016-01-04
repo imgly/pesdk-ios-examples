@@ -761,7 +761,7 @@ private let kTempVideoFilename = "recording.mov"
         previewView.sendSubviewToBack(videoPreviewView!)
 
         var options = [String: AnyObject]()
-        
+
         if let colorspace = CGColorSpaceCreateDeviceRGB() {
             options = [kCIContextWorkingColorSpace: colorspace]
         }

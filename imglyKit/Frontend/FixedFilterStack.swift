@@ -48,7 +48,7 @@ import CoreImage
             // swiftlint:enable force_fast
         }
     }
-    
+
     private func setCropRectForTextFilters () {
         //for stickerFilter in stickerFilters {
          //   (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
@@ -63,11 +63,11 @@ import CoreImage
     public func rotateStickersLeft () {
         rotateStickers(CGFloat(-M_PI_2), negateX: false, negateY: true)
     }
-    
+
     public func rotateTextRight () {
         rotateText(CGFloat(M_PI_2), negateX: true, negateY: false)
     }
-    
+
     public func rotateTextLeft () {
         rotateText(CGFloat(-M_PI_2), negateX: false, negateY: true)
     }
@@ -90,9 +90,9 @@ import CoreImage
         }
     }
 
-    private func rotateText (angle:CGFloat, negateX:Bool ,negateY:Bool) {
-        let xFactor:CGFloat = negateX ? -1.0 : 1.0
-        let yFactor:CGFloat = negateY ? -1.0 : 1.0
+    private func rotateText (angle: CGFloat, negateX: Bool, negateY: Bool) {
+        let xFactor: CGFloat = negateX ? -1.0 : 1.0
+        let yFactor: CGFloat = negateY ? -1.0 : 1.0
         textFilter.transform = CGAffineTransformRotate(textFilter.transform, angle)
         textFilter.center.x -= 0.5
         textFilter.center.y -= 0.5
@@ -103,7 +103,7 @@ import CoreImage
         textFilter.center.y += 0.5
     }
 
-    
+
     public func flipStickersHorizontal () {
         flipStickers(true)
     }
@@ -115,11 +115,11 @@ import CoreImage
     public func flipTextHorizontal () {
         flipText(true)
     }
-    
+
     public func flipTextVertical () {
         flipText(false)
     }
-    
+
     private func flipStickers(horizontal: Bool) {
         for filter in self.activeFilters {
             if let stickerFilter = filter as? StickerFilter {
@@ -167,13 +167,13 @@ import CoreImage
         stickerFilter.transform = CGAffineTransformRotate(stickerFilter.transform, delta * 2.0)
     }
 
-    private func flipText(horizontal:Bool) {
+    private func flipText(horizontal: Bool) {
         for filter in self.activeFilters {
             if let stickerFilter = filter as? TextFilter {
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
                 let center = stickerFilter.center
-                if (horizontal) {
+                if horizontal {
                     flipRotationHorizontal(stickerFilter)
                     stickerFilter.center.x = -center.x
                 } else {
@@ -185,11 +185,11 @@ import CoreImage
             }
         }
     }
-    
+
     private func flipRotationHorizontal(textFilter: TextFilter) {
         flipRotation(textFilter, axisAngle: CGFloat(M_PI))
     }
-    
+
     private func flipRotationVertical(textFilter: TextFilter) {
         flipRotation(textFilter, axisAngle: CGFloat(M_PI_2))
     }
@@ -198,18 +198,18 @@ import CoreImage
         var angle = atan2(textFilter.transform.b, textFilter.transform.a)
         let twoPI = CGFloat(M_PI * 2.0)
         // normalize angle
-        while (angle >= twoPI) {
+        while angle >= twoPI {
             angle -= twoPI
         }
-        
-        while (angle < 0) {
+
+        while angle < 0 {
             angle += twoPI
         }
-        
+
         let delta = axisAngle - angle
         textFilter.transform = CGAffineTransformRotate(textFilter.transform, delta * 2.0)
     }
-    
+
     // MARK: - Initializers
     required override public init () {
         super.init()

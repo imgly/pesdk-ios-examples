@@ -199,12 +199,12 @@ private let kMinimumFontSize = CGFloat(12.0)
         var size = initialSizeForStickerImage(textFilter.textImageSize())
         size.width = size.width / completeSize.width
         size.height = size.height / completeSize.height
-        
+
         textFilter.color = textColor
         textFilter.transform = textLabel.transform
         textFilter.center = center
         textFilter.scale = size.width
-        
+
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
@@ -217,7 +217,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let scale = min(widthRatio, heightRatio)
         return CGSize(width: size.width * scale, height: size.height * scale)
     }
-    
+
     // MARK: - Configuration
 
     private func configureColorSelectorView() {
@@ -269,20 +269,20 @@ private let kMinimumFontSize = CGFloat(12.0)
         panGestureRecognizer.minimumNumberOfTouches = 1
         panGestureRecognizer.maximumNumberOfTouches = 1
         textLabel.addGestureRecognizer(panGestureRecognizer)
-            
+
         if options.canModifyTextSize {
             let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
             pinchGestureRecognizer.delegate = self
             textLabel.addGestureRecognizer(pinchGestureRecognizer)
         }
-        
+
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
         textLabel.addGestureRecognizer(rotationGestureRecognizer)
     }
 
     // MARK: - Gesture Handling
-    
+
     @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(textClipView)
         let translation = recognizer.translationInView(textClipView)
@@ -302,9 +302,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         default:
             break
        }
-        
+
     }
-    
+
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
         if recognizer.numberOfTouches() == 2 {
             let point1 = recognizer.locationOfTouch(0, inView:textClipView)
@@ -317,7 +317,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 if draggedView == nil {
                     draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
                 }
-                
+
                 if let draggedView = draggedView {
                     textClipView.bringSubviewToFront(draggedView)
               }
@@ -333,20 +333,20 @@ private let kMinimumFontSize = CGFloat(12.0)
             }
         }
     }
-    
+
     @objc private func handleRotate(recognizer: UIRotationGestureRecognizer) {
         if recognizer.numberOfTouches() == 2 {
             let point1 = recognizer.locationOfTouch(0, inView: textClipView)
             let point2 = recognizer.locationOfTouch(1, inView: textClipView)
             let midpoint = CGPoint(x:(point1.x + point2.x) / 2, y: (point1.y + point2.y) / 2)
             let rotation = recognizer.rotation
-            
+
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
                     draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
                 }
-                
+
                 if let draggedView = draggedView {
                     textClipView.bringSubviewToFront(draggedView)
                 }
@@ -354,7 +354,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 if let draggedView = draggedView {
                     draggedView.transform = CGAffineTransformRotate(draggedView.transform, rotation)
                 }
-                
+
                 recognizer.rotation = 0
             case .Cancelled, .Ended:
                 draggedView = nil
@@ -395,8 +395,9 @@ private let kMinimumFontSize = CGFloat(12.0)
             if !text.isEmpty {
                 repeat {
                     currentTextSize += 1.0
-                    let font = UIFont(name: fontName, size: currentTextSize)
-                    size = text.sizeWithAttributes([ NSFontAttributeName: font as! AnyObject ])
+                    if let font = UIFont(name: fontName, size: currentTextSize) {
+                        size = text.sizeWithAttributes([ NSFontAttributeName: font ])
+                    }
                 } while ((size.width < (view.frame.size.width - kTextLabelInitialMargin)) && (size.height < (view.frame.size.height - kTextLabelInitialMargin)))
             }
         }
@@ -483,7 +484,7 @@ extension TextEditorViewController: UIGestureRecognizerDelegate {
         if (gestureRecognizer is UIPinchGestureRecognizer && otherGestureRecognizer is UIRotationGestureRecognizer) || (gestureRecognizer is UIRotationGestureRecognizer && otherGestureRecognizer is UIPinchGestureRecognizer) {
             return true
         }
-        
+
         return false
     }
 }
