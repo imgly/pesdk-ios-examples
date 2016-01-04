@@ -15,7 +15,7 @@ public typealias PreviewImageGenerationCompletionBlock = () -> (Void)
 
     // MARK: - Properties
 
-    public var fixedFilterStack: FixedFilterStack = FixedFilterStack()
+    @NSCopying public var fixedFilterStack: FixedFilterStack = FixedFilterStack()
     public var completionHandler: SubEditorCompletionBlock?
 
     // MARK: - Initializers
