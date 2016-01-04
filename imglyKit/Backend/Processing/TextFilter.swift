@@ -24,7 +24,9 @@ import AppKit
         return createTextImage()
     }
     #elseif os(OSX)
-    public var sticker: NSImage?
+    public var sticker: NSImage? {
+        return createTextImage()
+    }
     #endif
 
     /// The text that should be rendered.
@@ -34,7 +36,7 @@ import AppKit
     public var fontName = "Helvetica Neue"
     ///  This factor determins the font-size. Its a relative value that is multiplied with the image height
     ///  during the process.
-    public var intialFontSize = CGFloat(1)
+    public var initialFontSize = CGFloat(1)
 
     public var transform = CGAffineTransformIdentity
 
@@ -112,8 +114,8 @@ import AppKit
         UIColor(white: 1.0, alpha: 0.0).setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: textSize))
 
-        if let font = UIFont(name: fontName, size: intialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
-            text.drawAtPoint(CGPointZero, withAttributes:  [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+        if let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
+            text.drawAtPoint(CGPointZero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
         }
 
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -129,13 +131,23 @@ import AppKit
         let rect = inputImage!.extent
         let imageSize = rect.size
 
-        let image = NSImage(size: imageSize)
+        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+
+        // swiftlint:disable force_cast
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        // swiftlint:enable force_cast
+        customParagraphStyle.lineBreakMode = .ByClipping
+
+        let textSize = textImageSize()
+        let image = NSImage(size: textSize)
         image.lockFocus()
 
         NSColor(white: 1, alpha: 0).setFill()
-        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
-        let font = NSFont(name: fontName, size: fontScaleFactor * imageSize.height)
-        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
+        NSRectFill(CGRect(origin: CGPoint(), size: textSize))
+
+        if let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
+            text.drawAtPoint(CGPointZero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+        }
 
         image.unlockFocus()
 
@@ -154,12 +166,20 @@ import AppKit
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
-        guard let font = UIFont(name: fontName, size: intialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+        #if os(iOS)
+        guard let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
             return CGSizeZero
         }
+        #elseif os(OSX)
+        guard let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+            return CGSizeZero
+        }
+        #endif
 
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
+
+    #if os(iOS)
 
     private func createStickerImage() -> UIImage {
         let rect = inputImage!.extent
@@ -177,6 +197,28 @@ import AppKit
 
         return image
     }
+
+    #elseif os(OSX)
+
+    private func createStickerImage() -> NSImage {
+        let rect = inputImage!.extent
+        let imageSize = rect.size
+        let image = NSImage(size: imageSize)
+        image.lockFocus()
+
+        NSColor(white: 1, alpha: 0).setFill()
+        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
+
+        if let context = NSGraphicsContext.currentContext()?.CGContext {
+            drawStickerInContext(context, withImageOfSize: imageSize)
+        }
+
+        image.unlockFocus()
+
+        return image
+    }
+
+    #endif
 
     private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
         CGContextSaveGState(context)
@@ -209,7 +251,7 @@ extension TextFilter {
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
         copy.text = (text as NSString).copyWithZone(zone) as! String
         copy.fontName = (fontName as NSString).copyWithZone(zone) as! String
-        copy.intialFontSize = intialFontSize
+        copy.initialFontSize = initialFontSize
         copy.cropRect = cropRect
         copy.center = center
         copy.scale = scale
