@@ -169,7 +169,7 @@ import CoreImage
 
     private func flipText(horizontal:Bool) {
         for filter in self.activeFilters {
-            if let stickerFilter = filter as? IMGLYTextFilter {
+            if let stickerFilter = filter as? TextFilter {
                 stickerFilter.center.x -= 0.5
                 stickerFilter.center.y -= 0.5
                 let center = stickerFilter.center
@@ -186,24 +186,26 @@ import CoreImage
         }
     }
     
-    private func flipRotationHorizontal (textFilter:IMGLYTextFilter) {
+    private func flipRotationHorizontal(textFilter: TextFilter) {
         flipRotation(textFilter, axisAngle: CGFloat(M_PI))
     }
     
-    private func flipRotationVertical (textFilter:IMGLYTextFilter) {
+    private func flipRotationVertical(textFilter: TextFilter) {
         flipRotation(textFilter, axisAngle: CGFloat(M_PI_2))
     }
 
-    private func flipRotation (textFilter:IMGLYTextFilter, axisAngle:CGFloat) {
+    private func flipRotation(textFilter: TextFilter, axisAngle: CGFloat) {
         var angle = atan2(textFilter.transform.b, textFilter.transform.a)
         let twoPI = CGFloat(M_PI * 2.0)
         // normalize angle
         while (angle >= twoPI) {
             angle -= twoPI
         }
+        
         while (angle < 0) {
             angle += twoPI
         }
+        
         let delta = axisAngle - angle
         textFilter.transform = CGAffineTransformRotate(textFilter.transform, delta * 2.0)
     }
