@@ -12,5 +12,3 @@ FOUNDATION_EXPORT double imglyKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char imglyKitVersionString[];
 
 #import <imglyKit/LUTToNSDataConverter.h>
-
-

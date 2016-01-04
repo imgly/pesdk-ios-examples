@@ -13,22 +13,23 @@ import CoreGraphics
 Adds framework-related methods to `UIImage`.
 */
 public extension UIImage {
+    // swiftlint:disable variable_name
     /// Returns a copy of the image, taking into account its orientation
     public var imgly_normalizedImage: UIImage {
         if imageOrientation == .Up {
             return self
         }
-        
+
         return imgly_normalizedImageOfSize(size)
     }
-    
+
     /**
     Returns a rescaled copy of the image, taking into account its orientation
-    
+
     - parameter size: The size of the rescaled image.
-    
+
     - returns: The rescaled image.
-    
+
     :discussion: The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
     */
     public func imgly_normalizedImageOfSize(size: CGSize) -> UIImage {
@@ -38,6 +39,8 @@ public extension UIImage {
         UIGraphicsEndImageContext()
         return normalizedImage
     }
+
+    // swiftlint:enable variable_name
 }
 
 extension UIImageOrientation: CustomStringConvertible {

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -9,90 +10,10 @@
         <view contentMode="scaleToFill" id="6OH-Go-v3X">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="am7-3j-HZn" userLabel="Top controls view">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u37-al-tSw" userLabel="Choose flash mode button">
-                            <rect key="frame" x="20" y="0.0" width="50" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="dqv-4v-4Ax"/>
-                                <constraint firstAttribute="height" constant="20" id="iL3-Ux-R12"/>
-                                <constraint firstAttribute="width" constant="50" id="m0r-TC-jKC"/>
-                            </constraints>
-                            <state key="normal" image="flash_auto">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <variation key="default">
-                                <mask key="constraints">
-                                    <exclude reference="iL3-Ux-R12"/>
-                                    <exclude reference="m0r-TC-jKC"/>
-                                </mask>
-                            </variation>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aom-Pc-t2h" userLabel="Swap camera button">
-                            <rect key="frame" x="536" y="0.0" width="44" height="44"/>
-                            <constraints>
-                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="43Q-tl-oGa"/>
-                            </constraints>
-                            <state key="normal" image="cam_switch">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="u37-al-tSw" secondAttribute="bottom" id="JUi-l7-Qw4"/>
-                        <constraint firstAttribute="trailing" secondItem="Aom-Pc-t2h" secondAttribute="trailing" constant="20" id="Uo3-Lm-ile"/>
-                        <constraint firstAttribute="bottom" secondItem="Aom-Pc-t2h" secondAttribute="bottom" id="W4E-fO-7gx"/>
-                        <constraint firstItem="Aom-Pc-t2h" firstAttribute="top" secondItem="am7-3j-HZn" secondAttribute="top" id="dZH-Kt-g8G"/>
-                        <constraint firstItem="u37-al-tSw" firstAttribute="top" secondItem="am7-3j-HZn" secondAttribute="top" id="pew-kJ-1je"/>
-                        <constraint firstItem="u37-al-tSw" firstAttribute="leading" secondItem="am7-3j-HZn" secondAttribute="leading" constant="20" id="tur-4c-GLp"/>
-                        <constraint firstAttribute="height" constant="44" id="wDv-es-nFc"/>
-                    </constraints>
-                </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wHV-ll-sGQ" userLabel="Bottom controls view">
-                    <rect key="frame" x="0.0" y="500" width="600" height="100"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pxN-YW-m5t" userLabel="Take photo button">
-                            <rect key="frame" x="265" y="15" width="70" height="70"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="70" id="2Rd-DO-bzC"/>
-                                <constraint firstAttribute="height" constant="70" id="AI4-rq-T97"/>
-                            </constraints>
-                            <state key="normal" image="LensAperture_ShapeLayer_00000">
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <variation key="heightClass=regular" misplaced="YES">
-                                <rect key="frame" x="413" y="35" width="63" height="30"/>
-                            </variation>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="centerY" secondItem="pxN-YW-m5t" secondAttribute="centerY" id="Vbf-Dz-wnp"/>
-                        <constraint firstAttribute="height" constant="100" id="g9y-7i-JKc"/>
-                        <constraint firstAttribute="centerX" secondItem="pxN-YW-m5t" secondAttribute="centerX" id="nW1-LS-5aM"/>
-                    </constraints>
-                </view>
-            </subviews>
-            <color key="backgroundColor" white="0.1319901316" alpha="1" colorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstItem="am7-3j-HZn" firstAttribute="leading" secondItem="6OH-Go-v3X" secondAttribute="leading" id="IiH-o0-aA0"/>
-                <constraint firstAttribute="trailing" secondItem="wHV-ll-sGQ" secondAttribute="trailing" id="VLs-KM-OSI"/>
-                <constraint firstAttribute="trailing" secondItem="am7-3j-HZn" secondAttribute="trailing" id="ipe-Zc-9yr"/>
-                <constraint firstItem="am7-3j-HZn" firstAttribute="top" secondItem="6OH-Go-v3X" secondAttribute="top" id="jrD-9c-THO"/>
-                <constraint firstAttribute="bottom" secondItem="wHV-ll-sGQ" secondAttribute="bottom" id="nBz-0k-3p3"/>
-                <constraint firstItem="wHV-ll-sGQ" firstAttribute="leading" secondItem="6OH-Go-v3X" secondAttribute="leading" id="vvh-mE-obw"/>
-            </constraints>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="951.5" y="915"/>
         </view>
     </objects>
-    <resources>
-        <image name="LensAperture_ShapeLayer_00000" width="70" height="70"/>
-        <image name="cam_switch" width="28" height="21"/>
-        <image name="flash_auto" width="50" height="20"/>
-    </resources>
 </document>

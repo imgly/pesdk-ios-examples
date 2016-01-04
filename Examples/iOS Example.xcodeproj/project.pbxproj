@@ -12,6 +12,9 @@
 		2BF4D7881AF11E2E00C801B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D7871AF11E2E00C801B2 /* Images.xcassets */; };
 		2BF4D78B1AF11E2E00C801B2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D7891AF11E2E00C801B2 /* LaunchScreen.xib */; };
 		2BF4D7C01AF11F7200C801B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D7BF1AF11F7200C801B2 /* AppDelegate.swift */; };
+		E929C6AC1C288C2500CD71FB /* SampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E929C6AB1C288C2500CD71FB /* SampleViewController.swift */; };
+		E9730B481C2AC6630028F987 /* SampleStickersEditorSubclass.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9730B471C2AC6630028F987 /* SampleStickersEditorSubclass.swift */; };
+		E9730B4B1C2ACFFE0028F987 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9730B4A1C2ACFFE0028F987 /* Storyboard.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +62,9 @@
 		2BF4D78A1AF11E2E00C801B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		2BF4D7B41AF11ED100C801B2 /* imglyKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = imglyKit.xcodeproj; path = ../imglyKit.xcodeproj; sourceTree = "<group>"; };
 		2BF4D7BF1AF11F7200C801B2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E929C6AB1C288C2500CD71FB /* SampleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleViewController.swift; sourceTree = "<group>"; };
+		E9730B471C2AC6630028F987 /* SampleStickersEditorSubclass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleStickersEditorSubclass.swift; sourceTree = "<group>"; };
+		E9730B4A1C2ACFFE0028F987 /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,9 @@
 				2BF4D7871AF11E2E00C801B2 /* Images.xcassets */,
 				2BF4D7891AF11E2E00C801B2 /* LaunchScreen.xib */,
 				2BF4D77E1AF11E2E00C801B2 /* Supporting Files */,
+				E929C6AB1C288C2500CD71FB /* SampleViewController.swift */,
+				E9730B471C2AC6630028F987 /* SampleStickersEditorSubclass.swift */,
+				E9730B4A1C2ACFFE0028F987 /* Storyboard.storyboard */,
 			);
 			path = "iOS Example";
 			sourceTree = "<group>";
@@ -129,6 +138,7 @@
 				2BF4D7781AF11E2E00C801B2 /* Frameworks */,
 				2BF4D7791AF11E2E00C801B2 /* Resources */,
 				2B3A5D941B2F095200CCF99B /* Embed Frameworks */,
+				2B5727F91C28340A0003EF8F /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -205,10 +215,28 @@
 			files = (
 				2BF4D78B1AF11E2E00C801B2 /* LaunchScreen.xib in Resources */,
 				2BF4D7881AF11E2E00C801B2 /* Images.xcassets in Resources */,
+				E9730B4B1C2ACFFE0028F987 /* Storyboard.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2B5727F91C28340A0003EF8F /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"SwiftLint does not exist, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2BF4D7771AF11E2E00C801B2 /* Sources */ = {
@@ -216,6 +244,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF4D7C01AF11F7200C801B2 /* AppDelegate.swift in Sources */,
+				E9730B481C2AC6630028F987 /* SampleStickersEditorSubclass.swift in Sources */,
+				E929C6AC1C288C2500CD71FB /* SampleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
