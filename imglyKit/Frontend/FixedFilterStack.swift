@@ -30,14 +30,15 @@ import CoreImage
     public var effectFilter = InstanceFactory.effectFilterWithType(FilterType.None)
     public var brightnessFilter = InstanceFactory.colorAdjustmentFilter()
     public var tiltShiftFilter = InstanceFactory.tiltShiftFilter()
-    public var textFilter = InstanceFactory.textFilter()
     public var stickerFilters = [Filter]()
+    public var textFilters = [Filter]()
 
     public var activeFilters: [Filter] {
         setCropRectForStickerFilters()
         setCropRectForTextFilters()
-        var activeFilters: [Filter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter, textFilter]
+        var activeFilters: [Filter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter]
         activeFilters += stickerFilters
+        activeFilters += textFilters
         return activeFilters
     }
 
@@ -50,10 +51,11 @@ import CoreImage
     }
 
     private func setCropRectForTextFilters () {
-        //for stickerFilter in stickerFilters {
-         //   (stickerFilter as! IMGLYStickerFilter).cropRect = orientationCropFilter.cropRect
-        //}
-        textFilter.cropRect = orientationCropFilter.cropRect
+        for textFilter in textFilters where textFilter is TextFilter {
+            // swiftlint:disable force_cast
+            (textFilter as! TextFilter).cropRect = orientationCropFilter.cropRect
+            // swiftlint:enable force_fast
+        }
     }
 
     public func rotateStickersRight () {
@@ -93,14 +95,18 @@ import CoreImage
     private func rotateText (angle: CGFloat, negateX: Bool, negateY: Bool) {
         let xFactor: CGFloat = negateX ? -1.0 : 1.0
         let yFactor: CGFloat = negateY ? -1.0 : 1.0
-        textFilter.transform = CGAffineTransformRotate(textFilter.transform, angle)
-        textFilter.center.x -= 0.5
-        textFilter.center.y -= 0.5
-        let center = textFilter.center
-        textFilter.center.x = xFactor * center.y
-        textFilter.center.y = yFactor * center.x
-        textFilter.center.x += 0.5
-        textFilter.center.y += 0.5
+        for filter in self.activeFilters {
+            if let textFilter = filter as? TextFilter {
+                textFilter.transform = CGAffineTransformRotate(textFilter.transform, angle)
+                textFilter.center.x -= 0.5
+                textFilter.center.y -= 0.5
+                let center = textFilter.center
+                textFilter.center.x = xFactor * center.y
+                textFilter.center.y = yFactor * center.x
+                textFilter.center.x += 0.5
+                textFilter.center.y += 0.5
+            }
+        }
     }
 
 
@@ -226,7 +232,7 @@ extension FixedFilterStack: NSCopying {
         copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilter
         copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! ContrastBrightnessSaturationFilter
         copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! TiltshiftFilter
-        copy.textFilter = textFilter.copyWithZone(zone) as! TextFilter
+        copy.textFilters = NSArray(array: textFilters, copyItems: true) as! [Filter]
         copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [Filter]
         // swiftlint:enable force_cast
         return copy

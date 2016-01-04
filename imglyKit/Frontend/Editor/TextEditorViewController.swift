@@ -183,7 +183,13 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let textFilter = fixedFilterStack.textFilter
+        if fixedFilterStack.textFilters.count == 0 {
+            fixedFilterStack.textFilters.append(InstanceFactory.textFilter())
+        }
+
+        // swiftlint:disable force_cast
+        let textFilter = fixedFilterStack.textFilters.first as! TextFilter
+        // swiftlint:enable force_cast
         textFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let cropRect = textFilter.cropRect
         let completeSize = textClipView.bounds.size
