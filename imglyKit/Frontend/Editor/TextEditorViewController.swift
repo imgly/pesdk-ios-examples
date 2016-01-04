@@ -189,6 +189,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         // swiftlint:disable force_cast
         let textFilter = fixedFilterStack.textFilters.first as! TextFilter
+        textFilter.inputImage = self.previewImageView.image!.CIImage
+
         // swiftlint:enable force_cast
         textFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let cropRect = textFilter.cropRect
@@ -202,7 +204,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         textFilter.fontName = fontName
         textFilter.text = textLabel.text ?? ""
         textFilter.initialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
-        var size = initialSizeForStickerImage(textFilter.textImageSize())
+        let inputImage = previewImageView.image!
+        var size = initialSizeForStickerImage(textFilter.textImageSizeFromImageSize(inputImage.size))
         size.width = size.width / completeSize.width
         size.height = size.height / completeSize.height
 
