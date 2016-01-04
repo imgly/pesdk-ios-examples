@@ -88,9 +88,6 @@ import AppKit
 
     public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
-        if imageSize.width > imageSize.height {
-            return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
-        }
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
 
