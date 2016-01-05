@@ -10,10 +10,10 @@ import UIKit
 
 /// An available editor action for the main editor
 @objc(IMGLYMainEditorAction) public class MainEditorAction: NSObject {
-    let title: String?
-    let image: UIImage?
-    let selectedImage: UIImage?
-    let editorType: MainEditorActionType
+    public let title: String?
+    public let image: UIImage?
+    public let selectedImage: UIImage?
+    public let editorType: MainEditorActionType
 
     /**
      - parameter title:         The title shown below the icon
@@ -23,7 +23,7 @@ import UIKit
 
      - returns: An MainEditorActionItem with the given values
      */
-    init(title: String?, image: UIImage?, selectedImage: UIImage? = nil, editorType: MainEditorActionType) {
+    public init(title: String?, image: UIImage?, selectedImage: UIImage? = nil, editorType: MainEditorActionType) {
         self.title = title
         self.image = image
         self.selectedImage = selectedImage
