@@ -249,6 +249,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
             viewNames.append(viewName)
             buttonContainerView.addSubview(button)
             views[viewName] = button
+            print(viewName)
             buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
 

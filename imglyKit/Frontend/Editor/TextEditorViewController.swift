@@ -31,6 +31,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// Enables/Disables color changes through the bottom drawer. Defaults to true.
     public let canModifyTextColor: Bool
 
+    /// Enables/Disables font changes through the bottom drawer. Defaults to true.
+    public let canModifyTextFont: Bool
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -41,6 +44,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         availableFontColors = builder.availableFontColors
         canModifyTextSize = builder.canModifyTextSize
         canModifyTextColor = builder.canModifyTextColor
+        canModifyTextFont = builder.canModifyTextFont
         super.init(editorBuilder: builder)
     }
 }
@@ -66,6 +70,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// Enables/Disables color changes through the bottom drawer. Defaults to true.
     public var canModifyTextColor = true
 
+    /// Enables/Disables font changes through the bottom drawer. Defaults to true.
+    public let canModifyTextFont = true
+
     public override init() {
         super.init()
 
@@ -87,6 +94,16 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var distanceAtPinchBegin = CGFloat(0)
     private var beganTwoFingerPitch = false
     private var draggedView: UILabel?
+
+    public private(set) lazy var addTextButton: ImageCaptionButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = ImageCaptionButton()
+        button.textLabel.text = NSLocalizedString("crop-editor.free", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        return button
+    }()
 
     public private(set) lazy var textColorSelectorView: TextColorSelectorView = {
         let view = TextColorSelectorView(availableColors: self.options.availableFontColors)
@@ -157,13 +174,14 @@ private let kMinimumFontSize = CGFloat(12.0)
         navigationItem.rightBarButtonItem?.enabled = false
 
         if options.canModifyTextColor {
-            configureColorSelectorView()
+        //    configureColorSelectorView()
         }
 
         configureTextClipView()
         configureTextField()
         configureTextLabel()
-        configureFontSelectorView()
+        configureButtons()
+       // configureFontSelectorView()
         registerForKeyboardNotifications()
         configureGestureRecognizers()
     }
@@ -204,7 +222,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         textFilter.text = textLabel.text ?? ""
         textFilter.initialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
         let inputImage = previewImageView.image!
-        var size = initialSizeForStickerImage(textFilter.textImageSizeFromImageSize(inputImage.size))
+        var size = initialSizeForTextImage(textFilter.textImageSizeFromImageSize(inputImage.size))
         size.width = size.width / completeSize.width
         size.height = size.height / completeSize.height
 
@@ -223,7 +241,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
-    private func initialSizeForStickerImage(size: CGSize) -> CGSize {
+    private func initialSizeForTextImage(size: CGSize) -> CGSize {
         let initialMaxStickerSize = (CGRectGetWidth(textClipView.bounds) - kTextLabelInitialMargin) * self.fixedFilterStack.orientationCropFilter.cropRect.width
         let widthRatio = initialMaxStickerSize / size.width
         let heightRatio = initialMaxStickerSize / size.height
@@ -232,6 +250,27 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     // MARK: - Configuration
+    private func configureButtons() {
+        // Setup button container view
+        let buttonContainerView = UIView()
+        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
+        bottomContainerView.addSubview(buttonContainerView)
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
+        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+
+        var views = [String: UIView]()
+        var visualFormatString = ""
+        if options.canModifyTextColor {
+            let viewName = "_\(String(addTextButton.hash))"
+            visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
+            buttonContainerView.addSubview(addTextButton)
+            views[viewName] = addTextButton
+            print(viewName)
+            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
+
+        }
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+    }
 
     private func configureColorSelectorView() {
         bottomContainerView.addSubview(textColorSelectorView)
