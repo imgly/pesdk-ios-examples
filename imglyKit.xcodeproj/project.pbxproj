@@ -177,8 +177,6 @@
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BE0C44F1C3ABB3B00F1F5E4 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF4D3841AF1139600C801B2 /* imglyKit.framework */; };
 		2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
-		2BE0C45A1C3AC92F00F1F5E4 /* LUTConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4591C3AC92F00F1F5E4 /* LUTConverter.swift */; };
-		2BE0C45B1C3AC92F00F1F5E4 /* LUTConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4591C3AC92F00F1F5E4 /* LUTConverter.swift */; };
 		2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */; };
 		2BEBCE971B00D7D1000FE22B /* AnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */; };
 		2BEE5B321B063E7800FDF0F7 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE5B311B063E7800FDF0F7 /* CameraController.swift */; };
@@ -406,7 +404,6 @@
 		2BE0C44E1C3ABB3B00F1F5E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUTConverterTests.swift; sourceTree = "<group>"; };
 		2BE0C4581C3ABCEB00F1F5E4 /* imglyKit-iOS-Tests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "imglyKit-iOS-Tests-Bridging-Header.h"; sourceTree = "<group>"; };
-		2BE0C4591C3AC92F00F1F5E4 /* LUTConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUTConverter.swift; sourceTree = "<group>"; };
 		2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRecordButton.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BEE5B311B063E7800FDF0F7 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CameraController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -903,7 +900,6 @@
 				2BF4D49F1AF1154B00C801B2 /* ContrastBrightnessSaturationFilter.swift */,
 				2BF4D4A01AF1154B00C801B2 /* CropFilter.swift */,
 				2BF4D4A11AF1154B00C801B2 /* EnhancementFilter.swift */,
-				2BE0C4591C3AC92F00F1F5E4 /* LUTConverter.swift */,
 				2BF4D53B1AF1156F00C801B2 /* LUTToNSDataConverter.h */,
 				2BF4D53C1AF1156F00C801B2 /* LUTToNSDataConverter.m */,
 				2BF4D4A31AF1154B00C801B2 /* NoneFilter.swift */,
@@ -1351,7 +1347,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BE0C45B1C3AC92F00F1F5E4 /* LUTConverter.swift in Sources */,
 				2B1ADADC1B19C8EE00C98522 /* TexasFilter.swift in Sources */,
 				2B1ADAA21B19C8EE00C98522 /* BluesFilter.swift in Sources */,
 				2B1ADAAC1B19C8EE00C98522 /* CreamyFilter.swift in Sources */,
@@ -1565,7 +1560,6 @@
 				2BF4D5011AF1155E00C801B2 /* CelsiusFilter.swift in Sources */,
 				2BF4D3D61AF1150500C801B2 /* FilterCollectionViewCell.swift in Sources */,
 				2BF4D3EA1AF1150500C801B2 /* TextEditorViewController.swift in Sources */,
-				2BE0C45A1C3AC92F00F1F5E4 /* LUTConverter.swift in Sources */,
 				2BF4D50F1AF1155E00C801B2 /* FridgeFilter.swift in Sources */,
 				2BF51F701B41A7E700FFB4C2 /* RecordingMode.swift in Sources */,
 				2BF4D51A1AF1155E00C801B2 /* LithoFilter.swift in Sources */,
@@ -1810,6 +1804,7 @@
 				2BE0C4531C3ABB3B00F1F5E4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2BF4D37E1AF1139600C801B2 /* Build configuration list for PBXProject "imglyKit" */ = {
 			isa = XCConfigurationList;

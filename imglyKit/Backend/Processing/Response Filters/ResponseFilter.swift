@@ -38,8 +38,7 @@ import QuartzCore
     private var colorCubeData: NSData? {
         get {
             if _colorCubeData == nil {
-                _colorCubeData = LUTConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
-//                _colorCubeData = LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
+                _colorCubeData = LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
             }
 
             return _colorCubeData
