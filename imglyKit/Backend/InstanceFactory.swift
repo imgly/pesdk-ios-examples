@@ -161,7 +161,15 @@ import Foundation
     - returns: An array of filter types.
     */
     public class var availableFilterList: [FilterType] {
-        return Array(filterTypeToFilter.keys)
+        return [
+            .None, .K1, .K2, .K6, .KDynamic, .Fridge, .Breeze, .Orchid, .Chest, .Front, .Fixie,
+            .X400, .BW, .AD1920, .Lenin, .Quozi, .Pola669, .PolaSX, .Food, .Glam, .Celsius, .Texas,
+            .Lomo, .Goblin, .Sin, .Mellow, .Soft, .Blues, .Elder, .Sunset, .Evening, .Steel,
+            .Seventies, .HighContrast, .BlueShadows, .Highcarb, .Eighties, .Colorful, .Lomo100,
+            .Pro400, .Twilight, .CottonCandy, .Pale, .Settled, .Cool, .Litho, .Ancient, .Pitched,
+            .Lucid, .Creamy, .Keen, .Tender, .Bleached, .BleachedBlue, .Fall, .Winter, .SepiaHigh,
+            .Summer, .Classic, .NoGreen, .Neat, .Plate
+        ]
     }
 
     // MARK: - Font Related
