@@ -29,11 +29,11 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: OrientationEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: OrientationEditorViewControllerOptionsBuilder) {
+    public init(builder: OrientationEditorViewControllerOptionsBuilder) {
         allowedOrientationActions = builder.allowedOrientationActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)

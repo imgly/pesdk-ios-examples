@@ -15,11 +15,11 @@ import UIKit
     /// MainEditorActionsDataSource providing all editors.
     public let editorActionsDataSource: MainEditorActionsDataSourceProtocol
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: MainEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: MainEditorViewControllerOptionsBuilder) {
+    public init(builder: MainEditorViewControllerOptionsBuilder) {
         editorActionsDataSource = builder.editorActionsDataSource
         super.init(editorBuilder: builder)
     }

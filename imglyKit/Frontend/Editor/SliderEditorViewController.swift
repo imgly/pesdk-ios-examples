@@ -13,11 +13,11 @@ import UIKit
     /// Defaults to an empty implementation.
     public let sliderConfigurationClosure: SliderConfigurationClosure
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: SliderEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: SliderEditorViewControllerOptionsBuilder) {
+    public init(builder: SliderEditorViewControllerOptionsBuilder) {
         sliderConfigurationClosure = builder.sliderConfigurationClosure
         super.init(editorBuilder: builder)
     }

@@ -35,11 +35,11 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public let allowsPreviewImageZoom: Bool
 
-    convenience override init() {
+    public convenience override init() {
         self.init(editorBuilder: EditorViewControllerOptionsBuilder())
     }
 
-    init(editorBuilder: EditorViewControllerOptionsBuilder) {
+    public init(editorBuilder: EditorViewControllerOptionsBuilder) {
         title = editorBuilder.title
         backgroundColor = editorBuilder.backgroundColor
         leftBarButtonConfigurationClosure = editorBuilder.leftBarButtonConfigurationClosure
@@ -142,7 +142,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
 
     - returns: An initialized EditorViewController
     */
-    init(configuration: Configuration) {
+    public init(configuration: Configuration) {
         super.init(nibName: nil, bundle: nil)
         self.configuration = configuration
     }

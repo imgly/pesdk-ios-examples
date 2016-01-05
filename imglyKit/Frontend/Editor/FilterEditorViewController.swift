@@ -26,11 +26,11 @@ import UIKit
     /// Enable/Disable the filter intensity slider. Defaults to true.
     public let showFilterIntensitySlider: Bool
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: FilterEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: FilterEditorViewControllerOptionsBuilder) {
+    public init(builder: FilterEditorViewControllerOptionsBuilder) {
         filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
         filterDataSource = builder.filterDataSource
         showFilterIntensitySlider = builder.showFilterIntensitySlider

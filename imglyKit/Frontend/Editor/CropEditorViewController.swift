@@ -38,11 +38,11 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: CropEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: CropEditorViewControllerOptionsBuilder) {
+    public init(builder: CropEditorViewControllerOptionsBuilder) {
         allowedCropActions = builder.allowedCropActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)

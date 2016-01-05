@@ -22,11 +22,11 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: StickersEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: StickersEditorViewControllerOptionsBuilder) {
+    public init(builder: StickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
         super.init(editorBuilder: builder)

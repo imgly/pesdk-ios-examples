@@ -28,7 +28,7 @@ public typealias FilterTypeActiveBlock = () -> (FilterType?)
 
     // MARK: - Initializers
 
-    init() {
+    public init() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.itemSize = kFilterCollectionViewCellSize
         flowLayout.scrollDirection = .Horizontal

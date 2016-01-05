@@ -31,11 +31,11 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// Enables/Disables color changes through the bottom drawer. Defaults to true.
     public let canModifyTextColor: Bool
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: TextEditorViewControllerOptionsBuilder) {
+    public init(builder: TextEditorViewControllerOptionsBuilder) {
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
         fontPreviewTextColor = builder.fontPreviewTextColor
         availableFontColors = builder.availableFontColors

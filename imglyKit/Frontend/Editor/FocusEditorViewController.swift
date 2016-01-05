@@ -35,11 +35,11 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure
 
-    convenience init() {
+    public convenience init() {
         self.init(builder: FocusEditorViewControllerOptionsBuilder())
     }
 
-    init(builder: FocusEditorViewControllerOptionsBuilder) {
+    public init(builder: FocusEditorViewControllerOptionsBuilder) {
         allowedFocusActions = builder.allowedFocusActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)
