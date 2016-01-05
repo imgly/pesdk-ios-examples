@@ -190,7 +190,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         // swiftlint:disable force_cast
         let textFilter = fixedFilterStack.textFilters.first as! TextFilter
         textFilter.inputImage = self.previewImageView.image!.CIImage
-
         // swiftlint:enable force_cast
         textFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let cropRect = textFilter.cropRect
@@ -209,10 +208,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         size.width = size.width / completeSize.width
         size.height = size.height / completeSize.height
 
+        let ratio = completeSize.height / completeSize.width
+        // Since we use width based scaling, we must set another factor when the string
+        // image is taller than wide.
+        let scale = size.height < size.width ? size.width : size.width * ratio
+
         textFilter.color = textColor
         textFilter.transform = textLabel.transform
         textFilter.center = center
-        textFilter.scale = size.width
+        textFilter.scale = scale
 
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
@@ -397,6 +401,11 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func calculateInitialFontSize() {
+        // swiftlint:disable force_cast
+       let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        // swiftlint:enable force_cast
+        customParagraphStyle.lineBreakMode = .ByClipping
+
         if let text = textLabel.text {
             currentTextSize = 1.0
             var size = CGSizeZero
@@ -404,8 +413,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 repeat {
                     currentTextSize += 1.0
                     if let font = UIFont(name: fontName, size: currentTextSize) {
-                        size = text.sizeWithAttributes([ NSFontAttributeName: font ])
-                        print(size)
+                        size = text.sizeWithAttributes([ NSFontAttributeName: font,  NSParagraphStyleAttributeName:customParagraphStyle])
                     }
                 } while ((size.width < (textClipView.frame.size.width - kTextLabelInitialMargin)) && (size.height < (textClipView.frame.size.height - kTextLabelInitialMargin)))
             }

@@ -168,6 +168,7 @@ import AppKit
     public func textImageSizeFromImageSize(imageSize: CGSize) -> CGSize {
         #elseif os(OSX)
         let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+        print(originalSize)
         // swiftlint:disable force_cast
         let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         // swiftlint:enable force_cast
@@ -178,7 +179,9 @@ import AppKit
         }
         #endif
 
-        return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+        let size = text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+        print(size)
+        return size
     }
 
     #if os(iOS)
