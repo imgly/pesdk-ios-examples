@@ -399,15 +399,15 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func calculateInitialFontSize() {
         if let text = textLabel.text {
             currentTextSize = 1.0
-
             var size = CGSizeZero
             if !text.isEmpty {
                 repeat {
                     currentTextSize += 1.0
                     if let font = UIFont(name: fontName, size: currentTextSize) {
                         size = text.sizeWithAttributes([ NSFontAttributeName: font ])
+                        print(size)
                     }
-                } while ((size.width < (view.frame.size.width - kTextLabelInitialMargin)) && (size.height < (view.frame.size.height - kTextLabelInitialMargin)))
+                } while ((size.width < (textClipView.frame.size.width - kTextLabelInitialMargin)) && (size.height < (textClipView.frame.size.height - kTextLabelInitialMargin)))
             }
         }
     }
