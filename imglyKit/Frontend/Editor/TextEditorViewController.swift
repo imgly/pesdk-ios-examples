@@ -159,7 +159,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         return textField
     }()
 
-    public private(set) lazy var textLabel: UILabel = {
+  /*  public private(set) lazy var textLabel: UILabel = {
         let label = UILabel()
         label.alpha = 0.0
         label.backgroundColor = UIColor(white:0.0, alpha:0.0)
@@ -169,6 +169,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         label.userInteractionEnabled = true
         return label
     }()
+*/
 
     public private(set) lazy var fontSelectorContainerView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .Dark)
@@ -184,6 +185,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         selector.fontPreviewTextColor = self.options.fontPreviewTextColor
         return selector
     }()
+
+    private var textLabel = UILabel()
 
     // MAKR: - Initializers
 
@@ -208,7 +211,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         configureTextClipView()
         configureTextField()
-        configureTextLabel()
+ //       configureTextLabel()
         configureButtons()
        // configureFontSelectorView()
         registerForKeyboardNotifications()
@@ -321,6 +324,12 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func configureTextLabel() {
         textClipView.addSubview(textLabel)
+        textLabel.alpha = 0.0
+        textLabel.backgroundColor = UIColor(white:0.0, alpha:0.0)
+        textLabel.textColor = self.textColor
+        textLabel.textAlignment = NSTextAlignment.Center
+        textLabel.clipsToBounds = true
+        textLabel.userInteractionEnabled = true
     }
 
     private func configureFontSelectorView() {
@@ -368,6 +377,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - Button Handling
 
     @objc private func addText(sender: ImageCaptionButton) {
+        textField.text = ""
         textField.becomeFirstResponder()
     }
 
@@ -521,29 +531,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         let diffY = point1.y - point2.y
         return sqrt(diffX * diffX + diffY  * diffY)
     }
-
-    private func updateTextLabelFrameForCurrentFont() {
-        // resize and keep the text centered
-        let frame = textLabel.frame
-        textLabel.sizeToFit()
-
-        let diffX = frame.size.width - textLabel.frame.size.width
-        let diffY = frame.size.height - textLabel.frame.size.height
-        textLabel.frame.origin.x += (diffX / 2.0)
-        textLabel.frame.origin.y += (diffY / 2.0)
-    }
-
-    private func transformedTextFrame() -> CGRect {
-        var origin = textLabel.frame.origin
-        origin.x = origin.x / previewImageView.visibleImageFrame.size.width
-        origin.y = origin.y / previewImageView.visibleImageFrame.size.height
-
-        var size = textLabel.frame.size
-        size.width = size.width / textLabel.frame.size.width
-        size.height = size.height / textLabel.frame.size.height
-
-        return CGRect(origin: origin, size: size)
-    }
 }
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
@@ -562,6 +549,8 @@ extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideTextField()
+        textLabel = UILabel()
+        configureTextLabel()
         textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         textLabel.transform = CGAffineTransformRotate(textLabel.transform, 0)
         setInitialTextLabelSize()
