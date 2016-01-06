@@ -98,7 +98,27 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var addTextButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("crop-editor.free", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = NSLocalizedString("text-editor.add", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var selectTextFontButton: ImageCaptionButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = ImageCaptionButton()
+        button.textLabel.text = NSLocalizedString("text-editor.font", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var selectTextColorButton: ImageCaptionButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = ImageCaptionButton()
+        button.textLabel.text = NSLocalizedString("text-editor.text-color", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
@@ -261,15 +281,32 @@ private let kMinimumFontSize = CGFloat(12.0)
         var views = [String: UIView]()
         var visualFormatString = ""
         if options.canModifyTextColor {
-            let viewName = "_\(String(addTextButton.hash))"
-            visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
-            buttonContainerView.addSubview(addTextButton)
-            views[viewName] = addTextButton
-            print(viewName)
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
-
+            views = viewsByAddingButton(addTextButton, containerView: buttonContainerView, views: views)
+            visualFormatString = visualFormatStringByAddingButton(addTextButton, visualFormatString: visualFormatString)
+        }
+        if options.canModifyTextFont {
+            views = viewsByAddingButton(selectTextFontButton, containerView: buttonContainerView, views: views)
+            visualFormatString = visualFormatStringByAddingButton(selectTextFontButton, visualFormatString: visualFormatString)
+        }
+        if options.canModifyTextColor {
+            views = viewsByAddingButton(selectTextColorButton, containerView: buttonContainerView, views: views)
+            visualFormatString = visualFormatStringByAddingButton(selectTextColorButton, visualFormatString: visualFormatString)
         }
         buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+    }
+
+    private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
+        let viewName = "_\(String(button.hash))"
+        containerView.addSubview(button)
+        views[viewName] = button
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
+        return views
+    }
+
+    private func visualFormatStringByAddingButton(button: ImageCaptionButton, var visualFormatString: String) -> (String) {
+        let viewName = "_\(String(button.hash))"
+        visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
+        return visualFormatString
     }
 
     private func configureColorSelectorView() {

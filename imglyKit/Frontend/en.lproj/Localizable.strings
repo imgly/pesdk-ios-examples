@@ -55,6 +55,11 @@
 "crop-editor.4-to-3" = "4:3";
 "crop-editor.16-to-9" = "16:9";
 
+// Crop Editor
+"text-editor.add" = "Add";
+"text-editor.font" = "Font";
+"text-editor.text-color" = "Color";
+
 // Brightness Editor
 "brightness-editor.title" = "Brightness";
 
