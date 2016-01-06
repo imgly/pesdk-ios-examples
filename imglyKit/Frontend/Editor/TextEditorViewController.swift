@@ -434,10 +434,10 @@ private let kMinimumFontSize = CGFloat(12.0)
                     textClipView.bringSubviewToFront(draggedView)
               }
             case .Changed:
-                if (draggedView != nil) {
+                if let draggedView =  draggedView {
                     currentTextSize *= scale
-                    textLabel.font = UIFont(name: fontName, size: currentTextSize)
-                    textLabel.sizeToFit()
+                    draggedView.font = UIFont(name: fontName, size: currentTextSize)
+                    draggedView.sizeToFit()
                 }
                 recognizer.scale = 1
             case .Cancelled, .Ended:
@@ -576,6 +576,7 @@ extension TextEditorViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         hideTextField()
         textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        textLabel.transform = CGAffineTransformRotate(textLabel.transform, 0)
         setInitialTextLabelSize()
         showTextLabel()
         navigationItem.rightBarButtonItem?.enabled = true
