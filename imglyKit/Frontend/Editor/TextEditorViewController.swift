@@ -34,6 +34,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// Enables/Disables font changes through the bottom drawer. Defaults to true.
     public let canModifyTextFont: Bool
 
+    /// The name of the default Font. Defaults to 'Helvetica Neue'.
+    public let defaultFontName: String
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -45,6 +48,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         canModifyTextSize = builder.canModifyTextSize
         canModifyTextColor = builder.canModifyTextColor
         canModifyTextFont = builder.canModifyTextFont
+        defaultFontName = builder.defaultFontName
         super.init(editorBuilder: builder)
     }
 }
@@ -72,6 +76,9 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     /// Enables/Disables font changes through the bottom drawer. Defaults to true.
     public let canModifyTextFont = true
+
+    /// The name of the default Font. Defaults to 'Helvetica Neue'.
+    public let defaultFontName = "Helvetica Neue"
 
     public override init() {
         super.init()
@@ -101,7 +108,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.textLabel.text = NSLocalizedString("text-editor.add", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -111,7 +118,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.textLabel.text = NSLocalizedString("text-editor.font", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "setTextFont:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -121,7 +128,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.textLabel.text = NSLocalizedString("text-editor.text-color", tableName: nil, bundle: bundle, value: "", comment: "")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -191,6 +198,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         InstanceFactory.fontImporter().importFonts()
 
+        fontName = options.defaultFontName
+
         navigationItem.rightBarButtonItem?.enabled = false
 
         if options.canModifyTextColor {
@@ -250,11 +259,11 @@ private let kMinimumFontSize = CGFloat(12.0)
         // Since we use width based scaling, we must set another factor when the string
         // image is taller than wide.
         let scale = size.height < size.width ? size.width : size.width * ratio
-
+        print(scale, size)
         textFilter.color = textColor
         textFilter.transform = textLabel.transform
         textFilter.center = center
-        textFilter.scale = scale
+        textFilter.scale = 1.0
 
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
@@ -370,6 +379,20 @@ private let kMinimumFontSize = CGFloat(12.0)
         textClipView.addGestureRecognizer(rotationGestureRecognizer)
     }
 
+    // MARK: - Button Handling
+
+    @objc private func addText(sender: ImageCaptionButton) {
+        textField.becomeFirstResponder()
+    }
+
+    @objc private func setTextColor(sender: ImageCaptionButton) {
+
+    }
+
+    @objc private func setTextFont(sender: ImageCaptionButton) {
+
+    }
+
     // MARK: - Gesture Handling
 
     @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
@@ -411,8 +434,10 @@ private let kMinimumFontSize = CGFloat(12.0)
                     textClipView.bringSubviewToFront(draggedView)
               }
             case .Changed:
-                if let draggedView = draggedView {
-                    draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
+                if (draggedView != nil) {
+                    currentTextSize *= scale
+                    textLabel.font = UIFont(name: fontName, size: currentTextSize)
+                    textLabel.sizeToFit()
                 }
                 recognizer.scale = 1
             case .Cancelled, .Ended:
@@ -567,7 +592,7 @@ extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
         fontSelectorContainerView.removeFromSuperview()
         self.fontName = fontName
-        textField.font = UIFont(name: fontName, size: kFontSizeInTextField)
+        //textField.font = UIFont(name: fontName, size: kFontSizeInTextField)
         textField.becomeFirstResponder()
     }
 }

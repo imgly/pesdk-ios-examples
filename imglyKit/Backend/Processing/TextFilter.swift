@@ -86,7 +86,7 @@ import AppKit
         return filter.outputImage
     }
 
-    public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
+    private func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
@@ -233,7 +233,7 @@ import AppKit
         center.x -= (cropRect.origin.x * originalSize.width)
         center.y -= (cropRect.origin.y * originalSize.height)
 
-        let size = self.absolutStickerSizeForImageSize(originalSize)
+        let size = self.sticker!.size
         let imageRect = CGRect(origin: center, size: size)
 
         // Move center to origin
