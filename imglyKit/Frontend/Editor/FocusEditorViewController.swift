@@ -200,7 +200,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
         var viewNames = [String]()
         for action in options.allowedFocusActions {
             let button = actionToButtonMap[action]!
-            let viewName = "_\(String(button.hash))" // View names must start with a letter or underscore
+            let viewName = "_\(String(abs(button.hash)))" // View names must start with a letter or underscore
             viewNames.append(viewName)
             buttonContainerView.addSubview(button)
             views[viewName] = button
