@@ -46,6 +46,7 @@ lane :ci_commit do |options|
 
   test_framework(configuration: configuration)
   build_example(configuration: configuration)
+  af_pod_spec_lint(quick: true)
 end
 
 desc "Runs all tests for the given environment"
