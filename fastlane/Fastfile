@@ -1,0 +1,112 @@
+# Customise this file, documentation can be found here:
+# https://github.com/KrauseFx/fastlane/tree/master/docs
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
+# can also be listed using the `fastlane actions` command
+
+# Change the syntax highlighting to Ruby
+# All lines starting with a # are ignored when running `fastlane`
+
+# By default, fastlane will send which actions are used
+# No personal data is shared, more information on https://github.com/fastlane/enhancer
+# Uncomment the following line to opt out
+# opt_out_usage
+
+# If you want to automatically update fastlane if a new version is available:
+# update_fastlane
+
+# This is the minimum version number required.
+# Update this, if you use features of a newer version
+fastlane_version "1.49.0"
+
+before_all do
+  # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
+
+
+  # increment_build_number
+
+  # xctool # run the tests of your app
+end
+
+# Test Lanes
+desc "Runs tests and builds example for the given environment"
+desc "The lane to run by ci on every commit. This lanes calls the lanes `test_framework` and `build_example`."
+desc "#### Example:"
+desc "```\nfastlane ci_commit configuration:Debug --env ios92\n```"
+desc "#### Options"
+desc " * **`configuration`**: The build configuration to use. (`IMGLY_CONFIGURATION`)"
+desc ""
+lane :ci_commit do |options|
+  if options[:configuration]
+    configuration = options[:configuration]
+  elsif ENV["IMGLY_CONFIGURATION"]
+    configuration = ENV["IMGLY_CONFIGURATION"]
+  else
+    configuration = "Release"
+  end
+
+  test_framework(configuration: configuration)
+  build_example(configuration: configuration)
+end
+
+desc "Runs all tests for the given environment"
+desc "Set `scan` action environment variables to control test configuration"
+desc "#### Example:"
+desc "```\nfastlane test_framework configuration:Debug --env ios92\n```"
+desc "#### Options"
+desc " * **`configuration`**: The build configuration to use."
+desc ""
+lane :test_framework do |options|
+  scan(
+    configuration: options[:configuration]
+  )
+end
+
+desc "Builds the example file"
+desc "Set `xcodebuild` action environment variables to control build configuration"
+desc "#### Example:"
+desc "```\nfastlane build_example configuration:Debug --env ios92\n```"
+desc "#### Options"
+desc " * **`configuration`**: The build configuration to use."
+desc ""
+lane :build_example do |options|
+  xcodebuild(
+    workspace: ENV["EXAMPLE_WORKSPACE"],
+    scheme: ENV["EXAMPLE_SCHEME"],
+    build: true,
+    destination: ENV["EXAMPLE_DESTINATION"],
+    configuration: options[:configuration],
+    build_settings: [["ONLY_ACTIVE_ARCH", "NO"]]
+  )
+end
+
+desc "Runs SwiftLint on the project"
+desc "#### Example:"
+desc "```\nfastlane lint\n```"
+desc ""
+lane :lint do |options|
+  if options[:configuration] != "Debug"
+    Helper.log.info "Not running lint lane for #{options[:configuration]} configuration".yellow
+  else
+    swiftlint(strict: true)
+  end
+end
+
+after_all do |lane|
+  # This block is called, only if the executed lane was successful
+
+  # slack(
+  #   message: "Successfully deployed new App Update."
+  # )
+end
+
+error do |lane, exception|
+  # slack(
+  #   message: exception.message,
+  #   success: false
+  # )
+end
+
+
+
+# More information about multiple platforms in fastlane: https://github.com/KrauseFx/fastlane/blob/master/docs/Platforms.md
+# All available actions: https://github.com/KrauseFx/fastlane/blob/master/docs/Actions.md
