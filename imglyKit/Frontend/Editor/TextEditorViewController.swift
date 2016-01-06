@@ -337,6 +337,11 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
         fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: [], metrics: nil, views: views))
+
+        fontSelectorContainerView.alpha = 0.0
+        UIView.animateWithDuration(0.3) {
+            self.fontSelectorContainerView.alpha = 1.0
+        }
     }
 
     private func registerForKeyboardNotifications() {
@@ -573,7 +578,13 @@ extension TextEditorViewController: UITextFieldDelegate {
 
 extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
-        fontSelectorContainerView.removeFromSuperview()
+        UIView.animateWithDuration(0.3, animations: {
+            self.fontSelectorContainerView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+                self.fontSelectorContainerView.removeFromSuperview()
+        })
+
         self.fontName = fontName
         textLabel.font = UIFont(name: fontName, size: currentTextSize)
         textLabel.sizeToFit()
