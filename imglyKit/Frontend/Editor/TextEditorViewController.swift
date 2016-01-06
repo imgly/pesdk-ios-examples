@@ -250,32 +250,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         textFilter.fontName = fontName
         textFilter.text = textLabel.text ?? ""
         textFilter.initialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
-        let inputImage = previewImageView.image!
-        var size = initialSizeForTextImage(textFilter.textImageSizeFromImageSize(inputImage.size))
-        size.width = size.width / completeSize.width
-        size.height = size.height / completeSize.height
-
-        let ratio = completeSize.height / completeSize.width
-        // Since we use width based scaling, we must set another factor when the string
-        // image is taller than wide.
-        let scale = size.height < size.width ? size.width : size.width * ratio
-        print(scale, size)
         textFilter.color = textColor
         textFilter.transform = textLabel.transform
         textFilter.center = center
-        textFilter.scale = 1.0
 
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
-    }
-
-    private func initialSizeForTextImage(size: CGSize) -> CGSize {
-        let initialMaxStickerSize = (CGRectGetWidth(textClipView.bounds) - kTextLabelInitialMargin) * self.fixedFilterStack.orientationCropFilter.cropRect.width
-        let widthRatio = initialMaxStickerSize / size.width
-        let heightRatio = initialMaxStickerSize / size.height
-        let scale = min(widthRatio, heightRatio)
-        return CGSize(width: size.width * scale, height: size.height * scale)
     }
 
     // MARK: - Configuration

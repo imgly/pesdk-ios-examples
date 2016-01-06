@@ -43,9 +43,6 @@ import AppKit
     /// The relative center of the sticker within the image.
     public var center = CGPoint()
 
-    /// The relative scale of the sticker within the image.
-    public var scale = CGFloat(1.0)
-
     /// The crop-create applied to the input image, so we can adjust the sticker position
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
@@ -292,7 +289,6 @@ extension TextFilter {
         copy.initialFontSize = initialFontSize
         copy.cropRect = cropRect
         copy.center = center
-        copy.scale = scale
         copy.transform = transform
         #if os(iOS)
         copy.color = color.copyWithZone(zone) as! UIColor
