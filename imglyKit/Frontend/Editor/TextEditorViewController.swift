@@ -366,13 +366,14 @@ private let kMinimumFontSize = CGFloat(12.0)
         textField.becomeFirstResponder()
     }
 
+    @objc private func setTextFont(sender: ImageCaptionButton) {
+        configureFontSelectorView()
+    }
+
     @objc private func setTextColor(sender: ImageCaptionButton) {
 
     }
 
-    @objc private func setTextFont(sender: ImageCaptionButton) {
-
-    }
 
     // MARK: - Gesture Handling
 
@@ -574,8 +575,8 @@ extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
         fontSelectorContainerView.removeFromSuperview()
         self.fontName = fontName
-        //textField.font = UIFont(name: fontName, size: kFontSizeInTextField)
-        textField.becomeFirstResponder()
+        textLabel.font = UIFont(name: fontName, size: currentTextSize)
+        textLabel.sizeToFit()
     }
 }
 
