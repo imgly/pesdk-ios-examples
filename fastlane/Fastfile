@@ -92,6 +92,24 @@ lane :lint do |options|
   end
 end
 
+desc "Produces code coverage information"
+desc "Set `scan` action environment variables to control test configuration"
+desc "#### Example:"
+desc "```\nfastlane code_coverage configuration:Debug\n```"
+desc "#### Options"
+desc " * **`configuration`**: The build configuration to use. The only supported configuration is the `Debug` configuration."
+desc ""
+lane :code_coverage do |options|
+  if options[:configuration] != "Debug"
+    Helper.log.info "Not running code coverage lane for #{options[:configuration]} configuration".yellow
+  else
+    scan(
+      configuration: options[:configuration],
+      xcargs: "OBJROOT=build GCC_GENERATE_TEST_COVERAGE_FILES=YES GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES"
+    )
+  end
+end
+
 after_all do |lane|
   # This block is called, only if the executed lane was successful
 
