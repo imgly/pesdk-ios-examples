@@ -8,7 +8,6 @@ env:
     - FASTLANE_LANE=ci_commit
   matrix:
     - FASTLANE_LANE=lint FASTLANE_ENV=default
-    - FASTLANE_LANE=code_coverage FASTLANE_ENV=default
     - FASTLANE_ENV=ios82
     - FASTLANE_ENV=ios83
     - FASTLANE_ENV=ios84
