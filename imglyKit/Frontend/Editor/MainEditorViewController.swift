@@ -105,9 +105,24 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
         updatePreviewImage {
             if self.options.forceCrop && !self.configuration.cropEditorViewControllerOptions.allowedCropActions.contains(.Free) {
-                // TODO: Check image aspect ratio
+                guard let image = self.previewImageView.image else {
+                    return
+                }
 
-                self.presentSubEditorForActionType(.Crop, withFixedFilterStack: self.fixedFilterStack, configuration: self.configuration, enableBackButton: false)
+                let imageAspectRatio = Float(image.size.width / image.size.height)
+                var presentCropEditor = true
+
+                for cropAction in self.configuration.cropEditorViewControllerOptions.allowedCropActions {
+                    if let cropAspectRatio = cropAction.ratio {
+                        if fabs(imageAspectRatio - cropAspectRatio) < 0.00001 {
+                            presentCropEditor = false
+                        }
+                    }
+                }
+
+                if presentCropEditor {
+                    self.presentSubEditorForActionType(.Crop, withFixedFilterStack: self.fixedFilterStack, configuration: self.configuration, enableBackButton: false)
+                }
             }
         }
 
