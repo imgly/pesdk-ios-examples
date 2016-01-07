@@ -193,15 +193,9 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         navigationItem.rightBarButtonItem?.enabled = false
 
-        if options.canModifyTextColor {
-        //    configureColorSelectorView()
-        }
-
         configureTextClipView()
         configureTextField()
- //       configureTextLabel()
         configureButtons()
-       // configureFontSelectorView()
         registerForKeyboardNotifications()
         configureGestureRecognizers()
     }
@@ -251,6 +245,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     // MARK: - Configuration
+
     private func configureButtons() {
         // Setup button container view
         let buttonContainerView = UIView()
@@ -379,7 +374,6 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     }
 
-
     // MARK: - Gesture Handling
 
     @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
@@ -404,7 +398,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         default:
             break
        }
-
     }
 
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
@@ -425,7 +418,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
                     textClipView.bringSubviewToFront(draggedView)
-              }
+                }
             case .Changed:
                 if let draggedView =  draggedView {
                     currentTextSize = draggedView.font.pointSize
@@ -595,7 +588,6 @@ extension TextEditorViewController: UIGestureRecognizerDelegate {
         if (gestureRecognizer is UIPinchGestureRecognizer && otherGestureRecognizer is UIRotationGestureRecognizer) || (gestureRecognizer is UIRotationGestureRecognizer && otherGestureRecognizer is UIPinchGestureRecognizer) {
             return true
         }
-
         return false
     }
 }
