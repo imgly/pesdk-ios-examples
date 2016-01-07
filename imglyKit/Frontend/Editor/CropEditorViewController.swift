@@ -23,6 +23,19 @@ public let kMinimumCropSize = CGFloat(50)
     case OneToOne
     case FourToThree
     case SixteenToNine
+
+    var ratio: Float? {
+        switch self {
+        case .Free:
+            return nil
+        case .OneToOne:
+            return 1
+        case .FourToThree:
+            return 4.0 / 3.0
+        case .SixteenToNine:
+            return 16.0 / 9.0
+        }
+    }
 }
 
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
@@ -148,7 +161,6 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     private let cropRectComponent = InstanceFactory.cropRectComponent()
     public var selectionMode = CropAction.Free
-    public var selectionRatio = CGFloat(1.0)
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
     private var cropRectTopBound = CGFloat(0)
@@ -178,12 +190,12 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
                     self.view.setNeedsLayout()
                     self.view.layoutIfNeeded()
                     self.reCalculateCropRectBounds()
-                    self.setInitialCropRect()
+                    self.setCropRectForSelectionRatio()
                     self.cropRectComponent.present()
                 }
         } else {
             reCalculateCropRectBounds()
-            setInitialCropRect()
+            setCropRectForSelectionRatio()
             cropRectComponent.present()
         }
     }
@@ -327,20 +339,20 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     private func reCalulateSizeForTopLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != .Free {
-            newSize.height = newSize.height * selectionRatio
+        if let selectionRatio = selectionMode.ratio {
+            newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
             }
-            newSize.height = newSize.width / selectionRatio
+            newSize.height = newSize.width / CGFloat(selectionRatio)
 
             if (cropRectComponent.bottomRightAnchor!.center.x - newSize.width) < cropRectLeftBound {
                 newSize.width = cropRectComponent.bottomRightAnchor!.center.x - cropRectLeftBound
-                newSize.height = newSize.width / selectionRatio
+                newSize.height = newSize.width / CGFloat(selectionRatio)
             }
             if (cropRectComponent.bottomRightAnchor!.center.y - newSize.height) < cropRectTopBound {
                 newSize.height = cropRectComponent.bottomRightAnchor!.center.y - cropRectTopBound
-                newSize.width = newSize.height * selectionRatio
+                newSize.width = newSize.height * CGFloat(selectionRatio)
             }
         } else {
             if (cropRectComponent.bottomRightAnchor!.center.x - newSize.width) < cropRectLeftBound {
@@ -380,18 +392,18 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     private func reCalulateSizeForTopRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != .Free {
-            newSize.height = newSize.height * selectionRatio
+        if let selectionRatio = selectionMode.ratio {
+            newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
             }
             if (cropRectComponent.topLeftAnchor!.center.x + newSize.width) > cropRectRightBound {
                 newSize.width = cropRectRightBound - cropRectComponent.topLeftAnchor!.center.x
             }
-            newSize.height = newSize.width / selectionRatio
+            newSize.height = newSize.width / CGFloat(selectionRatio)
             if (cropRectComponent.bottomRightAnchor!.center.y - newSize.height) < cropRectTopBound {
                 newSize.height = cropRectComponent.bottomRightAnchor!.center.y - cropRectTopBound
-                newSize.width = newSize.height * selectionRatio
+                newSize.width = newSize.height * CGFloat(selectionRatio)
             }
         } else {
             if (cropRectComponent.topLeftAnchor!.center.x + newSize.width) > cropRectRightBound {
@@ -432,21 +444,21 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     private func reCalulateSizeForBottomLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != .Free {
-            newSize.height = newSize.height * selectionRatio
+        if let selectionRatio = selectionMode.ratio {
+            newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
             }
-            newSize.height = newSize.width / selectionRatio
+            newSize.height = newSize.width / CGFloat(selectionRatio)
 
             if (cropRectComponent.topRightAnchor!.center.x - newSize.width) < cropRectLeftBound {
                 newSize.width = cropRectComponent.topRightAnchor!.center.x - cropRectLeftBound
-                newSize.height = newSize.width / selectionRatio
+                newSize.height = newSize.width / CGFloat(selectionRatio)
             }
 
             if (cropRectComponent.topRightAnchor!.center.y + newSize.height) > cropRectBottomBound {
                 newSize.height = cropRectBottomBound - cropRectComponent.topRightAnchor!.center.y
-                newSize.width = newSize.height * selectionRatio
+                newSize.width = newSize.height * CGFloat(selectionRatio)
             }
         } else {
             if (cropRectComponent.topRightAnchor!.center.x - newSize.width) < cropRectLeftBound {
@@ -478,18 +490,18 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     private func reCalulateSizeForBottomRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if selectionMode != .Free {
-            newSize.height = newSize.height * selectionRatio
+        if let selectionRatio = selectionMode.ratio {
+            newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
             }
             if (cropRectComponent.topLeftAnchor!.center.x + newSize.width) > cropRectRightBound {
                 newSize.width = cropRectRightBound - cropRectComponent.topLeftAnchor!.center.x
             }
-            newSize.height = newSize.width / selectionRatio
+            newSize.height = newSize.width / CGFloat(selectionRatio)
             if (cropRectComponent.topLeftAnchor!.center.y + newSize.height) > cropRectBottomBound {
                 newSize.height = cropRectBottomBound - cropRectComponent.topLeftAnchor!.center.y
-                newSize.width = newSize.height * selectionRatio
+                newSize.width = newSize.height * CGFloat(selectionRatio)
             }
         } else {
             if (cropRectComponent.topLeftAnchor!.center.x + newSize.width) > cropRectRightBound {
@@ -577,11 +589,6 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         return newSize
     }
 
-    private func setInitialCropRect() {
-        calculateRatioForSelectionMode(false)
-        setCropRectForSelectionRatio()
-    }
-
     private func setCropRectForSelectionRatio() {
         let size = CGSize(width: cropRectRightBound - cropRectLeftBound,
             height: cropRectBottomBound - cropRectTopBound)
@@ -591,7 +598,9 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
             rectHeight = size.height
             rectWidth = rectHeight
         }
-        rectHeight /= selectionRatio
+
+        let selectionRatio = selectionMode.ratio ?? 1
+        rectHeight /= CGFloat(selectionRatio)
 
         let sizeDeltaX = (size.width - rectWidth) / 2.0
         let sizeDeltaY = (size.height - rectHeight) / 2.0
@@ -603,16 +612,8 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
             height: rectHeight)
     }
 
-    private func calculateRatioForSelectionMode(updateCropRect: Bool = true) {
-        if selectionMode == .FourToThree {
-            selectionRatio = 4.0 / 3.0
-        } else if selectionMode == .OneToOne {
-            selectionRatio = 1.0
-        } else if selectionMode == .SixteenToNine {
-            selectionRatio = 16.0 / 9.0
-        }
-
-        if selectionMode != .Free && updateCropRect {
+    private func updateCropRectForSelectionMode() {
+        if selectionMode != .Free {
             setCropRectForSelectionRatio()
             cropRectComponent.layoutViewsForCropRect()
         }
@@ -626,7 +627,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         }
 
         selectionMode = .Free
-        calculateRatioForSelectionMode()
+        updateCropRectForSelectionMode()
 
         selectedButton = sender
     }
@@ -637,7 +638,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         }
 
         selectionMode = .OneToOne
-        calculateRatioForSelectionMode()
+        updateCropRectForSelectionMode()
 
         selectedButton = sender
     }
@@ -648,7 +649,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         }
 
         selectionMode = .FourToThree
-        calculateRatioForSelectionMode()
+        updateCropRectForSelectionMode()
 
         selectedButton = sender
     }
@@ -659,7 +660,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         }
 
         selectionMode = .SixteenToNine
-        calculateRatioForSelectionMode()
+        updateCropRectForSelectionMode()
 
         selectedButton = sender
     }
