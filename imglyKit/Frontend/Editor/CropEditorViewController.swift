@@ -161,9 +161,13 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         super.viewDidLoad()
 
         navigationItem.title = options.title
+
+        if let firstCropAction = options.allowedCropActions.first {
+            selectionMode = firstCropAction
+        }
+
         configureButtons()
         configureCropRect()
-        selectedButton = freeRatioButton
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -240,7 +244,13 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         let visualFormatString = viewNames.reduce("") { (acc, name) -> String in
             return acc + "[\(name)(==buttonWidth)]"
         }
+
         buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+
+        // Select first button
+        if let firstCropAction = options.allowedCropActions.first {
+            selectedButton = actionToButtonMap[firstCropAction]
+        }
     }
 
     private func configureCropRect() {
@@ -568,7 +578,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     }
 
     private func setInitialCropRect() {
-        selectionRatio = 1.0
+        calculateRatioForSelectionMode(false)
         setCropRectForSelectionRatio()
     }
 
@@ -593,7 +603,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
             height: rectHeight)
     }
 
-    private func calculateRatioForSelectionMode() {
+    private func calculateRatioForSelectionMode(updateCropRect: Bool = true) {
         if selectionMode == .FourToThree {
             selectionRatio = 4.0 / 3.0
         } else if selectionMode == .OneToOne {
@@ -602,7 +612,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
             selectionRatio = 16.0 / 9.0
         }
 
-        if selectionMode != .Free {
+        if selectionMode != .Free && updateCropRect {
             setCropRectForSelectionRatio()
             cropRectComponent.layoutViewsForCropRect()
         }
