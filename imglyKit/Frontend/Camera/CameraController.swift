@@ -12,44 +12,6 @@ import OpenGLES
 import GLKit
 import CoreMotion
 
-struct SDKVersion: Comparable, CustomStringConvertible {
-    let majorVersion: Int
-    let minorVersion: Int
-    let patchVersion: Int
-
-    var description: String {
-        return "\(majorVersion).\(minorVersion).\(patchVersion)"
-    }
-}
-
-func == (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
-    return (lhs.majorVersion == rhs.majorVersion) && (lhs.minorVersion == rhs.minorVersion) && (lhs.patchVersion == rhs.patchVersion)
-}
-
-func < (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
-    if lhs.majorVersion < rhs.majorVersion {
-        return true
-    } else if lhs.majorVersion > rhs.majorVersion {
-        return false
-    }
-
-    if lhs.minorVersion < rhs.minorVersion {
-        return true
-    } else if lhs.minorVersion > rhs.minorVersion {
-        return false
-    }
-
-    if lhs.patchVersion < rhs.patchVersion {
-        return true
-    } else if lhs.patchVersion > rhs.patchVersion {
-        return false
-    }
-
-    return false
-}
-
-let kCurrentSDKVersion = SDKVersion(majorVersion: 2, minorVersion: 4, patchVersion: 1)
-
 private let kIndicatorSize = CGFloat(75)
 private var capturingStillImageContext = 0
 private var sessionRunningAndDeviceAuthorizedContext = 0
@@ -225,7 +187,7 @@ private let kTempVideoFilename = "recording.mov"
 
     // MARK: - SDK
 
-    private func versionComponentsFromString(version: String) -> (majorVersion: Int, minorVersion: Int, patchVersion: Int)? {
+    private func versionFromString(version: String) -> (majorVersion: Int, minorVersion: Int, patchVersion: Int)? {
         let versionComponents = version.componentsSeparatedByString(".")
         if versionComponents.count == 3 {
             if let major = Int(versionComponents[0]), minor = Int(versionComponents[1]), patch = Int(versionComponents[2]) {
@@ -237,6 +199,10 @@ private let kTempVideoFilename = "recording.mov"
     }
 
     private func checkSDKVersion() {
+        guard let frameworkVersionNumber = NSBundle(forClass: CameraController.self).infoDictionary?["CFBundleShortVersionString"] as? String, frameworkVersion = SDKVersion(string: frameworkVersionNumber) else {
+            return
+        }
+
         let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
         if let appIdentifier = appIdentifier, url = NSURL(string: "https://www.photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
             let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
@@ -244,11 +210,9 @@ private let kTempVideoFilename = "recording.mov"
                     do {
                         let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
 
-                        if let json = json, version = json["version"] as? String, versionComponents = self.versionComponentsFromString(version) {
-                            let remoteVersion = SDKVersion(majorVersion: versionComponents.majorVersion, minorVersion: versionComponents.minorVersion, patchVersion: versionComponents.patchVersion)
-
-                            if kCurrentSDKVersion < remoteVersion {
-                                print("Your version of the img.ly SDK is outdated. You are using version \(kCurrentSDKVersion), the latest available version is \(remoteVersion). Please consider updating.")
+                        if let json = json, versionString = json["version"] as? String, remoteVersion = SDKVersion(string: versionString) {
+                            if frameworkVersion < remoteVersion {
+                                print("Your version of the img.ly SDK is outdated. You are using version \(frameworkVersion), the latest available version is \(remoteVersion). Please consider updating.")
                             }
                         }
                     } catch {

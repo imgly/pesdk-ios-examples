@@ -18,6 +18,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2B044DEC1C3EAA5C00A73AE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BF4D7B41AF11ED100C801B2 /* imglyKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2BE0C44A1C3ABB3B00F1F5E4;
+			remoteInfo = "imglyKit iOS Tests";
+		};
+		2B044DEE1C3EAA5C00A73AE6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2BF4D7B41AF11ED100C801B2 /* imglyKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2B044DD71C3E5E4500A73AE6;
+			remoteInfo = "imglyKit OSX Tests";
+		};
 		2B3A5D921B2F095200CCF99B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2BF4D7B41AF11ED100C801B2 /* imglyKit.xcodeproj */;
@@ -84,6 +98,8 @@
 			children = (
 				2B3F302E1B2F071F00D85301 /* imglyKit.framework */,
 				2B3F30301B2F071F00D85301 /* imglyKit.framework */,
+				2B044DED1C3EAA5C00A73AE6 /* imglyKit iOS Tests.xctest */,
+				2B044DEF1C3EAA5C00A73AE6 /* imglyKit OSX Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,6 +207,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		2B044DED1C3EAA5C00A73AE6 /* imglyKit iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "imglyKit iOS Tests.xctest";
+			remoteRef = 2B044DEC1C3EAA5C00A73AE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2B044DEF1C3EAA5C00A73AE6 /* imglyKit OSX Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "imglyKit OSX Tests.xctest";
+			remoteRef = 2B044DEE1C3EAA5C00A73AE6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		2B3F302E1B2F071F00D85301 /* imglyKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
