@@ -159,18 +159,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         return textField
     }()
 
-  /*  public private(set) lazy var textLabel: UILabel = {
-        let label = UILabel()
-        label.alpha = 0.0
-        label.backgroundColor = UIColor(white:0.0, alpha:0.0)
-        label.textColor = self.textColor
-        label.textAlignment = NSTextAlignment.Center
-        label.clipsToBounds = true
-        label.userInteractionEnabled = true
-        return label
-    }()
-*/
-
     public private(set) lazy var fontSelectorContainerView: UIVisualEffectView = {
         let blurEffect = UIBlurEffect(style: .Dark)
         let view = UIVisualEffectView(effect: blurEffect)
@@ -330,6 +318,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         textLabel.textAlignment = NSTextAlignment.Center
         textLabel.clipsToBounds = true
         textLabel.userInteractionEnabled = true
+        // we set the rotation to 360 degree, so the transform anchor point is set to center
+        textLabel.transform = CGAffineTransformRotate(textLabel.transform, CGFloat(M_PI) * 2.0)
     }
 
     private func configureFontSelectorView() {
@@ -399,6 +389,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         case .Began:
             draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
             if let draggedView = draggedView {
+                unSelectTextLabel(textLabel)
+                textLabel = draggedView
+                selectTextLabel(textLabel)
                 textClipView.bringSubviewToFront(draggedView)
             }
         case .Changed:
@@ -428,12 +421,16 @@ private let kMinimumFontSize = CGFloat(12.0)
                 }
 
                 if let draggedView = draggedView {
+                    unSelectTextLabel(textLabel)
+                    textLabel = draggedView
+                    selectTextLabel(textLabel)
                     textClipView.bringSubviewToFront(draggedView)
               }
             case .Changed:
                 if let draggedView =  draggedView {
+                    currentTextSize = draggedView.font.pointSize
                     currentTextSize *= scale
-                    draggedView.font = UIFont(name: fontName, size: currentTextSize)
+                    draggedView.font = UIFont(name: draggedView.font.fontName, size: currentTextSize)
                     draggedView.sizeToFit()
                 }
                 recognizer.scale = 1
@@ -459,6 +456,9 @@ private let kMinimumFontSize = CGFloat(12.0)
                 }
 
                 if let draggedView = draggedView {
+                    unSelectTextLabel(textLabel)
+                    textLabel = draggedView
+                    selectTextLabel(textLabel)
                     textClipView.bringSubviewToFront(draggedView)
                 }
             case .Changed:
@@ -531,6 +531,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         let diffY = point1.y - point2.y
         return sqrt(diffX * diffX + diffY  * diffY)
     }
+
+    private func selectTextLabel(label: UILabel) {
+        label.layer.borderColor = UIColor.whiteColor().CGColor
+        label.layer.borderWidth = 1.0
+    }
+
+    private func unSelectTextLabel(label: UILabel) {
+        label.layer.borderWidth = 0
+    }
 }
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
@@ -549,10 +558,11 @@ extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideTextField()
+        unSelectTextLabel(textLabel)
         textLabel = UILabel()
         configureTextLabel()
         textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        textLabel.transform = CGAffineTransformRotate(textLabel.transform, 0)
+        selectTextLabel(textLabel)
         setInitialTextLabelSize()
         showTextLabel()
         navigationItem.rightBarButtonItem?.enabled = true
