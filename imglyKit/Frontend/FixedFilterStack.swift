@@ -96,10 +96,12 @@ import CoreImage
         let xFactor: CGFloat = negateX ? -1.0 : 1.0
         let yFactor: CGFloat = negateY ? -1.0 : 1.0
         for filter in self.activeFilters {
-            if let textFilter = filter as? TextFilter {
+            if let textFilter = filter as? TextFilter, image = textFilter.inputImage {
                 textFilter.transform = CGAffineTransformRotate(textFilter.transform, angle)
                 textFilter.center.x -= 0.5
                 textFilter.center.y -= 0.5
+                let ratio = image.extent.size.height / image.extent.size.width
+                textFilter.initialFontSize *= ratio
                 let center = textFilter.center
                 textFilter.center.x = xFactor * center.y
                 textFilter.center.y = yFactor * center.x

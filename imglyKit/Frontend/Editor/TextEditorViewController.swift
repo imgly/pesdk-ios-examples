@@ -215,29 +215,30 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        if fixedFilterStack.textFilters.count == 0 {
-            fixedFilterStack.textFilters.append(InstanceFactory.textFilter())
-        }
-
-        // swiftlint:disable force_cast
-        let textFilter = fixedFilterStack.textFilters.first as! TextFilter
-        textFilter.inputImage = self.previewImageView.image!.CIImage
-        // swiftlint:enable force_cast
-        textFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-        let cropRect = textFilter.cropRect
         let completeSize = textClipView.bounds.size
-        var center = CGPoint(x: textLabel.center.x / completeSize.width,
-            y: textLabel.center.y / completeSize.height)
-        center.x *= cropRect.width
-        center.y *= cropRect.height
-        center.x += cropRect.origin.x
-        center.y += cropRect.origin.y
-        textFilter.fontName = fontName
-        textFilter.text = textLabel.text ?? ""
-        textFilter.initialFontSize = currentTextSize / previewImageView.visibleImageFrame.size.height
-        textFilter.color = textColor
-        textFilter.transform = textLabel.transform
-        textFilter.center = center
+        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+        for view in textClipView.subviews {
+            if let label = view as? UILabel {
+                let textFilter = InstanceFactory.textFilter()
+                // swiftlint:disable force_cast
+                textFilter.inputImage = self.previewImageView.image!.CIImage
+                // swiftlint:enable force_cast
+                textFilter.cropRect = cropRect
+                var center = CGPoint(x: label.center.x / completeSize.width,
+                    y: label.center.y / completeSize.height)
+                center.x *= cropRect.width
+                center.y *= cropRect.height
+                center.x += cropRect.origin.x
+                center.y += cropRect.origin.y
+                textFilter.fontName = label.font.fontName
+                textFilter.text = label.text ?? ""
+                textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
+                textFilter.color = textColor
+                textFilter.transform = label.transform
+                textFilter.center = center
+                fixedFilterStack.textFilters.append(textFilter)
+            }
+        }
 
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
