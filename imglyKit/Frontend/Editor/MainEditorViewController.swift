@@ -15,12 +15,18 @@ import UIKit
     /// MainEditorActionsDataSource providing all editors.
     public let editorActionsDataSource: MainEditorActionsDataSourceProtocol
 
+    /// Setting this to `true` results in the crop editor being displayed immediately if the image passed
+    /// to the view controller doesn't have an aspect ratio that is equal to one of the allowed crop actions.
+    /// This property only works if you do **not** specify `.Free` as one of the allowed crop actions.
+    public let forceCrop: Bool
+
     public convenience init() {
         self.init(builder: MainEditorViewControllerOptionsBuilder())
     }
 
     public init(builder: MainEditorViewControllerOptionsBuilder) {
         editorActionsDataSource = builder.editorActionsDataSource
+        forceCrop = builder.forceCrop
         super.init(editorBuilder: builder)
     }
 }
@@ -33,6 +39,10 @@ import UIKit
     /// MainEditorActionsDataSource providing all editors.
     public var editorActionsDataSource: MainEditorActionsDataSourceProtocol = MainEditorActionsDataSource()
 
+    /// Setting this to `true` results in the crop editor being displayed immediately if the image passed
+    /// to the view controller doesn't have an aspect ratio that is equal to one of the allowed crop actions.
+    /// This property only works if you do **not** specify `.Free` as one of the allowed crop actions.
+    public var forceCrop = false
 
     public override init() {
         super.init()
@@ -93,7 +103,29 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
         fixedFilterStack.effectFilter = InstanceFactory.effectFilterWithType(initialFilterType)
         fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
 
-        updatePreviewImage()
+        updatePreviewImage {
+            if self.options.forceCrop && !self.configuration.cropEditorViewControllerOptions.allowedCropActions.contains(.Free) {
+                guard let image = self.previewImageView.image else {
+                    return
+                }
+
+                let imageAspectRatio = Float(image.size.width / image.size.height)
+                var presentCropEditor = true
+
+                for cropAction in self.configuration.cropEditorViewControllerOptions.allowedCropActions {
+                    if let cropAspectRatio = cropAction.ratio {
+                        if fabs(imageAspectRatio - cropAspectRatio) < 0.00001 {
+                            presentCropEditor = false
+                        }
+                    }
+                }
+
+                if presentCropEditor {
+                    self.presentSubEditorForActionType(.Crop, withFixedFilterStack: self.fixedFilterStack, configuration: self.configuration, enableBackButton: false)
+                }
+            }
+        }
+
         configureMenuCollectionView()
     }
 
@@ -130,13 +162,21 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
             }
         } else {
-            if let viewController = InstanceFactory.viewControllerForEditorActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
-                viewController.lowResolutionImage = lowResolutionImage
-                viewController.previewImageView.image = previewImageView.image
-                viewController.completionHandler = subEditorDidComplete
+            presentSubEditorForActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration)
+        }
+    }
 
-                showViewController(viewController, sender: self)
+    private func presentSubEditorForActionType(actionType: MainEditorActionType, withFixedFilterStack fixedFilterStack: FixedFilterStack, configuration: Configuration, enableBackButton: Bool = true) {
+        if let viewController = InstanceFactory.viewControllerForEditorActionType(actionType, withFixedFilterStack: fixedFilterStack, configuration: configuration) {
+            viewController.lowResolutionImage = lowResolutionImage
+            viewController.previewImageView.image = previewImageView.image
+            viewController.completionHandler = subEditorDidComplete
+
+            if !enableBackButton {
+                viewController.navigationItem.setHidesBackButton(true, animated: false)
             }
+
+            showViewController(viewController, sender: self)
         }
     }
 
@@ -165,7 +205,7 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
         }
     }
 
-    private func updatePreviewImage() {
+    private func updatePreviewImage(completion: (() -> Void)? = nil) {
         if let lowResolutionImage = self.lowResolutionImage {
             updating = true
             dispatch_async(kPhotoProcessorQueue) {
@@ -174,6 +214,8 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
                 dispatch_async(dispatch_get_main_queue()) {
                     self.previewImageView.image = processedImage
                     self.updating = false
+
+                    completion?()
                 }
             }
         }
