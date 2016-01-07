@@ -132,14 +132,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         return button
     }()
 
-    public private(set) lazy var textColorSelectorView: TextColorSelectorView = {
-        let view = TextColorSelectorView(availableColors: self.options.availableFontColors)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = self.currentBackgroundColor
-        view.menuDelegate = self
-        return view
-    }()
-
     public private(set) lazy var textClipView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -171,6 +163,22 @@ private let kMinimumFontSize = CGFloat(12.0)
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
         selector.fontPreviewTextColor = self.options.fontPreviewTextColor
+        return selector
+    }()
+
+    public private(set) lazy var colorPickerContainerView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .Dark)
+        let view = UIVisualEffectView(effect: blurEffect)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    public private(set) lazy var colorPickerView: ColorPickerView = {
+        let selector = ColorPickerView()
+        selector.translatesAutoresizingMaskIntoConstraints = false
+        selector.backgroundColor = UIColor.whiteColor()
+        //selector.selectorDelegate = self
+        //selector.fontPreviewTextColor = self.options.fontPreviewTextColor
         return selector
     }()
 
@@ -286,17 +294,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         return visualFormatString
     }
 
-    private func configureColorSelectorView() {
-        bottomContainerView.addSubview(textColorSelectorView)
-
-        let views = [
-            "textColorSelectorView" : textColorSelectorView
-        ]
-
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: [], metrics: nil, views: views))
-    }
-
     private func configureTextClipView() {
         view.addSubview(textClipView)
     }
@@ -339,6 +336,27 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
+    private func configureColorPickerView() {
+        view.addSubview(colorPickerContainerView)
+        colorPickerContainerView.contentView.addSubview(colorPickerView)
+
+        let views = [
+            "colorPickerContainerView" : colorPickerContainerView,
+            "colorPickerView" : colorPickerView
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerContainerView]|", options: [], metrics: nil, views: views))
+
+        colorPickerContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        colorPickerContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerView]|", options: [], metrics: nil, views: views))
+        colorPickerContainerView.alpha = 0.0
+        UIView.animateWithDuration(0.3) {
+            self.colorPickerContainerView.alpha = 1.0
+        }
+    }
+
+
     private func registerForKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
@@ -376,7 +394,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
-
+        configureColorPickerView()
     }
 
     // MARK: - Gesture Handling

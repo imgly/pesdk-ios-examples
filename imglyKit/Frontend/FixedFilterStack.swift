@@ -111,7 +111,6 @@ import CoreImage
         }
     }
 
-
     public func flipStickersHorizontal () {
         flipStickers(true)
     }
