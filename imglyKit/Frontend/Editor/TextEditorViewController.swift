@@ -354,6 +354,10 @@ private let kMinimumFontSize = CGFloat(12.0)
             textClipView.addGestureRecognizer(pinchGestureRecognizer)
         }
 
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        tapGestureRecognizer.delegate = self
+        textClipView.addGestureRecognizer(tapGestureRecognizer)
+
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
         textClipView.addGestureRecognizer(rotationGestureRecognizer)
@@ -468,6 +472,18 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
+    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
+        let location = recognizer.locationInView(textClipView)
+        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        unSelectTextLabel(textLabel)
+        if let draggedView = draggedView {
+            textLabel = draggedView
+            currentTextSize = textLabel.font.pointSize
+            selectTextLabel(textLabel)
+            textClipView.bringSubviewToFront(draggedView)
+        }
+    }
+
     // MARK: - Notification Handling
 
     @objc private func keyboardWillChangeFrame(notification: NSNotification) {
@@ -578,8 +594,10 @@ extension TextEditorViewController: FontSelectorViewDelegate {
         })
 
         self.fontName = fontName
-        textLabel.font = UIFont(name: fontName, size: currentTextSize)
-        textLabel.sizeToFit()
+        if textLabel.layer.borderWidth > 0 {
+            textLabel.font = UIFont(name: fontName, size: currentTextSize)
+            textLabel.sizeToFit()
+        }
     }
 }
 
