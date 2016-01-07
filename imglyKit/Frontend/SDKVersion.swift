@@ -70,6 +70,6 @@ func < (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
     } else if lhs.patchVersion > rhs.patchVersion {
         return false
     }
-    
+
     return false
 }
