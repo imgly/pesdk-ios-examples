@@ -44,8 +44,18 @@ lane :ci_commit do |options|
     configuration = "Release"
   end
 
+  if ENV["BUILD_EXAMPLE"] && ENV["BUILD_EXAMPLE"] == "NO"
+    build_example = false
+  else
+    build_example = true
+  end
+
   test_framework(configuration: configuration)
-  build_example(configuration: configuration)
+
+  if build_example
+    build_example(configuration: configuration)
+  end
+
   af_pod_spec_lint(quick: true)
 end
 
