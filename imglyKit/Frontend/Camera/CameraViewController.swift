@@ -56,6 +56,9 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// Enable/Disable permanent crop to square. Disabled by default.
     public let cropToSquare: Bool
 
+    /// The maximum length of a video. If set to 0 the length is unlimited.
+    public let maximumVideoLength: Int
+
     /// Enable/Disable tap to focus on the camera preview image. Enabled by default.
     public let tapToFocusEnabled: Bool
 
@@ -102,6 +105,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         timeLabelConfigurationClosure = builder.timeLabelConfigurationClosure
         filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
         cropToSquare = builder.cropToSquare
+        maximumVideoLength = builder.maximumVideoLength
         tapToFocusEnabled = builder.tapToFocusEnabled
         showCameraRoll = builder.showCameraRoll
         showFilters = builder.showFilters
@@ -149,6 +153,9 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     /// Enable/Disable permanent crop to square. Disabled by default.
     public var cropToSquare = false
+
+    /// The maximum length of a video. If set to 0 the length is unlimited.
+    public var maximumVideoLength = 0
 
     /// Enable/Disable tap to focus on the camera preview image. Enabled by default.
     public var tapToFocusEnabled = true
@@ -431,19 +438,6 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     public private(set) var cameraController: CameraController?
 
-    /// The maximum length of a video. If set to 0 the length is unlimited.
-    public var maximumVideoLength: Int = 0 {
-        didSet {
-            if maximumVideoLength == 0 {
-                cameraController?.maximumVideoLength = nil
-            } else {
-                cameraController?.maximumVideoLength = maximumVideoLength
-            }
-
-            updateRecordingTimeLabel(maximumVideoLength)
-        }
-    }
-
     private var buttonsEnabled = true {
         didSet {
             flashButton.enabled = buttonsEnabled
@@ -692,11 +686,13 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         cameraController!.allowedFlashModes = options.allowedFlashModes
         cameraController!.allowedTorchModes = options.allowedTorchModes
         cameraController!.squareMode = options.cropToSquare
+
+        if options.maximumVideoLength > 0 {
+            cameraController!.maximumVideoLength = options.maximumVideoLength
+        }
+
         cameraController!.delegate = self
         cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
-        if maximumVideoLength > 0 {
-            cameraController!.maximumVideoLength = maximumVideoLength
-        }
     }
 
     private func configureFilterSelectionController() {
@@ -742,7 +738,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func addRecordingTimeLabel() {
-        updateRecordingTimeLabel(maximumVideoLength)
+        updateRecordingTimeLabel(options.maximumVideoLength)
         topControlsView.addSubview(recordingTimeLabel)
 
         topControlsView.addConstraint(NSLayoutConstraint(item: recordingTimeLabel, attribute: .CenterX, relatedBy: .Equal, toItem: topControlsView, attribute: .CenterX, multiplier: 1, constant: 0))
@@ -1236,7 +1232,7 @@ extension CameraViewController: CameraControllerDelegate {
             self.filterSelectionButton.alpha = 1
             self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
 
-            self.updateRecordingTimeLabel(self.maximumVideoLength)
+            self.updateRecordingTimeLabel(self.options.maximumVideoLength)
 
             for recordingModeSelectionButton in self.recordingModeSelectionButtons {
                 recordingModeSelectionButton.alpha = 1
@@ -1273,8 +1269,8 @@ extension CameraViewController: CameraControllerDelegate {
     public func cameraController(cameraController: CameraController, recordedSeconds seconds: Int) {
         let displayedSeconds: Int
 
-        if maximumVideoLength > 0 {
-            displayedSeconds = maximumVideoLength - seconds
+        if options.maximumVideoLength > 0 {
+            displayedSeconds = options.maximumVideoLength - seconds
         } else {
             displayedSeconds = seconds
         }

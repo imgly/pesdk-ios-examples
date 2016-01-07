@@ -29,7 +29,6 @@ class SampleViewController: UIViewController {
         UINavigationBar.appearance().tintColor = UIColor.blueColor()
 
         let cameraViewController = CameraViewController()
-        cameraViewController.maximumVideoLength = 15
         presentViewController(cameraViewController, animated: true, completion: nil)
     }
 
@@ -76,6 +75,7 @@ class SampleViewController: UIViewController {
 
                 // Enable/Disable some features
                 options.cropToSquare = true
+                options.maximumVideoLength = 15
                 options.showFilterIntensitySlider = false
                 options.tapToFocusEnabled = false
 
