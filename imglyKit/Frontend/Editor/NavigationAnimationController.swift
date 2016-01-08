@@ -24,6 +24,8 @@ extension NavigationAnimationController: UIViewControllerAnimatedTransitioning {
             let toView = toViewController.view
             let fromView = fromViewController.view
 
+            toView.frame = fromView.frame
+
             let containerView = transitionContext.containerView()
             containerView?.addSubview(toView)
             containerView?.sendSubviewToBack(toView)
