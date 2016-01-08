@@ -190,6 +190,8 @@
 		2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */; };
 		2BEBCE971B00D7D1000FE22B /* AnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */; };
 		2BEBFEAB1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */; };
+		2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
+		2BEBFEAE1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
 		2BEE5B321B063E7800FDF0F7 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE5B311B063E7800FDF0F7 /* CameraController.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
@@ -433,6 +435,7 @@
 		2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoRecordButton.swift; sourceTree = "<group>"; };
 		2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AnimationDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientationExtension.swift; sourceTree = "<group>"; };
+		2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		2BEE5B311B063E7800FDF0F7 /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CameraController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -719,6 +722,7 @@
 			isa = PBXGroup;
 			children = (
 				2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */,
+				2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */,
 				2B1ADA0F1B19C3F300C98522 /* InstanceFactoryExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
@@ -1441,6 +1445,7 @@
 				2B1ADAAC1B19C8EE00C98522 /* CreamyFilter.swift in Sources */,
 				2B1ADAB81B19C8EE00C98522 /* HighcarbFilter.swift in Sources */,
 				2B1ADA991B19C8E500C98522 /* TiltshiftFilter.swift in Sources */,
+				2BEBFEAE1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2B1ADAD61B19C8EE00C98522 /* SoftFilter.swift in Sources */,
 				2B1ADA971B19C8E500C98522 /* StickerFilter.swift in Sources */,
 				2B1ADAC81B19C8EE00C98522 /* OrchidFilter.swift in Sources */,
@@ -1603,6 +1608,7 @@
 				2BF4D3CF1AF1150500C801B2 /* ButtonCollectionViewCell.swift in Sources */,
 				2BF4D5151AF1155E00C801B2 /* K2Filter.swift in Sources */,
 				2BF4D5221AF1155E00C801B2 /* NoGreenFilter.swift in Sources */,
+				2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
 				2BF4D3D11AF1150500C801B2 /* ColorButton.swift in Sources */,
