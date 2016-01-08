@@ -1162,9 +1162,9 @@ private let kTempVideoFilename = "recording.mov"
 
             if let videoDevice = self.videoDeviceInput?.device, captureVideoOrientation = self.captureVideoOrientation {
                 if videoDevice.position == .Front {
-                    self.assetWriterVideoInput?.transform = GetTransformForDeviceOrientation(captureVideoOrientation, mirrored: true)
+                    self.assetWriterVideoInput?.transform = captureVideoOrientation.toTransform(true)
                 } else {
-                    self.assetWriterVideoInput?.transform = GetTransformForDeviceOrientation(captureVideoOrientation)
+                    self.assetWriterVideoInput?.transform = captureVideoOrientation.toTransform()
                 }
             }
 
@@ -1474,23 +1474,4 @@ extension CGRect {
         self.size.width = scaledWidth
         self.size.height = scaledHeight
     }
-}
-
-// MARK: - Helper Functions
-
-private func GetTransformForDeviceOrientation(orientation: AVCaptureVideoOrientation, mirrored: Bool = false) -> CGAffineTransform {
-    let result: CGAffineTransform
-
-    switch orientation {
-    case .Portrait:
-        result = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-    case .PortraitUpsideDown:
-        result = CGAffineTransformMakeRotation(CGFloat(3 * M_PI_2))
-    case .LandscapeRight:
-        result = mirrored ? CGAffineTransformMakeRotation(CGFloat(M_PI)) : CGAffineTransformIdentity
-    case .LandscapeLeft:
-        result = mirrored ? CGAffineTransformIdentity : CGAffineTransformMakeRotation(CGFloat(M_PI))
-    }
-
-    return result
 }
