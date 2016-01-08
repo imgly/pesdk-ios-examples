@@ -58,6 +58,7 @@ import UIKit
     private func configureHuePickView() {
         self.addSubview(huePickerView)
         huePickerView.translatesAutoresizingMaskIntoConstraints = false
+        huePickerView.pickerDelegate = self
     }
 
     private func configureConstraints() {
@@ -83,5 +84,12 @@ import UIKit
 extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
     public func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor) {
         colorView.backgroundColor = color
+    }
+}
+
+extension ColorPickerView: HuePickerViewDelegate {
+    public func huePicked(huePickerView: HuePickerView, hue: CGFloat) {
+        saturationBrightnessPickerView.hue = hue
+        colorView.backgroundColor = saturationBrightnessPickerView.color
     }
 }

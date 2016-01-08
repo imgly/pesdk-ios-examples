@@ -19,6 +19,19 @@ import UIKit
             self.setNeedsDisplay()
         }
     }
+
+    public var color: UIColor {
+        set {
+            let hsb = newValue.hsb
+            hue = hsb.hue
+            brightness = hsb.brightness
+            saturation = hsb.saturation
+            setNeedsDisplay()
+        }
+        get {
+            return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
+        }
+    }
     public var saturation = CGFloat(1)
     public var brightness = CGFloat(1)
 

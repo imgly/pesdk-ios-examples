@@ -23,7 +23,7 @@ import UIKit
 
     public var color = UIColor.redColor() {
         didSet {
-            hue = color.hue
+            hue = color.hsb.hue
             self.setNeedsDisplay()
         }
     }
