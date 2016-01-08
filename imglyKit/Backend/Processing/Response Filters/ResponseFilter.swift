@@ -28,7 +28,9 @@ import QuartzCore
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {
         didSet {
-            colorCubeData = nil
+            if oldValue != inputIntensity {
+                colorCubeData = nil
+            }
         }
     }
 
@@ -89,9 +91,10 @@ extension ResponseFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! ResponseFilter
-        // swiftlint:enable force_cast
         copy.inputImage = inputImage?.copyWithZone(zone) as? CIImage
-        copy.inputIntensity = inputIntensity
+        copy.inputIntensity = inputIntensity.copyWithZone(zone) as! NSNumber
+        copy._colorCubeData = _colorCubeData?.copyWithZone(zone) as? NSData
+        // swiftlint:enable force_cast
         return copy
     }
 }
