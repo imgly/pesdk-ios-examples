@@ -10,7 +10,7 @@
 import UIKit
 
 @objc(IMGLYColorPickerViewDelegate) public protocol ColorPickerViewDelegate {
-    func colorPickerView(colorPickerView: ColorPickerView, didSelectColor color: UIColor)
+    func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor)
 }
 
 @objc(IMGLYColorPickerView) public class ColorPickerView: UIView {
@@ -34,6 +34,7 @@ import UIKit
 
     private func configureSaturationBrightnessPicker() {
         saturationBrightnessPickerView.translatesAutoresizingMaskIntoConstraints = false
+        saturationBrightnessPickerView.pickerDelegate = self
         self.addSubview(saturationBrightnessPickerView)
 
         let views = [
@@ -44,5 +45,11 @@ import UIKit
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[saturationBrightnessPickerView]-20-|", options: [], metrics: nil, views: views))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[saturationBrightnessPickerView]", options: [], metrics: nil, views: views))
+    }
+}
+
+extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
+    public func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor) {
+
     }
 }

@@ -121,13 +121,20 @@ import AppKit
         let rect = inputImage!.extent
         let imageSize = rect.size
 
+        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+
+        // swiftlint:disable force_cast
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        // swiftlint:enable force_cast
+        customParagraphStyle.lineBreakMode = .ByClipping
+
+        let textSize = textImageSize()
+
         let image = NSImage(size: textSize)
         image.lockFocus()
 
         NSColor(white: 1, alpha: 0).setFill()
         NSRectFill(CGRect(origin: CGPoint(), size: textSize))
-        let font = NSFont(name: fontName, size: fontScaleFactor * imageSize.height)
-        text.drawInRect(CGRect(x: frame.origin.x * imageSize.width, y: frame.origin.y * imageSize.height, width: frame.size.width * imageSize.width, height: frame.size.height * imageSize.width), withAttributes: [NSFontAttributeName: font!, NSForegroundColorAttributeName: color])
 
         if let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
             text.drawAtPoint(CGPointZero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
@@ -140,7 +147,6 @@ import AppKit
 
     #endif
 
-    #if os(iOS)
 
     private func textImageSize() -> CGSize {
         let rect = inputImage!.extent
@@ -152,33 +158,11 @@ import AppKit
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
-        guard let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+        guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
             return CGSizeZero
         }
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
-
-    #elseif os(OSX)
-
-    private func textImageSize() -> CGSize {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-
-        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
-        // swiftlint:disable force_cast
-        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        // swiftlint:enable force_cast
-        customParagraphStyle.lineBreakMode = .ByClipping
-
-        guard let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
-            return CGSizeZero
-        }
-        return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
-    }
-
-    #endif
-
-    #if os(iOS)
 
     public func textImageSizeFromImageSize(imageSize: CGSize) -> CGSize {
         let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
@@ -187,31 +171,11 @@ import AppKit
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
-        guard let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+        guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
             return CGSizeZero
         }
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
-
-    #elseif os(OSX)
-
-    public func textImageSizeFromImageSize(imageSize: CGSize) -> CGSize {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-
-        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
-        // swiftlint:disable force_cast
-        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
-        // swiftlint:enable force_cast
-        customParagraphStyle.lineBreakMode = .ByClipping
-
-        guard let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
-            return CGSizeZero
-        }
-        return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
-    }
-
-    #endif
 
 
     #if os(iOS)

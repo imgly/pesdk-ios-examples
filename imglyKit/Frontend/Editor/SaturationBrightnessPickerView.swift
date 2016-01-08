@@ -8,8 +8,12 @@
 
 import UIKit
 
-//class SaturationBrightnessPickerView: UIView {
+@objc(IMGLYSaturationBrightnessPickerViewDelegate) public protocol SaturationBrightnessPickerViewDelegate {
+    func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor)
+}
+
 @objc(IMGLYSaturationBrightnessPickerView) public class SaturationBrightnessPickerView: UIView {
+    public weak var pickerDelegate: SaturationBrightnessPickerViewDelegate?
     public var hue = CGFloat(0)
     public var saturation = CGFloat(1)
     public var brightness = CGFloat(1)
@@ -95,7 +99,8 @@ import UIKit
         saturation = pos.x / w
         brightness = 1 - (pos.y / h)
 
-        //[delegate colorPicked:[UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0] forPicker:self];
+        pickerDelegate?.colorPicked(self,  didPickColor: UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0))
+        
         self.setNeedsDisplay()
     }
 }
