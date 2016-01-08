@@ -29,10 +29,9 @@ public extension UIColor {
             var b = max(c[0], c[1])
             b = max(b, c[2])
 
-            if (b == x) {
+            if b == x {
                 hsb.brightness = b
-            }
-            else {
+            } else {
                 let f = CGFloat((c[0] == x) ? c[1] - c[2] : ((c[1] == x) ? c[2] - c[0] : c[0] - c[1]))
                 let i = CGFloat((c[0] == x) ? 3 : ((c[1] == x) ? 5 : 1))
 
