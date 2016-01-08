@@ -14,7 +14,11 @@ import UIKit
 
 @objc(IMGLYSaturationBrightnessPickerView) public class SaturationBrightnessPickerView: UIView {
     public weak var pickerDelegate: SaturationBrightnessPickerViewDelegate?
-    public var hue = CGFloat(0)
+    public var hue = CGFloat(0) {
+        didSet {
+            self.setNeedsDisplay()
+        }
+    }
     public var saturation = CGFloat(1)
     public var brightness = CGFloat(1)
 
@@ -100,7 +104,7 @@ import UIKit
         brightness = 1 - (pos.y / h)
 
         pickerDelegate?.colorPicked(self,  didPickColor: UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0))
-        
+
         self.setNeedsDisplay()
     }
 }
