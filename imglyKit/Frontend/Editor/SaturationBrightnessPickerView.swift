@@ -35,26 +35,26 @@ import UIKit
         CGContextSaveGState(context)
         CGContextClipToRect(context, rect)
 
+        drawColorMatrixToContext(context, rect: rect)
+        drawMarkerToContext(context, rect: rect)
+    }
+
+    private func drawColorMatrixToContext(context: CGContextRef?, rect: CGRect) {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-
         let locs: [CGFloat] = [0.00, 1.0]
-
         var colors = [UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0).CGColor,
             UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0).CGColor]
-
         var grad = CGGradientCreateWithColors(colorSpace, colors, locs)
-        CGContextDrawLinearGradient(context, grad, CGPoint(x:rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
 
+        CGContextDrawLinearGradient(context, grad, CGPoint(x:rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
         colors = [UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0).CGColor,
             UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0).CGColor]
-
         grad = CGGradientCreateWithColors(colorSpace, colors, locs)
         CGContextDrawLinearGradient(context, grad, CGPoint(x: 0, y: 0), CGPoint(x: 0, y: rect.size.height), CGGradientDrawingOptions(rawValue: 0))
-
         CGContextRestoreGState(context)
+    }
 
-        // draw the 'marker'
-
+    private func drawMarkerToContext(context: CGContextRef?, rect: CGRect) {
         let realPos = CGPoint(x: saturation * rect.size.width, y:rect.size.height - (brightness * rect.size.height))
         let reticuleRect = CGRect(x: realPos.x - 10, y: realPos.y - 10, width: 20, height: 20)
 
@@ -91,9 +91,10 @@ import UIKit
 
         pos.x = min(max(pos.x, 0), w)
         pos.y = min(max(pos.y, 0), h)
+
         saturation = pos.x / w
         brightness = 1 - (pos.y / h)
-        print(saturation, brightness)
+
         //[delegate colorPicked:[UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0] forPicker:self];
         self.setNeedsDisplay()
     }

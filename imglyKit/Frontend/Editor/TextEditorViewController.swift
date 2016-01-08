@@ -176,7 +176,6 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var colorPickerView: ColorPickerView = {
         let selector = ColorPickerView()
         selector.translatesAutoresizingMaskIntoConstraints = false
-        selector.backgroundColor = UIColor.whiteColor()
         //selector.selectorDelegate = self
         //selector.fontPreviewTextColor = self.options.fontPreviewTextColor
         return selector
