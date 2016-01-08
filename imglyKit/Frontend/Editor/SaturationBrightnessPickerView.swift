@@ -10,16 +10,23 @@ import UIKit
 
 //class SaturationBrightnessPickerView: UIView {
 @objc(IMGLYSaturationBrightnessPickerView) public class SaturationBrightnessPickerView: UIView {
-    public var hue = CGFloat(0.5)
-    public var saturation = CGFloat(0.5)
-    public var brightness = CGFloat(0.5)
+    public var hue = CGFloat(0)
+    public var saturation = CGFloat(1)
+    public var brightness = CGFloat(1)
 
     public override init(frame: CGRect) {
         super.init(frame:frame)
+        commonInit()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        opaque = false
+        backgroundColor = UIColor.clearColor()
     }
 
     override public func drawRect(rect: CGRect) {
@@ -59,5 +66,35 @@ import UIKit
         CGContextClosePath(context)
         CGContextSetShadow(context, CGSize(width: 1.0, height: 1.0), 4)
         CGContextDrawPath(context, CGPathDrawingMode.EOFillStroke)
+    }
+
+    public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        handleTouches(touches, withEvent: event)
+    }
+
+    public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        handleTouches(touches, withEvent: event)
+    }
+
+    public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        handleTouches(touches, withEvent: event)
+    }
+
+    private func handleTouches(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        guard let touch = touches.first else {
+            return
+        }
+        var pos = touch.locationInView(self)
+
+        let w = self.frame.size.width
+        let h = self.frame.size.height
+
+        pos.x = min(max(pos.x, 0), w)
+        pos.y = min(max(pos.y, 0), h)
+        saturation = pos.x / w
+        brightness = 1 - (pos.y / h)
+        print(saturation, brightness)
+        //[delegate colorPicked:[UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1.0] forPicker:self];
+        self.setNeedsDisplay()
     }
 }

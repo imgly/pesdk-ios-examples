@@ -32,7 +32,6 @@ import UIKit
         configureSaturationBrightnessPicker()
     }
 
-
     private func configureSaturationBrightnessPicker() {
         saturationBrightnessPickerView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(saturationBrightnessPickerView)
