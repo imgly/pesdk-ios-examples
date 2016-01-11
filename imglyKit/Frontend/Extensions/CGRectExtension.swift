@@ -41,4 +41,10 @@ extension CGRect {
         self.size.width = scaledWidth
         self.size.height = scaledHeight
     }
+
+    func rectFittedIntoTargetRect(targetRect: CGRect, withContentMode contentMode: UIViewContentMode) -> CGRect {
+        var sourceRect = self
+        sourceRect.fittedIntoTargetRect(targetRect, withContentMode: contentMode)
+        return sourceRect
+    }
 }

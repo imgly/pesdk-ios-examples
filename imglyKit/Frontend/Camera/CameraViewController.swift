@@ -427,7 +427,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
                 return
             }
 
-            self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
+//            self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
         }
     }
 
@@ -472,7 +472,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         configureViewConstraints()
         configureFilterSelectionController()
         configureCameraController()
-        cameraController?.switchToRecordingMode(currentRecordingMode, animated: false)
+//        cameraController?.switchToRecordingMode(currentRecordingMode, animated: false)
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -678,57 +678,75 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     private func configureCameraController() {
         // Needed so that the framebuffer can bind to OpenGL ES
-        view.layoutIfNeeded()
+//        view.layoutIfNeeded()
 
-        cameraController = CameraController(previewView: cameraPreviewContainer)
-        cameraController!.tapToFocusEnabled = options.tapToFocusEnabled
-        cameraController!.allowedCameraPositions = options.allowedCameraPositions
-        cameraController!.allowedFlashModes = options.allowedFlashModes
-        cameraController!.allowedTorchModes = options.allowedTorchModes
-        cameraController!.squareMode = options.cropToSquare
+        cameraController = CameraController()
 
-        if options.maximumVideoLength > 0 {
-            cameraController!.maximumVideoLength = options.maximumVideoLength
+        do {
+            try cameraController!.setup()
+        } catch CameraControllerError.MultipleCallsToSetup {
+            fatalError("setup() on CameraController has been called before.")
+        } catch CameraControllerError.UnableToInitializeCaptureDevice {
+            fatalError("No camera found on device")
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        } catch {
+            fatalError("Unknown error")
         }
 
-        cameraController!.delegate = self
-        cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
+        cameraPreviewContainer.addSubview(cameraController!.videoPreviewView)
+        cameraController!.videoPreviewView.frame = cameraPreviewContainer.bounds
+
+
+//        cameraController = CameraController(previewView: cameraPreviewContainer)
+//        cameraController!.tapToFocusEnabled = options.tapToFocusEnabled
+//        cameraController!.allowedCameraPositions = options.allowedCameraPositions
+//        cameraController!.allowedFlashModes = options.allowedFlashModes
+//        cameraController!.allowedTorchModes = options.allowedTorchModes
+//        cameraController!.squareMode = options.cropToSquare
+//
+//        if options.maximumVideoLength > 0 {
+//            cameraController!.maximumVideoLength = options.maximumVideoLength
+//        }
+//
+//        cameraController!.delegate = self
+//        cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
     }
 
     private func configureFilterSelectionController() {
-        filterSelectionController.dataSource = self.options.filtersDataSource
-        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
-            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
-                cameraController.effectFilter = InstanceFactory.effectFilterWithType(filterType)
-                cameraController.effectFilter.inputIntensity = initialFilterIntensity
-                self?.filterIntensitySlider.value = initialFilterIntensity
-            }
-
-            if filterType == .None {
-                self?.hideSliderTimer?.invalidate()
-                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
-                    UIView.animateWithDuration(0.25) {
-                        filterIntensitySlider.alpha = 0
-                    }
-                }
-            } else {
-                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
-                    UIView.animateWithDuration(0.25) {
-                        filterIntensitySlider.alpha = 1
-                    }
-                }
-
-                self?.resetHideSliderTimer()
-            }
-        }
-
-        filterSelectionController.activeFilterType = { [weak self] in
-            if let cameraController = self?.cameraController {
-                return cameraController.effectFilter.filterType
-            } else {
-                return .None
-            }
-        }
+//        filterSelectionController.dataSource = self.options.filtersDataSource
+//        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
+//            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
+//                cameraController.effectFilter = InstanceFactory.effectFilterWithType(filterType)
+//                cameraController.effectFilter.inputIntensity = initialFilterIntensity
+//                self?.filterIntensitySlider.value = initialFilterIntensity
+//            }
+//
+//            if filterType == .None {
+//                self?.hideSliderTimer?.invalidate()
+//                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
+//                    UIView.animateWithDuration(0.25) {
+//                        filterIntensitySlider.alpha = 0
+//                    }
+//                }
+//            } else {
+//                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
+//                    UIView.animateWithDuration(0.25) {
+//                        filterIntensitySlider.alpha = 1
+//                    }
+//                }
+//
+//                self?.resetHideSliderTimer()
+//            }
+//        }
+//
+//        filterSelectionController.activeFilterType = { [weak self] in
+//            if let cameraController = self?.cameraController {
+//                return cameraController.effectFilter.filterType
+//            } else {
+//                return .None
+//            }
+//        }
     }
 
     // MARK: - Helpers
@@ -789,35 +807,35 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func updateFlashButton() {
-        if let cameraController = cameraController {
-            let bundle = NSBundle(forClass: CameraViewController.self)
-
-            if currentRecordingMode == .Photo {
-                flashButton.hidden = !cameraController.flashAvailable
-
-                switch cameraController.flashMode {
-                case .Auto:
-                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                case .On:
-                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                case .Off:
-                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                }
-            } else if currentRecordingMode == .Video {
-                flashButton.hidden = !cameraController.torchAvailable
-
-                switch cameraController.torchMode {
-                case .Auto:
-                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                case .On:
-                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                case .Off:
-                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-                }
-            }
-        } else {
-            flashButton.hidden = true
-        }
+//        if let cameraController = cameraController {
+//            let bundle = NSBundle(forClass: CameraViewController.self)
+//
+//            if currentRecordingMode == .Photo {
+//                flashButton.hidden = !cameraController.flashAvailable
+//
+//                switch cameraController.flashMode {
+//                case .Auto:
+//                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                case .On:
+//                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                case .Off:
+//                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                }
+//            } else if currentRecordingMode == .Video {
+//                flashButton.hidden = !cameraController.torchAvailable
+//
+//                switch cameraController.torchMode {
+//                case .Auto:
+//                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                case .On:
+//                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                case .Off:
+//                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//                }
+//            }
+//        } else {
+//            flashButton.hidden = true
+//        }
     }
 
     private func resetHideSliderTimer() {
@@ -826,22 +844,22 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func showEditorNavigationControllerWithImage(image: UIImage) {
-        // swiftlint:disable force_cast
-        let editorViewController = self.configuration.getClassForReplacedClass(MainEditorViewController.self).init() as! MainEditorViewController
-        // swiftlint:enable force_cast
-        editorViewController.configuration = configuration
-        editorViewController.highResolutionImage = image
-        if let cameraController = cameraController {
-            editorViewController.initialFilterType = cameraController.effectFilter.filterType
-            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
-        }
-        editorViewController.completionBlock = editorCompletionBlock
-
-        let navigationController = NavigationController(rootViewController: editorViewController)
-        navigationController.navigationBar.barStyle = .Black
-        navigationController.navigationBar.translucent = false
-
-        self.presentViewController(navigationController, animated: true, completion: nil)
+//        // swiftlint:disable force_cast
+//        let editorViewController = self.configuration.getClassForReplacedClass(MainEditorViewController.self).init() as! MainEditorViewController
+//        // swiftlint:enable force_cast
+//        editorViewController.configuration = configuration
+//        editorViewController.highResolutionImage = image
+//        if let cameraController = cameraController {
+//            editorViewController.initialFilterType = cameraController.effectFilter.filterType
+//            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
+//        }
+//        editorViewController.completionBlock = editorCompletionBlock
+//
+//        let navigationController = NavigationController(rootViewController: editorViewController)
+//        navigationController.navigationBar.barStyle = .Black
+//        navigationController.navigationBar.translucent = false
+//
+//        self.presentViewController(navigationController, animated: true, completion: nil)
     }
 
     private func saveMovieWithMovieURLToAssets(movieURL: NSURL) {
@@ -919,16 +937,16 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func changeFlash(sender: UIButton?) {
-        switch currentRecordingMode {
-        case .Photo:
-            cameraController?.selectNextFlashMode()
-        case .Video:
-            cameraController?.selectNextTorchMode()
-        }
+//        switch currentRecordingMode {
+//        case .Photo:
+//            cameraController?.selectNextFlashMode()
+//        case .Video:
+//            cameraController?.selectNextTorchMode()
+//        }
     }
 
     public func switchCamera(sender: UIButton?) {
-        cameraController?.toggleCameraPosition()
+//        cameraController?.toggleCameraPosition()
     }
 
     public func showCameraRoll(sender: UIButton?) {
@@ -943,33 +961,33 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func takePhoto(sender: UIButton?) {
-        cameraController?.takePhoto { image, error in
-            if error == nil {
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let completionBlock = self.completionBlock {
-                        completionBlock(image, nil)
-                    } else {
-                        if let image = image {
-                            self.showEditorNavigationControllerWithImage(image)
-                        }
-                    }
-                }
-            }
-        }
+//        cameraController?.takePhoto { image, error in
+//            if error == nil {
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    if let completionBlock = self.completionBlock {
+//                        completionBlock(image, nil)
+//                    } else {
+//                        if let image = image {
+//                            self.showEditorNavigationControllerWithImage(image)
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     public func recordVideo(sender: VideoRecordButton?) {
-        if let recordVideoButton = sender {
-            if recordVideoButton.recording {
-                cameraController?.startVideoRecording()
-            } else {
-                cameraController?.stopVideoRecording()
-            }
-
-            if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
-                toggleFilters(filterSelectionButton)
-            }
-        }
+//        if let recordVideoButton = sender {
+//            if recordVideoButton.recording {
+//                cameraController?.startVideoRecording()
+//            } else {
+//                cameraController?.stopVideoRecording()
+//            }
+//
+//            if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+//                toggleFilters(filterSelectionButton)
+//            }
+//        }
     }
 
     public func toggleFilters(sender: UIButton?) {
@@ -1002,10 +1020,10 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     @objc private func changeIntensity(sender: UISlider?) {
-        if let slider = sender {
-            resetHideSliderTimer()
-            cameraController?.effectFilter.inputIntensity = slider.value
-        }
+//        if let slider = sender {
+//            resetHideSliderTimer()
+//            cameraController?.effectFilter.inputIntensity = slider.value
+//        }
     }
 
     // MARK: - Completion
@@ -1024,262 +1042,262 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
 }
 
-extension CameraViewController: CameraControllerDelegate {
-    public func cameraControllerDidStartCamera(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.buttonsEnabled = true
-        }
-    }
-
-    public func cameraControllerDidStopCamera(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.buttonsEnabled = false
-        }
-    }
-
-    public func cameraControllerDidStartStillImageCapture(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            // Animate the actionButton if it is a UIButton and has a sequence of images set
-            (self.actionButtonContainer.subviews.first as? UIButton)?.imageView?.startAnimating()
-            self.buttonsEnabled = false
-        }
-    }
-
-    public func cameraControllerDidFailAuthorization(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            let bundle = NSBundle(forClass: CameraViewController.self)
-
-            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
-
-            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
-                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
-                    UIApplication.sharedApplication().openURL(url)
-                }
-            }
-
-            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
-
-            alertController.addAction(settingsAction)
-            alertController.addAction(cancelAction)
-
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateFlashButton()
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateFlashButton()
-        }
-    }
-
-    public func cameraControllerDidCompleteSetup(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateFlashButton()
-            self.switchCameraButton.hidden = !cameraController.moreThanOneCameraPresent
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.buttonsEnabled = false
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.buttonsEnabled = true
-            self.updateFlashButton()
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, willSwitchToRecordingMode recordingMode: RecordingMode) {
-        buttonsEnabled = false
-
-        if let centerModeButtonConstraint = centerModeButtonConstraint {
-            bottomControlsView.removeConstraint(centerModeButtonConstraint)
-        }
-
-        // add new action button to container
-        let actionButton = currentRecordingMode.actionButton
-        actionButton.addTarget(self, action: currentRecordingMode.actionSelector, forControlEvents: .TouchUpInside)
-        actionButton.alpha = 0
-        self.addActionButtonToContainer(actionButton)
-        // Call configuration closure if actionButton is a UIButton subclass
-        if let imageCaptureActionButton = actionButton as? UIButton {
-            self.options.photoActionButtonConfigurationClosure(imageCaptureActionButton)
-        }
-        actionButton.layoutIfNeeded()
-
-        let buttonIndex = recordingModes.indexOf(currentRecordingMode)!
-        if recordingModeSelectionButtons.count >= buttonIndex + 1 {
-            let target = recordingModeSelectionButtons[buttonIndex]
-
-            // create new centerModeButtonConstraint
-            self.centerModeButtonConstraint = NSLayoutConstraint(item: target, attribute: .CenterX, relatedBy: .Equal, toItem: actionButtonContainer, attribute: .CenterX, multiplier: 1, constant: 0)
-            self.bottomControlsView.addConstraint(centerModeButtonConstraint!)
-        }
-
-        // add recordingTimeLabel
-        if recordingMode == .Video {
-            self.addRecordingTimeLabel()
-            self.cameraController?.hideSquareMask()
-        } else {
-            if options.cropToSquare {
-                self.cameraController?.showSquareMask()
-            }
-        }
-
-        self.view.bringSubviewToFront(self.filterIntensitySlider)
-    }
-
-    public func cameraController(cameraController: CameraController, didSwitchToRecordingMode recordingMode: RecordingMode) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.setLastImageFromRollAsPreview()
-            self.buttonsEnabled = true
-
-            if recordingMode == .Photo {
-                self.recordingTimeLabel.removeFromSuperview()
-            }
-        }
-    }
-
-    public func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void) {
-        return {
-            let buttonIndex = self.recordingModes.indexOf(self.currentRecordingMode)!
-            if self.recordingModeSelectionButtons.count >= buttonIndex + 1 {
-                let target = self.recordingModeSelectionButtons[buttonIndex]
-
-                // mark target as selected
-                target.selected = true
-
-                // deselect all other buttons
-                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                    if recordingModeSelectionButton != target {
-                        recordingModeSelectionButton.selected = false
-                    }
-                }
-            }
-
-            // fade new action button in and old action button out
-            let actionButton = self.actionButtonContainer.subviews.last as? UIControl
-
-            // fetch previous action button from container
-            let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
-            actionButton?.alpha = 1
-
-            if let previousActionButton = previousActionButton, actionButton = actionButton where previousActionButton != actionButton {
-                previousActionButton.alpha = 0
-            }
-
-            self.cameraRollButton.alpha = self.currentRecordingMode == .Video ? 0 : 1
-
-            self.bottomControlsView.layoutIfNeeded()
-        }
-    }
-
-    public func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: CameraController) -> (() -> Void) {
-        return {
-            if self.actionButtonContainer.subviews.count > 1 {
-                // fetch previous action button from container
-                let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
-
-                // remove old action button
-                previousActionButton?.removeFromSuperview()
-            }
-
-            self.updateConstraintsForRecordingMode(self.currentRecordingMode)
-        }
-    }
-
-    public func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void) {
-        return {
-            // update constraints for view hierarchy
-            self.updateViewsForRecordingMode(self.currentRecordingMode)
-
-            self.recordingTimeLabel.alpha = self.currentRecordingMode == .Video ? 1 : 0
-        }
-    }
-
-    public func cameraControllerDidStartRecording(cameraController: CameraController) {
-        dispatch_async(dispatch_get_main_queue()) {
-            UIView.animateWithDuration(0.25) {
-                self.swipeLeftGestureRecognizer.enabled = false
-                self.swipeRightGestureRecognizer.enabled = false
-
-                self.switchCameraButton.alpha = 0
-                self.filterSelectionButton.alpha = 0
-                self.bottomControlsView.backgroundColor = UIColor.clearColor()
-
-                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                    recordingModeSelectionButton.alpha = 0
-                }
-            }
-        }
-    }
-
-    private func updateUIForStoppedRecording() {
-        UIView.animateWithDuration(0.25) {
-            self.swipeLeftGestureRecognizer.enabled = true
-            self.swipeRightGestureRecognizer.enabled = true
-
-            self.switchCameraButton.alpha = 1
-            self.filterSelectionButton.alpha = 1
-            self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
-
-            self.updateRecordingTimeLabel(self.options.maximumVideoLength)
-
-            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-                recordingModeSelectionButton.alpha = 1
-            }
-
-            if let actionButton = self.actionButtonContainer.subviews.first as? VideoRecordButton {
-                actionButton.recording = false
-            }
-        }
-    }
-
-    public func cameraControllerDidFailRecording(cameraController: CameraController, error: NSError?) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateUIForStoppedRecording()
-
-            let alertController = UIAlertController(title: "Error", message: "Video recording failed", preferredStyle: .Alert)
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            alertController.addAction(cancelAction)
-            self.presentViewController(alertController, animated: true, completion: nil)
-        }
-    }
-
-    public func cameraControllerDidFinishRecording(cameraController: CameraController, fileURL: NSURL) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateUIForStoppedRecording()
-            if let completionBlock = self.completionBlock {
-                completionBlock(nil, fileURL)
-            } else {
-                self.saveMovieWithMovieURLToAssets(fileURL)
-            }
-        }
-    }
-
-    public func cameraController(cameraController: CameraController, recordedSeconds seconds: Int) {
-        let displayedSeconds: Int
-
-        if options.maximumVideoLength > 0 {
-            displayedSeconds = options.maximumVideoLength - seconds
-        } else {
-            displayedSeconds = seconds
-        }
-
-        dispatch_async(dispatch_get_main_queue()) {
-            self.updateRecordingTimeLabel(displayedSeconds)
-        }
-    }
-}
+//extension CameraViewController: CameraControllerDelegate {
+//    public func cameraControllerDidStartCamera(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.buttonsEnabled = true
+//        }
+//    }
+//
+//    public func cameraControllerDidStopCamera(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.buttonsEnabled = false
+//        }
+//    }
+//
+//    public func cameraControllerDidStartStillImageCapture(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            // Animate the actionButton if it is a UIButton and has a sequence of images set
+//            (self.actionButtonContainer.subviews.first as? UIButton)?.imageView?.startAnimating()
+//            self.buttonsEnabled = false
+//        }
+//    }
+//
+//    public func cameraControllerDidFailAuthorization(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            let bundle = NSBundle(forClass: CameraViewController.self)
+//
+//            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
+//
+//            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
+//                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+//                    UIApplication.sharedApplication().openURL(url)
+//                }
+//            }
+//
+//            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+//
+//            alertController.addAction(settingsAction)
+//            alertController.addAction(cancelAction)
+//
+//            self.presentViewController(alertController, animated: true, completion: nil)
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateFlashButton()
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateFlashButton()
+//        }
+//    }
+//
+//    public func cameraControllerDidCompleteSetup(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateFlashButton()
+//            self.switchCameraButton.hidden = !cameraController.moreThanOneCameraPresent
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.buttonsEnabled = false
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, didSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.buttonsEnabled = true
+//            self.updateFlashButton()
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, willSwitchToRecordingMode recordingMode: RecordingMode) {
+//        buttonsEnabled = false
+//
+//        if let centerModeButtonConstraint = centerModeButtonConstraint {
+//            bottomControlsView.removeConstraint(centerModeButtonConstraint)
+//        }
+//
+//        // add new action button to container
+//        let actionButton = currentRecordingMode.actionButton
+//        actionButton.addTarget(self, action: currentRecordingMode.actionSelector, forControlEvents: .TouchUpInside)
+//        actionButton.alpha = 0
+//        self.addActionButtonToContainer(actionButton)
+//        // Call configuration closure if actionButton is a UIButton subclass
+//        if let imageCaptureActionButton = actionButton as? UIButton {
+//            self.options.photoActionButtonConfigurationClosure(imageCaptureActionButton)
+//        }
+//        actionButton.layoutIfNeeded()
+//
+//        let buttonIndex = recordingModes.indexOf(currentRecordingMode)!
+//        if recordingModeSelectionButtons.count >= buttonIndex + 1 {
+//            let target = recordingModeSelectionButtons[buttonIndex]
+//
+//            // create new centerModeButtonConstraint
+//            self.centerModeButtonConstraint = NSLayoutConstraint(item: target, attribute: .CenterX, relatedBy: .Equal, toItem: actionButtonContainer, attribute: .CenterX, multiplier: 1, constant: 0)
+//            self.bottomControlsView.addConstraint(centerModeButtonConstraint!)
+//        }
+//
+//        // add recordingTimeLabel
+//        if recordingMode == .Video {
+//            self.addRecordingTimeLabel()
+//            self.cameraController?.hideSquareMask()
+//        } else {
+//            if options.cropToSquare {
+//                self.cameraController?.showSquareMask()
+//            }
+//        }
+//
+//        self.view.bringSubviewToFront(self.filterIntensitySlider)
+//    }
+//
+//    public func cameraController(cameraController: CameraController, didSwitchToRecordingMode recordingMode: RecordingMode) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.setLastImageFromRollAsPreview()
+//            self.buttonsEnabled = true
+//
+//            if recordingMode == .Photo {
+//                self.recordingTimeLabel.removeFromSuperview()
+//            }
+//        }
+//    }
+//
+//    public func cameraControllerAnimateAlongsideFirstPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void) {
+//        return {
+//            let buttonIndex = self.recordingModes.indexOf(self.currentRecordingMode)!
+//            if self.recordingModeSelectionButtons.count >= buttonIndex + 1 {
+//                let target = self.recordingModeSelectionButtons[buttonIndex]
+//
+//                // mark target as selected
+//                target.selected = true
+//
+//                // deselect all other buttons
+//                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+//                    if recordingModeSelectionButton != target {
+//                        recordingModeSelectionButton.selected = false
+//                    }
+//                }
+//            }
+//
+//            // fade new action button in and old action button out
+//            let actionButton = self.actionButtonContainer.subviews.last as? UIControl
+//
+//            // fetch previous action button from container
+//            let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
+//            actionButton?.alpha = 1
+//
+//            if let previousActionButton = previousActionButton, actionButton = actionButton where previousActionButton != actionButton {
+//                previousActionButton.alpha = 0
+//            }
+//
+//            self.cameraRollButton.alpha = self.currentRecordingMode == .Video ? 0 : 1
+//
+//            self.bottomControlsView.layoutIfNeeded()
+//        }
+//    }
+//
+//    public func cameraControllerFirstPhaseOfRecordingModeSwitchAnimationCompletionBlock(cameraController: CameraController) -> (() -> Void) {
+//        return {
+//            if self.actionButtonContainer.subviews.count > 1 {
+//                // fetch previous action button from container
+//                let previousActionButton = self.actionButtonContainer.subviews.first as? UIControl
+//
+//                // remove old action button
+//                previousActionButton?.removeFromSuperview()
+//            }
+//
+//            self.updateConstraintsForRecordingMode(self.currentRecordingMode)
+//        }
+//    }
+//
+//    public func cameraControllerAnimateAlongsideSecondPhaseOfRecordingModeSwitchBlock(cameraController: CameraController) -> (() -> Void) {
+//        return {
+//            // update constraints for view hierarchy
+//            self.updateViewsForRecordingMode(self.currentRecordingMode)
+//
+//            self.recordingTimeLabel.alpha = self.currentRecordingMode == .Video ? 1 : 0
+//        }
+//    }
+//
+//    public func cameraControllerDidStartRecording(cameraController: CameraController) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            UIView.animateWithDuration(0.25) {
+//                self.swipeLeftGestureRecognizer.enabled = false
+//                self.swipeRightGestureRecognizer.enabled = false
+//
+//                self.switchCameraButton.alpha = 0
+//                self.filterSelectionButton.alpha = 0
+//                self.bottomControlsView.backgroundColor = UIColor.clearColor()
+//
+//                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+//                    recordingModeSelectionButton.alpha = 0
+//                }
+//            }
+//        }
+//    }
+//
+//    private func updateUIForStoppedRecording() {
+//        UIView.animateWithDuration(0.25) {
+//            self.swipeLeftGestureRecognizer.enabled = true
+//            self.swipeRightGestureRecognizer.enabled = true
+//
+//            self.switchCameraButton.alpha = 1
+//            self.filterSelectionButton.alpha = 1
+//            self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
+//
+//            self.updateRecordingTimeLabel(self.options.maximumVideoLength)
+//
+//            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+//                recordingModeSelectionButton.alpha = 1
+//            }
+//
+//            if let actionButton = self.actionButtonContainer.subviews.first as? VideoRecordButton {
+//                actionButton.recording = false
+//            }
+//        }
+//    }
+//
+//    public func cameraControllerDidFailRecording(cameraController: CameraController, error: NSError?) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateUIForStoppedRecording()
+//
+//            let alertController = UIAlertController(title: "Error", message: "Video recording failed", preferredStyle: .Alert)
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+//            alertController.addAction(cancelAction)
+//            self.presentViewController(alertController, animated: true, completion: nil)
+//        }
+//    }
+//
+//    public func cameraControllerDidFinishRecording(cameraController: CameraController, fileURL: NSURL) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateUIForStoppedRecording()
+//            if let completionBlock = self.completionBlock {
+//                completionBlock(nil, fileURL)
+//            } else {
+//                self.saveMovieWithMovieURLToAssets(fileURL)
+//            }
+//        }
+//    }
+//
+//    public func cameraController(cameraController: CameraController, recordedSeconds seconds: Int) {
+//        let displayedSeconds: Int
+//
+//        if options.maximumVideoLength > 0 {
+//            displayedSeconds = options.maximumVideoLength - seconds
+//        } else {
+//            displayedSeconds = seconds
+//        }
+//
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.updateRecordingTimeLabel(displayedSeconds)
+//        }
+//    }
+//}
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
