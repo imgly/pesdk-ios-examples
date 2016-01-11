@@ -198,8 +198,6 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         fontName = options.defaultFontName
 
-        navigationItem.rightBarButtonItem?.enabled = false
-
         configureTextClipView()
         configureTextField()
         configureButtons()
