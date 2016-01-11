@@ -92,7 +92,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     // MARK: - Properties
 
-    private var textColor = UIColor.whiteColor()
+    private var textColor = UIColor(hue: 0.0, saturation: 0.0, brightness: 1.0, alpha: 1.0)
     private var fontName = ""
     private var currentTextSize = CGFloat(0)
     private var maximumFontSize = CGFloat(0)
@@ -240,7 +240,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 textFilter.fontName = label.font.fontName
                 textFilter.text = label.text ?? ""
                 textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
-                textFilter.color = textColor
+                textFilter.color = label.textColor
                 textFilter.transform = label.transform
                 textFilter.center = center
                 fixedFilterStack.textFilters.append(textFilter)
@@ -338,6 +338,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func configureColorPickerView() {
         view.addSubview(colorPickerContainerView)
         colorPickerContainerView.contentView.addSubview(colorPickerView)
+        colorPickerView.initialColor = textLabel.textColor
+        colorPickerView.pickerDelegate = self
 
         let views = [
             "colorPickerContainerView" : colorPickerContainerView,
@@ -626,4 +628,25 @@ extension TextEditorViewController: UIGestureRecognizerDelegate {
         }
         return false
     }
+}
+
+extension TextEditorViewController: ColorPickerViewDelegate {
+    public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
+        textLabel.textColor = color
+        hideColorPicker()
+    }
+
+    public func canceledColorPicking(colorPickerView: ColorPickerView) {
+        hideColorPicker()
+    }
+
+    private func hideColorPicker() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.colorPickerContainerView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+                self.colorPickerContainerView.removeFromSuperview()
+        })
+    }
+
 }

@@ -71,3 +71,7 @@
 
 // Text Editor
 "text-editor.title" = "Text";
+
+// Color Picker View
+"color-picker-view-ok-button.title" = "Ok";
+"color-picker-view-cancel-button.title" = "Cancel";

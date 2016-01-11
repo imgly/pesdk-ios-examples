@@ -30,12 +30,14 @@ public extension UIColor {
             b = max(b, c[2])
 
             if b == x {
+                hsb.hue = 0.0
+                hsb.saturation = 0.0
                 hsb.brightness = b
             } else {
                 let f = CGFloat((c[0] == x) ? c[1] - c[2] : ((c[1] == x) ? c[2] - c[0] : c[0] - c[1]))
-                let i = CGFloat((c[0] == x) ? 3 : ((c[1] == x) ? 5 : 1))
+                let i = (c[0] == x) ? 3 : ((c[1] == x) ? 5 : 1)
 
-                hsb.hue = ((i - f / (b - x)) / 6)
+                hsb.hue = ((CGFloat(i) - f / (b - x)) / 6)
                 hsb.saturation = (b - x) / b
                 hsb.brightness = b
             }

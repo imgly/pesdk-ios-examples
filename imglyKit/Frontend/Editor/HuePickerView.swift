@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc(IMGLYSaturationBrightnessPickerViewDelegate) public protocol HuePickerViewDelegate {
+@objc(IMGLYHuePickerViewDelegate) public protocol HuePickerViewDelegate {
     func huePicked(huePickerView: HuePickerView, hue: CGFloat)
 }
 
