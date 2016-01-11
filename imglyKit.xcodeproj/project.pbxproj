@@ -823,6 +823,7 @@
 				2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */,
 				2BF4D3BB1AF1150400C801B2 /* FontSelectorView.swift */,
 				2BF4D3BC1AF1150400C801B2 /* GradientViewDelegate.swift */,
+				0983311E1C3FF908000135B8 /* HuePickerView.swift */,
 				2BF4D3BD1AF1150400C801B2 /* ImageCaptionButton.swift */,
 				2BF4D3BE1AF1150400C801B2 /* ImageCaptionCollectionViewCell.swift */,
 				2BF4D3AD1AF1150400C801B2 /* MainEditorAction.swift */,
@@ -840,7 +841,6 @@
 				2BF4D3CA1AF1150400C801B2 /* TextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
-				0983311E1C3FF908000135B8 /* HuePickerView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";

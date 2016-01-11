@@ -29,18 +29,16 @@ import UIKit
     }
 
     public override func drawRect(rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
+        if let context = UIGraphicsGetCurrentContext() {
+            drawColorSpectrum(context, rect:rect)
+            drawMarkerToContext(context, rect:rect)
+        }
+    }
+
+    private func drawColorSpectrum(context: CGContextRef, rect: CGRect) {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let step = CGFloat(0.166666666666667)
-        let locs: [CGFloat] = [
-            0.00,
-            step,
-            step * 2,
-            step * 3,
-            step * 4,
-            step * 5,
-            1.0]
-
+        let locs: [CGFloat] = [0.00, step, step * 2, step * 3, step * 4, step * 5, 1.0]
         let colors = [UIColor(red:1.0, green:0.0, blue:0.0, alpha:1.0).CGColor,
             UIColor(red:1.0, green:0.0, blue:1.0, alpha:1.0).CGColor,
             UIColor(red:0.0, green:0.0, blue:1.0, alpha:1.0).CGColor,
@@ -52,13 +50,14 @@ import UIKit
         let grad = CGGradientCreateWithColors(colorSpace, colors, locs)
 
         CGContextDrawLinearGradient(context, grad, CGPoint(x: rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
+    }
 
-        // Draw the indicator
+    private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
         let pos = rect.size.width * hue
         let indLength = rect.size.height / 3
 
-        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
         CGContextSetLineWidth(context, 0.5)
         CGContextSetShadow(context, CGSize(width: 0, height: 0), 4)
 

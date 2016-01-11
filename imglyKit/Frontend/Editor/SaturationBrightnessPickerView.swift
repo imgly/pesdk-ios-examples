@@ -52,16 +52,15 @@ import UIKit
     }
 
     override public func drawRect(rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-
-        CGContextSaveGState(context)
-        CGContextClipToRect(context, rect)
-
-        drawColorMatrixToContext(context, rect: rect)
-        drawMarkerToContext(context, rect: rect)
+        if let context = UIGraphicsGetCurrentContext() {
+            drawColorMatrixToContext(context, rect: rect)
+            drawMarkerToContext(context, rect: rect)
+        }
     }
 
-    private func drawColorMatrixToContext(context: CGContextRef?, rect: CGRect) {
+    private func drawColorMatrixToContext(context: CGContextRef, rect: CGRect) {
+        CGContextSaveGState(context)
+        CGContextClipToRect(context, rect)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let locs: [CGFloat] = [0.00, 1.0]
         var colors = [UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0).CGColor,
@@ -76,14 +75,14 @@ import UIKit
         CGContextRestoreGState(context)
     }
 
-    private func drawMarkerToContext(context: CGContextRef?, rect: CGRect) {
+    private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
         let realPos = CGPoint(x: saturation * rect.size.width, y:rect.size.height - (brightness * rect.size.height))
         let reticuleRect = CGRect(x: realPos.x - 10, y: realPos.y - 10, width: 20, height: 20)
 
         CGContextAddEllipseInRect(context, reticuleRect)
         CGContextAddEllipseInRect(context, CGRectInset(reticuleRect, 4, 4))
-        CGContextSetFillColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextSetStrokeColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
+        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
         CGContextSetLineWidth(context, 0.5)
         CGContextClosePath(context)
         CGContextSetShadow(context, CGSize(width: 1.0, height: 1.0), 4)
