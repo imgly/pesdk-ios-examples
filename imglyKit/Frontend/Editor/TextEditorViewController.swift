@@ -391,10 +391,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = false
         configureFontSelectorView()
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = false
         configureColorPickerView()
     }
 
@@ -610,6 +612,7 @@ extension TextEditorViewController: FontSelectorViewDelegate {
             self.fontSelectorContainerView.alpha = 0.0
             }, completion: {
                 (value: Bool) in
+                self.navigationItem.rightBarButtonItem?.enabled = true
                 self.fontSelectorContainerView.removeFromSuperview()
         })
 
@@ -645,6 +648,7 @@ extension TextEditorViewController: ColorPickerViewDelegate {
             self.colorPickerContainerView.alpha = 0.0
             }, completion: {
                 (value: Bool) in
+                self.navigationItem.rightBarButtonItem?.enabled = true
                 self.colorPickerContainerView.removeFromSuperview()
         })
     }
