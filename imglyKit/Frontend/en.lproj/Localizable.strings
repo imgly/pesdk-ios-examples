@@ -56,7 +56,6 @@
 "crop-editor.16-to-9" = "16:9";
 
 // Crop Editor
-"text-editor.add" = "Add";
 "text-editor.font" = "Font";
 "text-editor.text-color" = "Text";
 "text-editor.background-color" = "Back";

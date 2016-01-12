@@ -491,9 +491,15 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     // MARK: - Button Handling
 
-    @objc private func addText(sender: ImageCaptionButton) {
+    @objc private func addText(sender: UIButton) {
         textField.text = ""
         textField.becomeFirstResponder()
+    }
+
+    @objc private func deleteText(sender: UIButton) {
+        if textLabel.layer.borderWidth > 0 {
+            textLabel.removeFromSuperview()
+        }
     }
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
