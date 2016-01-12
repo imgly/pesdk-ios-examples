@@ -58,7 +58,9 @@
 // Crop Editor
 "text-editor.add" = "Add";
 "text-editor.font" = "Font";
-"text-editor.text-color" = "Color";
+"text-editor.text-color" = "Text";
+"text-editor.background-color" = "Back";
+"text-editor.bring-to-front" = "Bring to front";
 
 // Brightness Editor
 "brightness-editor.title" = "Brightness";

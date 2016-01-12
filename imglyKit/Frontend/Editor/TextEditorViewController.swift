@@ -49,6 +49,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public let defaultFontName: String
 
+    /// The background color of the add text button. Defaults to petrol.
+    public let addButtonBackgroundColor: UIColor
+
+    /// The background color of the delete text button. Defaults to petrol.
+    public let deleteButtonBackgroundColor: UIColor
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -65,6 +71,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         canBringToFront = builder.canBringToFront
         canModifyTextFont = builder.canModifyTextFont
         defaultFontName = builder.defaultFontName
+        addButtonBackgroundColor = builder.addButtonBackgroundColor
+        deleteButtonBackgroundColor = builder.deleteButtonBackgroundColor
         super.init(editorBuilder: builder)
     }
 }
@@ -108,6 +116,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public let defaultFontName = "Helvetica Neue"
 
+    /// The background color of the add text button. Defaults to petrol.
+    public let addButtonBackgroundColor = UIColor(red:0, green:0.48, blue:0.56, alpha:0.6)
+
+    /// The background color of the delete text button. Defaults to petrol.
+    public let deleteButtonBackgroundColor = UIColor(red:0, green:0.48, blue:0.56, alpha:0.6)
+
     public override init() {
         super.init()
 
@@ -130,13 +144,21 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var draggedView: UILabel?
     private var tempTextCopy = [Filter]()
 
-    public private(set) lazy var addTextButton: ImageCaptionButton = {
+    public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
-        let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("text-editor.add", tableName: nil, bundle: bundle, value: "", comment: "")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var deleteTextButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "deleteText:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -230,7 +252,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private var textLabel = UILabel()
 
-    // MAKR: - Initializers
+    // MARK: - Initializers
 
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -247,7 +269,9 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         configureTextClipView()
         configureTextField()
-        configureButtons()
+        configureBottomButtons()
+        configureAddButton()
+        configureDeleteButton()
         registerForKeyboardNotifications()
         configureGestureRecognizers()
         backupTexts()
@@ -309,7 +333,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     // MARK: - Configuration
 
-    private func configureButtons() {
+    private func configureBottomButtons() {
         // Setup button container view
         let buttonContainerView = UIView()
         buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
@@ -319,10 +343,6 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         var views = [String: UIView]()
         var visualFormatString = ""
-        if options.canAddText {
-            views = viewsByAddingButton(addTextButton, containerView: buttonContainerView, views: views)
-            visualFormatString = visualFormatStringByAddingButton(addTextButton, visualFormatString: visualFormatString)
-        }
         if options.canModifyTextFont {
             views = viewsByAddingButton(selectTextFontButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectTextFontButton, visualFormatString: visualFormatString)
@@ -335,7 +355,35 @@ private let kMinimumFontSize = CGFloat(12.0)
             views = viewsByAddingButton(selectBackgroundColorButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectBackgroundColorButton, visualFormatString: visualFormatString)
         }
+        if options.canBringToFront {
+            views = viewsByAddingButton(bringToFrontButton, containerView: buttonContainerView, views: views)
+            visualFormatString = visualFormatStringByAddingButton(bringToFrontButton, visualFormatString: visualFormatString)
+        }
         buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+    }
+
+    private func configureAddButton() {
+        let views: [String : AnyObject] = [
+            "addTextButton" : addTextButton
+        ]
+        view.addSubview(addTextButton)
+        addTextButton.clipsToBounds = false
+        addTextButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureDeleteButton() {
+        let views: [String : AnyObject] = [
+            "deleteTextButton" : deleteTextButton
+        ]
+        view.addSubview(deleteTextButton)
+        deleteTextButton.clipsToBounds = false
+        deleteTextButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
@@ -641,7 +689,6 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func backupTexts() {
         tempTextCopy = fixedFilterStack.textFilters
     }
-
 
     /*
     * in this method we do some calculations to re calculate the
