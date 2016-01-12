@@ -25,6 +25,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// from the given values. If no colors are passed, a default color set is loaded.
     public let availableFontColors: [UIColor]?
 
+    /// Enables/Disables the add text button. Defaults to true.
+    public let canAddText: Bool
+
+    /// Enables/Disables the delete text button. Defaults to true.
+    public let canDeleteText: Bool
+
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public let canModifyTextSize: Bool
 
@@ -51,6 +57,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
         fontPreviewTextColor = builder.fontPreviewTextColor
         availableFontColors = builder.availableFontColors
+        canAddText = builder.canAddText
+        canDeleteText = builder.canDeleteText
         canModifyTextSize = builder.canModifyTextSize
         canModifyTextColor = builder.canModifyTextColor
         canModifyBackgroundColor = builder.canModifyBackgroundColor
@@ -75,6 +83,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// An optional array of custom color values. The user can select a text color
     /// from the given values. If no colors are passed, a default color set is loaded.
     public var availableFontColors: [UIColor]?
+
+    /// Enables/Disables the add text button. Defaults to true.
+    public let canAddText = true
+
+    /// Enables/Disables the delete text button. Defaults to true.
+    public let canDeleteText = true
 
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public var canModifyTextSize = true
@@ -305,7 +319,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         var views = [String: UIView]()
         var visualFormatString = ""
-        if options.canModifyTextColor {
+        if options.canAddText {
             views = viewsByAddingButton(addTextButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(addTextButton, visualFormatString: visualFormatString)
         }
@@ -316,6 +330,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         if options.canModifyTextColor {
             views = viewsByAddingButton(selectTextColorButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectTextColorButton, visualFormatString: visualFormatString)
+        }
+        if options.canModifyBackgroundColor {
+            views = viewsByAddingButton(selectBackgroundColorButton, containerView: buttonContainerView, views: views)
+            visualFormatString = visualFormatStringByAddingButton(selectBackgroundColorButton, visualFormatString: visualFormatString)
         }
         buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
     }
