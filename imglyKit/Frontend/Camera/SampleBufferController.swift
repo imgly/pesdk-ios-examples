@@ -19,9 +19,18 @@ class SampleBufferController: NSObject {
 
     // MARK: - Initializers
 
-    init(videoPreviewView: GLKView, ciContext: CIContext) {
+    init(videoPreviewView: GLKView) {
         self.videoPreviewView = videoPreviewView
-        self.ciContext = ciContext
+
+        let options: [String: AnyObject]?
+        if let colorSpace = CGColorSpaceCreateDeviceRGB() {
+            options = [kCIContextWorkingColorSpace: colorSpace]
+        } else {
+            options = nil
+        }
+
+        ciContext = CIContext(EAGLContext: self.videoPreviewView.context, options: options)
+
         super.init()
     }
 

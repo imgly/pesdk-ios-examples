@@ -196,7 +196,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// `allowedCameraPositions` with the corresponding unwrapped values.
     public var allowedCameraPositionsAsNSNumbers: [NSNumber] = [ AVCaptureDevicePosition.Back, .Front ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedCameraPositions = allowedCameraPositionsAsNSNumbers.map({ AVCaptureDevicePosition(rawValue: $0.integerValue)! })
+            self.allowedCameraPositions = allowedCameraPositionsAsNSNumbers.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
         }
     }
 
@@ -205,7 +205,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// `allowedFlashModes` with the corresponding unwrapped values.
     public var allowedFlashModesAsNSNumbers: [NSNumber] = [ AVCaptureFlashMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedFlashModes = allowedFlashModesAsNSNumbers.map({ AVCaptureFlashMode(rawValue: $0.integerValue)! })
+            self.allowedFlashModes = allowedFlashModesAsNSNumbers.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
         }
     }
 
@@ -214,7 +214,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// `allowedFlashModes` with the corresponding unwrapped values.
     public var allowedTorchModesAsNSNumbers: [NSNumber] = [ AVCaptureTorchMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedTorchModes = allowedTorchModesAsNSNumbers.map({ AVCaptureTorchMode(rawValue: $0.integerValue)! })
+            self.allowedTorchModes = allowedTorchModesAsNSNumbers.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
         }
     }
 }
@@ -254,7 +254,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     - returns: An initialized and configured instance of `CameraViewController`
     */
     public convenience init(recordingModes: [NSNumber], configuration: Configuration = Configuration()) {
-        let modes = recordingModes.map { RecordingMode(rawValue: $0.integerValue) }.filter { $0 != nil }.map { $0! }
+        let modes = recordingModes.flatMap { RecordingMode(rawValue: $0.integerValue) }
         self.init(recordingModes: modes, configuration: configuration)
     }
 
@@ -680,23 +680,27 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         // Needed so that the framebuffer can bind to OpenGL ES
 //        view.layoutIfNeeded()
 
-        cameraController = CameraController()
+        let cameraController = CameraController(
+            allowedCameraPositions: configuration.cameraViewControllerOptions.allowedCameraPositions,
+            allowedFlashModes: configuration.cameraViewControllerOptions.allowedFlashModes,
+            allowedTorchModes: configuration.cameraViewControllerOptions.allowedTorchModes
+        )
 
         do {
-            try cameraController!.setup()
+            try cameraController.setup()
         } catch CameraControllerError.MultipleCallsToSetup {
             fatalError("setup() on CameraController has been called before.")
         } catch CameraControllerError.UnableToInitializeCaptureDevice {
-            fatalError("No camera found on device")
+            print("No camera found on device")
         } catch let error as NSError {
             print(error.localizedDescription)
         } catch {
             fatalError("Unknown error")
         }
 
-        cameraPreviewContainer.addSubview(cameraController!.videoPreviewView)
-        cameraController!.videoPreviewView.frame = cameraPreviewContainer.bounds
-
+        cameraPreviewContainer.addSubview(cameraController.videoPreviewView)
+        cameraController.videoPreviewView.frame = cameraPreviewContainer.bounds
+        self.cameraController = cameraController
 
 //        cameraController = CameraController(previewView: cameraPreviewContainer)
 //        cameraController!.tapToFocusEnabled = options.tapToFocusEnabled

@@ -179,10 +179,12 @@
 		2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */; };
 		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
 		2B25F1BC1B03AC8E0081032D /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */; };
+		2B319B651C45070200515C9D /* FlashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B319B641C45070200515C9D /* FlashController.swift */; };
 		2B50239E1C286B0400CE9AD3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
 		2B54A0A01C2AEA6100E82DC6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
 		2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
+		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
@@ -427,8 +429,10 @@
 		2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAffineTransformExtension.swift; sourceTree = "<group>"; };
 		2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
+		2B319B641C45070200515C9D /* FlashController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashController.swift; sourceTree = "<group>"; };
 		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2B5728051C28594E0003EF8F /* EffectFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilter.swift; sourceTree = "<group>"; };
+		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
@@ -811,9 +815,11 @@
 				2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */,
 				2BEBFEB41C400A5D00FAA95C /* CameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */,
+				2B319B641C45070200515C9D /* FlashController.swift */,
 				2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */,
 				2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */,
 				2BF717D71B414FC600D4A50C /* ShapeLayer.swift */,
+				2B6D88F31C4509F500200557 /* TorchController.swift */,
 				2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */,
 			);
 			path = Camera;
@@ -1544,6 +1550,7 @@
 			files = (
 				2BEBCE971B00D7D1000FE22B /* AnimationDelegate.swift in Sources */,
 				2BF4D3DA1AF1150500C801B2 /* FontSelectorView.swift in Sources */,
+				2B319B651C45070200515C9D /* FlashController.swift in Sources */,
 				2BF4D3E31AF1150500C801B2 /* SliderEditorViewController.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* NavigationAnimationController.swift in Sources */,
 				2BF4D53E1AF1156F00C801B2 /* LUTToNSDataConverter.m in Sources */,
@@ -1593,6 +1600,7 @@
 				2BF4D51C1AF1155E00C801B2 /* LomoFilter.swift in Sources */,
 				2BF4D3DC1AF1150500C801B2 /* ImageCaptionButton.swift in Sources */,
 				2BF4D5161AF1155E00C801B2 /* K6Filter.swift in Sources */,
+				2B6D88F41C4509F500200557 /* TorchController.swift in Sources */,
 				2B25F1BC1B03AC8E0081032D /* ZoomingImageView.swift in Sources */,
 				2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */,
 				2BF4D3E11AF1150500C801B2 /* OrientationEditorViewController.swift in Sources */,

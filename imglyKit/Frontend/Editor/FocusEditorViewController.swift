@@ -71,7 +71,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     /// `allowedFocusActions` with the corresponding `FocusAction` values.
     public var allowedFocusActionsAsNSNumbers: [NSNumber] = [ FocusAction.Off, .Linear, .Radial ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ FocusAction(rawValue: $0.integerValue)! })
+            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.flatMap { FocusAction(rawValue: $0.integerValue) }
         }
     }
 

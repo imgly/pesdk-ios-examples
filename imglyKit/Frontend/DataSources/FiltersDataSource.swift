@@ -80,7 +80,7 @@ import UIKit
     /// This initializer should only be used in Objective-C. It expects an NSArray of NSNumbers that wrap
     /// the integer value of FilterType.
     public convenience init(availableFilters: [NSNumber]) {
-        let castedFilters = availableFilters.map { FilterType(rawValue: $0.integerValue) }.filter { $0 != nil }.map { $0! }
+        let castedFilters = availableFilters.flatMap { FilterType(rawValue: $0.integerValue) }
         self.init(availableFilters: castedFilters)
     }
 

@@ -59,7 +59,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     /// `allowedOrientationActions` with the corresponding `FocusAction` values.
     public var allowedOrientationActionsAsNSNumbers: [NSNumber] = [ OrientationAction.RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.map({ OrientationAction(rawValue: $0.integerValue)! })
+            self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.flatMap { OrientationAction(rawValue: $0.integerValue) }
         }
     }
 

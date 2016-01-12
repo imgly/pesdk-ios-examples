@@ -27,44 +27,51 @@ import GLKit
     private let videoDataOutput = AVCaptureVideoDataOutput()
 
     private let glContext: EAGLContext
-    private let ciContext: CIContext
     public let videoPreviewView: GLKView
 
     private var setupComplete = false
+    private let allowedCameraPositions: [AVCaptureDevicePosition]
+    private let allowedFlashModes: [AVCaptureFlashMode]
+    private let allowedTorchModes: [AVCaptureTorchMode]
 
     private let sampleBufferController: SampleBufferController
+    private var flashController: FlashController?
+    private var torchController: TorchController?
 
     // MARK: - Initializer
 
-    public override init() {
+    public convenience init(allowedCameraPositions: [NSNumber], allowedFlashModes: [NSNumber], allowedTorchModes: [NSNumber]) {
+        let cameraPositions = allowedCameraPositions.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
+        let flashModes = allowedFlashModes.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
+        let torchModes = allowedTorchModes.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
+
+        self.init(allowedCameraPositions: cameraPositions, allowedFlashModes: flashModes, allowedTorchModes: torchModes)
+    }
+
+    public init(allowedCameraPositions: [AVCaptureDevicePosition], allowedFlashModes: [AVCaptureFlashMode], allowedTorchModes: [AVCaptureTorchMode]) {
+        self.allowedCameraPositions = allowedCameraPositions.count == 0 ? [.Back, .Front] : allowedCameraPositions
+        self.allowedFlashModes = allowedFlashModes
+        self.allowedTorchModes = allowedTorchModes
+
         guard let glContext = EAGLContext(API: .OpenGLES2) else {
             fatalError("Unable to create EAGLContext")
         }
 
         self.glContext = glContext
 
-        let options: [String: AnyObject]?
-        if let colorSpace = CGColorSpaceCreateDeviceRGB() {
-            options = [kCIContextWorkingColorSpace: colorSpace]
-        } else {
-            options = nil
-        }
-
-        ciContext = CIContext(EAGLContext: glContext, options: options)
         videoPreviewView = GLKView(frame: CGRectZero, context: glContext)
         videoPreviewView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
 
         sampleBufferController = SampleBufferController(
-            videoPreviewView: videoPreviewView,
-            ciContext: ciContext
+            videoPreviewView: videoPreviewView
         )
 
         super.init()
     }
 
-    // MARK: - Session Notifications
+    // MARK: - Observers
 
-    private func addSessionObservers() {
+    private func addObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "sessionRuntimeError:",
             name: AVCaptureSessionRuntimeErrorNotification,
@@ -83,6 +90,10 @@ import GLKit
             object: session)
     }
 
+    private func removeObservers() {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+
     @objc private func sessionRuntimeError(notification: NSNotification) {
         // TODO
     }
@@ -98,7 +109,7 @@ import GLKit
     // MARK: - Setup
 
     public func setup() throws {
-        try setupWithInitialCameraPosition(.Back, initialSessionPreset: AVCaptureSessionPresetPhoto)
+        try setupWithInitialCameraPosition(allowedCameraPositions[0], initialSessionPreset: AVCaptureSessionPresetPhoto)
     }
 
     public func setupWithInitialCameraPosition(initialCameraPosition: AVCaptureDevicePosition, initialSessionPreset: String) throws {
@@ -117,16 +128,38 @@ import GLKit
         let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         self.videoDeviceInput = videoDeviceInput
 
+        flashController = FlashController(allowedFlashModes: allowedFlashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        torchController = TorchController(allowedTorchModes: allowedTorchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
             self.addVideoDeviceInput(videoDeviceInput)
             self.addVideoDataOutput(self.videoDataOutput)
             self.changeSessionPreset(initialSessionPreset)
             self.session.commitConfiguration()
-            completion?()
+
+            dispatch_async(dispatch_get_main_queue()) {
+                self.transformVideoPreviewToMatchDevicePosition(videoDeviceInput.device.position)
+                completion?()
+            }
         }
 
         setupComplete = true
+    }
+
+    // MARK: - View Transformation
+
+    private func transformVideoPreviewToMatchDevicePosition(position: AVCaptureDevicePosition) {
+        switch position {
+        case .Front:
+            // Front camera is mirrored so we need to transform the preview view
+            self.videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+            self.videoPreviewView.transform = CGAffineTransformScale(self.videoPreviewView.transform, 1, -1)
+        case .Back:
+            self.videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        case .Unspecified:
+            break
+        }
     }
 
     // MARK: - Session Configuration
@@ -134,19 +167,6 @@ import GLKit
     private func addVideoDeviceInput(videoDeviceInput: AVCaptureDeviceInput) {
         if session.canAddInput(videoDeviceInput) {
             session.addInput(videoDeviceInput)
-        }
-
-        dispatch_async(dispatch_get_main_queue()) {
-            switch videoDeviceInput.device.position {
-            case .Front:
-                // front camera is mirrored so we need to transform the preview view
-                self.videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-                self.videoPreviewView.transform = CGAffineTransformScale(self.videoPreviewView.transform, 1, -1)
-            case .Back:
-                self.videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-            case .Unspecified:
-                break
-            }
         }
     }
 
@@ -166,20 +186,23 @@ import GLKit
     // MARK: - Starting / Stopping
 
     public func startCamera() {
-        assert(setupComplete, "setup() needs to be called before calling startCamera()")
+        if !setupComplete {
+            print("You must call setup() before calling startCamera()")
+            return
+        }
 
         videoPreviewView.bindDrawable()
 
         dispatch_async(sessionQueue) {
+            self.addObservers()
             self.session.startRunning()
         }
     }
 
     public func stopCamera() {
-        assert(setupComplete, "setup() needs to be called before calling stopCamera()")
-
         dispatch_async(sessionQueue) {
             self.session.stopRunning()
+            self.removeObservers()
         }
     }
 }

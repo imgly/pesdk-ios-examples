@@ -82,7 +82,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// `allowedOrientationActions` with the corresponding `FocusAction` values.
     public var allowedCropActionsAsNSNumbers: [NSNumber] = [ CropAction.Free, .OneToOne, .FourToThree, .SixteenToNine ].map({ NSNumber(integer: $0.rawValue) }) {
         didSet {
-            self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ CropAction(rawValue: $0.integerValue)! })
+            self.allowedCropActions = allowedCropActionsAsNSNumbers.flatMap { CropAction(rawValue: $0.integerValue) }
         }
     }
 

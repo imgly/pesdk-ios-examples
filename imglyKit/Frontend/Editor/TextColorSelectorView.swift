@@ -95,7 +95,7 @@ import UIKit
                 height: kButtonSideLength)
             xPosition += (kButtonDistance + kButtonSideLength)
         }
-        
+
         buttonArray[0].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
