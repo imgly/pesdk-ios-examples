@@ -28,8 +28,14 @@ private let kMinimumFontSize = CGFloat(12.0)
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public let canModifyTextSize: Bool
 
-    /// Enables/Disables color changes through the bottom drawer. Defaults to true.
+    /// Enables/Disables text color changes through the bottom drawer. Defaults to true.
     public let canModifyTextColor: Bool
+
+    /// Enables/Disables background color changes through the bottom drawer. Defaults to true.
+    public let canModifyBackgroundColor: Bool
+
+    /// Enables/Disables the bring to front option. Defaults to true.
+    public let canBringToFront: Bool
 
     /// Enables/Disables font changes through the bottom drawer. Defaults to true.
     public let canModifyTextFont: Bool
@@ -47,6 +53,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         availableFontColors = builder.availableFontColors
         canModifyTextSize = builder.canModifyTextSize
         canModifyTextColor = builder.canModifyTextColor
+        canModifyBackgroundColor = builder.canModifyBackgroundColor
+        canBringToFront = builder.canBringToFront
         canModifyTextFont = builder.canModifyTextFont
         defaultFontName = builder.defaultFontName
         super.init(editorBuilder: builder)
@@ -73,6 +81,12 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     /// Enables/Disables color changes through the bottom drawer. Defaults to true.
     public var canModifyTextColor = true
+
+    /// Enables/Disables background color changes through the bottom drawer. Defaults to true.
+    public let canModifyBackgroundColor = true
+
+    /// Enables/Disables the bring to front option. Defaults to true.
+    public let canBringToFront = true
 
     /// Enables/Disables font changes through the bottom drawer. Defaults to true.
     public let canModifyTextFont = true
@@ -132,6 +146,27 @@ private let kMinimumFontSize = CGFloat(12.0)
         return button
     }()
 
+    public private(set) lazy var selectBackgroundColorButton: ImageCaptionButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = ImageCaptionButton()
+        button.textLabel.text = NSLocalizedString("text-editor.background-color", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var bringToFrontButton: ImageCaptionButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = ImageCaptionButton()
+        button.textLabel.text = NSLocalizedString("text-editor.bring-to-front", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+
     public private(set) lazy var textClipView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
@@ -176,8 +211,6 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var colorPickerView: ColorPickerView = {
         let selector = ColorPickerView()
         selector.translatesAutoresizingMaskIntoConstraints = false
-        //selector.selectorDelegate = self
-        //selector.fontPreviewTextColor = self.options.fontPreviewTextColor
         return selector
     }()
 
@@ -615,7 +648,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             label.text = textFilter.text
             label.sizeToFit()
             label.transform = textFilter.transform
-            //label.frame.size = CGSize(width: 364, height: 255)
 
             var center = CGPoint(x: textFilter.center.x * completeSize.width,
                 y: textFilter.center.y * completeSize.height)
@@ -628,7 +660,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             print(center, completeSize)
             print(label.frame.size)
             label.clipsToBounds = false
-            label.textColor = UIColor.whiteColor()
+            label.textColor = textFilter.color
             textClipView.addSubview(label)
         }
     }
