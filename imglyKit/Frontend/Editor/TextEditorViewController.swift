@@ -99,8 +99,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var panOffset = CGPointZero
     private var fontSizeAtPinchBegin = CGFloat(0)
     private var distanceAtPinchBegin = CGFloat(0)
-    private var beganTwoFingerPitch = false
     private var draggedView: UILabel?
+    private var tempTextCopy = [Filter]()
 
     public private(set) lazy var addTextButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -203,6 +203,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureButtons()
         registerForKeyboardNotifications()
         configureGestureRecognizers()
+        backupTexts()
+        fixedFilterStack.textFilters.removeAll()
+    }
+
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        rerenderPreviewWithoutText()
     }
 
     override public func viewDidLayoutSubviews() {
@@ -224,6 +231,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         for view in textClipView.subviews {
             if let label = view as? UILabel {
+                print(label.center, completeSize)
+                print(label.font)
+                print(label.frame.size)
                 let textFilter = InstanceFactory.textFilter()
                 // swiftlint:disable force_cast
                 textFilter.inputImage = self.previewImageView.image!.CIImage
@@ -354,7 +364,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             self.colorPickerContainerView.alpha = 1.0
         }
     }
-
 
     private func registerForKeyboardNotifications() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
@@ -569,6 +578,60 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func unSelectTextLabel(label: UILabel) {
         label.layer.borderWidth = 0
     }
+
+    // MARK: - sticker object restore
+
+    private func rerenderPreviewWithoutText() {
+        updatePreviewImageWithCompletion { () -> (Void) in
+            self.addTextsFromTextFilters(self.tempTextCopy)
+        }
+    }
+
+    private func backupTexts() {
+        tempTextCopy = fixedFilterStack.textFilters
+    }
+
+
+    /*
+    * in this method we do some calculations to re calculate the
+    * sticker position in relation to the crop region.
+    * Therefore we calculte the position and size within the non-cropped image
+    * and apply the translation and scaling that comes with cropping in relation
+    * to the full image.
+    * When we are done we must revoke that extra transformation.
+    */
+    private func addTextsFromTextFilters(textFilters: [Filter]) {
+        for element in textFilters {
+            guard let textFilter = element as? TextFilter else {
+                return
+            }
+            let label = UILabel()
+            label.userInteractionEnabled = true
+            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+            var completeSize = previewImageView.visibleImageFrame.size
+            completeSize.width *= 1.0 / cropRect.width
+            completeSize.height *= 1.0 / cropRect.height
+            label.font = UIFont(name: textFilter.fontName, size: textFilter.initialFontSize * previewImageView.visibleImageFrame.size.height)
+            label.text = textFilter.text
+            label.sizeToFit()
+            label.transform = textFilter.transform
+            //label.frame.size = CGSize(width: 364, height: 255)
+
+            var center = CGPoint(x: textFilter.center.x * completeSize.width,
+                y: textFilter.center.y * completeSize.height)
+            center.x -= cropRect.origin.x
+            center.y -= cropRect.origin.y
+            center.x /= cropRect.width
+            center.y /= cropRect.height
+
+            label.center = center
+            print(center, completeSize)
+            print(label.frame.size)
+            label.clipsToBounds = false
+            label.textColor = UIColor.whiteColor()
+            textClipView.addSubview(label)
+        }
+    }
 }
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
@@ -650,5 +713,4 @@ extension TextEditorViewController: ColorPickerViewDelegate {
                 self.colorPickerContainerView.removeFromSuperview()
         })
     }
-
 }
