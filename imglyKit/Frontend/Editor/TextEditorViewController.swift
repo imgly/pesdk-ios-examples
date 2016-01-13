@@ -144,6 +144,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var draggedView: UILabel?
     private var tempTextCopy = [Filter]()
     private var createNewText = false
+    private var selectBackgroundColor = false
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -447,7 +448,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func configureColorPickerView() {
         configureBlurredContainerView()
         blurredContainerView.contentView.addSubview(colorPickerView)
-        colorPickerView.initialColor = textLabel.textColor
+        colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
         colorPickerView.pickerDelegate = self
 
         let views = [
@@ -501,6 +502,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
+        navigationItem.rightBarButtonItem?.enabled = false
         createNewText = true
         configureTextField()
         textField.text = ""
@@ -520,11 +522,13 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
+        selectBackgroundColor = false
         configureColorPickerView()
     }
 
     @objc private func setBackgroundColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
+        selectBackgroundColor = true
         configureColorPickerView()
     }
 
@@ -821,7 +825,11 @@ extension TextEditorViewController: UIGestureRecognizerDelegate {
 
 extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
-        textLabel.textColor = color
+        if selectBackgroundColor {
+            textLabel.backgroundColor = color
+        } else {
+            textLabel.textColor = color
+        }
         hideBlurredContainer()
     }
 
