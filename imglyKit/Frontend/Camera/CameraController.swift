@@ -83,7 +83,10 @@ import GLKit
 
                 cameraPositions = cameraPositions.filter { availableCameraPositions.contains($0) }
 
-                // TODO: Update current camera position if needed
+                // Update current camera position if needed
+                if let currentCameraPosition = videoDeviceInput?.device.position where setupComplete && !cameraPositions.contains(currentCameraPosition) {
+                    switchToCameraAtPosition(nextCameraPositionForCurrentPosition(currentCameraPosition))
+                }
             }
         }
     }
@@ -318,6 +321,66 @@ import GLKit
         dispatch_async(sessionQueue) {
             self.session.stopRunning()
             self.removeObservers()
+        }
+    }
+
+    // MARK: - Camera Switching
+
+    private func nextCameraPositionForCurrentPosition(position: AVCaptureDevicePosition?) -> AVCaptureDevicePosition {
+        let nextPosition: AVCaptureDevicePosition
+
+        if let currentPosition = position {
+            switch currentPosition {
+            case .Front, .Unspecified where cameraPositions.contains(.Back):
+                nextPosition = .Back
+            case .Back where cameraPositions.contains(.Front):
+                nextPosition = .Front
+            default:
+                nextPosition = currentPosition
+            }
+        } else {
+            nextPosition = cameraPositions[0]
+        }
+
+        return nextPosition
+    }
+
+    public func toggleCameraPosition() {
+        switchToCameraAtPosition(nextCameraPositionForCurrentPosition(videoDeviceInput?.device.position))
+    }
+
+    public func switchToCameraAtPosition(position: AVCaptureDevicePosition) {
+        if !setupComplete {
+            print("You must call setup() before calling switchToCameraAtPosition(:)")
+            return
+        }
+
+        dispatch_async(sessionQueue) {
+            self.session.beginConfiguration()
+
+            if let input = self.videoDeviceInput {
+                self.session.removeInput(input)
+            }
+
+            // TODO: Remove {Flash, Torch}Controller observers
+
+            if let device = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: position), input = try? AVCaptureDeviceInput(device: device) {
+                self.videoDeviceInput = input
+                self.addVideoDeviceInput(input)
+
+                self.flashController = FlashController(flashModes: self.flashModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
+                self.torchController = TorchController(torchModes: self.torchModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
+
+                // TODO: Add {Flash, Torch}Controller observers
+            }
+
+            self.session.commitConfiguration()
+
+            if let device = self.videoDeviceInput?.device {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.transformVideoPreviewToMatchDevicePosition(device.position)
+                }
+            }
         }
     }
 }

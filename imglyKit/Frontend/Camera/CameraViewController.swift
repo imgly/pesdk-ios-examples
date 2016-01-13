@@ -952,7 +952,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func switchCamera(sender: UIButton?) {
-//        cameraController?.toggleCameraPosition()
+        cameraController?.toggleCameraPosition()
     }
 
     public func showCameraRoll(sender: UIButton?) {
