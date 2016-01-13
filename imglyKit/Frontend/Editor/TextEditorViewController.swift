@@ -528,6 +528,12 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureColorPickerView()
     }
 
+    @objc private func bringToFront(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            textClipView.bringSubviewToFront(textLabel)
+        }
+    }
+
     // MARK: - Gesture Handling
 
     @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
@@ -540,7 +546,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                 unSelectTextLabel(textLabel)
                 textLabel = draggedView
                 selectTextLabel(textLabel)
-                textClipView.bringSubviewToFront(draggedView)
             }
         case .Changed:
             if let draggedView = draggedView {
@@ -571,7 +576,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                     unSelectTextLabel(textLabel)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
-                    textClipView.bringSubviewToFront(draggedView)
                 }
             case .Changed:
                 if let draggedView =  draggedView {
@@ -606,7 +610,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                     unSelectTextLabel(textLabel)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
-                    textClipView.bringSubviewToFront(draggedView)
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -630,7 +633,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             textLabel = draggedView
             currentTextSize = textLabel.font.pointSize
             selectTextLabel(textLabel)
-            textClipView.bringSubviewToFront(draggedView)
         }
     }
 
@@ -781,6 +783,7 @@ extension TextEditorViewController: UITextFieldDelegate {
             configureTextLabel()
             textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             setInitialTextLabelSize()
+            textClipView.bringSubviewToFront(textLabel)
         } else {
             textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
             textLabel.sizeToFit()
