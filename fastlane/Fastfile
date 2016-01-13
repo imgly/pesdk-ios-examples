@@ -16,7 +16,7 @@
 
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "1.49.0"
+fastlane_version "1.50.0"
 
 before_all do
   # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
