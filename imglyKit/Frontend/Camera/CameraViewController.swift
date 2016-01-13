@@ -756,32 +756,32 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func configureFilterSelectionController() {
-//        filterSelectionController.dataSource = self.options.filtersDataSource
-//        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
+        filterSelectionController.dataSource = self.options.filtersDataSource
+        filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
 //            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
 //                cameraController.effectFilter = InstanceFactory.effectFilterWithType(filterType)
 //                cameraController.effectFilter.inputIntensity = initialFilterIntensity
 //                self?.filterIntensitySlider.value = initialFilterIntensity
 //            }
-//
-//            if filterType == .None {
-//                self?.hideSliderTimer?.invalidate()
-//                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
-//                    UIView.animateWithDuration(0.25) {
-//                        filterIntensitySlider.alpha = 0
-//                    }
-//                }
-//            } else {
-//                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
-//                    UIView.animateWithDuration(0.25) {
-//                        filterIntensitySlider.alpha = 1
-//                    }
-//                }
-//
-//                self?.resetHideSliderTimer()
-//            }
-//        }
-//
+
+            if filterType == .None {
+                self?.hideSliderTimer?.invalidate()
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
+                    UIView.animateWithDuration(0.25) {
+                        filterIntensitySlider.alpha = 0
+                    }
+                }
+            } else {
+                if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
+                    UIView.animateWithDuration(0.25) {
+                        filterIntensitySlider.alpha = 1
+                    }
+                }
+
+                self?.resetHideSliderTimer()
+            }
+        }
+
 //        filterSelectionController.activeFilterType = { [weak self] in
 //            if let cameraController = self?.cameraController {
 //                return cameraController.effectFilter.filterType
@@ -848,60 +848,28 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         actionButtonContainer.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[actionButton]|", options: [], metrics: nil, views: [ "actionButton" : actionButton ]))
     }
 
-    private func updateFlashButton() {
-//        if let cameraController = cameraController {
-//            let bundle = NSBundle(forClass: CameraViewController.self)
-//
-//            if currentRecordingMode == .Photo {
-//                flashButton.hidden = !cameraController.flashAvailable
-//
-//                switch cameraController.flashMode {
-//                case .Auto:
-//                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                case .On:
-//                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                case .Off:
-//                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                }
-//            } else if currentRecordingMode == .Video {
-//                flashButton.hidden = !cameraController.torchAvailable
-//
-//                switch cameraController.torchMode {
-//                case .Auto:
-//                    self.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                case .On:
-//                    self.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                case .Off:
-//                    self.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
-//                }
-//            }
-//        } else {
-//            flashButton.hidden = true
-//        }
-    }
-
     private func resetHideSliderTimer() {
         hideSliderTimer?.invalidate()
         hideSliderTimer = NSTimer.scheduledTimerWithTimeInterval(kShowFilterIntensitySliderInterval, target: self, selector: "hideFilterIntensitySlider:", userInfo: nil, repeats: false)
     }
 
     private func showEditorNavigationControllerWithImage(image: UIImage) {
-//        // swiftlint:disable force_cast
-//        let editorViewController = self.configuration.getClassForReplacedClass(MainEditorViewController.self).init() as! MainEditorViewController
-//        // swiftlint:enable force_cast
-//        editorViewController.configuration = configuration
-//        editorViewController.highResolutionImage = image
-//        if let cameraController = cameraController {
+        // swiftlint:disable force_cast
+        let editorViewController = self.configuration.getClassForReplacedClass(MainEditorViewController.self).init() as! MainEditorViewController
+        // swiftlint:enable force_cast
+        editorViewController.configuration = configuration
+        editorViewController.highResolutionImage = image
+        if let cameraController = cameraController {
 //            editorViewController.initialFilterType = cameraController.effectFilter.filterType
 //            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
-//        }
-//        editorViewController.completionBlock = editorCompletionBlock
-//
-//        let navigationController = NavigationController(rootViewController: editorViewController)
-//        navigationController.navigationBar.barStyle = .Black
-//        navigationController.navigationBar.translucent = false
-//
-//        self.presentViewController(navigationController, animated: true, completion: nil)
+        }
+        editorViewController.completionBlock = editorCompletionBlock
+
+        let navigationController = NavigationController(rootViewController: editorViewController)
+        navigationController.navigationBar.barStyle = .Black
+        navigationController.navigationBar.translucent = false
+
+        self.presentViewController(navigationController, animated: true, completion: nil)
     }
 
     private func saveMovieWithMovieURLToAssets(movieURL: NSURL) {
@@ -1064,10 +1032,10 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     @objc private func changeIntensity(sender: UISlider?) {
-//        if let slider = sender {
-//            resetHideSliderTimer()
+        if let slider = sender {
+            resetHideSliderTimer()
 //            cameraController?.effectFilter.inputIntensity = slider.value
-//        }
+        }
     }
 
     // MARK: - Completion
@@ -1128,24 +1096,6 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 //        }
 //    }
 //
-//    public func cameraController(cameraController: CameraController, didChangeToFlashMode flashMode: AVCaptureFlashMode) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateFlashButton()
-//        }
-//    }
-//
-//    public func cameraController(cameraController: CameraController, didChangeToTorchMode torchMode: AVCaptureTorchMode) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateFlashButton()
-//        }
-//    }
-//
-//    public func cameraControllerDidCompleteSetup(cameraController: CameraController) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateFlashButton()
-//            self.switchCameraButton.hidden = !cameraController.moreThanOneCameraPresent
-//        }
-//    }
 //
 //    public func cameraController(cameraController: CameraController, willSwitchToCameraPosition cameraPosition: AVCaptureDevicePosition) {
 //        dispatch_async(dispatch_get_main_queue()) {

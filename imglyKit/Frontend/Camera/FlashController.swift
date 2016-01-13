@@ -51,7 +51,9 @@ class FlashController: NSObject {
 
         super.init()
 
-        self.flashMode = flashModes[0]
+        if !self.flashModes.contains(flashMode) {
+            flashMode = self.flashModes[0]
+        }
     }
 
     // MARK: - Public API
