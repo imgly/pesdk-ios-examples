@@ -185,6 +185,7 @@
 		2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
+		2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
@@ -433,6 +434,7 @@
 		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2B5728051C28594E0003EF8F /* EffectFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilter.swift; sourceTree = "<group>"; };
 		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
+		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
@@ -815,6 +817,7 @@
 				2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */,
 				2BEBFEB41C400A5D00FAA95C /* CameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */,
+				2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */,
 				2B319B641C45070200515C9D /* FlashController.swift */,
 				2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */,
 				2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */,
@@ -1681,6 +1684,7 @@
 				2BF4D3EA1AF1150500C801B2 /* TextEditorViewController.swift in Sources */,
 				2BF4D50F1AF1155E00C801B2 /* FridgeFilter.swift in Sources */,
 				2BF51F701B41A7E700FFB4C2 /* RecordingMode.swift in Sources */,
+				2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */,
 				2BF4D51A1AF1155E00C801B2 /* LithoFilter.swift in Sources */,
 				099FBD5D1C3EC314000BB333 /* ColorPickerView.swift in Sources */,
 			);

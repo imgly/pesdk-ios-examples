@@ -30,29 +30,145 @@ import GLKit
     public let videoPreviewView: GLKView
 
     private var setupComplete = false
-    private let allowedCameraPositions: [AVCaptureDevicePosition]
-    private let allowedFlashModes: [AVCaptureFlashMode]
-    private let allowedTorchModes: [AVCaptureTorchMode]
+
+    // Options
+
+    /// An array of recording modes (e.g. .Photo, .Video) that you want to support. Passing an empty
+    /// array to this property is ignored. Defaults to all recording modes. Duplicate values result in
+    /// undefined behaviour.
+    public var recordingModes: [RecordingMode] = [.Photo, .Video] {
+        didSet {
+            // Require at least one `RecordingMode`
+            if recordingModes.count == 0 {
+                recordingModes = oldValue
+            }
+
+            if oldValue != recordingModes {
+                // TODO: Update current recording mode (and stop recording) if needed
+            }
+        }
+    }
+
+    /// An array of `RecordingMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `recordingModes` with the corresponding unwrapped values.
+    public var recordingModesAsNSNumbers: [NSNumber] {
+        get {
+            return recordingModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            recordingModes = newValue.flatMap { RecordingMode(rawValue: $0.integerValue) }
+        }
+    }
+
+    /// An array of camera positions (e.g. .Front, .Back) that you want to support. Setting
+    /// this property automatically checks if the device supports all camera positions and updates
+    /// the property accordingly if it does not. Passing an empty array to this property is ignored.
+    /// Defaults to all available camera positions. Duplicate values result in undefined behaviour.
+    public var cameraPositions: [AVCaptureDevicePosition] = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).flatMap {
+        ($0 as? AVCaptureDevice)?.position
+        } {
+        didSet {
+            // Require at least one `AVCaptureDevicePosition`
+            if cameraPositions.count == 0 {
+                cameraPositions = oldValue
+            }
+
+            // Only set `AVCaptureDevicePosition`s which are actually supported by the device
+            if oldValue != cameraPositions {
+                let availableCameraPositions = AVCaptureDevice.devicesWithMediaType(AVMediaTypeVideo).flatMap {
+                    ($0 as? AVCaptureDevice)?.position
+                }
+
+                cameraPositions = cameraPositions.filter { availableCameraPositions.contains($0) }
+
+                // TODO: Update current camera position if needed
+            }
+        }
+    }
+
+    /// An array of `AVCaptureDevicePosition` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `cameraPositions` with the corresponding unwrapped values.
+    public var cameraPositionsAsNSNumbers: [NSNumber] {
+        get {
+            return cameraPositions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            cameraPositions = newValue.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
+        }
+    }
+
+    /// An array of flash modes (e.g. .Auto, .On, .Off) that you want to support. Passing an empt
+    /// array to this property is ignored. Often not all modes are supported by each camera on a
+    /// device, in which case only the supported flash modes are used.
+    /// Defaults to all flash modes. Duplicate values result in undefined behaviour.
+    public var flashModes: [AVCaptureFlashMode] = [.Auto, .On, .Off] {
+        didSet {
+            // Require at least one `AVCaptureFlashMode`
+            if flashModes.count == 0 {
+                flashModes = oldValue
+            }
+
+            if oldValue != flashModes {
+                flashController?.flashModes = flashModes
+            }
+        }
+    }
+
+    /// An array of `AVCaptureFlashMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `flashModes` with the corresponding unwrapped values.
+    public var flashModesAsNSNumbers: [NSNumber] {
+        get {
+            return flashModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            flashModes = newValue.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
+        }
+    }
+
+    /// An array of torch modes (e.g. .Auto, .On, .Off) that you want to support. Passing an empty
+    /// array to this property is ignored. Often not all modes are supported by each camera on a
+    /// device, in which case only the supported torch modes are used.
+    /// Defaults to all torch modes. Duplicate values result in undefined behaviour.
+    public var torchModes: [AVCaptureTorchMode] = [.Auto, .On, .Off] {
+        didSet {
+            // Require at least one `AVCaptureTorchMode`
+            if torchModes.count == 0 {
+                torchModes = oldValue
+            }
+
+            if oldValue != torchModes {
+                torchController?.torchModes = torchModes
+            }
+        }
+    }
+
+    /// An array of `AVCaptureTorchMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `torchModes` with the corresponding unwrapped values.
+    public var torchModesAsNSNumbers: [NSNumber] {
+        get {
+            return torchModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            torchModes = newValue.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
+        }
+    }
 
     private let sampleBufferController: SampleBufferController
+    private let deviceOrientationController = DeviceOrientationController()
     private var flashController: FlashController?
     private var torchController: TorchController?
 
     // MARK: - Initializer
 
-    public convenience init(allowedCameraPositions: [NSNumber], allowedFlashModes: [NSNumber], allowedTorchModes: [NSNumber]) {
-        let cameraPositions = allowedCameraPositions.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
-        let flashModes = allowedFlashModes.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
-        let torchModes = allowedTorchModes.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
-
-        self.init(allowedCameraPositions: cameraPositions, allowedFlashModes: flashModes, allowedTorchModes: torchModes)
-    }
-
-    public init(allowedCameraPositions: [AVCaptureDevicePosition], allowedFlashModes: [AVCaptureFlashMode], allowedTorchModes: [AVCaptureTorchMode]) {
-        self.allowedCameraPositions = allowedCameraPositions.count == 0 ? [.Back, .Front] : allowedCameraPositions
-        self.allowedFlashModes = allowedFlashModes
-        self.allowedTorchModes = allowedTorchModes
-
+    public override init() {
         guard let glContext = EAGLContext(API: .OpenGLES2) else {
             fatalError("Unable to create EAGLContext")
         }
@@ -109,33 +225,29 @@ import GLKit
     // MARK: - Setup
 
     public func setup() throws {
-        try setupWithInitialCameraPosition(allowedCameraPositions[0], initialSessionPreset: AVCaptureSessionPresetPhoto)
+        try setupWithCompletion(nil)
     }
 
-    public func setupWithInitialCameraPosition(initialCameraPosition: AVCaptureDevicePosition, initialSessionPreset: String) throws {
-        try setupWithInitialCameraPosition(initialCameraPosition, initialSessionPreset: initialSessionPreset, completion: nil)
-    }
-
-    public func setupWithInitialCameraPosition(initialCameraPosition: AVCaptureDevicePosition, initialSessionPreset: String, completion: (() -> Void)?) throws {
+    public func setupWithCompletion(completion: (() -> Void)?) throws {
         if setupComplete {
             throw CameraControllerError.MultipleCallsToSetup
         }
 
-        guard let videoDevice = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: initialCameraPosition) else {
+        guard let videoDevice = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPositions[0]) else {
             throw CameraControllerError.UnableToInitializeCaptureDevice
         }
 
         let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         self.videoDeviceInput = videoDeviceInput
 
-        flashController = FlashController(allowedFlashModes: allowedFlashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
-        torchController = TorchController(allowedTorchModes: allowedTorchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        flashController = FlashController(flashModes: flashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        torchController = TorchController(torchModes: torchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
 
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
             self.addVideoDeviceInput(videoDeviceInput)
             self.addVideoDataOutput(self.videoDataOutput)
-            self.changeSessionPreset(initialSessionPreset)
+            self.changeSessionPreset(self.recordingModes[0].sessionPreset)
             self.session.commitConfiguration()
 
             dispatch_async(dispatch_get_main_queue()) {
@@ -191,6 +303,7 @@ import GLKit
             return
         }
 
+        deviceOrientationController.start()
         videoPreviewView.bindDrawable()
 
         dispatch_async(sessionQueue) {
@@ -200,6 +313,8 @@ import GLKit
     }
 
     public func stopCamera() {
+        deviceOrientationController.stop()
+
         dispatch_async(sessionQueue) {
             self.session.stopRunning()
             self.removeObservers()

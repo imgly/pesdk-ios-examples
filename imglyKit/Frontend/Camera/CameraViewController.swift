@@ -72,23 +72,28 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     public let filtersDataSource: FiltersDataSourceProtocol
 
     /// Enable/Disable filter intensity slider.
-    public var showFilterIntensitySlider: Bool
+    public let showFilterIntensitySlider: Bool
 
     /// Allowed camera positions. Defaults to all available positions
     /// and falls back to supported position if only one exists.
-    public var allowedCameraPositions: [AVCaptureDevicePosition]
+    public let allowedCameraPositions: [AVCaptureDevicePosition]
 
     /// Allowed flash modes. Defaults to all available modes. Duplicate
     /// values are not removed and may lead to unexpected behaviour. The
     /// first option is selected on launch, although the view controller
     /// tries to match the previous torch mode on record mode changes.
-    public var allowedFlashModes: [AVCaptureFlashMode]
+    public let allowedFlashModes: [AVCaptureFlashMode]
 
     /// Allowed torch modes. Defaults to all available modes. Duplicate
     /// values are not removed and may lead to unexpected behaviour. The
     /// first option is selected on launch, although the view controller
     /// tries to match the previous flash mode on record mode changes.
-    public var allowedTorchModes: [AVCaptureTorchMode]
+    public let allowedTorchModes: [AVCaptureTorchMode]
+
+    /// Supported recording modes (e.g. .Photo or .Video). Defaults to all available modes.
+    /// Duplicate values are not removed and may lead to unexpected behaviour. The first option is
+    /// selected on launch. To set this option from Obj-C see `allowedRecordingModesAsNSNumbers`.
+    public let allowedRecordingModes: [RecordingMode]
 
     convenience override init() {
         self.init(builder: CameraViewControllerOptionsBuilder())
@@ -114,6 +119,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         allowedCameraPositions = builder.allowedCameraPositions
         allowedFlashModes = builder.allowedFlashModes
         allowedTorchModes = builder.allowedTorchModes
+        allowedRecordingModes = builder.allowedRecordingModes.count > 0 ? builder.allowedRecordingModes : [.Photo, .Video]
         super.init()
     }
 }
@@ -174,47 +180,77 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     /// Allowed camera positions. Defaults to all available positions
     /// and falls back to supported position if only one exists. To set
-    /// this option from Objc-C see `allowedCameraPositionsAsNSNumbers`.
+    /// this option from Obj-C see `allowedCameraPositionsAsNSNumbers`.
     public var allowedCameraPositions: [AVCaptureDevicePosition] = [ .Back, .Front ]
 
     /// Allowed flash modes. Defaults to all available modes. Duplicate
     /// values are not removed and may lead to unexpected behaviour. The
     /// first option is selected on launch, although the view controller
     /// tries to match the previous torch mode on record mode changes.
-    /// To set  this option from Objc-C see `allowedFlashModesAsNSNumbers`.
+    /// To set this option from Obj-C see `allowedFlashModesAsNSNumbers`.
     public var allowedFlashModes: [AVCaptureFlashMode] = [ .Auto, .On, .Off ]
 
     /// Allowed torch modes. Defaults to all available modes. Duplicate
     /// values are not removed and may lead to unexpected behaviour. The
     /// first option is selected on launch, although the view controller
     /// tries to match the previous flash mode on record mode changes.
-    /// To set  this option from Objc-C see `allowedTorchModesAsNSNumbers`.
+    /// To set this option from Obj-C see `allowedTorchModesAsNSNumbers`.
     public var allowedTorchModes: [AVCaptureTorchMode] = [ .Auto, .On, .Off ]
+
+    /// Supported recording modes (e.g. .Photo or .Video). Defaults to all available modes.
+    /// Duplicate values are not removed and may lead to unexpected behaviour. The first option is
+    /// selected on launch. To set this option from Obj-C see `allowedRecordingModesAsNSNumbers`.
+    public var allowedRecordingModes: [RecordingMode] = [ .Photo, .Video ]
 
     /// An array of `AVCaptureDevicePosition` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedCameraPositions` with the corresponding unwrapped values.
-    public var allowedCameraPositionsAsNSNumbers: [NSNumber] = [ AVCaptureDevicePosition.Back, .Front ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedCameraPositions = allowedCameraPositionsAsNSNumbers.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
+    public var allowedCameraPositionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedCameraPositions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedCameraPositions = newValue.flatMap { AVCaptureDevicePosition(rawValue: $0.integerValue) }
         }
     }
 
     /// An array of `AVCaptureFlashMode` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedFlashModes` with the corresponding unwrapped values.
-    public var allowedFlashModesAsNSNumbers: [NSNumber] = [ AVCaptureFlashMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedFlashModes = allowedFlashModesAsNSNumbers.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
+    public var allowedFlashModesAsNSNumbers: [NSNumber] {
+        get {
+            return allowedFlashModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedFlashModes = newValue.flatMap { AVCaptureFlashMode(rawValue: $0.integerValue) }
         }
     }
 
     /// An array of `AVCaptureTorchMode` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedFlashModes` with the corresponding unwrapped values.
-    public var allowedTorchModesAsNSNumbers: [NSNumber] = [ AVCaptureTorchMode.Auto, .On, .Off ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedTorchModes = allowedTorchModesAsNSNumbers.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
+    public var allowedTorchModesAsNSNumbers: [NSNumber] {
+        get {
+            return allowedTorchModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedTorchModes = newValue.flatMap { AVCaptureTorchMode(rawValue: $0.integerValue) }
+        }
+    }
+
+    /// An array of `RecordingMode` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedRecordingModes` with the corresponding unwrapped values.
+    public var allowedRecordingModesAsNSNumbers: [NSNumber] {
+        get {
+            return allowedRecordingModes.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedRecordingModes = newValue.flatMap { RecordingMode(rawValue: $0.integerValue) }
         }
     }
 }
@@ -240,45 +276,21 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     // MARK: - Initializers
 
-    public convenience init(configuration: Configuration = Configuration()) {
-        self.init(recordingModes: [.Photo, .Video], configuration: configuration)
-    }
-
-    /**
-    This initializer should only be used in Objective-C. It expects an NSArray of NSNumbers that wrap
-    the integer value of `RecordingMode`.
-
-    - parameter recordingModes: The supported recording modes.
-    - parameter configuration:  The configuration object.
-
-    - returns: An initialized and configured instance of `CameraViewController`
-    */
-    public convenience init(recordingModes: [NSNumber], configuration: Configuration = Configuration()) {
-        let modes = recordingModes.flatMap { RecordingMode(rawValue: $0.integerValue) }
-        self.init(recordingModes: modes, configuration: configuration)
-    }
-
      /**
      Initializes a camera view controller using the given parameters.
 
-     - parameter recordingModes: An array of recording modes that you want to support.
      - parameter configuration:  An `Configuration` object.
 
      - returns: And initialized `CameraViewController`.
 
      - discussion: If you use the standard `init` method or `initWithCoder` to initialize a `CameraViewController` object, a camera view controller with all supported recording modes and the default configuration is created.
      */
-    public init(recordingModes: [RecordingMode], configuration: Configuration = Configuration()) {
-        assert(recordingModes.count > 0, "You need to set at least one recording mode.")
-        self.recordingModes = recordingModes
-        self.currentRecordingMode = recordingModes.first!
+    public init(configuration: Configuration = Configuration()) {
         self.configuration = configuration
         super.init(nibName: nil, bundle: nil)
     }
 
     required public init?(coder aDecoder: NSCoder) {
-        recordingModes = [.Photo, .Video]
-        currentRecordingMode = recordingModes.first!
         self.configuration = Configuration()
         super.init(coder: aDecoder)
     }
@@ -418,18 +430,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         return recognizer
     }()
 
-    public let recordingModes: [RecordingMode]
     private var recordingModeSelectionButtons = [UIButton]()
-
-    public private(set) var currentRecordingMode: RecordingMode {
-        didSet {
-            if currentRecordingMode == oldValue {
-                return
-            }
-
-//            self.cameraController?.switchToRecordingMode(self.currentRecordingMode)
-        }
-    }
 
     private var hideSliderTimer: NSTimer?
 
@@ -472,7 +473,6 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         configureViewConstraints()
         configureFilterSelectionController()
         configureCameraController()
-//        cameraController?.switchToRecordingMode(currentRecordingMode, animated: false)
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -534,11 +534,11 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     // MARK: - Configuration
 
     private func configureRecordingModeSwitching() {
-        if recordingModes.count > 1 {
+        if configuration.cameraViewControllerOptions.allowedRecordingModes.count > 1 {
             view.addGestureRecognizer(swipeLeftGestureRecognizer)
             view.addGestureRecognizer(swipeRightGestureRecognizer)
 
-            recordingModeSelectionButtons = recordingModes.map { $0.selectionButton }
+            recordingModeSelectionButtons = configuration.cameraViewControllerOptions.allowedRecordingModes.map { $0.selectionButton }
 
             for recordingModeSelectionButton in recordingModeSelectionButtons {
                 recordingModeSelectionButton.addTarget(self, action: "toggleMode:", forControlEvents: .TouchUpInside)
@@ -575,7 +575,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
         for recordingModeSelectionButton in recordingModeSelectionButtons {
             bottomControlsView.addSubview(recordingModeSelectionButton)
-            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, recordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
+            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, configuration.cameraViewControllerOptions.allowedRecordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
         }
 
         backgroundContainerView.addSubview(filterIntensitySlider)
@@ -680,11 +680,11 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         // Needed so that the framebuffer can bind to OpenGL ES
 //        view.layoutIfNeeded()
 
-        let cameraController = CameraController(
-            allowedCameraPositions: configuration.cameraViewControllerOptions.allowedCameraPositions,
-            allowedFlashModes: configuration.cameraViewControllerOptions.allowedFlashModes,
-            allowedTorchModes: configuration.cameraViewControllerOptions.allowedTorchModes
-        )
+        let cameraController = CameraController()
+        cameraController.recordingModes = configuration.cameraViewControllerOptions.allowedRecordingModes
+        cameraController.cameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
+        cameraController.flashModes = configuration.cameraViewControllerOptions.allowedFlashModes
+        cameraController.torchModes = configuration.cameraViewControllerOptions.allowedTorchModes
 
         do {
             try cameraController.setup()
@@ -905,32 +905,34 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     // MARK: - Targets
 
     @objc private func toggleMode(sender: AnyObject?) {
-        if let gestureRecognizer = sender as? UISwipeGestureRecognizer {
-            if gestureRecognizer.direction == .Left {
-                let currentIndex = recordingModes.indexOf(currentRecordingMode)
-
-                if let currentIndex = currentIndex where currentIndex < recordingModes.count - 1 {
-                    currentRecordingMode = recordingModes[currentIndex + 1]
-                    return
-                }
-            } else if gestureRecognizer.direction == .Right {
-                let currentIndex = recordingModes.indexOf(currentRecordingMode)
-
-                if let currentIndex = currentIndex where currentIndex > 0 {
-                    currentRecordingMode = recordingModes[currentIndex - 1]
-                    return
-                }
-            }
-        }
-
-        if let button = sender as? UIButton {
-            let buttonIndex = recordingModeSelectionButtons.indexOf(button)
-
-            if let buttonIndex = buttonIndex {
-                currentRecordingMode = recordingModes[buttonIndex]
-                return
-            }
-        }
+//        let recordingModes = configuration.cameraViewControllerOptions.allowedRecordingModes
+//
+//        if let gestureRecognizer = sender as? UISwipeGestureRecognizer {
+//            if gestureRecognizer.direction == .Left {
+//                let currentIndex = recordingModes.indexOf(currentRecordingMode)
+//
+//                if let currentIndex = currentIndex where currentIndex < recordingModes.count - 1 {
+//                    currentRecordingMode = recordingModes[currentIndex + 1]
+//                    return
+//                }
+//            } else if gestureRecognizer.direction == .Right {
+//                let currentIndex = recordingModes.indexOf(currentRecordingMode)
+//
+//                if let currentIndex = currentIndex where currentIndex > 0 {
+//                    currentRecordingMode = recordingModes[currentIndex - 1]
+//                    return
+//                }
+//            }
+//        }
+//
+//        if let button = sender as? UIButton {
+//            let buttonIndex = recordingModeSelectionButtons.indexOf(button)
+//
+//            if let buttonIndex = buttonIndex {
+//                currentRecordingMode = recordingModes[buttonIndex]
+//                return
+//            }
+//        }
     }
 
     @objc private func hideFilterIntensitySlider(timer: NSTimer?) {
