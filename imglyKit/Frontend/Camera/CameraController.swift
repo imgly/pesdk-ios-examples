@@ -33,7 +33,23 @@ private var cameraControllerContext = 0
 
     private var setupComplete = false
 
+    public var currentRecordingMode: RecordingMode {
+        if session.sessionPreset == AVCaptureSessionPresetPhoto {
+            return .Photo
+        } else {
+            return .Video
+        }
+    }
+
     // Handlers
+
+    /// Called when the list of available recording modes was changed.
+    public var availableRecordingModesChangedHandler: (() -> Void)? {
+        didSet {
+            // Call immediately for initial value
+            availableRecordingModesChangedHandler?()
+        }
+    }
 
     /// Called when the list of available camera positions was changed.
     public var availableCameraPositionsChangedHandler: (() -> Void)? {
@@ -66,7 +82,17 @@ private var cameraControllerContext = 0
             }
 
             if oldValue != recordingModes {
-                // TODO: Update current recording mode (and stop recording) if needed
+                // TODO: Stop recording if needed
+
+                if !recordingModes.contains(currentRecordingMode) {
+                    dispatch_async(sessionQueue) {
+                        self.session.beginConfiguration()
+                        self.changeSessionPreset(self.recordingModes[0].sessionPreset)
+                        self.session.commitConfiguration()
+                    }
+                }
+
+                availableRecordingModesChangedHandler?()
             }
         }
     }
@@ -104,9 +130,7 @@ private var cameraControllerContext = 0
                 }
 
                 cameraPositions = cameraPositions.filter { availableCameraPositions.contains($0) }
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.availableCameraPositionsChangedHandler?()
-                }
+                availableCameraPositionsChangedHandler?()
 
                 // Update current camera position if needed
                 if let currentCameraPosition = videoDeviceInput?.device.position where setupComplete && !cameraPositions.contains(currentCameraPosition) {
@@ -387,6 +411,10 @@ private var cameraControllerContext = 0
 
     // MARK: - Starting / Stopping
 
+    /**
+    Starts the camera. `setup()` __must__ be called before calling this method, otherwise this method does
+    nothing. You should also add the `videoPreviewView` to your view hierachy to see the camera output.
+    */
     public func startCamera() {
         if !setupComplete {
             print("You must call setup() before calling startCamera()")
@@ -402,6 +430,9 @@ private var cameraControllerContext = 0
         }
     }
 
+    /**
+    Stops the camera.
+    */
     public func stopCamera() {
         deviceOrientationController.stop()
 
@@ -432,10 +463,18 @@ private var cameraControllerContext = 0
         return nextPosition
     }
 
+    /**
+     Switches the camera to the other position (e.g. `.Back` -> `.Front` and `.Front` -> `.Back`)
+     */
     public func toggleCameraPosition() {
         switchToCameraAtPosition(nextCameraPositionForCurrentPosition(videoDeviceInput?.device.position))
     }
 
+    /**
+    Switches the camera to the desired position (if available).
+
+    - parameter position: The position to switch to.
+    */
     public func switchToCameraAtPosition(position: AVCaptureDevicePosition) {
         if !setupComplete {
             print("You must call setup() before calling switchToCameraAtPosition(:)")

@@ -547,7 +547,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func configureViewHierarchy() {
-        /// Handle custom colors
+        // Handle custom colors
         view.backgroundColor = currentBackgroundColor
 
         view.addSubview(backgroundContainerView)
