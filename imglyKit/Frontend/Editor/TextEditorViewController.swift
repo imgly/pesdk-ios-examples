@@ -143,6 +143,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var distanceAtPinchBegin = CGFloat(0)
     private var draggedView: UILabel?
     private var tempTextCopy = [Filter]()
+    private var createNewText = false
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -259,7 +260,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureBottomButtons()
         configureAddButton()
         configureDeleteButton()
-        registerForKeyboardNotifications()
         configureGestureRecognizers()
         backupTexts()
         fixedFilterStack.textFilters.removeAll()
@@ -346,7 +346,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             views = viewsByAddingButton(bringToFrontButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(bringToFrontButton, visualFormatString: visualFormatString)
         }
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 90 ], views: views))
     }
 
     private func configureAddButton() {
@@ -393,7 +393,6 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func configureTextLabel() {
         textClipView.addSubview(textLabel)
-        textLabel.alpha = 0.0
         textLabel.backgroundColor = UIColor(white:0.0, alpha:0.0)
         textLabel.textColor = self.textColor
         textLabel.textAlignment = NSTextAlignment.Center
@@ -474,11 +473,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(blurredContainerView)
     }
 
-
-    private func registerForKeyboardNotifications() {
-    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
-    }
-
     private func configureGestureRecognizers() {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         panGestureRecognizer.minimumNumberOfTouches = 1
@@ -498,11 +492,16 @@ private let kMinimumFontSize = CGFloat(12.0)
         let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
         textClipView.addGestureRecognizer(rotationGestureRecognizer)
+
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        longPressRecognizer.minimumPressDuration = 2
+        textClipView.addGestureRecognizer(longPressRecognizer)
     }
 
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
+        createNewText = true
         configureTextField()
         textField.text = ""
         textField.becomeFirstResponder()
@@ -520,6 +519,11 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = false
+        configureColorPickerView()
+    }
+
+    @objc private func setBackgroundColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
         configureColorPickerView()
     }
@@ -630,15 +634,21 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
-    // MARK: - Notification Handling
-/*
-    @objc private func keyboardWillChangeFrame(notification: NSNotification) {
-        if let frameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardFrame = view.convertRect(frameValue.CGRectValue(), fromView: nil)
-            textField.frame = CGRect(x: 0, y: view.frame.size.height - keyboardFrame.size.height - kTextFieldHeight, width: view.frame.size.width, height: kTextFieldHeight)
+    @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
+        let location = recognizer.locationInView(textClipView)
+        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        if recognizer.state == .Began {
+            if let draggedView = draggedView {
+                textLabel = draggedView
+                if textLabel.layer.borderWidth > 0 {
+                    createNewText = false
+                    configureTextField()
+                    textField.text = textLabel.text
+                    textField.becomeFirstResponder()
+                }
+            }
         }
-    }*/
-
+    }
     // MARK: - Helpers
 
     private func hideBlurredContainer() {
@@ -649,12 +659,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.navigationItem.rightBarButtonItem?.enabled = true
                 self.blurredContainerView.removeFromSuperview()
         })
-    }
-
-    private func showTextLabel() {
-        UIView.animateWithDuration(0.2) {
-            self.textLabel.alpha = 1.0
-        }
     }
 
     private func calculateInitialFontSize() {
@@ -771,13 +775,17 @@ extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideBlurredContainer()
-        unSelectTextLabel(textLabel)
-        textLabel = UILabel()
-        configureTextLabel()
-        textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if createNewText {
+            unSelectTextLabel(textLabel)
+            textLabel = UILabel()
+            configureTextLabel()
+            textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            setInitialTextLabelSize()
+        } else {
+            textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+            textLabel.sizeToFit()
+        }
         selectTextLabel(textLabel)
-        setInitialTextLabelSize()
-        showTextLabel()
         navigationItem.rightBarButtonItem?.enabled = true
         return true
     }
