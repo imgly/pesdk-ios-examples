@@ -212,21 +212,14 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var textField: UITextField = {
         let textField = UITextField()
         textField.delegate = self
-        textField.backgroundColor = UIColor(white:0.0, alpha:0.5)
         textField.text = ""
         textField.textColor = self.textColor
         textField.clipsToBounds = false
-        textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Center
+        textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
         textField.returnKeyType = UIReturnKeyType.Done
+        textField.translatesAutoresizingMaskIntoConstraints = false
         self.options.textFieldConfigurationClosure(textField)
         return textField
-    }()
-
-    public private(set) lazy var fontSelectorContainerView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .Dark)
-        let view = UIVisualEffectView(effect: blurEffect)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
     }()
 
     public private(set) lazy var fontSelectorView: FontSelectorView = {
@@ -237,13 +230,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         return selector
     }()
 
-    public private(set) lazy var colorPickerContainerView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .Dark)
-        let view = UIVisualEffectView(effect: blurEffect)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-
     public private(set) lazy var colorPickerView: ColorPickerView = {
         let selector = ColorPickerView()
         selector.translatesAutoresizingMaskIntoConstraints = false
@@ -251,6 +237,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     private var textLabel = UILabel()
+
+    private var blurredContainerView = UIVisualEffectView()
 
     // MARK: - Initializers
 
@@ -268,7 +256,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         fontName = options.defaultFontName
 
         configureTextClipView()
-        configureTextField()
         configureBottomButtons()
         configureAddButton()
         configureDeleteButton()
@@ -404,11 +391,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(textClipView)
     }
 
-    private func configureTextField() {
-        view.addSubview(textField)
-        textField.frame = CGRect(x: 0, y: view.bounds.size.height, width: view.bounds.size.width, height: kTextFieldHeight)
-    }
-
     private func configureTextLabel() {
         textClipView.addSubview(textLabel)
         textLabel.alpha = 0.0
@@ -421,51 +403,80 @@ private let kMinimumFontSize = CGFloat(12.0)
         textLabel.transform = CGAffineTransformRotate(textLabel.transform, CGFloat(M_PI) * 2.0)
     }
 
-    private func configureFontSelectorView() {
-        view.addSubview(fontSelectorContainerView)
-        fontSelectorContainerView.contentView.addSubview(fontSelectorView)
+    private func configureTextField() {
+        configureBlurredContainerView()
+        blurredContainerView.contentView.addSubview(textField)
 
         let views = [
-            "fontSelectorContainerView" : fontSelectorContainerView,
+            "blurredContainerView" : blurredContainerView,
+            "textField" : textField
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
+
+        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[textField]-20-|", options: [], metrics: nil, views: views))
+        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[textField]|", options: [], metrics: nil, views: views))
+
+        blurredContainerView.alpha = 0.0
+        UIView.animateWithDuration(0.3) {
+            self.blurredContainerView.alpha = 1.0
+        }
+}
+
+    private func configureFontSelectorView() {
+        configureBlurredContainerView()
+        blurredContainerView.contentView.addSubview(fontSelectorView)
+
+        let views = [
+            "blurredContainerView" : blurredContainerView,
             "fontSelectorView" : fontSelectorView
         ]
 
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorContainerView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
 
-        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
-        fontSelectorContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: [], metrics: nil, views: views))
+        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
+        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: [], metrics: nil, views: views))
 
-        fontSelectorContainerView.alpha = 0.0
+        blurredContainerView.alpha = 0.0
         UIView.animateWithDuration(0.3) {
-            self.fontSelectorContainerView.alpha = 1.0
+            self.blurredContainerView.alpha = 1.0
         }
     }
 
     private func configureColorPickerView() {
-        view.addSubview(colorPickerContainerView)
-        colorPickerContainerView.contentView.addSubview(colorPickerView)
+        configureBlurredContainerView()
+        blurredContainerView.contentView.addSubview(colorPickerView)
         colorPickerView.initialColor = textLabel.textColor
         colorPickerView.pickerDelegate = self
 
         let views = [
-            "colorPickerContainerView" : colorPickerContainerView,
+            "blurredContainerView" : blurredContainerView,
             "colorPickerView" : colorPickerView
         ]
 
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerContainerView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
 
-        colorPickerContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        colorPickerContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerView]|", options: [], metrics: nil, views: views))
-        colorPickerContainerView.alpha = 0.0
+        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerView]|", options: [], metrics: nil, views: views))
+        blurredContainerView.alpha = 0.0
         UIView.animateWithDuration(0.3) {
-            self.colorPickerContainerView.alpha = 1.0
+            self.blurredContainerView.alpha = 1.0
         }
     }
 
+    private func configureBlurredContainerView() {
+        let blurEffect = UIBlurEffect(style: .Dark)
+        blurredContainerView = UIVisualEffectView(effect: blurEffect)
+        blurredContainerView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(blurredContainerView)
+    }
+
+
     private func registerForKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+    //    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
 
     private func configureGestureRecognizers() {
@@ -492,6 +503,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
+        configureTextField()
         textField.text = ""
         textField.becomeFirstResponder()
     }
@@ -619,20 +631,24 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     // MARK: - Notification Handling
-
+/*
     @objc private func keyboardWillChangeFrame(notification: NSNotification) {
         if let frameValue = notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardFrame = view.convertRect(frameValue.CGRectValue(), fromView: nil)
             textField.frame = CGRect(x: 0, y: view.frame.size.height - keyboardFrame.size.height - kTextFieldHeight, width: view.frame.size.width, height: kTextFieldHeight)
         }
-    }
+    }*/
 
     // MARK: - Helpers
 
-    private func hideTextField() {
-        UIView.animateWithDuration(0.2) {
-            self.textField.alpha = 0.0
-        }
+    private func hideBlurredContainer() {
+        UIView.animateWithDuration(0.3, animations: {
+            self.blurredContainerView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+                self.navigationItem.rightBarButtonItem?.enabled = true
+                self.blurredContainerView.removeFromSuperview()
+        })
     }
 
     private func showTextLabel() {
@@ -684,7 +700,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         label.layer.borderWidth = 0
     }
 
-    // MARK: - sticker object restore
+    // MARK: - text object restore
 
     private func rerenderPreviewWithoutText() {
         updatePreviewImageWithCompletion { () -> (Void) in
@@ -737,6 +753,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 }
 
+// MARK:- extensions
+
 extension TextEditorViewController: TextColorSelectorViewDelegate {
     public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {
         textColor = color
@@ -752,7 +770,7 @@ extension TextEditorViewController: UITextFieldDelegate {
 
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        hideTextField()
+        hideBlurredContainer()
         unSelectTextLabel(textLabel)
         textLabel = UILabel()
         configureTextLabel()
@@ -772,14 +790,7 @@ extension TextEditorViewController: UITextFieldDelegate {
 
 extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
-        UIView.animateWithDuration(0.3, animations: {
-            self.fontSelectorContainerView.alpha = 0.0
-            }, completion: {
-                (value: Bool) in
-                self.navigationItem.rightBarButtonItem?.enabled = true
-                self.fontSelectorContainerView.removeFromSuperview()
-        })
-
+        hideBlurredContainer()
         self.fontName = fontName
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
@@ -800,20 +811,10 @@ extension TextEditorViewController: UIGestureRecognizerDelegate {
 extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         textLabel.textColor = color
-        hideColorPicker()
+        hideBlurredContainer()
     }
 
     public func canceledColorPicking(colorPickerView: ColorPickerView) {
-        hideColorPicker()
-    }
-
-    private func hideColorPicker() {
-        UIView.animateWithDuration(0.3, animations: {
-            self.colorPickerContainerView.alpha = 0.0
-            }, completion: {
-                (value: Bool) in
-                self.navigationItem.rightBarButtonItem?.enabled = true
-                self.colorPickerContainerView.removeFromSuperview()
-        })
+        hideBlurredContainer()
     }
 }
