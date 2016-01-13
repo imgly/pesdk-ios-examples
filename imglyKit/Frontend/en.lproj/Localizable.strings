@@ -55,6 +55,12 @@
 "crop-editor.4-to-3" = "4:3";
 "crop-editor.16-to-9" = "16:9";
 
+// Crop Editor
+"text-editor.font" = "Font";
+"text-editor.text-color" = "Text";
+"text-editor.background-color" = "Back";
+"text-editor.bring-to-front" = "Bring to front";
+
 // Brightness Editor
 "brightness-editor.title" = "Brightness";
 
@@ -66,3 +72,7 @@
 
 // Text Editor
 "text-editor.title" = "Text";
+
+// Color Picker View
+"color-picker-view-ok-button.title" = "Ok";
+"color-picker-view-cancel-button.title" = "Cancel";

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */; };
+		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
+		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
+		0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311E1C3FF908000135B8 /* HuePickerView.swift */; };
+		098331211C400A72000135B8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331201C400A72000135B8 /* UIColorExtension.swift */; };
+		099FBD5D1C3EC314000BB333 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */; };
 		2B044DDC1C3E5E4500A73AE6 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1ADA1D1B19C86300C98522 /* imglyKit.framework */; };
 		2B044DE31C3E5F6B00A73AE6 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
 		2B044DF11C3EAE3100A73AE6 /* SDKVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */; };
@@ -401,6 +407,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturationBrightnessPickerView.swift; sourceTree = "<group>"; };
+		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
+		0983311E1C3FF908000135B8 /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
+		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
 		2B044DD71C3E5E4500A73AE6 /* imglyKit OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKVersion.swift; sourceTree = "<group>"; };
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
@@ -706,6 +717,7 @@
 				2B1ADA0F1B19C3F300C98522 /* InstanceFactoryExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
+				098331201C400A72000135B8 /* UIColorExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -766,6 +778,7 @@
 				2B1ADA0B1B19C33600C98522 /* Frontend */,
 				2BF4D3891AF1139600C801B2 /* imglyKit.h */,
 				2BF4D3871AF1139600C801B2 /* Supporting Files */,
+				0983311B1C3FEB36000135B8 /* TypeAliases.swift */,
 			);
 			path = imglyKit;
 			sourceTree = "<group>";
@@ -799,6 +812,7 @@
 				2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */,
 				2BF4D3B11AF1150400C801B2 /* CircleGradientView.swift */,
 				2BF4D3B21AF1150400C801B2 /* ColorButton.swift */,
+				099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */,
 				2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */,
 				2BF4D3B41AF1150400C801B2 /* CropEditorViewController.swift */,
 				2BF4D3B51AF1150400C801B2 /* CropRectComponent.swift */,
@@ -809,6 +823,7 @@
 				2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */,
 				2BF4D3BB1AF1150400C801B2 /* FontSelectorView.swift */,
 				2BF4D3BC1AF1150400C801B2 /* GradientViewDelegate.swift */,
+				0983311E1C3FF908000135B8 /* HuePickerView.swift */,
 				2BF4D3BD1AF1150400C801B2 /* ImageCaptionButton.swift */,
 				2BF4D3BE1AF1150400C801B2 /* ImageCaptionCollectionViewCell.swift */,
 				2BF4D3AD1AF1150400C801B2 /* MainEditorAction.swift */,
@@ -816,6 +831,7 @@
 				2BF4D3C01AF1150400C801B2 /* NavigationAnimationController.swift */,
 				2BF4D3C11AF1150400C801B2 /* NavigationController.swift */,
 				2BF4D3C21AF1150400C801B2 /* OrientationEditorViewController.swift */,
+				098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */,
 				2BF4D3C31AF1150400C801B2 /* SaturationEditorViewController.swift */,
 				2BF4D3C41AF1150400C801B2 /* SliderEditorViewController.swift */,
 				2BF4D3C51AF1150400C801B2 /* Sticker.swift */,
@@ -1462,6 +1478,7 @@
 				2B1ADAB21B19C8EE00C98522 /* FixieFilter.swift in Sources */,
 				2B1ADAD51B19C8EE00C98522 /* SinFilter.swift in Sources */,
 				2B1ADAD11B19C8EE00C98522 /* ResponseFilter.swift in Sources */,
+				0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */,
 				2B1ADAC01B19C8EE00C98522 /* Lomo100Filter.swift in Sources */,
 				2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */,
 				2B1ADABD1B19C8EE00C98522 /* KeenFilter.swift in Sources */,
@@ -1520,6 +1537,7 @@
 				2BF4D3AC1AF114FA00C801B2 /* CameraViewController.swift in Sources */,
 				2BF4D52B1AF1155E00C801B2 /* QuoziFilter.swift in Sources */,
 				2BF4D4AB1AF1154B00C801B2 /* EnhancementFilter.swift in Sources */,
+				0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */,
 				2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */,
 				2BF4D3E51AF1150500C801B2 /* StickerCollectionViewCell.swift in Sources */,
 				2BF4D3E71AF1150500C801B2 /* StickersEditorViewController.swift in Sources */,
@@ -1580,7 +1598,9 @@
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
 				2BF4D3D11AF1150500C801B2 /* ColorButton.swift in Sources */,
+				098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D5361AF1155E00C801B2 /* TenderFilter.swift in Sources */,
+				098331211C400A72000135B8 /* UIColorExtension.swift in Sources */,
 				2BF4D51D1AF1155E00C801B2 /* LucidFilter.swift in Sources */,
 				2BF4D5371AF1155E00C801B2 /* TexasFilter.swift in Sources */,
 				2BF4D5101AF1155E00C801B2 /* FrontFilter.swift in Sources */,
@@ -1600,6 +1620,7 @@
 				2BF4D4AE1AF1154B00C801B2 /* OrientationCropFilter.swift in Sources */,
 				2BF4D3E91AF1150500C801B2 /* TextColorSelectorView.swift in Sources */,
 				2BF4D5191AF1155E00C801B2 /* LeninFilter.swift in Sources */,
+				0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */,
 				2BF4D3D71AF1150500C801B2 /* FilterEditorViewController.swift in Sources */,
 				2BF4D50B1AF1155E00C801B2 /* EveningFilter.swift in Sources */,
 				2BF4D4B01AF1154B00C801B2 /* StickerFilter.swift in Sources */,
@@ -1631,6 +1652,7 @@
 				2BF4D50F1AF1155E00C801B2 /* FridgeFilter.swift in Sources */,
 				2BF51F701B41A7E700FFB4C2 /* RecordingMode.swift in Sources */,
 				2BF4D51A1AF1155E00C801B2 /* LithoFilter.swift in Sources */,
+				099FBD5D1C3EC314000BB333 /* ColorPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -43,9 +43,6 @@ import AppKit
     /// The relative center of the sticker within the image.
     public var center = CGPoint()
 
-    /// The relative scale of the sticker within the image.
-    public var scale = CGFloat(1.0)
-
     /// The crop-create applied to the input image, so we can adjust the sticker position
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
@@ -86,13 +83,6 @@ import AppKit
         return filter.outputImage
     }
 
-    public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
-        let stickerRatio = sticker!.size.height / sticker!.size.width
-        if imageSize.width > imageSize.height {
-            return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
-        }
-        return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
-    }
 
     #if os(iOS)
 
@@ -139,6 +129,7 @@ import AppKit
         customParagraphStyle.lineBreakMode = .ByClipping
 
         let textSize = textImageSize()
+
         let image = NSImage(size: textSize)
         image.lockFocus()
 
@@ -156,7 +147,8 @@ import AppKit
 
     #endif
 
-    public func textImageSize() -> CGSize {
+
+    private func textImageSize() -> CGSize {
         let rect = inputImage!.extent
         let imageSize = rect.size
 
@@ -166,18 +158,25 @@ import AppKit
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
-        #if os(iOS)
-        guard let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+        guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
             return CGSizeZero
         }
-        #elseif os(OSX)
-        guard let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
-            return CGSizeZero
-        }
-        #endif
-
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
+
+    public func textImageSizeFromImageSize(imageSize: CGSize) -> CGSize {
+        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
+        // swiftlint:disable force_cast
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        // swiftlint:enable force_cast
+        customParagraphStyle.lineBreakMode = .ByClipping
+
+        guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
+            return CGSizeZero
+        }
+        return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+    }
+
 
     #if os(iOS)
 
@@ -228,7 +227,7 @@ import AppKit
         center.x -= (cropRect.origin.x * originalSize.width)
         center.y -= (cropRect.origin.y * originalSize.height)
 
-        let size = self.absolutStickerSizeForImageSize(originalSize)
+        let size = self.sticker!.size
         let imageRect = CGRect(origin: center, size: size)
 
         // Move center to origin
@@ -254,7 +253,6 @@ extension TextFilter {
         copy.initialFontSize = initialFontSize
         copy.cropRect = cropRect
         copy.center = center
-        copy.scale = scale
         copy.transform = transform
         #if os(iOS)
         copy.color = color.copyWithZone(zone) as! UIColor
