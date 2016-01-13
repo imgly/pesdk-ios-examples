@@ -15,6 +15,8 @@ import GLKit
     case UnableToInitializeCaptureDevice
 }
 
+private var cameraControllerContext = 0
+
 @objc(IMGLYCameraController) public class CameraController: NSObject {
 
     // MARK: - Properties
@@ -31,9 +33,29 @@ import GLKit
 
     private var setupComplete = false
 
+    // Handlers
+
+    /// Called when the list of available camera positions was changed.
+    public var availableCameraPositionsChangedHandler: (() -> Void)? {
+        didSet {
+            // Call immediately for initial value
+            availableCameraPositionsChangedHandler?()
+        }
+    }
+
+    /// Called when any aspect of the flash changes.
+    /// `hasFlash` is `true` if the current camera has a flash. `flashMode` represents the currently
+    /// active flash mode. `flashAvailable` is `true` if the flash is available for use.
+    public var flashChangedHandler: ((hasFlash: Bool, flashMode: AVCaptureFlashMode, flashAvailable: Bool) -> Void)?
+
+    /// Called when any aspect of the torch changes.
+    /// `hasTorch` is `true` if the current camera has a torch. `torchMMode` represents the currently
+    /// active torch mode. `torchAvailable` is `true` if the torch is available for use.
+    public var torchChangedHandler: ((hasTorch: Bool, torchMode: AVCaptureTorchMode, torchAvailable: Bool) -> Void)?
+
     // Options
 
-    /// An array of recording modes (e.g. .Photo, .Video) that you want to support. Passing an empty
+    /// An array of recording modes (e.g. `.Photo`, `.Video`) that you want to support. Passing an empty
     /// array to this property is ignored. Defaults to all recording modes. Duplicate values result in
     /// undefined behaviour.
     public var recordingModes: [RecordingMode] = [.Photo, .Video] {
@@ -49,7 +71,7 @@ import GLKit
         }
     }
 
-    /// An array of `RecordingMode` raw values wrapped in NSNumbers.
+    /// An array of `RecordingMode` raw values wrapped in `NSNumber`s.
     /// Setting this property overrides any previously set values in
     /// `recordingModes` with the corresponding unwrapped values.
     public var recordingModesAsNSNumbers: [NSNumber] {
@@ -62,7 +84,7 @@ import GLKit
         }
     }
 
-    /// An array of camera positions (e.g. .Front, .Back) that you want to support. Setting
+    /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
     /// this property automatically checks if the device supports all camera positions and updates
     /// the property accordingly if it does not. Passing an empty array to this property is ignored.
     /// Defaults to all available camera positions. Duplicate values result in undefined behaviour.
@@ -82,6 +104,9 @@ import GLKit
                 }
 
                 cameraPositions = cameraPositions.filter { availableCameraPositions.contains($0) }
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.availableCameraPositionsChangedHandler?()
+                }
 
                 // Update current camera position if needed
                 if let currentCameraPosition = videoDeviceInput?.device.position where setupComplete && !cameraPositions.contains(currentCameraPosition) {
@@ -91,7 +116,7 @@ import GLKit
         }
     }
 
-    /// An array of `AVCaptureDevicePosition` raw values wrapped in NSNumbers.
+    /// An array of `AVCaptureDevicePosition` raw values wrapped in `NSNumber`s.
     /// Setting this property overrides any previously set values in
     /// `cameraPositions` with the corresponding unwrapped values.
     public var cameraPositionsAsNSNumbers: [NSNumber] {
@@ -104,7 +129,7 @@ import GLKit
         }
     }
 
-    /// An array of flash modes (e.g. .Auto, .On, .Off) that you want to support. Passing an empt
+    /// An array of flash modes (e.g. `.Auto`, `.On`, `.Off`) that you want to support. Passing an empty
     /// array to this property is ignored. Often not all modes are supported by each camera on a
     /// device, in which case only the supported flash modes are used.
     /// Defaults to all flash modes. Duplicate values result in undefined behaviour.
@@ -121,7 +146,7 @@ import GLKit
         }
     }
 
-    /// An array of `AVCaptureFlashMode` raw values wrapped in NSNumbers.
+    /// An array of `AVCaptureFlashMode` raw values wrapped in `NSNumber`s.
     /// Setting this property overrides any previously set values in
     /// `flashModes` with the corresponding unwrapped values.
     public var flashModesAsNSNumbers: [NSNumber] {
@@ -134,7 +159,7 @@ import GLKit
         }
     }
 
-    /// An array of torch modes (e.g. .Auto, .On, .Off) that you want to support. Passing an empty
+    /// An array of torch modes (e.g. `.Auto`, `.On`, `.Off`) that you want to support. Passing an empty
     /// array to this property is ignored. Often not all modes are supported by each camera on a
     /// device, in which case only the supported torch modes are used.
     /// Defaults to all torch modes. Duplicate values result in undefined behaviour.
@@ -151,7 +176,7 @@ import GLKit
         }
     }
 
-    /// An array of `AVCaptureTorchMode` raw values wrapped in NSNumbers.
+    /// An array of `AVCaptureTorchMode` raw values wrapped in `NSNumber`s.
     /// Setting this property overrides any previously set values in
     /// `torchModes` with the corresponding unwrapped values.
     public var torchModesAsNSNumbers: [NSNumber] {
@@ -180,6 +205,8 @@ import GLKit
 
         videoPreviewView = GLKView(frame: CGRectZero, context: glContext)
         videoPreviewView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        // Rotate to match images coming from the camera
+        videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
 
         sampleBufferController = SampleBufferController(
             videoPreviewView: videoPreviewView
@@ -225,12 +252,71 @@ import GLKit
         // TODO
     }
 
+    private func addFlashObserversForController(flashController: FlashController) {
+        flashController.addObserver(self, forKeyPath: "hasFlash", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+        flashController.addObserver(self, forKeyPath: "flashMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+        flashController.addObserver(self, forKeyPath: "flashAvailable", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+    }
+
+    private func addTorchObserversForController(torchController: TorchController) {
+        torchController.addObserver(self, forKeyPath: "hasTorch", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+        torchController.addObserver(self, forKeyPath: "torchMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+        torchController.addObserver(self, forKeyPath: "torchAvailable", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+    }
+
+    private func removeFlashObserversForController(flashController: FlashController) {
+        flashController.removeObserver(self, forKeyPath: "hasFlash", context: &cameraControllerContext)
+        flashController.removeObserver(self, forKeyPath: "flashMode", context: &cameraControllerContext)
+        flashController.removeObserver(self, forKeyPath: "flashAvailable", context: &cameraControllerContext)
+    }
+
+    private func removeTorchObserversForController(torchController: TorchController) {
+        torchController.removeObserver(self, forKeyPath: "hasTorch", context: &cameraControllerContext)
+        torchController.removeObserver(self, forKeyPath: "torchMode", context: &cameraControllerContext)
+        torchController.removeObserver(self, forKeyPath: "torchAvailable", context: &cameraControllerContext)
+    }
+
+    private func addFlashAndTorchObservers() {
+        if let flashController = self.flashController {
+            self.addFlashObserversForController(flashController)
+        }
+
+        if let torchController = self.torchController {
+            self.addTorchObserversForController(torchController)
+        }
+    }
+
+    private func removeFlashAndTorchObservers() {
+        if let flashController = self.flashController {
+            self.removeFlashObserversForController(flashController)
+        }
+
+        if let torchController = self.torchController {
+            self.removeTorchObserversForController(torchController)
+        }
+    }
+
     // MARK: - Setup
 
+    /**
+    Initializes the camera. This method __must__ be called before calling `startCamera()`.
+    Any handlers that will be used should be set before calling this method, so that they are called
+    with their initial values.
+
+    - throws: A `CameraControllerError` or an `NSError` if setup fails.
+    */
     public func setup() throws {
         try setupWithCompletion(nil)
     }
 
+    /**
+     Same as `setup()` but with an optional completion handler. The completion handler is always invoked
+     on the main thread.
+
+     - parameter completion: A block to be executed when the camera has finished initialization.
+
+     - throws: A `CameraControllerError` or an `NSError` if setup fails.
+     */
     public func setupWithCompletion(completion: (() -> Void)?) throws {
         if setupComplete {
             throw CameraControllerError.MultipleCallsToSetup
@@ -245,6 +331,7 @@ import GLKit
 
         flashController = FlashController(flashModes: flashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
         torchController = TorchController(torchModes: torchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        addFlashAndTorchObservers()
 
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
@@ -362,7 +449,7 @@ import GLKit
                 self.session.removeInput(input)
             }
 
-            // TODO: Remove {Flash, Torch}Controller observers
+            self.removeFlashAndTorchObservers()
 
             if let device = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: position), input = try? AVCaptureDeviceInput(device: device) {
                 self.videoDeviceInput = input
@@ -371,7 +458,7 @@ import GLKit
                 self.flashController = FlashController(flashModes: self.flashModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
                 self.torchController = TorchController(torchModes: self.torchModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
 
-                // TODO: Add {Flash, Torch}Controller observers
+                self.addFlashAndTorchObservers()
             }
 
             self.session.commitConfiguration()
@@ -381,6 +468,53 @@ import GLKit
                     self.transformVideoPreviewToMatchDevicePosition(device.position)
                 }
             }
+        }
+    }
+
+    // MARK: - LED
+
+    /**
+    Selects the next flash mode. The order is taken from `flashModes`.
+    If the current device does not support a flash mode, the next flash mode that is supported is used or `.Off`.
+    */
+    public func selectNextFlashMode() {
+        flashController?.selectNextFlashMode()
+    }
+
+    /**
+     Selects the next torch mode. The order is taken from `torchModes`.
+     If the current device does not support a torch mode, the next flash mode that is supported is used or `.Off`.
+     */
+    public func selectNextTorchMode() {
+        torchController?.selectNextTorchMode()
+    }
+
+    // MARK: - KVO
+
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+        if let keyPath = keyPath where context == &cameraControllerContext {
+            switch keyPath {
+            case "hasFlash", "flashMode", "flashAvailable":
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.flashChangedHandler?(
+                        hasFlash: self.flashController?.hasFlash ?? false,
+                        flashMode: self.flashController?.flashMode ?? .Off,
+                        flashAvailable: self.flashController?.flashAvailable ?? false
+                    )
+                }
+            case "hasTorch", "torchMode", "torchAvailable":
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.torchChangedHandler?(
+                        hasTorch: self.torchController?.hasTorch ?? false,
+                        torchMode: self.torchController?.torchMode ?? .Off,
+                        torchAvailable: self.torchController?.torchAvailable ?? false
+                    )
+                }
+            default:
+                break
+            }
+        } else {
+            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
         }
     }
 }

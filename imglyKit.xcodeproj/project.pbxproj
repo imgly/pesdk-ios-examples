@@ -196,7 +196,6 @@
 		2BEBCE971B00D7D1000FE22B /* AnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */; };
 		2BEBFEAB1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */; };
 		2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
-		2BEBFEAE1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
 		2BEBFEB51C400A5D00FAA95C /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEB41C400A5D00FAA95C /* CameraController.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
@@ -1460,7 +1459,6 @@
 				2B1ADAAC1B19C8EE00C98522 /* CreamyFilter.swift in Sources */,
 				2B1ADAB81B19C8EE00C98522 /* HighcarbFilter.swift in Sources */,
 				2B1ADA991B19C8E500C98522 /* TiltshiftFilter.swift in Sources */,
-				2BEBFEAE1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2B1ADAD61B19C8EE00C98522 /* SoftFilter.swift in Sources */,
 				2B1ADA971B19C8E500C98522 /* StickerFilter.swift in Sources */,
 				2B1ADAC81B19C8EE00C98522 /* OrchidFilter.swift in Sources */,

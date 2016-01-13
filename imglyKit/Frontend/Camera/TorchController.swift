@@ -13,7 +13,7 @@ class TorchController: NSObject {
     // MARK: - Properties
 
     private let session: AVCaptureSession
-    private let videoDeviceInput: AVCaptureDeviceInput
+    private dynamic let videoDeviceInput: AVCaptureDeviceInput
     private let sessionQueue: dispatch_queue_t
 
     var torchModes: [AVCaptureTorchMode] {

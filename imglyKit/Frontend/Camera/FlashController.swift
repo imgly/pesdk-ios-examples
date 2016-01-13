@@ -13,7 +13,7 @@ class FlashController: NSObject {
     // MARK: - Properties
 
     private let session: AVCaptureSession
-    private let videoDeviceInput: AVCaptureDeviceInput
+    private dynamic let videoDeviceInput: AVCaptureDeviceInput
     private let sessionQueue: dispatch_queue_t
 
     var flashModes: [AVCaptureFlashMode] {
@@ -56,10 +56,6 @@ class FlashController: NSObject {
 
     // MARK: - Public API
 
-    /**
-    Selects the next flash-mode. The order is taken from `availableFlashModes`.
-    If the current device does not support a flash mode, this method uses the next flash mode that is supported or .Off.
-    */
     func selectNextFlashMode() {
         let currentFlashModeIndex = flashModes.indexOf(flashMode) ?? -1
         var nextFlashModeIndex = (currentFlashModeIndex + 1) % flashModes.count

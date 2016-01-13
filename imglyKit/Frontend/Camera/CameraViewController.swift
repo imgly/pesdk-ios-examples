@@ -468,7 +468,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        configureRecordingModeSwitching()
+//        configureRecordingModeSwitching()
         configureViewHierarchy()
         configureViewConstraints()
         configureFilterSelectionController()
@@ -677,14 +677,52 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     private func configureCameraController() {
-        // Needed so that the framebuffer can bind to OpenGL ES
-//        view.layoutIfNeeded()
-
         let cameraController = CameraController()
         cameraController.recordingModes = configuration.cameraViewControllerOptions.allowedRecordingModes
         cameraController.cameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
         cameraController.flashModes = configuration.cameraViewControllerOptions.allowedFlashModes
         cameraController.torchModes = configuration.cameraViewControllerOptions.allowedTorchModes
+
+        // Handlers
+        cameraController.availableCameraPositionsChangedHandler = { [weak self] in
+            if cameraController.cameraPositions.count > 1 {
+                self?.switchCameraButton.hidden = false
+            } else {
+                self?.switchCameraButton.hidden = true
+            }
+        }
+
+        cameraController.flashChangedHandler = { [weak self] hasFlash, flashMode, flashAvailable in
+            self?.flashButton.hidden = !hasFlash
+            self?.flashButton.enabled = flashAvailable
+
+            let bundle = NSBundle(forClass: CameraViewController.self)
+
+            switch flashMode {
+            case .Auto:
+                self?.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+            case .On:
+                self?.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+            case .Off:
+                self?.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+            }
+        }
+
+//        cameraController.torchChangedHandler = { [weak self] hasTorch, torchMode, torchAvailable in
+//            self?.flashButton.hidden = !hasTorch
+//            self?.flashButton.enabled = torchAvailable
+//
+//            let bundle = NSBundle(forClass: CameraViewController.self)
+//
+//            switch torchMode {
+//            case .Auto:
+//                self?.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//            case .On:
+//                self?.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//            case .Off:
+//                self?.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
+//            }
+//        }
 
         do {
             try cameraController.setup()
@@ -945,7 +983,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     public func changeFlash(sender: UIButton?) {
 //        switch currentRecordingMode {
 //        case .Photo:
-//            cameraController?.selectNextFlashMode()
+            cameraController?.selectNextFlashMode()
 //        case .Video:
 //            cameraController?.selectNextTorchMode()
 //        }
