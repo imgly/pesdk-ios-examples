@@ -135,6 +135,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - Properties
 
     private var textColor = UIColor(hue: 0.0, saturation: 0.0, brightness: 1.0, alpha: 1.0)
+    private var backgroundColor = UIColor(hue: 0.0, saturation: 0.0, brightness: 1.0, alpha: 0.0)
     private var fontName = ""
     private var currentTextSize = CGFloat(0)
     private var maximumFontSize = CGFloat(0)
@@ -216,6 +217,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         textField.delegate = self
         textField.text = ""
         textField.textColor = self.textColor
+        textField.backgroundColor = self.backgroundColor
         textField.clipsToBounds = false
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
         textField.returnKeyType = UIReturnKeyType.Done
@@ -394,7 +396,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func configureTextLabel() {
         textClipView.addSubview(textLabel)
-        textLabel.backgroundColor = UIColor(white:0.0, alpha:0.0)
+        textLabel.backgroundColor = self.backgroundColor
         textLabel.textColor = self.textColor
         textLabel.textAlignment = NSTextAlignment.Center
         textLabel.clipsToBounds = true
