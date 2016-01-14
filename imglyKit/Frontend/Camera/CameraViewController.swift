@@ -683,6 +683,10 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         cameraController.torchModes = options.allowedTorchModes
 
         // Handlers
+        cameraController.runningStateChangedHandler = { [weak self] running in
+            self?.buttonsEnabled = running
+        }
+
         cameraController.availableCameraPositionsChangedHandler = { [weak self] in
             if cameraController.cameraPositions.count > 1 {
                 self?.switchCameraButton.hidden = false
@@ -796,14 +800,6 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 //
 //        cameraController!.delegate = self
 //        cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
-    }
-
-    private func updateFlashButtonForFlashMode(flashMode: AVCaptureFlashMode) {
-
-    }
-
-    private func updateFlashButtonForTorchMode(torchMode: AVCaptureTorchMode) {
-        
     }
 
     private func configureFilterSelectionController() {
@@ -1023,19 +1019,19 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func takePhoto(sender: UIButton?) {
-//        cameraController?.takePhoto { image, error in
-//            if error == nil {
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    if let completionBlock = self.completionBlock {
-//                        completionBlock(image, nil)
-//                    } else {
-//                        if let image = image {
-//                            self.showEditorNavigationControllerWithImage(image)
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        cameraController?.takePhoto { image, error in
+            if error == nil {
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let completionBlock = self.completionBlock {
+                        completionBlock(image, nil)
+                    } else {
+                        if let image = image {
+                            self.showEditorNavigationControllerWithImage(image)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public func recordVideo(sender: VideoRecordButton?) {

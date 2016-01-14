@@ -10,9 +10,11 @@ import Foundation
 import AVFoundation
 
 @objc enum LightMode: Int {
+    // swiftlint:disable type_name
     case Off
     case On
     case Auto
+    // swiftlint:enable type_name
 
     init(flashMode: AVCaptureFlashMode) {
         switch flashMode {

@@ -29,6 +29,7 @@ private var cameraControllerContext = 0
     private var audioDeviceInput: AVCaptureDeviceInput?
     private let videoDataOutput = AVCaptureVideoDataOutput()
     private let audioDataOutput = AVCaptureAudioDataOutput()
+    private let stillImageOutput = AVCaptureStillImageOutput()
 
     private let glContext: EAGLContext
     public let videoPreviewView: GLKView
@@ -75,17 +76,10 @@ private var cameraControllerContext = 0
         }
     }
 
-//    /// The currently selected flash mode.
-//    public var flashMode: AVCaptureFlashMode {
-//        return flashController?.flashMode ?? .Off
-//    }
-//
-//    /// The currently selected torch mode.
-//    public var torchMode: AVCaptureTorchMode {
-//        return torchController?.torchMode ?? .Off
-//    }
-
     // Handlers
+
+    /// Called when the `running` state of the camera changes.
+    public var runningStateChangedHandler: ((running: Bool) -> Void)?
 
     /// Called when the recording mode changes.
     public var recordingModeChangedHandler: ((previousRecordingMode: RecordingMode?, newRecordingMode: RecordingMode) -> Void)?
@@ -252,6 +246,7 @@ private var cameraControllerContext = 0
     // MARK: - Observers
 
     private func addSessionObservers() {
+        session.addObserver(self, forKeyPath: "running", options: [.New, .Old, .Initial], context: &cameraControllerContext)
         addObserver(self, forKeyPath: "recordingMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
 
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -273,6 +268,7 @@ private var cameraControllerContext = 0
     }
 
     private func removeSessionObservers() {
+        session.removeObserver(self, forKeyPath: "running", context: &cameraControllerContext)
         removeObserver(self, forKeyPath: "recordingMode", context: &cameraControllerContext)
 
         NSNotificationCenter.defaultCenter().removeObserver(self)
@@ -356,10 +352,13 @@ private var cameraControllerContext = 0
         let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         self.videoDeviceInput = videoDeviceInput
 
+        self.videoDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
+
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
             self.addDeviceInput(videoDeviceInput)
-            self.addVideoDataOutput(self.videoDataOutput)
+            self.addCaptureOutput(self.videoDataOutput)
+            self.addCaptureOutput(self.stillImageOutput)
             self.changeSessionPreset(recordingMode.sessionPreset)
 
             if recordingMode.sessionPreset != AVCaptureSessionPresetPhoto {
@@ -402,17 +401,9 @@ private var cameraControllerContext = 0
         }
     }
 
-    private func addVideoDataOutput(videoDataOutput: AVCaptureVideoDataOutput) {
-        if session.canAddOutput(videoDataOutput) {
-            videoDataOutput.setSampleBufferDelegate(sampleBufferController, queue: sampleBufferQueue)
-            session.addOutput(videoDataOutput)
-        }
-    }
-
-    private func addAudioDataOutput(audioDataOutput: AVCaptureAudioDataOutput) {
-        if session.canAddOutput(audioDataOutput) {
-            audioDataOutput.setSampleBufferDelegate(sampleBufferController, queue: sampleBufferQueue)
-            session.addOutput(audioDataOutput)
+    private func addCaptureOutput(captureOutput: AVCaptureOutput) {
+        if session.canAddOutput(captureOutput) {
+            session.addOutput(captureOutput)
         }
     }
 
@@ -533,6 +524,52 @@ private var cameraControllerContext = 0
         }
     }
 
+    // MARK: - Photo
+
+    /**
+    Takes a photo and hands it over to the completion block. The completion block always runs on the main
+    thread.
+
+    - parameter completion: A completion block that has an image and an error as parameters.
+    If the image was taken sucessfully the error is nil.
+    */
+    public func takePhoto(completion: (UIImage?, NSError?) -> Void) {
+        if !setupComplete {
+            return
+        }
+
+        dispatch_async(sessionQueue) {
+            let connection = self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)
+
+            // Update the orientation on the still image output video connection before capturing.
+            if let captureVideoOrientation = self.deviceOrientationController.captureVideoOrientation {
+                connection.videoOrientation = captureVideoOrientation
+            }
+
+            self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(connection) { imageDataSampleBuffer, error in
+                if let imageDataSampleBuffer = imageDataSampleBuffer {
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                    let image = UIImage(data: imageData)
+                    // TODO
+//                    if self.squareMode {
+//                        image = self.squareTakenImage(image!)
+//                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(image, nil)
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(nil, error)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: - Video
+
+    // TODO
+
     // MARK: - LED
 
     private func createLightControllerForSession(session: AVCaptureSession, videoDeviceInput: AVCaptureDeviceInput, sessionQueue: dispatch_queue_t) {
@@ -597,6 +634,14 @@ private var cameraControllerContext = 0
                         previousRecordingMode: previousRecordingMode,
                         newRecordingMode: newRecordingMode
                     )
+                }
+            case "running":
+                guard let running = change?[NSKeyValueChangeNewKey] as? NSNumber else {
+                    return
+                }
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.runningStateChangedHandler?(running: running.boolValue)
                 }
             default:
                 break
