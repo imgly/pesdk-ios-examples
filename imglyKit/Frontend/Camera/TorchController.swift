@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class TorchController: NSObject {
+class TorchController: NSObject, LightControllable {
 
     // MARK: - Properties
 
@@ -16,21 +16,21 @@ class TorchController: NSObject {
     private dynamic let videoDeviceInput: AVCaptureDeviceInput
     private let sessionQueue: dispatch_queue_t
 
-    var torchModes: [AVCaptureTorchMode] {
+    var lightModes: [LightMode] {
         didSet {
-            if torchModes.count == 0 {
-                torchModes = oldValue
+            if lightModes.count == 0 {
+                lightModes = oldValue
             }
 
-            if oldValue != torchModes {
-                torchModes = torchModes.filter { videoDeviceInput.device.isTorchModeSupported($0) }
-                if torchModes.count == 0 {
-                    torchModes = [.Off]
+            if oldValue != lightModes {
+                lightModes = lightModes.filter { videoDeviceInput.device.isTorchModeSupported(AVCaptureTorchMode(lightMode: $0)) }
+                if lightModes.count == 0 {
+                    lightModes = [.Off]
                 }
 
                 // Update current flash mode if it is not in the list of supported flash modes
-                if !torchModes.contains(torchMode) {
-                    selectNextTorchMode()
+                if !lightModes.contains(lightMode) {
+                    selectNextLightMode()
                 }
             }
         }
@@ -44,14 +44,16 @@ class TorchController: NSObject {
         self.sessionQueue = sessionQueue
 
         // Set to all available flash modes
-        self.torchModes = (torchModes.count == 0 ? [.On, .Off, .Auto] : torchModes).filter { videoDeviceInput.device.isTorchModeSupported($0) }
-        if self.torchModes.count == 0 {
-            self.torchModes = [.Off]
+        lightModes = (torchModes.count == 0 ? [.On, .Off, .Auto] : torchModes).filter { videoDeviceInput.device.isTorchModeSupported($0) }.map { LightMode(torchMode: $0) }
+        if lightModes.count == 0 {
+            lightModes = [.Off]
         }
 
         super.init()
 
-        self.torchMode = torchModes[0]
+        if !lightModes.contains(lightMode) {
+            lightMode = lightModes[0]
+        }
     }
 
     // MARK: - Public API
@@ -60,74 +62,71 @@ class TorchController: NSObject {
     Selects the next torch-mode. The order is taken from `availableTorchModes`.
     If the current device does not support a torch mode, this method uses the next torch mode that is supported or .Off.
     */
-    func selectNextTorchMode() {
-        let currentTorchModeIndex = torchModes.indexOf(torchMode) ?? -1
-        var nextTorchModeIndex = (currentTorchModeIndex + 1) % torchModes.count
-        var nextTorchMode = torchModes[nextTorchModeIndex]
+    func selectNextLightMode() {
+        let currentTorchModeIndex = lightModes.indexOf(lightMode) ?? -1
+        var nextTorchModeIndex = (currentTorchModeIndex + 1) % lightModes.count
+        var nextTorchMode = lightModes[nextTorchModeIndex]
         var counter = 1
 
-        while !videoDeviceInput.device.isTorchModeSupported(nextTorchMode) {
-            nextTorchModeIndex = (nextTorchModeIndex + 1) % torchModes.count
-            nextTorchMode = torchModes[nextTorchModeIndex]
+        while !videoDeviceInput.device.isTorchModeSupported(AVCaptureTorchMode(lightMode: nextTorchMode)) {
+            nextTorchModeIndex = (nextTorchModeIndex + 1) % lightModes.count
+            nextTorchMode = lightModes[nextTorchModeIndex]
             counter++
 
-            if counter >= torchModes.count {
+            if counter >= lightModes.count {
                 nextTorchMode = .Off
                 break
             }
         }
 
-        torchMode = nextTorchMode
+        lightMode = nextTorchMode
     }
 
-    dynamic var hasTorch: Bool {
+    var hasLight: Bool {
         return videoDeviceInput.device.hasTorch
     }
 
-    dynamic private(set) var torchMode: AVCaptureTorchMode {
+    private(set) var lightMode: LightMode {
         get {
-            return videoDeviceInput.device.torchMode
+            return LightMode(torchMode: videoDeviceInput.device.torchMode)
         }
 
         set {
             dispatch_async(sessionQueue) {
-                if self.videoDeviceInput.device.isTorchModeSupported(newValue) {
+                if self.videoDeviceInput.device.isTorchModeSupported(AVCaptureTorchMode(lightMode: newValue)) {
                     self.session.beginConfiguration()
 
-                    if self.videoDeviceInput.device.isTorchModeSupported(newValue) {
-                        do {
-                            try self.videoDeviceInput.device.lockForConfiguration()
-                        } catch let error as NSError {
-                            print("Error changing torch mode: \(error.description)")
-                        } catch {
-                            fatalError()
-                        }
-
-                        self.videoDeviceInput.device.torchMode = newValue
-                        self.videoDeviceInput.device.unlockForConfiguration()
+                    do {
+                        try self.videoDeviceInput.device.lockForConfiguration()
+                    } catch let error as NSError {
+                        print("Error changing torch mode: \(error.description)")
+                    } catch {
+                        fatalError()
                     }
 
+                    self.videoDeviceInput.device.torchMode = AVCaptureTorchMode(lightMode: newValue)
+                    self.videoDeviceInput.device.unlockForConfiguration()
                     self.session.commitConfiguration()
                 }
             }
         }
     }
 
-    dynamic var torchAvailable: Bool {
+    var lightAvailable: Bool {
         return videoDeviceInput.device.torchAvailable
     }
 
     // MARK: - KVO
 
-    @objc private class func keyPathsForValuesAffectingHasTorch() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingHasLight() -> Set<String> {
         return ["videoDeviceInput.device.hasTorch"]
     }
 
-    @objc private class func keyPathsForValuesAffectingTorchMode() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingLightMode() -> Set<String> {
         return ["videoDeviceInput.device.torchMode"]
     }
 
-    @objc private class func keyPathsForValuesAffectingTorchAvailable() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingLightAvailable() -> Set<String> {
         return ["videoDeviceInput.device.torchAvailable"]
     }
 }

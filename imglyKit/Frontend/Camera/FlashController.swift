@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class FlashController: NSObject {
+class FlashController: NSObject, LightControllable {
 
     // MARK: - Properties
 
@@ -16,21 +16,21 @@ class FlashController: NSObject {
     private dynamic let videoDeviceInput: AVCaptureDeviceInput
     private let sessionQueue: dispatch_queue_t
 
-    var flashModes: [AVCaptureFlashMode] {
+    var lightModes: [LightMode] {
         didSet {
-            if flashModes.count == 0 {
-                flashModes = oldValue
+            if lightModes.count == 0 {
+                lightModes = oldValue
             }
 
-            if oldValue != flashModes {
-                flashModes = flashModes.filter { videoDeviceInput.device.isFlashModeSupported($0) }
-                if flashModes.count == 0 {
-                    flashModes = [.Off]
+            if oldValue != lightModes {
+                lightModes = lightModes.filter { videoDeviceInput.device.isFlashModeSupported(AVCaptureFlashMode(lightMode: $0)) }
+                if lightModes.count == 0 {
+                    lightModes = [.Off]
                 }
 
                 // Update current flash mode if it is not in the list of supported flash modes
-                if !flashModes.contains(flashMode) {
-                    selectNextFlashMode()
+                if !lightModes.contains(lightMode) {
+                    selectNextLightMode()
                 }
             }
         }
@@ -44,52 +44,52 @@ class FlashController: NSObject {
         self.sessionQueue = sessionQueue
 
         // Set to all available flash modes
-        self.flashModes = (flashModes.count == 0 ? [.On, .Off, .Auto] : flashModes).filter { videoDeviceInput.device.isFlashModeSupported($0) }
-        if self.flashModes.count == 0 {
-            self.flashModes = [.Off]
+        lightModes = (flashModes.count == 0 ? [.On, .Off, .Auto] : flashModes).filter { videoDeviceInput.device.isFlashModeSupported($0) }.map { LightMode(flashMode: $0) }
+        if lightModes.count == 0 {
+            lightModes = [.Off]
         }
 
         super.init()
 
-        if !self.flashModes.contains(flashMode) {
-            flashMode = self.flashModes[0]
+        if !lightModes.contains(lightMode) {
+            lightMode = lightModes[0]
         }
     }
 
     // MARK: - Public API
 
-    func selectNextFlashMode() {
-        let currentFlashModeIndex = flashModes.indexOf(flashMode) ?? -1
-        var nextFlashModeIndex = (currentFlashModeIndex + 1) % flashModes.count
-        var nextFlashMode = flashModes[nextFlashModeIndex]
+    func selectNextLightMode() {
+        let currentFlashModeIndex = lightModes.indexOf(lightMode) ?? -1
+        var nextFlashModeIndex = (currentFlashModeIndex + 1) % lightModes.count
+        var nextFlashMode = lightModes[nextFlashModeIndex]
         var counter = 1
 
-        while !videoDeviceInput.device.isFlashModeSupported(nextFlashMode) {
-            nextFlashModeIndex = (nextFlashModeIndex + 1) % flashModes.count
-            nextFlashMode = flashModes[nextFlashModeIndex]
+        while !videoDeviceInput.device.isFlashModeSupported(AVCaptureFlashMode(lightMode: nextFlashMode)) {
+            nextFlashModeIndex = (nextFlashModeIndex + 1) % lightModes.count
+            nextFlashMode = lightModes[nextFlashModeIndex]
             counter++
 
-            if counter >= flashModes.count {
+            if counter >= lightModes.count {
                 nextFlashMode = .Off
                 break
             }
         }
 
-        flashMode = nextFlashMode
+        lightMode = nextFlashMode
     }
 
-    dynamic var hasFlash: Bool {
+    var hasLight: Bool {
         return videoDeviceInput.device.hasFlash
     }
 
-    dynamic private(set) var flashMode: AVCaptureFlashMode {
+    private(set) var lightMode: LightMode {
         get {
-            return videoDeviceInput.device.flashMode
+            return LightMode(flashMode: videoDeviceInput.device.flashMode)
         }
 
         set {
             dispatch_async(sessionQueue) {
-                if self.videoDeviceInput.device.isFlashModeSupported(newValue) {
+                if self.videoDeviceInput.device.isFlashModeSupported(AVCaptureFlashMode(lightMode: newValue)) {
                     self.session.beginConfiguration()
 
                     do {
@@ -100,7 +100,7 @@ class FlashController: NSObject {
                         fatalError()
                     }
 
-                    self.videoDeviceInput.device.flashMode = newValue
+                    self.videoDeviceInput.device.flashMode = AVCaptureFlashMode(lightMode: newValue)
                     self.videoDeviceInput.device.unlockForConfiguration()
                     self.session.commitConfiguration()
                 }
@@ -108,21 +108,21 @@ class FlashController: NSObject {
         }
     }
 
-    dynamic var flashAvailable: Bool {
+    var lightAvailable: Bool {
         return videoDeviceInput.device.flashAvailable
     }
 
     // MARK: - KVO
 
-    @objc private class func keyPathsForValuesAffectingHasFlash() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingHasLight() -> Set<String> {
         return ["videoDeviceInput.device.hasFlash"]
     }
 
-    @objc private class func keyPathsForValuesAffectingFlashMode() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingLightMode() -> Set<String> {
         return ["videoDeviceInput.device.flashMode"]
     }
 
-    @objc private class func keyPathsForValuesAffectingFlashAvailable() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingLightAvailable() -> Set<String> {
         return ["videoDeviceInput.device.flashAvailable"]
     }
 }

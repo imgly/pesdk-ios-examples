@@ -39,7 +39,7 @@ private var cameraControllerContext = 0
     /// calling `setupWithInitialRecordingMode(:)` is ignored. The setter asynchronously updates the
     /// session, so the getter might not immediately represent the new value. You can observe changes
     /// to the value of this property using key-value observing.
-    public dynamic var recordingMode: RecordingMode {
+    public var recordingMode: RecordingMode {
         get {
             if session.sessionPreset == AVCaptureSessionPresetPhoto {
                 return .Photo
@@ -54,25 +54,38 @@ private var cameraControllerContext = 0
             }
 
             dispatch_async(sessionQueue) {
+                self.removeLightObserver()
+                self.session.beginConfiguration()
+
                 // TODO: Stop recording if needed
                 // TODO: Add asset writer if needed
                 self.changeSessionPreset(newValue.sessionPreset)
                 if newValue.sessionPreset != AVCaptureSessionPresetPhoto {
                     self.addAudioInput()
                 }
+
+                self.session.commitConfiguration()
+
+                // Change LightController (from Flash to Torch or vice-versa)
+                if let videoDeviceInput = self.videoDeviceInput {
+                    self.createLightControllerForSession(self.session, videoDeviceInput: videoDeviceInput, sessionQueue: self.sessionQueue)
+                    self.addLightObservers()
+                }
             }
         }
     }
 
-    // Handlers
-
-//    /// Called when the list of available recording modes was changed.
-//    public var availableRecordingModesChangedHandler: (() -> Void)? {
-//        didSet {
-//            // Call immediately for initial value
-//            availableRecordingModesChangedHandler?()
-//        }
+//    /// The currently selected flash mode.
+//    public var flashMode: AVCaptureFlashMode {
+//        return flashController?.flashMode ?? .Off
 //    }
+//
+//    /// The currently selected torch mode.
+//    public var torchMode: AVCaptureTorchMode {
+//        return torchController?.torchMode ?? .Off
+//    }
+
+    // Handlers
 
     /// Called when the recording mode changes.
     public var recordingModeChangedHandler: ((previousRecordingMode: RecordingMode?, newRecordingMode: RecordingMode) -> Void)?
@@ -96,45 +109,6 @@ private var cameraControllerContext = 0
     public var torchChangedHandler: ((hasTorch: Bool, torchMode: AVCaptureTorchMode, torchAvailable: Bool) -> Void)?
 
     // Options
-
-//    /// An array of recording modes (e.g. `.Photo`, `.Video`) that you want to support. Passing an empty
-//    /// array to this property is ignored. Defaults to all recording modes. Duplicate values result in
-//    /// undefined behaviour.
-//    public var recordingModes: [RecordingMode] = [.Photo, .Video] {
-//        didSet {
-//            // Require at least one `RecordingMode`
-//            if recordingModes.count == 0 {
-//                recordingModes = oldValue
-//            }
-//
-//            if oldValue != recordingModes {
-//                // TODO: Stop recording if needed
-//
-//                if !recordingModes.contains(currentRecordingMode) {
-//                    dispatch_async(sessionQueue) {
-//                        self.session.beginConfiguration()
-//                        self.changeSessionPreset(self.recordingModes[0].sessionPreset)
-//                        self.session.commitConfiguration()
-//                    }
-//                }
-//
-//                availableRecordingModesChangedHandler?()
-//            }
-//        }
-//    }
-//
-//    /// An array of `RecordingMode` raw values wrapped in `NSNumber`s.
-//    /// Setting this property overrides any previously set values in
-//    /// `recordingModes` with the corresponding unwrapped values.
-//    public var recordingModesAsNSNumbers: [NSNumber] {
-//        get {
-//            return recordingModes.map { NSNumber(integer: $0.rawValue) }
-//        }
-//
-//        set {
-//            recordingModes = newValue.flatMap { RecordingMode(rawValue: $0.integerValue) }
-//        }
-//    }
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
     /// this property automatically checks if the device supports all camera positions and updates
@@ -190,8 +164,8 @@ private var cameraControllerContext = 0
                 flashModes = oldValue
             }
 
-            if oldValue != flashModes {
-                flashController?.flashModes = flashModes
+            if let flashController = lightController as? FlashController where oldValue != flashModes {
+                flashController.lightModes = flashModes.map { LightMode(flashMode: $0) }
             }
         }
     }
@@ -220,8 +194,8 @@ private var cameraControllerContext = 0
                 torchModes = oldValue
             }
 
-            if oldValue != torchModes {
-                torchController?.torchModes = torchModes
+            if let torchController = lightController as? TorchController where oldValue != torchModes {
+                torchController.lightModes = torchModes.map { LightMode(torchMode: $0) }
             }
         }
     }
@@ -252,8 +226,7 @@ private var cameraControllerContext = 0
 
     private let sampleBufferController: SampleBufferController
     private let deviceOrientationController = DeviceOrientationController()
-    private var flashController: FlashController?
-    private var torchController: TorchController?
+    private var lightController: LightControllable?
 
     // MARK: - Initializer
 
@@ -317,47 +290,31 @@ private var cameraControllerContext = 0
         // TODO
     }
 
-    private func addFlashObserversForController(flashController: FlashController) {
-        flashController.addObserver(self, forKeyPath: "hasFlash", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-        flashController.addObserver(self, forKeyPath: "flashMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-        flashController.addObserver(self, forKeyPath: "flashAvailable", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-    }
-
-    private func addTorchObserversForController(torchController: TorchController) {
-        torchController.addObserver(self, forKeyPath: "hasTorch", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-        torchController.addObserver(self, forKeyPath: "torchMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-        torchController.addObserver(self, forKeyPath: "torchAvailable", options: [.New, .Old, .Initial], context: &cameraControllerContext)
-    }
-
-    private func removeFlashObserversForController(flashController: FlashController) {
-        flashController.removeObserver(self, forKeyPath: "hasFlash", context: &cameraControllerContext)
-        flashController.removeObserver(self, forKeyPath: "flashMode", context: &cameraControllerContext)
-        flashController.removeObserver(self, forKeyPath: "flashAvailable", context: &cameraControllerContext)
-    }
-
-    private func removeTorchObserversForController(torchController: TorchController) {
-        torchController.removeObserver(self, forKeyPath: "hasTorch", context: &cameraControllerContext)
-        torchController.removeObserver(self, forKeyPath: "torchMode", context: &cameraControllerContext)
-        torchController.removeObserver(self, forKeyPath: "torchAvailable", context: &cameraControllerContext)
-    }
-
-    private func addFlashAndTorchObservers() {
-        if let flashController = self.flashController {
-            self.addFlashObserversForController(flashController)
-        }
-
-        if let torchController = self.torchController {
-            self.addTorchObserversForController(torchController)
+    private func addLightObserversForController(lightController: LightControllable) {
+        if let lightController = lightController as? NSObject {
+            lightController.addObserver(self, forKeyPath: "hasLight", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+            lightController.addObserver(self, forKeyPath: "lightMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+            lightController.addObserver(self, forKeyPath: "lightAvailable", options: [.New, .Old, .Initial], context: &cameraControllerContext)
         }
     }
 
-    private func removeFlashAndTorchObservers() {
-        if let flashController = self.flashController {
-            self.removeFlashObserversForController(flashController)
+    private func removeLightObserversForController(lightController: LightControllable) {
+        if let lightController = lightController as? NSObject {
+            lightController.removeObserver(self, forKeyPath: "hasLight", context: &cameraControllerContext)
+            lightController.removeObserver(self, forKeyPath: "lightMode", context: &cameraControllerContext)
+            lightController.removeObserver(self, forKeyPath: "lightAvailable", context: &cameraControllerContext)
         }
+    }
 
-        if let torchController = self.torchController {
-            self.removeTorchObserversForController(torchController)
+    private func addLightObservers() {
+        if let lightController = self.lightController {
+            self.addLightObserversForController(lightController)
+        }
+    }
+
+    private func removeLightObserver() {
+        if let lightController = self.lightController {
+            self.removeLightObserversForController(lightController)
         }
     }
 
@@ -399,10 +356,6 @@ private var cameraControllerContext = 0
         let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         self.videoDeviceInput = videoDeviceInput
 
-        flashController = FlashController(flashModes: flashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
-        torchController = TorchController(torchModes: torchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
-        addFlashAndTorchObservers()
-
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
             self.addDeviceInput(videoDeviceInput)
@@ -416,6 +369,8 @@ private var cameraControllerContext = 0
             self.session.commitConfiguration()
 
             dispatch_async(dispatch_get_main_queue()) {
+                self.createLightControllerForSession(self.session, videoDeviceInput: videoDeviceInput, sessionQueue: self.sessionQueue)
+                self.addLightObservers()
                 self.transformVideoPreviewToMatchDevicePosition(videoDeviceInput.device.position)
                 completion?()
             }
@@ -558,16 +513,14 @@ private var cameraControllerContext = 0
                 self.session.removeInput(input)
             }
 
-            self.removeFlashAndTorchObservers()
+            self.removeLightObserver()
 
             if let device = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: position), input = try? AVCaptureDeviceInput(device: device) {
                 self.videoDeviceInput = input
                 self.addDeviceInput(input)
 
-                self.flashController = FlashController(flashModes: self.flashModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
-                self.torchController = TorchController(torchModes: self.torchModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
-
-                self.addFlashAndTorchObservers()
+                self.createLightControllerForSession(self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
+                self.addLightObservers()
             }
 
             self.session.commitConfiguration()
@@ -582,46 +535,48 @@ private var cameraControllerContext = 0
 
     // MARK: - LED
 
-    /**
-    Selects the next flash mode. The order is taken from `flashModes`.
-    If the current device does not support a flash mode, the next flash mode that is supported is used or `.Off`.
-    */
-    public func selectNextFlashMode() {
-        flashController?.selectNextFlashMode()
+    private func createLightControllerForSession(session: AVCaptureSession, videoDeviceInput: AVCaptureDeviceInput, sessionQueue: dispatch_queue_t) {
+        if recordingMode.sessionPreset == AVCaptureSessionPresetPhoto {
+            lightController = FlashController(flashModes: flashModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        } else {
+            lightController = TorchController(torchModes: torchModes, session: session, videoDeviceInput: videoDeviceInput, sessionQueue: sessionQueue)
+        }
     }
 
     /**
-     Selects the next torch mode. The order is taken from `torchModes`.
-     If the current device does not support a torch mode, the next flash mode that is supported is used or `.Off`.
-     */
-    public func selectNextTorchMode() {
-        torchController?.selectNextTorchMode()
+    Selects the next light mode. The order is taken from `flashModes` or `torchModes` depending on which is active.
+    If the current device does not support a light mode, the next light mode that is supported is used or `.Off`.
+    */
+    public func selectNextLightMode() {
+        lightController?.selectNextLightMode()
     }
 
     // MARK: - KVO
 
-    @objc private class func keyPathsForValuesAffectingCurrentRecordingMode() -> Set<String> {
+    @objc private class func keyPathsForValuesAffectingRecordingMode() -> Set<String> {
         return ["session.sessionPreset"]
     }
 
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let keyPath = keyPath where context == &cameraControllerContext {
             switch keyPath {
-            case "hasFlash", "flashMode", "flashAvailable":
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.flashChangedHandler?(
-                        hasFlash: self.flashController?.hasFlash ?? false,
-                        flashMode: self.flashController?.flashMode ?? .Off,
-                        flashAvailable: self.flashController?.flashAvailable ?? false
-                    )
-                }
-            case "hasTorch", "torchMode", "torchAvailable":
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.torchChangedHandler?(
-                        hasTorch: self.torchController?.hasTorch ?? false,
-                        torchMode: self.torchController?.torchMode ?? .Off,
-                        torchAvailable: self.torchController?.torchAvailable ?? false
-                    )
+            case "hasLight", "lightMode", "lightAvailable":
+                if object is FlashController {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.flashChangedHandler?(
+                            hasFlash: self.lightController?.hasLight ?? false,
+                            flashMode: AVCaptureFlashMode(lightMode: (self.lightController?.lightMode ?? .Off)),
+                            flashAvailable: self.lightController?.lightAvailable ?? false
+                        )
+                    }
+                } else if object is TorchController {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.torchChangedHandler?(
+                            hasTorch: self.lightController?.hasLight ?? false,
+                            torchMode: AVCaptureTorchMode(lightMode: (self.lightController?.lightMode ?? .Off)),
+                            torchAvailable: self.lightController?.lightAvailable ?? false
+                        )
+                    }
                 }
             case "recordingMode":
                 guard let
