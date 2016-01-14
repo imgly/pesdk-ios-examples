@@ -111,6 +111,244 @@ lane :code_coverage do |options|
   end
 end
 
+# Deployment Lanes
+desc "Prepares the framework for release"
+desc "This lane should be run from your local machine, and will push a tag to the remote when finished."
+desc " * Verifies the git branch is clean"
+desc " * Ensures the lane is running on the master branch"
+desc " * Verifies the Github milestone is ready for release"
+desc " * Pulls the remote to verify the latest the branch is up to date"
+desc " * Updates the version of the info plist path used by the framework"
+desc " * Updates the the version of the podspec"
+desc " * Generates a changelog based on the Github milestone"
+desc " * Updates the changelog file"
+desc " * Commits the changes"
+desc " * Pushes the commited branch"
+desc " * Creates a tag"
+desc " * Pushes the tag"
+desc "#### Example:"
+desc "```\nfastlane prepare_framework_release version:3.0.0 --env deploy\n```"
+desc "#### Options"
+desc "It is recommended to manage these options through a .env file. See `fastlane/.env.deploy` for an example."
+desc " * **`version`** (required): The new version of the framework"
+desc " * **`allow_dirty_branch`**: Allows the git branch to be dirty before continuing. Defaults to false"
+desc " * **`remote`**: The name of the git remote. Defaults to `origin`. (`DEPLOY_REMOTE`)"
+desc " * **`allow_branch`**: The name of the branch to build from. Defaults to `master`. (`DEPLOY_BRANCH`)"
+desc " * **`skip_validate_github_milestone`**: Skips validating a Github milestone. Defaults to false"
+desc " * **`skip_git_pull`**: Skips pulling the git remote. Defaults to false"
+desc " * **`skip_plist_update`**: Skips updating the version of the info plist. Defaults to false"
+desc " * **`plist_path`**: The path of the plist file to update. (`DEPLOY_PLIST_PATH`)"
+desc " * **`skip_podspec_update`**: Skips updating the version of the podspec. Defaults to false"
+desc " * **`podspec`**: The path of the podspec file to update. (`DEPLOY_PODSPEC`)"
+desc " * **`skip_changelog`**: Skip generating a changelog. Defaults to false."
+desc " * **`changelog_path`**: The path to the changelog file. (`DEPLOY_CHANGELOG_PATH`)"
+desc " * **`changelog_insert_delimiter`**: The delimiter to insert the changelog after. (`DEPLOY_CHANGELOG_DELIMITER`)"
+desc ""
+
+lane :prepare_framework_release do |options|
+  if !options[:version]
+    raise "No version specified!".red
+  end
+
+  # Ensure the branch is clean
+  if options[:allow_dirty_branch] != true
+    ensure_git_status_clean
+  end
+
+  remote = options[:remote] ? options[:remote] : (ENV["DEPLOY_REMOTE"] ? ENV["DEPLOY_REMOTE"] : "origin")
+  allowed_branch = options[:allow_branch] ? options[:allow_branch] : (ENV["DEPLOY_BRANCH"] ? ENV["DEPLOY_BRANCH"] : "master")
+
+  # Ensure we are on the right branch
+  ensure_git_branch(
+    branch: allowed_branch
+  )
+
+  # Verify the Github milestone is ready for release
+  if options[:skip_validate_github_milestone] != true
+    af_get_github_milestone(
+      title: options[:version],
+      verify_for_release:true
+    )
+  end
+
+  # Pull the latest to ensure we are up to date
+  if options[:skip_git_pull] != true
+    sh("git pull #{remote} #{allowed_branch}")
+  end
+
+  # Update the framework plist
+  if options[:skip_plist_update] != true
+    plist_path = options[:plist_path] ? options[:plist_path] : ENV["DEPLOY_PLIST_PATH"]
+    set_info_plist_value(
+      path: plist_path,
+      key: "CFBundleVersion",
+      value: options[:version]
+    )
+  end
+
+  # Update the podspec
+  if options[:skip_podspec_update] != true
+    podspec = options[:podpsec] ? options[:podpsec] : ENV["DEPLOY_PODSPEC"]
+    version_bump_podspec(
+      path: podspec,
+      version_number: options[:version]
+    )
+
+  end
+
+  # Generate a Changelog
+  if options[:skip_changelog] != true
+    changelog = af_generate_github_milestone_changelog(
+      milestone: options[:version]
+    )
+
+    Helper.log.info "Generated Changelog: #{changelog[:title]} #{changelog[:header]} #{changelog[:changelog]}"
+
+    changelog_path = options[:changelog_path] ? options[:changelog_path] : ENV["DEPLOY_CHANGELOG_PATH"]
+    changelog_insert_delimiter = options[:changelog_insert_delimiter] ? options[:changelog_insert_delimiter] : ENV["DEPLOY_CHANGELOG_DELIMITER"]
+    af_insert_text_into_file(
+      file_path: changelog_path,
+      text: changelog[:title] + changelog[:header] + changelog[:changelog],
+      insert_delimiter: changelog_insert_delimiter
+    )
+  end
+
+  if prompt(text: "#{options[:version]} has been prepped for release. If you have any additional changes you would like to make to the README or CHANGELOG, please do those before continuing. Would you like to commit, tag, and push #{options[:version]} to #{remote}?".green, boolean: true,ci_input:"y")
+
+    # commit the branch
+    git_commit(
+      path: ".",
+      message: "Preparing for the #{options[:version]} release"
+    )
+
+    #push the branch
+    push_to_git_remote(
+      remote: remote
+    )
+
+    # tag the repo
+    add_git_tag(
+      tag: "#{options[:version]}"
+    )
+
+    # push the tag
+    if options [:skip_push_tags] != true
+      af_push_git_tags_to_remote(
+        remote: remote
+      )
+    end
+
+    if !is_ci
+      notification(
+      title: "Release Preparation Complete",
+      message: "The tag #{options[:version]} is now available"
+      )
+    end
+
+  else
+    Helper.log.info "When finished, commit your changes and create your tag.".red
+  end
+end
+
+
+desc "Completes the framework release"
+desc "This lane should be from a CI machine, after the tests have passed on the tag build. This lane does the following:"
+desc " * Verifies the git branch is clean"
+desc " * Ensures the lane is running on the master branch"
+desc " * Pulls the remote to verify the latest the branch is up to date"
+desc " * Generates a changelog for the Github Release"
+desc " * Creates a Github Release"
+desc " * Builds Carthage Frameworks"
+desc " * Uploads Carthage Framework to Github Release"
+desc " * Pushes podspec to pod trunk"
+desc " * Lints the pod spec to ensure it is valid"
+desc " * Closes the associated Github milestone"
+desc "#### Example:"
+desc "```\nfastlane complete_framework_release --env deploy\n```"
+desc "#### Options"
+desc "It is recommended to manage these options through a .env file. See `fastlane/.env.deploy` for an example."
+desc " * **`version`** (required): The new version of the framework. Defaults to the last tag in the repo"
+desc " * **`allow_dirty_branch`**: Allows the git branch to be dirty before continuing. Defaults to false"
+desc " * **`remote`**: The name of the git remote. Defaults to `origin`. (`DEPLOY_REMOTE`)"
+desc " * **`allow_branch`**: The name of the branch to build from. Defaults to `master`. (`DEPLOY_BRANCH`)"
+desc " * **`skip_github_release`**: Skips creating a Github release. Defaults to false"
+desc " * **`skip_carthage_framework`**: Skips creating a carthage framework. If building a swift framework, this should be disabled. Defaults to false."
+desc " * **`skip_pod_push`**: Skips pushing the podspec to trunk."
+desc " * **`skip_podspec_update`**: Skips updating the version of the podspec. Defaults to false"
+desc " * **`skip_closing_github_milestone`**: Skips closing the associated Github milestone. Defaults to false"
+desc ""
+lane :complete_framework_release do |options|
+  if options[:skip_ci_check] != true
+    if !is_ci
+      raise "#{lane_context[SharedValues::LANE_NAME]} should be run from a CI machine. If you want to override this, pass 'skip_ci_check:true'".red
+    end
+  end
+
+  version = options[:version] ? options[:version] : last_git_tag.strip
+  Helper.log.info "Using version #{version}"
+
+  # Ensure clean branch
+  if options[:allow_dirty_branch] != true
+    ensure_git_status_clean
+  end
+
+  remote = options[:remote] ? options[:remote] : (ENV["DEPLOY_REMOTE"] ? ENV["DEPLOY_REMOTE"] : "origin")
+  allowed_branch = options[:allow_branch] ? options[:allow_branch] : (ENV["DEPLOY_BRANCH"] ? ENV["DEPLOY_BRANCH"] : "master")
+
+  # Ensure we are on the right branch
+  ensure_git_branch(
+    branch: allowed_branch
+  )
+
+  # Pull the latest to ensure we are up to date
+  if options[:skip_git_pull] != true
+    sh("git pull #{remote} #{allowed_branch}")
+  end
+
+  # Create a release
+    #* Upload Notes
+    #* Upload Carthage Asset
+  if options[:skip_github_release] != true
+    af_generate_github_milestone_changelog(
+          milestone: version
+        )
+
+        body = lane_context[SharedValues::GITHUB_MILESTONE_CHANGELOG][:header] + lane_context[SharedValues::GITHUB_MILESTONE_CHANGELOG][:changelog]
+    af_create_github_release(
+        tag_name: version,
+        name: version,
+        body: body
+      )
+
+      # generate the carthage zip
+      if options[:skip_carthage_framework] != true
+        af_build_carthage_frameworks
+
+        af_upload_asset_for_github_release(
+          file_path:lane_context[SharedValues::CARTHAGE_FRAMEWORK]
+        )
+
+      end
+  end
+
+  # pod trunk push
+  if options[:skip_pod_push] != true
+    pod_push
+
+    af_pod_spec_lint
+  end
+
+  if options[:skip_closing_github_milestone] != true
+    af_get_github_milestone(
+      title: version
+    )
+
+    af_update_github_milestone(
+      state: "closed"
+    )
+  end
+end
+
 after_all do |lane|
   # This block is called, only if the executed lane was successful
 

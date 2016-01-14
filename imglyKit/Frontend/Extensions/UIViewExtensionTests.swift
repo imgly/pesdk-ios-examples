@@ -29,14 +29,16 @@ class UIViewExtensionTests: XCTestCase {
         let constraint2 = NSLayoutConstraint(item: view, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: 1, constant: 100)
 
         view.addConstraint(constraint1, forKey: "test1")
-        view.addConstraint(constraint2, forKey: "test2")
+        view.addConstraint(constraint2, forKey: "test1")
 
         XCTAssert(view.constraints.contains(constraint1))
-        XCTAssert(view.constraints.contains(constraint1))
+        XCTAssert(view.constraints.contains(constraint2))
 
         XCTAssert(view.hasConstraintForKey("test1"))
-        XCTAssert(view.hasConstraintForKey("test2"))
-        XCTAssert(!view.hasConstraintForKey("test3"))
+        XCTAssert(!view.hasConstraintForKey("test2"))
+
+        XCTAssertNotNil(view.constraintsForKey("test1"))
+        XCTAssertEqual([constraint1, constraint2], view.constraintsForKey("test1")!)
     }
 
     func testAddConstraints() {

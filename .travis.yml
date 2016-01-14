@@ -24,7 +24,7 @@ before_install:
 script:
   - set -o pipefail
   - fastlane $FASTLANE_LANE configuration:Debug --env $FASTLANE_ENV
-  - fastlane $FASTLANE_LANE configuration:Release --env $FASTLANE_ENV
+  - fastlane $FASTLANE_LANE configuration:ReleaseTest --env $FASTLANE_ENV
 after_success:
   - if [ "$FASTLANE_LANE" == "code_coverage" ]; then
       bash <(curl -s https://codecov.io/bash);
@@ -33,3 +33,8 @@ after_failure:
  - cat -n ~/Library/Logs/scan/*
  - cat -n $TMPDIR/com.apple.dt.XCTest-status/Session*.log
  - cat -n ~/Library/Logs/DiagnosticReports/xctest*.crash
+ deploy:
+   provider: script
+   script: fastlane complete_framework_release --env deploy
+   on:
+     tags: true
