@@ -21,35 +21,61 @@ private var cameraControllerContext = 0
 
     // MARK: - Properties
 
-    private let session = AVCaptureSession()
+    private dynamic let session = AVCaptureSession()
     private let sessionQueue = dispatch_queue_create("capture_session_queue", DISPATCH_QUEUE_SERIAL)
     private let sampleBufferQueue = dispatch_queue_create("sample_buffer_queue", DISPATCH_QUEUE_SERIAL)
 
     private var videoDeviceInput: AVCaptureDeviceInput?
+    private var audioDeviceInput: AVCaptureDeviceInput?
     private let videoDataOutput = AVCaptureVideoDataOutput()
+    private let audioDataOutput = AVCaptureAudioDataOutput()
 
     private let glContext: EAGLContext
     public let videoPreviewView: GLKView
 
     private var setupComplete = false
 
-    public var currentRecordingMode: RecordingMode {
-        if session.sessionPreset == AVCaptureSessionPresetPhoto {
-            return .Photo
-        } else {
-            return .Video
+    /// The currently active recording mode (i.e. `.Photo` or `.Video`). Setting this property before
+    /// calling `setupWithInitialRecordingMode(:)` is ignored. The setter asynchronously updates the
+    /// session, so the getter might not immediately represent the new value. You can observe changes
+    /// to the value of this property using key-value observing.
+    public dynamic var recordingMode: RecordingMode {
+        get {
+            if session.sessionPreset == AVCaptureSessionPresetPhoto {
+                return .Photo
+            } else {
+                return .Video
+            }
+        }
+
+        set {
+            if !setupComplete || recordingMode == newValue {
+                return
+            }
+
+            dispatch_async(sessionQueue) {
+                // TODO: Stop recording if needed
+                // TODO: Add asset writer if needed
+                self.changeSessionPreset(newValue.sessionPreset)
+                if newValue.sessionPreset != AVCaptureSessionPresetPhoto {
+                    self.addAudioInput()
+                }
+            }
         }
     }
 
     // Handlers
 
-    /// Called when the list of available recording modes was changed.
-    public var availableRecordingModesChangedHandler: (() -> Void)? {
-        didSet {
-            // Call immediately for initial value
-            availableRecordingModesChangedHandler?()
-        }
-    }
+//    /// Called when the list of available recording modes was changed.
+//    public var availableRecordingModesChangedHandler: (() -> Void)? {
+//        didSet {
+//            // Call immediately for initial value
+//            availableRecordingModesChangedHandler?()
+//        }
+//    }
+
+    /// Called when the recording mode changes.
+    public var recordingModeChangedHandler: ((previousRecordingMode: RecordingMode?, newRecordingMode: RecordingMode) -> Void)?
 
     /// Called when the list of available camera positions was changed.
     public var availableCameraPositionsChangedHandler: (() -> Void)? {
@@ -71,44 +97,44 @@ private var cameraControllerContext = 0
 
     // Options
 
-    /// An array of recording modes (e.g. `.Photo`, `.Video`) that you want to support. Passing an empty
-    /// array to this property is ignored. Defaults to all recording modes. Duplicate values result in
-    /// undefined behaviour.
-    public var recordingModes: [RecordingMode] = [.Photo, .Video] {
-        didSet {
-            // Require at least one `RecordingMode`
-            if recordingModes.count == 0 {
-                recordingModes = oldValue
-            }
-
-            if oldValue != recordingModes {
-                // TODO: Stop recording if needed
-
-                if !recordingModes.contains(currentRecordingMode) {
-                    dispatch_async(sessionQueue) {
-                        self.session.beginConfiguration()
-                        self.changeSessionPreset(self.recordingModes[0].sessionPreset)
-                        self.session.commitConfiguration()
-                    }
-                }
-
-                availableRecordingModesChangedHandler?()
-            }
-        }
-    }
-
-    /// An array of `RecordingMode` raw values wrapped in `NSNumber`s.
-    /// Setting this property overrides any previously set values in
-    /// `recordingModes` with the corresponding unwrapped values.
-    public var recordingModesAsNSNumbers: [NSNumber] {
-        get {
-            return recordingModes.map { NSNumber(integer: $0.rawValue) }
-        }
-
-        set {
-            recordingModes = newValue.flatMap { RecordingMode(rawValue: $0.integerValue) }
-        }
-    }
+//    /// An array of recording modes (e.g. `.Photo`, `.Video`) that you want to support. Passing an empty
+//    /// array to this property is ignored. Defaults to all recording modes. Duplicate values result in
+//    /// undefined behaviour.
+//    public var recordingModes: [RecordingMode] = [.Photo, .Video] {
+//        didSet {
+//            // Require at least one `RecordingMode`
+//            if recordingModes.count == 0 {
+//                recordingModes = oldValue
+//            }
+//
+//            if oldValue != recordingModes {
+//                // TODO: Stop recording if needed
+//
+//                if !recordingModes.contains(currentRecordingMode) {
+//                    dispatch_async(sessionQueue) {
+//                        self.session.beginConfiguration()
+//                        self.changeSessionPreset(self.recordingModes[0].sessionPreset)
+//                        self.session.commitConfiguration()
+//                    }
+//                }
+//
+//                availableRecordingModesChangedHandler?()
+//            }
+//        }
+//    }
+//
+//    /// An array of `RecordingMode` raw values wrapped in `NSNumber`s.
+//    /// Setting this property overrides any previously set values in
+//    /// `recordingModes` with the corresponding unwrapped values.
+//    public var recordingModesAsNSNumbers: [NSNumber] {
+//        get {
+//            return recordingModes.map { NSNumber(integer: $0.rawValue) }
+//        }
+//
+//        set {
+//            recordingModes = newValue.flatMap { RecordingMode(rawValue: $0.integerValue) }
+//        }
+//    }
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
     /// this property automatically checks if the device supports all camera positions and updates
@@ -213,6 +239,17 @@ private var cameraControllerContext = 0
         }
     }
 
+    /// The effect filter that is applied to the live feed.
+    public var effectFilter: EffectFilter {
+        get {
+            return sampleBufferController.effectFilter
+        }
+
+        set {
+            sampleBufferController.effectFilter = newValue
+        }
+    }
+
     private let sampleBufferController: SampleBufferController
     private let deviceOrientationController = DeviceOrientationController()
     private var flashController: FlashController?
@@ -241,7 +278,9 @@ private var cameraControllerContext = 0
 
     // MARK: - Observers
 
-    private func addObservers() {
+    private func addSessionObservers() {
+        addObserver(self, forKeyPath: "recordingMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "sessionRuntimeError:",
             name: AVCaptureSessionRuntimeErrorNotification,
@@ -260,7 +299,9 @@ private var cameraControllerContext = 0
             object: session)
     }
 
-    private func removeObservers() {
+    private func removeSessionObservers() {
+        removeObserver(self, forKeyPath: "recordingMode", context: &cameraControllerContext)
+
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
@@ -327,21 +368,26 @@ private var cameraControllerContext = 0
     Any handlers that will be used should be set before calling this method, so that they are called
     with their initial values.
 
+    - parameter recordingMode: The initial recording mode (e.g. `.Photo` or `.Video`) to use when
+    initializing the camera.
+
     - throws: A `CameraControllerError` or an `NSError` if setup fails.
     */
-    public func setup() throws {
-        try setupWithCompletion(nil)
+    public func setupWithInitialRecordingMode(recordingMode: RecordingMode) throws {
+        try setupWithInitialRecordingMode(recordingMode, completion: nil)
     }
 
     /**
-     Same as `setup()` but with an optional completion handler. The completion handler is always invoked
+     Same as `setupWithInitialRecordingMode(:)` but with an optional completion handler. The completion handler is always invoked
      on the main thread.
 
+     - parameter recordingMode: The initial recording mode (e.g. `.Photo` or `.Video`) to use when
+     initializing the camera.
      - parameter completion: A block to be executed when the camera has finished initialization.
 
      - throws: A `CameraControllerError` or an `NSError` if setup fails.
      */
-    public func setupWithCompletion(completion: (() -> Void)?) throws {
+    public func setupWithInitialRecordingMode(recordingMode: RecordingMode, completion: (() -> Void)?) throws {
         if setupComplete {
             throw CameraControllerError.MultipleCallsToSetup
         }
@@ -359,9 +405,14 @@ private var cameraControllerContext = 0
 
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
-            self.addVideoDeviceInput(videoDeviceInput)
+            self.addDeviceInput(videoDeviceInput)
             self.addVideoDataOutput(self.videoDataOutput)
-            self.changeSessionPreset(self.recordingModes[0].sessionPreset)
+            self.changeSessionPreset(recordingMode.sessionPreset)
+
+            if recordingMode.sessionPreset != AVCaptureSessionPresetPhoto {
+                self.addAudioInput()
+            }
+
             self.session.commitConfiguration()
 
             dispatch_async(dispatch_get_main_queue()) {
@@ -390,9 +441,9 @@ private var cameraControllerContext = 0
 
     // MARK: - Session Configuration
 
-    private func addVideoDeviceInput(videoDeviceInput: AVCaptureDeviceInput) {
-        if session.canAddInput(videoDeviceInput) {
-            session.addInput(videoDeviceInput)
+    private func addDeviceInput(deviceInput: AVCaptureDeviceInput) {
+        if session.canAddInput(deviceInput) {
+            session.addInput(deviceInput)
         }
     }
 
@@ -403,21 +454,40 @@ private var cameraControllerContext = 0
         }
     }
 
+    private func addAudioDataOutput(audioDataOutput: AVCaptureAudioDataOutput) {
+        if session.canAddOutput(audioDataOutput) {
+            audioDataOutput.setSampleBufferDelegate(sampleBufferController, queue: sampleBufferQueue)
+            session.addOutput(audioDataOutput)
+        }
+    }
+
     private func changeSessionPreset(sessionPreset: String) {
         if session.canSetSessionPreset(sessionPreset) {
             session.sessionPreset = sessionPreset
         }
     }
 
+    private func addAudioInput() {
+        if audioDeviceInput != nil {
+            return
+        }
+
+        if let audioDevice = AVCaptureDevice.deviceWithMediaType(AVMediaTypeAudio),
+            audioDeviceInput = try? AVCaptureDeviceInput(device: audioDevice) {
+                addDeviceInput(audioDeviceInput)
+                self.audioDeviceInput = audioDeviceInput
+        }
+    }
+
     // MARK: - Starting / Stopping
 
     /**
-    Starts the camera. `setup()` __must__ be called before calling this method, otherwise this method does
+    Starts the camera. `setupWithInitialRecordingMode(:)` __must__ be called before calling this method, otherwise this method does
     nothing. You should also add the `videoPreviewView` to your view hierachy to see the camera output.
     */
     public func startCamera() {
         if !setupComplete {
-            print("You must call setup() before calling startCamera()")
+            print("You must call setupWithInitialRecordingMode(:) before calling startCamera()")
             return
         }
 
@@ -425,7 +495,7 @@ private var cameraControllerContext = 0
         videoPreviewView.bindDrawable()
 
         dispatch_async(sessionQueue) {
-            self.addObservers()
+            self.addSessionObservers()
             self.session.startRunning()
         }
     }
@@ -438,7 +508,7 @@ private var cameraControllerContext = 0
 
         dispatch_async(sessionQueue) {
             self.session.stopRunning()
-            self.removeObservers()
+            self.removeSessionObservers()
         }
     }
 
@@ -477,7 +547,7 @@ private var cameraControllerContext = 0
     */
     public func switchToCameraAtPosition(position: AVCaptureDevicePosition) {
         if !setupComplete {
-            print("You must call setup() before calling switchToCameraAtPosition(:)")
+            print("You must call setupWithInitialRecordingMode(:) before calling switchToCameraAtPosition(:)")
             return
         }
 
@@ -492,7 +562,7 @@ private var cameraControllerContext = 0
 
             if let device = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: position), input = try? AVCaptureDeviceInput(device: device) {
                 self.videoDeviceInput = input
-                self.addVideoDeviceInput(input)
+                self.addDeviceInput(input)
 
                 self.flashController = FlashController(flashModes: self.flashModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
                 self.torchController = TorchController(torchModes: self.torchModes, session: self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
@@ -530,6 +600,10 @@ private var cameraControllerContext = 0
 
     // MARK: - KVO
 
+    @objc private class func keyPathsForValuesAffectingCurrentRecordingMode() -> Set<String> {
+        return ["session.sessionPreset"]
+    }
+
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let keyPath = keyPath where context == &cameraControllerContext {
             switch keyPath {
@@ -547,6 +621,26 @@ private var cameraControllerContext = 0
                         hasTorch: self.torchController?.hasTorch ?? false,
                         torchMode: self.torchController?.torchMode ?? .Off,
                         torchAvailable: self.torchController?.torchAvailable ?? false
+                    )
+                }
+            case "recordingMode":
+                guard let
+                    newRecordingModeRaw = change?[NSKeyValueChangeNewKey] as? Int,
+                    newRecordingMode = RecordingMode(rawValue: newRecordingModeRaw) else {
+                    return
+                }
+
+                let previousRecordingMode: RecordingMode?
+                if let previousRecordingModeRaw = change?[NSKeyValueChangeOldKey] as? Int {
+                    previousRecordingMode = RecordingMode(rawValue: previousRecordingModeRaw)
+                } else {
+                    previousRecordingMode = nil
+                }
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.recordingModeChangedHandler?(
+                        previousRecordingMode: previousRecordingMode,
+                        newRecordingMode: newRecordingMode
                     )
                 }
             default:

@@ -1,5 +1,5 @@
 //
-//  GobblinFilter.swift
+//  GoblinFilter.swift
 //  imglyKit
 //
 //  Created by Carsten Przyluczky on 11/03/15.

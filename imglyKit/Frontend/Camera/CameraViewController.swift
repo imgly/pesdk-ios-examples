@@ -468,7 +468,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-//        configureRecordingModeSwitching()
+        configureRecordingModeSwitching()
         configureViewHierarchy()
         configureViewConstraints()
         configureFilterSelectionController()
@@ -534,11 +534,11 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     // MARK: - Configuration
 
     private func configureRecordingModeSwitching() {
-        if configuration.cameraViewControllerOptions.allowedRecordingModes.count > 1 {
+        if options.allowedRecordingModes.count > 1 {
             view.addGestureRecognizer(swipeLeftGestureRecognizer)
             view.addGestureRecognizer(swipeRightGestureRecognizer)
 
-            recordingModeSelectionButtons = configuration.cameraViewControllerOptions.allowedRecordingModes.map { $0.selectionButton }
+            recordingModeSelectionButtons = options.allowedRecordingModes.map { $0.selectionButton }
 
             for recordingModeSelectionButton in recordingModeSelectionButtons {
                 recordingModeSelectionButton.addTarget(self, action: "toggleMode:", forControlEvents: .TouchUpInside)
@@ -575,7 +575,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
         for recordingModeSelectionButton in recordingModeSelectionButtons {
             bottomControlsView.addSubview(recordingModeSelectionButton)
-            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, configuration.cameraViewControllerOptions.allowedRecordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
+            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, options.allowedRecordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
         }
 
         backgroundContainerView.addSubview(filterIntensitySlider)
@@ -678,10 +678,9 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 
     private func configureCameraController() {
         let cameraController = CameraController()
-        cameraController.recordingModes = configuration.cameraViewControllerOptions.allowedRecordingModes
-        cameraController.cameraPositions = configuration.cameraViewControllerOptions.allowedCameraPositions
-        cameraController.flashModes = configuration.cameraViewControllerOptions.allowedFlashModes
-        cameraController.torchModes = configuration.cameraViewControllerOptions.allowedTorchModes
+        cameraController.cameraPositions = options.allowedCameraPositions
+        cameraController.flashModes = options.allowedFlashModes
+        cameraController.torchModes = options.allowedTorchModes
 
         // Handlers
         cameraController.availableCameraPositionsChangedHandler = { [weak self] in
@@ -690,6 +689,50 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
             } else {
                 self?.switchCameraButton.hidden = true
             }
+        }
+
+        cameraController.recordingModeChangedHandler = { [weak self] previousRecordingMode, newRecordingMode in
+            guard let strongSelf = self, cameraController = self?.cameraController else {
+                return
+            }
+
+            if let centerModeButtonConstraint = strongSelf.centerModeButtonConstraint {
+                strongSelf.bottomControlsView.removeConstraint(centerModeButtonConstraint)
+            }
+
+            // add new action button to container
+            let actionButton = newRecordingMode.actionButton
+            actionButton.addTarget(self, action: newRecordingMode.actionSelector, forControlEvents: .TouchUpInside)
+            actionButton.alpha = 0
+            strongSelf.addActionButtonToContainer(actionButton)
+
+            // Call configuration closure if actionButton is a UIButton subclass
+            if let imageCaptureActionButton = actionButton as? UIButton {
+                strongSelf.options.photoActionButtonConfigurationClosure(imageCaptureActionButton)
+            }
+
+            actionButton.layoutIfNeeded()
+
+            let buttonIndex = strongSelf.options.allowedRecordingModes.indexOf(newRecordingMode)!
+            if strongSelf.recordingModeSelectionButtons.count >= buttonIndex + 1 {
+                let target = strongSelf.recordingModeSelectionButtons[buttonIndex]
+
+                // create new centerModeButtonConstraint
+                strongSelf.centerModeButtonConstraint = NSLayoutConstraint(item: target, attribute: .CenterX, relatedBy: .Equal, toItem: strongSelf.actionButtonContainer, attribute: .CenterX, multiplier: 1, constant: 0)
+                strongSelf.bottomControlsView.addConstraint(strongSelf.centerModeButtonConstraint!)
+            }
+
+            // add recordingTimeLabel
+            if cameraController.recordingMode == .Video {
+                strongSelf.addRecordingTimeLabel()
+//                cameraController.hideSquareMask()
+            } else {
+                if strongSelf.options.cropToSquare {
+//                    cameraController.showSquareMask()
+                }
+            }
+
+            strongSelf.view.bringSubviewToFront(strongSelf.filterIntensitySlider)
         }
 
         cameraController.flashChangedHandler = { [weak self] hasFlash, flashMode, flashAvailable in
@@ -725,7 +768,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 //        }
 
         do {
-            try cameraController.setup()
+            try cameraController.setupWithInitialRecordingMode(options.allowedRecordingModes[0])
         } catch CameraControllerError.MultipleCallsToSetup {
             fatalError("setup() on CameraController has been called before.")
         } catch CameraControllerError.UnableToInitializeCaptureDevice {
@@ -758,11 +801,11 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     private func configureFilterSelectionController() {
         filterSelectionController.dataSource = self.options.filtersDataSource
         filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
-//            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
-//                cameraController.effectFilter = InstanceFactory.effectFilterWithType(filterType)
-//                cameraController.effectFilter.inputIntensity = initialFilterIntensity
-//                self?.filterIntensitySlider.value = initialFilterIntensity
-//            }
+            if let cameraController = self?.cameraController where cameraController.effectFilter.filterType != filterType {
+                cameraController.effectFilter = InstanceFactory.effectFilterWithType(filterType)
+                cameraController.effectFilter.inputIntensity = initialFilterIntensity
+                self?.filterIntensitySlider.value = initialFilterIntensity
+            }
 
             if filterType == .None {
                 self?.hideSliderTimer?.invalidate()
@@ -782,13 +825,13 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
             }
         }
 
-//        filterSelectionController.activeFilterType = { [weak self] in
-//            if let cameraController = self?.cameraController {
-//                return cameraController.effectFilter.filterType
-//            } else {
-//                return .None
-//            }
-//        }
+        filterSelectionController.activeFilterType = { [weak self] in
+            if let cameraController = self?.cameraController {
+                return cameraController.effectFilter.filterType
+            } else {
+                return .None
+            }
+        }
     }
 
     // MARK: - Helpers
@@ -860,8 +903,8 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         editorViewController.configuration = configuration
         editorViewController.highResolutionImage = image
         if let cameraController = cameraController {
-//            editorViewController.initialFilterType = cameraController.effectFilter.filterType
-//            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
+            editorViewController.initialFilterType = cameraController.effectFilter.filterType
+            editorViewController.initialFilterIntensity = cameraController.effectFilter.inputIntensity
         }
         editorViewController.completionBlock = editorCompletionBlock
 
@@ -911,34 +954,38 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     // MARK: - Targets
 
     @objc private func toggleMode(sender: AnyObject?) {
-//        let recordingModes = configuration.cameraViewControllerOptions.allowedRecordingModes
-//
-//        if let gestureRecognizer = sender as? UISwipeGestureRecognizer {
-//            if gestureRecognizer.direction == .Left {
-//                let currentIndex = recordingModes.indexOf(currentRecordingMode)
-//
-//                if let currentIndex = currentIndex where currentIndex < recordingModes.count - 1 {
-//                    currentRecordingMode = recordingModes[currentIndex + 1]
-//                    return
-//                }
-//            } else if gestureRecognizer.direction == .Right {
-//                let currentIndex = recordingModes.indexOf(currentRecordingMode)
-//
-//                if let currentIndex = currentIndex where currentIndex > 0 {
-//                    currentRecordingMode = recordingModes[currentIndex - 1]
-//                    return
-//                }
-//            }
-//        }
-//
-//        if let button = sender as? UIButton {
-//            let buttonIndex = recordingModeSelectionButtons.indexOf(button)
-//
-//            if let buttonIndex = buttonIndex {
-//                currentRecordingMode = recordingModes[buttonIndex]
-//                return
-//            }
-//        }
+        let recordingModes = options.allowedRecordingModes
+
+        guard let cameraController = cameraController else {
+            return
+        }
+
+        if let gestureRecognizer = sender as? UISwipeGestureRecognizer {
+            if gestureRecognizer.direction == .Left {
+                let currentIndex = recordingModes.indexOf(cameraController.recordingMode)
+
+                if let currentIndex = currentIndex where currentIndex < recordingModes.count - 1 {
+                    cameraController.recordingMode = recordingModes[currentIndex + 1]
+                    return
+                }
+            } else if gestureRecognizer.direction == .Right {
+                let currentIndex = recordingModes.indexOf(cameraController.recordingMode)
+
+                if let currentIndex = currentIndex where currentIndex > 0 {
+                    cameraController.recordingMode = recordingModes[currentIndex - 1]
+                    return
+                }
+            }
+        }
+
+        if let button = sender as? UIButton {
+            let buttonIndex = recordingModeSelectionButtons.indexOf(button)
+
+            if let buttonIndex = buttonIndex {
+                cameraController.recordingMode = recordingModes[buttonIndex]
+                return
+            }
+        }
     }
 
     @objc private func hideFilterIntensitySlider(timer: NSTimer?) {
@@ -949,12 +996,16 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func changeFlash(sender: UIButton?) {
-//        switch currentRecordingMode {
-//        case .Photo:
-            cameraController?.selectNextFlashMode()
-//        case .Video:
-//            cameraController?.selectNextTorchMode()
-//        }
+        guard let cameraController = cameraController else {
+            return
+        }
+
+        switch cameraController.recordingMode {
+        case .Photo:
+            cameraController.selectNextFlashMode()
+        case .Video:
+            cameraController.selectNextTorchMode()
+        }
     }
 
     public func switchCamera(sender: UIButton?) {
@@ -1034,7 +1085,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     @objc private func changeIntensity(sender: UISlider?) {
         if let slider = sender {
             resetHideSliderTimer()
-//            cameraController?.effectFilter.inputIntensity = slider.value
+            cameraController?.effectFilter.inputIntensity = slider.value
         }
     }
 

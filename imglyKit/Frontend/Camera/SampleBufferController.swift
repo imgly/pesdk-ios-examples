@@ -16,6 +16,7 @@ class SampleBufferController: NSObject {
 
     let videoPreviewView: GLKView
     let ciContext: CIContext
+    var effectFilter: EffectFilter = NoneFilter()
 
     // MARK: - Initializers
 
@@ -36,7 +37,7 @@ class SampleBufferController: NSObject {
 
 }
 
-extension SampleBufferController: AVCaptureVideoDataOutputSampleBufferDelegate {
+extension SampleBufferController: AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!) {
         guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
@@ -49,10 +50,20 @@ extension SampleBufferController: AVCaptureVideoDataOutputSampleBufferDelegate {
             sourceImage = CIImage(CVPixelBuffer: imageBuffer as CVPixelBuffer)
         }
 
+        let filteredImage: CIImage
+        if effectFilter is NoneFilter {
+            filteredImage = sourceImage
+        } else {
+            filteredImage = PhotoProcessor.processWithCIImage(sourceImage, filters: [effectFilter]) ?? sourceImage
+        }
+
         let targetRect = CGRect(x: 0, y: 0, width: videoPreviewView.drawableWidth, height: videoPreviewView.drawableHeight)
         let videoPreviewFrame = sourceImage.extent.rectFittedIntoTargetRect(targetRect, withContentMode: .ScaleAspectFit)
 
-        ciContext.drawImage(sourceImage, inRect: videoPreviewFrame, fromRect: sourceImage.extent)
+        glClearColor(0, 0, 0, 1.0)
+        glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+
+        ciContext.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: filteredImage.extent)
 
         videoPreviewView.display()
     }

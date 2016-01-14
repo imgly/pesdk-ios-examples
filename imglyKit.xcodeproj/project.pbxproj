@@ -43,7 +43,7 @@
 		2B1ADA4F1B19C8D500C98522 /* Fridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4081AF1152500C801B2 /* Fridge.png */; };
 		2B1ADA501B19C8D500C98522 /* Front.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4091AF1152500C801B2 /* Front.png */; };
 		2B1ADA511B19C8D500C98522 /* Glam.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40A1AF1152500C801B2 /* Glam.png */; };
-		2B1ADA521B19C8D500C98522 /* Gobblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40B1AF1152500C801B2 /* Gobblin.png */; };
+		2B1ADA521B19C8D500C98522 /* Goblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40B1AF1152500C801B2 /* Goblin.png */; };
 		2B1ADA531B19C8D500C98522 /* Highcarb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40C1AF1152500C801B2 /* Highcarb.png */; };
 		2B1ADA541B19C8D500C98522 /* HighContrast.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40D1AF1152500C801B2 /* HighContrast.png */; };
 		2B1ADA551B19C8D500C98522 /* Identity.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40E1AF1152500C801B2 /* Identity.png */; };
@@ -138,7 +138,7 @@
 		2B1ADAB41B19C8EE00C98522 /* FridgeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CB1AF1155D00C801B2 /* FridgeFilter.swift */; };
 		2B1ADAB51B19C8EE00C98522 /* FrontFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CC1AF1155D00C801B2 /* FrontFilter.swift */; };
 		2B1ADAB61B19C8EE00C98522 /* GlamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CD1AF1155D00C801B2 /* GlamFilter.swift */; };
-		2B1ADAB71B19C8EE00C98522 /* GobblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CE1AF1155D00C801B2 /* GobblinFilter.swift */; };
+		2B1ADAB71B19C8EE00C98522 /* GoblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CE1AF1155D00C801B2 /* GoblinFilter.swift */; };
 		2B1ADAB81B19C8EE00C98522 /* HighcarbFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CF1AF1155D00C801B2 /* HighcarbFilter.swift */; };
 		2B1ADAB91B19C8EE00C98522 /* K1Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4D01AF1155D00C801B2 /* K1Filter.swift */; };
 		2B1ADABA1B19C8EE00C98522 /* K2Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4D11AF1155D00C801B2 /* K2Filter.swift */; };
@@ -258,7 +258,7 @@
 		2BF4D44C1AF1152500C801B2 /* Fridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4081AF1152500C801B2 /* Fridge.png */; };
 		2BF4D44D1AF1152500C801B2 /* Front.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4091AF1152500C801B2 /* Front.png */; };
 		2BF4D44E1AF1152500C801B2 /* Glam.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40A1AF1152500C801B2 /* Glam.png */; };
-		2BF4D44F1AF1152500C801B2 /* Gobblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40B1AF1152500C801B2 /* Gobblin.png */; };
+		2BF4D44F1AF1152500C801B2 /* Goblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40B1AF1152500C801B2 /* Goblin.png */; };
 		2BF4D4501AF1152500C801B2 /* Highcarb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40C1AF1152500C801B2 /* Highcarb.png */; };
 		2BF4D4511AF1152500C801B2 /* HighContrast.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40D1AF1152500C801B2 /* HighContrast.png */; };
 		2BF4D4521AF1152500C801B2 /* Identity.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40E1AF1152500C801B2 /* Identity.png */; };
@@ -350,7 +350,7 @@
 		2BF4D50F1AF1155E00C801B2 /* FridgeFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CB1AF1155D00C801B2 /* FridgeFilter.swift */; };
 		2BF4D5101AF1155E00C801B2 /* FrontFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CC1AF1155D00C801B2 /* FrontFilter.swift */; };
 		2BF4D5111AF1155E00C801B2 /* GlamFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CD1AF1155D00C801B2 /* GlamFilter.swift */; };
-		2BF4D5121AF1155E00C801B2 /* GobblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CE1AF1155D00C801B2 /* GobblinFilter.swift */; };
+		2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CE1AF1155D00C801B2 /* GoblinFilter.swift */; };
 		2BF4D5131AF1155E00C801B2 /* HighcarbFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4CF1AF1155D00C801B2 /* HighcarbFilter.swift */; };
 		2BF4D5141AF1155E00C801B2 /* K1Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4D01AF1155D00C801B2 /* K1Filter.swift */; };
 		2BF4D5151AF1155E00C801B2 /* K2Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4D11AF1155D00C801B2 /* K2Filter.swift */; };
@@ -511,7 +511,7 @@
 		2BF4D4081AF1152500C801B2 /* Fridge.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Fridge.png; sourceTree = "<group>"; };
 		2BF4D4091AF1152500C801B2 /* Front.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Front.png; sourceTree = "<group>"; };
 		2BF4D40A1AF1152500C801B2 /* Glam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Glam.png; sourceTree = "<group>"; };
-		2BF4D40B1AF1152500C801B2 /* Gobblin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gobblin.png; sourceTree = "<group>"; };
+		2BF4D40B1AF1152500C801B2 /* Goblin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Goblin.png; sourceTree = "<group>"; };
 		2BF4D40C1AF1152500C801B2 /* Highcarb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Highcarb.png; sourceTree = "<group>"; };
 		2BF4D40D1AF1152500C801B2 /* HighContrast.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HighContrast.png; sourceTree = "<group>"; };
 		2BF4D40E1AF1152500C801B2 /* Identity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Identity.png; sourceTree = "<group>"; };
@@ -603,7 +603,7 @@
 		2BF4D4CB1AF1155D00C801B2 /* FridgeFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FridgeFilter.swift; sourceTree = "<group>"; };
 		2BF4D4CC1AF1155D00C801B2 /* FrontFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrontFilter.swift; sourceTree = "<group>"; };
 		2BF4D4CD1AF1155D00C801B2 /* GlamFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlamFilter.swift; sourceTree = "<group>"; };
-		2BF4D4CE1AF1155D00C801B2 /* GobblinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GobblinFilter.swift; sourceTree = "<group>"; };
+		2BF4D4CE1AF1155D00C801B2 /* GoblinFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoblinFilter.swift; sourceTree = "<group>"; };
 		2BF4D4CF1AF1155D00C801B2 /* HighcarbFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighcarbFilter.swift; sourceTree = "<group>"; };
 		2BF4D4D01AF1155D00C801B2 /* K1Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K1Filter.swift; sourceTree = "<group>"; };
 		2BF4D4D11AF1155D00C801B2 /* K2Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = K2Filter.swift; sourceTree = "<group>"; };
@@ -902,7 +902,7 @@
 				2BF4D4081AF1152500C801B2 /* Fridge.png */,
 				2BF4D4091AF1152500C801B2 /* Front.png */,
 				2BF4D40A1AF1152500C801B2 /* Glam.png */,
-				2BF4D40B1AF1152500C801B2 /* Gobblin.png */,
+				2BF4D40B1AF1152500C801B2 /* Goblin.png */,
 				2BF4D40C1AF1152500C801B2 /* Highcarb.png */,
 				2BF4D40D1AF1152500C801B2 /* HighContrast.png */,
 				2BF4D40E1AF1152500C801B2 /* Identity.png */,
@@ -1017,7 +1017,7 @@
 				2BF4D4CB1AF1155D00C801B2 /* FridgeFilter.swift */,
 				2BF4D4CC1AF1155D00C801B2 /* FrontFilter.swift */,
 				2BF4D4CD1AF1155D00C801B2 /* GlamFilter.swift */,
-				2BF4D4CE1AF1155D00C801B2 /* GobblinFilter.swift */,
+				2BF4D4CE1AF1155D00C801B2 /* GoblinFilter.swift */,
 				2BF4D4CF1AF1155D00C801B2 /* HighcarbFilter.swift */,
 				2BF4D4C61AF1155D00C801B2 /* HighContrastFilter.swift */,
 				2BF4D4D01AF1155D00C801B2 /* K1Filter.swift */,
@@ -1267,7 +1267,7 @@
 				2B1ADA7C1B19C8DC00C98522 /* AbrahamLincoln.ttf in Resources */,
 				2B1ADA601B19C8D500C98522 /* Mellow.png in Resources */,
 				2B1ADA4D1B19C8D500C98522 /* Fixie.png in Resources */,
-				2B1ADA521B19C8D500C98522 /* Gobblin.png in Resources */,
+				2B1ADA521B19C8D500C98522 /* Goblin.png in Resources */,
 				2B1ADA621B19C8D500C98522 /* Neat.png in Resources */,
 				2B1ADA661B19C8D500C98522 /* Pale.png in Resources */,
 				2B1ADA541B19C8D500C98522 /* HighContrast.png in Resources */,
@@ -1339,7 +1339,7 @@
 				2BF4D4741AF1152500C801B2 /* Tender.png in Resources */,
 				2BF4D45B1AF1152500C801B2 /* Lomo100.png in Resources */,
 				2BF4D4961AF1153B00C801B2 /* Homestead-Regular.ttf in Resources */,
-				2BF4D44F1AF1152500C801B2 /* Gobblin.png in Resources */,
+				2BF4D44F1AF1152500C801B2 /* Goblin.png in Resources */,
 				2BF4D4671AF1152500C801B2 /* PolaSX.png in Resources */,
 				2BF4D4901AF1153B00C801B2 /* BLANCH_CONDENSED.otf in Resources */,
 				2BF4D4761AF1152500C801B2 /* Twilight.png in Resources */,
@@ -1530,7 +1530,7 @@
 				2B1ADAB31B19C8EE00C98522 /* FoodFilter.swift in Sources */,
 				2B1ADAB11B19C8EE00C98522 /* FallFilter.swift in Sources */,
 				2B1ADA9E1B19C8EE00C98522 /* AncientFilter.swift in Sources */,
-				2B1ADAB71B19C8EE00C98522 /* GobblinFilter.swift in Sources */,
+				2B1ADAB71B19C8EE00C98522 /* GoblinFilter.swift in Sources */,
 				2B1ADAD41B19C8EE00C98522 /* SeventiesFilter.swift in Sources */,
 				2B1ADADF1B19C8EE00C98522 /* X400Filter.swift in Sources */,
 				2B1ADADA1B19C8EE00C98522 /* SunsetFilter.swift in Sources */,
@@ -1674,7 +1674,7 @@
 				2BF4D5041AF1155E00C801B2 /* ColorfulFilter.swift in Sources */,
 				2BF4D5281AF1155E00C801B2 /* PolaSXFIlter.swift in Sources */,
 				2BF4D3E81AF1150500C801B2 /* SubEditorViewController.swift in Sources */,
-				2BF4D5121AF1155E00C801B2 /* GobblinFilter.swift in Sources */,
+				2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */,
 				2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */,
 				2BF4D5251AF1155E00C801B2 /* PitchedFilter.swift in Sources */,
 				2BF4D53A1AF1155E00C801B2 /* X400Filter.swift in Sources */,
