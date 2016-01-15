@@ -105,6 +105,16 @@ private var cameraControllerContext = 0
     /// active torch mode. `torchAvailable` is `true` if the torch is available for use.
     public var torchChangedHandler: ((hasTorch: Bool, torchMode: AVCaptureTorchMode, torchAvailable: Bool) -> Void)?
 
+    /// Called when a photo is currently being captured or done being captured.
+    public var capturingStillImageHandler: ((capturing: Bool) -> Void)?
+
+    /// Called when the session is interrupted or the interruption ended. This can happen when
+    /// switching to a multi-app layout, introduced in iOS 9 for example.
+    public var sessionInterruptionHandler: ((interrupted: Bool) -> Void)?
+
+    /// Called when a runtime error occurs.
+    public var sessionRuntimeErrorHandler: ((error: NSError) -> Void)?
+
     // Options
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
@@ -250,6 +260,7 @@ private var cameraControllerContext = 0
 
     private func addSessionObservers() {
         session.addObserver(self, forKeyPath: "running", options: [.New, .Old, .Initial], context: &cameraControllerContext)
+        stillImageOutput.addObserver(self, forKeyPath: "capturingStillImage", options: [.New, .Old, .Initial], context: &cameraControllerContext)
         addObserver(self, forKeyPath: "recordingMode", options: [.New, .Old, .Initial], context: &cameraControllerContext)
 
         NSNotificationCenter.defaultCenter().addObserver(self,
@@ -278,15 +289,23 @@ private var cameraControllerContext = 0
     }
 
     @objc private func sessionRuntimeError(notification: NSNotification) {
-        // TODO
+        guard let error = notification.userInfo?[AVCaptureSessionErrorKey] as? NSError else {
+            return
+        }
+
+        self.sessionRuntimeErrorHandler?(error: error)
     }
 
     @objc private func sessionWasInterrupted(notification: NSNotification) {
-        // TODO
+        dispatch_async(dispatch_get_main_queue()) {
+            self.sessionInterruptionHandler?(interrupted: true)
+        }
     }
 
     @objc private func sessionInterruptionEnded(notification: NSNotification) {
-        // TODO
+        dispatch_async(dispatch_get_main_queue()) {
+            self.sessionInterruptionHandler?(interrupted: false)
+        }
     }
 
     private func addLightObserversForController(lightController: LightControllable) {
@@ -348,7 +367,9 @@ private var cameraControllerContext = 0
             throw CameraControllerError.MultipleCallsToSetup
         }
 
-        guard let videoDevice = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPositions[0]) else {
+        guard let
+            cameraPosition = cameraPositions.first,
+            videoDevice = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: cameraPosition) else {
             throw CameraControllerError.UnableToInitializeCaptureDevice
         }
 
@@ -642,6 +663,14 @@ private var cameraControllerContext = 0
                         previousRecordingMode: previousRecordingMode,
                         newRecordingMode: newRecordingMode
                     )
+                }
+            case "capturingStillImage":
+                guard let capturing = change?[NSKeyValueChangeNewKey] as? Bool else {
+                    return
+                }
+
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.capturingStillImageHandler?(capturing: capturing)
                 }
             case "running":
                 guard let running = change?[NSKeyValueChangeNewKey] as? NSNumber else {

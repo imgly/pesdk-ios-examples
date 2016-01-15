@@ -499,6 +499,14 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             }
         }
 
+        cameraController.capturingStillImageHandler = { [weak self] capturing in
+            if capturing {
+                // Animate the actionButton if it is a UIButton and has a sequence of images set
+                (self?.actionButtonContainer.subviews.first as? UIButton)?.imageView?.startAnimating()
+                self?.buttonsEnabled = false
+            }
+        }
+
         cameraController.flashChangedHandler = { [weak self] hasFlash, flashMode, flashAvailable in
             self?.flashButton.hidden = !hasFlash
             self?.flashButton.enabled = flashAvailable
@@ -529,6 +537,52 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             case .Off:
                 self?.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             }
+        }
+
+        cameraController.sessionInterruptionHandler = { [weak self, unowned cameraController] interrupted in
+            self?.buttonsEnabled = !interrupted
+            guard let strongSelf = self else {
+                return
+            }
+
+            if interrupted {
+                let videoPreviewView = cameraController.videoPreviewView
+                videoPreviewView.hidden = true
+
+                // Add a snapshot of the preview and show it immediately
+                let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+                snapshot.transform = videoPreviewView.transform
+                snapshot.frame = strongSelf.backgroundContainerView.frame
+                videoPreviewView.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
+
+                // Create another snapshot with a visual effect view added
+                let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+                snapshotWithBlur.transform = videoPreviewView.transform
+                snapshotWithBlur.frame = strongSelf.backgroundContainerView.frame
+
+                let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+                visualEffectView.frame = snapshotWithBlur.bounds
+                visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+                snapshotWithBlur.addSubview(visualEffectView)
+
+                // Transition between the two snapshots
+                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: [.TransitionCrossDissolve, .CurveEaseOut]) { _ in
+                    strongSelf.snapshotView = snapshotWithBlur
+                }
+            } else {
+                strongSelf.transitionFromSnapshotToLivePreviewAlongAnimations(nil)
+            }
+        }
+
+        cameraController.sessionRuntimeErrorHandler = { [weak self] error in
+            let alertController = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .Alert)
+            let action = UIAlertAction(title: "OK", style: .Default) { handler in
+                self?.cameraController?.startCamera()
+            }
+
+            alertController.addAction(action)
+
+            self?.presentViewController(alertController, animated: true, completion: nil)
         }
 
         do {
@@ -782,6 +836,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
 
         let videoPreviewView = cameraController.videoPreviewView
+        videoPreviewView.hidden = true
 
         // Add a snapshot of the preview and show it immediately
         let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
@@ -852,7 +907,6 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 }
 
                 self.updateConstraintsForRecordingMode(recordingMode)
-                self.bottomControlsView.layoutIfNeeded()
                 self.snapshotView = snapshotWithBlur
 
                 // If the actual camera change is already done at this point, immediately transition to the live preview
