@@ -463,6 +463,9 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     private var cameraPreviewContainerTopConstraint: NSLayoutConstraint?
     private var cameraPreviewContainerBottomConstraint: NSLayoutConstraint?
 
+    private var snapshotView: UIView?
+    private var cameraTransitionComplete: Bool?
+
     // MARK: - UIViewController
 
     override public func viewDidLoad() {
@@ -685,6 +688,15 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         // Handlers
         cameraController.runningStateChangedHandler = { [weak self] running in
             self?.buttonsEnabled = running
+        }
+
+        cameraController.cameraPositionChangedHandler = { [weak self] _, _ in
+            self?.cameraTransitionComplete = true
+
+            // Transition to the live preview. This only happens if the first phase of the animation is done.
+            // Otherwise the animation itself takes care of transitioning to the live preview.
+            self?.transitionFromSnapshotToLivePreview()
+            self?.buttonsEnabled = true
         }
 
         cameraController.availableCameraPositionsChangedHandler = { [weak self] in
@@ -955,6 +967,21 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
         }
     }
 
+    private func transitionFromSnapshotToLivePreview() {
+        if let snapshot = snapshotView, cameraController = cameraController {
+            // Giving the preview view a bit of time to redraw first
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, Int64(0.05 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) {
+                // Cross fading between blur and live preview, this sets `snapshotWithBlur.hidden` to `true` and `videoPreviewView.hidden` to false
+                UIView.transitionFromView(snapshot, toView: cameraController.videoPreviewView, duration: 0.2, options: [.TransitionCrossDissolve, .ShowHideTransitionViews], completion: { _ in
+                    // Deleting the blurred snapshot
+                    snapshot.removeFromSuperview()
+                    self.snapshotView = nil
+                    self.cameraTransitionComplete = nil
+                })
+            }
+        }
+    }
+
     // MARK: - Targets
 
     @objc private func toggleMode(sender: AnyObject?) {
@@ -1004,7 +1031,39 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 
     public func switchCamera(sender: UIButton?) {
+        buttonsEnabled = false
         cameraController?.toggleCameraPosition()
+
+        if let videoPreviewView = cameraController?.videoPreviewView {
+            // Hide live preview
+            cameraController?.videoPreviewView.hidden = true
+
+            // Add a snapshot of the preview and show it immediately
+            let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+            snapshot.transform = videoPreviewView.transform
+            snapshot.frame = videoPreviewView.frame
+            videoPreviewView.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
+
+            // Create another snapshot with a visual effect view added
+            let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
+            snapshotWithBlur.transform = videoPreviewView.transform
+            snapshotWithBlur.frame = videoPreviewView.frame
+
+            let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+            visualEffectView.frame = snapshotWithBlur.bounds
+            visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+            snapshotWithBlur.addSubview(visualEffectView)
+
+            // Transition between the two snapshots
+            UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: [.TransitionFlipFromLeft, .CurveEaseOut]) { _ in
+                self.snapshotView = snapshotWithBlur
+
+                // If the actual camera change is already done at this point, immediately transition to the live preview
+                if let cameraTransitionComplete = self.cameraTransitionComplete where cameraTransitionComplete == true {
+                    self.transitionFromSnapshotToLivePreview()
+                }
+            }
+        }
     }
 
     public func showCameraRoll(sender: UIButton?) {

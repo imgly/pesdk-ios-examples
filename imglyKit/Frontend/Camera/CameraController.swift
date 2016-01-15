@@ -81,6 +81,9 @@ private var cameraControllerContext = 0
     /// Called when the `running` state of the camera changes.
     public var runningStateChangedHandler: ((running: Bool) -> Void)?
 
+    /// Called when the camera position changes.
+    public var cameraPositionChangedHandler: ((previousPosition: AVCaptureDevicePosition, newPosition: AVCaptureDevicePosition) -> Void)?
+
     /// Called when the recording mode changes.
     public var recordingModeChangedHandler: ((previousRecordingMode: RecordingMode?, newRecordingMode: RecordingMode) -> Void)?
 
@@ -500,6 +503,7 @@ private var cameraControllerContext = 0
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
 
+            let previousPosition = self.videoDeviceInput?.device.position ?? .Unspecified
             if let input = self.videoDeviceInput {
                 self.session.removeInput(input)
             }
@@ -519,6 +523,10 @@ private var cameraControllerContext = 0
             if let device = self.videoDeviceInput?.device {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.transformVideoPreviewToMatchDevicePosition(device.position)
+                    self.cameraPositionChangedHandler?(
+                        previousPosition: previousPosition,
+                        newPosition: device.position
+                    )
                 }
             }
         }
