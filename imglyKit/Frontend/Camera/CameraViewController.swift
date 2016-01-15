@@ -585,6 +585,29 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             self?.presentViewController(alertController, animated: true, completion: nil)
         }
 
+        cameraController.authorizationFailedHandler = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            let bundle = NSBundle(forClass: strongSelf.dynamicType)
+
+            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
+
+            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
+                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
+                    UIApplication.sharedApplication().openURL(url)
+                }
+            }
+
+            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+
+            alertController.addAction(settingsAction)
+            alertController.addAction(cancelAction)
+
+            strongSelf.presentViewController(alertController, animated: true, completion: nil)
+        }
+
         do {
             try cameraController.setupWithInitialRecordingMode(options.allowedRecordingModes[0])
         } catch CameraControllerError.MultipleCallsToSetup {

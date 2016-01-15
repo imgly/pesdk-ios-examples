@@ -115,6 +115,9 @@ private var cameraControllerContext = 0
     /// Called when a runtime error occurs.
     public var sessionRuntimeErrorHandler: ((error: NSError) -> Void)?
 
+    /// Called when the user did not grant authorization for the camera.
+    public var authorizationFailedHandler: (() -> Void)?
+
     // Options
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
@@ -363,6 +366,12 @@ private var cameraControllerContext = 0
      - throws: A `CameraControllerError` or an `NSError` if setup fails.
      */
     public func setupWithInitialRecordingMode(recordingMode: RecordingMode, completion: (() -> Void)?) throws {
+        if AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Denied {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.authorizationFailedHandler?()
+            }
+        }
+
         if setupComplete {
             throw CameraControllerError.MultipleCallsToSetup
         }
