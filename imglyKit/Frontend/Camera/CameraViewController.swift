@@ -541,11 +541,12 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
         cameraController.sessionInterruptionHandler = { [weak self, unowned cameraController] interrupted in
             self?.buttonsEnabled = !interrupted
+
             guard let strongSelf = self else {
                 return
             }
 
-            if interrupted {
+            if interrupted && strongSelf.snapshotView == nil {
                 let videoPreviewView = cameraController.videoPreviewView
                 videoPreviewView.hidden = true
 
@@ -565,10 +566,10 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 visualEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
                 snapshotWithBlur.addSubview(visualEffectView)
 
+                strongSelf.snapshotView = snapshotWithBlur
+
                 // Transition between the two snapshots
-                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: [.TransitionCrossDissolve, .CurveEaseOut]) { _ in
-                    strongSelf.snapshotView = snapshotWithBlur
-                }
+                UIView.transitionFromView(snapshot, toView: snapshotWithBlur, duration: 0.4, options: [.TransitionCrossDissolve, .CurveEaseOut], completion: nil)
             } else {
                 strongSelf.transitionFromSnapshotToLivePreviewAlongAnimations(nil)
             }
