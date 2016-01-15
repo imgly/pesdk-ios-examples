@@ -252,11 +252,8 @@ extension TextFilter {
         copy.cropRect = cropRect
         copy.center = center
         copy.transform = transform
-        #if os(iOS)
-        copy.color = color.copyWithZone(zone) as! UIColor
-        #elseif os(OSX)
-        copy.color = color.copyWithZone(zone) as! NSColor
-        #endif
+        copy.color = color.copyWithZone(zone) as! Color
+        copy.backgroundColor = backgroundColor.copyWithZone(zone) as! Color
         // swiftlint:enable force_cast
 
         return copy

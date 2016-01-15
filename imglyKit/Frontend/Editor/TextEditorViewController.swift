@@ -310,6 +310,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 textFilter.text = label.text ?? ""
                 textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
                 textFilter.color = label.textColor
+                textFilter.backgroundColor = label.backgroundColor!
                 textFilter.transform = label.transform
                 textFilter.center = center
                 fixedFilterStack.textFilters.append(textFilter)
@@ -756,10 +757,9 @@ private let kMinimumFontSize = CGFloat(12.0)
             center.y /= cropRect.height
 
             label.center = center
-            print(center, completeSize)
-            print(label.frame.size)
             label.clipsToBounds = false
             label.textColor = textFilter.color
+            label.backgroundColor = textFilter.backgroundColor
             textClipView.addSubview(label)
         }
     }
