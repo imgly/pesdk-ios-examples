@@ -552,13 +552,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 // Add a snapshot of the preview and show it immediately
                 let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
                 snapshot.transform = videoPreviewView.transform
-                snapshot.frame = strongSelf.backgroundContainerView.frame
-                videoPreviewView.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
+                snapshot.frame = strongSelf.cameraPreviewContainer.frame
+                strongSelf.cameraPreviewContainer.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
 
                 // Create another snapshot with a visual effect view added
                 let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
                 snapshotWithBlur.transform = videoPreviewView.transform
-                snapshotWithBlur.frame = strongSelf.backgroundContainerView.frame
+                snapshotWithBlur.frame = strongSelf.cameraPreviewContainer.frame
 
                 let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
                 visualEffectView.frame = snapshotWithBlur.bounds
@@ -841,8 +841,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         // Add a snapshot of the preview and show it immediately
         let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
         snapshot.transform = videoPreviewView.transform
-        snapshot.frame = backgroundContainerView.frame
-        videoPreviewView.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
+        snapshot.frame = cameraPreviewContainer.frame
+        cameraPreviewContainer.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
 
         // Switch recording mode
         cameraController.recordingMode = recordingMode
@@ -850,7 +850,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         // Create another snapshot with a visual effect view added
         let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
         snapshotWithBlur.transform = videoPreviewView.transform
-        snapshotWithBlur.frame = backgroundContainerView.frame
+        snapshotWithBlur.frame = cameraPreviewContainer.frame
 
         let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
         visualEffectView.frame = snapshotWithBlur.bounds
@@ -858,7 +858,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         snapshotWithBlur.addSubview(visualEffectView)
         snapshotWithBlur.alpha = 0
 
-        videoPreviewView.superview?.insertSubview(snapshotWithBlur, belowSubview: snapshot)
+        cameraPreviewContainer.superview?.insertSubview(snapshotWithBlur, belowSubview: snapshot)
 
         UIView.animateWithDuration(0.4, delay: 0, options: .CurveEaseOut, animations: {
             // Crossfade between regular and blurred snapshot
@@ -979,13 +979,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             // Add a snapshot of the preview and show it immediately
             let snapshot = videoPreviewView.snapshotViewAfterScreenUpdates(false)
             snapshot.transform = videoPreviewView.transform
-            snapshot.frame = backgroundContainerView.frame
-            videoPreviewView.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
+            snapshot.frame = cameraPreviewContainer.frame
+            cameraPreviewContainer.superview?.insertSubview(snapshot, aboveSubview: videoPreviewView)
 
             // Create another snapshot with a visual effect view added
             let snapshotWithBlur = videoPreviewView.snapshotViewAfterScreenUpdates(false)
             snapshotWithBlur.transform = videoPreviewView.transform
-            snapshotWithBlur.frame = backgroundContainerView.frame
+            snapshotWithBlur.frame = cameraPreviewContainer.frame
 
             let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
             visualEffectView.frame = snapshotWithBlur.bounds
