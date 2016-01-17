@@ -47,11 +47,9 @@ import AppKit
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
     /// The color of the text.
-    #if os(iOS)
-    public var color = UIColor.whiteColor()
-    #elseif os(OSX)
-    public var color = NSColor.whiteColor()
-    #endif
+    public var color = Color.whiteColor()
+
+    public var backgroundColor = Color(white: 1.0, alpha: 0.0)
 
     override init() {
         super.init()
@@ -101,7 +99,7 @@ import AppKit
         let context = UIGraphicsGetCurrentContext()
         CGContextSaveGState(context)
         UIGraphicsBeginImageContext(textSize)
-        UIColor(white: 1.0, alpha: 0.0).setFill()
+        backgroundColor.setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: textSize))
 
         if let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
@@ -133,7 +131,7 @@ import AppKit
         let image = NSImage(size: textSize)
         image.lockFocus()
 
-        NSColor(white: 1, alpha: 0).setFill()
+        backgroundColor.setFill()
         NSRectFill(CGRect(origin: CGPoint(), size: textSize))
 
         if let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
@@ -254,11 +252,8 @@ extension TextFilter {
         copy.cropRect = cropRect
         copy.center = center
         copy.transform = transform
-        #if os(iOS)
-        copy.color = color.copyWithZone(zone) as! UIColor
-        #elseif os(OSX)
-        copy.color = color.copyWithZone(zone) as! NSColor
-        #endif
+        copy.color = color.copyWithZone(zone) as! Color
+        copy.backgroundColor = backgroundColor.copyWithZone(zone) as! Color
         // swiftlint:enable force_cast
 
         return copy

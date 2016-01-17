@@ -310,6 +310,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 textFilter.text = label.text ?? ""
                 textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
                 textFilter.color = label.textColor
+                textFilter.backgroundColor = label.backgroundColor!
                 textFilter.transform = label.transform
                 textFilter.center = center
                 fixedFilterStack.textFilters.append(textFilter)
@@ -424,7 +425,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         UIView.animateWithDuration(0.3) {
             self.blurredContainerView.alpha = 1.0
         }
-}
+    }
 
     private func configureFontSelectorView() {
         configureBlurredContainerView()
@@ -558,11 +559,11 @@ private let kMinimumFontSize = CGFloat(12.0)
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
             recognizer.setTranslation(CGPointZero, inView: textClipView)
-       case .Cancelled, .Ended:
+        case .Cancelled, .Ended:
             draggedView = nil
         default:
             break
-       }
+        }
     }
 
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
@@ -671,7 +672,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func calculateInitialFontSize() {
         // swiftlint:disable force_cast
-       let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
@@ -756,10 +757,9 @@ private let kMinimumFontSize = CGFloat(12.0)
             center.y /= cropRect.height
 
             label.center = center
-            print(center, completeSize)
-            print(label.frame.size)
             label.clipsToBounds = false
             label.textColor = textFilter.color
+            label.backgroundColor = textFilter.backgroundColor
             textClipView.addSubview(label)
         }
     }
