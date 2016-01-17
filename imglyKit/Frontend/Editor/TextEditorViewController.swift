@@ -425,7 +425,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         UIView.animateWithDuration(0.3) {
             self.blurredContainerView.alpha = 1.0
         }
-}
+    }
 
     private func configureFontSelectorView() {
         configureBlurredContainerView()
@@ -559,11 +559,11 @@ private let kMinimumFontSize = CGFloat(12.0)
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
             recognizer.setTranslation(CGPointZero, inView: textClipView)
-       case .Cancelled, .Ended:
+        case .Cancelled, .Ended:
             draggedView = nil
         default:
             break
-       }
+        }
     }
 
     @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
@@ -672,7 +672,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func calculateInitialFontSize() {
         // swiftlint:disable force_cast
-       let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
+        let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
         // swiftlint:enable force_cast
         customParagraphStyle.lineBreakMode = .ByClipping
 
