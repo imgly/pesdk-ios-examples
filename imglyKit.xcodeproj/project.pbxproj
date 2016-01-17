@@ -13,6 +13,7 @@
 		0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311E1C3FF908000135B8 /* HuePickerView.swift */; };
 		098331211C400A72000135B8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331201C400A72000135B8 /* UIColorExtension.swift */; };
 		099FBD5D1C3EC314000BB333 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */; };
+		09D214CE1C4C043C008D20F6 /* OverlayConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */; };
 		09DF6DF71C47B9B4000070B6 /* AlphaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DF6DF61C47B9B4000070B6 /* AlphaPickerView.swift */; };
 		2B044DDC1C3E5E4500A73AE6 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1ADA1D1B19C86300C98522 /* imglyKit.framework */; };
 		2B044DE31C3E5F6B00A73AE6 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
@@ -435,6 +436,7 @@
 		0983311E1C3FF908000135B8 /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ColorPickerView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayConverter.swift; sourceTree = "<group>"; };
 		09DF6DF61C47B9B4000070B6 /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		2B044DD71C3E5E4500A73AE6 /* imglyKit OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKVersion.swift; sourceTree = "<group>"; };
@@ -915,6 +917,7 @@
 				2BF4D3CA1AF1150400C801B2 /* TextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
+				09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1626,6 +1629,7 @@
 				2BF4D5351AF1155E00C801B2 /* SunsetFilter.swift in Sources */,
 				2BF4D3CD1AF1150500C801B2 /* BoxGradientView.swift in Sources */,
 				2BF4D4B21AF1154B00C801B2 /* TiltshiftFilter.swift in Sources */,
+				09D214CE1C4C043C008D20F6 /* OverlayConverter.swift in Sources */,
 				2BF4D5031AF1155E00C801B2 /* ClassicFilter.swift in Sources */,
 				2BF4D4FB1AF1155E00C801B2 /* BleachedFilter.swift in Sources */,
 				2BF4D5081AF1155E00C801B2 /* EightiesFilter.swift in Sources */,
