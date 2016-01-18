@@ -29,6 +29,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var tempTextCopy = [Filter]()
     private var createNewText = false
     private var selectBackgroundColor = false
+    private var overlayConverter: OverlayConverter?
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -171,34 +172,6 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let completeSize = textClipView.bounds.size
-        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-        for view in textClipView.subviews {
-            if let label = view as? UILabel {
-                print(label.center, completeSize)
-                print(label.font)
-                print(label.frame.size)
-                let textFilter = InstanceFactory.textFilter()
-                // swiftlint:disable force_cast
-                textFilter.inputImage = self.previewImageView.image!.CIImage
-                // swiftlint:enable force_cast
-                textFilter.cropRect = cropRect
-                var center = CGPoint(x: label.center.x / completeSize.width,
-                    y: label.center.y / completeSize.height)
-                center.x *= cropRect.width
-                center.y *= cropRect.height
-                center.x += cropRect.origin.x
-                center.y += cropRect.origin.y
-                textFilter.fontName = label.font.fontName
-                textFilter.text = label.text ?? ""
-                textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
-                textFilter.color = label.textColor
-                textFilter.backgroundColor = label.backgroundColor!
-                textFilter.transform = label.transform
-                textFilter.center = center
-                fixedFilterStack.textFilters.append(textFilter)
-            }
-        }
 
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
@@ -552,7 +525,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.blurredContainerView.removeFromSuperview()
         })
     }
-
     private func calculateInitialFontSize() {
         // swiftlint:disable force_cast
         let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
@@ -600,51 +572,12 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func rerenderPreviewWithoutText() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.addTextsFromTextFilters(self.tempTextCopy)
+            self.overlayConverter?.addTextsFromTextFilters(self.tempTextCopy, containerView: self.textClipView, previewSize: self.previewImageView.visibleImageFrame.size)
         }
     }
 
     private func backupTexts() {
         tempTextCopy = fixedFilterStack.textFilters
-    }
-
-    /*
-    * in this method we do some calculations to re calculate the
-    * sticker position in relation to the crop region.
-    * Therefore we calculte the position and size within the non-cropped image
-    * and apply the translation and scaling that comes with cropping in relation
-    * to the full image.
-    * When we are done we must revoke that extra transformation.
-    */
-    private func addTextsFromTextFilters(textFilters: [Filter]) {
-        for element in textFilters {
-            guard let textFilter = element as? TextFilter else {
-                return
-            }
-            let label = UILabel()
-            label.userInteractionEnabled = true
-            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-            var completeSize = previewImageView.visibleImageFrame.size
-            completeSize.width *= 1.0 / cropRect.width
-            completeSize.height *= 1.0 / cropRect.height
-            label.font = UIFont(name: textFilter.fontName, size: textFilter.initialFontSize * previewImageView.visibleImageFrame.size.height)
-            label.text = textFilter.text
-            label.sizeToFit()
-            label.transform = textFilter.transform
-
-            var center = CGPoint(x: textFilter.center.x * completeSize.width,
-                y: textFilter.center.y * completeSize.height)
-            center.x -= cropRect.origin.x
-            center.y -= cropRect.origin.y
-            center.x /= cropRect.width
-            center.y /= cropRect.height
-
-            label.center = center
-            label.clipsToBounds = false
-            label.textColor = textFilter.color
-            label.backgroundColor = textFilter.backgroundColor
-            textClipView.addSubview(label)
-        }
     }
 }
 
