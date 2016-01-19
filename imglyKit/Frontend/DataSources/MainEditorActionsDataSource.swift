@@ -57,14 +57,14 @@ import UIKit
 
     /**
      This initializer should only be called from Objective-C. It
-     creates a default datasource offering the given actionTypes.
-     - Parameter availableActionTypesAsNSNumbers: An NSOrderedSet
+     creates a default datasource offering the given actionTypes. Duplicates are not removed.
+     - Parameter availableActionTypesAsNSNumbers: An array
      containing NSNumbers that wrap the raw value of the corresponding
      MainEditorActionType
      */
-    public convenience init(availableActionTypesAsNSNumbers: NSOrderedSet) {
+    public convenience init(availableActionTypesAsNSNumbers: [NSNumber]) {
         self.init()
-
+        items = self.itemsForAvailableActions(availableActionTypesAsNSNumbers.flatMap { MainEditorActionType(rawValue: $0.integerValue) })
     }
 
     // MARK: MainEditorActionsDataSource
