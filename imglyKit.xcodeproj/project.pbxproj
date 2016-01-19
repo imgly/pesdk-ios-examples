@@ -194,8 +194,6 @@
 		2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE166B1C4E44FA00921DE7 /* FocusController.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
 		2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */; };
-		2BC437181C46B36600E47AFC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC437171C46B36600E47AFC /* UIViewExtension.swift */; };
-		2BC4371A1C46B7E000E47AFC /* UIViewExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC437191C46B7E000E47AFC /* UIViewExtensionTests.swift */; };
 		2BE0C44F1C3ABB3B00F1F5E4 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF4D3841AF1139600C801B2 /* imglyKit.framework */; };
 		2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
 		2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */; };
@@ -447,8 +445,6 @@
 		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
-		2BC437171C46B36600E47AFC /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
-		2BC437191C46B7E000E47AFC /* UIViewExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIViewExtensionTests.swift; path = imglyKit/Frontend/Extensions/UIViewExtensionTests.swift; sourceTree = SOURCE_ROOT; };
 		2BE0C44A1C3ABB3B00F1F5E4 /* imglyKit iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0C44E1C3ABB3B00F1F5E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUTConverterTests.swift; sourceTree = "<group>"; };
@@ -705,7 +701,6 @@
 		2B044DE51C3E613300A73AE6 /* Frontend Tests */ = {
 			isa = PBXGroup;
 			children = (
-				2BC437191C46B7E000E47AFC /* UIViewExtensionTests.swift */,
 			);
 			path = "Frontend Tests";
 			sourceTree = "<group>";
@@ -750,7 +745,6 @@
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				098331201C400A72000135B8 /* UIColorExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
-				2BC437171C46B36600E47AFC /* UIViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1559,7 +1553,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BC4371A1C46B7E000E47AFC /* UIViewExtensionTests.swift in Sources */,
 				2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1703,7 +1696,6 @@
 				2BF4D5011AF1155E00C801B2 /* CelsiusFilter.swift in Sources */,
 				2BF4D3D61AF1150500C801B2 /* FilterCollectionViewCell.swift in Sources */,
 				2BF4D3EA1AF1150500C801B2 /* TextEditorViewController.swift in Sources */,
-				2BC437181C46B36600E47AFC /* UIViewExtension.swift in Sources */,
 				2BF4D50F1AF1155E00C801B2 /* FridgeFilter.swift in Sources */,
 				2BF51F701B41A7E700FFB4C2 /* RecordingMode.swift in Sources */,
 				2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */,
