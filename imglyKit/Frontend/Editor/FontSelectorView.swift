@@ -61,7 +61,7 @@ import UIKit
     public override func layoutSubviews() {
         super.layoutSubviews()
 
-        for var index = 0; index < subviews.count; index++ {
+        for index in 0 ..< subviews.count {
             if let button = subviews[index] as? UIButton {
                 button.frame = CGRect(x: 0,
                     y: CGFloat(index) * kDistanceBetweenButtons,

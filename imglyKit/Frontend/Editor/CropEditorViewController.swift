@@ -80,9 +80,13 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// An array of `OrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedOrientationActions` with the corresponding `FocusAction` values.
-    public var allowedCropActionsAsNSNumbers: [NSNumber] = [ CropAction.Free, .OneToOne, .FourToThree, .SixteenToNine ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedCropActions = allowedCropActionsAsNSNumbers.map({ CropAction(rawValue: $0.integerValue)! })
+    public var allowedCropActionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedCropActions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedCropActions = newValue.flatMap { CropAction(rawValue: $0.integerValue) }
         }
     }
 

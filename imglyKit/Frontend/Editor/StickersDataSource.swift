@@ -47,14 +47,14 @@ import UIKit
             "star"
         ]
 
-        stickers = stickerFiles.map { (file: String) -> Sticker? in
+        stickers = stickerFiles.flatMap { (file: String) -> Sticker? in
             if let image = UIImage(named: file, inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil) {
                 let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil)
                 return Sticker(image: image, thumbnail: thumbnail)
             }
 
             return nil
-            }.filter { $0 != nil }.map { $0! }
+        }
 
         super.init()
     }

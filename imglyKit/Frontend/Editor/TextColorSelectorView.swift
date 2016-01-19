@@ -86,7 +86,8 @@ import UIKit
 
     private func layoutColorButtons() {
         var xPosition = kButtonXPositionOffset
-        for var i = 0; i < colorArray.count; i++ {
+
+        for i in 0 ..< colorArray.count {
             let button = buttonArray[i]
             button.frame = CGRect(x: xPosition,
                 y: kButtonYPosition,
@@ -94,6 +95,7 @@ import UIKit
                 height: kButtonSideLength)
             xPosition += (kButtonDistance + kButtonSideLength)
         }
+
         buttonArray[0].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }

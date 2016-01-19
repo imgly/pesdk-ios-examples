@@ -69,9 +69,13 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     /// An array of `FocusAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedFocusActions` with the corresponding `FocusAction` values.
-    public var allowedFocusActionsAsNSNumbers: [NSNumber] = [ FocusAction.Off, .Linear, .Radial ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedFocusActions = allowedFocusActionsAsNSNumbers.map({ FocusAction(rawValue: $0.integerValue)! })
+    public var allowedFocusActionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedFocusActions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedFocusActions = newValue.flatMap { FocusAction(rawValue: $0.integerValue) }
         }
     }
 

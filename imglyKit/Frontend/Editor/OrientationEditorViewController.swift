@@ -57,9 +57,13 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     /// An array of `OrientationAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
     /// `allowedOrientationActions` with the corresponding `FocusAction` values.
-    public var allowedOrientationActionsAsNSNumbers: [NSNumber] = [ OrientationAction.RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ].map({ NSNumber(integer: $0.rawValue) }) {
-        didSet {
-            self.allowedOrientationActions = allowedOrientationActionsAsNSNumbers.map({ OrientationAction(rawValue: $0.integerValue)! })
+    public var allowedOrientationActionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedOrientationActions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedOrientationActions = newValue.flatMap { OrientationAction(rawValue: $0.integerValue) }
         }
     }
 

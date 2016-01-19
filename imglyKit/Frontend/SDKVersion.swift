@@ -73,3 +73,39 @@ func < (lhs: SDKVersion, rhs: SDKVersion) -> Bool {
 
     return false
 }
+
+// MARK: - Globals
+
+internal var kDidCheckSDKVersion = false
+
+internal func checkSDKVersionIfNeeded() {
+    if kDidCheckSDKVersion {
+        return
+    }
+
+    guard let frameworkVersionNumber = NSBundle(forClass: CameraController.self).infoDictionary?["CFBundleShortVersionString"] as? String, frameworkVersion = SDKVersion(string: frameworkVersionNumber) else {
+        return
+    }
+
+    let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
+    if let appIdentifier = appIdentifier, url = NSURL(string: "https://www.photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
+            if let data = data {
+                do {
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: AnyObject]
+
+                    if let json = json, versionString = json["version"] as? String, remoteVersion = SDKVersion(string: versionString) {
+                        if frameworkVersion < remoteVersion {
+                            print("Your version of the img.ly SDK is outdated. You are using version \(frameworkVersion), the latest available version is \(remoteVersion). Please consider updating.")
+                        }
+                    }
+                } catch {
+
+                }
+            }
+        }
+
+        task.resume()
+        kDidCheckSDKVersion = true
+    }
+}
