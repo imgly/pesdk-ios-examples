@@ -33,7 +33,7 @@ after_failure:
  - cat -n ~/Library/Logs/scan/*
  - cat -n $TMPDIR/com.apple.dt.XCTest-status/Session*.log
  - cat -n ~/Library/Logs/DiagnosticReports/xctest*.crash
- deploy:
+deploy:
    provider: script
    script: fastlane complete_framework_release --env deploy
    on:
