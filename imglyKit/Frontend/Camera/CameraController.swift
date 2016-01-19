@@ -130,6 +130,9 @@ private var cameraControllerContext = 0
     /// Called each second while a video recording is in progress.
     public var videoRecordingProgressHandler: ((seconds: Int) -> Void)?
 
+    /// Called when the size of the preview image within the `videoPreviewView` changes
+    public var previewFrameChangedHandler: ((previewFrame: CGRect) -> Void)?
+
     // Options
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
@@ -246,8 +249,8 @@ private var cameraControllerContext = 0
         }
     }
 
+    let deviceOrientationController = DeviceOrientationController()
     private let sampleBufferController: SampleBufferController
-    private let deviceOrientationController = DeviceOrientationController()
     private var lightController: LightControllable?
     private var videoController: VideoController? {
         didSet {
@@ -269,9 +272,7 @@ private var cameraControllerContext = 0
         // Rotate to match images coming from the camera
         videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
 
-        sampleBufferController = SampleBufferController(
-            videoPreviewView: videoPreviewView
-        )
+        sampleBufferController = SampleBufferController(videoPreviewView: videoPreviewView)
 
         super.init()
     }
@@ -402,8 +403,14 @@ private var cameraControllerContext = 0
         let videoDeviceInput = try AVCaptureDeviceInput(device: videoDevice)
         self.videoDeviceInput = videoDeviceInput
 
-        self.videoDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
-        self.audioDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
+        videoDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
+        audioDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
+
+        sampleBufferController.previewFrameChangedHandler = { [weak self] previewFrame in
+            dispatch_async(dispatch_get_main_queue()) {
+                self?.previewFrameChangedHandler?(previewFrame: previewFrame)
+            }
+        }
 
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
@@ -608,10 +615,6 @@ private var cameraControllerContext = 0
                 if let imageDataSampleBuffer = imageDataSampleBuffer {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                     let image = UIImage(data: imageData)
-                    // TODO
-//                    if self.squareMode {
-//                        image = self.squareTakenImage(image!)
-//                    }
                     dispatch_async(dispatch_get_main_queue()) {
                         completion(image, nil)
                     }

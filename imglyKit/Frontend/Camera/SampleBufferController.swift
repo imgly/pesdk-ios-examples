@@ -18,7 +18,15 @@ class SampleBufferController: NSObject {
     let ciContext: CIContext
     var effectFilter: EffectFilter = NoneFilter()
     var videoController: VideoController?
+    var previewFrameChangedHandler: ((previewFrame: CGRect) -> Void)?
 
+    private(set) var currentPreviewFrame: CGRect? {
+        didSet {
+            if let currentPreviewFrame = currentPreviewFrame where oldValue != currentPreviewFrame {
+                previewFrameChangedHandler?(previewFrame: currentPreviewFrame)
+            }
+        }
+    }
     private(set) var currentVideoDimensions: CMVideoDimensions?
 
     // MARK: - Initializers
@@ -130,6 +138,7 @@ extension SampleBufferController: AVCaptureVideoDataOutputSampleBufferDelegate, 
             ciContext.drawImage(filteredImage, inRect: videoPreviewFrame, fromRect: filteredImage.extent)
         }
 
+        currentPreviewFrame = videoPreviewFrame
         videoPreviewView.display()
     }
 }

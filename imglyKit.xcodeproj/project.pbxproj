@@ -746,8 +746,8 @@
 				2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */,
 				2B1ADA0F1B19C3F300C98522 /* InstanceFactoryExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
-				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
 				098331201C400A72000135B8 /* UIColorExtension.swift */,
+				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
 				2BC437171C46B36600E47AFC /* UIViewExtension.swift */,
 			);
 			path = Extensions;

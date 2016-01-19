@@ -190,6 +190,36 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return recognizer
     }()
 
+    private lazy var maskIndicatorLayer: CALayer = {
+        let layer = CALayer()
+        layer.borderColor = UIColor.whiteColor().CGColor
+        layer.borderWidth = 1
+        layer.frame = CGRectZero
+        layer.hidden = true
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        return layer
+    }()
+
+    private let upperMaskDarkenLayer: CALayer = {
+        let layer = CALayer()
+        layer.borderWidth = 0
+        layer.frame = CGRectZero
+        layer.hidden = true
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        layer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        return layer
+    }()
+
+    private let lowerMaskDarkenLayer: CALayer = {
+        let layer = CALayer()
+        layer.borderWidth = 0
+        layer.frame = CGRectZero
+        layer.hidden = true
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        layer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        return layer
+    }()
+
     private var recordingModeSelectionButtons = [UIButton]()
 
     private var hideSliderTimer: NSTimer?
@@ -237,6 +267,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         configureViewsForInitialRecordingMode()
         configureFilterSelectionController()
         configureCameraController()
+        configureMaskLayers()
     }
 
     public override func viewWillAppear(animated: Bool) {
@@ -445,6 +476,10 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
         updateConstraintsForRecordingMode(recordingMode)
         updateViewsForRecordingMode(recordingMode)
+
+        if recordingMode == .Photo && options.cropToSquare {
+            showSquareMask()
+        }
 
         // add new action button to container
         let actionButton = recordingMode.actionButton
@@ -665,6 +700,10 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             if strongSelf.options.maximumVideoLength > 0 && seconds >= strongSelf.options.maximumVideoLength {
                 self?.cameraController?.stopVideoRecording()
             }
+        }
+
+        cameraController.previewFrameChangedHandler = { [weak self] previewFrame in
+            self?.updateSquareIndicatorView(previewFrame)
         }
 
         do {
@@ -908,12 +947,10 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         // add recordingTimeLabel
         if recordingMode == .Video {
             self.addRecordingTimeLabel()
-            // TODO
-//            self.cameraController?.hideSquareMask()
+            self.hideSquareMask()
         } else {
             if options.cropToSquare {
-                // TODO
-//                self.cameraController?.showSquareMask()
+                self.showSquareMask()
             }
         }
 
@@ -1100,12 +1137,33 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     public func takePhoto(sender: UIButton?) {
         cameraController?.takePhoto { image, error in
             if error == nil {
+                let updatedImage: UIImage?
+
+                if let
+                    cameraController = self.cameraController,
+                    image = image where self.options.cropToSquare {
+                        var scale = image.size.width / image.size.height
+                        if let captureVideoOrientation = cameraController.deviceOrientationController.captureVideoOrientation {
+                            if captureVideoOrientation == .LandscapeRight || captureVideoOrientation == .LandscapeLeft {
+                                scale = image.size.height / image.size.width
+                            }
+                        }
+
+                        let offset = (1.0 - scale) / 2.0
+                        let orientationCropFilter = InstanceFactory.orientationCropFilter()
+                        orientationCropFilter.cropRect = CGRect(x: offset, y: 0, width: scale, height: 1)
+
+                        updatedImage = PhotoProcessor.processWithUIImage(image, filters: [orientationCropFilter])
+                } else {
+                    updatedImage = image
+                }
+
                 dispatch_async(dispatch_get_main_queue()) {
                     if let completionBlock = self.completionBlock {
-                        completionBlock(image, nil)
+                        completionBlock(updatedImage, nil)
                     } else {
-                        if let image = image {
-                            self.showEditorNavigationControllerWithImage(image)
+                        if let updatedImage = updatedImage {
+                            self.showEditorNavigationControllerWithImage(updatedImage)
                         }
                     }
                 }
@@ -1198,6 +1256,44 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 actionButton.recording = false
             }
         }
+    }
+
+    // MARK: - Square
+
+    private func configureMaskLayers() {
+        cameraPreviewContainer.layer.addSublayer(maskIndicatorLayer)
+        cameraPreviewContainer.layer.addSublayer(upperMaskDarkenLayer)
+        cameraPreviewContainer.layer.addSublayer(lowerMaskDarkenLayer)
+    }
+
+    /*
+    Please note, the calculations in this method might look a bit weird.
+    The reason is that the frame we are getting is rotated by 90 degree
+    */
+    private func updateSquareIndicatorView(newRect: CGRect) {
+        let width = newRect.size.height / 2.0
+        let height = width
+        let top = newRect.origin.x + ((newRect.size.width / 2.0) - width) / 2.0
+        let left = newRect.origin.y / 2.0
+        CATransaction.begin()
+        CATransaction.setAnimationDuration(0)
+        maskIndicatorLayer.frame = CGRect(x: left, y: top, width: width, height: height).integral
+        upperMaskDarkenLayer.frame = CGRect(x: left, y: 0, width: width, height: top - 1).integral
+        // add extra space to the bottom to avoid a gab due to the lower bar animation
+        lowerMaskDarkenLayer.frame = CGRect(x: left, y: top + height + 1, width: width, height: top * 2).integral
+        CATransaction.commit()
+    }
+
+    func showSquareMask() {
+        maskIndicatorLayer.hidden = false
+        upperMaskDarkenLayer.hidden = false
+        lowerMaskDarkenLayer.hidden = false
+    }
+
+    func hideSquareMask() {
+        maskIndicatorLayer.hidden = true
+        upperMaskDarkenLayer.hidden = true
+        lowerMaskDarkenLayer.hidden = true
     }
 }
 
