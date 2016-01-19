@@ -94,7 +94,6 @@ public final class VideoRecordButton: UIControl {
     public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
         recording = !recording
         innerLayer.fillColor = VideoRecordButton.recordingColor.CGColor
-        sendActionsForControlEvents(.TouchUpInside)
     }
 
     public override func cancelTrackingWithEvent(event: UIEvent?) {

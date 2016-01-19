@@ -57,12 +57,12 @@ private var cameraControllerContext = 0
             dispatch_async(sessionQueue) {
                 self.removeLightObserver()
                 self.session.beginConfiguration()
-
-                // TODO: Stop recording if needed
-                // TODO: Add asset writer if needed
                 self.changeSessionPreset(newValue.sessionPreset)
                 if newValue.sessionPreset != AVCaptureSessionPresetPhoto {
                     self.addAudioInput()
+                    self.createVideoController()
+                } else {
+                    self.videoController = nil
                 }
 
                 self.session.commitConfiguration()
@@ -117,6 +117,18 @@ private var cameraControllerContext = 0
 
     /// Called when the user did not grant authorization for the camera.
     public var authorizationFailedHandler: (() -> Void)?
+
+    /// Called when video recording starts.
+    public var videoRecordingStartedHandler: (() -> Void)?
+
+    /// Called when video recording finishes.
+    public var videoRecordingFinishedHandler: ((fileURL: NSURL) -> Void)?
+
+    /// Called when video recording fails.
+    public var videoRecordingFailedHandler: (() -> Void)?
+
+    /// Called each second while a video recording is in progress.
+    public var videoRecordingProgressHandler: ((seconds: Int) -> Void)?
 
     // Options
 
@@ -237,6 +249,11 @@ private var cameraControllerContext = 0
     private let sampleBufferController: SampleBufferController
     private let deviceOrientationController = DeviceOrientationController()
     private var lightController: LightControllable?
+    private var videoController: VideoController? {
+        didSet {
+            sampleBufferController.videoController = videoController
+        }
+    }
 
     // MARK: - Initializer
 
@@ -386,16 +403,19 @@ private var cameraControllerContext = 0
         self.videoDeviceInput = videoDeviceInput
 
         self.videoDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
+        self.audioDataOutput.setSampleBufferDelegate(self.sampleBufferController, queue: self.sampleBufferQueue)
 
         dispatch_async(sessionQueue) {
             self.session.beginConfiguration()
             self.addDeviceInput(videoDeviceInput)
             self.addCaptureOutput(self.videoDataOutput)
+            self.addCaptureOutput(self.audioDataOutput)
             self.addCaptureOutput(self.stillImageOutput)
             self.changeSessionPreset(recordingMode.sessionPreset)
 
             if recordingMode.sessionPreset != AVCaptureSessionPresetPhoto {
                 self.addAudioInput()
+                self.createVideoController()
             }
 
             self.session.commitConfiguration()
@@ -606,7 +626,51 @@ private var cameraControllerContext = 0
 
     // MARK: - Video
 
-    // TODO
+    private func createVideoController() {
+        if videoController != nil {
+            return
+        }
+
+
+        videoController = VideoController(videoOutputSettings: videoDataOutput.recommendedVideoSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie) as? [String: AnyObject], audioOutputSettings: audioDataOutput.recommendedAudioSettingsForAssetWriterWithOutputFileType(AVFileTypeQuickTimeMovie) as? [String: AnyObject], sampleBufferQueue: sampleBufferQueue) { [weak self] started, failed, fileURL, timeRecorded in
+            dispatch_async(dispatch_get_main_queue()) {
+                if started {
+                    self?.videoRecordingStartedHandler?()
+                }
+
+                if failed {
+                    self?.videoRecordingFailedHandler?()
+                }
+
+                if let fileURL = fileURL {
+                    self?.videoRecordingFinishedHandler?(fileURL: fileURL)
+                }
+
+                if let timeRecorded = timeRecorded {
+                    self?.videoRecordingProgressHandler?(seconds: timeRecorded)
+                }
+            }
+        }
+    }
+
+    /// Starts the video recording. This only works if `recordingMode` is set to .Video. You should
+    /// set appropriate blocks for `videoRecordingStartedHandler`, `videoRecordingFailedHandler`,
+    /// `videoRecordingFinishedHandler` and `videoRecordingProgressHandler`. The finished handler gets
+    /// passed a `NSURL` to the path of the recorded video file. Please note that you are responsible
+    /// for deleting that file when you no longer need it.
+    public func startVideoRecording() {
+        guard let videoDeviceInput = videoDeviceInput else {
+            return
+        }
+
+        let recordAudio = audioDeviceInput != nil
+        videoController?.startWritingWithVideoDimensions(sampleBufferController.currentVideoDimensions, orientation: deviceOrientationController.captureVideoOrientation, cameraPosition: videoDeviceInput.device.position, recordAudio: recordAudio)
+    }
+
+    /// Stops video recording. This only works if you previously started video recording.
+    public func stopVideoRecording() {
+        videoController?.stopWritingWithCompletionHandler(nil)
+    }
 
     // MARK: - LED
 

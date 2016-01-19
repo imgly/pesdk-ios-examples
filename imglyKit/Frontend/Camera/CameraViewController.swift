@@ -609,6 +609,64 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             strongSelf.presentViewController(alertController, animated: true, completion: nil)
         }
 
+        cameraController.videoRecordingStartedHandler = { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+
+            UIView.animateWithDuration(0.25) {
+                strongSelf.swipeLeftGestureRecognizer.enabled = false
+                strongSelf.swipeRightGestureRecognizer.enabled = false
+
+                strongSelf.switchCameraButton.alpha = 0
+                strongSelf.filterSelectionButton.alpha = 0
+                strongSelf.bottomControlsView.backgroundColor = UIColor.clearColor()
+
+                for recordingModeSelectionButton in strongSelf.recordingModeSelectionButtons {
+                    recordingModeSelectionButton.alpha = 0
+                }
+            }
+        }
+
+        cameraController.videoRecordingFailedHandler = { [weak self] in
+            self?.updateUIForStoppedRecording()
+
+            let alertController = UIAlertController(title: "Error", message: "Video recording failed", preferredStyle: .Alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+            alertController.addAction(cancelAction)
+            self?.presentViewController(alertController, animated: true, completion: nil)
+        }
+
+        cameraController.videoRecordingFinishedHandler = { [weak self] fileURL in
+            self?.updateUIForStoppedRecording()
+
+            if let completionBlock = self?.completionBlock {
+                completionBlock(nil, fileURL)
+            } else {
+                self?.saveMovieWithMovieURLToAssets(fileURL)
+            }
+        }
+
+        cameraController.videoRecordingProgressHandler = { [weak self] seconds in
+            guard let strongSelf = self else {
+                return
+            }
+
+            let displayedSeconds: Int
+
+            if strongSelf.options.maximumVideoLength > 0 {
+                displayedSeconds = strongSelf.options.maximumVideoLength - seconds
+            } else {
+                displayedSeconds = seconds
+            }
+
+            strongSelf.updateRecordingTimeLabel(displayedSeconds)
+
+            if strongSelf.options.maximumVideoLength > 0 && seconds >= strongSelf.options.maximumVideoLength {
+                self?.cameraController?.stopVideoRecording()
+            }
+        }
+
         do {
             try cameraController.setupWithInitialRecordingMode(options.allowedRecordingModes[0])
         } catch CameraControllerError.MultipleCallsToSetup {
@@ -1056,17 +1114,17 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     }
 
     public func recordVideo(sender: VideoRecordButton?) {
-//        if let recordVideoButton = sender {
-//            if recordVideoButton.recording {
-//                cameraController?.startVideoRecording()
-//            } else {
-//                cameraController?.stopVideoRecording()
-//            }
-//
-//            if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
-//                toggleFilters(filterSelectionButton)
-//            }
-//        }
+        if let recordVideoButton = sender {
+            if recordVideoButton.recording {
+                cameraController?.startVideoRecording()
+            } else {
+                cameraController?.stopVideoRecording()
+            }
+
+            if let filterSelectionViewConstraint = filterSelectionViewConstraint where filterSelectionViewConstraint.constant != 0 {
+                toggleFilters(filterSelectionButton)
+            }
+        }
     }
 
     public func toggleFilters(sender: UIButton?) {
@@ -1119,112 +1177,29 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         setLastImageFromRollAsPreview()
     }
 
-}
+    // MARK: - Recording UI
 
-//extension CameraViewController: CameraControllerDelegate {
-//    public func cameraControllerDidStartStillImageCapture(cameraController: CameraController) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            // Animate the actionButton if it is a UIButton and has a sequence of images set
-//            (self.actionButtonContainer.subviews.first as? UIButton)?.imageView?.startAnimating()
-//            self.buttonsEnabled = false
-//        }
-//    }
-//
-//    public func cameraControllerDidFailAuthorization(cameraController: CameraController) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            let bundle = NSBundle(forClass: CameraViewController.self)
-//
-//            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
-//
-//            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
-//                if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
-//                    UIApplication.sharedApplication().openURL(url)
-//                }
-//            }
-//
-//            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
-//
-//            alertController.addAction(settingsAction)
-//            alertController.addAction(cancelAction)
-//
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        }
-//    }
-//
-//    public func cameraControllerDidStartRecording(cameraController: CameraController) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            UIView.animateWithDuration(0.25) {
-//                self.swipeLeftGestureRecognizer.enabled = false
-//                self.swipeRightGestureRecognizer.enabled = false
-//
-//                self.switchCameraButton.alpha = 0
-//                self.filterSelectionButton.alpha = 0
-//                self.bottomControlsView.backgroundColor = UIColor.clearColor()
-//
-//                for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-//                    recordingModeSelectionButton.alpha = 0
-//                }
-//            }
-//        }
-//    }
-//
-//    private func updateUIForStoppedRecording() {
-//        UIView.animateWithDuration(0.25) {
-//            self.swipeLeftGestureRecognizer.enabled = true
-//            self.swipeRightGestureRecognizer.enabled = true
-//
-//            self.switchCameraButton.alpha = 1
-//            self.filterSelectionButton.alpha = 1
-//            self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
-//
-//            self.updateRecordingTimeLabel(self.options.maximumVideoLength)
-//
-//            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
-//                recordingModeSelectionButton.alpha = 1
-//            }
-//
-//            if let actionButton = self.actionButtonContainer.subviews.first as? VideoRecordButton {
-//                actionButton.recording = false
-//            }
-//        }
-//    }
-//
-//    public func cameraControllerDidFailRecording(cameraController: CameraController, error: NSError?) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateUIForStoppedRecording()
-//
-//            let alertController = UIAlertController(title: "Error", message: "Video recording failed", preferredStyle: .Alert)
-//            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-//            alertController.addAction(cancelAction)
-//            self.presentViewController(alertController, animated: true, completion: nil)
-//        }
-//    }
-//
-//    public func cameraControllerDidFinishRecording(cameraController: CameraController, fileURL: NSURL) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateUIForStoppedRecording()
-//            if let completionBlock = self.completionBlock {
-//                completionBlock(nil, fileURL)
-//            } else {
-//                self.saveMovieWithMovieURLToAssets(fileURL)
-//            }
-//        }
-//    }
-//
-//    public func cameraController(cameraController: CameraController, recordedSeconds seconds: Int) {
-//        let displayedSeconds: Int
-//
-//        if options.maximumVideoLength > 0 {
-//            displayedSeconds = options.maximumVideoLength - seconds
-//        } else {
-//            displayedSeconds = seconds
-//        }
-//
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.updateRecordingTimeLabel(displayedSeconds)
-//        }
-//    }
-//}
+    private func updateUIForStoppedRecording() {
+        UIView.animateWithDuration(0.25) {
+            self.swipeLeftGestureRecognizer.enabled = true
+            self.swipeRightGestureRecognizer.enabled = true
+
+            self.switchCameraButton.alpha = 1
+            self.filterSelectionButton.alpha = 1
+            self.bottomControlsView.backgroundColor = self.currentBackgroundColor.colorWithAlphaComponent(0.3)
+
+            self.updateRecordingTimeLabel(self.options.maximumVideoLength)
+
+            for recordingModeSelectionButton in self.recordingModeSelectionButtons {
+                recordingModeSelectionButton.alpha = 1
+            }
+
+            if let actionButton = self.actionButtonContainer.subviews.first as? VideoRecordButton {
+                actionButton.recording = false
+            }
+        }
+    }
+}
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
