@@ -279,6 +279,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         configureFilterSelectionController()
         configureCameraController()
         configureMaskLayers()
+        checkSDKVersionIfNeeded()
     }
 
     public override func viewWillAppear(animated: Bool) {

@@ -165,6 +165,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
         configureNavigationItems()
         configureViewHierarchy()
         configureViewConstraints()
+        checkSDKVersionIfNeeded()
     }
 
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
