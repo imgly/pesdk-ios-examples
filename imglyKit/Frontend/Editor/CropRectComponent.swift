@@ -9,12 +9,12 @@
 import UIKit
 
 @objc(IMGLYCropRectComponent) public class CropRectComponent: NSObject {
-    public var cropRect = CGRectZero
+    public var cropRect = CGRect.zero
 
-    private var topLineView = UIView(frame: CGRectZero)
-    private var bottomLineView = UIView(frame: CGRectZero)
-    private var leftLineView = UIView(frame: CGRectZero)
-    private var rightLineView = UIView(frame: CGRectZero)
+    private var topLineView = UIView(frame: CGRect.zero)
+    private var bottomLineView = UIView(frame: CGRect.zero)
+    private var leftLineView = UIView(frame: CGRect.zero)
+    private var rightLineView = UIView(frame: CGRect.zero)
 
     public var topLeftAnchor: UIImageView?
     public var topRightAnchor: UIImageView?

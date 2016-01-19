@@ -129,11 +129,11 @@ extension InstanceFactory {
     // MARK: - Gradient Views
 
     public class func circleGradientView() -> CircleGradientView {
-        return CircleGradientView(frame: CGRectZero)
+        return CircleGradientView(frame: CGRect.zero)
     }
 
     public class func boxGradientView() -> BoxGradientView {
-        return BoxGradientView(frame: CGRectZero)
+        return BoxGradientView(frame: CGRect.zero)
     }
 
     // MARK: - Helpers

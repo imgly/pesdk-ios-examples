@@ -103,7 +103,7 @@ import AppKit
         UIRectFill(CGRect(origin: CGPoint(), size: textSize))
 
         if let font = UIFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
-            text.drawAtPoint(CGPointZero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+            text.drawAtPoint(CGPoint.zero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
         }
 
         let image = UIGraphicsGetImageFromCurrentImageContext()
@@ -135,7 +135,7 @@ import AppKit
         NSRectFill(CGRect(origin: CGPoint(), size: textSize))
 
         if let font = NSFont(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle {
-            text.drawAtPoint(CGPointZero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
+            text.drawAtPoint(CGPoint.zero, withAttributes: [NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
         }
 
         image.unlockFocus()
@@ -157,7 +157,7 @@ import AppKit
         customParagraphStyle.lineBreakMode = .ByClipping
 
         guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
-            return CGSizeZero
+            return CGSize.zero
         }
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
@@ -170,7 +170,7 @@ import AppKit
         customParagraphStyle.lineBreakMode = .ByClipping
 
         guard let font = Font(name: fontName, size: initialFontSize * originalSize.height), paragraphStyle = customParagraphStyle.copy() as? NSParagraphStyle else {
-            return CGSizeZero
+            return CGSize.zero
         }
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }

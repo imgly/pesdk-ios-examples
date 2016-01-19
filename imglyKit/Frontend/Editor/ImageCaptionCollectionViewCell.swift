@@ -91,7 +91,7 @@ class ImageCaptionCollectionViewCell: UICollectionViewCell {
 
     var imageSize: CGSize {
         // Subclasses should override this
-        return CGSizeZero
+        return CGSize.zero
     }
 
     var imageCaptionMargin: CGFloat {

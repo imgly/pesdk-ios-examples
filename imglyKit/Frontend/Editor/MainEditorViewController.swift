@@ -139,7 +139,7 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 0
 
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
         collectionView.delegate = self

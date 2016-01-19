@@ -30,9 +30,9 @@ import QuartzCore
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     /// One of the two points, marking the dimension and direction of the box or circle.
-    public var controlPoint1 = CGPointZero
+    public var controlPoint1 = CGPoint.zero
     /// One of the two points, marking the dimension and direction of the box or circle.
-    public var controlPoint2 = CGPointZero
+    public var controlPoint2 = CGPoint.zero
     /// Defines the mode the filter operates in. Possible values are Box, Circle, and Off.
     public var tiltShiftType = TiltshiftType.Off
     /// The radius that is set to the gaussian filter during the whole process. Default is 4.
@@ -40,9 +40,9 @@ import QuartzCore
 
     private var center = CGPoint(x: 0.5, y: 0.5)
     private var radius = CGFloat(0.1)
-    private var scaleVector = CGPointZero
-    private var imageSize = CGSizeZero
-    private var rect = CGRectZero
+    private var scaleVector = CGPoint.zero
+    private var imageSize = CGSize.zero
+    private var rect = CGRect.zero
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {

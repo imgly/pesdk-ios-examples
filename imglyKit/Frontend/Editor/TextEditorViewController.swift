@@ -139,7 +139,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var fontName = ""
     private var currentTextSize = CGFloat(0)
     private var maximumFontSize = CGFloat(0)
-    private var panOffset = CGPointZero
+    private var panOffset = CGPoint.zero
     private var fontSizeAtPinchBegin = CGFloat(0)
     private var distanceAtPinchBegin = CGFloat(0)
     private var draggedView: UILabel?
@@ -558,7 +558,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
-            recognizer.setTranslation(CGPointZero, inView: textClipView)
+            recognizer.setTranslation(CGPoint.zero, inView: textClipView)
         case .Cancelled, .Ended:
             draggedView = nil
         default:
@@ -678,7 +678,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         if let text = textLabel.text {
             currentTextSize = 1.0
-            var size = CGSizeZero
+            var size = CGSize.zero
             if !text.isEmpty {
                 repeat {
                     currentTextSize += 1.0

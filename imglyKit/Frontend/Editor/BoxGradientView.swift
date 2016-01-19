@@ -11,10 +11,10 @@ public struct Line {
 }
 
 @objc(IMGLYBoxGradientView) public class BoxGradientView: UIView {
-    public var centerPoint = CGPointZero
+    public var centerPoint = CGPoint.zero
     public weak var gradientViewDelegate: GradientViewDelegate?
-    public var controlPoint1 = CGPointZero
-    public var controlPoint2 = CGPointZero {
+    public var controlPoint1 = CGPoint.zero
+    public var controlPoint2 = CGPoint.zero {
         didSet {
             calculateCenterPointFromOtherControlPoints()
             layoutCrosshair()

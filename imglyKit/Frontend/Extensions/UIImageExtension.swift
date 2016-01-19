@@ -34,7 +34,7 @@ public extension UIImage {
     */
     public func imgly_normalizedImageOfSize(size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        drawInRect(CGRect(origin: CGPointZero, size: size))
+        drawInRect(CGRect(origin: CGPoint.zero, size: size))
         let normalizedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return normalizedImage

@@ -157,7 +157,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 10
 
-        let collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = currentBackgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -208,7 +208,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
 
-            recognizer.setTranslation(CGPointZero, inView: stickersClipView)
+            recognizer.setTranslation(CGPoint.zero, inView: stickersClipView)
         case .Cancelled, .Ended:
             draggedView = nil
         default:

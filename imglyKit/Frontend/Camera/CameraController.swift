@@ -290,7 +290,7 @@ private var cameraControllerContext = 0
 
         self.glContext = glContext
 
-        videoPreviewView = GLKView(frame: CGRectZero, context: glContext)
+        videoPreviewView = GLKView(frame: CGRect.zero, context: glContext)
         videoPreviewView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         // Rotate to match images coming from the camera
         videoPreviewView.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))

@@ -169,7 +169,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     private var cropRectRightBound = CGFloat(0)
     private var cropRectTopBound = CGFloat(0)
     private var cropRectBottomBound = CGFloat(0)
-    private var dragOffset = CGPointZero
+    private var dragOffset = CGPoint.zero
 
     // MARK: - UIViewController
 
