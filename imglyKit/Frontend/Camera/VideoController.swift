@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
-class VideoController {
+final class VideoController {
 
     // MARK: - Properties
 

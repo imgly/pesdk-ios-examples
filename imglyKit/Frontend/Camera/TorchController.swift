@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class TorchController: NSObject, LightControllable {
+final class TorchController: NSObject, LightControllable {
 
     // MARK: - Properties
 

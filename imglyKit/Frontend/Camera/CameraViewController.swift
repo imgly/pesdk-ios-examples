@@ -11,6 +11,7 @@ import AVFoundation
 import MobileCoreServices
 import Photos
 
+private let kIndicatorSize = CGFloat(75)
 private let kShowFilterIntensitySliderInterval = NSTimeInterval(2)
 private let kFilterSelectionViewHeight = 100
 private let kBottomControlSize = CGSize(width: 47, height: 47)
@@ -200,7 +201,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return layer
     }()
 
-    private let upperMaskDarkenLayer: CALayer = {
+    private lazy var upperMaskDarkenLayer: CALayer = {
         let layer = CALayer()
         layer.borderWidth = 0
         layer.frame = CGRectZero
@@ -210,13 +211,23 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return layer
     }()
 
-    private let lowerMaskDarkenLayer: CALayer = {
+    private lazy var lowerMaskDarkenLayer: CALayer = {
         let layer = CALayer()
         layer.borderWidth = 0
         layer.frame = CGRectZero
         layer.hidden = true
         layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         layer.backgroundColor = UIColor(white: 0.0, alpha: 0.8).CGColor
+        return layer
+    }()
+
+    private lazy var focusIndicatorLayer: CALayer = {
+        let layer = CALayer()
+        layer.borderColor = UIColor.whiteColor().CGColor
+        layer.borderWidth = 1
+        layer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
+        layer.hidden = true
+        layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         return layer
     }()
 
@@ -706,6 +717,31 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             self?.updateSquareIndicatorView(previewFrame)
         }
 
+        cameraController.focusPointChangedHandler = { [weak self, unowned cameraController] point in
+            guard let strongSelf = self else {
+                return
+            }
+
+            let convertedPoint = cameraController.videoPreviewView.convertPoint(point, toView: strongSelf.cameraPreviewContainer)
+            strongSelf.showFocusIndicatorLayerAtLocation(convertedPoint)
+        }
+
+        cameraController.focusModeChangedHandler = { [weak self] focusMode, exposureMode in
+            guard let strongSelf = self else {
+                return
+            }
+
+            if strongSelf.focusIndicatorLayer.hidden == false {
+                if focusMode == .Locked && exposureMode == .Locked {
+                    strongSelf.focusIndicatorLayer.borderColor = UIColor(white: 1, alpha: 0.5).CGColor
+                }
+            }
+        }
+
+        cameraController.focusDisabledHandler = { [weak self] in
+            self?.disableFocusLockAnimated(true)
+        }
+
         do {
             try cameraController.setupWithInitialRecordingMode(options.allowedRecordingModes[0])
         } catch CameraControllerError.MultipleCallsToSetup {
@@ -917,6 +953,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
 
         buttonsEnabled = false
+        focusIndicatorLayer.hidden = true
 
         if let centerModeButtonConstraint = centerModeButtonConstraint {
             bottomControlsView.removeConstraint(centerModeButtonConstraint)
@@ -1264,6 +1301,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         cameraPreviewContainer.layer.addSublayer(maskIndicatorLayer)
         cameraPreviewContainer.layer.addSublayer(upperMaskDarkenLayer)
         cameraPreviewContainer.layer.addSublayer(lowerMaskDarkenLayer)
+        cameraPreviewContainer.layer.addSublayer(focusIndicatorLayer)
     }
 
     /*
@@ -1294,6 +1332,85 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         maskIndicatorLayer.hidden = true
         upperMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.hidden = true
+    }
+
+    // MARK: - Focus
+
+    private var focusIndicatorFadeOutTimer: NSTimer?
+    private var focusIndicatorAnimating = false
+
+    private func showFocusIndicatorLayerAtLocation(location: CGPoint) {
+        focusIndicatorFadeOutTimer?.invalidate()
+        focusIndicatorFadeOutTimer = nil
+        focusIndicatorAnimating = false
+
+        CATransaction.begin()
+        focusIndicatorLayer.opacity = 1
+        focusIndicatorLayer.hidden = false
+        focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+        focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
+        focusIndicatorLayer.position = location
+        focusIndicatorLayer.transform = CATransform3DIdentity
+        focusIndicatorLayer.removeAllAnimations()
+        CATransaction.commit()
+
+        let resizeAnimation = CABasicAnimation(keyPath: "transform")
+        resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
+        resizeAnimation.duration = 0.25
+        focusIndicatorLayer.addAnimation(resizeAnimation, forKey: nil)
+    }
+
+    private func disableFocusLockAnimated(animated: Bool) {
+        if focusIndicatorAnimating {
+            return
+        }
+
+        focusIndicatorAnimating = true
+        focusIndicatorFadeOutTimer?.invalidate()
+
+        if animated {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
+            focusIndicatorLayer.borderColor = UIColor.whiteColor().CGColor
+            focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize * 2, height: kIndicatorSize * 2)
+            focusIndicatorLayer.transform = CATransform3DIdentity
+            focusIndicatorLayer.position = cameraPreviewContainer.center
+
+            CATransaction.commit()
+
+            let resizeAnimation = CABasicAnimation(keyPath: "transform")
+            resizeAnimation.duration = 0.25
+            resizeAnimation.fromValue = NSValue(CATransform3D: CATransform3DMakeScale(1.5, 1.5, 1))
+            resizeAnimation.delegate = AnimationDelegate(block: { finished in
+                if finished {
+                    self.focusIndicatorFadeOutTimer = NSTimer.after(0.85) { [unowned self] in
+                        self.focusIndicatorLayer.opacity = 0
+
+                        let fadeAnimation = CABasicAnimation(keyPath: "opacity")
+                        fadeAnimation.duration = 0.25
+                        fadeAnimation.fromValue = 1
+                        fadeAnimation.delegate = AnimationDelegate(block: { finished in
+                            if finished {
+                                CATransaction.begin()
+                                CATransaction.setDisableActions(true)
+                                self.focusIndicatorLayer.hidden = true
+                                self.focusIndicatorLayer.opacity = 1
+                                self.focusIndicatorLayer.frame.size = CGSize(width: kIndicatorSize, height: kIndicatorSize)
+                                CATransaction.commit()
+                                self.focusIndicatorAnimating = false
+                            }
+                        })
+
+                        self.focusIndicatorLayer.addAnimation(fadeAnimation, forKey: nil)
+                    }
+                }
+            })
+
+            focusIndicatorLayer.addAnimation(resizeAnimation, forKey: nil)
+        } else {
+            focusIndicatorLayer.hidden = true
+            focusIndicatorAnimating = false
+        }
     }
 }
 

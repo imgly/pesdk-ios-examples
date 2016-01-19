@@ -133,6 +133,15 @@ private var cameraControllerContext = 0
     /// Called when the size of the preview image within the `videoPreviewView` changes
     public var previewFrameChangedHandler: ((previewFrame: CGRect) -> Void)?
 
+    /// Called when the focus point changes.
+    public var focusPointChangedHandler: ((point: CGPoint) -> Void)?
+
+    /// Called when the focus mode changes.
+    public var focusModeChangedHandler: ((focusMode: AVCaptureFocusMode, exposureMode: AVCaptureExposureMode) -> Void)?
+
+    /// Called when the focus gets disabled.
+    public var focusDisabledHandler: (() -> Void)?
+
     // Options
 
     /// An array of camera positions (e.g. `.Front`, `.Back`) that you want to support. Setting
@@ -238,6 +247,19 @@ private var cameraControllerContext = 0
         }
     }
 
+    /// Set to `false` to disable locking focus when a user taps on the live preview. Default is `true`.
+    public var tapToFocusEnabled = true {
+        didSet {
+            if oldValue != tapToFocusEnabled {
+                if let videoDeviceInput = videoDeviceInput where tapToFocusEnabled {
+                    createFocusControllerForVideoDeviceInput(videoDeviceInput)
+                } else {
+                    focusController = nil
+                }
+            }
+        }
+    }
+
     /// The effect filter that is applied to the live feed.
     public var effectFilter: EffectFilter {
         get {
@@ -257,6 +279,7 @@ private var cameraControllerContext = 0
             sampleBufferController.videoController = videoController
         }
     }
+    private var focusController: FocusController?
 
     // MARK: - Initializer
 
@@ -408,8 +431,13 @@ private var cameraControllerContext = 0
 
         sampleBufferController.previewFrameChangedHandler = { [weak self] previewFrame in
             dispatch_async(dispatch_get_main_queue()) {
+                self?.focusController?.videoPreviewFrame = previewFrame
                 self?.previewFrameChangedHandler?(previewFrame: previewFrame)
             }
+        }
+
+        if tapToFocusEnabled {
+            createFocusControllerForVideoDeviceInput(videoDeviceInput)
         }
 
         dispatch_async(sessionQueue) {
@@ -566,6 +594,7 @@ private var cameraControllerContext = 0
             }
 
             self.removeLightObserver()
+            self.focusController = nil
 
             if let device = AVCaptureDevice.deviceWithMediaType(AVMediaTypeVideo, preferringPosition: position), input = try? AVCaptureDeviceInput(device: device) {
                 self.videoDeviceInput = input
@@ -573,6 +602,10 @@ private var cameraControllerContext = 0
 
                 self.createLightControllerForSession(self.session, videoDeviceInput: input, sessionQueue: self.sessionQueue)
                 self.addLightObservers()
+
+                if self.tapToFocusEnabled {
+                    self.createFocusControllerForVideoDeviceInput(input)
+                }
             }
 
             self.session.commitConfiguration()
@@ -691,6 +724,27 @@ private var cameraControllerContext = 0
     */
     public func selectNextLightMode() {
         lightController?.selectNextLightMode()
+    }
+
+    // MARK: - Focus
+
+    private func createFocusControllerForVideoDeviceInput(videoDeviceInput: AVCaptureDeviceInput) {
+        focusController = FocusController(videoDeviceInput: videoDeviceInput, videoPreviewView: videoPreviewView, videoPreviewFrame: sampleBufferController.currentPreviewFrame, sessionQueue: sessionQueue)
+        focusController?.handler = { [weak self] point, mode, disabled in
+            dispatch_async(dispatch_get_main_queue()) {
+                if let point = point {
+                    self?.focusPointChangedHandler?(point: point)
+                }
+
+                if let mode = mode {
+                    self?.focusModeChangedHandler?(focusMode: mode.0, exposureMode: mode.1)
+                }
+
+                if disabled {
+                    self?.focusDisabledHandler?()
+                }
+            }
+        }
     }
 
     // MARK: - KVO

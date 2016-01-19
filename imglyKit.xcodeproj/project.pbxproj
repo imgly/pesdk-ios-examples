@@ -191,6 +191,7 @@
 		2BA980601C493FE7001C85B6 /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9805F1C493FE7001C85B6 /* VideoController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
+		2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE166B1C4E44FA00921DE7 /* FocusController.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
 		2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */; };
 		2BC437181C46B36600E47AFC /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC437171C46B36600E47AFC /* UIViewExtension.swift */; };
@@ -443,6 +444,7 @@
 		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
 		2BA9805F1C493FE7001C85B6 /* VideoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
+		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
 		2BC437171C46B36600E47AFC /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
@@ -831,6 +833,7 @@
 				2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */,
 				2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */,
 				2B319B641C45070200515C9D /* FlashController.swift */,
+				2BBE166B1C4E44FA00921DE7 /* FocusController.swift */,
 				2B67D1C71C47DBED00BEE726 /* LightController.swift */,
 				2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */,
 				2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */,
@@ -1696,6 +1699,7 @@
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,
 				2BF4D4FA1AF1155E00C801B2 /* BleachedBlueFilter.swift in Sources */,
 				2BF4D3DE1AF1150500C801B2 /* MainEditorViewController.swift in Sources */,
+				2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */,
 				2BF4D5011AF1155E00C801B2 /* CelsiusFilter.swift in Sources */,
 				2BF4D3D61AF1150500C801B2 /* FilterCollectionViewCell.swift in Sources */,
 				2BF4D3EA1AF1150500C801B2 /* TextEditorViewController.swift in Sources */,

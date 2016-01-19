@@ -8,7 +8,7 @@
 
 import AVFoundation
 
-class FlashController: NSObject, LightControllable {
+final class FlashController: NSObject, LightControllable {
 
     // MARK: - Properties
 
