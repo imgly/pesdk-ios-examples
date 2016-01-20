@@ -95,7 +95,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
         super.init()
 
         /// Override inherited properties with default values
-        self.title = Localize("crop-editor.title")
+        self.title = Localize("Crop")
     }
 }
 
@@ -106,7 +106,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     public private(set) lazy var freeRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("crop-editor.free")
+        button.textLabel.text = Localize("Free")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
@@ -117,7 +117,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     public private(set) lazy var oneToOneRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("crop-editor.1-to-1")
+        button.textLabel.text = Localize("1:1")
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
@@ -128,7 +128,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     public private(set) lazy var fourToThreeRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("crop-editor.4-to-3")
+        button.textLabel.text = Localize("4:3")
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
@@ -139,7 +139,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     public private(set) lazy var sixteenToNineRatioButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("crop-editor.16-to-9")
+        button.textLabel.text = Localize("16:9")
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)

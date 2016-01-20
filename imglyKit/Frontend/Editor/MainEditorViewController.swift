@@ -48,7 +48,7 @@ import UIKit
         super.init()
 
         /// Override inherited properties with default values
-        self.title = Localize("main-editor.title")
+        self.title = Localize("Editor")
     }
 }
 

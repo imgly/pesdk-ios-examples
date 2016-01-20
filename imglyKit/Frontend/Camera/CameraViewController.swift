@@ -638,15 +638,15 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 return
             }
 
-            let alertController = UIAlertController(title: Localize("camera-view-controller.camera-no-permission.title"), message: Localize("camera-view-controller.camera-no-permission.message"), preferredStyle: .Alert)
+            let alertController = UIAlertController(title: Localize("No permission"), message: Localize("Permission to use Camera are required, please change privacy settings."), preferredStyle: .Alert)
 
-            let settingsAction = UIAlertAction(title: Localize("camera-view-controller.camera-no-permission.settings"), style: .Default) { _ in
+            let settingsAction = UIAlertAction(title: Localize("Settings"), style: .Default) { _ in
                 if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.sharedApplication().openURL(url)
                 }
             }
 
-            let cancelAction = UIAlertAction(title: Localize("camera-view-controller.camera-no-permission.cancel"), style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: Localize("Cancel"), style: .Cancel, handler: nil)
 
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
@@ -895,8 +895,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             }) { success, error in
                 if let error = error {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let alertController = UIAlertController(title: Localize("camera-view-controller.error-saving-video.title"), message: error.localizedDescription, preferredStyle: .Alert)
-                        let cancelAction = UIAlertAction(title: Localize("camera-view-controller.error-saving-video.cancel"), style: .Cancel, handler: nil)
+                        let alertController = UIAlertController(title: Localize("Error while saving video"), message: error.localizedDescription, preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: Localize("Cancel"), style: .Cancel, handler: nil)
 
                         alertController.addAction(cancelAction)
 

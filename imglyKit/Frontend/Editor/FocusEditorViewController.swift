@@ -84,7 +84,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
         super.init()
 
         /// Override inherited properties with default values
-        self.title = Localize("focus-editor.title")
+        self.title = Localize("Focus")
     }
 }
 
@@ -95,7 +95,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     public private(set) lazy var offButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("focus-editor.off")
+        button.textLabel.text = Localize("Off")
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "turnOff:", forControlEvents: .TouchUpInside)
@@ -106,7 +106,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     public private(set) lazy var linearButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("focus-editor.linear")
+        button.textLabel.text = Localize("Linear")
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateLinear:", forControlEvents: .TouchUpInside)
@@ -117,7 +117,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     public private(set) lazy var radialButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = Localize("focus-editor.radial")
+        button.textLabel.text = Localize("Radial")
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateRadial:", forControlEvents: .TouchUpInside)

@@ -49,7 +49,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         super.init()
 
         /// Override inherited properties with default values
-        self.title = Localize("stickers-editor.title")
+        self.title = Localize("Stickers")
     }
 }
 

@@ -22,9 +22,9 @@ import MobileCoreServices
     var titleForSelectionButton: String {
         switch self {
         case .Photo:
-            return Localize("camera-view-controller.mode.photo")
+            return Localize("PHOTO")
         case .Video:
-            return Localize("camera-view-controller.mode.video")
+            return Localize("VIDEO")
         }
     }
 

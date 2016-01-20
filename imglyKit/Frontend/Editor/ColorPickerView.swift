@@ -88,7 +88,7 @@ import UIKit
     private func configureOkButton() {
         self.addSubview(okButton)
         okButton.translatesAutoresizingMaskIntoConstraints = false
-        let title = Localize("color-picker-view-ok-button.title")
+        let title = Localize("Ok")
         okButton.setTitle(title, forState:UIControlState.Normal)
         okButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         okButton.addTarget(self, action: "okButtonTouched:", forControlEvents: .TouchUpInside)
@@ -97,7 +97,7 @@ import UIKit
     private func configureCancelButton() {
         self.addSubview(cancelButton)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        let title = Localize("color-picker-view-cancel-button.title")
+        let title = Localize("Cancel")
         cancelButton.setTitle(title, forState:UIControlState.Normal)
         cancelButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
         cancelButton.addTarget(self, action: "cancelButtonTouched:", forControlEvents: .TouchUpInside)

@@ -85,44 +85,44 @@ import UIKit
         for actionType in types {
             switch actionType {
             case .Magic:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.magic"),
+                actions.append(MainEditorAction(title: Localize("Magic"),
                     image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil)!,
                     editorType: .Magic))
             case .Filter:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.filter"),
+                actions.append(MainEditorAction(title: Localize("Filter"),
                     image: UIImage(named: "icon_option_filters", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Filter))
             case .Stickers:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.stickers"),
+                actions.append(MainEditorAction(title: Localize("Stickers"),
                     image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Stickers))
             case .Orientation:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.orientation"),
+                actions.append(MainEditorAction(title: Localize("Orientation"),
                     image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Orientation))
             case .Focus:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.focus"),
+                actions.append(MainEditorAction(title: Localize("Focus"),
                     image: UIImage(named: "icon_option_focus", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Focus))
             case .Crop:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.crop"),
+                actions.append(MainEditorAction(title: Localize("Crop"),
                     image: UIImage(named: "icon_option_crop", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Crop))
             case .Brightness:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.brightness"),
+                actions.append(MainEditorAction(title: Localize("Brightness"),
                     image: UIImage(named: "icon_option_brightness", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Brightness))
             case .Contrast:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.contrast"),
+                actions.append(MainEditorAction(title: Localize("Contrast"),
                     image: UIImage(named: "icon_option_contrast", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Contrast))
             case .Saturation:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.saturation"),
+                actions.append(MainEditorAction(title: Localize("Saturation"),
                     image: UIImage(named: "icon_option_saturation", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Saturation))
             case .Text:
-                actions.append(MainEditorAction(title: Localize("main-editor.button.text"),
+                actions.append(MainEditorAction(title: Localize("Text"),
                     image: UIImage(named: "icon_option_text", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Text))
             }

@@ -60,7 +60,7 @@ import UIKit
         super.init()
 
         /// Override inherited properties with default values
-        self.title = Localize("filter-editor.title")
+        self.title = Localize("Filter")
     }
 }
 
