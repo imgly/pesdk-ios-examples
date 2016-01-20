@@ -30,7 +30,7 @@ func Localize(stringToken: String) -> String {
     }
 
     // Use standard NSLocalizedString
-    let bundle = NSBundle(forClass: CameraController.self)
+    let bundle = NSBundle(forClass: PhotoProcessor.self)
 
     return NSLocalizedString(stringToken, tableName: nil, bundle: bundle, value: stringToken, comment: "")
 }
