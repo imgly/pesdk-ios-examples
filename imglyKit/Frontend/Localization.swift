@@ -19,11 +19,10 @@ func Localize(stringToken: String) -> String {
 
     // If a custom localization dictionary is set, try that
     if let localizationDictionary = localizationDictionary {
-        // Only take preferred languages into account, that the application is also localized in
-        let preferredLanguages = NSLocale.preferredLanguages().filter { NSBundle.mainBundle().localizations.contains($0) }
+        let preferredLocalizations = NSBundle.mainBundle().preferredLocalizations
 
         // Try preferred langauges
-        for language in preferredLanguages {
+        for language in preferredLocalizations {
             if let localization = localizationDictionary[language]?[stringToken] {
                 return localization
             }
