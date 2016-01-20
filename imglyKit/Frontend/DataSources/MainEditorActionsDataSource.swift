@@ -85,44 +85,44 @@ import UIKit
         for actionType in types {
             switch actionType {
             case .Magic:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.magic", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.magic"),
                     image: UIImage(named: "icon_option_magic", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     selectedImage: UIImage(named: "icon_option_magic_active", inBundle: bundle, compatibleWithTraitCollection: nil)!,
                     editorType: .Magic))
             case .Filter:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.filter", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.filter"),
                     image: UIImage(named: "icon_option_filters", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Filter))
             case .Stickers:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.stickers", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.stickers"),
                     image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Stickers))
             case .Orientation:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.orientation", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.orientation"),
                     image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Orientation))
             case .Focus:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.focus", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.focus"),
                     image: UIImage(named: "icon_option_focus", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Focus))
             case .Crop:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.crop", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.crop"),
                     image: UIImage(named: "icon_option_crop", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Crop))
             case .Brightness:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.brightness", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.brightness"),
                     image: UIImage(named: "icon_option_brightness", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Brightness))
             case .Contrast:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.contrast", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.contrast"),
                     image: UIImage(named: "icon_option_contrast", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Contrast))
             case .Saturation:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.saturation", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.saturation"),
                     image: UIImage(named: "icon_option_saturation", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Saturation))
             case .Text:
-                actions.append(MainEditorAction(title: NSLocalizedString("main-editor.button.text", tableName: nil, bundle: bundle, value: "", comment: ""),
+                actions.append(MainEditorAction(title: Localize("main-editor.button.text"),
                     image: UIImage(named: "icon_option_text", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Text))
             }

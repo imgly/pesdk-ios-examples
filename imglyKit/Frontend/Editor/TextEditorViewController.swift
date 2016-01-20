@@ -126,7 +126,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("text-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
+        self.title = Localize("text-editor.title")
     }
 }
 
@@ -168,7 +168,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectTextFontButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("text-editor.font", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("text-editor.font")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "setTextFont:", forControlEvents: .TouchUpInside)
@@ -178,7 +178,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectTextColorButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("text-editor.text-color", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("text-editor.text-color")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
@@ -188,7 +188,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectBackgroundColorButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("text-editor.background-color", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("text-editor.background-color")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
@@ -198,7 +198,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var bringToFrontButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("text-editor.bring-to-front", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("text-editor.bring-to-front")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)

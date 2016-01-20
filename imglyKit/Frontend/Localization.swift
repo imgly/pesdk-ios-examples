@@ -56,4 +56,3 @@ public func IMGLYSetLocalizationDictionary(localizationDict: [String: [String: S
 public func IMGLYSetLocalizationBlock(localizationBlock: (stringToLocalize: String) -> String) {
     imglyKit.localizationBlock = localizationBlock
 }
-
