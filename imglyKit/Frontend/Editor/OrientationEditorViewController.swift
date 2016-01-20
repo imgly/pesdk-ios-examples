@@ -72,7 +72,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("orientation-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
+        self.title = Localize("Orientation")
     }
 }
 
@@ -83,7 +83,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     public private(set) lazy var rotateLeftButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("orientation-editor.rotate-left", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("Rotate L")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-l", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateLeft:", forControlEvents: .TouchUpInside)
@@ -94,7 +94,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     public private(set) lazy var rotateRightButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("orientation-editor.rotate-right", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("Rotate R")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-r", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateRight:", forControlEvents: .TouchUpInside)
@@ -105,7 +105,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     public private(set) lazy var flipHorizontallyButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("orientation-editor.flip-horizontally", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("Flip H")
         button.imageView.image = UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontally:", forControlEvents: .TouchUpInside)
@@ -116,7 +116,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     public private(set) lazy var flipVerticallyButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
-        button.textLabel.text = NSLocalizedString("orientation-editor.flip-vertically", tableName: nil, bundle: bundle, value: "", comment: "")
+        button.textLabel.text = Localize("Flip V")
         button.imageView.image = UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertically:", forControlEvents: .TouchUpInside)

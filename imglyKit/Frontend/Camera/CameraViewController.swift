@@ -638,17 +638,15 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 return
             }
 
-            let bundle = NSBundle(forClass: strongSelf.dynamicType)
+            let alertController = UIAlertController(title: Localize("No permission"), message: Localize("Permission to use Camera are required, please change privacy settings."), preferredStyle: .Alert)
 
-            let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.camera-no-permission.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: NSLocalizedString("camera-view-controller.camera-no-permission.message", tableName: nil, bundle: bundle, value: "", comment: ""), preferredStyle: .Alert)
-
-            let settingsAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.settings", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Default) { _ in
+            let settingsAction = UIAlertAction(title: Localize("Settings"), style: .Default) { _ in
                 if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
                     UIApplication.sharedApplication().openURL(url)
                 }
             }
 
-            let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.camera-no-permission.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: Localize("Cancel"), style: .Cancel, handler: nil)
 
             alertController.addAction(settingsAction)
             alertController.addAction(cancelAction)
@@ -897,10 +895,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             }) { success, error in
                 if let error = error {
                     dispatch_async(dispatch_get_main_queue()) {
-                        let bundle = NSBundle(forClass: CameraViewController.self)
-
-                        let alertController = UIAlertController(title: NSLocalizedString("camera-view-controller.error-saving-video.title", tableName: nil, bundle: bundle, value: "", comment: ""), message: error.localizedDescription, preferredStyle: .Alert)
-                        let cancelAction = UIAlertAction(title: NSLocalizedString("camera-view-controller.error-saving-video.cancel", tableName: nil, bundle: bundle, value: "", comment: ""), style: .Cancel, handler: nil)
+                        let alertController = UIAlertController(title: Localize("Error while saving video"), message: error.localizedDescription, preferredStyle: .Alert)
+                        let cancelAction = UIAlertAction(title: Localize("Cancel"), style: .Cancel, handler: nil)
 
                         alertController.addAction(cancelAction)
 

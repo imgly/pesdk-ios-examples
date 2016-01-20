@@ -60,7 +60,7 @@ import UIKit
         super.init()
 
         /// Override inherited properties with default values
-        self.title = NSLocalizedString("filter-editor.title", tableName: nil, bundle: NSBundle(forClass: MainEditorViewController.self), value: "", comment: "")
+        self.title = Localize("Filter")
     }
 }
 

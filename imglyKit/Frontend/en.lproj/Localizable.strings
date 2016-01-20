@@ -7,72 +7,66 @@
 */
 
 // Camera View Controller
-"camera-view-controller.camera-no-permission.title" = "No permission";
-"camera-view-controller.camera-no-permission.message" = "Permission to use Camera are required, please change privacy settings.";
-"camera-view-controller.camera-no-permission.settings" = "Settings";
-"camera-view-controller.camera-no-permission.cancel" = "Cancel";
-"camera-view-controller.mode.photo" = "PHOTO";
-"camera-view-controller.mode.video" = "VIDEO";
-"camera-view-controller.error-saving-video.title" = "Error while saving video";
-"camera-view-controller.error-saving-video.cancel" = "Cancel";
+"No permission" = "No permission";
+"Permission to use Camera are required, please change privacy settings." = "Permission to use Camera are required, please change privacy settings.";
+"Settings" = "Settings";
+"Cancel" = "Cancel";
+"PHOTO" = "PHOTO";
+"VIDEO" = "VIDEO";
+"Error while saving video" = "Error while saving video";
 
 // Main Editor
-"main-editor.title" = "Editor";
-"main-editor.button.magic" = "Magic";
-"main-editor.button.filter" = "Filter";
-"main-editor.button.stickers" = "Stickers";
-"main-editor.button.orientation" = "Orientation";
-"main-editor.button.focus" = "Focus";
-"main-editor.button.crop" = "Crop";
-"main-editor.button.brightness" = "Brightness";
-"main-editor.button.contrast" = "Contrast";
-"main-editor.button.saturation" = "Saturation";
-"main-editor.button.text" = "Text";
+"Editor" = "Editor";
+"Magic" = "Magic";
+"Filter" = "Filter";
+"Stickers" = "Stickers";
+"Orientation" = "Orientation";
+"Focus" = "Focus";
+"Crop" = "Crop";
+"Brightness" = "Brightness";
+"Contrast" = "Contrast";
+"Saturation" = "Saturation";
+"Text" = "Text";
 
 // Filter Editor
-"filter-editor.title" = "Filter";
+"Filter" = "Filter";
 
 // Stickers Editor
-"stickers-editor.title" = "Stickers";
+"Stickers" = "Stickers";
 
 // Orientation Editor
-"orientation-editor.title" = "Orientation";
-"orientation-editor.rotate-left" = "Rotate L";
-"orientation-editor.rotate-right" = "Rotate R";
-"orientation-editor.flip-horizontally" = "Flip H";
-"orientation-editor.flip-vertically" = "Flip V";
+"Orientation" = "Orientation";
+"Rotate L" = "Rotate L";
+"Rotate R" = "Rotate R";
+"Flip H" = "Flip H";
+"Flip V" = "Flip V";
 
 // Focus Editor
-"focus-editor.title" = "Focus";
-"focus-editor.off" = "Off";
-"focus-editor.linear" = "Linear";
-"focus-editor.radial" = "Radial";
+"Focus" = "Focus";
+"Off" = "Off";
+"Linear" = "Linear";
+"Radial" = "Radial";
 
 // Crop Editor
-"crop-editor.title" = "Crop";
-"crop-editor.free" = "Free";
-"crop-editor.1-to-1" = "1:1";
-"crop-editor.4-to-3" = "4:3";
-"crop-editor.16-to-9" = "16:9";
+"Crop" = "Crop";
+"Free" = "Free";
+"1:1" = "1:1";
+"4:3" = "4:3";
+"16:9" = "16:9";
 
 // Crop Editor
-"text-editor.font" = "Font";
-"text-editor.text-color" = "Text";
-"text-editor.background-color" = "Back";
-"text-editor.bring-to-front" = "Bring to front";
+"Font" = "Font";
+"Back" = "Back";
+"Bring to front" = "Bring to front";
 
 // Brightness Editor
-"brightness-editor.title" = "Brightness";
+"Brightness" = "Brightness";
 
 // Contrast Editor
-"contrast-editor.title" = "Contrast";
+"Contrast" = "Contrast";
 
 // Saturation Editor
-"saturation-editor.title" = "Saturation";
-
-// Text Editor
-"text-editor.title" = "Text";
+"Saturation" = "Saturation";
 
 // Color Picker View
-"color-picker-view-ok-button.title" = "Ok";
-"color-picker-view-cancel-button.title" = "Cancel";
+"Ok" = "Ok";

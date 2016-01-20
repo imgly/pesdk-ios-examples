@@ -15,8 +15,7 @@ import UIKit
     override public func viewDidLoad() {
         super.viewDidLoad()
 
-        let bundle = NSBundle(forClass: BrightnessEditorViewController.self)
-        let defaultTitle = NSLocalizedString("brightness-editor.title", tableName: nil, bundle: bundle, value: "", comment: "")
+        let defaultTitle = Localize("Brightness")
         if let title = options.title {
             if title != defaultTitle {
                 navigationItem.title = title

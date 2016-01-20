@@ -22,9 +22,9 @@ import MobileCoreServices
     var titleForSelectionButton: String {
         switch self {
         case .Photo:
-            return NSLocalizedString("camera-view-controller.mode.photo", tableName: nil, bundle: bundle, value: "", comment: "")
+            return Localize("PHOTO")
         case .Video:
-            return NSLocalizedString("camera-view-controller.mode.video", tableName: nil, bundle: bundle, value: "", comment: "")
+            return Localize("VIDEO")
         }
     }
 

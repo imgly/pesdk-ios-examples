@@ -185,6 +185,8 @@
 		2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5728051C28594E0003EF8F /* EffectFilter.swift */; };
 		2B5CA32E1C490CD80065DE48 /* CameraViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */; };
+		2B5E62B41C4FDE3C00C54B40 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E62B31C4FDE3C00C54B40 /* Localization.swift */; };
+		2B5E62B51C4FDE3C00C54B40 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E62B31C4FDE3C00C54B40 /* Localization.swift */; };
 		2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B67D1C71C47DBED00BEE726 /* LightController.swift */; };
 		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
 		2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */; };
@@ -423,7 +425,7 @@
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		0983311E1C3FF908000135B8 /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
-		099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPickerView.swift; sourceTree = "<group>"; };
+		099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ColorPickerView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		09DF6DF61C47B9B4000070B6 /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		2B044DD71C3E5E4500A73AE6 /* imglyKit OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKVersion.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2B5728051C28594E0003EF8F /* EffectFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilter.swift; sourceTree = "<group>"; };
 		2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewControllerOptions.swift; sourceTree = "<group>"; };
+		2B5E62B31C4FDE3C00C54B40 /* Localization.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
 		2B67D1C71C47DBED00BEE726 /* LightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightController.swift; sourceTree = "<group>"; };
 		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
 		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
@@ -465,14 +468,14 @@
 		2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ButtonCollectionViewCell.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3B11AF1150400C801B2 /* CircleGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleGradientView.swift; sourceTree = "<group>"; };
 		2BF4D3B21AF1150400C801B2 /* ColorButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorButton.swift; sourceTree = "<group>"; };
-		2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContrastEditorViewController.swift; sourceTree = "<group>"; };
+		2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ContrastEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3B41AF1150400C801B2 /* CropEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = CropEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3B51AF1150400C801B2 /* CropRectComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRectComponent.swift; sourceTree = "<group>"; };
 		2BF4D3B61AF1150400C801B2 /* EditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewController.swift; sourceTree = "<group>"; };
 		2BF4D3B71AF1150400C801B2 /* FilterCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCollectionViewCell.swift; sourceTree = "<group>"; };
 		2BF4D3B81AF1150400C801B2 /* FilterEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3B91AF1150400C801B2 /* FilterSelectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FilterSelectionController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusEditorViewController.swift; sourceTree = "<group>"; };
+		2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FocusEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3BB1AF1150400C801B2 /* FontSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = FontSelectorView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3BC1AF1150400C801B2 /* GradientViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientViewDelegate.swift; sourceTree = "<group>"; };
 		2BF4D3BD1AF1150400C801B2 /* ImageCaptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCaptionButton.swift; sourceTree = "<group>"; };
@@ -481,7 +484,7 @@
 		2BF4D3C01AF1150400C801B2 /* NavigationAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationAnimationController.swift; sourceTree = "<group>"; };
 		2BF4D3C11AF1150400C801B2 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		2BF4D3C21AF1150400C801B2 /* OrientationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = OrientationEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		2BF4D3C31AF1150400C801B2 /* SaturationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturationEditorViewController.swift; sourceTree = "<group>"; };
+		2BF4D3C31AF1150400C801B2 /* SaturationEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = SaturationEditorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF4D3C41AF1150400C801B2 /* SliderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderEditorViewController.swift; sourceTree = "<group>"; };
 		2BF4D3C51AF1150400C801B2 /* Sticker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sticker.swift; sourceTree = "<group>"; };
 		2BF4D3C61AF1150400C801B2 /* StickerCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -649,10 +652,10 @@
 		2BF4D5411AF1159D00C801B2 /* FontImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontImporter.swift; sourceTree = "<group>"; };
 		2BF4D5421AF1159D00C801B2 /* InstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceFactory.swift; sourceTree = "<group>"; };
 		2BF4D5461AF115A200C801B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingMode.swift; sourceTree = "<group>"; };
+		2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecordingMode.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2BF717D71B414FC600D4A50C /* ShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeLayer.swift; sourceTree = "<group>"; };
 		E990B2331C20506600806B30 /* FiltersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersDataSource.swift; sourceTree = "<group>"; };
-		E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorActionsDataSource.swift; sourceTree = "<group>"; };
+		E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainEditorActionsDataSource.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E9D550ED1C05E27D00CE72C3 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -716,6 +719,7 @@
 				2B1ADA0D1B19C36C00C98522 /* Extensions */,
 				2BF4D4A21AF1154B00C801B2 /* FixedFilterStack.swift */,
 				2BF4D5471AF115A200C801B2 /* Localizable.strings */,
+				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
 			);
 			path = Frontend;
@@ -1516,6 +1520,7 @@
 				2B1ADAD11B19C8EE00C98522 /* ResponseFilter.swift in Sources */,
 				0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */,
 				2B1ADAC01B19C8EE00C98522 /* Lomo100Filter.swift in Sources */,
+				2B5E62B51C4FDE3C00C54B40 /* Localization.swift in Sources */,
 				2B5728071C2859520003EF8F /* EffectFilter.swift in Sources */,
 				2B1ADABD1B19C8EE00C98522 /* KeenFilter.swift in Sources */,
 				2B1ADAB91B19C8EE00C98522 /* K1Filter.swift in Sources */,
@@ -1596,6 +1601,7 @@
 				2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */,
 				2BF4D5381AF1155E00C801B2 /* TwilightFilter.swift in Sources */,
 				2BF4D5301AF1155E00C801B2 /* SinFilter.swift in Sources */,
+				2B5E62B41C4FDE3C00C54B40 /* Localization.swift in Sources */,
 				2BF4D4AF1AF1154B00C801B2 /* PhotoProcessor.swift in Sources */,
 				2BF4D3E01AF1150500C801B2 /* NavigationController.swift in Sources */,
 				2BF4D3D41AF1150500C801B2 /* CropRectComponent.swift in Sources */,
