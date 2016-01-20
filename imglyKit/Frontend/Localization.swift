@@ -8,13 +8,13 @@
 
 import Foundation
 
-var localizationBlock: ((stringToLocalize: String) -> String)?
+var localizationBlock: ((stringToLocalize: String) -> String?)?
 var localizationDictionary: [String: [String: String]]?
 
 func Localize(stringToken: String) -> String {
-    // If a custom localization block is set, always use that
-    if let localizationBlock = localizationBlock {
-        return localizationBlock(stringToLocalize: stringToken)
+    // If a custom localization block is set, try that
+    if let localizationFromBlock = localizationBlock?(stringToLocalize: stringToken) {
+        return localizationFromBlock
     }
 
     // If a custom localization dictionary is set, try that
@@ -52,6 +52,6 @@ public func IMGLYSetLocalizationDictionary(localizationDict: [String: [String: S
 
  - parameter localizationBlock: A custom block that handles translation.
  */
-public func IMGLYSetLocalizationBlock(localizationBlock: (stringToLocalize: String) -> String) {
+public func IMGLYSetLocalizationBlock(localizationBlock: (stringToLocalize: String) -> String?) {
     imglyKit.localizationBlock = localizationBlock
 }
