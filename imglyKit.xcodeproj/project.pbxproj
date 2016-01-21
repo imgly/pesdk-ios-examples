@@ -196,6 +196,15 @@
 		2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE166B1C4E44FA00921DE7 /* FocusController.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
 		2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */; };
+		2BC5378D1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */; };
+		2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */; };
+		2BC537911C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */; };
+		2BC537931C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537921C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift */; };
+		2BC537951C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537941C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift */; };
+		2BC537971C513A2900A7DE17 /* CropEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537961C513A2900A7DE17 /* CropEditorViewControllerOptions.swift */; };
+		2BC537991C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537981C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift */; };
+		2BC5379B1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5379A1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift */; };
+		2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5379C1C513AA500A7DE17 /* EditorViewControllerOptions.swift */; };
 		2BE0C44F1C3ABB3B00F1F5E4 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BF4D3841AF1139600C801B2 /* imglyKit.framework */; };
 		2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
 		2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE37B771B3D9978009FAD40 /* VideoRecordButton.swift */; };
@@ -448,6 +457,15 @@
 		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
+		2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537921C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrientationEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537941C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537961C513A2900A7DE17 /* CropEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537981C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SliderEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC5379A1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC5379C1C513AA500A7DE17 /* EditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2BE0C44A1C3ABB3B00F1F5E4 /* imglyKit iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BE0C44E1C3ABB3B00F1F5E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LUTConverterTests.swift; sourceTree = "<group>"; };
@@ -771,6 +789,23 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		2BC537891C51397500A7DE17 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */,
+				2BC537961C513A2900A7DE17 /* CropEditorViewControllerOptions.swift */,
+				2BC5379C1C513AA500A7DE17 /* EditorViewControllerOptions.swift */,
+				2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */,
+				2BC537941C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift */,
+				2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */,
+				2BC537921C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift */,
+				2BC537981C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift */,
+				2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */,
+				2BC5379A1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift */,
+			);
+			path = Options;
+			sourceTree = "<group>";
+		};
 		2BE0C4551C3ABB4600F1F5E4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,7 +863,6 @@
 				2BEBCE961B00D7D1000FE22B /* AnimationDelegate.swift */,
 				2BEBFEB41C400A5D00FAA95C /* CameraController.swift */,
 				2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */,
-				2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */,
 				2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */,
 				2B319B641C45070200515C9D /* FlashController.swift */,
 				2BBE166B1C4E44FA00921DE7 /* FocusController.swift */,
@@ -1083,8 +1117,9 @@
 			isa = PBXGroup;
 			children = (
 				E9D550ED1C05E27D00CE72C3 /* Configuration.swift */,
+				2BC537891C51397500A7DE17 /* Options */,
 			);
-			name = Configuration;
+			path = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1577,9 +1612,11 @@
 				2BF4D4FF1AF1155E00C801B2 /* BreezeFilter.swift in Sources */,
 				2BF4D3D81AF1150500C801B2 /* FilterSelectionController.swift in Sources */,
 				2BF4D5391AF1155E00C801B2 /* WinterFilter.swift in Sources */,
+				2BC537931C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift in Sources */,
 				2BF4D3AC1AF114FA00C801B2 /* CameraViewController.swift in Sources */,
 				2BF4D52B1AF1155E00C801B2 /* QuoziFilter.swift in Sources */,
 				2BF4D4AB1AF1154B00C801B2 /* EnhancementFilter.swift in Sources */,
+				2BC537911C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift in Sources */,
 				0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */,
 				2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */,
 				2BEBFEB51C400A5D00FAA95C /* CameraController.swift in Sources */,
@@ -1651,6 +1688,7 @@
 				2BF4D3D11AF1150500C801B2 /* ColorButton.swift in Sources */,
 				098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D5361AF1155E00C801B2 /* TenderFilter.swift in Sources */,
+				2BC537971C513A2900A7DE17 /* CropEditorViewControllerOptions.swift in Sources */,
 				098331211C400A72000135B8 /* UIColorExtension.swift in Sources */,
 				2BF4D51D1AF1155E00C801B2 /* LucidFilter.swift in Sources */,
 				2BF4D5371AF1155E00C801B2 /* TexasFilter.swift in Sources */,
@@ -1662,6 +1700,8 @@
 				2BF4D3D31AF1150500C801B2 /* CropEditorViewController.swift in Sources */,
 				2BF4D3DB1AF1150500C801B2 /* GradientViewDelegate.swift in Sources */,
 				2BF4D3D01AF1150500C801B2 /* CircleGradientView.swift in Sources */,
+				2BC5379B1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift in Sources */,
+				2BC537991C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift in Sources */,
 				2BF4D5201AF1155E00C801B2 /* NeatFilter.swift in Sources */,
 				2BF4D5111AF1155E00C801B2 /* GlamFilter.swift in Sources */,
 				2BF4D5061AF1155E00C801B2 /* CottonCandyFilter.swift in Sources */,
@@ -1674,6 +1714,7 @@
 				0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */,
 				2BF4D3D71AF1150500C801B2 /* FilterEditorViewController.swift in Sources */,
 				2BF4D50B1AF1155E00C801B2 /* EveningFilter.swift in Sources */,
+				2BC5378D1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift in Sources */,
 				2BF4D4B01AF1154B00C801B2 /* StickerFilter.swift in Sources */,
 				2BF4D4F91AF1155E00C801B2 /* AncientFilter.swift in Sources */,
 				2BF4D5001AF1155E00C801B2 /* BWFilter.swift in Sources */,
@@ -1684,6 +1725,7 @@
 				2BF4D50D1AF1155E00C801B2 /* FixieFilter.swift in Sources */,
 				E9AF1E621C0F2E0D00893621 /* MainEditorActionsDataSource.swift in Sources */,
 				2BF4D5171AF1155E00C801B2 /* KDynamicFilter.swift in Sources */,
+				2BC537951C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift in Sources */,
 				2BF4D5041AF1155E00C801B2 /* ColorfulFilter.swift in Sources */,
 				2BF4D5281AF1155E00C801B2 /* PolaSXFIlter.swift in Sources */,
 				2BF4D3E81AF1150500C801B2 /* SubEditorViewController.swift in Sources */,
@@ -1695,7 +1737,9 @@
 				2BF4D4AD1AF1154B00C801B2 /* NoneFilter.swift in Sources */,
 				2BF4D4AC1AF1154B00C801B2 /* FixedFilterStack.swift in Sources */,
 				2BF4D5131AF1155E00C801B2 /* HighcarbFilter.swift in Sources */,
+				2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */,
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,
+				2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */,
 				2BF4D4FA1AF1155E00C801B2 /* BleachedBlueFilter.swift in Sources */,
 				2BF4D3DE1AF1150500C801B2 /* MainEditorViewController.swift in Sources */,
 				2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */,
