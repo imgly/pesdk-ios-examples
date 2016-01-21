@@ -15,67 +15,6 @@ import UIKit
     case FlipVertically
 }
 
-public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButton, OrientationAction) -> ()
-
-// swiftlint:disable type_name
-@objc(IMGLYOrientationEditorViewControllerOptions) public class OrientationEditorViewControllerOptions: EditorViewControllerOptions {
-    // swiftlint:enable type_name
-
-    /// Defines all allowed actions. The action buttons are shown in the given order.
-    /// Defaults to show all available actions.
-    public let allowedOrientationActions: [OrientationAction]
-
-    /// This closure allows further configuration of the action buttons. The closure is called for
-    /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure
-
-    public convenience init() {
-        self.init(builder: OrientationEditorViewControllerOptionsBuilder())
-    }
-
-    public init(builder: OrientationEditorViewControllerOptionsBuilder) {
-        allowedOrientationActions = builder.allowedOrientationActions
-        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
-        super.init(editorBuilder: builder)
-    }
-}
-
-// swiftlint:disable type_name
-@objc(IMGLYOrientationEditorViewControllerOptionsBuilder) public class OrientationEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
-    // swiftlint:enable type_name
-
-    /// Defines all allowed actions. The action buttons are always shown in the given order.
-    /// Defaults to show all available actions. To set this
-    /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
-    public var allowedOrientationActions: [OrientationAction] = [ .RotateLeft, .RotateRight, .FlipHorizontally, .FlipVertically ]
-
-    /// This closure allows further configuration of the action buttons. The closure is called for
-    /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure = { _ in }
-
-
-    /// An array of `OrientationAction` raw values wrapped in NSNumbers.
-    /// Setting this property overrides any previously set values in
-    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
-    public var allowedOrientationActionsAsNSNumbers: [NSNumber] {
-        get {
-            return allowedOrientationActions.map { NSNumber(integer: $0.rawValue) }
-        }
-
-        set {
-            allowedOrientationActions = newValue.flatMap { OrientationAction(rawValue: $0.integerValue) }
-        }
-    }
-
-
-    public override init() {
-        super.init()
-
-        /// Override inherited properties with default values
-        self.title = Localize("Orientation")
-    }
-}
-
 @objc(IMGLYOrientationEditorViewController) public class OrientationEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
@@ -87,7 +26,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         button.imageView.image = UIImage(named: "icon_orientation_rotate-l", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateLeft:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .RotateLeft)
+        self.options.actionButtonConfigurationClosure?(button, .RotateLeft)
         return button
         }()
 
@@ -98,7 +37,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         button.imageView.image = UIImage(named: "icon_orientation_rotate-r", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateRight:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .RotateRight)
+        self.options.actionButtonConfigurationClosure?(button, .RotateRight)
         return button
         }()
 
@@ -109,7 +48,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         button.imageView.image = UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontally:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .FlipHorizontally)
+        self.options.actionButtonConfigurationClosure?(button, .FlipHorizontally)
         return button
         }()
 
@@ -120,7 +59,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         button.imageView.image = UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertically:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .FlipVertically)
+        self.options.actionButtonConfigurationClosure?(button, .FlipVertically)
         return button
         }()
 

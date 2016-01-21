@@ -538,6 +538,10 @@ private var cameraControllerContext = 0
     Stops the camera.
     */
     public func stopCamera() {
+        if !setupComplete || !session.running {
+            return
+        }
+
         deviceOrientationController.stop()
 
         dispatch_async(sessionQueue) {
