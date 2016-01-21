@@ -23,6 +23,7 @@ import UIKit
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Rotate L")
+        button.accessibilityLabel = Localize("Rotate left")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-l", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateLeft:", forControlEvents: .TouchUpInside)
@@ -34,6 +35,7 @@ import UIKit
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Rotate R")
+        button.accessibilityLabel = Localize("Rotate right")
         button.imageView.image = UIImage(named: "icon_orientation_rotate-r", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rotateRight:", forControlEvents: .TouchUpInside)
@@ -45,6 +47,7 @@ import UIKit
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Flip H")
+        button.accessibilityLabel = Localize("Flip horizontally")
         button.imageView.image = UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontally:", forControlEvents: .TouchUpInside)
@@ -56,6 +59,7 @@ import UIKit
         let bundle = NSBundle(forClass: OrientationEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Flip V")
+        button.accessibilityLabel = Localize("Flip vertically")
         button.imageView.image = UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertically:", forControlEvents: .TouchUpInside)

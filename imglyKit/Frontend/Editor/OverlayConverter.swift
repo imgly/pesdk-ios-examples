@@ -39,8 +39,8 @@ import UIKit
     * When we are done we must revoke that extra transformation.
     */
     func addUIElementFromStickerFilter(stickerFilter: StickerFilter, containerView: UIView) {
-        let imageView = UIImageView(image: stickerFilter.sticker)
-        imageView.userInteractionEnabled = true
+        let imageView = StickerImageView(image: stickerFilter.sticker)
+
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         var completeSize = containerView.bounds.size
         completeSize.width *= 1.0 / cropRect.width

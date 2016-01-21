@@ -46,6 +46,8 @@
 "Rotate R" = "Rotate R";
 "Flip H" = "Flip H";
 "Flip V" = "Flip V";
+"Flip vertically" = "Flip vertically";
+"Flip horizontally" = "Flip horizontally";
 
 // Focus Editor
 "Focus" = "Focus";

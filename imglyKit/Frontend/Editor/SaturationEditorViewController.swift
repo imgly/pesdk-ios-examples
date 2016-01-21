@@ -15,6 +15,8 @@ import UIKit
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        slider.accessibilityLabel = Localize("Saturation")
+
         let defaultTitle = Localize("Saturation")
         if let title = options.title {
             if title != defaultTitle {

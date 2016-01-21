@@ -428,7 +428,49 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView:self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView: self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+
+            // Recreate accessibility functions
+            for view in self.stickersClipView.subviews {
+                if let imageView = view as? StickerImageView {
+                    // Check datasource for sticker to get label
+                    var sticker: Sticker?
+                    for i in 0 ..< self.options.stickersDataSource.stickerCount {
+                        if self.options.stickersDataSource.stickerAtIndex(i).image == imageView.image {
+                            sticker = self.options.stickersDataSource.stickerAtIndex(i)
+                            break
+                        }
+                    }
+
+                    if let label = sticker?.label {
+                        imageView.accessibilityLabel = Localize(label)
+                    }
+
+                    imageView.decrementHandler = { [unowned imageView] in
+                        // Decrease by 10 %
+                        imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+
+                    imageView.incrementHandler = { [unowned imageView] in
+                        // Increase by 10 %
+                        imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+
+                    imageView.rotateLeftHandler = { [unowned imageView] in
+                        // Rotate by 10 degrees to the left
+                        imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+                    
+                    imageView.rotateRightHandler = { [unowned imageView] in
+                        // Rotate by 10 degrees to the right
+                        imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+                }
+            }
         }
     }
 
@@ -445,6 +487,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 result = imageView as? UIImageView
             }
         }
+        
         return result
     }
 
