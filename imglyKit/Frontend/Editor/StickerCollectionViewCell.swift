@@ -32,6 +32,8 @@ class StickerCollectionViewCell: UICollectionViewCell {
     }
 
     private func commonInit() {
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
         configureViews()
     }
 

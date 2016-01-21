@@ -21,6 +21,7 @@ import UIKit
         slider.minimumValue = 0
         slider.maximumValue = 1
         slider.value = 0.75
+        slider.accessibilityLabel = Localize("Filter Intensity")
         slider.addTarget(self, action: "changeIntensity:", forControlEvents: .ValueChanged)
         slider.addTarget(self, action: "sliderTouchedUpInside:", forControlEvents: .TouchUpInside)
 
@@ -61,14 +62,18 @@ import UIKit
         filterSelectionController.selectedBlock = { [weak self] filterType, initialFilterIntensity in
             if filterType == .None {
                 if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha > 0 {
-                    UIView.animateWithDuration(0.3) {
+                    UIView.animateWithDuration(0.3, animations: {
                         filterIntensitySlider.alpha = 0
+                        }) { finished in
+                            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
                     }
                 }
             } else {
                 if let filterIntensitySlider = self?.filterIntensitySlider where filterIntensitySlider.alpha < 1 {
-                    UIView.animateWithDuration(0.3) {
+                    UIView.animateWithDuration(0.3, animations: {
                         filterIntensitySlider.alpha = 1
+                        }) { finished in
+                            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
                     }
                 }
             }

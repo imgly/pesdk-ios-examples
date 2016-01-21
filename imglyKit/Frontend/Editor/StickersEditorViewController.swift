@@ -497,6 +497,10 @@ extension StickersEditorViewController: UICollectionViewDataSource {
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         cell.imageView.image = sticker.thumbnail ?? sticker.image
 
+        if let label = sticker.label {
+            cell.accessibilityLabel = Localize(label)
+        }
+
         return cell
     }
 }
@@ -505,13 +509,42 @@ extension StickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         unSelectView(selectedView)
+
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
-        let imageView = UIImageView(image: sticker.image)
-        imageView.userInteractionEnabled = true
+        let imageView = StickerImageView(image: sticker.image)
         if let size = overlayConverter?.initialSizeForStickerImage(sticker.image, containerView: stickersClipView) {
             imageView.frame.size = size
         }
+
         imageView.center = CGPoint(x: stickersClipView.bounds.midX, y: stickersClipView.bounds.midY)
+
+        if let label = sticker.label {
+            imageView.accessibilityLabel = Localize(label)
+        }
+
+        imageView.decrementHandler = { [unowned imageView] in
+            // Decrease by 10 %
+            imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.incrementHandler = { [unowned imageView] in
+            // Increase by 10 %
+            imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.rotateLeftHandler = { [unowned imageView] in
+            // Rotate by 10 degrees to the left
+            imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.rotateRightHandler = { [unowned imageView] in
+            // Rotate by 10 degrees to the right
+            imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
 
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let scaleX = 1.0 / cropRect.width
@@ -525,11 +558,13 @@ extension StickersEditorViewController: UICollectionViewDelegate {
 
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
-            }, completion: { (Bool) -> Void in
-                self.selectedView = imageView
-                self.selectView(imageView)
-                self.updateButtonStatus()
-        })
+        }) { _ in
+            self.selectedView = imageView
+            self.selectView(imageView)
+            self.updateButtonStatus()
+
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, imageView)
+        }
     }
 }
 

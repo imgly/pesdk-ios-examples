@@ -27,30 +27,31 @@ import UIKit
      Creates a default datasource offering all available stickers.
     */
     override init() {
-        let stickerFiles = [
-            "glasses_nerd",
-            "glasses_normal",
-            "glasses_shutter_green",
-            "glasses_shutter_yellow",
-            "glasses_sun",
-            "hat_cap",
-            "hat_party",
-            "hat_sherrif",
-            "hat_zylinder",
-            "heart",
-            "mustache_long",
-            "mustache1",
-            "mustache2",
-            "mustache3",
-            "pipe",
-            "snowflake",
-            "star"
+        let stickerFilesAndLabels = [
+            ("glasses_nerd", "Brown glasses"),
+            ("glasses_normal", "Black glasses"),
+            ("glasses_shutter_green", "Green glasses"),
+            ("glasses_shutter_yellow", "Yellow glasses"),
+            ("glasses_sun", "Sunglasses"),
+            ("hat_cap", "Blue and white cap"),
+            ("hat_party", "White and red party hat"),
+            ("hat_sherrif", "Sherrif hat"),
+            ("hat_zylinder", "Black high hat"),
+            ("heart", "Red heart"),
+            ("mustache_long", "Long black mustache"),
+            ("mustache1", "Brown mustache"),
+            ("mustache2", "Black mustache"),
+            ("mustache3", "Brown mustache"),
+            ("pipe", "Pipe"),
+            ("snowflake", "Snowflake"),
+            ("star", "Star")
         ]
 
-        stickers = stickerFiles.flatMap { (file: String) -> Sticker? in
-            if let image = UIImage(named: file, inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil) {
-                let thumbnail = UIImage(named: file + "_thumbnail", inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil)
-                return Sticker(image: image, thumbnail: thumbnail)
+        stickers = stickerFilesAndLabels.flatMap { fileAndLabel -> Sticker? in
+            if let image = UIImage(named: fileAndLabel.0, inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil) {
+                let thumbnail = UIImage(named: fileAndLabel.0 + "_thumbnail", inBundle: NSBundle(forClass: StickersDataSource.self), compatibleWithTraitCollection: nil)
+                let label = fileAndLabel.1
+                return Sticker(image: image, thumbnail: thumbnail, label: label)
             }
 
             return nil

@@ -212,6 +212,7 @@
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
 		2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */; };
 		2BC5378D1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */; };
+		2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537871C51001500A7DE17 /* StickerImageView.swift */; };
 		2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */; };
 		2BC537911C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */; };
 		2BC537931C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537921C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift */; };
@@ -484,6 +485,7 @@
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
 		2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorViewControllerOptions.swift; sourceTree = "<group>"; };
+		2BC537871C51001500A7DE17 /* StickerImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerImageView.swift; sourceTree = "<group>"; };
 		2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterEditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersEditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2BC537921C513A1800A7DE17 /* OrientationEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrientationEditorViewControllerOptions.swift; sourceTree = "<group>"; };
@@ -950,6 +952,7 @@
 				2BF4D3C41AF1150400C801B2 /* SliderEditorViewController.swift */,
 				2BF4D3C51AF1150400C801B2 /* Sticker.swift */,
 				2BF4D3C61AF1150400C801B2 /* StickerCollectionViewCell.swift */,
+				2BC537871C51001500A7DE17 /* StickerImageView.swift */,
 				2BF4D3C81AF1150400C801B2 /* StickersEditorViewController.swift */,
 				2BF4D3C91AF1150400C801B2 /* SubEditorViewController.swift */,
 				09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */,
@@ -1779,6 +1782,7 @@
 				093D111F1C60F90800B72B7A /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D3E81AF1150500C801B2 /* SubEditorViewController.swift in Sources */,
 				2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */,
+				2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */,
 				2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */,
 				2BF4D5251AF1155E00C801B2 /* PitchedFilter.swift in Sources */,
 				2BF4D53A1AF1155E00C801B2 /* X400Filter.swift in Sources */,

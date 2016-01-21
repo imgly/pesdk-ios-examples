@@ -11,10 +11,12 @@ import UIKit
 @objc(IMGLYSticker) public class Sticker: NSObject {
     public let image: UIImage
     public let thumbnail: UIImage?
+    public let label: String?
 
-    public init(image: UIImage, thumbnail: UIImage?) {
+    public init(image: UIImage, thumbnail: UIImage?, label: String?) {
         self.image = image
         self.thumbnail = thumbnail
+        self.label = label
         super.init()
     }
 }

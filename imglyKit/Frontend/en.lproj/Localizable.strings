@@ -15,6 +15,9 @@
 "VIDEO" = "VIDEO";
 "Error while saving video" = "Error while saving video";
 
+// Editor
+"Photol" = "Photo";
+
 // Main Editor
 "Editor" = "Editor";
 "Magic" = "Magic";
@@ -30,9 +33,12 @@
 
 // Filter Editor
 "Filter" = "Filter";
+"Filter Intensity" = "Filter Intensity";
 
 // Stickers Editor
 "Stickers" = "Stickers";
+"Rotate left" = "Rotate left";
+"Rotate right" = "Rotate right";
 
 // Orientation Editor
 "Orientation" = "Orientation";
@@ -70,3 +76,22 @@
 
 // Color Picker View
 "Ok" = "Ok";
+
+// Stickers
+"Brown glasses" = "Brown glasses";
+"Black glasses" = "Black glasses";
+"Green glasses" = "Green glasses";
+"Yellow glasses" = "Yellow glasses";
+"Sunglasses" = "Sunglasses";
+"Blue and white cap" = "Blue and white cap";
+"White and red party hat" = "White and red party hat";
+"Sherrif hat" = "Sherrif hat";
+"Black high hat" = "Black high hat";
+"Red heart" = "Red heart";
+"Long black mustache" = "Long black mustache";
+"Brown mustache" = "Brown mustache";
+"Black mustache" = "Black mustache";
+"Brown mustache" = "Brown mustache";
+"Pipe" = "Pipe";
+"Snowflake" = "Snowflake";
+"Star" = "Star";
