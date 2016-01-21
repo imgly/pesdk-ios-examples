@@ -20,7 +20,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure
+    public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure?
 
     public convenience init() {
         self.init(builder: FocusEditorViewControllerOptionsBuilder())
@@ -50,7 +50,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure = { _ in }
+    public var actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure? = nil
 
 
     /// An array of `FocusAction` raw values wrapped in NSNumbers.

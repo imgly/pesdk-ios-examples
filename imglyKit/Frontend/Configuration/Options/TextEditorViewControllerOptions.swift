@@ -11,7 +11,7 @@ import UIKit
 @objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
-    public let textFieldConfigurationClosure: TextFieldConfigurationClosure
+    public let textFieldConfigurationClosure: TextFieldConfigurationClosure?
 
     /// Defaults to white.
     public let fontPreviewTextColor: UIColor
@@ -77,8 +77,7 @@ import UIKit
     // swiftlint:enable type_name
 
     /// Use this closure to configure the text input field.
-    /// Defaults to an empty implementation.
-    public lazy var textFieldConfigurationClosure: TextFieldConfigurationClosure = { _ in }
+    public var textFieldConfigurationClosure: TextFieldConfigurationClosure? = nil
 
     /// Defaults to white.
     public var fontPreviewTextColor: UIColor = UIColor.whiteColor()
@@ -88,10 +87,10 @@ import UIKit
     public var availableFontColors: [UIColor]?
 
     /// Enables/Disables the add text button. Defaults to true.
-    public let canAddText = true
+    public var canAddText = true
 
     /// Enables/Disables the delete text button. Defaults to true.
-    public let canDeleteText = true
+    public var canDeleteText = true
 
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public var canModifyTextSize = true
@@ -100,22 +99,22 @@ import UIKit
     public var canModifyTextColor = true
 
     /// Enables/Disables background color changes through the bottom drawer. Defaults to true.
-    public let canModifyBackgroundColor = true
+    public var canModifyBackgroundColor = true
 
     /// Enables/Disables the bring to front option. Defaults to true.
-    public let canBringToFront = true
+    public var canBringToFront = true
 
     /// Enables/Disables font changes through the bottom drawer. Defaults to true.
-    public let canModifyTextFont = true
+    public var canModifyTextFont = true
 
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
-    public let defaultFontName = "Helvetica Neue"
+    public var defaultFontName = "Helvetica Neue"
 
     /// The background color of the add text button. Defaults to petrol.
-    public let addButtonBackgroundColor = UIColor(red:0, green:0.48, blue:0.56, alpha:0.6)
+    public var addButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 0.6)
 
     /// The background color of the delete text button. Defaults to petrol.
-    public let deleteButtonBackgroundColor = UIColor(red:0, green:0.48, blue:0.56, alpha:0.6)
+    public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 0.6)
 
     public override init() {
         super.init()

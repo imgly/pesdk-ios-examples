@@ -20,7 +20,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure
+    public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure?
 
     public convenience init() {
         self.init(builder: OrientationEditorViewControllerOptionsBuilder())
@@ -44,7 +44,7 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure = { _ in }
+    public var actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure? = nil
 
 
     /// An array of `OrientationAction` raw values wrapped in NSNumbers.

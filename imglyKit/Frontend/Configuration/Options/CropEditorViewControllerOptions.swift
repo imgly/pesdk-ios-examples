@@ -19,7 +19,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure
+    public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure?
 
     public convenience init() {
         self.init(builder: CropEditorViewControllerOptionsBuilder())
@@ -43,7 +43,7 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure = { _ in }
+    public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
 
     // MARK: Obj-C Compatibility
 

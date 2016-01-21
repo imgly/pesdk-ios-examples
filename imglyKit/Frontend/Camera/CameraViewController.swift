@@ -96,7 +96,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.contentHorizontalAlignment = .Left
         button.addTarget(self, action: "changeFlash:", forControlEvents: .TouchUpInside)
         button.hidden = true
-        self.options.flashButtonConfigurationClosure(button)
+        self.options.flashButtonConfigurationClosure?(button)
         return button
     }()
 
@@ -109,7 +109,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.contentHorizontalAlignment = .Right
         button.addTarget(self, action: "switchCamera:", forControlEvents: .TouchUpInside)
         button.hidden = true
-        self.options.switchCameraButtonConfigurationClosure(button)
+        self.options.switchCameraButtonConfigurationClosure?(button)
         return button
     }()
 
@@ -122,7 +122,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
         button.addTarget(self, action: "showCameraRoll:", forControlEvents: .TouchUpInside)
-        self.options.cameraRollButtonConfigurationClosure(button)
+        self.options.cameraRollButtonConfigurationClosure?(button)
         return button
     }()
 
@@ -138,7 +138,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         label.alpha = 0
         label.textColor = UIColor.whiteColor()
         label.text = "00:00"
-        self.options.timeLabelConfigurationClosure(label)
+        self.options.timeLabelConfigurationClosure?(label)
         return label
     }()
 
@@ -153,7 +153,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.clipsToBounds = true
         button.addTarget(self, action: "toggleFilters:", forControlEvents: .TouchUpInside)
         button.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
-        self.options.filterSelectorButtonConfigurationClosure(button)
+        self.options.filterSelectorButtonConfigurationClosure?(button)
         return button
     }()
 
@@ -175,7 +175,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
 
         slider.hidden = !self.options.showFilterIntensitySlider
-        self.options.filterIntensitySliderConfigurationClosure(slider)
+        self.options.filterIntensitySliderConfigurationClosure?(slider)
 
         return slider
     }()
@@ -382,7 +382,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
         for recordingModeSelectionButton in recordingModeSelectionButtons {
             bottomControlsView.addSubview(recordingModeSelectionButton)
-            options.recordingModeButtonConfigurationClosure(recordingModeSelectionButton, options.allowedRecordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
+            options.recordingModeButtonConfigurationClosure?(recordingModeSelectionButton, options.allowedRecordingModes[recordingModeSelectionButtons.indexOf(recordingModeSelectionButton)!])
         }
 
         backgroundContainerView.addSubview(filterIntensitySlider)
@@ -964,7 +964,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
         // Call configuration closure if actionButton is a UIButton subclass
         if let imageCaptureActionButton = actionButton as? UIButton {
-            options.photoActionButtonConfigurationClosure(imageCaptureActionButton)
+            options.photoActionButtonConfigurationClosure?(imageCaptureActionButton)
         }
 
         actionButton.layoutIfNeeded()

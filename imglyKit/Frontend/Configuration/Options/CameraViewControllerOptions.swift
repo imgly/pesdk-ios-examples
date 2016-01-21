@@ -19,32 +19,32 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// Defaults to the global background color.
     public let backgroundColor: UIColor?
 
-    /// Use this closure to configure the flash button. Defaults to an empty implementation.
-    public let flashButtonConfigurationClosure: ButtonConfigurationClosure
+    /// Use this closure to configure the flash button.
+    public let flashButtonConfigurationClosure: ButtonConfigurationClosure?
 
-    /// Use this closure to configure the switch camera button. Defaults to an empty implementation.
-    public let switchCameraButtonConfigurationClosure: ButtonConfigurationClosure
+    /// Use this closure to configure the switch camera button.
+    public let switchCameraButtonConfigurationClosure: ButtonConfigurationClosure?
 
-    /// Use this closure to configure the camera roll button. Defaults to an empty implementation.
-    public let cameraRollButtonConfigurationClosure: ButtonConfigurationClosure
+    /// Use this closure to configure the camera roll button.
+    public let cameraRollButtonConfigurationClosure: ButtonConfigurationClosure?
 
-    /// Use this closure to configure the action button in photo mode. Defaults to an empty implementation.
-    public let photoActionButtonConfigurationClosure: ButtonConfigurationClosure
+    /// Use this closure to configure the action button in photo mode.
+    public let photoActionButtonConfigurationClosure: ButtonConfigurationClosure?
 
-    /// Use this closure to configure the filter selector button. Defaults to an empty implementation.
-    public let filterSelectorButtonConfigurationClosure: ButtonConfigurationClosure
+    /// Use this closure to configure the filter selector button.
+    public let filterSelectorButtonConfigurationClosure: ButtonConfigurationClosure?
 
-    /// Use this closure to configure the timelabel. Defaults to an empty implementation.
-    public let timeLabelConfigurationClosure: LabelConfigurationClosure
+    /// Use this closure to configure the timelabel.
+    public let timeLabelConfigurationClosure: LabelConfigurationClosure?
 
     // swiftlint:disable variable_name_max_length
-    /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
-    public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure
+    /// Use this closure to configure the filter intensity slider.
+    public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure?
     // swiftlint:enable variable_name_max_length
 
     /// Use this closure to configure the given recording mode button. By default the buttons
     /// light up in yellow, when selected.
-    public let recordingModeButtonConfigurationClosure: RecordingModeButtonConfigurationClosure
+    public let recordingModeButtonConfigurationClosure: RecordingModeButtonConfigurationClosure?
 
     /// Enable/Disable permanent crop to square. Disabled by default.
     public let cropToSquare: Bool
@@ -124,31 +124,31 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     public var backgroundColor: UIColor?
 
     /// Use this closure to configure the flash button. Defaults to an empty implementation.
-    public lazy var flashButtonConfigurationClosure: ButtonConfigurationClosure = { _ in }
+    public var flashButtonConfigurationClosure: ButtonConfigurationClosure? = nil
 
     /// Use this closure to configure the switch camera button. Defaults to an empty implementation.
-    public lazy var switchCameraButtonConfigurationClosure: ButtonConfigurationClosure = { _ in }
+    public var switchCameraButtonConfigurationClosure: ButtonConfigurationClosure? = nil
 
     /// Use this closure to configure the camera roll button. Defaults to an empty implementation.
-    public lazy var cameraRollButtonConfigurationClosure: ButtonConfigurationClosure = { _ in }
+    public var cameraRollButtonConfigurationClosure: ButtonConfigurationClosure? = nil
 
     /// Use this closure to configure the action button in photo mode. Defaults to an empty implementation.
-    public lazy var photoActionButtonConfigurationClosure: ButtonConfigurationClosure = { _ in }
+    public var photoActionButtonConfigurationClosure: ButtonConfigurationClosure? = nil
 
     /// Use this closure to configure the filter selector button. Defaults to an empty implementation.
-    public lazy var filterSelectorButtonConfigurationClosure: ButtonConfigurationClosure = { _ in }
+    public var filterSelectorButtonConfigurationClosure: ButtonConfigurationClosure? = nil
 
     /// Use this closure to configure the timelabel. Defaults to an empty implementation.
-    public lazy var timeLabelConfigurationClosure: LabelConfigurationClosure = { _ in }
+    public var timeLabelConfigurationClosure: LabelConfigurationClosure? = nil
 
     // swiftlint:disable variable_name_max_length
     /// Use this closure to configure the filter intensity slider. Defaults to an empty implementation.
-    public lazy var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure = { _ in }
+    public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure? = nil
     // swiftlint:enable variable_name_max_length
 
     /// Use this closure to configure the given recording mode button. By default the buttons
     /// light up in yellow, when selected.
-    public lazy var recordingModeButtonConfigurationClosure: RecordingModeButtonConfigurationClosure = { _ in }
+    public var recordingModeButtonConfigurationClosure: RecordingModeButtonConfigurationClosure? = nil
 
     /// Enable/Disable permanent crop to square. Disabled by default.
     public var cropToSquare = false

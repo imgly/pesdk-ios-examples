@@ -105,7 +105,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
         textField.returnKeyType = UIReturnKeyType.Done
         textField.translatesAutoresizingMaskIntoConstraints = false
-        self.options.textFieldConfigurationClosure(textField)
+        self.options.textFieldConfigurationClosure?(textField)
         return textField
     }()
 

@@ -32,7 +32,7 @@ import UIKit
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "turnOff:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .Off)
+        self.options.actionButtonConfigurationClosure?(button, .Off)
         return button
         }()
 
@@ -43,7 +43,7 @@ import UIKit
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateLinear:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .Linear)
+        self.options.actionButtonConfigurationClosure?(button, .Linear)
         return button
         }()
 
@@ -54,7 +54,7 @@ import UIKit
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateRadial:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .Radial)
+        self.options.actionButtonConfigurationClosure?(button, .Radial)
         return button
         }()
 

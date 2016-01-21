@@ -52,7 +52,7 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
         super.viewDidLoad()
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelTapped:")
-        options.leftBarButtonConfigurationClosure(navigationItem.leftBarButtonItem!)
+        options.leftBarButtonConfigurationClosure?(navigationItem.leftBarButtonItem!)
 
         navigationController?.delegate = self
 

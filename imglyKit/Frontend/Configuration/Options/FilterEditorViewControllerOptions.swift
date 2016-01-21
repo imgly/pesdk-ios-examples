@@ -15,7 +15,7 @@ import UIKit
     // swiftlint:disable variable_name_max_length
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure
+    public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure?
     // swiftlint:enable variable_name_max_length
 
     /// An object conforming to the `FiltersDataSourceProtocol`
@@ -45,7 +45,7 @@ import UIKit
     // swiftlint:disable variable_name_max_length
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure = { _ in }
+    public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure? = nil
     // swiftlint:enable variable_name_max_length
 
     /// An object conforming to the `FiltersDataSourceProtocol`

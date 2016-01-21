@@ -49,7 +49,7 @@ public let kMinimumCropSize = CGFloat(50)
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .Free)
+        self.options.actionButtonConfigurationClosure?(button, .Free)
         return button
         }()
 
@@ -60,7 +60,7 @@ public let kMinimumCropSize = CGFloat(50)
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .OneToOne)
+        self.options.actionButtonConfigurationClosure?(button, .OneToOne)
         return button
         }()
 
@@ -71,7 +71,7 @@ public let kMinimumCropSize = CGFloat(50)
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .FourToThree)
+        self.options.actionButtonConfigurationClosure?(button, .FourToThree)
         return button
         }()
 
@@ -82,7 +82,7 @@ public let kMinimumCropSize = CGFloat(50)
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure(button, .SixteenToNine)
+        self.options.actionButtonConfigurationClosure?(button, .SixteenToNine)
         return button
         }()
 

@@ -11,7 +11,7 @@ import UIKit
 @objc(IMGLYSliderEditorViewControllerOptions) public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public let sliderConfigurationClosure: SliderConfigurationClosure
+    public let sliderConfigurationClosure: SliderConfigurationClosure?
 
     public convenience init() {
         self.init(builder: SliderEditorViewControllerOptionsBuilder())
@@ -29,5 +29,5 @@ import UIKit
 
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
-    public lazy var sliderConfigurationClosure: SliderConfigurationClosure = { _ in }
+    public var sliderConfigurationClosure: SliderConfigurationClosure? = nil
 }

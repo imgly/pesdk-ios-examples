@@ -22,13 +22,13 @@ import UIKit
      Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
      a navigation controller.
      */
-    public let leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure
+    public let leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure?
 
     /**
      A configuration closure to configure the given done button item.
      Defaults to 'Editor' in the apps tintColor.
      */
-    public let rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure
+    public let rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure?
 
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public let allowsPreviewImageZoom: Bool
@@ -60,14 +60,14 @@ import UIKit
      Defaults to a 'Cancel' in the apps tintColor or 'Back' when presented within
      a navigation controller.
      */
-    public lazy var leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure = { _ in }
+    public var leftBarButtonConfigurationClosure: BarButtonItemConfigurationClosure? = nil
 
     /**
      A configuration closure to configure the given done button item.
      Defaults to 'Editor' in the apps tintColor.
      */
-    public lazy var rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure = { _ in }
+    public var rightBarButtonConfigurationClosure: BarButtonItemConfigurationClosure? = nil
 
     /// Controls if the user can zoom the preview image. Defaults to **true**.
-    public lazy var allowsPreviewImageZoom = true
+    public var allowsPreviewImageZoom = true
 }

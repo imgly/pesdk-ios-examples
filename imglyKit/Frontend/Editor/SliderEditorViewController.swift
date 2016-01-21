@@ -21,7 +21,7 @@ import UIKit
         slider.addTarget(self, action: "sliderValueChanged:", forControlEvents: .ValueChanged)
         slider.addTarget(self, action: "sliderTouchedUpInside:", forControlEvents: .TouchUpInside)
         slider.translatesAutoresizingMaskIntoConstraints = false
-        self.options.sliderConfigurationClosure(slider)
+        self.options.sliderConfigurationClosure?(slider)
         return slider
     }()
 

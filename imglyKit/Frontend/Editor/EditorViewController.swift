@@ -124,10 +124,10 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
 
     private func configureNavigationItems() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "tappedDone:")
-        options.rightBarButtonConfigurationClosure(navigationItem.rightBarButtonItem!)
+        options.rightBarButtonConfigurationClosure?(navigationItem.rightBarButtonItem!)
 
         if let leftNavigationItem = navigationItem.leftBarButtonItem {
-            options.leftBarButtonConfigurationClosure(leftNavigationItem)
+            options.leftBarButtonConfigurationClosure?(leftNavigationItem)
         }
     }
 

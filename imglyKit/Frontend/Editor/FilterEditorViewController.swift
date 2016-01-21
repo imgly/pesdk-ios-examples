@@ -30,7 +30,7 @@ import UIKit
         slider.setThumbImage(sliderThumbImage, forState: .Normal)
         slider.setThumbImage(sliderThumbImage, forState: .Highlighted)
 
-        self.options.filterIntensitySliderConfigurationClosure(slider)
+        self.options.filterIntensitySliderConfigurationClosure?(slider)
 
         return slider
     }()
