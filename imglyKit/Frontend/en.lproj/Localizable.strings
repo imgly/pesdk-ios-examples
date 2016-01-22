@@ -54,6 +54,8 @@
 "Off" = "Off";
 "Linear" = "Linear";
 "Radial" = "Radial";
+"Radial focus area" = "Radial focus area";
+"Double-tap and hold to move focus area" = "Double-tap and hold to move focus area";
 
 // Crop Editor
 "Crop" = "Crop";

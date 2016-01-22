@@ -174,6 +174,7 @@ import UIKit
         hideBoxGradientView()
         hideCircleGradientView()
         updateFilterTypeAndPreview()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     @objc private func activateLinear(sender: ImageCaptionButton) {
@@ -185,6 +186,7 @@ import UIKit
         hideCircleGradientView()
         showBoxGradientView()
         updateFilterTypeAndPreview()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     @objc private func activateRadial(sender: ImageCaptionButton) {
@@ -196,6 +198,7 @@ import UIKit
         hideBoxGradientView()
         showCircleGradientView()
         updateFilterTypeAndPreview()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     // MARK: - Helpers
