@@ -167,14 +167,20 @@ import UIKit
     // MARK: - Accessibility
 
     public override func accessibilityIncrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
         // Widen gap by 20 points
-        controlPoint1 = CGPoint(x: centerPoint.x, y: controlPoint1.y - 10)
-        controlPoint2 = CGPoint(x: centerPoint.x, y: controlPoint2.y + 10)
+        controlPoint1 = controlPoint1 + 10 * vector1
+        controlPoint2 = controlPoint2 + 10 * vector2
     }
 
     public override func accessibilityDecrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
         // Reduce gap by 20 points
-        controlPoint1 = CGPoint(x: centerPoint.x, y: controlPoint1.y + 10)
-        controlPoint2 = CGPoint(x: centerPoint.x, y: controlPoint2.y - 10)
+        controlPoint1 = controlPoint1 - 10 * vector1
+        controlPoint2 = controlPoint2 - 10 * vector2
     }
 }

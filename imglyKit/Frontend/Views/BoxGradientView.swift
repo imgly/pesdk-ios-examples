@@ -61,6 +61,15 @@ public struct Line {
         configureCrossImageView()
         configurePanGestureRecognizer()
         configurePinchGestureRecognizer()
+
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitAdjustable
+        accessibilityLabel = Localize("Linear focus area")
+        accessibilityHint = Localize("Double-tap and hold to move focus area")
+
+        let rotateLeftAction = UIAccessibilityCustomAction(name: Localize("Rotate left"), target: self, selector: "rotateLeft")
+        let rotateRightAction = UIAccessibilityCustomAction(name: Localize("Rotate right"), target: self, selector: "rotateRight")
+        accessibilityCustomActions = [rotateLeftAction, rotateRightAction]
     }
 
     public func configureControlPoints() {
@@ -208,6 +217,14 @@ public struct Line {
 
     public func layoutCrosshair() {
         crossImageView.center = centerPoint
+
+        let line1 = lineForControlPoint(controlPoint1)
+        let line2 = lineForControlPoint(controlPoint2)
+
+        if let frame = CGRect(points: [line1.start, line1.end, line2.start, line2.end]) {
+            accessibilityFrame = convertRect(frame, toView: nil)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
     }
 
     public func centerGUIElements() {
@@ -217,5 +234,67 @@ public struct Line {
         let y2 = frame.size.height * 0.75
         controlPoint1 = CGPoint(x: x1, y: y1)
         controlPoint2 = CGPoint(x: x2, y: y2)
+    }
+
+    // MARK: - Accessibility
+
+    public override func accessibilityIncrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
+        // Widen gap by 20 points
+        controlPoint1 = controlPoint1 + 10 * vector1
+        controlPoint2 = controlPoint2 + 10 * vector2
+    }
+
+    public override func accessibilityDecrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
+        // Reduce gap by 20 points
+        controlPoint1 = controlPoint1 - 10 * vector1
+        controlPoint2 = controlPoint2 - 10 * vector2
+    }
+
+    @objc private func rotateLeft() -> Bool {
+        // Move control points by -10 degrees
+        let angle1 = angleOfPoint(controlPoint1, onCircleAroundCenter: centerPoint) - CGFloat(10 * M_PI / 180)
+        let angle2 = angleOfPoint(controlPoint2, onCircleAroundCenter: centerPoint) - CGFloat(10 * M_PI / 180)
+
+        // Calculate vector
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1)
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2)
+
+        // Calculate radius
+        let radius1 = sqrt(vector1.dx * vector1.dx + vector1.dy * vector1.dy)
+        let radius2 = sqrt(vector2.dx * vector2.dx + vector2.dy * vector2.dy)
+
+        // Calculate points
+        controlPoint1 = CGPoint(x: radius1 * cos(angle1) + centerPoint.x, y: radius1 * sin(angle1) + centerPoint.y)
+        controlPoint2 = CGPoint(x: radius2 * cos(angle2) + centerPoint.x, y: radius2 * sin(angle2) + centerPoint.y)
+        return true
+    }
+
+    @objc private func rotateRight() -> Bool {
+        // Move control points by +10 degrees
+        let angle1 = angleOfPoint(controlPoint1, onCircleAroundCenter: centerPoint) + CGFloat(10 * M_PI / 180)
+        let angle2 = angleOfPoint(controlPoint2, onCircleAroundCenter: centerPoint) + CGFloat(10 * M_PI / 180)
+
+        // Calculate vector
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1)
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2)
+
+        // Calculate radius
+        let radius1 = sqrt(vector1.dx * vector1.dx + vector1.dy * vector1.dy)
+        let radius2 = sqrt(vector2.dx * vector2.dx + vector2.dy * vector2.dy)
+
+        // Calculate points
+        controlPoint1 = CGPoint(x: radius1 * cos(angle1) + centerPoint.x, y: radius1 * sin(angle1) + centerPoint.y)
+        controlPoint2 = CGPoint(x: radius2 * cos(angle2) + centerPoint.x, y: radius2 * sin(angle2) + centerPoint.y)
+        return true
+    }
+
+    private func angleOfPoint(point: CGPoint, onCircleAroundCenter center: CGPoint) -> CGFloat {
+        return atan2(point.y - center.y, point.x - center.x)
     }
 }

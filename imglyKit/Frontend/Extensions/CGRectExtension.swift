@@ -13,6 +13,46 @@
 #endif
 
 extension CGRect {
+    init?(points: [CGPoint]) {
+        var maxX: CGFloat?
+        var maxY: CGFloat?
+        var minX: CGFloat?
+        var minY: CGFloat?
+
+        for point in points {
+            if let x = maxX {
+                maxX = max(x, point.x)
+            } else {
+                maxX = point.x
+            }
+
+            if let y = maxY {
+                maxY = max(y, point.y)
+            } else {
+                maxY = point.y
+            }
+
+            if let x = minX {
+                minX = min(x, point.x)
+            } else {
+                minX = point.x
+            }
+
+            if let y = minY {
+                minY = min(y, point.y)
+            } else {
+                minY = point.y
+            }
+        }
+
+        if let maxX = maxX, maxY = maxY, minX = minX, minY = minY {
+            origin = CGPoint(x: minX, y: minY)
+            size = CGSize(width: maxX - minX, height: maxY - minY)
+        } else {
+            return nil
+        }
+    }
+
     mutating func fittedIntoTargetRect(targetRect: CGRect, withContentMode contentMode: UIViewContentMode) {
         if !(contentMode == .ScaleAspectFit || contentMode == .ScaleAspectFill) {
             // Not implemented
