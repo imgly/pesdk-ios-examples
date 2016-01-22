@@ -753,6 +753,7 @@
 				2BF4D5421AF1159D00C801B2 /* InstanceFactory.swift */,
 				2BF4D3A51AF1140900C801B2 /* Processing */,
 				2B5728041C2859310003EF8F /* Protocols */,
+				0983311B1C3FEB36000135B8 /* TypeAliases.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -844,7 +845,6 @@
 				2B1ADA0B1B19C33600C98522 /* Frontend */,
 				2BF4D3891AF1139600C801B2 /* imglyKit.h */,
 				2BF4D3871AF1139600C801B2 /* Supporting Files */,
-				0983311B1C3FEB36000135B8 /* TypeAliases.swift */,
 			);
 			path = imglyKit;
 			sourceTree = "<group>";
