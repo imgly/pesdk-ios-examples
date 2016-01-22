@@ -50,6 +50,7 @@ import UIKit
     private func setupLineView(lineView: UIView) {
         lineView.backgroundColor = UIColor.whiteColor()
         lineView.hidden = true
+        lineView.userInteractionEnabled = false
         parentView!.addSubview(lineView)
     }
 
@@ -65,19 +66,50 @@ import UIKit
         maskLayer.path = path.CGPath
         maskLayer.fillRule = kCAFillRuleEvenOdd
 
-       transparentView!.layer.mask = maskLayer
+        transparentView!.layer.mask = maskLayer
+
+        let cropRectElement = UIAccessibilityElement(accessibilityContainer: self)
+        cropRectElement.isAccessibilityElement = true
+        cropRectElement.accessibilityLabel = Localize("Cropping area")
+        cropRectElement.accessibilityHint = Localize("Double-tap and hold to move cropping area")
+        cropRectElement.accessibilityFrame = transparentView!.convertRect(cropRect, toView: nil)
+
+        transparentView!.accessibilityElements = [cropRectElement]
+
+        if let topLeftAnchor = topLeftAnchor {
+            transparentView!.accessibilityElements?.append(topLeftAnchor)
+        }
+
+        if let topRightAnchor = topRightAnchor {
+            transparentView!.accessibilityElements?.append(topRightAnchor)
+        }
+
+        if let bottomLeftAnchor = bottomLeftAnchor {
+            transparentView!.accessibilityElements?.append(bottomLeftAnchor)
+        }
+
+        if let bottomRightAnchor = bottomRightAnchor {
+            transparentView!.accessibilityElements?.append(bottomRightAnchor)
+        }
     }
 
     private func setupAnchors() {
         let anchorImage = UIImage(named: "crop_anchor", inBundle: NSBundle(forClass: CropRectComponent.self), compatibleWithTraitCollection:nil)
         topLeftAnchor = createAnchorWithImage(anchorImage)
+        topLeftAnchor?.accessibilityLabel = Localize("Top left cropping handle")
         topRightAnchor = createAnchorWithImage(anchorImage)
+        topRightAnchor?.accessibilityLabel = Localize("Top right cropping handle")
         bottomLeftAnchor = createAnchorWithImage(anchorImage)
+        bottomLeftAnchor?.accessibilityLabel = Localize("Bottom left cropping handle")
         bottomRightAnchor = createAnchorWithImage(anchorImage)
+        bottomRightAnchor?.accessibilityLabel = Localize("Bottom right cropping handle")
     }
 
     private func createAnchorWithImage(image: UIImage?) -> UIImageView {
         let anchor = UIImageView(image: image!)
+        anchor.isAccessibilityElement = true
+        anchor.accessibilityTraits &= ~UIAccessibilityTraitImage
+        anchor.accessibilityHint = Localize("Double-tap and hold to adjust cropping area")
         anchor.contentMode = UIViewContentMode.Center
         anchor.frame = CGRect(x: 0, y: 0, width: 44, height: 44)
         anchor.hidden = true

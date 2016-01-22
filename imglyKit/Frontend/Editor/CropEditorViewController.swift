@@ -205,6 +205,8 @@ public let kMinimumCropSize = CGFloat(50)
         } else if recognizer.view!.isEqual(transparentRectView) {
             handlePanOnTransparentView(recognizer)
         }
+
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     public func handlePanOnTopLeft(recognizer: UIPanGestureRecognizer) {

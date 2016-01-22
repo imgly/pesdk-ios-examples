@@ -33,8 +33,8 @@ public class StickerImageView: UIImageView {
         userInteractionEnabled = true
         isAccessibilityElement = true
         accessibilityTraits &= ~UIAccessibilityTraitImage
-        accessibilityTraits |= UIAccessibilityTraitAllowsDirectInteraction
         accessibilityTraits |= UIAccessibilityTraitAdjustable
+        accessibilityHint = Localize("Double-tap and hold to move")
 
         let rotateLeftAction = UIAccessibilityCustomAction(name: Localize("Rotate left"), target: self, selector: "rotateLeft")
         let rotateRightAction = UIAccessibilityCustomAction(name: Localize("Rotate right"), target: self, selector: "rotateRight")

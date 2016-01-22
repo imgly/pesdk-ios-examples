@@ -29,6 +29,7 @@ import UIKit
         let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Off")
+        button.accessibilityLabel = Localize("Off")
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "turnOff:", forControlEvents: .TouchUpInside)
@@ -40,6 +41,7 @@ import UIKit
         let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Linear")
+        button.accessibilityLabel = Localize("Linear")
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateLinear:", forControlEvents: .TouchUpInside)
@@ -51,6 +53,7 @@ import UIKit
         let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Radial")
+        button.accessibilityLabel = Localize("Radial")
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "activateRadial:", forControlEvents: .TouchUpInside)

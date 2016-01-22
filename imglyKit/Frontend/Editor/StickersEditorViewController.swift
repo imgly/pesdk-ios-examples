@@ -463,7 +463,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                         imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
                         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
                     }
-                    
+
                     imageView.rotateRightHandler = { [unowned imageView] in
                         // Rotate by 10 degrees to the right
                         imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
@@ -487,7 +487,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 result = imageView as? UIImageView
             }
         }
-        
+
         return result
     }
 

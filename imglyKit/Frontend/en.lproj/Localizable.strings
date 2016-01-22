@@ -61,8 +61,18 @@
 "1:1" = "1:1";
 "4:3" = "4:3";
 "16:9" = "16:9";
+"1 to 1" = "1 to 1";
+"4 to 3" = "4 to 3";
+"16 to 9" = "16 to 9";
+"Top left cropping area" = "Top left cropping area";
+"Top right cropping area" = "Top right cropping area";
+"Bottom left cropping area" = "Bottom left cropping area";
+"Bottom right cropping area" = "Bottom right cropping area";
+"Double-tap and hold to adjust cropping area" = "Double-tap and hold to adjust cropping area";
+"Double-tap and hold to move cropping area" = "Double-tap and hold to move cropping area";
+"Cropping area" = "Cropping area";
 
-// Crop Editor
+// Text Editor
 "Font" = "Font";
 "Back" = "Back";
 "Bring to front" = "Bring to front";
@@ -93,7 +103,7 @@
 "Long black mustache" = "Long black mustache";
 "Brown mustache" = "Brown mustache";
 "Black mustache" = "Black mustache";
-"Brown mustache" = "Brown mustache";
 "Pipe" = "Pipe";
 "Snowflake" = "Snowflake";
 "Star" = "Star";
+"Double-tap and hold to move" = "Double-tap and hold to move";
