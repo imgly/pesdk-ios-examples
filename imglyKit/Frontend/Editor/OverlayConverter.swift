@@ -20,6 +20,16 @@ import UIKit
     }
 
     // MARK:- stickers -> UI elements
+    public func addUIElementsFromSpriteFilters(spriteFilters: [Filter], containerView: UIView, previewSize: CGSize) {
+        for element in spriteFilters {
+            if let stickerFilter = element as? StickerFilter {
+                addUIElementFromStickerFilter(stickerFilter, containerView:containerView)
+            } else if let textFIlter = element as? TextFilter {
+                addUIElementFromTextFilter(textFIlter, containerView: containerView, previewSize: previewSize)
+            }
+        }
+    }
+
     /*
     * in this method we do some calculations to re calculate the
     * sticker position in relation to the crop region.
@@ -28,59 +38,49 @@ import UIKit
     * to the full image.
     * When we are done we must revoke that extra transformation.
     */
-    public func addStickerImagesFromStickerFilters(stickerFilters: [Filter], containerView: UIView) {
-        for element in stickerFilters {
-            guard let stickerFilter = element as? StickerFilter else {
-                return
-            }
-            let imageView = UIImageView(image: stickerFilter.sticker)
-            imageView.userInteractionEnabled = true
-            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-            var completeSize = containerView.bounds.size
-            completeSize.width *= 1.0 / cropRect.width
-            completeSize.height *= 1.0 / cropRect.height
-            let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
-            imageView.frame.size = size
-            print(stickerFilter.center)
-            var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
-                y: stickerFilter.center.y * completeSize.height)
-            center.x -= (cropRect.origin.x * completeSize.width)
-            center.y -= (cropRect.origin.y * completeSize.height)
-            imageView.center = center
-            imageView.transform = stickerFilter.transform
-            containerView.addSubview(imageView)
-        }
+    func addUIElementFromStickerFilter(stickerFilter: StickerFilter, containerView: UIView) {
+        let imageView = UIImageView(image: stickerFilter.sticker)
+        imageView.userInteractionEnabled = true
+        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+        var completeSize = containerView.bounds.size
+        completeSize.width *= 1.0 / cropRect.width
+        completeSize.height *= 1.0 / cropRect.height
+        let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
+        imageView.frame.size = size
+        print(stickerFilter.center)
+        var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
+            y: stickerFilter.center.y * completeSize.height)
+        center.x -= (cropRect.origin.x * completeSize.width)
+        center.y -= (cropRect.origin.y * completeSize.height)
+        imageView.center = center
+        imageView.transform = stickerFilter.transform
+        containerView.addSubview(imageView)
     }
 
-    public func addTextsFromTextFilters(textFilters: [Filter], containerView: UIView, previewSize: CGSize) {
-        for element in textFilters {
-            guard let textFilter = element as? TextFilter else {
-                return
-            }
-            let label = UILabel()
-            label.userInteractionEnabled = true
-            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-            var completeSize = previewSize
-            completeSize.width *= 1.0 / cropRect.width
-            completeSize.height *= 1.0 / cropRect.height
-            label.font = UIFont(name: textFilter.fontName, size: textFilter.initialFontSize * previewSize.height)
-            label.text = textFilter.text
-            label.sizeToFit()
-            label.transform = textFilter.transform
+    func addUIElementFromTextFilter(textFilter: TextFilter, containerView: UIView, previewSize: CGSize) {
+        let label = UILabel()
+        label.userInteractionEnabled = true
+        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+        var completeSize = previewSize
+        completeSize.width *= 1.0 / cropRect.width
+        completeSize.height *= 1.0 / cropRect.height
+        label.font = UIFont(name: textFilter.fontName, size: textFilter.initialFontSize * previewSize.height)
+        label.text = textFilter.text
+        label.sizeToFit()
+        label.transform = textFilter.transform
 
-            var center = CGPoint(x: textFilter.center.x * completeSize.width,
-                y: textFilter.center.y * completeSize.height)
-            center.x -= cropRect.origin.x
-            center.y -= cropRect.origin.y
-            center.x /= cropRect.width
-            center.y /= cropRect.height
+        var center = CGPoint(x: textFilter.center.x * completeSize.width,
+            y: textFilter.center.y * completeSize.height)
+        center.x -= cropRect.origin.x
+        center.y -= cropRect.origin.y
+        center.x /= cropRect.width
+        center.y /= cropRect.height
 
-            label.center = center
-            label.clipsToBounds = false
-            label.textColor = textFilter.color
-            label.backgroundColor = textFilter.backgroundColor
-            containerView.addSubview(label)
-        }
+        label.center = center
+        label.clipsToBounds = false
+        label.textColor = textFilter.color
+        label.backgroundColor = textFilter.backgroundColor
+        containerView.addSubview(label)
     }
 
     // MARK:- UI elements -> sprites

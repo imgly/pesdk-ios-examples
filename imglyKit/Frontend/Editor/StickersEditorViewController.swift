@@ -209,7 +209,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.overlayConverter?.addStickerImagesFromStickerFilters(self.tempStickerCopy, containerView:self.stickersClipView)
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView:self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
         }
     }
 

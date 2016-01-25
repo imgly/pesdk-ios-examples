@@ -573,8 +573,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func rerenderPreviewWithoutText() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.overlayConverter?.addTextsFromTextFilters(self.tempTextCopy, containerView: self.textClipView, previewSize: self.previewImageView.visibleImageFrame.size)
-        }
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempTextCopy, containerView:self.textClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+       }
     }
 
     private func backupTexts() {
