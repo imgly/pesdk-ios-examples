@@ -127,15 +127,11 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
         switch recognizer.state {
         case .Began:
-            draggedView = stickersClipView.hitTest(location, withEvent: nil) as? UIImageView
-            if let draggedView = draggedView {
-                stickersClipView.bringSubviewToFront(draggedView)
-            }
+            draggedView = hitImageView(location)
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
-
             recognizer.setTranslation(CGPoint.zero, inView: stickersClipView)
         case .Cancelled, .Ended:
             draggedView = nil
@@ -154,17 +150,12 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
-                }
-
-                if let draggedView = draggedView {
-                    stickersClipView.bringSubviewToFront(draggedView)
+                    draggedView = hitImageView(midpoint)
                 }
             case .Changed:
                 if let draggedView = draggedView {
                     draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
                 }
-
                 recognizer.scale = 1
             case .Cancelled, .Ended:
                 draggedView = nil
@@ -184,11 +175,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
-                }
-
-                if let draggedView = draggedView {
-                    stickersClipView.bringSubviewToFront(draggedView)
+                    draggedView = hitImageView(midpoint)
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -204,8 +191,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         }
     }
 
-
-    // MARK: - sticker object restore
+    // MARK:- sticker object restore
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in
@@ -216,6 +202,19 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     private func backupStickers() {
         tempStickerCopy = fixedFilterStack.spriteFilters
     }
+
+    // MARK:- helper
+
+    private func hitImageView(point: CGPoint) -> UIImageView? {
+        var result: UIImageView? = nil
+        for imageView in stickersClipView.subviews where imageView is UIImageView {
+            if imageView.frame.contains(point) {
+                result = imageView as? UIImageView
+            }
+        }
+        return result
+    }
+
 }
 
 extension StickersEditorViewController: UICollectionViewDataSource {
