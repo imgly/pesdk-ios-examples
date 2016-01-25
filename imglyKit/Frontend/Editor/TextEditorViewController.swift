@@ -405,7 +405,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let translation = recognizer.translationInView(textClipView)
         switch recognizer.state {
         case .Began:
-            draggedView = hitLabel(location) //textClipView.hitTest(location, withEvent: nil) as? UILabel
+            draggedView = hitLabel(location)
             if let draggedView = draggedView {
                 unSelectTextLabel(textLabel)
                 textLabel = draggedView
@@ -433,7 +433,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
+                    draggedView = hitLabel(midpoint)
                 }
 
                 if let draggedView = draggedView {
@@ -467,7 +467,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
+                    draggedView = hitLabel(midpoint)
                 }
 
                 if let draggedView = draggedView {
@@ -491,7 +491,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let location = recognizer.locationInView(textClipView)
-        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        draggedView = hitLabel(location)
         unSelectTextLabel(textLabel)
         if let draggedView = draggedView {
             textLabel = draggedView
@@ -502,7 +502,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
         let location = recognizer.locationInView(textClipView)
-        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        draggedView = hitLabel(location)
         if recognizer.state == .Began {
             if let draggedView = draggedView {
                 textLabel = draggedView
