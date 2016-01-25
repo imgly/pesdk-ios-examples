@@ -405,7 +405,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let translation = recognizer.translationInView(textClipView)
         switch recognizer.state {
         case .Began:
-            draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+            draggedView = hitLabel(location) //textClipView.hitTest(location, withEvent: nil) as? UILabel
             if let draggedView = draggedView {
                 unSelectTextLabel(textLabel)
                 textLabel = draggedView
@@ -526,6 +526,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.blurredContainerView.removeFromSuperview()
         })
     }
+
     private func calculateInitialFontSize() {
         // swiftlint:disable force_cast
         let customParagraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as! NSMutableParagraphStyle
@@ -567,6 +568,16 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func unSelectTextLabel(label: UILabel) {
         label.layer.borderWidth = 0
+    }
+
+    private func hitLabel(point: CGPoint) -> UILabel? {
+        var result: UILabel? = nil
+        for label in textClipView.subviews where label is UILabel {
+            if label.frame.contains(point) {
+                result = label as? UILabel
+            }
+        }
+        return result
     }
 
     // MARK: - text object restore
