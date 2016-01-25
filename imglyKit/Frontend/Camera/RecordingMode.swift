@@ -52,6 +52,8 @@ import MobileCoreServices
                 button.imageView?.animationImages?.append(UIImage(named: image, inBundle: bundle, compatibleWithTraitCollection:nil)!)
             }
 
+            button.accessibilityLabel = Localize("Take picture")
+
             return button
         case .Video:
             let button = VideoRecordButton()

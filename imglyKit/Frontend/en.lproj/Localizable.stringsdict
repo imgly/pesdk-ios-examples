@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   Localizable.plist
+   imglyKit
+
+   Created by Sascha Schwabbauer on 25/01/16.
+   Copyright (c) 2016 9elements GmbH. All rights reserved.
+-->
+<plist version="1.0">
+    <dict>
+        <key>%d seconds</key>
+        <dict>
+            <key>NSStringLocalizedFormatKey</key>
+            <string>%#@seconds@</string>
+            <key>seconds</key>
+            <dict>
+                <key>NSStringFormatSpecTypeKey</key>
+                <string>NSStringPluralRuleType</string>
+                <key>NSStringFormatValueTypeKey</key>
+                <string>d</string>
+                <key>zero</key>
+                <string>%d seconds</string>
+                <key>one</key>
+                <string>%d second</string>
+                <key>other</key>
+                <string>%d seconds</string>
+            </dict>
+        </dict>
+    </dict>
+</plist>

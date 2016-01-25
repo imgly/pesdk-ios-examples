@@ -34,6 +34,7 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 @objc(IMGLYMainEditorViewController) public class MainEditorViewController: EditorViewController {
 
     // MARK: - Properties
+
     public var completionBlock: EditorCompletionBlock?
     public var initialFilterType = FilterType.None
     public var initialFilterIntensity = NSNumber(double: 0.75)

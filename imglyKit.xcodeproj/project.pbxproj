@@ -231,6 +231,7 @@
 		2BEBFEAB1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */; };
 		2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
 		2BEBFEB51C400A5D00FAA95C /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEB41C400A5D00FAA95C /* CameraController.swift */; };
+		2BF1A0C51C56832300C67EAC /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
 		2BF4D3AC1AF114FA00C801B2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */; };
@@ -509,6 +510,7 @@
 		2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientationExtension.swift; sourceTree = "<group>"; };
 		2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		2BEBFEB41C400A5D00FAA95C /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		2BF1A0C61C56832300C67EAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D3891AF1139600C801B2 /* imglyKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imglyKit.h; sourceTree = "<group>"; };
@@ -788,6 +790,7 @@
 				2BF4D3A11AF113ED00C801B2 /* Editor */,
 				2B1ADA0D1B19C36C00C98522 /* Extensions */,
 				2BF4D4A21AF1154B00C801B2 /* FixedFilterStack.swift */,
+				2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */,
 				2BF4D5471AF115A200C801B2 /* Localizable.strings */,
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
@@ -1425,6 +1428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF4D4521AF1152500C801B2 /* Identity.png in Resources */,
+				2BF1A0C51C56832300C67EAC /* Localizable.stringsdict in Resources */,
 				2BF4D44E1AF1152500C801B2 /* Glam.png in Resources */,
 				2BF4D46B1AF1152500C801B2 /* SepiaHigh.png in Resources */,
 				2BF4D4511AF1152500C801B2 /* HighContrast.png in Resources */,
@@ -1835,6 +1839,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BF1A0C61C56832300C67EAC /* en */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		2BF4D5471AF115A200C801B2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

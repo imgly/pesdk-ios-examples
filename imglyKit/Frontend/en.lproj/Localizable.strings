@@ -14,6 +14,18 @@
 "PHOTO" = "PHOTO";
 "VIDEO" = "VIDEO";
 "Error while saving video" = "Error while saving video";
+"Flash, automatic" = "Flash, automatic";
+"Flash, on" = "Flash, on";
+"Flash, off" = "Flash, off";
+"Camera chooser" = "Camera chooser";
+"Switch between the front and backfacing camera" = "Switch between the front and backfacing camera";
+"Filters" = "Filters";
+"Show or hide the list of filters" = "Show or hide the list of filters";
+"Viewfinder" = "Viewfinder";
+"Photo Viewer" = "Photo Viewer";
+"Take picture" = "Take picture";
+"Record video" = "Record video";
+"Stop recording video" = "Stop recording video";
 
 // Editor
 "Photol" = "Photo";
