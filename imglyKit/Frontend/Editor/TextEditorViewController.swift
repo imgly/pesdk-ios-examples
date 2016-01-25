@@ -29,6 +29,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var tempTextCopy = [Filter]()
     private var createNewText = false
     private var selectBackgroundColor = false
+    private var overlayConverter: OverlayConverter?
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -148,11 +149,12 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureDeleteButton()
         configureGestureRecognizers()
         backupTexts()
-        fixedFilterStack.textFilters.removeAll()
+        fixedFilterStack.spriteFilters.removeAll()
     }
 
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
     }
 
@@ -171,35 +173,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let completeSize = textClipView.bounds.size
-        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-        for view in textClipView.subviews {
-            if let label = view as? UILabel {
-                print(label.center, completeSize)
-                print(label.font)
-                print(label.frame.size)
-                let textFilter = InstanceFactory.textFilter()
-                // swiftlint:disable force_cast
-                textFilter.inputImage = self.previewImageView.image!.CIImage
-                // swiftlint:enable force_cast
-                textFilter.cropRect = cropRect
-                var center = CGPoint(x: label.center.x / completeSize.width,
-                    y: label.center.y / completeSize.height)
-                center.x *= cropRect.width
-                center.y *= cropRect.height
-                center.x += cropRect.origin.x
-                center.y += cropRect.origin.y
-                textFilter.fontName = label.font.fontName
-                textFilter.text = label.text ?? ""
-                textFilter.initialFontSize = label.font.pointSize / previewImageView.visibleImageFrame.size.height
-                textFilter.color = label.textColor
-                textFilter.backgroundColor = label.backgroundColor!
-                textFilter.transform = label.transform
-                textFilter.center = center
-                fixedFilterStack.textFilters.append(textFilter)
-            }
-        }
-
+        self.overlayConverter?.addSpriteFiltersFromUIElements(textClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
@@ -431,7 +405,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let translation = recognizer.translationInView(textClipView)
         switch recognizer.state {
         case .Began:
-            draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+            draggedView = hitLabel(location)
             if let draggedView = draggedView {
                 unSelectTextLabel(textLabel)
                 textLabel = draggedView
@@ -459,7 +433,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
+                    draggedView = hitLabel(midpoint)
                 }
 
                 if let draggedView = draggedView {
@@ -493,7 +467,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = textClipView.hitTest(midpoint, withEvent: nil) as? UILabel
+                    draggedView = hitLabel(midpoint)
                 }
 
                 if let draggedView = draggedView {
@@ -517,7 +491,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func handleTap(recognizer: UITapGestureRecognizer) {
         let location = recognizer.locationInView(textClipView)
-        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        draggedView = hitLabel(location)
         unSelectTextLabel(textLabel)
         if let draggedView = draggedView {
             textLabel = draggedView
@@ -528,7 +502,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
         let location = recognizer.locationInView(textClipView)
-        draggedView = textClipView.hitTest(location, withEvent: nil) as? UILabel
+        draggedView = hitLabel(location)
         if recognizer.state == .Began {
             if let draggedView = draggedView {
                 textLabel = draggedView
@@ -596,55 +570,26 @@ private let kMinimumFontSize = CGFloat(12.0)
         label.layer.borderWidth = 0
     }
 
+    private func hitLabel(point: CGPoint) -> UILabel? {
+        var result: UILabel? = nil
+        for label in textClipView.subviews where label is UILabel {
+            if label.frame.contains(point) {
+                result = label as? UILabel
+            }
+        }
+        return result
+    }
+
     // MARK: - text object restore
 
     private func rerenderPreviewWithoutText() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.addTextsFromTextFilters(self.tempTextCopy)
-        }
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempTextCopy, containerView:self.textClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+       }
     }
 
     private func backupTexts() {
-        tempTextCopy = fixedFilterStack.textFilters
-    }
-
-    /*
-    * in this method we do some calculations to re calculate the
-    * sticker position in relation to the crop region.
-    * Therefore we calculte the position and size within the non-cropped image
-    * and apply the translation and scaling that comes with cropping in relation
-    * to the full image.
-    * When we are done we must revoke that extra transformation.
-    */
-    private func addTextsFromTextFilters(textFilters: [Filter]) {
-        for element in textFilters {
-            guard let textFilter = element as? TextFilter else {
-                return
-            }
-            let label = UILabel()
-            label.userInteractionEnabled = true
-            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-            var completeSize = previewImageView.visibleImageFrame.size
-            completeSize.width *= 1.0 / cropRect.width
-            completeSize.height *= 1.0 / cropRect.height
-            label.font = UIFont(name: textFilter.fontName, size: textFilter.initialFontSize * previewImageView.visibleImageFrame.size.height)
-            label.text = textFilter.text
-            label.sizeToFit()
-            label.transform = textFilter.transform
-
-            var center = CGPoint(x: textFilter.center.x * completeSize.width,
-                y: textFilter.center.y * completeSize.height)
-            center.x -= cropRect.origin.x
-            center.y -= cropRect.origin.y
-            center.x /= cropRect.width
-            center.y /= cropRect.height
-
-            label.center = center
-            label.clipsToBounds = false
-            label.textColor = textFilter.color
-            label.backgroundColor = textFilter.backgroundColor
-            textClipView.addSubview(label)
-        }
+        tempTextCopy = fixedFilterStack.spriteFilters
     }
 }
 

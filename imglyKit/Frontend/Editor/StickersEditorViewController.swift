@@ -26,6 +26,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private var draggedView: UIView?
     private var tempStickerCopy = [Filter]()
+    private var overlayConverter: OverlayConverter?
 
     // MARK: - EditorViewController
 
@@ -36,35 +37,8 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        var addedStickers = false
-
-        for view in stickersClipView.subviews {
-            if let view = view as? UIImageView {
-                if let image = view.image {
-                    let stickerFilter = InstanceFactory.stickerFilter()
-                    stickerFilter.sticker = image
-                    stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-                    let cropRect = stickerFilter.cropRect
-                    let completeSize = stickersClipView.bounds.size
-                    var center = CGPoint(x: view.center.x / completeSize.width,
-                                         y: view.center.y / completeSize.height)
-                    center.x *= cropRect.width
-                    center.y *= cropRect.height
-                    center.x += cropRect.origin.x
-                    center.y += cropRect.origin.y
-                    var size = initialSizeForStickerImage(image)
-                    size.width = size.width / completeSize.width
-                    size.height = size.height / completeSize.height
-                    stickerFilter.center = center
-                    stickerFilter.scale = size.width
-                    stickerFilter.transform = view.transform
-                    fixedFilterStack.stickerFilters.append(stickerFilter)
-                    addedStickers = true
-                }
-            }
-        }
-
-        if addedStickers {
+        let addedStickers =         self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
+        if addedStickers != nil {
             updatePreviewImageWithCompletion {
                 self.stickersClipView.removeFromSuperview()
                 super.tappedDone(sender)
@@ -72,16 +46,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         } else {
             super.tappedDone(sender)
         }
-    }
-
-    // MARK: - Helpers
-
-    private func initialSizeForStickerImage(image: UIImage) -> CGSize {
-        let initialMaxStickerSize = stickersClipView.bounds.width * 0.3
-        let widthRatio = initialMaxStickerSize / image.size.width
-        let heightRatio = initialMaxStickerSize / image.size.height
-        let scale = min(widthRatio, heightRatio)
-        return CGSize(width: image.size.width * scale, height: image.size.height * scale)
     }
 
     // MARK: - UIViewController
@@ -92,8 +56,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         configureStickersCollectionView()
         configureStickersClipView()
         configureGestureRecognizers()
+        configureOverlayConverter()
         backupStickers()
-        fixedFilterStack.stickerFilters.removeAll()
+        fixedFilterStack.spriteFilters.removeAll()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -103,11 +68,14 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-
         stickersClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
     }
 
     // MARK: - Configuration
+
+    private func configureOverlayConverter() {
+        self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
+    }
 
     private func configureStickersCollectionView() {
         let flowLayout = UICollectionViewFlowLayout()
@@ -159,15 +127,11 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
         switch recognizer.state {
         case .Began:
-            draggedView = stickersClipView.hitTest(location, withEvent: nil) as? UIImageView
-            if let draggedView = draggedView {
-                stickersClipView.bringSubviewToFront(draggedView)
-            }
+            draggedView = hitImageView(location)
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
             }
-
             recognizer.setTranslation(CGPoint.zero, inView: stickersClipView)
         case .Cancelled, .Ended:
             draggedView = nil
@@ -186,17 +150,12 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
-                }
-
-                if let draggedView = draggedView {
-                    stickersClipView.bringSubviewToFront(draggedView)
+                    draggedView = hitImageView(midpoint)
                 }
             case .Changed:
                 if let draggedView = draggedView {
                     draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
                 }
-
                 recognizer.scale = 1
             case .Cancelled, .Ended:
                 draggedView = nil
@@ -216,11 +175,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             switch recognizer.state {
             case .Began:
                 if draggedView == nil {
-                    draggedView = stickersClipView.hitTest(midpoint, withEvent: nil) as? UIImageView
-                }
-
-                if let draggedView = draggedView {
-                    stickersClipView.bringSubviewToFront(draggedView)
+                    draggedView = hitImageView(midpoint)
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -236,50 +191,30 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         }
     }
 
-
-    // MARK: - sticker object restore
+    // MARK:- sticker object restore
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.addStickerImagesFromStickerFilters(self.tempStickerCopy)
-        }
-    }
-
-    /*
-    * in this method we do some calculations to re calculate the
-    * sticker position in relation to the crop region.
-    * Therefore we calculte the position and size within the non-cropped image
-    * and apply the translation and scaling that comes with cropping in relation
-    * to the full image.
-    * When we are done we must revoke that extra transformation.
-    */
-    private func addStickerImagesFromStickerFilters(stickerFilters: [Filter]) {
-        for element in stickerFilters {
-            guard let stickerFilter = element as? StickerFilter else {
-                return
-            }
-            let imageView = UIImageView(image: stickerFilter.sticker)
-            imageView.userInteractionEnabled = true
-            let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-            var completeSize = stickersClipView.bounds.size
-            completeSize.width *= 1.0 / cropRect.width
-            completeSize.height *= 1.0 / cropRect.height
-            let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
-            imageView.frame.size = size
-            print(stickerFilter.center)
-            var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
-                                 y: stickerFilter.center.y * completeSize.height)
-            center.x -= (cropRect.origin.x * completeSize.width)
-            center.y -= (cropRect.origin.y * completeSize.height)
-            imageView.center = center
-            imageView.transform = stickerFilter.transform
-            stickersClipView.addSubview(imageView)
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView:self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
         }
     }
 
     private func backupStickers() {
-        tempStickerCopy = fixedFilterStack.stickerFilters
+        tempStickerCopy = fixedFilterStack.spriteFilters
     }
+
+    // MARK:- helper
+
+    private func hitImageView(point: CGPoint) -> UIImageView? {
+        var result: UIImageView? = nil
+        for imageView in stickersClipView.subviews where imageView is UIImageView {
+            if imageView.frame.contains(point) {
+                result = imageView as? UIImageView
+            }
+        }
+        return result
+    }
+
 }
 
 extension StickersEditorViewController: UICollectionViewDataSource {
@@ -309,7 +244,9 @@ extension StickersEditorViewController: UICollectionViewDelegate {
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
-        imageView.frame.size = initialSizeForStickerImage(sticker.image)
+        if let size = overlayConverter?.initialSizeForStickerImage(sticker.image, containerView: stickersClipView) {
+            imageView.frame.size = size
+        }
         imageView.center = CGPoint(x: stickersClipView.bounds.midX, y: stickersClipView.bounds.midY)
 
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect

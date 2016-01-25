@@ -30,20 +30,18 @@ import CoreImage
     public var effectFilter = InstanceFactory.effectFilterWithType(FilterType.None)
     public var brightnessFilter = InstanceFactory.colorAdjustmentFilter()
     public var tiltShiftFilter = InstanceFactory.tiltShiftFilter()
-    public var stickerFilters = [Filter]()
-    public var textFilters = [Filter]()
+    public var spriteFilters = [Filter]()
 
     public var activeFilters: [Filter] {
         setCropRectForStickerFilters()
         setCropRectForTextFilters()
         var activeFilters: [Filter] = [enhancementFilter, orientationCropFilter, tiltShiftFilter, effectFilter, brightnessFilter]
-        activeFilters += stickerFilters
-        activeFilters += textFilters
+        activeFilters += spriteFilters
         return activeFilters
     }
 
     private func setCropRectForStickerFilters () {
-        for stickerFilter in stickerFilters where stickerFilter is StickerFilter {
+        for stickerFilter in spriteFilters where stickerFilter is StickerFilter {
             // swiftlint:disable force_cast
             (stickerFilter as! StickerFilter).cropRect = orientationCropFilter.cropRect
             // swiftlint:enable force_fast
@@ -51,7 +49,7 @@ import CoreImage
     }
 
     private func setCropRectForTextFilters () {
-        for textFilter in textFilters where textFilter is TextFilter {
+        for textFilter in spriteFilters where textFilter is TextFilter {
             // swiftlint:disable force_cast
             (textFilter as! TextFilter).cropRect = orientationCropFilter.cropRect
             // swiftlint:enable force_fast
@@ -233,8 +231,7 @@ extension FixedFilterStack: NSCopying {
         copy.effectFilter = effectFilter.copyWithZone(zone) as! EffectFilter
         copy.brightnessFilter = brightnessFilter.copyWithZone(zone) as! ContrastBrightnessSaturationFilter
         copy.tiltShiftFilter = tiltShiftFilter.copyWithZone(zone) as! TiltshiftFilter
-        copy.textFilters = NSArray(array: textFilters, copyItems: true) as! [Filter]
-        copy.stickerFilters = NSArray(array: stickerFilters, copyItems: true) as! [Filter]
+        copy.spriteFilters = NSArray(array: spriteFilters, copyItems: true) as! [Filter]
         // swiftlint:enable force_cast
         return copy
     }
