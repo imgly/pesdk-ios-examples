@@ -154,6 +154,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
     }
 
@@ -172,7 +173,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-
+        self.overlayConverter?.addTextFiltersFromUIElements(textClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
