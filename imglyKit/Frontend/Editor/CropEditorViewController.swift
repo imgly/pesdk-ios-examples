@@ -30,6 +30,12 @@ public let kMinimumCropSize = CGFloat(50)
         return view
         }()
 
+    private lazy var scrollView: CenteredScrollView = {
+        let scrollView = CenteredScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
     private var cropRatioToButton = [CropRatio: ImageCaptionButton]()
     private let cropRectComponent = InstanceFactory.cropRectComponent()
     public var selectionMode: CropRatio?
@@ -52,6 +58,7 @@ public let kMinimumCropSize = CGFloat(50)
 
         configureButtons()
         configureCropRect()
+        configureScrollView()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -70,6 +77,8 @@ public let kMinimumCropSize = CGFloat(50)
             setCropRectForSelectionRatio()
             cropRectComponent.present()
         }
+
+        scrollView.flashScrollIndicators()
     }
 
     // MARK: - EditorViewController
@@ -101,6 +110,14 @@ public let kMinimumCropSize = CGFloat(50)
 
     // MARK: - Configuration
 
+    private func configureScrollView() {
+        bottomContainerView.addSubview(scrollView)
+
+        let views = [ "scrollView" : scrollView ]
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[scrollView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: [], metrics: nil, views: views))
+    }
+
     private func configureButtons() {
         for cropRatio in options.allowedCropRatios {
             let button = ImageCaptionButton()
@@ -112,22 +129,15 @@ public let kMinimumCropSize = CGFloat(50)
             cropRatioToButton[cropRatio] = button
         }
 
-        // Setup button container view
-        let buttonContainerView = UIView()
-        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
-        bottomContainerView.addSubview(buttonContainerView)
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
-        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
-
         var views = [String: UIView]()
         var viewNames = [String]()
         for cropRatio in options.allowedCropRatios {
             let button = cropRatioToButton[cropRatio]!
             let viewName = "_\(String(abs(button.hash)))" // View names must start with a letter or underscore
             viewNames.append(viewName)
-            buttonContainerView.addSubview(button)
+            scrollView.addSubview(button)
             views[viewName] = button
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
+            scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)(==100)]|", options: [], metrics: nil, views: views))
         }
 
         // Button Constraints
@@ -135,7 +145,7 @@ public let kMinimumCropSize = CGFloat(50)
             return acc + "[\(name)(==buttonWidth)]"
         }
 
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+        scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
 
         // Select first button
         if let firstCropAction = options.allowedCropRatios.first {
