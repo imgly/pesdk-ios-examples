@@ -149,7 +149,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureDeleteButton()
         configureGestureRecognizers()
         backupTexts()
-        fixedFilterStack.textFilters.removeAll()
+        fixedFilterStack.spriteFilters.removeAll()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -173,7 +173,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        self.overlayConverter?.addTextFiltersFromUIElements(textClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
+        self.overlayConverter?.addSpriteFiltersFromUIElements(textClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
@@ -578,7 +578,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func backupTexts() {
-        tempTextCopy = fixedFilterStack.textFilters
+        tempTextCopy = fixedFilterStack.spriteFilters
     }
 }
 

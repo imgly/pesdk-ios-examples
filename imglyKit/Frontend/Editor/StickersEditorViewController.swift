@@ -37,7 +37,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let addedStickers = overlayConverter?.addStickersFiltersFromUIElements(stickersClipView)
+        let addedStickers =         self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         if addedStickers != nil {
             updatePreviewImageWithCompletion {
                 self.stickersClipView.removeFromSuperview()
@@ -58,7 +58,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         configureGestureRecognizers()
         configureOverlayConverter()
         backupStickers()
-        fixedFilterStack.stickerFilters.removeAll()
+        fixedFilterStack.spriteFilters.removeAll()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -214,7 +214,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }
 
     private func backupStickers() {
-        tempStickerCopy = fixedFilterStack.stickerFilters
+        tempStickerCopy = fixedFilterStack.spriteFilters
     }
 }
 

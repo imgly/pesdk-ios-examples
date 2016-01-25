@@ -83,68 +83,68 @@ import UIKit
         }
     }
 
-    // MARK:- UI elements -> stickers
-
-    public func addStickersFiltersFromUIElements(containerView: UIView) -> Bool {
+    // MARK:- UI elements -> sprites
+    public func addSpriteFiltersFromUIElements(containerView: UIView, previewSize: CGSize, previewImage: UIImage) -> Bool {
         var addedStickers = false
-
         for view in containerView.subviews {
-            if let view = view as? UIImageView {
-                if let image = view.image {
-                    let stickerFilter = InstanceFactory.stickerFilter()
-                    stickerFilter.sticker = image
-                    stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-                    let cropRect = stickerFilter.cropRect
-                    let completeSize = containerView.bounds.size
-                    var center = CGPoint(x: view.center.x / completeSize.width,
-                        y: view.center.y / completeSize.height)
-                    center.x *= cropRect.width
-                    center.y *= cropRect.height
-                    center.x += cropRect.origin.x
-                    center.y += cropRect.origin.y
-                    var size = initialSizeForStickerImage(image, containerView: containerView)
-                    size.width = size.width / completeSize.width
-                    size.height = size.height / completeSize.height
-                    stickerFilter.center = center
-                    stickerFilter.scale = size.width
-                    stickerFilter.transform = view.transform
-                    fixedFilterStack.stickerFilters.append(stickerFilter)
-                    addedStickers = true
-                }
+            if let imageView = view as? UIImageView {
+                let addedSticker = addStickerFiltersFromUIElement(imageView, containerView: containerView)
+                addedStickers = addedStickers || addedSticker
+            } else if let label = view as? UILabel {
+                addTextFilterFromUIElement(label, containerView: containerView, previewSize: previewSize, previewImage: previewImage)
             }
         }
         return addedStickers
     }
 
-    public func addTextFiltersFromUIElements(containerView: UIView, previewSize: CGSize, previewImage: UIImage) {
+    func addStickerFiltersFromUIElement(view: UIImageView, containerView: UIView) -> Bool {
+        var addedSticker = false
+        if let image = view.image {
+            let stickerFilter = InstanceFactory.stickerFilter()
+            stickerFilter.sticker = image
+            stickerFilter.cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+            let cropRect = stickerFilter.cropRect
+            let completeSize = containerView.bounds.size
+            var center = CGPoint(x: view.center.x / completeSize.width,
+                y: view.center.y / completeSize.height)
+            center.x *= cropRect.width
+            center.y *= cropRect.height
+            center.x += cropRect.origin.x
+            center.y += cropRect.origin.y
+            var size = initialSizeForStickerImage(image, containerView: containerView)
+            size.width = size.width / completeSize.width
+            size.height = size.height / completeSize.height
+            stickerFilter.center = center
+            stickerFilter.scale = size.width
+            stickerFilter.transform = view.transform
+            fixedFilterStack.spriteFilters.append(stickerFilter)
+            addedSticker = true
+        }
+        return addedSticker
+    }
+
+    func addTextFilterFromUIElement(label: UILabel, containerView: UIView, previewSize: CGSize, previewImage: UIImage) {
         let completeSize = containerView.bounds.size
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-        for view in containerView.subviews {
-            if let label = view as? UILabel {
-                print(label.center, completeSize)
-                print(label.font)
-                print(label.frame.size)
-                let textFilter = InstanceFactory.textFilter()
-                // swiftlint:disable force_cast
-                textFilter.inputImage = previewImage.CIImage // self.previewImageView.image!.CIImage
-                // swiftlint:enable force_cast
-                textFilter.cropRect = cropRect
-                var center = CGPoint(x: label.center.x / completeSize.width,
-                    y: label.center.y / completeSize.height)
-                center.x *= cropRect.width
-                center.y *= cropRect.height
-                center.x += cropRect.origin.x
-                center.y += cropRect.origin.y
-                textFilter.fontName = label.font.fontName
-                textFilter.text = label.text ?? ""
-                textFilter.initialFontSize = label.font.pointSize / previewSize.height //previewImageView.visibleImageFrame.size.height
-                textFilter.color = label.textColor
-                textFilter.backgroundColor = label.backgroundColor!
-                textFilter.transform = label.transform
-                textFilter.center = center
-                fixedFilterStack.textFilters.append(textFilter)
-            }
-        }
+        let textFilter = InstanceFactory.textFilter()
+        // swiftlint:disable force_cast
+        textFilter.inputImage = previewImage.CIImage
+        // swiftlint:enable force_cast
+        textFilter.cropRect = cropRect
+        var center = CGPoint(x: label.center.x / completeSize.width,
+            y: label.center.y / completeSize.height)
+        center.x *= cropRect.width
+        center.y *= cropRect.height
+        center.x += cropRect.origin.x
+        center.y += cropRect.origin.y
+        textFilter.fontName = label.font.fontName
+        textFilter.text = label.text ?? ""
+        textFilter.initialFontSize = label.font.pointSize / previewSize.height
+        textFilter.color = label.textColor
+        textFilter.backgroundColor = label.backgroundColor!
+        textFilter.transform = label.transform
+        textFilter.center = center
+        fixedFilterStack.spriteFilters.append(textFilter)
     }
 
     // MARK: - Helpers
