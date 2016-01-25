@@ -79,6 +79,11 @@
 "Font" = "Font";
 "Back" = "Back";
 "Bring to front" = "Bring to front";
+"Text color" = "Text color";
+"Background color" = "Background color";
+"Add text" = "Add text";
+"Delete text" = "Delete text";
+"Change text" = "Change text";
 
 // Brightness Editor
 "Brightness" = "Brightness";

@@ -38,7 +38,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var panOffset = CGPoint.zero
     private var fontSizeAtPinchBegin = CGFloat(0)
     private var distanceAtPinchBegin = CGFloat(0)
-    private var draggedView: UILabel?
+    private var draggedView: TextLabel?
     private var tempTextCopy = [Filter]()
     private var createNewText = false
     private var selectBackgroundColor = false
@@ -59,6 +59,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.accessibilityLabel = Localize("Add text")
         button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 2
@@ -72,6 +73,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var deleteTextButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.accessibilityLabel = Localize("Delete text")
         button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 2
@@ -137,6 +139,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectTextFontButton: TextCaptionButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = TextCaptionButton()
+        button.accessibilityLabel = Localize("Font")
         button.textLabel.text = Localize("Font")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleView.text = "Ag"
@@ -149,6 +152,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectTextColorButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
+        button.accessibilityLabel = Localize("Text color")
         button.textLabel.text = Localize("Text")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -162,6 +166,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var selectBackgroundColorButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
+        button.accessibilityLabel = Localize("Background color")
         button.textLabel.text = Localize("Back")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -175,8 +180,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var bringToFrontButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
+        button.accessibilityLabel = Localize("Bring to front")
         button.textLabel.text = Localize("Bring to front")
-        button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .BringToFront)
@@ -449,6 +454,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         textLabel.userInteractionEnabled = true
         // we set the rotation to 360 degree, so the transform anchor point is set to center
         textLabel.transform = CGAffineTransformRotate(textLabel.transform, CGFloat(M_PI) * 2.0)
+        textLabel.accessibilityTraits |= UIAccessibilityTraitAdjustable
     }
 
     private func configureTextField() {
@@ -879,6 +885,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
+        label.accessibilityTraits |= UIAccessibilityTraitSelected
+
         if selectBackgroundColor {
             if let backgroundColor = label.backgroundColor {
                 colorPickerView.color = backgroundColor
@@ -898,13 +906,14 @@ private let kMinimumFontSize = CGFloat(12.0)
             return
         }
         label.layer.borderWidth = 0
+        label.accessibilityTraits &= ~UIAccessibilityTraitSelected
     }
 
-    private func hitLabel(point: CGPoint) -> UILabel? {
-        var result: UILabel? = nil
-        for label in textClipView.subviews where label is UILabel {
+    private func hitLabel(point: CGPoint) -> TextLabel? {
+        var result: TextLabel? = nil
+        for label in textClipView.subviews where label is TextLabel {
             if label.frame.contains(point) {
-                result = label as? UILabel
+                result = label as? TextLabel
             }
         }
         return result
@@ -1128,6 +1137,7 @@ extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideBlurredContainer()
+
         if let newText = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
             if newText.characters.count > 0 {
                 if createNewText {
@@ -1151,6 +1161,8 @@ extension TextEditorViewController: UITextFieldDelegate {
             }
         }
         navigationItem.rightBarButtonItem?.enabled = true
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, textLabel)
+
         return true
     }
 

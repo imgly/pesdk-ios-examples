@@ -193,6 +193,7 @@
 		2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */; };
 		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
 		2B1B9AF61C52625100C6D276 /* CGVectorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */; };
+		2B1B9AF81C52848700C6D276 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1B9AF71C52848700C6D276 /* TextLabel.swift */; };
 		2B25F1BC1B03AC8E0081032D /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */; };
 		2B319B651C45070200515C9D /* FlashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B319B641C45070200515C9D /* FlashController.swift */; };
 		2B50239E1C286B0400CE9AD3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
@@ -472,6 +473,7 @@
 		2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAffineTransformExtension.swift; sourceTree = "<group>"; };
 		2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGVectorExtension.swift; sourceTree = "<group>"; };
+		2B1B9AF71C52848700C6D276 /* TextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
 		2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
 		2B319B641C45070200515C9D /* FlashController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashController.swift; sourceTree = "<group>"; };
 		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -962,6 +964,8 @@
 				2BF4D3C91AF1150400C801B2 /* SubEditorViewController.swift */,
 				09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
+				2B1B9AF71C52848700C6D276 /* TextLabel.swift */,
+				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1654,6 +1658,7 @@
 				2BF4D3E31AF1150500C801B2 /* SliderEditorViewController.swift in Sources */,
 				2B5CA32E1C490CD80065DE48 /* CameraViewControllerOptions.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* NavigationAnimationController.swift in Sources */,
+				2B1B9AF81C52848700C6D276 /* TextLabel.swift in Sources */,
 				2BF4D53E1AF1156F00C801B2 /* LUTToNSDataConverter.m in Sources */,
 				2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */,
 				2BF4D4FF1AF1155E00C801B2 /* BreezeFilter.swift in Sources */,

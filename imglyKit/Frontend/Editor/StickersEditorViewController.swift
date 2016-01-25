@@ -478,7 +478,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         tempStickerCopy = fixedFilterStack.spriteFilters
     }
 
-    // MARK:- helper
+    // MARK: - Helpers
 
     private func hitImageView(point: CGPoint) -> UIImageView? {
         var result: UIImageView? = nil

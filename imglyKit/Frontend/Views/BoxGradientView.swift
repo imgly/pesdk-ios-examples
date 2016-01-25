@@ -257,7 +257,9 @@ public struct Line {
     }
 
     @objc private func rotateLeft() -> Bool {
-        // Move control points by -10 degrees
+        // Move control points by -10 degrees around centerPoint
+
+        // Calculate angle of new point
         let angle1 = angleOfPoint(controlPoint1, onCircleAroundCenter: centerPoint) - CGFloat(10 * M_PI / 180)
         let angle2 = angleOfPoint(controlPoint2, onCircleAroundCenter: centerPoint) - CGFloat(10 * M_PI / 180)
 
@@ -276,7 +278,9 @@ public struct Line {
     }
 
     @objc private func rotateRight() -> Bool {
-        // Move control points by +10 degrees
+        // Move control points by +10 degrees around centerPoint
+
+        // Calculate angle of new point
         let angle1 = angleOfPoint(controlPoint1, onCircleAroundCenter: centerPoint) + CGFloat(10 * M_PI / 180)
         let angle2 = angleOfPoint(controlPoint2, onCircleAroundCenter: centerPoint) + CGFloat(10 * M_PI / 180)
 
