@@ -60,16 +60,17 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
         fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
 
         updatePreviewImage {
-            if self.options.forceCrop && !self.configuration.cropEditorViewControllerOptions.allowedCropActions.contains(.Free) {
+            let freeCropAllowed = self.configuration.cropEditorViewControllerOptions.allowedCropRatios.contains { $0.ratio == nil }
+            if self.options.forceCrop && !freeCropAllowed {
                 guard let image = self.previewImageView.image else {
                     return
                 }
 
-                let imageAspectRatio = Float(image.size.width / image.size.height)
+                let imageAspectRatio = CGFloat(image.size.width / image.size.height)
                 var presentCropEditor = true
 
-                for cropAction in self.configuration.cropEditorViewControllerOptions.allowedCropActions {
-                    if let cropAspectRatio = cropAction.ratio {
+                for cropRatio in self.configuration.cropEditorViewControllerOptions.allowedCropRatios {
+                    if let cropAspectRatio = cropRatio.ratio {
                         if fabs(imageAspectRatio - cropAspectRatio) < 0.00001 {
                             presentCropEditor = false
                         }

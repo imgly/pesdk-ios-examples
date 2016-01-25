@@ -203,7 +203,7 @@
 		2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B67D1C71C47DBED00BEE726 /* LightController.swift */; };
 		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
 		2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */; };
-		2B948C351C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
+		2BA5DB9E1C562FDC0038570A /* CropRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5DB9D1C562FDC0038570A /* CropRatio.swift */; };
 		2B948C361C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
 		2BA980601C493FE7001C85B6 /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9805F1C493FE7001C85B6 /* VideoController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
@@ -475,6 +475,7 @@
 		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
 		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
 		2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAffineTransformExtension.swift; sourceTree = "<group>"; };
+		2BA5DB9D1C562FDC0038570A /* CropRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRatio.swift; sourceTree = "<group>"; };
 		2BA9805F1C493FE7001C85B6 /* VideoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
 		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
@@ -924,6 +925,7 @@
 				2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */,
 				2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */,
 				2BF4D3B41AF1150400C801B2 /* CropEditorViewController.swift */,
+				2BA5DB9D1C562FDC0038570A /* CropRatio.swift */,
 				2BF4D3B51AF1150400C801B2 /* CropRectComponent.swift */,
 				2BF4D3B61AF1150400C801B2 /* EditorViewController.swift */,
 				2BF4D3B71AF1150400C801B2 /* FilterCollectionViewCell.swift */,
@@ -1782,6 +1784,7 @@
 				2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */,
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,
 				093D111B1C60F90800B72B7A /* FontQuickSelectorView.swift in Sources */,
+				2BA5DB9E1C562FDC0038570A /* CropRatio.swift in Sources */,
 				2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */,
 				2BF4D4FA1AF1155E00C801B2 /* BleachedBlueFilter.swift in Sources */,
 				2BF4D3DE1AF1150500C801B2 /* MainEditorViewController.swift in Sources */,
