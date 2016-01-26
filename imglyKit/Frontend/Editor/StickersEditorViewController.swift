@@ -202,7 +202,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         view.addSubview(flipHorizontalButton)
         flipHorizontalButton.clipsToBounds = false
         flipHorizontalButton.backgroundColor = options.flipHorizontalButtonBackgroundColor
-  //      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[flipHorizontalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipHorizontalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipHorizontalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -214,7 +213,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         view.addSubview(flipVerticalButton)
         flipVerticalButton.clipsToBounds = false
         flipVerticalButton.backgroundColor = options.flipVerticalButtonBackgroundColor
-//        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[flipVerticalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipVerticalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipVerticalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -376,9 +374,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         updateButtonStatus()
     }
 
-
     // MARK:- Button-handling
-     @objc private func deleteSticker(sender: UIButton) {
+
+    @objc private func deleteSticker(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
             selectedView.removeFromSuperview()
         }
@@ -389,6 +387,24 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         if selectedView.layer.borderWidth > 0 {
             stickersClipView.bringSubviewToFront(selectedView)
         }
+    }
+
+    @objc private func flipHorizontal(sender: UIButton) {
+        if selectedView.layer.borderWidth > 0 {
+            flipStickerHorizontaly(selectedView)
+        }
+    }
+
+    @objc private func flipVertical(sender: UIButton) {
+        if selectedView.layer.borderWidth > 0 {
+            flipStickerHorizontaly(selectedView)
+             selectedView.transform = CGAffineTransformRotate(selectedView.transform, CGFloat(M_PI))
+        }
+    }
+
+    private func flipStickerHorizontaly(imageView: UIImageView) {
+        let flippedOrientation = UIImageOrientation(rawValue:(imageView.image!.imageOrientation.rawValue + 4) % 8)
+        imageView.image = UIImage(CGImage: imageView.image!.CGImage!, scale: imageView.image!.scale, orientation: flippedOrientation!)
     }
 
     // MARK:- sticker object restore
