@@ -41,7 +41,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let addedStickers =         self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
+        let addedStickers = self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         if addedStickers != nil {
             updatePreviewImageWithCompletion {
                 self.stickersClipView.removeFromSuperview()

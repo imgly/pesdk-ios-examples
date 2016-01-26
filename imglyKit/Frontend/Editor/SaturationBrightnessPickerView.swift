@@ -26,7 +26,6 @@ import UIKit
             hue = hsb.hue
             brightness = hsb.brightness
             saturation = hsb.saturation
-            print(hue, brightness, saturation)
             setNeedsDisplay()
         }
         get {

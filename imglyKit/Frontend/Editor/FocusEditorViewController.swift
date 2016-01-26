@@ -94,6 +94,16 @@ import UIKit
         return false
     }
 
+    public override func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView) {
+        super.zoomingImageViewDidZoom(zoomingImageView)
+        
+        circleGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
+        circleGradientView.centerGUIElements()
+
+        boxGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
+        boxGradientView.centerGUIElements()
+    }
+
     // MARK: - UIViewController
 
     override public func viewDidLoad() {
@@ -107,16 +117,6 @@ import UIKit
             fixedFilterStack.tiltShiftFilter.tiltShiftType = .Off
             updatePreviewImage()
         }
-    }
-
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        circleGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
-        circleGradientView.centerGUIElements()
-
-        boxGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
-        boxGradientView.centerGUIElements()
     }
 
     // MARK: - Configuration

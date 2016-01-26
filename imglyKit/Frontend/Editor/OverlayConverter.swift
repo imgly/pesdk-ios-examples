@@ -47,7 +47,6 @@ import UIKit
         completeSize.height *= 1.0 / cropRect.height
         let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
         imageView.frame.size = size
-        print(stickerFilter.center)
         var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
             y: stickerFilter.center.y * completeSize.height)
         center.x -= (cropRect.origin.x * completeSize.width)
