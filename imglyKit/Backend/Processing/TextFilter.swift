@@ -217,6 +217,86 @@ import AppKit
 
     #endif
 
+    // MARK:- rotation
+
+    public func rotateTextRight () {
+        if self.inputImage != nil {
+            rotateText(CGFloat(M_PI_2), negateX: true, negateY: false)
+        }
+    }
+
+    public func rotateTextLeft () {
+        if self.inputImage != nil {
+            rotateText(CGFloat(-M_PI_2), negateX: false, negateY: true)
+        }
+    }
+
+    private func rotateText (angle: CGFloat, negateX: Bool, negateY: Bool) {
+        let xFactor: CGFloat = negateX ? -1.0 : 1.0
+        let yFactor: CGFloat = negateY ? -1.0 : 1.0
+        self.transform = CGAffineTransformRotate(self.transform, angle)
+        self.center.x -= 0.5
+        self.center.y -= 0.5
+        let ratio = self.inputImage!.extent.size.height / self.inputImage!.extent.size.width
+        self.initialFontSize *= ratio
+        let center = self.center
+        self.center.x = xFactor * center.y
+        self.center.y = yFactor * center.x
+        self.center.x += 0.5
+        self.center.y += 0.5
+    }
+
+    // MARK:- flipping
+
+    public func flipTextHorizontal () {
+        flipText(true)
+    }
+
+    public func flipTextVertical () {
+        flipText(false)
+    }
+
+    private func flipText(horizontal: Bool) {
+        self.center.x -= 0.5
+        self.center.y -= 0.5
+        let center = self.center
+        if horizontal {
+            flipRotationHorizontal()
+            self.center.x = -center.x
+        } else {
+            flipRotationVertical()
+            self.center.y = -center.y
+        }
+        self.center.x += 0.5
+        self.center.y += 0.5
+    }
+
+    private func flipRotationHorizontal() {
+        flipRotation(CGFloat(M_PI))
+    }
+
+    private func flipRotationVertical() {
+        flipRotation(CGFloat(M_PI_2))
+    }
+
+    private func flipRotation(axisAngle: CGFloat) {
+        var angle = atan2(self.transform.b, self.transform.a)
+        let twoPI = CGFloat(M_PI * 2.0)
+        // normalize angle
+        while angle >= twoPI {
+            angle -= twoPI
+        }
+
+        while angle < 0 {
+            angle += twoPI
+        }
+
+        let delta = axisAngle - angle
+        self.transform = CGAffineTransformRotate(self.transform, delta * 2.0)
+    }
+
+    // MARK:- drawing
+
     private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
         CGContextSaveGState(context)
 
