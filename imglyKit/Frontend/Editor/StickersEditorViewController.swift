@@ -180,6 +180,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         if options.canBringToFront {
             configureBringToFrontButton()
         }
+        configureOverlayButtonHorizontalConstraints()
     }
 
     private func configureDeleteButton() {
@@ -201,7 +202,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         view.addSubview(flipHorizontalButton)
         flipHorizontalButton.clipsToBounds = false
         flipHorizontalButton.backgroundColor = options.flipHorizontalButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[flipHorizontalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+  //      view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[flipHorizontalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipHorizontalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipHorizontalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -213,7 +214,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         view.addSubview(flipVerticalButton)
         flipVerticalButton.clipsToBounds = false
         flipVerticalButton.backgroundColor = options.flipVerticalButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[flipVerticalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+//        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[flipVerticalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipVerticalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipVerticalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -228,6 +229,50 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[bringToFrontButton]-80-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bringToFrontButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: bringToFrontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureOverlayButtonHorizontalConstraints() {
+        configureLeftOverlayButtonHorizontalConstraints()
+        configureRightOverlayButtonHorizontalConstraints()
+    }
+
+    private func configureLeftOverlayButtonHorizontalConstraints() {
+        var leftButtons: [UIButton] = []
+        if options.canFlipHorizontaly {
+            leftButtons.append(flipHorizontalButton)
+        }
+        if options.canFlipVerticaly {
+            leftButtons.append(flipVerticalButton)
+        }
+        setOverlayButtonConstraints(leftButtons, prefix: "|-20-", suffix: "")
+    }
+
+    private func configureRightOverlayButtonHorizontalConstraints() {
+        var rightButtons: [UIButton] = []
+        if options.canBringToFront {
+            rightButtons.append(bringToFrontButton)
+        }
+        if options.canDeleteSticker {
+            rightButtons.append(deleteButton)
+        }
+        setOverlayButtonConstraints(rightButtons, prefix: "", suffix: "-20-|")
+    }
+
+    private func setOverlayButtonConstraints(buttons: [UIButton], prefix: String, suffix: String) {
+        if buttons.count == 1 {
+            let views: [String : AnyObject] = [
+                "button1" : buttons[0]
+            ]
+            let string = "\(prefix)[button1]\(suffix)"
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(string, options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        } else if buttons.count == 2 {
+            let views: [String : AnyObject] = [
+                "button1" : buttons[0],
+                "button2" : buttons[1]
+            ]
+            let string = "\(prefix)[button1]-20-[button2]\(suffix)"
+            view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(string, options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        }
     }
 
     // MARK: - Gesture Handling
