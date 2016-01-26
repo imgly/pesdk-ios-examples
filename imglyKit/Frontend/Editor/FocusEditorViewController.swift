@@ -90,6 +90,10 @@ import UIKit
         return self.configuration.focusEditorViewControllerOptions
     }
 
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
     // MARK: - UIViewController
 
     override public func viewDidLoad() {

@@ -156,6 +156,10 @@ public let kMinimumCropSize = CGFloat(50)
         return self.configuration.cropEditorViewControllerOptions
     }
 
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
@@ -192,7 +196,6 @@ public let kMinimumCropSize = CGFloat(50)
             viewNames.append(viewName)
             buttonContainerView.addSubview(button)
             views[viewName] = button
-            print(viewName)
             buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
 

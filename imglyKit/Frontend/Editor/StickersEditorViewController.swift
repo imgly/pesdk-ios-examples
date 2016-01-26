@@ -34,6 +34,10 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         return self.configuration.stickersEditorViewControllerOptions
     }
 
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
