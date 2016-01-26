@@ -155,7 +155,7 @@ public let kMinimumCropSize = CGFloat(50)
 
     public override func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView) {
         super.zoomingImageViewDidZoom(zoomingImageView)
-        
+
         transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         reCalculateCropRectBounds()
     }

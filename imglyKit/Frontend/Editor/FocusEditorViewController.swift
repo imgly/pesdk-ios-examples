@@ -96,7 +96,7 @@ import UIKit
 
     public override func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView) {
         super.zoomingImageViewDidZoom(zoomingImageView)
-        
+
         circleGradientView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
         circleGradientView.centerGUIElements()
 
