@@ -170,6 +170,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         return self.configuration.textEditorViewControllerOptions
     }
 
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {

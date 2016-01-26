@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc(IMGLYZoomingImageViewDelegate) public protocol ZoomingImageViewDelegate: class {
+    func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView)
+}
+
 @objc(IMGLYZoomingImageView) public class ZoomingImageView: UIScrollView {
 
     // MARK: - Properties
@@ -39,6 +43,8 @@ import UIKit
         visibleImageFrame.intersectInPlace(imageView.frame)
         return visibleImageFrame
     }
+
+    public weak var zoomDelegate: ZoomingImageViewDelegate?
 
     // MARK: - Initializers
 
@@ -72,8 +78,22 @@ import UIKit
 
         if imageView.image != nil {
             if !initialZoomScaleWasSet {
-                minimumZoomScale = min(frame.size.width / imageView.bounds.size.width, frame.size.height / imageView.bounds.size.height)
-                zoomScale = minimumZoomScale
+                // Calculate ideal scale to make the image fit the frame of the image view
+                let idealScale = min(frame.size.width / imageView.bounds.size.width, frame.size.height / imageView.bounds.size.height)
+
+                // If the image is smaller than the bounds, the maximumZoomScale should match the
+                // idealZoomScale
+                if maximumZoomScale < idealScale {
+                    maximumZoomScale = idealScale
+                }
+
+                // If the image is smaller than the bounds, the minimumZoomScale should always be 1
+                // Otherwise the minimumZoomScale is the ideal scale
+                minimumZoomScale = min(idealScale, 1)
+
+                // Initially set the zoomScale to the ideal value
+                zoomScale = idealScale
+
                 initialZoomScaleWasSet = true
             }
         }
@@ -102,5 +122,6 @@ extension ZoomingImageView: UIScrollViewDelegate {
         let offsetY = max((bounds.size.height - contentSize.height) * 0.5, 0)
 
         imageView.center = CGPoint(x: contentSize.width * 0.5 + offsetX, y: contentSize.height * 0.5 + offsetY)
+        zoomDelegate?.zoomingImageViewDidZoom(self)
     }
 }

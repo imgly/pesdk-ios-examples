@@ -44,6 +44,7 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
         imageView.backgroundColor = self.currentBackgroundColor
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
+        imageView.zoomDelegate = self
         return imageView
         }()
 
@@ -171,5 +172,10 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
     public func tappedDone(sender: UIBarButtonItem?) {
         // Subclasses must override this
     }
+}
 
+extension EditorViewController: ZoomingImageViewDelegate {
+    public func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView) {
+        // Subclasses can override this
+    }
 }

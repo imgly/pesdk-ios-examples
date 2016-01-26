@@ -12,11 +12,11 @@ import UIKit
 
     // MARK: UI
 
-    // swiftlint:disable variable_name_max_length
+    // swiftlint:disable variable_name
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public let filterIntensitySliderConfigurationClosure: SliderConfigurationClosure?
-    // swiftlint:enable variable_name_max_length
+    // swiftlint:enable variable_name
 
     /// An object conforming to the `FiltersDataSourceProtocol`
     /// Per default an `FilterSelectionControllerDataSource` offering all filters
@@ -42,11 +42,11 @@ import UIKit
 @objc(IMGLYFilterEditorViewControllerOptionsBuilder) public class FilterEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
-    // swiftlint:disable variable_name_max_length
+    // swiftlint:disable variable_name
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure? = nil
-    // swiftlint:enable variable_name_max_length
+    // swiftlint:enable variable_name
 
     /// An object conforming to the `FiltersDataSourceProtocol`
     /// Per default an `FilterSelectionControllerDataSource` offering all filters

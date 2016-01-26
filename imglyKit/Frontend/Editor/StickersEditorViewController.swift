@@ -9,9 +9,9 @@
 import UIKit
 
 let kStickersCollectionViewCellSize = CGSize(width: 90, height: 90)
-// swiftlint:disable variable_name_max_length
+// swiftlint:disable variable_name
 let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
-// swiftlint:enable variable_name_max_length
+// swiftlint:enable variable_name
 
 @objc(IMGLYStickersEditorViewController) public class StickersEditorViewController: SubEditorViewController {
 
@@ -34,10 +34,14 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         return self.configuration.stickersEditorViewControllerOptions
     }
 
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let addedStickers =         self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
+        let addedStickers = self.overlayConverter?.addSpriteFiltersFromUIElements(stickersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
         if addedStickers != nil {
             updatePreviewImageWithCompletion {
                 self.stickersClipView.removeFromSuperview()

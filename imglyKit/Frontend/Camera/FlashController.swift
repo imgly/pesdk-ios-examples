@@ -67,7 +67,7 @@ final class FlashController: NSObject, LightControllable {
         while !videoDeviceInput.device.isFlashModeSupported(AVCaptureFlashMode(lightMode: nextFlashMode)) {
             nextFlashModeIndex = (nextFlashModeIndex + 1) % lightModes.count
             nextFlashMode = lightModes[nextFlashModeIndex]
-            counter++
+            counter += 1
 
             if counter >= lightModes.count {
                 nextFlashMode = .Off

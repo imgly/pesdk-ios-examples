@@ -143,17 +143,21 @@ public let kMinimumCropSize = CGFloat(50)
         }
     }
 
-    public override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-
-        transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
-        reCalculateCropRectBounds()
-    }
-
     // MARK: - EditorViewController
 
     public override var options: CropEditorViewControllerOptions {
         return self.configuration.cropEditorViewControllerOptions
+    }
+
+    override var enableZoomingInPreviewImage: Bool {
+        return false
+    }
+
+    public override func zoomingImageViewDidZoom(zoomingImageView: ZoomingImageView) {
+        super.zoomingImageViewDidZoom(zoomingImageView)
+
+        transparentRectView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
+        reCalculateCropRectBounds()
     }
 
     // MARK: - SubEditorViewController
@@ -192,7 +196,6 @@ public let kMinimumCropSize = CGFloat(50)
             viewNames.append(viewName)
             buttonContainerView.addSubview(button)
             views[viewName] = button
-            print(viewName)
             buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
         }
 
