@@ -155,6 +155,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.viewDidAppear(animated)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
+        showNewTextDialog()
     }
 
     override public func viewDidLayoutSubviews() {
@@ -365,6 +366,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
+        showNewTextDialog()
+    }
+
+    private func showNewTextDialog() {
         navigationItem.rightBarButtonItem?.enabled = false
         createNewText = true
         configureTextField()
@@ -614,18 +619,26 @@ extension TextEditorViewController: UITextFieldDelegate {
     public func textFieldShouldEndEditing(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         hideBlurredContainer()
-        if createNewText {
-            unSelectTextLabel(textLabel)
-            textLabel = UILabel()
-            configureTextLabel()
-            textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            setInitialTextLabelSize()
-            textClipView.bringSubviewToFront(textLabel)
-        } else {
-            textLabel.text = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-            textLabel.sizeToFit()
+        if let newText = textField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()) {
+            if newText.characters.count > 0 {
+                if createNewText {
+                    unSelectTextLabel(textLabel)
+                    textLabel = UILabel()
+                    configureTextLabel()
+                    textLabel.text = newText
+                    setInitialTextLabelSize()
+                    textClipView.bringSubviewToFront(textLabel)
+                } else if newText.characters.count > 0 {
+                    textLabel.text = newText
+                    textLabel.sizeToFit()
+                }
+                selectTextLabel(textLabel)
+            } else {
+                if !createNewText {
+                    textLabel.removeFromSuperview()
+                }
+            }
         }
-        selectTextLabel(textLabel)
         navigationItem.rightBarButtonItem?.enabled = true
         return true
     }

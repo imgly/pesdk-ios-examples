@@ -111,10 +111,10 @@ import UIKit
     public var defaultFontName = "Helvetica Neue"
 
     /// The background color of the add text button. Defaults to petrol.
-    public var addButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 0.6)
+    public var addButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
 
     /// The background color of the delete text button. Defaults to petrol.
-    public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 0.6)
+    public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
 
     public override init() {
         super.init()

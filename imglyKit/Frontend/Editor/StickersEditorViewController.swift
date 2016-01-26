@@ -98,11 +98,10 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         configureStickersClipView()
         configureGestureRecognizers()
         configureOverlayConverter()
-        configureDeleteButton()
-        configureFlipHorizontalButton()
-        configureFlipVerticalButton()
+        configureOverlayButtons()
         backupStickers()
         fixedFilterStack.spriteFilters.removeAll()
+        updateButtonStatus()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -167,40 +166,68 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         stickersClipView.addGestureRecognizer(tapGestureRecognizer)
     }
 
+
+    private func configureOverlayButtons() {
+        if options.canDeleteSticker {
+            configureDeleteButton()
+        }
+        if options.canFlipHorizontaly {
+            configureFlipHorizontalButton()
+        }
+        if options.canFlipVerticaly {
+            configureFlipVerticalButton()
+        }
+        if options.canBringToFront {
+            configureBringToFrontButton()
+        }
+    }
+
     private func configureDeleteButton() {
         let views: [String : AnyObject] = [
-            "deleteTextButton" : deleteButton
+            "deleteButton" : deleteButton
         ]
         view.addSubview(deleteButton)
         deleteButton.clipsToBounds = false
-        deleteButton.backgroundColor = UIColor.redColor()
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
+        deleteButton.backgroundColor = options.deleteButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
     private func configureFlipHorizontalButton() {
         let views: [String : AnyObject] = [
-            "addTextButton" : flipHorizontalButton
+            "flipHorizontalButton" : flipHorizontalButton
         ]
         view.addSubview(flipHorizontalButton)
         flipHorizontalButton.clipsToBounds = false
-        flipHorizontalButton.backgroundColor = UIColor.greenColor()
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        flipHorizontalButton.backgroundColor = options.flipHorizontalButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[flipHorizontalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipHorizontalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipHorizontalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
     private func configureFlipVerticalButton() {
         let views: [String : AnyObject] = [
-            "addTextButton" : flipVerticalButton
+            "flipVerticalButton" : flipVerticalButton
         ]
         view.addSubview(flipVerticalButton)
         flipVerticalButton.clipsToBounds = false
-        flipVerticalButton.backgroundColor = UIColor.yellowColor()
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        flipVerticalButton.backgroundColor = options.flipVerticalButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[flipVerticalButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipVerticalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipVerticalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureBringToFrontButton() {
+        let views: [String : AnyObject] = [
+            "bringToFrontButton" : bringToFrontButton
+        ]
+        view.addSubview(bringToFrontButton)
+        bringToFrontButton.clipsToBounds = false
+        bringToFrontButton.backgroundColor = options.bringToFrontButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[bringToFrontButton]-80-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bringToFrontButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: bringToFrontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
     // MARK: - Gesture Handling
@@ -309,6 +336,13 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         if selectedView.layer.borderWidth > 0 {
             selectedView.removeFromSuperview()
         }
+        updateButtonStatus()
+    }
+
+    @objc private func bringToFront(sender: UIButton) {
+        if selectedView.layer.borderWidth > 0 {
+            stickersClipView.bringSubviewToFront(selectedView)
+        }
     }
 
     // MARK:- sticker object restore
@@ -353,6 +387,8 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         flipVerticalButton.enabled = enabled
         flipHorizontalButton.alpha = alpha
         flipHorizontalButton.enabled = enabled
+        bringToFrontButton.alpha = alpha
+        bringToFrontButton.enabled = enabled
     }
 
 }
@@ -381,6 +417,7 @@ extension StickersEditorViewController: UICollectionViewDataSource {
 extension StickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        unSelectView(selectedView)
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         let imageView = UIImageView(image: sticker.image)
         imageView.userInteractionEnabled = true
@@ -404,6 +441,7 @@ extension StickersEditorViewController: UICollectionViewDelegate {
             }, completion: { (Bool) -> Void in
                 self.selectedView = imageView
                 self.selectView(imageView)
+                self.updateButtonStatus()
         })
     }
 }
@@ -413,7 +451,6 @@ extension StickersEditorViewController: UIGestureRecognizerDelegate {
         if (gestureRecognizer is UIPinchGestureRecognizer && otherGestureRecognizer is UIRotationGestureRecognizer) || (gestureRecognizer is UIRotationGestureRecognizer && otherGestureRecognizer is UIPinchGestureRecognizer) {
             return true
         }
-
         return false
     }
 }
