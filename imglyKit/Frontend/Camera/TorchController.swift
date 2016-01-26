@@ -71,7 +71,7 @@ final class TorchController: NSObject, LightControllable {
         while !videoDeviceInput.device.isTorchModeSupported(AVCaptureTorchMode(lightMode: nextTorchMode)) {
             nextTorchModeIndex = (nextTorchModeIndex + 1) % lightModes.count
             nextTorchMode = lightModes[nextTorchModeIndex]
-            counter++
+            counter += 1
 
             if counter >= lightModes.count {
                 nextTorchMode = .Off
