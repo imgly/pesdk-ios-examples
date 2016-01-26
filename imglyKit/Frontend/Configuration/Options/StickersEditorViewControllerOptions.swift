@@ -18,6 +18,21 @@ import UIKit
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
 
+    /// Enables/Disables the delete sticker button. Defaults to true.
+    public var canDeleteSticker: Bool
+
+    /// Enables/Disables the flip-horizontal button. Defaults to true.
+    public var canFlipHorizontaly: Bool
+
+    /// Enables/Disables the flip-vertical button. Defaults to true.
+    public var canFlipVerticaly: Bool
+
+    /// This value determins the opacity of any disabled button that is positions above the preview.
+    public var disabledOverlayButtonAlpha: CGFloat
+
+    /// This value determins the opacity of any enabled button that is positions above the preview.
+    public var enabledOverlayButtonAlpha: CGFloat
+
     public convenience init() {
         self.init(builder: StickersEditorViewControllerOptionsBuilder())
     }
@@ -25,6 +40,11 @@ import UIKit
     public init(builder: StickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
+        canDeleteSticker = builder.canDeleteSticker
+        canFlipHorizontaly = builder.canFlipHorizontaly
+        canFlipVerticaly = builder.canFlipVerticaly
+        disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
+        enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
         super.init(editorBuilder: builder)
     }
 }
@@ -40,6 +60,21 @@ import UIKit
 
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true
+
+    /// Enables/Disables the delete sticker button. Defaults to true.
+    public var canDeleteSticker = true
+
+    /// Enables/Disables the flip-horizontal button. Defaults to true.
+    public var canFlipHorizontaly = true
+
+    /// Enables/Disables the flip-vertical button. Defaults to true.
+    public var canFlipVerticaly = true
+
+    /// This value determins the opacity of any disabled button that is positions above the preview.
+    public var disabledOverlayButtonAlpha = CGFloat(0.2)
+
+    /// This value determins the opacity of any enabled button that is positions above the preview.
+    public var enabledOverlayButtonAlpha = CGFloat(0.6)
 
     public override init() {
         super.init()

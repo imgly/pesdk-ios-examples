@@ -24,9 +24,46 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         return view
         }()
 
-    private var draggedView: UIView?
+    private var draggedView: UIImageView?
     private var tempStickerCopy = [Filter]()
     private var overlayConverter: OverlayConverter?
+    private var selectedView = UIImageView()
+
+    public private(set) lazy var deleteButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "deleteSticker:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var flipHorizontalButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "flipHorizontal:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var flipVerticalButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "flipVertical:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var bringToFrontButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
+        return button
+    }()
 
     // MARK: - EditorViewController
 
@@ -61,6 +98,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         configureStickersClipView()
         configureGestureRecognizers()
         configureOverlayConverter()
+        configureDeleteButton()
+        configureFlipHorizontalButton()
+        configureFlipVerticalButton()
         backupStickers()
         fixedFilterStack.spriteFilters.removeAll()
     }
@@ -107,31 +147,76 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }
 
     private func configureGestureRecognizers() {
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "panned:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePan:")
         panGestureRecognizer.minimumNumberOfTouches = 1
         panGestureRecognizer.maximumNumberOfTouches = 1
         stickersClipView.addGestureRecognizer(panGestureRecognizer)
 
         if options.canModifyStickerSize {
-            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "pinched:")
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinch:")
             pinchGestureRecognizer.delegate = self
             stickersClipView.addGestureRecognizer(pinchGestureRecognizer)
         }
 
-        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "rotated:")
+        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
         rotationGestureRecognizer.delegate = self
         stickersClipView.addGestureRecognizer(rotationGestureRecognizer)
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        tapGestureRecognizer.delegate = self
+        stickersClipView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    private func configureDeleteButton() {
+        let views: [String : AnyObject] = [
+            "deleteTextButton" : deleteButton
+        ]
+        view.addSubview(deleteButton)
+        deleteButton.clipsToBounds = false
+        deleteButton.backgroundColor = UIColor.redColor()
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureFlipHorizontalButton() {
+        let views: [String : AnyObject] = [
+            "addTextButton" : flipHorizontalButton
+        ]
+        view.addSubview(flipHorizontalButton)
+        flipHorizontalButton.clipsToBounds = false
+        flipHorizontalButton.backgroundColor = UIColor.greenColor()
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: flipHorizontalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureFlipVerticalButton() {
+        let views: [String : AnyObject] = [
+            "addTextButton" : flipVerticalButton
+        ]
+        view.addSubview(flipVerticalButton)
+        flipVerticalButton.clipsToBounds = false
+        flipVerticalButton.backgroundColor = UIColor.yellowColor()
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-80-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: flipVerticalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
     // MARK: - Gesture Handling
 
-    @objc private func panned(recognizer: UIPanGestureRecognizer) {
+    @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(stickersClipView)
         let translation = recognizer.translationInView(stickersClipView)
 
         switch recognizer.state {
         case .Began:
             draggedView = hitImageView(location)
+            if let draggedView = draggedView {
+                unSelectView(selectedView)
+                selectedView = draggedView
+                selectView(selectedView)
+            }
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
@@ -144,7 +229,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         }
     }
 
-    @objc private func pinched(recognizer: UIPinchGestureRecognizer) {
+    @objc private func handlePinch(recognizer: UIPinchGestureRecognizer) {
         if recognizer.numberOfTouches() == 2 {
             let point1 = recognizer.locationOfTouch(0, inView: stickersClipView)
             let point2 = recognizer.locationOfTouch(1, inView: stickersClipView)
@@ -156,6 +241,12 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 if draggedView == nil {
                     draggedView = hitImageView(midpoint)
                 }
+                if let draggedView = draggedView {
+                    unSelectView(selectedView)
+                    selectedView = draggedView
+                    selectView(selectedView)
+                }
+                updateButtonStatus()
             case .Changed:
                 if let draggedView = draggedView {
                     draggedView.transform = CGAffineTransformScale(draggedView.transform, scale, scale)
@@ -169,7 +260,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         }
     }
 
-    @objc private func rotated(recognizer: UIRotationGestureRecognizer) {
+    @objc private func handleRotate(recognizer: UIRotationGestureRecognizer) {
         if recognizer.numberOfTouches() == 2 {
             let point1 = recognizer.locationOfTouch(0, inView: stickersClipView)
             let point2 = recognizer.locationOfTouch(1, inView: stickersClipView)
@@ -180,6 +271,12 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             case .Began:
                 if draggedView == nil {
                     draggedView = hitImageView(midpoint)
+                }
+                if let draggedView = draggedView {
+                    unSelectView(selectedView)
+                    selectedView = draggedView
+                    selectView(selectedView)
+                    updateButtonStatus()
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -192,6 +289,25 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             default:
                 break
             }
+        }
+    }
+
+    @objc private func handleTap(recognizer: UITapGestureRecognizer) {
+        let location = recognizer.locationInView(stickersClipView)
+        draggedView = hitImageView(location)
+        unSelectView(selectedView)
+        if let draggedView = draggedView {
+            selectedView = draggedView
+            selectView(selectedView)
+        }
+        updateButtonStatus()
+    }
+
+
+    // MARK:- Button-handling
+     @objc private func deleteSticker(sender: UIButton) {
+        if selectedView.layer.borderWidth > 0 {
+            selectedView.removeFromSuperview()
         }
     }
 
@@ -217,6 +333,26 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             }
         }
         return result
+    }
+
+    private func selectView(imageView: UIImageView) {
+        imageView.layer.borderColor = UIColor.whiteColor().CGColor
+        imageView.layer.borderWidth = 1.0
+    }
+
+    private func unSelectView(imageView: UIImageView) {
+        imageView.layer.borderWidth = 0
+    }
+
+    private func updateButtonStatus() {
+        let enabled = selectedView.layer.borderWidth > 0
+        let alpha = CGFloat( enabled ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha )
+        deleteButton.alpha = alpha
+        deleteButton.enabled = enabled
+        flipVerticalButton.alpha = alpha
+        flipVerticalButton.enabled = enabled
+        flipHorizontalButton.alpha = alpha
+        flipHorizontalButton.enabled = enabled
     }
 
 }
@@ -265,7 +401,10 @@ extension StickersEditorViewController: UICollectionViewDelegate {
 
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
-            }, completion: nil)
+            }, completion: { (Bool) -> Void in
+                self.selectedView = imageView
+                self.selectView(imageView)
+        })
     }
 }
 

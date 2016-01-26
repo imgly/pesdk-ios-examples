@@ -89,7 +89,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         return button
     }()
 
-
     public private(set) lazy var textClipView: UIView = {
         let view = UIView()
         view.clipsToBounds = true
