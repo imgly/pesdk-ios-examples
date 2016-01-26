@@ -244,6 +244,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 selectedView = draggedView
                 selectView(selectedView)
             }
+            updateButtonStatus()
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
