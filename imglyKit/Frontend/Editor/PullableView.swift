@@ -116,35 +116,30 @@ import AVFoundation
 
     func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
+
             self.setOpened(!opened, animated: animate)
         }
     }
 
    func setOpened(opend: Bool, animated anim: Bool) {
         self.opened = opend
-        if anim {
-            UIView.animateWithDuration(1.0,
-                delay: 0.0,
-                options: UIViewAnimationOptions.CurveEaseOut,
-                animations: {
-                },
-                completion: { finished in
-                    if finished {
-                        // Restores interaction after the animation is over
-                        self.dragRecognizer.enabled = true
-                        self.tapRecognizer.enabled = self.toggleOnTap
-                        self.delegate?.pullableView(self, didChangeState: self.opened)
-                    }
-            })
-        }
-        self.center = opened ? openedCenter : closedCenter
-        if anim {
-            // For the duration of the animation, no further interaction with the view is permitted
-            dragRecognizer.enabled = false
-            tapRecognizer.enabled = false
-            UIView.commitAnimations()
-        } else {
-            delegate?.pullableView(self, didChangeState: opened)
-        }
+        // For the duration of the animation, no further interaction with the view is permitted
+        dragRecognizer.enabled = false
+        tapRecognizer.enabled = false
+        UIView.commitAnimations()
+        UIView.animateWithDuration(animationDuration,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.center = opend ? self.openedCenter : self.closedCenter
+            },
+            completion: { finished in
+                if finished {
+                    // Restores interaction after the animation is over
+                    self.dragRecognizer.enabled = true
+                    self.tapRecognizer.enabled = true
+                    self.delegate?.pullableView(self, didChangeState: self.opened)
+                }
+        })
     }
 }
