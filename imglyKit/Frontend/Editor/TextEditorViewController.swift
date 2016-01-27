@@ -123,6 +123,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         return selector
     }()
 
+    public private(set) lazy var textColorSelectorView: TextColorSelectorView = {
+        let view = TextColorSelectorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.menuDelegate = self
+        return view
+    }()
+
     private var textLabel = UILabel()
 
     private var blurredContainerView = UIVisualEffectView()
@@ -308,6 +315,18 @@ private let kMinimumFontSize = CGFloat(12.0)
             self.blurredContainerView.alpha = 1.0
         }
     }
+
+    private func configureColorSelectorView() {
+        bottomContainerView.addSubview(textColorSelectorView)
+
+        let views = [
+            "textColorSelectorView" : textColorSelectorView
+        ]
+
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+    }
+
 
     private func configureColorPickerView() {
         configureBlurredContainerView()
