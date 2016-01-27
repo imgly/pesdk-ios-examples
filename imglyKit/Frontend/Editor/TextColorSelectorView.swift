@@ -22,14 +22,17 @@ import UIKit
     private let kButtonXPositionOffset = CGFloat(5)
     private let kButtonDistance = CGFloat(10)
     private let kButtonSideLength = CGFloat(50)
+    private var pullableView = PullableView()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        self.colorArray = defaultColorArray()
         commonInit()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.colorArray = defaultColorArray()
         commonInit()
     }
 

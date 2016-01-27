@@ -30,6 +30,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var createNewText = false
     private var selectBackgroundColor = false
     private var overlayConverter: OverlayConverter?
+    private var pullableView = PullableView()
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -163,6 +164,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
+        configurePullableView()
     }
 
     override public func viewDidLayoutSubviews() {
@@ -318,6 +320,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func configureColorSelectorView() {
         bottomContainerView.addSubview(textColorSelectorView)
+        textColorSelectorView.backgroundColor = self.currentBackgroundColor
 
         let views = [
             "textColorSelectorView" : textColorSelectorView
@@ -382,6 +385,22 @@ private let kMinimumFontSize = CGFloat(12.0)
         textClipView.addGestureRecognizer(longPressRecognizer)
     }
 
+    private func configurePullableView() {
+        pullableView = PullableView(frame: CGRectMake(0, 0, 320, 460))
+        pullableView.openedCenter = CGPointMake(160 ,self.view.frame.size.height)
+        pullableView.closedCenter = CGPointMake(160 ,self.view.frame.size.height + 200)
+        pullableView.center = pullableView.closedCenter
+        pullableView.handleView.frame = CGRect(x: 0, y: 0, width: 320, height: 40)
+        pullableView.backgroundColor = UIColor.redColor()
+        self.view.addSubview(pullableView)
+
+        let label = UILabel(frame: CGRectMake(0, 4, 320, 20))
+        label.textColor = UIColor.whiteColor()
+        label.text = "Pull me up"
+        pullableView.addSubview(label)
+    }
+
+
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
@@ -410,7 +429,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     @objc private func setTextColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = false
-        configureColorPickerView()
+        configureColorSelectorView()
     }
 
     @objc private func setBackgroundColor(sender: ImageCaptionButton) {
