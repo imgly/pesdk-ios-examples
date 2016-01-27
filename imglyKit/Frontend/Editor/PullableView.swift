@@ -15,7 +15,7 @@ import AVFoundation
 @objc(IMGLYPullableView) public class PullableView: UIView {
     var closedCenter = CGPoint(x: 0, y: 0)
     var openedCenter = CGPoint(x: 0, y: 0)
-    var handleView = UIView()
+    public var handleView = UIView()
     var dragRecognizer = UIPanGestureRecognizer()
     var tapRecognizer = UITapGestureRecognizer()
     var startPos = CGPoint(x: 0, y: 0)

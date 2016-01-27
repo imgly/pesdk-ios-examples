@@ -155,6 +155,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureAddButton()
         configureDeleteButton()
         configureGestureRecognizers()
+        configurePullableView()
+        configureColorPickerView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
     }
@@ -164,8 +166,11 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
-        configurePullableView()
-       calculatePullableViewFrame()
+        calculatePullableViewFrame()
+        pullableView.handleView.frame = CGRect(x:0, y:0, width:pullableView.frame.size.width, height:40)
+        pullableView.handleView.backgroundColor = UIColor.blueColor()
+        print(pullableView.frame)
+        print(pullableView.handleView.frame)
     }
 
     override public func viewDidLayoutSubviews() {
@@ -331,27 +336,22 @@ private let kMinimumFontSize = CGFloat(12.0)
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: [], metrics: nil, views: views))
     }
 
-
     private func configureColorPickerView() {
         configureBlurredContainerView()
-        blurredContainerView.contentView.addSubview(colorPickerView)
+        pullableView.addSubview(colorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
         colorPickerView.pickerDelegate = self
 
         let views = [
-            "blurredContainerView" : blurredContainerView,
+            "pullableView" : pullableView,
             "colorPickerView" : colorPickerView
         ]
 
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[pullableView]|", options: [], metrics: nil, views: views))
 
-        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerView]|", options: [], metrics: nil, views: views))
-        blurredContainerView.alpha = 0.0
-        UIView.animateWithDuration(0.3) {
-            self.blurredContainerView.alpha = 1.0
-        }
+        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-40-[colorPickerView]|", options: [], metrics: nil, views: views))
     }
 
     private func configureBlurredContainerView() {
@@ -387,24 +387,27 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func configurePullableView() {
-        pullableView = PullableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 460))
-        calculatePullableViewFrame()
+        pullableView = PullableView()
+        pullableView.translatesAutoresizingMaskIntoConstraints = false
         pullableView.center = pullableView.closedCenter
-        pullableView.handleView.frame = CGRect(x: 0, y: 0, width: 320, height: 40)
         pullableView.backgroundColor = UIColor.redColor()
-        self.view.insertSubview(pullableView, belowSubview: bottomContainerView)
 
-        let label = UILabel(frame: CGRect(x: 0, y: 4, width: 320, height: 20))
+        self.view.addSubview(pullableView)
+
+        let label = UILabel(frame: CGRect(x: 0, y: 4, width: self.view.frame.size.width, height: 20))
         label.textColor = UIColor.whiteColor()
         label.text = "Pull me up"
+
         pullableView.addSubview(label)
+        //pullableView.addSubview(colorPickerView)
+
+        colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
     private func calculatePullableViewFrame() {
-        pullableView.openedCenter = CGPoint(x: 160, y: self.view.frame.size.height + 200)
-        pullableView.closedCenter = CGPoint(x: 160, y: self.view.frame.size.height + 100)
+        pullableView.openedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height)
+        pullableView.closedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height + 100)
     }
-
 
     // MARK: - Button Handling
 
