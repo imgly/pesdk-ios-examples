@@ -165,6 +165,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         rerenderPreviewWithoutText()
         showNewTextDialog()
         configurePullableView()
+       calculatePullableViewFrame()
     }
 
     override public func viewDidLayoutSubviews() {
@@ -386,18 +387,22 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func configurePullableView() {
-        pullableView = PullableView(frame: CGRectMake(0, 0, 320, 460))
-        pullableView.openedCenter = CGPointMake(160 ,self.view.frame.size.height)
-        pullableView.closedCenter = CGPointMake(160 ,self.view.frame.size.height + 200)
+        pullableView = PullableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: 460))
+        calculatePullableViewFrame()
         pullableView.center = pullableView.closedCenter
         pullableView.handleView.frame = CGRect(x: 0, y: 0, width: 320, height: 40)
         pullableView.backgroundColor = UIColor.redColor()
-        self.view.addSubview(pullableView)
+        self.view.insertSubview(pullableView, belowSubview: bottomContainerView)
 
-        let label = UILabel(frame: CGRectMake(0, 4, 320, 20))
+        let label = UILabel(frame: CGRect(x: 0, y: 4, width: 320, height: 20))
         label.textColor = UIColor.whiteColor()
         label.text = "Pull me up"
         pullableView.addSubview(label)
+    }
+
+    private func calculatePullableViewFrame() {
+        pullableView.openedCenter = CGPoint(x: 160, y: self.view.frame.size.height + 200)
+        pullableView.closedCenter = CGPoint(x: 160, y: self.view.frame.size.height + 100)
     }
 
 

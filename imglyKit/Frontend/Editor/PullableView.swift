@@ -111,12 +111,10 @@ import AVFoundation
             let op: Bool = CGPointEqualToPoint(target, openedCenter)
             self.setOpened(op, animated: animate)
         }
-
     }
 
     func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-
             self.setOpened(!opened, animated: animate)
         }
     }
