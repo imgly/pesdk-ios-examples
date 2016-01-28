@@ -35,8 +35,6 @@ import UIKit
     private var saturationBrightnessPickerView = SaturationBrightnessPickerView()
     private var huePickerView = HuePickerView()
     private var alphaPickerView = AlphaPickerView()
-    private var okButton = UIButton(type: .Custom)
-    private var cancelButton = UIButton(type: .Custom)
 
     // MARK:- init
 
@@ -55,8 +53,6 @@ import UIKit
         configureColorView()
         configureHuePickView()
         configureAlphaPickerView()
-        configureOkButton()
-        configureCancelButton()
         configureConstraints()
     }
 
@@ -85,62 +81,27 @@ import UIKit
         alphaPickerView.pickerDelegate = self
     }
 
-    private func configureOkButton() {
-        self.addSubview(okButton)
-        okButton.translatesAutoresizingMaskIntoConstraints = false
-        let title = Localize("Ok")
-        okButton.setTitle(title, forState:UIControlState.Normal)
-        okButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-        okButton.addTarget(self, action: "okButtonTouched:", forControlEvents: .TouchUpInside)
-    }
-
-    private func configureCancelButton() {
-        self.addSubview(cancelButton)
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        let title = Localize("Cancel")
-        cancelButton.setTitle(title, forState:UIControlState.Normal)
-        cancelButton.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
-        cancelButton.addTarget(self, action: "cancelButtonTouched:", forControlEvents: .TouchUpInside)
-    }
-
     private func configureConstraints() {
         let views = [
             "colorView" : colorView,
             "saturationBrightnessPickerView" : saturationBrightnessPickerView,
             "huePickerView" : huePickerView,
-            "alphaPickerView" : alphaPickerView,
-            "cancelButton" : cancelButton,
-            "okButton" : okButton
+            "alphaPickerView" : alphaPickerView
         ]
 
         NSLayoutConstraint(item: saturationBrightnessPickerView, attribute: .Height, relatedBy: .Equal, toItem: saturationBrightnessPickerView, attribute: .Width, multiplier: 1, constant: 0).active = true
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[saturationBrightnessPickerView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[colorView]-20-[saturationBrightnessPickerView]-20-[huePickerView]-20-[alphaPickerView]-20-[okButton]-[cancelButton]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[colorView]-20-[alphaPickerView]-20-[saturationBrightnessPickerView]-20-[huePickerView]", options: [], metrics: nil, views: views))
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[colorView]-20-|", options: [], metrics: nil, views: views))
-        colorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[colorView(==40)]", options: [], metrics: nil, views: views))
+        colorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[colorView(==20)]", options: [], metrics: nil, views: views))
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[huePickerView]-20-|", options: [], metrics: nil, views: views))
-        huePickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[huePickerView(==40)]", options: [], metrics: nil, views: views))
+        huePickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[huePickerView(==20)]", options: [], metrics: nil, views: views))
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[alphaPickerView]-20-|", options: [], metrics: nil, views: views))
-        alphaPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[alphaPickerView(==40)]", options: [], metrics: nil, views: views))
-
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[okButton]-20-|", options: [], metrics: nil, views: views))
-        okButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[okButton(==40)]", options: [], metrics: nil, views: views))
-
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[cancelButton]-20-|", options: [], metrics: nil, views: views))
-        cancelButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton(==40)]", options: [], metrics: nil, views: views))
-    }
-
-    // MARK:- actions
-    public func okButtonTouched(sender: UIButton?) {
-        pickerDelegate?.colorPicked(self, didPickColor: colorView.backgroundColor!)
-    }
-
-    public func cancelButtonTouched(sender: UIButton?) {
-        pickerDelegate?.canceledColorPicking(self)
+        alphaPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[alphaPickerView(==20)]", options: [], metrics: nil, views: views))
     }
 }
 
