@@ -14,8 +14,8 @@ import AVFoundation
 
 @objc(IMGLYPullableView) public class PullableView: UIView {
     var marginConstraint: NSLayoutConstraint?
-    var openedMargin = CGFloat(100)
-    var closedMargin = CGFloat(400)
+    var openedMargin = CGFloat(0)
+    var closedMargin = CGFloat(800)
     public var handleView = UIView()
     var dragRecognizer = UIPanGestureRecognizer()
     var tapRecognizer = UITapGestureRecognizer()
@@ -50,7 +50,7 @@ import AVFoundation
         animationDuration = 0.2
         toggleOnTap = true
         // Creates the handle view. Subclasses should resize, reposition and style this view
-        handleView = UIView(frame: CGRect(x:0, y:frame.size.height - 40, width:frame.size.width, height:40))
+        handleView = UIView(frame: CGRect(x:0, y:0, width:frame.size.width, height:40))
         self.addSubview(handleView)
         dragRecognizer = UIPanGestureRecognizer(target: self, action: "handleDrag:")
         dragRecognizer.minimumNumberOfTouches = 1
@@ -85,16 +85,14 @@ import AVFoundation
             }
         sender.setTranslation(translate, inView: self.superview)
             marginConstraint.constant = newPos.y
-            //self.center = newPos
         } else if sender.state == .Ended {
             // Gets the velocity of the gesture in the axis, so it can be
             // determined to which endpoint the state should be set.
             let vectorVelocity = sender.velocityInView(self.superview)
             let axisVelocity = vectorVelocity.y
             let target = axisVelocity < 0 ? minPos : maxPos
-            //let op: Bool = CGPointEqualToPoint(target, openedCenter)
-            let op = target == openedMargin
-            self.setOpened(op, animated: animate)
+            let opened = target == openedMargin
+            self.setOpened(opened, animated: animate)
         }
     }
 
@@ -103,24 +101,16 @@ import AVFoundation
             self.setOpened(!opened, animated: animate)
         }
     }
-/*
 
-    self.heightFromTop.constant = 550.0f;
-    [myView setNeedsUpdateConstraints];
-
-    [UIView animateWithDuration:0.25f animations:^{
-    [myView layoutIfNeeded];
-    }];
-*/
-   func setOpened(opend: Bool, animated anim: Bool) {
+    func setOpened(opened: Bool, animated anim: Bool) {
         guard let marginConstraint = self.marginConstraint else {
             return
         }
-        self.opened = opend
+        self.opened = opened
         // For the duration of the animation, no further interaction with the view is permitted
         dragRecognizer.enabled = false
         tapRecognizer.enabled = false
-        marginConstraint.constant = opend ? self.openedMargin : self.closedMargin
+        marginConstraint.constant = opened ? self.openedMargin : self.closedMargin
         self.needsUpdateConstraints()
         UIView.animateWithDuration(animationDuration,
             delay: 0.0,
