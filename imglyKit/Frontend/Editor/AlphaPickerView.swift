@@ -36,6 +36,21 @@ import UIKit
         }
     }
 
+    public override init(frame: CGRect) {
+        super.init(frame:frame)
+        commonInit()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        opaque = false
+        backgroundColor = UIColor.clearColor()
+    }
+
     public var color = UIColor.redColor() {
         didSet {
             alphaValue = CGColorGetAlpha(color.CGColor)
@@ -53,7 +68,8 @@ import UIKit
 
     private func drawColorSpectrum(context: CGContextRef, rect: CGRect) {
         CGContextSaveGState(context)
-        CGContextClipToRect(context, rect)
+        PathHelper.clipCornersToOvalWidth(context, width:frame.size.width, height: frame.size.height, ovalWidth:3.0, ovalHeight:3.0)
+        CGContextClip(context)
         CGContextSetFillColorWithColor(context, checkboardColor.CGColor)
         CGContextFillRect(context, self.bounds)
 
@@ -65,7 +81,6 @@ import UIKit
 
         CGContextDrawLinearGradient(context, grad, CGPoint(x:rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
         CGContextRestoreGState(context)
-
     }
 
     private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
