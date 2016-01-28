@@ -13,14 +13,17 @@ import AVFoundation
 }
 
 @objc(IMGLYPullableView) public class PullableView: UIView {
-    var closedCenter = CGPoint(x: 0, y: 0)
-    var openedCenter = CGPoint(x: 0, y: 0)
+//    var closedCenter = CGPoint(x: 0, y: 0)
+//    var openedCenter = CGPoint(x: 0, y: 0)
+    var marginConstraint: NSLayoutConstraint?
+    var openedMargin = CGFloat(100)
+    var closedMargin = CGFloat(400)
     public var handleView = UIView()
     var dragRecognizer = UIPanGestureRecognizer()
     var tapRecognizer = UITapGestureRecognizer()
     var startPos = CGPoint(x: 0, y: 0)
-    var minPos = CGPoint(x: 0, y: 0)
-    var maxPos = CGPoint(x: 0, y: 0)
+    var minPos = CGFloat(0)
+    var maxPos = CGFloat(0)
     var opened = false
     var verticalAxis = false
     var toggleOnTap: Bool {
@@ -65,50 +68,30 @@ import AVFoundation
     func handleDrag(sender: UIPanGestureRecognizer) {
         if sender.state == .Began {
             startPos = self.center
-            // Determines if the view can be pulled in the x or y axis
-            verticalAxis = closedCenter.x == openedCenter.x
-            // Finds the minimum and maximum points in the axis
-            if verticalAxis {
-                minPos = closedCenter.y < openedCenter.y ? closedCenter : openedCenter
-                maxPos = closedCenter.y > openedCenter.y ? closedCenter : openedCenter
-            } else {
-                minPos = closedCenter.x < openedCenter.x ? closedCenter : openedCenter
-                maxPos = closedCenter.x > openedCenter.x ? closedCenter : openedCenter
-            }
+            minPos = closedMargin < openedMargin ? closedMargin : openedMargin
+            maxPos = closedMargin > openedMargin ? closedMargin : openedMargin
+
         } else if sender.state == .Changed {
             var translate: CGPoint = sender.translationInView(self.superview)
-            var newPos: CGPoint
-            // Moves the view, keeping it constrained between openedCenter and closedCenter
-            if verticalAxis {
-                newPos = CGPoint(x: startPos.x, y: startPos.y + translate.y)
-                if newPos.y < minPos.y {
-                    newPos.y = minPos.y
-                    translate = CGPoint(x: 0, y: newPos.y - startPos.y)
-                }
-                if newPos.y > maxPos.y {
-                    newPos.y = maxPos.y
-                    translate = CGPoint(x: 0, y: newPos.y - startPos.y)
-                }
-            } else {
-                newPos = CGPoint(x: startPos.x + translate.x, y: startPos.y)
-                if newPos.x < minPos.x {
-                    newPos.x = minPos.x
-                    translate = CGPoint(x: newPos.x - startPos.x, y: 0)
-                }
-                if newPos.x > maxPos.x {
-                    newPos.x = maxPos.x
-                    translate = CGPoint(x: newPos.x - startPos.x, y: 0)
-                }
+            var newPos = CGPoint(x: startPos.x, y: startPos.y + translate.y)
+            if newPos.y < minPos {
+                newPos.y = minPos
+                translate = CGPoint(x: 0, y: newPos.y - startPos.y)
             }
-            sender.setTranslation(translate, inView: self.superview)
+            if newPos.y > maxPos {
+                newPos.y = maxPos
+                translate = CGPoint(x: 0, y: newPos.y - startPos.y)
+            }
+        sender.setTranslation(translate, inView: self.superview)
             self.center = newPos
         } else if sender.state == .Ended {
             // Gets the velocity of the gesture in the axis, so it can be
             // determined to which endpoint the state should be set.
-            let vectorVelocity: CGPoint = sender.velocityInView(self.superview)
-            let axisVelocity: CGFloat = verticalAxis ? vectorVelocity.y : vectorVelocity.x
-            let target: CGPoint = axisVelocity < 0 ? minPos : maxPos
-            let op: Bool = CGPointEqualToPoint(target, openedCenter)
+            let vectorVelocity = sender.velocityInView(self.superview)
+            let axisVelocity = vectorVelocity.y
+            let target = axisVelocity < 0 ? minPos : maxPos
+            //let op: Bool = CGPointEqualToPoint(target, openedCenter)
+            let op = target == openedMargin
             self.setOpened(op, animated: animate)
         }
     }
@@ -118,18 +101,30 @@ import AVFoundation
             self.setOpened(!opened, animated: animate)
         }
     }
+/*
 
+    self.heightFromTop.constant = 550.0f;
+    [myView setNeedsUpdateConstraints];
+
+    [UIView animateWithDuration:0.25f animations:^{
+    [myView layoutIfNeeded];
+    }];
+*/
    func setOpened(opend: Bool, animated anim: Bool) {
+        guard let marginConstraint = self.marginConstraint else {
+            return
+        }
         self.opened = opend
         // For the duration of the animation, no further interaction with the view is permitted
         dragRecognizer.enabled = false
         tapRecognizer.enabled = false
-        UIView.commitAnimations()
+        marginConstraint.constant = opend ? self.openedMargin : self.closedMargin
+        self.needsUpdateConstraints()
         UIView.animateWithDuration(animationDuration,
             delay: 0.0,
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: {
-                self.center = opend ? self.openedCenter : self.closedCenter
+                self.layoutIfNeeded()
             },
             completion: { finished in
                 if finished {

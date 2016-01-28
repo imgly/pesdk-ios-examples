@@ -167,16 +167,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         rerenderPreviewWithoutText()
         showNewTextDialog()
         calculatePullableViewFrame()
-        pullableView.handleView.frame = CGRect(x:0, y:0, width:pullableView.frame.size.width, height:40)
-        pullableView.handleView.backgroundColor = UIColor.blueColor()
-        print(pullableView.frame)
-        print(pullableView.handleView.frame)
     }
 
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
         textClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
+        pullableView.handleView.frame = CGRect(x:0, y:0, width:pullableView.frame.size.width, height:40)
+        pullableView.handleView.backgroundColor = UIColor.blueColor()
+
     }
 
     // MARK: - EditorViewController
@@ -348,10 +347,16 @@ private let kMinimumFontSize = CGFloat(12.0)
         ]
 
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[pullableView]|", options: [], metrics: nil, views: views))
+
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Top, multiplier: -1.0, constant: 0.0)
+        view.addConstraint(topConstraint)
+
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        view.addConstraint(bottomConstraint)
 
         pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
         pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-40-[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableView.marginConstraint = topConstraint
     }
 
     private func configureBlurredContainerView() {
@@ -389,7 +394,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func configurePullableView() {
         pullableView = PullableView()
         pullableView.translatesAutoresizingMaskIntoConstraints = false
-        pullableView.center = pullableView.closedCenter
+ //       pullableView.center = pullableView.closedCenter
         pullableView.backgroundColor = UIColor.redColor()
 
         self.view.addSubview(pullableView)
@@ -400,13 +405,12 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         pullableView.addSubview(label)
         //pullableView.addSubview(colorPickerView)
-
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
     private func calculatePullableViewFrame() {
-        pullableView.openedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height)
-        pullableView.closedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height + 100)
+//        pullableView.openedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height)
+//        pullableView.closedCenter = CGPoint(x: self.view.frame.size.width / 2.0, y: self.view.frame.size.height + 100)
     }
 
     // MARK: - Button Handling
