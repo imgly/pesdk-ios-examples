@@ -157,6 +157,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureGestureRecognizers()
         configurePullableView()
         configureColorPickerView()
+        configureColorSelectorView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
     }
@@ -326,15 +327,16 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func configureColorSelectorView() {
-        bottomContainerView.addSubview(textColorSelectorView)
+        view.addSubview(textColorSelectorView)
         textColorSelectorView.backgroundColor = self.currentBackgroundColor
 
         let views = [
             "textColorSelectorView" : textColorSelectorView
         ]
 
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[textColorSelectorView(==100)]|", options: [], metrics: nil, views: views))
+        textColorSelectorView.hidden = true
     }
 
     private func configureColorPickerView() {
@@ -437,13 +439,13 @@ private let kMinimumFontSize = CGFloat(12.0)
     @objc private func setTextColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = false
-        configureColorSelectorView()
+        showColorSelctionViews()
     }
 
     @objc private func setBackgroundColor(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = true
-        configureColorPickerView()
+        showColorSelctionViews()
     }
 
     @objc private func bringToFront(sender: ImageCaptionButton) {
@@ -569,6 +571,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             }
         }
     }
+
     // MARK: - Helpers
 
     private func hideBlurredContainer() {
@@ -644,6 +647,19 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func backupTexts() {
         tempTextCopy = fixedFilterStack.spriteFilters
+    }
+
+    private func showColorSelctionViews() {
+        textColorSelectorView.hidden = false
+        pullableView.hidden = false
+    }
+
+    private func hideColorSelctionViews() {
+        if pullableView.opened {
+            pullableView.setOpened(false, animated: true)
+        }
+        pullableView.hidden = true
+        textColorSelectorView.hidden = true
     }
 }
 
