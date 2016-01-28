@@ -13,17 +13,19 @@ import AVFoundation
 }
 
 @objc(IMGLYPullableView) public class PullableView: UIView {
-    var marginConstraint: NSLayoutConstraint?
-    var openedMargin = CGFloat(0)
-    var closedMargin = CGFloat(800)
+    public var marginConstraint: NSLayoutConstraint?
+    public var openedMargin = CGFloat(0)
+    public var closedMargin = CGFloat(800)
     public var handleView = UIView()
-    var dragRecognizer = UIPanGestureRecognizer()
-    var tapRecognizer = UITapGestureRecognizer()
-    var startPos = CGPoint(x: 0, y: 0)
-    var minPos = CGFloat(0)
-    var maxPos = CGFloat(0)
-    var opened = false
-    var verticalAxis = false
+    public var opened = false
+    public let handleHeight = CGFloat(20)
+
+    private var dragRecognizer = UIPanGestureRecognizer()
+    private var tapRecognizer = UITapGestureRecognizer()
+    private var startPos = CGPoint(x: 0, y: 0)
+    private var minPos = CGFloat(0)
+    private var maxPos = CGFloat(0)
+
     var toggleOnTap: Bool {
         set {
             tapRecognizer.enabled = newValue
@@ -49,9 +51,8 @@ import AVFoundation
         animate = true
         animationDuration = 0.2
         toggleOnTap = true
+        configureHandleView()
         // Creates the handle view. Subclasses should resize, reposition and style this view
-        handleView = UIView(frame: CGRect(x:0, y:0, width:frame.size.width, height:40))
-        self.addSubview(handleView)
         dragRecognizer = UIPanGestureRecognizer(target: self, action: "handleDrag:")
         dragRecognizer.minimumNumberOfTouches = 1
         dragRecognizer.maximumNumberOfTouches = 1
@@ -63,7 +64,20 @@ import AVFoundation
         opened = false
     }
 
-    func handleDrag(sender: UIPanGestureRecognizer) {
+    private func configureHandleView() {
+        handleView = UIView(frame: CGRect(x:0, y:0, width:frame.size.width, height:handleHeight))
+        handleView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(handleView)
+
+        let views = [
+            "handleView" : handleView
+        ]
+        handleView.backgroundColor = UIColor.blueColor()
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[handleView]|", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[handleView(==\(handleHeight))]", options: [], metrics: nil, views: views))
+    }
+
+    @objc func handleDrag(sender: UIPanGestureRecognizer) {
         guard let marginConstraint = self.marginConstraint else {
             return
         }
@@ -96,7 +110,7 @@ import AVFoundation
         }
     }
 
-    func handleTap(sender: UITapGestureRecognizer) {
+    @objc func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             self.setOpened(!opened, animated: animate)
         }

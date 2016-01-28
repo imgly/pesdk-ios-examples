@@ -167,9 +167,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
-        pullableView.handleView.frame = CGRect(x:0, y:0, width:pullableView.frame.size.width, height:40)
-        pullableView.handleView.backgroundColor = UIColor.blueColor()
-        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - 40
+        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableView.handleHeight
         pullableView.marginConstraint?.constant = closedMargin
         pullableView.closedMargin = closedMargin
     }
@@ -178,7 +176,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.viewDidLayoutSubviews()
 
         textClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
-  //      pullableView.closedMargin = self.view.frame.height - bottomContainerView.frame.height - 40
     }
 
     // MARK: - EditorViewController
@@ -359,7 +356,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addConstraint(bottomConstraint)
 
         pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-40-[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
         pullableView.marginConstraint = topConstraint
         pullableView.hidden = true
     }
@@ -399,15 +396,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func configurePullableView() {
         pullableView = PullableView()
         pullableView.translatesAutoresizingMaskIntoConstraints = false
-        pullableView.backgroundColor = UIColor.redColor()
+        pullableView.backgroundColor = self.currentBackgroundColor
 
         self.view.addSubview(pullableView)
-
-        let label = UILabel(frame: CGRect(x: 0, y: 4, width: self.view.frame.size.width, height: 20))
-        label.textColor = UIColor.whiteColor()
-        label.text = "Pull me up"
-
-        pullableView.addSubview(label)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
