@@ -21,6 +21,21 @@ import UIKit
         }
     }
 
+    public override init(frame: CGRect) {
+        super.init(frame:frame)
+        commonInit()
+    }
+
+    required public init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        commonInit()
+    }
+
+    private func commonInit() {
+        opaque = false
+        backgroundColor = UIColor.clearColor()
+    }
+
     public var color = UIColor.redColor() {
         didSet {
             hue = color.hsb.hue
@@ -36,6 +51,10 @@ import UIKit
     }
 
     private func drawColorSpectrum(context: CGContextRef, rect: CGRect) {
+        CGContextSaveGState(context)
+        PathHelper.clipCornersToOvalWidth(context, width:frame.size.width, height: frame.size.height, ovalWidth:3.0, ovalHeight:3.0)
+        CGContextClip(context)
+
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let step = CGFloat(0.166666666666667)
         let locs: [CGFloat] = [0.00, step, step * 2, step * 3, step * 4, step * 5, 1.0]
@@ -50,6 +69,7 @@ import UIKit
         let grad = CGGradientCreateWithColors(colorSpace, colors, locs)
 
         CGContextDrawLinearGradient(context, grad, CGPoint(x: rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
+        CGContextRestoreGState(context)
     }
 
     private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
