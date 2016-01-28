@@ -253,7 +253,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
-        let viewName = "_\(String(button.hash))"
+        let viewName = "_\(String(abs(button.hash)))"
+        print(viewName)
         containerView.addSubview(button)
         views[viewName] = button
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
@@ -261,7 +262,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func visualFormatStringByAddingButton(button: ImageCaptionButton, var visualFormatString: String) -> (String) {
-        let viewName = "_\(String(button.hash))"
+        let viewName = "_\(String(abs(button.hash)))"
         visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
         return visualFormatString
     }

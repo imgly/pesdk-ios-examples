@@ -67,6 +67,7 @@ import UIKit
     private func configureColorView() {
         self.addSubview(colorView)
         colorView.translatesAutoresizingMaskIntoConstraints = false
+        colorView.layer.cornerRadius = 3
     }
 
     private func configureHuePickView() {
@@ -92,10 +93,10 @@ import UIKit
         NSLayoutConstraint(item: saturationBrightnessPickerView, attribute: .Height, relatedBy: .Equal, toItem: saturationBrightnessPickerView, attribute: .Width, multiplier: 1, constant: 0).active = true
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[saturationBrightnessPickerView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[colorView]-20-[alphaPickerView]-20-[saturationBrightnessPickerView]-20-[huePickerView]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-10-[alphaPickerView]-10-[saturationBrightnessPickerView]-10-[huePickerView]-10-[colorView]", options: [], metrics: nil, views: views))
 
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[colorView]-20-|", options: [], metrics: nil, views: views))
-        colorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[colorView(==20)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-120-[colorView]-120-|", options: [], metrics: nil, views: views))
+        colorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[colorView(==40)]", options: [], metrics: nil, views: views))
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[huePickerView]-20-|", options: [], metrics: nil, views: views))
         huePickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[huePickerView(==20)]", options: [], metrics: nil, views: views))

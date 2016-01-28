@@ -18,13 +18,15 @@ import AVFoundation
     public var closedMargin = CGFloat(800)
     public var handleView = UIView()
     public var opened = false
-    public let handleHeight = CGFloat(20)
+    public let handleHeight = CGFloat(24)
 
     private var dragRecognizer = UIPanGestureRecognizer()
     private var tapRecognizer = UITapGestureRecognizer()
     private var startPos = CGPoint(x: 0, y: 0)
     private var minPos = CGFloat(0)
     private var maxPos = CGFloat(0)
+    private let gripHeight = CGFloat(4)
+    private let gripWidth = CGFloat(40)
 
     var toggleOnTap: Bool {
         set {
@@ -69,12 +71,27 @@ import AVFoundation
         handleView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(handleView)
 
+        let gripView = UIView()
+        gripView.backgroundColor = UIColor(red:0.46, green:0.46, blue:0.46, alpha:1)
+        gripView.translatesAutoresizingMaskIntoConstraints = false
+        gripView.layer.cornerRadius = 2
+
+        handleView.addSubview(gripView)
+        handleView.backgroundColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1)
+
         let views = [
-            "handleView" : handleView
+            "handleView" : handleView,
+            "gripView" : gripView
         ]
-        handleView.backgroundColor = UIColor.blueColor()
+
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[handleView]|", options: [], metrics: nil, views: views))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[handleView(==\(handleHeight))]", options: [], metrics: nil, views: views))
+
+        handleView.addConstraint(NSLayoutConstraint(item: handleView, attribute: .CenterX, relatedBy: .Equal, toItem: gripView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+        handleView.addConstraint(NSLayoutConstraint(item: handleView, attribute: .CenterY, relatedBy: .Equal, toItem: gripView, attribute: .CenterY, multiplier: 1.0, constant: 0))
+
+        handleView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[gripView(==\(gripWidth))]", options: [], metrics: nil, views: views))
+        handleView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[gripView(==\(gripHeight))]", options: [], metrics: nil, views: views))
     }
 
     @objc func handleDrag(sender: UIPanGestureRecognizer) {
