@@ -13,8 +13,6 @@ import AVFoundation
 }
 
 @objc(IMGLYPullableView) public class PullableView: UIView {
-//    var closedCenter = CGPoint(x: 0, y: 0)
-//    var openedCenter = CGPoint(x: 0, y: 0)
     var marginConstraint: NSLayoutConstraint?
     var openedMargin = CGFloat(100)
     var closedMargin = CGFloat(400)
@@ -66,8 +64,11 @@ import AVFoundation
     }
 
     func handleDrag(sender: UIPanGestureRecognizer) {
+        guard let marginConstraint = self.marginConstraint else {
+            return
+        }
         if sender.state == .Began {
-            startPos = self.center
+            startPos = CGPoint(x: self.center.x, y: marginConstraint.constant)
             minPos = closedMargin < openedMargin ? closedMargin : openedMargin
             maxPos = closedMargin > openedMargin ? closedMargin : openedMargin
 
@@ -83,7 +84,8 @@ import AVFoundation
                 translate = CGPoint(x: 0, y: newPos.y - startPos.y)
             }
         sender.setTranslation(translate, inView: self.superview)
-            self.center = newPos
+            marginConstraint.constant = newPos.y
+            //self.center = newPos
         } else if sender.state == .Ended {
             // Gets the velocity of the gesture in the axis, so it can be
             // determined to which endpoint the state should be set.
