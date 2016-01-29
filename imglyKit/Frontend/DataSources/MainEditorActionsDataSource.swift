@@ -42,7 +42,7 @@ import UIKit
     */
     public override init() {
         super.init()
-        items = self.itemsForAvailableActions([ .Magic, .Filter, .Stickers, .Orientation, .Focus, .Crop, .Brightness, .Contrast, .Saturation, .Text ])
+        items = self.itemsForAvailableActions([ .Magic, .Crop, .Orientation, .Filter, .Brightness, .Contrast, .Saturation, .Text, .Stickers, .Focus ])
     }
 
     /**
