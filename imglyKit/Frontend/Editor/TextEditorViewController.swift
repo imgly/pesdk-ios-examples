@@ -31,6 +31,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var selectBackgroundColor = false
     private var overlayConverter: OverlayConverter?
     private var pullableView = PullableView()
+    private var colorBackup = UIColor.whiteColor()
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -85,7 +86,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-        button.imageView.tintColor = UIColor.redColor()
+        button.imageView.tintColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -482,12 +483,18 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            colorBackup = textLabel.textColor
+        }
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = false
         showColorSelctionViews()
     }
 
     @objc private func setBackgroundColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            colorBackup = textLabel.backgroundColor!
+        }
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = true
         showColorSelctionViews()
@@ -497,6 +504,23 @@ private let kMinimumFontSize = CGFloat(12.0)
         if textLabel.layer.borderWidth > 0 {
             textClipView.bringSubviewToFront(textLabel)
         }
+    }
+
+    @objc private func acceptColor(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideColorSelctionViews()
+    }
+
+    @objc private func rejectColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            if selectBackgroundColor {
+                textLabel.backgroundColor = colorBackup
+            } else {
+                textLabel.textColor = colorBackup
+            }
+        }
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideColorSelctionViews()
     }
 
     // MARK: - Gesture Handling
