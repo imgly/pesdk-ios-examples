@@ -912,6 +912,7 @@
 				2BF4D3C11AF1150400C801B2 /* NavigationController.swift */,
 				2BF4D3C21AF1150400C801B2 /* OrientationEditorViewController.swift */,
 				09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */,
+				097A45D51C5A595100B2D45F /* PathHelper.swift */,
 				09AE9B131C591178000CEB28 /* PullableView.swift */,
 				098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */,
 				2BF4D3C31AF1150400C801B2 /* SaturationEditorViewController.swift */,
@@ -923,7 +924,6 @@
 				2BF4D3CA1AF1150400C801B2 /* TextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
-				097A45D51C5A595100B2D45F /* PathHelper.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";

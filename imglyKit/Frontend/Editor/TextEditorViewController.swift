@@ -50,6 +50,24 @@ private let kMinimumFontSize = CGFloat(12.0)
         return button
     }()
 
+    public private(set) lazy var acceptColorButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "acceptColor:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var rejectColorButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "rejectColor:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
     public private(set) lazy var selectTextFontButton: ImageCaptionButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
@@ -158,6 +176,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureBottomButtons()
         configureAddButton()
         configureDeleteButton()
+        configureAcceptColorButton()
+        configureRejectColorButton()
         configureGestureRecognizers()
         configurePullableView()
         configureColorPickerView()
@@ -241,7 +261,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         addTextButton.clipsToBounds = false
         addTextButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(50)]", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
@@ -250,11 +270,40 @@ private let kMinimumFontSize = CGFloat(12.0)
             "deleteTextButton" : deleteTextButton
         ]
         view.addSubview(deleteTextButton)
+        deleteTextButton.layer.cornerRadius = 2
         deleteTextButton.clipsToBounds = false
         deleteTextButton.backgroundColor = options.addButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+    }
+
+    private func configureAcceptColorButton() {
+        let views: [String : AnyObject] = [
+            "acceptColorButton" : acceptColorButton
+        ]
+        view.addSubview(acceptColorButton)
+        acceptColorButton.hidden = true
+        acceptColorButton.layer.cornerRadius = 2
+        acceptColorButton.clipsToBounds = false
+        acceptColorButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptColorButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptColorButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: acceptColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -50))
+    }
+
+    private func configureRejectColorButton() {
+        let views: [String : AnyObject] = [
+            "rejectColorButton" : rejectColorButton
+        ]
+        view.addSubview(rejectColorButton)
+        rejectColorButton.hidden = true
+        rejectColorButton.layer.cornerRadius = 2
+        rejectColorButton.clipsToBounds = false
+        rejectColorButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectColorButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectColorButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraint(NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -50))
     }
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
@@ -659,6 +708,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func showColorSelctionViews() {
         textColorSelectorView.hidden = false
         pullableView.hidden = false
+        acceptColorButton.hidden = false
+        rejectColorButton.hidden = false
+
+        addTextButton.hidden = true
+        deleteTextButton.hidden = true
+
         if textLabel.layer.borderWidth > 0 {
             if selectBackgroundColor {
                 colorPickerView.color = textLabel.backgroundColor!
@@ -674,6 +729,11 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
         pullableView.hidden = true
         textColorSelectorView.hidden = true
+        acceptColorButton.hidden = true
+        rejectColorButton.hidden = true
+
+        addTextButton.hidden = false
+        deleteTextButton.hidden = false
     }
 }
 
