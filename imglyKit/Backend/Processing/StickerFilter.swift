@@ -149,6 +149,7 @@ import CoreGraphics
     }
 
     private func flipSticker(horizontal: Bool) {
+        #if os(iOS)
         if let sticker = self.sticker {
             let flippedOrientation = UIImageOrientation(rawValue:(sticker.imageOrientation.rawValue + 4) % 8)
             self.sticker = UIImage(CGImage: sticker.CGImage!, scale: sticker.scale, orientation: flippedOrientation!)
@@ -165,6 +166,7 @@ import CoreGraphics
         }
         self.center.x += 0.5
         self.center.y += 0.5
+        #endif
     }
 
     private func flipRotationHorizontal(stickerFilter: StickerFilter) {

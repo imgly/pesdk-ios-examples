@@ -35,7 +35,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
         return button
@@ -44,7 +44,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var deleteTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "deleteText:", forControlEvents: .TouchUpInside)
         return button
@@ -64,8 +64,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Text")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor.redColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -74,7 +74,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Back")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
         return button
@@ -84,7 +83,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Bring to front")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         return button
@@ -100,7 +99,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let textField = UITextField()
         textField.delegate = self
         textField.text = ""
-        textField.textColor = self.textColor
+        textField.textColor = UIColor.whiteColor()
         textField.backgroundColor = self.backgroundColor
         textField.clipsToBounds = false
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
@@ -233,10 +232,11 @@ private let kMinimumFontSize = CGFloat(12.0)
             "addTextButton" : addTextButton
         ]
         view.addSubview(addTextButton)
+        addTextButton.layer.cornerRadius = 2
         addTextButton.clipsToBounds = false
         addTextButton.backgroundColor = options.addButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(50)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
 
@@ -613,6 +613,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func selectTextLabel(label: UILabel) {
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
+        colorPickerView.color = label.textColor
     }
 
     private func unSelectTextLabel(label: UILabel) {
@@ -644,6 +645,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func showColorSelctionViews() {
         textColorSelectorView.hidden = false
         pullableView.hidden = false
+        if textLabel.layer.borderWidth > 0 {
+            colorPickerView.color = textLabel.textColor
+        }
     }
 
     private func hideColorSelctionViews() {
@@ -660,8 +664,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 extension TextEditorViewController: TextColorSelectorViewDelegate {
     public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {
         textColor = color
-        textField.textColor = color
         textLabel.textColor = color
+        colorPickerView.color = color
     }
 }
 
@@ -729,6 +733,7 @@ extension TextEditorViewController: ColorPickerViewDelegate {
             textLabel.backgroundColor = color
         } else {
             textLabel.textColor = color
+            textColor = color
         }
         hideBlurredContainer()
     }
