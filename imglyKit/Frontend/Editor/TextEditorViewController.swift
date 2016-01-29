@@ -65,7 +65,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Text")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.backgroundColor = UIColor.redColor()
+        button.imageView.layer.cornerRadius = 2
+        button.imageView.backgroundColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -613,7 +614,17 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func selectTextLabel(label: UILabel) {
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
-        colorPickerView.color = label.textColor
+        if selectBackgroundColor {
+            if let backgroundColor = label.backgroundColor {
+                colorPickerView.color = backgroundColor
+            }
+        } else {
+            colorPickerView.color = label.textColor
+        }
+        selectTextColorButton.imageView.backgroundColor = label.textColor
+        if let backgroundColor = label.backgroundColor {
+            selectBackgroundColorButton.imageView.backgroundColor = backgroundColor
+        }
     }
 
     private func unSelectTextLabel(label: UILabel) {
@@ -663,9 +674,17 @@ private let kMinimumFontSize = CGFloat(12.0)
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
     public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {
-        textColor = color
-        textLabel.textColor = color
-        colorPickerView.color = color
+        if selectBackgroundColor {
+            colorPickerView.color = color
+            textLabel.backgroundColor = color
+            selectTextColorButton.imageView.backgroundColor = color
+        } else {
+            colorPickerView.color = color
+            textLabel.textColor = color
+            textColor = color
+            selectBackgroundColorButton.imageView.backgroundColor = color
+        }
+
     }
 }
 
@@ -731,11 +750,12 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
+            selectTextColorButton.imageView.backgroundColor = color
         } else {
             textLabel.textColor = color
             textColor = color
+            selectBackgroundColorButton.imageView.backgroundColor = color
         }
-        hideBlurredContainer()
     }
 
     public func canceledColorPicking(colorPickerView: ColorPickerView) {
