@@ -21,6 +21,7 @@ import AVFoundation
     public let handleHeight = CGFloat(26)
 
     private var dragRecognizer = UIPanGestureRecognizer()
+    private var handleDragRecognizer = UIPanGestureRecognizer()
     private var tapRecognizer = UITapGestureRecognizer()
     private var startPos = CGPoint(x: 0, y: 0)
     private var minPos = CGFloat(0)
@@ -60,6 +61,12 @@ import AVFoundation
         dragRecognizer.maximumNumberOfTouches = 1
         dragRecognizer.delegate = self
         self.addGestureRecognizer(dragRecognizer)
+
+        handleDragRecognizer = UIPanGestureRecognizer(target: self, action: "handleDrag:")
+        handleDragRecognizer.minimumNumberOfTouches = 1
+        handleDragRecognizer.maximumNumberOfTouches = 1
+        handleView.addGestureRecognizer(handleDragRecognizer)
+
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1

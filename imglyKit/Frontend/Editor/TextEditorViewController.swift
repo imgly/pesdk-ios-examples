@@ -65,8 +65,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Text")
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.imageView.layer.cornerRadius = 2
-        button.imageView.backgroundColor = UIColor.whiteColor()
+        button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        button.imageView.tintColor = UIColor.redColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -76,6 +77,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Back")
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        button.imageView.tintColor = UIColor.clearColor()
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -255,7 +259,6 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
         let viewName = "_\(String(abs(button.hash)))"
-        print(viewName)
         containerView.addSubview(button)
         views[viewName] = button
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
@@ -621,9 +624,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         } else {
             colorPickerView.color = label.textColor
         }
-        selectTextColorButton.imageView.backgroundColor = label.textColor
+        selectTextColorButton.imageView.tintColor = label.textColor
         if let backgroundColor = label.backgroundColor {
-            selectBackgroundColorButton.imageView.backgroundColor = backgroundColor
+            selectBackgroundColorButton.tintColor = backgroundColor
         }
     }
 
@@ -657,7 +660,11 @@ private let kMinimumFontSize = CGFloat(12.0)
         textColorSelectorView.hidden = false
         pullableView.hidden = false
         if textLabel.layer.borderWidth > 0 {
-            colorPickerView.color = textLabel.textColor
+            if selectBackgroundColor {
+                colorPickerView.color = textLabel.backgroundColor!
+            } else {
+                colorPickerView.color = textLabel.textColor
+            }
         }
     }
 
@@ -677,12 +684,12 @@ extension TextEditorViewController: TextColorSelectorViewDelegate {
         if selectBackgroundColor {
             colorPickerView.color = color
             textLabel.backgroundColor = color
-            selectTextColorButton.imageView.backgroundColor = color
+            selectBackgroundColorButton.tintColor = color
         } else {
             colorPickerView.color = color
             textLabel.textColor = color
             textColor = color
-            selectBackgroundColorButton.imageView.backgroundColor = color
+            selectTextColorButton.imageView.tintColor = color
         }
 
     }
@@ -750,11 +757,11 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
-            selectTextColorButton.imageView.backgroundColor = color
+            selectTextColorButton.imageView.tintColor = color
         } else {
             textLabel.textColor = color
             textColor = color
-            selectBackgroundColorButton.imageView.backgroundColor = color
+            selectBackgroundColorButton.tintColor = color
         }
     }
 
