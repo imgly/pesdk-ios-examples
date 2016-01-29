@@ -12,13 +12,13 @@ import AVFoundation
     func pullableView(pView: PullableView, didChangeState opend: Bool)
 }
 
-@objc(IMGLYPullableView) public class PullableView: UIView {
+@objc(IMGLYPullableView) public class PullableView: UIView, UIGestureRecognizerDelegate {
     public var marginConstraint: NSLayoutConstraint?
     public var openedMargin = CGFloat(0)
     public var closedMargin = CGFloat(800)
     public var handleView = UIView()
     public var opened = false
-    public let handleHeight = CGFloat(24)
+    public let handleHeight = CGFloat(26)
 
     private var dragRecognizer = UIPanGestureRecognizer()
     private var tapRecognizer = UITapGestureRecognizer()
@@ -58,6 +58,7 @@ import AVFoundation
         dragRecognizer = UIPanGestureRecognizer(target: self, action: "handleDrag:")
         dragRecognizer.minimumNumberOfTouches = 1
         dragRecognizer.maximumNumberOfTouches = 1
+        dragRecognizer.delegate = self
         self.addGestureRecognizer(dragRecognizer)
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         tapRecognizer.numberOfTapsRequired = 1
@@ -77,7 +78,7 @@ import AVFoundation
         gripView.layer.cornerRadius = 2
 
         handleView.addSubview(gripView)
-        handleView.backgroundColor = UIColor(red:0.10, green:0.10, blue:0.10, alpha:1)
+        handleView.backgroundColor = UIColor(red:0.16, green:0.16, blue:0.16, alpha:1)
 
         let views = [
             "handleView" : handleView,
@@ -98,6 +99,7 @@ import AVFoundation
         guard let marginConstraint = self.marginConstraint else {
             return
         }
+
         if sender.state == .Began {
             startPos = CGPoint(x: self.center.x, y: marginConstraint.constant)
             minPos = closedMargin < openedMargin ? closedMargin : openedMargin
@@ -158,4 +160,16 @@ import AVFoundation
                 }
         })
     }
+
+    @objc override public func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        let location = gestureRecognizer.locationInView(self)
+        let target = self.hitTest(location, withEvent: nil)
+        if let target = target {
+            if !target.isKindOfClass(ColorPickerView) && target != handleView {
+                return false
+            }
+        }
+        return true
+    }
+
 }
