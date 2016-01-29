@@ -763,8 +763,8 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.deleteTextButton.alpha = 0.0
                 self.acceptColorButton.alpha = 1.0
                 self.rejectColorButton.alpha = 1.0
-                self.pullableView.alpha = 1.0
                 self.textColorSelectorView.alpha = 1.0
+                self.pullableView.alpha = 1.0
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
