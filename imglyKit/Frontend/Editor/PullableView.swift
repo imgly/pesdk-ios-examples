@@ -58,7 +58,7 @@ import AVFoundation
         dragRecognizer = UIPanGestureRecognizer(target: self, action: "handleDrag:")
         dragRecognizer.minimumNumberOfTouches = 1
         dragRecognizer.maximumNumberOfTouches = 1
-        handleView.addGestureRecognizer(dragRecognizer)
+        self.addGestureRecognizer(dragRecognizer)
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         tapRecognizer.numberOfTapsRequired = 1
         tapRecognizer.numberOfTouchesRequired = 1
