@@ -32,6 +32,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var overlayConverter: OverlayConverter?
     private var pullableView = PullableView()
     private var colorBackup = UIColor.whiteColor()
+    private var addTextButtonConstraint = NSLayoutConstraint()
+    private var deleteButtonConstraint = NSLayoutConstraint()
+    private var acceptColorButtonConstraint = NSLayoutConstraint()
+    private var rejectColorButtonConstraint = NSLayoutConstraint()
+    private let upperOverlayButtonConstant = CGFloat(50)
+    private let lowerOverlayButtonConstant = CGFloat(20)
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
@@ -263,7 +269,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         addTextButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+        addTextButtonConstraint = NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(addTextButtonConstraint)
     }
 
     private func configureDeleteButton() {
@@ -276,7 +283,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         deleteTextButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+        deleteButtonConstraint = NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(deleteButtonConstraint)
     }
 
     private func configureAcceptColorButton() {
@@ -285,12 +293,14 @@ private let kMinimumFontSize = CGFloat(12.0)
         ]
         view.addSubview(acceptColorButton)
         acceptColorButton.hidden = true
+        acceptColorButton.alpha = 0.0
         acceptColorButton.layer.cornerRadius = 2
         acceptColorButton.clipsToBounds = false
         acceptColorButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptColorButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptColorButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: acceptColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -50))
+        acceptColorButtonConstraint = NSLayoutConstraint(item: acceptColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(acceptColorButtonConstraint)
     }
 
     private func configureRejectColorButton() {
@@ -299,12 +309,14 @@ private let kMinimumFontSize = CGFloat(12.0)
         ]
         view.addSubview(rejectColorButton)
         rejectColorButton.hidden = true
+        rejectColorButton.alpha = 0.0
         rejectColorButton.layer.cornerRadius = 2
         rejectColorButton.clipsToBounds = false
         rejectColorButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectColorButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectColorButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -50))
+        rejectColorButtonConstraint = NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(rejectColorButtonConstraint)
     }
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
@@ -388,6 +400,7 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[textColorSelectorView(==100)]|", options: [], metrics: nil, views: views))
+        textColorSelectorView.alpha = 0.0
         textColorSelectorView.hidden = true
     }
 
@@ -414,6 +427,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
         pullableView.marginConstraint = topConstraint
         pullableView.hidden = true
+        pullableView.alpha = 0.0
     }
 
     private func configureBlurredContainerView() {
@@ -730,13 +744,35 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func showColorSelctionViews() {
-        textColorSelectorView.hidden = false
-        pullableView.hidden = false
-        acceptColorButton.hidden = false
-        rejectColorButton.hidden = false
+        self.pullableView.hidden = false
+        self.textColorSelectorView.hidden = false
+        self.acceptColorButton.hidden = false
+        self.rejectColorButton.hidden = false
 
-        addTextButton.hidden = true
-        deleteTextButton.hidden = true
+        acceptColorButtonConstraint.constant = -upperOverlayButtonConstant
+        rejectColorButtonConstraint.constant = -upperOverlayButtonConstant
+        addTextButtonConstraint.constant = -upperOverlayButtonConstant
+        deleteButtonConstraint.constant = -upperOverlayButtonConstant
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = 0.0
+                self.deleteTextButton.alpha = 0.0
+                self.acceptColorButton.alpha = 1.0
+                self.rejectColorButton.alpha = 1.0
+                self.pullableView.alpha = 1.0
+                self.textColorSelectorView.alpha = 1.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.addTextButton.hidden = true
+                    self.deleteTextButton.hidden = true
+                }
+        })
 
         if textLabel.layer.borderWidth > 0 {
             if selectBackgroundColor {
@@ -751,13 +787,37 @@ private let kMinimumFontSize = CGFloat(12.0)
         if pullableView.opened {
             pullableView.setOpened(false, animated: true)
         }
-        pullableView.hidden = true
-        textColorSelectorView.hidden = true
-        acceptColorButton.hidden = true
-        rejectColorButton.hidden = true
-
         addTextButton.hidden = false
         deleteTextButton.hidden = false
+
+        acceptColorButtonConstraint.constant = -lowerOverlayButtonConstant
+        rejectColorButtonConstraint.constant = -lowerOverlayButtonConstant
+        addTextButtonConstraint.constant = -lowerOverlayButtonConstant
+        deleteButtonConstraint.constant = -lowerOverlayButtonConstant
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = 1.0
+                self.deleteTextButton.alpha = 1.0
+                self.acceptColorButton.alpha = 0.0
+                self.rejectColorButton.alpha = 0.0
+                self.pullableView.alpha = 0.0
+                self.textColorSelectorView.alpha = 0.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.acceptColorButton.hidden = true
+                    self.rejectColorButton.hidden = true
+                    self.pullableView.hidden = true
+                    self.textColorSelectorView.hidden = true
+                }
+        })
+
+
     }
 }
 
