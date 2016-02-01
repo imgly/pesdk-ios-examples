@@ -18,6 +18,17 @@ import AVFoundation
     public var closedMargin = CGFloat(800)
     public var handleView = UIView()
     public var opened = false
+    public var handleColor = UIColor.whiteColor() {
+        didSet {
+            gripView.backgroundColor = handleColor
+        }
+    }
+    public var handleBackgroundColor = UIColor(red:0.16, green:0.16, blue:0.16, alpha:1) {
+        didSet {
+            handleView.backgroundColor = handleBackgroundColor
+        }
+    }
+
     public let handleHeight = CGFloat(26)
 
     private var dragRecognizer = UIPanGestureRecognizer()
@@ -28,6 +39,7 @@ import AVFoundation
     private var maxPos = CGFloat(0)
     private let gripHeight = CGFloat(4)
     private let gripWidth = CGFloat(40)
+    private var gripView = UIView()
 
     var toggleOnTap: Bool {
         set {
@@ -79,13 +91,12 @@ import AVFoundation
         handleView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(handleView)
 
-        let gripView = UIView()
-        gripView.backgroundColor = UIColor(red:0.46, green:0.46, blue:0.46, alpha:1)
+        gripView.backgroundColor = handleColor
         gripView.translatesAutoresizingMaskIntoConstraints = false
         gripView.layer.cornerRadius = 2
 
         handleView.addSubview(gripView)
-        handleView.backgroundColor = UIColor(red:0.16, green:0.16, blue:0.16, alpha:1)
+        handleView.backgroundColor = handleBackgroundColor
 
         let views = [
             "handleView" : handleView,

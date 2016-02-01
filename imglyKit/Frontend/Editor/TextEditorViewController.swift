@@ -191,6 +191,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureColorSelectorView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
+        updateButtonStatus()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -270,6 +271,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
         addTextButtonConstraint = NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        addTextButton.alpha = options.enabledOverlayButtonAlpha
         view.addConstraint(addTextButtonConstraint)
     }
 
@@ -466,7 +468,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableView = PullableView()
         pullableView.translatesAutoresizingMaskIntoConstraints = false
         pullableView.backgroundColor = self.currentBackgroundColor
-
+        pullableView.handleBackgroundColor = options.handleBackgroundColor
+        pullableView.handleColor = options.handleColor
         self.view.addSubview(pullableView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
@@ -487,8 +490,10 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func deleteText(sender: UIButton) {
         if textLabel.layer.borderWidth > 0 {
+            textLabel.layer.borderWidth = 0
             textLabel.removeFromSuperview()
         }
+        updateButtonStatus()
     }
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
@@ -550,6 +555,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 textLabel = draggedView
                 selectTextLabel(textLabel)
             }
+            updateButtonStatus()
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
@@ -580,6 +586,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
                 }
+                updateButtonStatus()
             case .Changed:
                 if let draggedView =  draggedView {
                     currentTextSize = draggedView.font.pointSize
@@ -613,6 +620,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                     unSelectTextLabel(textLabel)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
+                    updateButtonStatus()
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -637,6 +645,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             currentTextSize = textLabel.font.pointSize
             selectTextLabel(textLabel)
         }
+        updateButtonStatus()
     }
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
@@ -731,6 +740,17 @@ private let kMinimumFontSize = CGFloat(12.0)
         return result
     }
 
+    private func updateButtonStatus() {
+        let enabled = textLabel.layer.borderWidth > 0
+        let alpha = CGFloat( enabled ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha )
+        deleteTextButton.alpha = alpha
+        deleteTextButton.enabled = enabled
+        bringToFrontButton.enabled = enabled
+        selectBackgroundColorButton.enabled = enabled
+        selectTextColorButton.enabled = enabled
+        selectTextFontButton.enabled = enabled
+     }
+
     // MARK: - text object restore
 
     private func rerenderPreviewWithoutText() {
@@ -761,8 +781,8 @@ private let kMinimumFontSize = CGFloat(12.0)
             animations: {
                 self.addTextButton.alpha = 0.0
                 self.deleteTextButton.alpha = 0.0
-                self.acceptColorButton.alpha = 1.0
-                self.rejectColorButton.alpha = 1.0
+                self.acceptColorButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.rejectColorButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.textColorSelectorView.alpha = 1.0
                 self.pullableView.alpha = 1.0
                 self.view.layoutIfNeeded()
@@ -795,13 +815,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         addTextButtonConstraint.constant = -lowerOverlayButtonConstant
         deleteButtonConstraint.constant = -lowerOverlayButtonConstant
 
+        let buttonAlpha = textLabel.layer.borderWidth > 0 ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha
+
         view.needsUpdateConstraints()
         UIView.animateWithDuration(0.2,
             delay: 0.0,
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: {
-                self.addTextButton.alpha = 1.0
-                self.deleteTextButton.alpha = 1.0
+                self.addTextButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.deleteTextButton.alpha = buttonAlpha
                 self.acceptColorButton.alpha = 0.0
                 self.rejectColorButton.alpha = 0.0
                 self.pullableView.alpha = 0.0
@@ -816,8 +838,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                     self.textColorSelectorView.hidden = true
                 }
         })
-
-
     }
 }
 
@@ -861,6 +881,7 @@ extension TextEditorViewController: UITextFieldDelegate {
                     textLabel.sizeToFit()
                 }
                 selectTextLabel(textLabel)
+                updateButtonStatus()
             } else {
                 if !createNewText {
                     textLabel.removeFromSuperview()
