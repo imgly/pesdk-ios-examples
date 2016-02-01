@@ -14,6 +14,15 @@ import UIKit
 
 @objc(IMGLYFontSelectorView) public class FontSelectorView: UIScrollView {
     public weak var selectorDelegate: FontSelectorViewDelegate?
+    public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+    public var textColor = UIColor.whiteColor()
+    public var selectedFontName = ""
+
+    public var text = "" {
+        didSet {
+            updateFontButtonText()
+        }
+    }
 
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)
@@ -43,6 +52,7 @@ import UIKit
     private func commonInit() {
         fontNames = InstanceFactory.availableFontsList
         configureFontButtons()
+        updateFontButtonText()
     }
 
     private func configureFontButtons() {
@@ -53,14 +63,23 @@ import UIKit
 
             if let font = UIFont(name: fontName, size: kFontSize) {
                 button.titleLabel?.font = font
+                button.setTitleColor(textColor, forState: .Normal)
                 addSubview(button)
                 button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
             }
         }
     }
+
+    private func updateFontButtonText() {
+        for button in subviews where button is UIButton {
+            // swiftlint:disable force_cast
+            (button as! UIButton).setTitle(text, forState:UIControlState.Normal)
+            // swiftlint:enable force_cast
+        }
+    }
+
     public override func layoutSubviews() {
         super.layoutSubviews()
-
         for index in 0 ..< subviews.count {
             if let button = subviews[index] as? UIButton {
                 button.frame = CGRect(x: 0,
@@ -73,6 +92,18 @@ import UIKit
     }
 
     @objc private func buttonTouchedUpInside(button: UIButton) {
-        selectorDelegate?.fontSelectorView(self, didSelectFontWithName: button.titleLabel!.text!)
+        let fontName = button.titleLabel!.font.fontName
+        selectedFontName = fontName
+        updateTextColor()
+        selectorDelegate?.fontSelectorView(self, didSelectFontWithName: fontName)
+    }
+
+    private func updateTextColor() {
+        for view in subviews where view is UIButton {
+            if let button = view as? UIButton {
+                let color = button.titleLabel!.font.fontName == selectedFontName ? selectedTextColor : textColor
+                button.setTitleColor(color, forState: .Normal)
+            }
+        }
     }
  }
