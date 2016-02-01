@@ -181,6 +181,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         return view
     }()
 
+    public private(set) lazy var fontQuickSelectorView: FontQuickSelectorView = {
+        let view = FontQuickSelectorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+       // view.menuDelegate = self
+        return view
+    }()
+
     private var textLabel = UILabel()
 
     private var blurredContainerView = UIVisualEffectView()
@@ -214,6 +221,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         configurePullableFontSelectorView()
         configureFontSelectorView()
         configureColorSelectorView()
+        configureFontQuickSelectorView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
         updateButtonStatus()
@@ -449,10 +457,25 @@ private let kMinimumFontSize = CGFloat(12.0)
         textColorSelectorView.hidden = true
     }
 
+    private func configureFontQuickSelectorView() {
+        view.addSubview(fontQuickSelectorView)
+        fontQuickSelectorView.backgroundColor = self.currentBackgroundColor
+
+        let views = [
+            "fontQuickSelectorView" : fontQuickSelectorView
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontQuickSelectorView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[fontQuickSelectorView(==100)]|", options: [], metrics: nil, views: views))
+        fontQuickSelectorView.alpha = 0.0
+        fontQuickSelectorView.hidden = true
+    }
+
     private func configureColorPickerView() {
         pullableColorPickerView.addSubview(colorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
         colorPickerView.pickerDelegate = self
+        colorPickerView.hidden = true
 
         let views = [
             "pullableView" : pullableColorPickerView,
@@ -868,6 +891,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 if finished {
                     self.addTextButton.hidden = true
                     self.deleteTextButton.hidden = true
+                    self.colorPickerView.hidden = false
                 }
         })
 
@@ -886,6 +910,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
         addTextButton.hidden = false
         deleteTextButton.hidden = false
+        colorPickerView.hidden = true
 
         acceptColorButtonConstraint.constant = -lowerOverlayButtonConstant
         rejectColorButtonConstraint.constant = -lowerOverlayButtonConstant
@@ -922,6 +947,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.fontSelectorView.hidden = false
         self.acceptFontButton.hidden = false
         self.rejectFontButton.hidden = false
+        self.fontQuickSelectorView.hidden = false
 
         acceptFontButtonConstraint.constant = -upperOverlayButtonConstant
         rejectFontButtonConstraint.constant = -upperOverlayButtonConstant
@@ -938,6 +964,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.acceptFontButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.rejectFontButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.pullableFontSelectorView.alpha = 1.0
+                self.fontQuickSelectorView.alpha = 1.0
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
@@ -977,17 +1004,18 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.acceptFontButton.alpha = 0.0
                 self.rejectFontButton.alpha = 0.0
                 self.pullableFontSelectorView.alpha = 0.0
+                self.fontQuickSelectorView.alpha = 0.0
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
                 if finished {
                     self.acceptFontButton.hidden = true
                     self.rejectFontButton.hidden = true
+                    self.fontQuickSelectorView.hidden = true
                     self.pullableFontSelectorView.hidden = true
                 }
         })
     }
-
 }
 
 // MARK:- extensions

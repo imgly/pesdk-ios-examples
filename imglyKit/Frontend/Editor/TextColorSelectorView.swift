@@ -23,7 +23,6 @@ import UIKit
     private let kButtonDistance = CGFloat(5)
     private let kButtonWidth = CGFloat(44)
     private let kButtonHeight = CGFloat(60)
-    private var pullableView = PullableView()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

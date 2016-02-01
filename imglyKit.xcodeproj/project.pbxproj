@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0939352E1C5FBE1D00DDA571 /* FontQuickSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0939352D1C5FBE1D00DDA571 /* FontQuickSelectorView.swift */; };
+		093D11031C5FC70800B72B7A /* FontButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11021C5FC70800B72B7A /* FontButton.swift */; };
 		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
@@ -435,6 +437,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0939352D1C5FBE1D00DDA571 /* FontQuickSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontQuickSelectorView.swift; sourceTree = "<group>"; };
+		093D11021C5FC70800B72B7A /* FontButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FontButton.swift; sourceTree = "<group>"; };
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturationBrightnessPickerView.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
@@ -905,6 +909,7 @@
 				2BF4D3B81AF1150400C801B2 /* FilterEditorViewController.swift */,
 				2BF4D3B91AF1150400C801B2 /* FilterSelectionController.swift */,
 				2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */,
+				0939352D1C5FBE1D00DDA571 /* FontQuickSelectorView.swift */,
 				2BF4D3BB1AF1150400C801B2 /* FontSelectorView.swift */,
 				2BF4D3BC1AF1150400C801B2 /* GradientViewDelegate.swift */,
 				0983311E1C3FF908000135B8 /* HuePickerView.swift */,
@@ -928,6 +933,7 @@
 				2BF4D3CA1AF1150400C801B2 /* TextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
+				093D11021C5FC70800B72B7A /* FontButton.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1620,6 +1626,7 @@
 				2B319B651C45070200515C9D /* FlashController.swift in Sources */,
 				2BF4D3E31AF1150500C801B2 /* SliderEditorViewController.swift in Sources */,
 				2B5CA32E1C490CD80065DE48 /* CameraViewControllerOptions.swift in Sources */,
+				093D11031C5FC70800B72B7A /* FontButton.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* NavigationAnimationController.swift in Sources */,
 				2BF4D53E1AF1156F00C801B2 /* LUTToNSDataConverter.m in Sources */,
 				2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */,
@@ -1697,6 +1704,7 @@
 				2BF4D3CF1AF1150500C801B2 /* ButtonCollectionViewCell.swift in Sources */,
 				2BF4D5151AF1155E00C801B2 /* K2Filter.swift in Sources */,
 				2BF4D5221AF1155E00C801B2 /* NoGreenFilter.swift in Sources */,
+				0939352E1C5FBE1D00DDA571 /* FontQuickSelectorView.swift in Sources */,
 				2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
