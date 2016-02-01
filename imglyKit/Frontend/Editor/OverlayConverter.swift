@@ -45,7 +45,7 @@ import UIKit
         var completeSize = containerView.bounds.size
         completeSize.width *= 1.0 / cropRect.width
         completeSize.height *= 1.0 / cropRect.height
-        let size = stickerFilter.absolutStickerSizeForImageSize(completeSize)
+        let size = stickerFilter.absoluteStickerSizeForImageSize(completeSize)
         imageView.frame.size = size
         var center = CGPoint(x: stickerFilter.center.x * completeSize.width,
             y: stickerFilter.center.y * completeSize.height)

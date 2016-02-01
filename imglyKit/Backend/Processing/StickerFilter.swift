@@ -66,8 +66,13 @@ import CoreGraphics
         return filter.outputImage
     }
 
-    public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
+    public func absoluteStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
+
+        if imageSize.width > imageSize.height {
+            return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
+        }
+
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
 
@@ -82,7 +87,7 @@ import CoreGraphics
         let inputImageSize = inputImageRect.size
 
         let originalInputImageSize = CGSize(width: round(inputImageSize.width / cropRect.width), height: round(inputImageSize.height / cropRect.height))
-        let absoluteStickerSize = absolutStickerSizeForImageSize(originalInputImageSize)
+        let absoluteStickerSize = absoluteStickerSizeForImageSize(originalInputImageSize)
 
         let stickerImageSize = image.extent.size
         let stickerScale = absoluteStickerSize.width / stickerImageSize.width
@@ -103,7 +108,7 @@ import CoreGraphics
         // Translate
         // Calculate the origin of the sticker. Note that in CoreImage (0,0) is at the bottom
         let stickerOrigin = CGPoint(x: stickerCenter.x - absoluteStickerSize.width * xScale / 2, y: stickerCenter.y + absoluteStickerSize.height * yScale / 2)
-        transform = CGAffineTransformTranslate(transform, stickerOrigin.x / stickerScale, (originalInputImageSize.height - stickerOrigin.y) / stickerScale)
+        transform = CGAffineTransformTranslate(transform, stickerOrigin.x / stickerScale, (inputImageSize.height - stickerOrigin.y) / stickerScale)
 
         // Scale
         transform = CGAffineTransformScale(transform, xScale, yScale)
