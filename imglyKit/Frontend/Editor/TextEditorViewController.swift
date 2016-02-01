@@ -30,7 +30,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var createNewText = false
     private var selectBackgroundColor = false
     private var overlayConverter: OverlayConverter?
-    private var pullableView = PullableView()
+    private var pullableColorPickerView = PullableView()
     private var colorBackup = UIColor.whiteColor()
     private var addTextButtonConstraint = NSLayoutConstraint()
     private var deleteButtonConstraint = NSLayoutConstraint()
@@ -199,9 +199,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
-        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableView.handleHeight
-        pullableView.marginConstraint?.constant = closedMargin
-        pullableView.closedMargin = closedMargin
+        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableColorPickerView.handleHeight
+        pullableColorPickerView.marginConstraint?.constant = closedMargin
+        pullableColorPickerView.closedMargin = closedMargin
     }
 
     override public func viewDidLayoutSubviews() {
@@ -408,28 +408,28 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     private func configureColorPickerView() {
         configureBlurredContainerView()
-        pullableView.addSubview(colorPickerView)
+        pullableColorPickerView.addSubview(colorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
         colorPickerView.pickerDelegate = self
 
         let views = [
-            "pullableView" : pullableView,
+            "pullableView" : pullableColorPickerView,
             "colorPickerView" : colorPickerView
         ]
 
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
 
-        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Top, multiplier: -1.0, constant: 0.0)
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableColorPickerView, attribute: .Top, multiplier: -1.0, constant: 0.0)
         view.addConstraint(topConstraint)
 
-        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableColorPickerView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
         view.addConstraint(bottomConstraint)
 
-        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
-        pullableView.marginConstraint = topConstraint
-        pullableView.hidden = true
-        pullableView.alpha = 0.0
+        pullableColorPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableColorPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableColorPickerView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableColorPickerView.marginConstraint = topConstraint
+        pullableColorPickerView.hidden = true
+        pullableColorPickerView.alpha = 0.0
     }
 
     private func configureBlurredContainerView() {
@@ -465,12 +465,12 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func configurePullableView() {
-        pullableView = PullableView()
-        pullableView.translatesAutoresizingMaskIntoConstraints = false
-        pullableView.backgroundColor = self.currentBackgroundColor
-        pullableView.handleBackgroundColor = options.handleBackgroundColor
-        pullableView.handleColor = options.handleColor
-        self.view.addSubview(pullableView)
+        pullableColorPickerView = PullableView()
+        pullableColorPickerView.translatesAutoresizingMaskIntoConstraints = false
+        pullableColorPickerView.backgroundColor = self.currentBackgroundColor
+        pullableColorPickerView.handleBackgroundColor = options.handleBackgroundColor
+        pullableColorPickerView.handleColor = options.handleColor
+        self.view.addSubview(pullableColorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
@@ -764,7 +764,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func showColorSelctionViews() {
-        self.pullableView.hidden = false
+        self.pullableColorPickerView.hidden = false
         self.textColorSelectorView.hidden = false
         self.acceptColorButton.hidden = false
         self.rejectColorButton.hidden = false
@@ -784,7 +784,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.acceptColorButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.rejectColorButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.textColorSelectorView.alpha = 1.0
-                self.pullableView.alpha = 1.0
+                self.pullableColorPickerView.alpha = 1.0
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
@@ -804,8 +804,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func hideColorSelctionViews() {
-        if pullableView.opened {
-            pullableView.setOpened(false, animated: true)
+        if pullableColorPickerView.opened {
+            pullableColorPickerView.setOpened(false, animated: true)
         }
         addTextButton.hidden = false
         deleteTextButton.hidden = false
@@ -826,7 +826,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 self.deleteTextButton.alpha = buttonAlpha
                 self.acceptColorButton.alpha = 0.0
                 self.rejectColorButton.alpha = 0.0
-                self.pullableView.alpha = 0.0
+                self.pullableColorPickerView.alpha = 0.0
                 self.textColorSelectorView.alpha = 0.0
                 self.view.layoutIfNeeded()
             },
@@ -834,7 +834,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 if finished {
                     self.acceptColorButton.hidden = true
                     self.rejectColorButton.hidden = true
-                    self.pullableView.hidden = true
+                    self.pullableColorPickerView.hidden = true
                     self.textColorSelectorView.hidden = true
                 }
         })
