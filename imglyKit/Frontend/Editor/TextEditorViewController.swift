@@ -30,11 +30,19 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var createNewText = false
     private var selectBackgroundColor = false
     private var overlayConverter: OverlayConverter?
+    private var pullableView = PullableView()
+    private var colorBackup = UIColor.whiteColor()
+    private var addTextButtonConstraint = NSLayoutConstraint()
+    private var deleteButtonConstraint = NSLayoutConstraint()
+    private var acceptColorButtonConstraint = NSLayoutConstraint()
+    private var rejectColorButtonConstraint = NSLayoutConstraint()
+    private let upperOverlayButtonConstant = CGFloat(50)
+    private let lowerOverlayButtonConstant = CGFloat(20)
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
         return button
@@ -43,9 +51,27 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var deleteTextButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "deleteText:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var acceptColorButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "acceptColor:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var rejectColorButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "rejectColor:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -63,8 +89,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Text")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        button.imageView.tintColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -73,8 +101,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Back")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.imageView.image = UIImage(named: "icon_selected_color", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+        button.imageView.tintColor = UIColor.clearColor()
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -83,7 +113,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Bring to front")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         return button
@@ -99,7 +129,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let textField = UITextField()
         textField.delegate = self
         textField.text = ""
-        textField.textColor = self.textColor
+        textField.textColor = UIColor.whiteColor()
         textField.backgroundColor = self.backgroundColor
         textField.clipsToBounds = false
         textField.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
@@ -121,6 +151,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         let selector = ColorPickerView()
         selector.translatesAutoresizingMaskIntoConstraints = false
         return selector
+    }()
+
+    public private(set) lazy var textColorSelectorView: TextColorSelectorView = {
+        let view = TextColorSelectorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.menuDelegate = self
+        return view
     }()
 
     private var textLabel = UILabel()
@@ -146,7 +183,12 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureBottomButtons()
         configureAddButton()
         configureDeleteButton()
+        configureAcceptColorButton()
+        configureRejectColorButton()
         configureGestureRecognizers()
+        configurePullableView()
+        configureColorPickerView()
+        configureColorSelectorView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
     }
@@ -156,6 +198,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
+        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableView.handleHeight
+        pullableView.marginConstraint?.constant = closedMargin
+        pullableView.closedMargin = closedMargin
     }
 
     override public func viewDidLayoutSubviews() {
@@ -219,11 +264,13 @@ private let kMinimumFontSize = CGFloat(12.0)
             "addTextButton" : addTextButton
         ]
         view.addSubview(addTextButton)
+        addTextButton.layer.cornerRadius = 2
         addTextButton.clipsToBounds = false
         addTextButton.backgroundColor = options.addButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+        addTextButtonConstraint = NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(addTextButtonConstraint)
     }
 
     private func configureDeleteButton() {
@@ -231,15 +278,49 @@ private let kMinimumFontSize = CGFloat(12.0)
             "deleteTextButton" : deleteTextButton
         ]
         view.addSubview(deleteTextButton)
+        deleteTextButton.layer.cornerRadius = 2
         deleteTextButton.clipsToBounds = false
         deleteTextButton.backgroundColor = options.addButtonBackgroundColor
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
-        view.addConstraint(NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
+        deleteButtonConstraint = NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(deleteButtonConstraint)
+    }
+
+    private func configureAcceptColorButton() {
+        let views: [String : AnyObject] = [
+            "acceptColorButton" : acceptColorButton
+        ]
+        view.addSubview(acceptColorButton)
+        acceptColorButton.hidden = true
+        acceptColorButton.alpha = 0.0
+        acceptColorButton.layer.cornerRadius = 2
+        acceptColorButton.clipsToBounds = false
+        acceptColorButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptColorButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptColorButton(40)]", options: [], metrics: nil, views: views))
+        acceptColorButtonConstraint = NSLayoutConstraint(item: acceptColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(acceptColorButtonConstraint)
+    }
+
+    private func configureRejectColorButton() {
+        let views: [String : AnyObject] = [
+            "rejectColorButton" : rejectColorButton
+        ]
+        view.addSubview(rejectColorButton)
+        rejectColorButton.hidden = true
+        rejectColorButton.alpha = 0.0
+        rejectColorButton.layer.cornerRadius = 2
+        rejectColorButton.clipsToBounds = false
+        rejectColorButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectColorButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectColorButton(40)]", options: [], metrics: nil, views: views))
+        rejectColorButtonConstraint = NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(rejectColorButtonConstraint)
     }
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
-        let viewName = "_\(String(button.hash))"
+        let viewName = "_\(String(abs(button.hash)))"
         containerView.addSubview(button)
         views[viewName] = button
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
@@ -247,7 +328,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func visualFormatStringByAddingButton(button: ImageCaptionButton, var visualFormatString: String) -> (String) {
-        let viewName = "_\(String(button.hash))"
+        let viewName = "_\(String(abs(button.hash)))"
         visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
         return visualFormatString
     }
@@ -309,26 +390,44 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
+    private func configureColorSelectorView() {
+        view.addSubview(textColorSelectorView)
+        textColorSelectorView.backgroundColor = self.currentBackgroundColor
+
+        let views = [
+            "textColorSelectorView" : textColorSelectorView
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[textColorSelectorView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[textColorSelectorView(==100)]|", options: [], metrics: nil, views: views))
+        textColorSelectorView.alpha = 0.0
+        textColorSelectorView.hidden = true
+    }
+
     private func configureColorPickerView() {
         configureBlurredContainerView()
-        blurredContainerView.contentView.addSubview(colorPickerView)
+        pullableView.addSubview(colorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
         colorPickerView.pickerDelegate = self
 
         let views = [
-            "blurredContainerView" : blurredContainerView,
+            "pullableView" : pullableView,
             "colorPickerView" : colorPickerView
         ]
 
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
 
-        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        blurredContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[colorPickerView]|", options: [], metrics: nil, views: views))
-        blurredContainerView.alpha = 0.0
-        UIView.animateWithDuration(0.3) {
-            self.blurredContainerView.alpha = 1.0
-        }
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Top, multiplier: -1.0, constant: 0.0)
+        view.addConstraint(topConstraint)
+
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        view.addConstraint(bottomConstraint)
+
+        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableView.marginConstraint = topConstraint
+        pullableView.hidden = true
+        pullableView.alpha = 0.0
     }
 
     private func configureBlurredContainerView() {
@@ -363,6 +462,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         textClipView.addGestureRecognizer(longPressRecognizer)
     }
 
+    private func configurePullableView() {
+        pullableView = PullableView()
+        pullableView.translatesAutoresizingMaskIntoConstraints = false
+        pullableView.backgroundColor = self.currentBackgroundColor
+
+        self.view.addSubview(pullableView)
+        colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
+    }
+
     // MARK: - Button Handling
 
     @objc private func addText(sender: UIButton) {
@@ -389,21 +497,44 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            colorBackup = textLabel.textColor
+        }
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = false
-        configureColorPickerView()
+        showColorSelctionViews()
     }
 
     @objc private func setBackgroundColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            colorBackup = textLabel.backgroundColor!
+        }
         navigationItem.rightBarButtonItem?.enabled = false
         selectBackgroundColor = true
-        configureColorPickerView()
+        showColorSelctionViews()
     }
 
     @objc private func bringToFront(sender: ImageCaptionButton) {
         if textLabel.layer.borderWidth > 0 {
             textClipView.bringSubviewToFront(textLabel)
         }
+    }
+
+    @objc private func acceptColor(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideColorSelctionViews()
+    }
+
+    @objc private func rejectColor(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            if selectBackgroundColor {
+                textLabel.backgroundColor = colorBackup
+            } else {
+                textLabel.textColor = colorBackup
+            }
+        }
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideColorSelctionViews()
     }
 
     // MARK: - Gesture Handling
@@ -523,6 +654,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             }
         }
     }
+
     // MARK: - Helpers
 
     private func hideBlurredContainer() {
@@ -572,6 +704,17 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func selectTextLabel(label: UILabel) {
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
+        if selectBackgroundColor {
+            if let backgroundColor = label.backgroundColor {
+                colorPickerView.color = backgroundColor
+            }
+        } else {
+            colorPickerView.color = label.textColor
+        }
+        selectTextColorButton.imageView.tintColor = label.textColor
+        if let backgroundColor = label.backgroundColor {
+            selectBackgroundColorButton.tintColor = backgroundColor
+        }
     }
 
     private func unSelectTextLabel(label: UILabel) {
@@ -599,15 +742,100 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func backupTexts() {
         tempTextCopy = fixedFilterStack.spriteFilters
     }
+
+    private func showColorSelctionViews() {
+        self.pullableView.hidden = false
+        self.textColorSelectorView.hidden = false
+        self.acceptColorButton.hidden = false
+        self.rejectColorButton.hidden = false
+
+        acceptColorButtonConstraint.constant = -upperOverlayButtonConstant
+        rejectColorButtonConstraint.constant = -upperOverlayButtonConstant
+        addTextButtonConstraint.constant = -upperOverlayButtonConstant
+        deleteButtonConstraint.constant = -upperOverlayButtonConstant
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = 0.0
+                self.deleteTextButton.alpha = 0.0
+                self.acceptColorButton.alpha = 1.0
+                self.rejectColorButton.alpha = 1.0
+                self.textColorSelectorView.alpha = 1.0
+                self.pullableView.alpha = 1.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.addTextButton.hidden = true
+                    self.deleteTextButton.hidden = true
+                }
+        })
+
+        if textLabel.layer.borderWidth > 0 {
+            if selectBackgroundColor {
+                colorPickerView.color = textLabel.backgroundColor!
+            } else {
+                colorPickerView.color = textLabel.textColor
+            }
+        }
+    }
+
+    private func hideColorSelctionViews() {
+        if pullableView.opened {
+            pullableView.setOpened(false, animated: true)
+        }
+        addTextButton.hidden = false
+        deleteTextButton.hidden = false
+
+        acceptColorButtonConstraint.constant = -lowerOverlayButtonConstant
+        rejectColorButtonConstraint.constant = -lowerOverlayButtonConstant
+        addTextButtonConstraint.constant = -lowerOverlayButtonConstant
+        deleteButtonConstraint.constant = -lowerOverlayButtonConstant
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = 1.0
+                self.deleteTextButton.alpha = 1.0
+                self.acceptColorButton.alpha = 0.0
+                self.rejectColorButton.alpha = 0.0
+                self.pullableView.alpha = 0.0
+                self.textColorSelectorView.alpha = 0.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.acceptColorButton.hidden = true
+                    self.rejectColorButton.hidden = true
+                    self.pullableView.hidden = true
+                    self.textColorSelectorView.hidden = true
+                }
+        })
+
+
+    }
 }
 
 // MARK:- extensions
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
     public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {
-        textColor = color
-        textField.textColor = color
-        textLabel.textColor = color
+        if selectBackgroundColor {
+            colorPickerView.color = color
+            textLabel.backgroundColor = color
+            selectBackgroundColorButton.tintColor = color
+        } else {
+            colorPickerView.color = color
+            textLabel.textColor = color
+            textColor = color
+            selectTextColorButton.imageView.tintColor = color
+        }
+
     }
 }
 
@@ -673,10 +901,12 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
+            selectTextColorButton.imageView.tintColor = color
         } else {
             textLabel.textColor = color
+            textColor = color
+            selectBackgroundColorButton.tintColor = color
         }
-        hideBlurredContainer()
     }
 
     public func canceledColorPicking(colorPickerView: ColorPickerView) {

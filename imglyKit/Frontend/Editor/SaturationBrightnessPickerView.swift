@@ -57,9 +57,11 @@ import UIKit
         }
     }
 
+
     private func drawColorMatrixToContext(context: CGContextRef, rect: CGRect) {
         CGContextSaveGState(context)
-        CGContextClipToRect(context, rect)
+        PathHelper.clipCornersToOvalWidth(context, width:frame.size.width, height: frame.size.height, ovalWidth:3.0, ovalHeight:3.0)
+        CGContextClip(context)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let locs: [CGFloat] = [0.00, 1.0]
         var colors = [UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0).CGColor,

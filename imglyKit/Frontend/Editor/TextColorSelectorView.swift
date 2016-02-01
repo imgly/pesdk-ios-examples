@@ -20,16 +20,20 @@ import UIKit
 
     private let kButtonYPosition = CGFloat(22)
     private let kButtonXPositionOffset = CGFloat(5)
-    private let kButtonDistance = CGFloat(10)
-    private let kButtonSideLength = CGFloat(50)
+    private let kButtonDistance = CGFloat(5)
+    private let kButtonWidth = CGFloat(44)
+    private let kButtonHeight = CGFloat(60)
+    private var pullableView = PullableView()
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
+        self.colorArray = defaultColorArray()
         commonInit()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        self.colorArray = defaultColorArray()
         commonInit()
     }
 
@@ -75,7 +79,7 @@ import UIKit
             button.addTarget(self, action: "colorButtonTouchedUpInside:", forControlEvents: .TouchUpInside)
             buttonArray.append(button)
             button.backgroundColor = color
-            button.hasFrame = true
+            button.hasFrame = false
         }
     }
 
@@ -91,12 +95,12 @@ import UIKit
             let button = buttonArray[i]
             button.frame = CGRect(x: xPosition,
                 y: kButtonYPosition,
-                width: kButtonSideLength,
-                height: kButtonSideLength)
-            xPosition += (kButtonDistance + kButtonSideLength)
+                width: kButtonWidth,
+                height: kButtonHeight)
+            xPosition += (kButtonDistance + kButtonWidth)
         }
 
-        buttonArray[0].hasFrame = true
+        buttonArray[1].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
 

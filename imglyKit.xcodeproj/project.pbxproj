@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311E1C3FF908000135B8 /* HuePickerView.swift */; };
 		098331211C400A72000135B8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331201C400A72000135B8 /* UIColorExtension.swift */; };
 		099FBD5D1C3EC314000BB333 /* ColorPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */; };
+		09AE9B141C591178000CEB28 /* PullableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AE9B131C591178000CEB28 /* PullableView.swift */; };
 		09D214CE1C4C043C008D20F6 /* OverlayConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */; };
 		09DF6DF71C47B9B4000070B6 /* AlphaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09DF6DF61C47B9B4000070B6 /* AlphaPickerView.swift */; };
 		2B044DDC1C3E5E4500A73AE6 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1ADA1D1B19C86300C98522 /* imglyKit.framework */; };
@@ -431,11 +433,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SaturationBrightnessPickerView.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		0983311E1C3FF908000135B8 /* HuePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuePickerView.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		099FBD5C1C3EC314000BB333 /* ColorPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ColorPickerView.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		09AE9B131C591178000CEB28 /* PullableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PullableView.swift; sourceTree = "<group>"; };
 		09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayConverter.swift; sourceTree = "<group>"; };
 		09DF6DF61C47B9B4000070B6 /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		2B044DD71C3E5E4500A73AE6 /* imglyKit OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -908,6 +912,8 @@
 				2BF4D3C11AF1150400C801B2 /* NavigationController.swift */,
 				2BF4D3C21AF1150400C801B2 /* OrientationEditorViewController.swift */,
 				09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */,
+				097A45D51C5A595100B2D45F /* PathHelper.swift */,
+				09AE9B131C591178000CEB28 /* PullableView.swift */,
 				098331111C3FB511000135B8 /* SaturationBrightnessPickerView.swift */,
 				2BF4D3C31AF1150400C801B2 /* SaturationEditorViewController.swift */,
 				2BF4D3C41AF1150400C801B2 /* SliderEditorViewController.swift */,
@@ -1717,9 +1723,11 @@
 				2BF4D5191AF1155E00C801B2 /* LeninFilter.swift in Sources */,
 				0983311F1C3FF908000135B8 /* HuePickerView.swift in Sources */,
 				2BF4D3D71AF1150500C801B2 /* FilterEditorViewController.swift in Sources */,
+				09AE9B141C591178000CEB28 /* PullableView.swift in Sources */,
 				2BF4D50B1AF1155E00C801B2 /* EveningFilter.swift in Sources */,
 				2BC5378D1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift in Sources */,
 				2BF4D4B01AF1154B00C801B2 /* StickerFilter.swift in Sources */,
+				097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */,
 				2BF4D4F91AF1155E00C801B2 /* AncientFilter.swift in Sources */,
 				2BF4D5001AF1155E00C801B2 /* BWFilter.swift in Sources */,
 				2BF4D5021AF1155E00C801B2 /* ChestFilter.swift in Sources */,
