@@ -50,6 +50,12 @@ import UIKit
     /// The background color of the delete text button. Defaults to petrol.
     public let deleteButtonBackgroundColor: UIColor
 
+    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
+    public let handleBackgroundColor: UIColor
+
+    /// The color of the handle, that is used to pull up detail views. Defaults to white.
+    public let handleColor: UIColor
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -68,6 +74,8 @@ import UIKit
         defaultFontName = builder.defaultFontName
         addButtonBackgroundColor = builder.addButtonBackgroundColor
         deleteButtonBackgroundColor = builder.deleteButtonBackgroundColor
+        handleBackgroundColor = builder.handleBackgroundColor
+        handleColor = builder.handleColor
         super.init(editorBuilder: builder)
     }
 }
@@ -115,6 +123,13 @@ import UIKit
 
     /// The background color of the delete text button. Defaults to petrol.
     public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+
+    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
+    public let handleBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+
+    /// The color of the handle, that is used to pull up detail views. Defaults to light gray.
+    public let handleColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
 
     public override init() {
         super.init()
