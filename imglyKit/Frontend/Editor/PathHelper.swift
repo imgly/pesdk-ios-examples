@@ -8,15 +8,17 @@
 
 import UIKit
 
-@objc(IMGLYPathHelper)  public class PathHelper: NSObject {
-    static public func clipCornersToOvalWidth(context: CGContextRef, width:CGFloat, height:CGFloat, ovalWidth: CGFloat, ovalHeight: CGFloat) {
+class PathHelper {
+    static func clipCornersToOvalWidth(context: CGContextRef, width: CGFloat, height: CGFloat, ovalWidth: CGFloat, ovalHeight: CGFloat) {
         var fw = CGFloat(0)
         var fh = CGFloat(0)
         let rect = CGRect(x: 0.0, y: 0.0, width: width, height: height)
+
         if ovalWidth == 0 || ovalHeight == 0 {
             CGContextAddRect(context, rect)
             return
         }
+
         CGContextSaveGState(context)
         CGContextTranslateCTM(context, CGRectGetMinX(rect), CGRectGetMinY(rect))
         CGContextScaleCTM(context, ovalWidth, ovalHeight)
@@ -30,5 +32,4 @@ import UIKit
         CGContextClosePath(context)
         CGContextRestoreGState(context)
     }
-
 }

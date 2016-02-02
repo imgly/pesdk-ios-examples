@@ -97,6 +97,7 @@ All types of response-filters.
         for filter in filters {
             filter.inputImage = currentImage
             currentImage = filter.outputImage
+            filter.inputImage = nil
         }
 
         if let currentImage = currentImage where CGRectIsEmpty(currentImage.extent) {
@@ -113,10 +114,11 @@ All types of response-filters.
         guard let coreImage = CIImage(image: image) else {
             return nil
         }
+
         var options = [String: AnyObject]()
 
         if let colorspace = CGColorSpaceCreateDeviceRGB() {
-            options = [kCIContextWorkingColorSpace: colorspace]
+            options[kCIContextWorkingColorSpace] = colorspace
         }
 
         let filteredCIImage = processWithCIImage(coreImage, filters: filters)
