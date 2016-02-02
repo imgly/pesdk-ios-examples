@@ -30,7 +30,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     private var selectedView = UIImageView()
 
     public private(set) lazy var deleteButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -39,7 +39,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }()
 
     public private(set) lazy var flipHorizontalButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -48,7 +48,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }()
 
     public private(set) lazy var flipVerticalButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -57,7 +57,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     }()
 
     public private(set) lazy var bringToFrontButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false

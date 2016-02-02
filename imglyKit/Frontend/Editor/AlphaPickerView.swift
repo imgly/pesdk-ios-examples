@@ -17,7 +17,7 @@ import UIKit
 
     private private(set) lazy var checkboardColor: UIColor = {
         var color = UIColor.whiteColor()
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: AlphaPickerView.self)
         if let image = UIImage(named: "checkerboard", inBundle: bundle, compatibleWithTraitCollection: nil) {
             color = UIColor(patternImage: image)
         }

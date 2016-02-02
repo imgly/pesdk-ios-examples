@@ -40,7 +40,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private let lowerOverlayButtonConstant = CGFloat(20)
 
     public private(set) lazy var addTextButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +49,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var deleteTextButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -58,7 +58,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var acceptColorButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -67,7 +67,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var rejectColorButton: UIButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
         button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -76,7 +76,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var selectTextFontButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Font")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -86,7 +86,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var selectTextColorButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Text")
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -98,7 +98,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var selectBackgroundColorButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Back")
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -110,7 +110,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }()
 
     public private(set) lazy var bringToFrontButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Bring to front")
         button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)

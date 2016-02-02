@@ -59,7 +59,7 @@ import UIKit
     }
 
     public func configureCrossImageView() {
-        crossImageView.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
+        crossImageView.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: CircleGradientView.self), compatibleWithTraitCollection:nil)
         crossImageView.userInteractionEnabled = true
         crossImageView.frame = CGRect(x: 0, y: 0, width: crossImageView.image!.size.width, height: crossImageView.image!.size.height)
         addSubview(crossImageView)

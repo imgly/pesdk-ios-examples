@@ -26,7 +26,7 @@ import UIKit
     // MARK: - Properties
 
     public private(set) lazy var offButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Off")
         button.imageView.image = UIImage(named: "icon_focus_off", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -37,7 +37,7 @@ import UIKit
         }()
 
     public private(set) lazy var linearButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Linear")
         button.imageView.image = UIImage(named: "icon_focus_linear", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -48,7 +48,7 @@ import UIKit
         }()
 
     public private(set) lazy var radialButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: FocusEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Radial")
         button.imageView.image = UIImage(named: "icon_focus_radial", inBundle: bundle, compatibleWithTraitCollection: nil)
