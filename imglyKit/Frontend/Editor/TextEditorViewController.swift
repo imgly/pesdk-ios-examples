@@ -81,7 +81,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var acceptFontButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "acceptFont:", forControlEvents: .TouchUpInside)
         return button
@@ -469,6 +469,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[fontQuickSelectorView(==100)]|", options: [], metrics: nil, views: views))
         fontQuickSelectorView.alpha = 0.0
         fontQuickSelectorView.hidden = true
+        fontQuickSelectorView.selectorDelegate = self
     }
 
     private func configureColorPickerView() {
@@ -596,6 +597,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
         navigationItem.rightBarButtonItem?.enabled = false
+        fontQuickSelectorView.selectedFontName = textField.font!.fontName
+        fontSelectorView.selectedFontName = textField.font!.fontName
         showFontSelctionViews()
     }
 
@@ -638,6 +641,19 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
         navigationItem.rightBarButtonItem?.enabled = true
         hideColorSelctionViews()
+    }
+
+    @objc private func acceptFont(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideFontSelctionViews()
+    }
+
+    @objc private func rejectFont(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            //textLabel.font = UIFont(name: fontQuickSelectorView.initialFontName, size: textLabel.font!.pointSize)
+        }
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideFontSelctionViews()
     }
 
     // MARK: - Gesture Handling
@@ -792,8 +808,6 @@ private let kMinimumFontSize = CGFloat(12.0)
                 } while ((size.width < (textClipView.frame.size.width - kTextLabelInitialMargin)) && (size.height < (textClipView.frame.size.height - kTextLabelInitialMargin)))
             }
         }
-
-        print(currentTextSize)
     }
 
     private func setInitialTextLabelSize() {
@@ -977,6 +991,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         if textLabel.layer.borderWidth > 0 {
             fontSelectorView.text = textLabel.text!
             fontSelectorView.selectedFontName = textLabel.font!.fontName
+            fontQuickSelectorView.selectedFontName = textLabel.font!.fontName
         }
     }
 
@@ -1078,6 +1093,18 @@ extension TextEditorViewController: UITextFieldDelegate {
 extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
         self.fontName = fontName
+        fontQuickSelectorView.selectedFontName = fontName
+        if textLabel.layer.borderWidth > 0 {
+            textLabel.font = UIFont(name: fontName, size: currentTextSize)
+            textLabel.sizeToFit()
+        }
+    }
+}
+
+extension TextEditorViewController: FontQuickSelectorViewDelegate {
+    public func fontSelectorView(selectorView: FontQuickSelectorView, didSelectFont fontName: String) {
+        self.fontName = fontName
+        fontSelectorView.selectedFontName = fontName
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
             textLabel.sizeToFit()

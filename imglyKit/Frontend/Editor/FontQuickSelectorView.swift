@@ -9,7 +9,7 @@
 import UIKit
 
 @objc(IMGLYFontQuickSelectorViewDelegate) public protocol FontQuickSelectorViewDelegate {
-    func fontSelectorView(selectorView: FontQuickSelectorView, didSelectFont fontNamew: String)
+    func fontSelectorView(selectorView: FontQuickSelectorView, didSelectFont fontName: String)
 }
 
 
@@ -25,9 +25,9 @@ import UIKit
     private let kButtonWidth = CGFloat(60)
     private let kButtonHeight = CGFloat(60)
 
-    public var initialFontName = "" {
+    public var selectedFontName = "" {
         didSet {
-            updateSelectedButton(initialFontName)
+            updateSelectedButton()
         }
     }
 
@@ -80,22 +80,16 @@ import UIKit
 
     @objc private func buttonTouchedUpInside(button: UIButton) {
         if let fontButton = button as? FontButton {
-            updateSelectedButton(fontButton.fontName)
-            fontButton.hasFocus = true
-            selectorDelegate?.fontSelectorView(self, didSelectFont: fontButton.fontName)
+            selectedFontName = fontButton.fontName
+            updateSelectedButton()
+            selectorDelegate?.fontSelectorView(self, didSelectFont: selectedFontName)
         }
     }
 
-    private func updateSelectedButton(selectedFontName: String) {
+    private func updateSelectedButton() {
         for button in buttonArray {
             let buttonFontMatches = button.fontName == selectedFontName
-            if button.hasFocus && !buttonFontMatches {
-                button.hasFocus = false
-            } else {
-                if !button.hasFocus && buttonFontMatches {
-                    button.hasFocus = true
-                }
-            }
+            button.hasFocus = buttonFontMatches
         }
     }
 }

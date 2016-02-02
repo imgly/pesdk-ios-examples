@@ -16,7 +16,11 @@ import UIKit
     public weak var selectorDelegate: FontSelectorViewDelegate?
     public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
     public var textColor = UIColor.whiteColor()
-    public var selectedFontName = ""
+    public var selectedFontName = "" {
+        didSet {
+            updateTextColor()
+        }
+    }
 
     public var text = "" {
         didSet {

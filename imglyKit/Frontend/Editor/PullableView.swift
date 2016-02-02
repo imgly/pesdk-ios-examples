@@ -183,7 +183,7 @@ import AVFoundation
         let location = gestureRecognizer.locationInView(self)
         let target = self.hitTest(location, withEvent: nil)
         if let target = target {
-            if !target.isKindOfClass(ColorPickerView) && target != handleView {
+            if !target.isKindOfClass(ColorPickerView) && !target.isKindOfClass(FontSelectorView) && target != handleView {
                 return false
             }
         }

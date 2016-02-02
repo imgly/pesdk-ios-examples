@@ -19,7 +19,7 @@ import UIKit
         }
     }
 
-    public var selectionColor = UIColor.redColor() {
+    public var selectionColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
         didSet {
             styleButton()
         }
