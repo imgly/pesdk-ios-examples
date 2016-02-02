@@ -57,64 +57,76 @@ import CoreGraphics
             return inputImage
         }
 
-        let stickerImage = createStickerImage()
-
-        guard let cgImage = stickerImage.CGImage, filter = CIFilter(name: "CISourceOverCompositing") else {
+        guard let filter = CIFilter(name: "CISourceOverCompositing"), sticker = createStickerImage() else {
             return inputImage
         }
 
-        let stickerCIImage = CIImage(CGImage: cgImage)
         filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-        filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
+        filter.setValue(sticker, forKey: kCIInputImageKey)
         return filter.outputImage
     }
 
-    public func absolutStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
+    public func absoluteStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
+
+        // TODO: Fix this
+        if imageSize.width > imageSize.height {
+            return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
+        }
+
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
 
-    #if os(iOS)
-
-    private func createStickerImage() -> UIImage {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-        UIGraphicsBeginImageContext(imageSize)
-        UIColor(white: 1.0, alpha: 0.0).setFill()
-        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
-
-        if let context = UIGraphicsGetCurrentContext() {
-            drawStickerInContext(context, withImageOfSize: imageSize)
+    private func createStickerImage() -> CIImage? {
+        guard let cgImage = sticker?.CGImage else {
+            return nil
         }
 
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
+        var image = CIImage(CGImage: cgImage)
+
+        let inputImageRect = inputImage!.extent
+        let inputImageSize = inputImageRect.size
+
+        let originalInputImageSize = CGSize(width: round(inputImageSize.width / cropRect.width), height: round(inputImageSize.height / cropRect.height))
+        let absoluteStickerSize = absoluteStickerSizeForImageSize(originalInputImageSize)
+
+        let stickerImageSize = image.extent.size
+        let stickerScaleX = absoluteStickerSize.width / stickerImageSize.width
+        let stickerScaleY = absoluteStickerSize.height / stickerImageSize.height
+
+        var stickerCenter = CGPoint(x: center.x * originalInputImageSize.width, y: center.y * originalInputImageSize.height)
+        stickerCenter.x -= (cropRect.origin.x * originalInputImageSize.width)
+        stickerCenter.y -= (cropRect.origin.y * originalInputImageSize.height)
+
+        let xScale = self.transform.xScale
+        let yScale = self.transform.yScale
+        let rotation = self.transform.rotation
+
+        var transform = CGAffineTransformIdentity
+
+        // Scale to match size of preview
+        transform = CGAffineTransformScale(transform, stickerScaleX, stickerScaleY)
+
+        // Translate
+        // Calculate the origin of the sticker. Note that in CoreImage (0,0) is at the bottom
+        let stickerOrigin = CGPoint(x: stickerCenter.x - absoluteStickerSize.width * xScale / 2, y: stickerCenter.y + absoluteStickerSize.height * yScale / 2)
+        transform = CGAffineTransformTranslate(transform, stickerOrigin.x / stickerScaleX, (inputImageSize.height - stickerOrigin.y) / stickerScaleY)
+
+        // Scale
+        transform = CGAffineTransformScale(transform, xScale, yScale)
+
+        // Rotate
+        transform = CGAffineTransformTranslate(transform, 0.5 * stickerImageSize.width, 0.5 * stickerImageSize.height)
+        transform = CGAffineTransformRotate(transform, -1 * rotation)
+        transform = CGAffineTransformTranslate(transform, -0.5 * stickerImageSize.width, -0.5 * stickerImageSize.height)
+
+        image = image.imageByApplyingTransform(transform)
+        image = image.imageByCroppingToRect(inputImageRect)
 
         return image
     }
 
-    #elseif os(OSX)
-
-    private func createStickerImage() -> NSImage {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-
-        let image = NSImage(size: imageSize)
-        image.lockFocus()
-        NSColor(white: 1, alpha: 0).setFill()
-        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
-
-        let context = NSGraphicsContext.currentContext()!.CGContext
-        drawStickerInContext(context, withImageOfSize: imageSize)
-
-        image.unlockFocus()
-
-        return image
-    }
-
-    #endif
-
-    // MARK:- rotation
+    // MARK: - Rotation
 
     public func rotateRight () {
         rotate(CGFloat(M_PI_2), negateX: true, negateY: false)
@@ -138,7 +150,7 @@ import CoreGraphics
         self.center.y += 0.5
     }
 
-    // MARK:- flipping
+    // MARK: - Flipping
 
     public func flipStickersHorizontal () {
         flipSticker(true)
@@ -191,30 +203,6 @@ import CoreGraphics
 
         let delta = axisAngle - angle
         self.transform = CGAffineTransformRotate(self.transform, delta * 2.0)
-    }
-
-    // MARK:- drawing
-
-    private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
-        CGContextSaveGState(context)
-
-        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
-        var center = CGPoint(x: self.center.x * originalSize.width, y: self.center.y * originalSize.height)
-        center.x -= (cropRect.origin.x * originalSize.width)
-        center.y -= (cropRect.origin.y * originalSize.height)
-
-        let size = self.absolutStickerSizeForImageSize(originalSize)
-        let imageRect = CGRect(origin: center, size: size)
-
-        // Move center to origin
-        CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
-        // Apply the transform
-        CGContextConcatCTM(context, self.transform)
-        // Move the origin back by half
-        CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
-
-        sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
-        CGContextRestoreGState(context)
     }
 }
 

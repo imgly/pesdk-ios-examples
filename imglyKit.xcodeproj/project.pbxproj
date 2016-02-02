@@ -193,6 +193,8 @@
 		2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B67D1C71C47DBED00BEE726 /* LightController.swift */; };
 		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
 		2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */; };
+		2B948C351C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
+		2B948C361C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
 		2BA980601C493FE7001C85B6 /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9805F1C493FE7001C85B6 /* VideoController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
@@ -458,6 +460,7 @@
 		2B67D1C71C47DBED00BEE726 /* LightController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightController.swift; sourceTree = "<group>"; };
 		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
 		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
+		2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAffineTransformExtension.swift; sourceTree = "<group>"; };
 		2BA9805F1C493FE7001C85B6 /* VideoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
 		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
@@ -781,6 +784,7 @@
 		2B1ADA0E1B19C36E00C98522 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */,
 				2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */,
 				2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */,
 			);
@@ -1554,6 +1558,7 @@
 				2B1ADACF1B19C8EE00C98522 /* Pro400Filter.swift in Sources */,
 				2B1ADAA31B19C8EE00C98522 /* BlueShadowsFilter.swift in Sources */,
 				2B1ADAB41B19C8EE00C98522 /* FridgeFilter.swift in Sources */,
+				2B948C361C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */,
 				2B1ADACA1B19C8EE00C98522 /* PitchedFilter.swift in Sources */,
 				2B1ADAD01B19C8EE00C98522 /* QuoziFilter.swift in Sources */,
 				2B1ADADB1B19C8EE00C98522 /* TenderFilter.swift in Sources */,
@@ -1696,6 +1701,7 @@
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
 				2BF4D3D11AF1150500C801B2 /* ColorButton.swift in Sources */,
+				2B948C351C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */,
 				098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D5361AF1155E00C801B2 /* TenderFilter.swift in Sources */,
 				2BC537971C513A2900A7DE17 /* CropEditorViewControllerOptions.swift in Sources */,
