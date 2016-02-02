@@ -72,7 +72,7 @@ import UIKit
         layer.cornerRadius = 3
         layer.masksToBounds = true
         backgroundColor = hasFocus ? selectionColor : UIColor.clearColor()
-        titleLabel?.textColor = textColor
+        setTitleColor(textColor, forState: .Normal)
         setTitle(dummyText, forState: .Normal)
         titleLabel!.sizeToFit()
         if fontName.characters.count > 0 {

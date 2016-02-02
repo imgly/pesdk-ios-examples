@@ -62,6 +62,12 @@ import UIKit
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public var enabledOverlayButtonAlpha: CGFloat
 
+    /// The color of the font examples on the text selectors
+    public var fontSelectorFontColor: UIColor
+
+    /// The color that is used to highlight, that a font is selected
+    public var fontSelectorHighlightColor: UIColor
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -84,6 +90,8 @@ import UIKit
         handleColor = builder.handleColor
         disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
         enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
+        fontSelectorFontColor = builder.fontSelectorFontColor
+        fontSelectorHighlightColor = builder.fontSelectorHighlightColor
         super.init(editorBuilder: builder)
     }
 }
@@ -144,6 +152,11 @@ import UIKit
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public var enabledOverlayButtonAlpha = CGFloat(0.6)
 
+    /// The color of the font examples on the text selectors
+    public var fontSelectorFontColor = UIColor(red:1, green:1, blue:1, alpha:1)
+
+    /// The color that is used to highlight, that a font is selected
+    public var fontSelectorHighlightColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     public override init() {
         super.init()

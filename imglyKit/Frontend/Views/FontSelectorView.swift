@@ -14,8 +14,18 @@ import UIKit
 
 @objc(IMGLYFontSelectorView) public class FontSelectorView: UIScrollView {
     public weak var selectorDelegate: FontSelectorViewDelegate?
-    public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
-    public var textColor = UIColor.whiteColor()
+    public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
+        didSet {
+            updateTextColor()
+        }
+    }
+
+    public var textColor = UIColor.whiteColor() {
+        didSet {
+            updateTextColor()
+        }
+    }
+
     public var selectedFontName = "" {
         didSet {
             updateTextColor()
@@ -111,4 +121,4 @@ import UIKit
             }
         }
     }
- }
+}

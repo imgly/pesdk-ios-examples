@@ -16,6 +16,18 @@ import UIKit
 @objc(IMGLYFontQuickSelectorView) public class FontQuickSelectorView: UIScrollView {
     public weak var selectorDelegate: FontQuickSelectorViewDelegate?
 
+    public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
+        didSet {
+            updateButtonColors()
+        }
+    }
+
+    public var textColor = UIColor.whiteColor() {
+        didSet {
+            updateButtonColors()
+        }
+    }
+
     private var fontNames = [String]()
     private var buttonArray = [FontButton]()
 
@@ -90,6 +102,13 @@ import UIKit
         for button in buttonArray {
             let buttonFontMatches = button.fontName == selectedFontName
             button.hasFocus = buttonFontMatches
+        }
+    }
+
+    private func updateButtonColors() {
+        for button in buttonArray {
+            button.textColor = textColor
+            button.selectionColor = selectedTextColor
         }
     }
 }
