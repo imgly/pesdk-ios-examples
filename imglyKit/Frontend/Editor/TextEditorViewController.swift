@@ -643,8 +643,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         if textLabel.layer.borderWidth > 0 {
             if selectBackgroundColor {
                 textLabel.backgroundColor = colorBackup
+                selectBackgroundColorButton.imageView.tintColor = colorBackup
             } else {
                 textLabel.textColor = colorBackup
+                selectTextColorButton.imageView.tintColor = colorBackup
             }
         }
         navigationItem.rightBarButtonItem?.enabled = true
