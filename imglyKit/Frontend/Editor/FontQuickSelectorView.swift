@@ -22,7 +22,7 @@ import UIKit
     private let kButtonYPosition = CGFloat(22)
     private let kButtonXPositionOffset = CGFloat(5)
     private let kButtonDistance = CGFloat(5)
-    private let kButtonWidth = CGFloat(44)
+    private let kButtonWidth = CGFloat(60)
     private let kButtonHeight = CGFloat(60)
 
     public override init(frame: CGRect) {

@@ -11,6 +11,7 @@ import UIKit
 
 @objc(IMGLYFontButton) public class FontButton: UIButton {
     private let kButtonHeight = CGFloat(60)
+    private let fontNameLabel = UILabel()
 
     public var hasFocus = false {
         didSet {
@@ -42,6 +43,13 @@ import UIKit
         }
     }
 
+    public override var frame: CGRect {
+        didSet {
+            super.frame = frame
+            styleButton()
+        }
+    }
+
     private let dummyText = "Ag"
 
     public override init(frame: CGRect) {
@@ -55,6 +63,7 @@ import UIKit
     }
 
     private func commonInit() {
+        configureFontNameLabel()
         styleButton()
     }
 
@@ -68,7 +77,11 @@ import UIKit
         titleLabel!.sizeToFit()
         if fontName.characters.count > 0 {
             titleLabel?.font = UIFont(name: fontName, size: fontSize)
+            fontNameLabel.text = fontName
         }
+        fontNameLabel.textColor = textColor
+        fontNameLabel.frame = CGRect(x: 0, y: self.bounds.height - 10, width: self.bounds.width, height: 10)
+        fontNameLabel.textAlignment = NSTextAlignment.Center
         centerTitleLabel()
     }
 
@@ -79,5 +92,10 @@ import UIKit
         let topPadding = titleLabel!.font.ascender - titleLabel!.font.capHeight
         let offset =  -textSize.height / 2.0 + kButtonHeight * 0.5 - topPadding * 0.5
         titleEdgeInsets = UIEdgeInsetsMake(offset, 0.0, 0.0, 0.0)
+    }
+
+    private func configureFontNameLabel() {
+        self.addSubview(fontNameLabel)
+        fontNameLabel.font = UIFont(name: fontNameLabel.font!.fontName, size: 10)
     }
 }
