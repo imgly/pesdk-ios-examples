@@ -190,11 +190,13 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 
             if let highResolutionImage = self.highResolutionImage {
                 sender?.enabled = false
+                updating = true
                 dispatch_async(kPhotoProcessorQueue) {
                     filteredHighResolutionImage = PhotoProcessor.processWithUIImage(highResolutionImage, filters: self.fixedFilterStack.activeFilters)
 
                     dispatch_async(dispatch_get_main_queue()) {
                         completionBlock(.Done, filteredHighResolutionImage)
+                        self.updating = false
                         sender?.enabled = true
                     }
                 }
