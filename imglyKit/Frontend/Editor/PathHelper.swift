@@ -8,8 +8,8 @@
 
 import UIKit
 
-class PathHelper {
-    static func clipCornersToOvalWidth(context: CGContextRef, width: CGFloat, height: CGFloat, ovalWidth: CGFloat, ovalHeight: CGFloat) {
+@objc(IMGLYPathHelper)  public class PathHelper: NSObject {
+    static public func clipCornersToOvalWidth(context: CGContextRef, width: CGFloat, height: CGFloat, ovalWidth: CGFloat, ovalHeight: CGFloat) {
         var fw = CGFloat(0)
         var fh = CGFloat(0)
         let rect = CGRect(x: 0.0, y: 0.0, width: width, height: height)

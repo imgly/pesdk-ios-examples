@@ -69,7 +69,6 @@ import CoreGraphics
     public func absoluteStickerSizeForImageSize(imageSize: CGSize) -> CGSize {
         let stickerRatio = sticker!.size.height / sticker!.size.width
 
-        // TODO: Fix this
         if imageSize.width > imageSize.height {
             return CGSize(width: self.scale * imageSize.height, height: self.scale * stickerRatio * imageSize.height)
         }

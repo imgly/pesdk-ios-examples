@@ -50,6 +50,18 @@ import UIKit
     /// The background color of the delete text button. Defaults to petrol.
     public let deleteButtonBackgroundColor: UIColor
 
+    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
+    public let handleBackgroundColor: UIColor
+
+    /// The color of the handle, that is used to pull up detail views. Defaults to white.
+    public let handleColor: UIColor
+
+    /// This value determins the opacity of any disabled button that is positions above the preview.
+    public var disabledOverlayButtonAlpha: CGFloat
+
+    /// This value determins the opacity of any enabled button that is positions above the preview.
+    public var enabledOverlayButtonAlpha: CGFloat
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -68,6 +80,10 @@ import UIKit
         defaultFontName = builder.defaultFontName
         addButtonBackgroundColor = builder.addButtonBackgroundColor
         deleteButtonBackgroundColor = builder.deleteButtonBackgroundColor
+        handleBackgroundColor = builder.handleBackgroundColor
+        handleColor = builder.handleColor
+        disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
+        enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
         super.init(editorBuilder: builder)
     }
 }
@@ -111,10 +127,23 @@ import UIKit
     public var defaultFontName = "Helvetica Neue"
 
     /// The background color of the add text button. Defaults to petrol.
-    public var addButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var addButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     /// The background color of the delete text button. Defaults to petrol.
-    public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var deleteButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+
+    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
+    public let handleBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+
+    /// The color of the handle, that is used to pull up detail views. Defaults to light gray.
+    public let handleColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+
+    /// This value determins the opacity of any disabled button that is positions above the preview.
+    public var disabledOverlayButtonAlpha = CGFloat(0.2)
+
+    /// This value determins the opacity of any enabled button that is positions above the preview.
+    public var enabledOverlayButtonAlpha = CGFloat(0.6)
+
 
     public override init() {
         super.init()

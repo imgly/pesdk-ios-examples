@@ -30,12 +30,16 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var createNewText = false
     private var selectBackgroundColor = false
     private var overlayConverter: OverlayConverter?
-    private var pullableView = PullableView()
+    private var pullableColorPickerView = PullableView()
+    private var pullableFontSelectorView = PullableView()
     private var colorBackup = UIColor.whiteColor()
+    private var fontBackup = UIFont()
     private var addTextButtonConstraint = NSLayoutConstraint()
     private var deleteButtonConstraint = NSLayoutConstraint()
     private var acceptColorButtonConstraint = NSLayoutConstraint()
     private var rejectColorButtonConstraint = NSLayoutConstraint()
+    private var acceptFontButtonConstraint = NSLayoutConstraint()
+    private var rejectFontButtonConstraint = NSLayoutConstraint()
     private let upperOverlayButtonConstant = CGFloat(50)
     private let lowerOverlayButtonConstant = CGFloat(20)
 
@@ -72,6 +76,24 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "rejectColor:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var acceptFontButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "acceptFont:", forControlEvents: .TouchUpInside)
+        return button
+    }()
+
+    public private(set) lazy var rejectFontButton: UIButton = {
+        let bundle = NSBundle(forClass: self.dynamicType)
+        let button = UIButton(type: UIButtonType.Custom)
+        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: "rejectFont:", forControlEvents: .TouchUpInside)
         return button
     }()
 
@@ -160,6 +182,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         return view
     }()
 
+    public private(set) lazy var fontQuickSelectorView: FontQuickSelectorView = {
+        let view = FontQuickSelectorView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+       // view.menuDelegate = self
+        return view
+    }()
+
     private var textLabel = UILabel()
 
     private var blurredContainerView = UIVisualEffectView()
@@ -185,12 +214,18 @@ private let kMinimumFontSize = CGFloat(12.0)
         configureDeleteButton()
         configureAcceptColorButton()
         configureRejectColorButton()
+        configureAcceptFontButton()
+        configureRejectFontButton()
         configureGestureRecognizers()
-        configurePullableView()
+        configurePullableColorPickerView()
         configureColorPickerView()
+        configurePullableFontSelectorView()
+        configureFontSelectorView()
         configureColorSelectorView()
+        configureFontQuickSelectorView()
         backupTexts()
         fixedFilterStack.spriteFilters.removeAll()
+        updateButtonStatus()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -198,9 +233,15 @@ private let kMinimumFontSize = CGFloat(12.0)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
         showNewTextDialog()
-        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableView.handleHeight
-        pullableView.marginConstraint?.constant = closedMargin
-        pullableView.closedMargin = closedMargin
+        setPullableViewMarings()
+    }
+
+    private func setPullableViewMarings() {
+        let closedMargin = self.view.frame.height - bottomContainerView.frame.height - pullableColorPickerView.handleHeight
+        pullableColorPickerView.marginConstraint?.constant = closedMargin
+        pullableColorPickerView.closedMargin = closedMargin
+        pullableFontSelectorView.marginConstraint?.constant = closedMargin
+        pullableFontSelectorView.closedMargin = closedMargin
     }
 
     override public func viewDidLayoutSubviews() {
@@ -270,6 +311,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
         addTextButtonConstraint = NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        addTextButton.alpha = options.enabledOverlayButtonAlpha
         view.addConstraint(addTextButtonConstraint)
     }
 
@@ -318,6 +360,39 @@ private let kMinimumFontSize = CGFloat(12.0)
         rejectColorButtonConstraint = NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
         view.addConstraint(rejectColorButtonConstraint)
     }
+
+    private func configureAcceptFontButton() {
+        let views: [String : AnyObject] = [
+            "acceptFontButton" : acceptFontButton
+        ]
+        view.addSubview(acceptFontButton)
+        acceptFontButton.hidden = true
+        acceptFontButton.alpha = 0.0
+        acceptFontButton.layer.cornerRadius = 2
+        acceptFontButton.clipsToBounds = false
+        acceptFontButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptFontButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptFontButton(40)]", options: [], metrics: nil, views: views))
+        acceptFontButtonConstraint = NSLayoutConstraint(item: acceptFontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(acceptFontButtonConstraint)
+    }
+
+    private func configureRejectFontButton() {
+        let views: [String : AnyObject] = [
+            "rejectFontButton" : rejectFontButton
+        ]
+        view.addSubview(rejectFontButton)
+        rejectFontButton.hidden = true
+        rejectFontButton.alpha = 0.0
+        rejectFontButton.layer.cornerRadius = 2
+        rejectFontButton.clipsToBounds = false
+        rejectFontButton.backgroundColor = options.addButtonBackgroundColor
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectFontButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectFontButton(40)]", options: [], metrics: nil, views: views))
+        rejectFontButtonConstraint = NSLayoutConstraint(item: rejectFontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
+        view.addConstraint(rejectFontButtonConstraint)
+    }
+
 
     private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
         let viewName = "_\(String(abs(button.hash)))"
@@ -369,27 +444,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
     }
 
-    private func configureFontSelectorView() {
-        configureBlurredContainerView()
-        blurredContainerView.contentView.addSubview(fontSelectorView)
-
-        let views = [
-            "blurredContainerView" : blurredContainerView,
-            "fontSelectorView" : fontSelectorView
-        ]
-
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[blurredContainerView]|", options: [], metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[blurredContainerView]|", options: [], metrics: nil, views: views))
-
-        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
-        blurredContainerView.contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[fontSelectorView]|", options: [], metrics: nil, views: views))
-
-        blurredContainerView.alpha = 0.0
-        UIView.animateWithDuration(0.3) {
-            self.blurredContainerView.alpha = 1.0
-        }
-    }
-
     private func configureColorSelectorView() {
         view.addSubview(textColorSelectorView)
         textColorSelectorView.backgroundColor = self.currentBackgroundColor
@@ -404,30 +458,68 @@ private let kMinimumFontSize = CGFloat(12.0)
         textColorSelectorView.hidden = true
     }
 
-    private func configureColorPickerView() {
-        configureBlurredContainerView()
-        pullableView.addSubview(colorPickerView)
-        colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
-        colorPickerView.pickerDelegate = self
+    private func configureFontQuickSelectorView() {
+        view.addSubview(fontQuickSelectorView)
+        fontQuickSelectorView.backgroundColor = self.currentBackgroundColor
 
         let views = [
-            "pullableView" : pullableView,
+            "fontQuickSelectorView" : fontQuickSelectorView
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontQuickSelectorView]|", options: [], metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[fontQuickSelectorView(==100)]|", options: [], metrics: nil, views: views))
+        fontQuickSelectorView.alpha = 0.0
+        fontQuickSelectorView.hidden = true
+        fontQuickSelectorView.selectorDelegate = self
+    }
+
+    private func configureColorPickerView() {
+        pullableColorPickerView.addSubview(colorPickerView)
+        colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
+        colorPickerView.pickerDelegate = self
+        colorPickerView.hidden = true
+
+        let views = [
+            "pullableView" : pullableColorPickerView,
             "colorPickerView" : colorPickerView
         ]
 
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
 
-        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Top, multiplier: -1.0, constant: 0.0)
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableColorPickerView, attribute: .Top, multiplier: -1.0, constant: 0.0)
         view.addConstraint(topConstraint)
 
-        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableColorPickerView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
         view.addConstraint(bottomConstraint)
 
-        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
-        pullableView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
-        pullableView.marginConstraint = topConstraint
-        pullableView.hidden = true
-        pullableView.alpha = 0.0
+        pullableColorPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableColorPickerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableColorPickerView.handleHeight)-[colorPickerView]|", options: [], metrics: nil, views: views))
+        pullableColorPickerView.marginConstraint = topConstraint
+        pullableColorPickerView.hidden = true
+        pullableColorPickerView.alpha = 0.0
+    }
+
+    private func configureFontSelectorView() {
+        pullableFontSelectorView.addSubview(fontSelectorView)
+
+        let views = [
+            "pullableView" : pullableFontSelectorView,
+            "fontSelectorView" : fontSelectorView
+        ]
+
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[pullableView]|", options: [], metrics: nil, views: views))
+
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .Top, relatedBy: NSLayoutRelation.Equal, toItem: pullableFontSelectorView, attribute: .Top, multiplier: -1.0, constant: 0.0)
+        view.addConstraint(topConstraint)
+
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .Bottom, relatedBy: NSLayoutRelation.Equal, toItem: pullableFontSelectorView, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
+        view.addConstraint(bottomConstraint)
+
+        pullableFontSelectorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[fontSelectorView]|", options: [], metrics: nil, views: views))
+        pullableFontSelectorView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-\(pullableFontSelectorView.handleHeight)-[fontSelectorView]|", options: [], metrics: nil, views: views))
+        pullableFontSelectorView.marginConstraint = topConstraint
+        pullableFontSelectorView.hidden = true
+        pullableFontSelectorView.alpha = 0.0
     }
 
     private func configureBlurredContainerView() {
@@ -462,13 +554,24 @@ private let kMinimumFontSize = CGFloat(12.0)
         textClipView.addGestureRecognizer(longPressRecognizer)
     }
 
-    private func configurePullableView() {
-        pullableView = PullableView()
-        pullableView.translatesAutoresizingMaskIntoConstraints = false
-        pullableView.backgroundColor = self.currentBackgroundColor
-
-        self.view.addSubview(pullableView)
+    private func configurePullableColorPickerView() {
+        pullableColorPickerView = PullableView()
+        pullableColorPickerView.translatesAutoresizingMaskIntoConstraints = false
+        pullableColorPickerView.backgroundColor = self.currentBackgroundColor
+        pullableColorPickerView.handleBackgroundColor = options.handleBackgroundColor
+        pullableColorPickerView.handleColor = options.handleColor
+        self.view.addSubview(pullableColorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
+    }
+
+    private func configurePullableFontSelectorView() {
+        pullableFontSelectorView = PullableView()
+        pullableFontSelectorView.translatesAutoresizingMaskIntoConstraints = false
+        pullableFontSelectorView.backgroundColor = self.currentBackgroundColor
+        pullableFontSelectorView.handleBackgroundColor = options.handleBackgroundColor
+        pullableFontSelectorView.handleColor = options.handleColor
+        self.view.addSubview(pullableFontSelectorView)
+        //colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
     // MARK: - Button Handling
@@ -487,13 +590,20 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func deleteText(sender: UIButton) {
         if textLabel.layer.borderWidth > 0 {
+            textLabel.layer.borderWidth = 0
             textLabel.removeFromSuperview()
         }
+        updateButtonStatus()
     }
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            fontBackup = textLabel.font!
+        }
         navigationItem.rightBarButtonItem?.enabled = false
-        configureFontSelectorView()
+        fontQuickSelectorView.selectedFontName = textField.font!.fontName
+        fontSelectorView.selectedFontName = textField.font!.fontName
+        showFontSelctionViews()
     }
 
     @objc private func setTextColor(sender: ImageCaptionButton) {
@@ -537,6 +647,20 @@ private let kMinimumFontSize = CGFloat(12.0)
         hideColorSelctionViews()
     }
 
+    @objc private func acceptFont(sender: ImageCaptionButton) {
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideFontSelctionViews()
+    }
+
+    @objc private func rejectFont(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            textLabel.font = fontBackup
+            textLabel.sizeToFit()
+        }
+        navigationItem.rightBarButtonItem?.enabled = true
+        hideFontSelctionViews()
+    }
+
     // MARK: - Gesture Handling
 
     @objc private func handlePan(recognizer: UIPanGestureRecognizer) {
@@ -550,6 +674,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                 textLabel = draggedView
                 selectTextLabel(textLabel)
             }
+            updateButtonStatus()
         case .Changed:
             if let draggedView = draggedView {
                 draggedView.center = CGPoint(x: draggedView.center.x + translation.x, y: draggedView.center.y + translation.y)
@@ -580,6 +705,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
                 }
+                updateButtonStatus()
             case .Changed:
                 if let draggedView =  draggedView {
                     currentTextSize = draggedView.font.pointSize
@@ -613,6 +739,7 @@ private let kMinimumFontSize = CGFloat(12.0)
                     unSelectTextLabel(textLabel)
                     textLabel = draggedView
                     selectTextLabel(textLabel)
+                    updateButtonStatus()
                 }
             case .Changed:
                 if let draggedView = draggedView {
@@ -637,6 +764,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             currentTextSize = textLabel.font.pointSize
             selectTextLabel(textLabel)
         }
+        updateButtonStatus()
     }
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
@@ -702,6 +830,11 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func selectTextLabel(label: UILabel) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
+
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
         if selectBackgroundColor {
@@ -718,6 +851,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func unSelectTextLabel(label: UILabel) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
         label.layer.borderWidth = 0
     }
 
@@ -730,6 +867,17 @@ private let kMinimumFontSize = CGFloat(12.0)
         }
         return result
     }
+
+    private func updateButtonStatus() {
+        let enabled = textLabel.layer.borderWidth > 0
+        let alpha = CGFloat( enabled ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha )
+        deleteTextButton.alpha = alpha
+        deleteTextButton.enabled = enabled
+        bringToFrontButton.enabled = enabled
+        selectBackgroundColorButton.enabled = enabled
+        selectTextColorButton.enabled = enabled
+        selectTextFontButton.enabled = enabled
+     }
 
     // MARK: - text object restore
 
@@ -744,7 +892,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func showColorSelctionViews() {
-        self.pullableView.hidden = false
+        self.pullableColorPickerView.hidden = false
         self.textColorSelectorView.hidden = false
         self.acceptColorButton.hidden = false
         self.rejectColorButton.hidden = false
@@ -761,16 +909,17 @@ private let kMinimumFontSize = CGFloat(12.0)
             animations: {
                 self.addTextButton.alpha = 0.0
                 self.deleteTextButton.alpha = 0.0
-                self.acceptColorButton.alpha = 1.0
-                self.rejectColorButton.alpha = 1.0
+                self.acceptColorButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.rejectColorButton.alpha = self.options.enabledOverlayButtonAlpha
                 self.textColorSelectorView.alpha = 1.0
-                self.pullableView.alpha = 1.0
+                self.pullableColorPickerView.alpha = 1.0
                 self.view.layoutIfNeeded()
             },
             completion: { finished in
                 if finished {
                     self.addTextButton.hidden = true
                     self.deleteTextButton.hidden = true
+                    self.colorPickerView.hidden = false
                 }
         })
 
@@ -784,27 +933,30 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func hideColorSelctionViews() {
-        if pullableView.opened {
-            pullableView.setOpened(false, animated: true)
+        if pullableColorPickerView.opened {
+            pullableColorPickerView.setOpened(false, animated: true)
         }
         addTextButton.hidden = false
         deleteTextButton.hidden = false
+        colorPickerView.hidden = true
 
         acceptColorButtonConstraint.constant = -lowerOverlayButtonConstant
         rejectColorButtonConstraint.constant = -lowerOverlayButtonConstant
         addTextButtonConstraint.constant = -lowerOverlayButtonConstant
         deleteButtonConstraint.constant = -lowerOverlayButtonConstant
 
+        let buttonAlpha = textLabel.layer.borderWidth > 0 ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha
+
         view.needsUpdateConstraints()
         UIView.animateWithDuration(0.2,
             delay: 0.0,
             options: UIViewAnimationOptions.CurveEaseOut,
             animations: {
-                self.addTextButton.alpha = 1.0
-                self.deleteTextButton.alpha = 1.0
+                self.addTextButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.deleteTextButton.alpha = buttonAlpha
                 self.acceptColorButton.alpha = 0.0
                 self.rejectColorButton.alpha = 0.0
-                self.pullableView.alpha = 0.0
+                self.pullableColorPickerView.alpha = 0.0
                 self.textColorSelectorView.alpha = 0.0
                 self.view.layoutIfNeeded()
             },
@@ -812,12 +964,86 @@ private let kMinimumFontSize = CGFloat(12.0)
                 if finished {
                     self.acceptColorButton.hidden = true
                     self.rejectColorButton.hidden = true
-                    self.pullableView.hidden = true
+                    self.pullableColorPickerView.hidden = true
                     self.textColorSelectorView.hidden = true
                 }
         })
+    }
 
+    private func showFontSelctionViews() {
+        self.pullableFontSelectorView.hidden = false
+        self.fontSelectorView.hidden = false
+        self.acceptFontButton.hidden = false
+        self.rejectFontButton.hidden = false
+        self.fontQuickSelectorView.hidden = false
 
+        acceptFontButtonConstraint.constant = -upperOverlayButtonConstant
+        rejectFontButtonConstraint.constant = -upperOverlayButtonConstant
+        addTextButtonConstraint.constant = -upperOverlayButtonConstant
+        deleteButtonConstraint.constant = -upperOverlayButtonConstant
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = 0.0
+                self.deleteTextButton.alpha = 0.0
+                self.acceptFontButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.rejectFontButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.pullableFontSelectorView.alpha = 1.0
+                self.fontQuickSelectorView.alpha = 1.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.addTextButton.hidden = true
+                    self.deleteTextButton.hidden = true
+                }
+        })
+
+        if textLabel.layer.borderWidth > 0 {
+            fontSelectorView.text = textLabel.text!
+            fontSelectorView.selectedFontName = textLabel.font!.fontName
+            fontQuickSelectorView.selectedFontName = textLabel.font!.fontName
+        }
+    }
+
+    private func hideFontSelctionViews() {
+        if pullableFontSelectorView.opened {
+            pullableFontSelectorView.setOpened(false, animated: true)
+        }
+        addTextButton.hidden = false
+        deleteTextButton.hidden = false
+
+        acceptFontButtonConstraint.constant = -lowerOverlayButtonConstant
+        rejectFontButtonConstraint.constant = -lowerOverlayButtonConstant
+        addTextButtonConstraint.constant = -lowerOverlayButtonConstant
+        deleteButtonConstraint.constant = -lowerOverlayButtonConstant
+
+        let buttonAlpha = textLabel.layer.borderWidth > 0 ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha
+
+        view.needsUpdateConstraints()
+        UIView.animateWithDuration(0.2,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.addTextButton.alpha = self.options.enabledOverlayButtonAlpha
+                self.deleteTextButton.alpha = buttonAlpha
+                self.acceptFontButton.alpha = 0.0
+                self.rejectFontButton.alpha = 0.0
+                self.pullableFontSelectorView.alpha = 0.0
+                self.fontQuickSelectorView.alpha = 0.0
+                self.view.layoutIfNeeded()
+            },
+            completion: { finished in
+                if finished {
+                    self.acceptFontButton.hidden = true
+                    self.rejectFontButton.hidden = true
+                    self.fontQuickSelectorView.hidden = true
+                    self.pullableFontSelectorView.hidden = true
+                }
+        })
     }
 }
 
@@ -861,6 +1087,7 @@ extension TextEditorViewController: UITextFieldDelegate {
                     textLabel.sizeToFit()
                 }
                 selectTextLabel(textLabel)
+                updateButtonStatus()
             } else {
                 if !createNewText {
                     textLabel.removeFromSuperview()
@@ -879,8 +1106,19 @@ extension TextEditorViewController: UITextFieldDelegate {
 
 extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
-        hideBlurredContainer()
         self.fontName = fontName
+        fontQuickSelectorView.selectedFontName = fontName
+        if textLabel.layer.borderWidth > 0 {
+            textLabel.font = UIFont(name: fontName, size: currentTextSize)
+            textLabel.sizeToFit()
+        }
+    }
+}
+
+extension TextEditorViewController: FontQuickSelectorViewDelegate {
+    public func fontSelectorView(selectorView: FontQuickSelectorView, didSelectFont fontName: String) {
+        self.fontName = fontName
+        fontSelectorView.selectedFontName = fontName
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
             textLabel.sizeToFit()
