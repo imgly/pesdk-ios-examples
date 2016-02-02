@@ -33,6 +33,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var pullableColorPickerView = PullableView()
     private var pullableFontSelectorView = PullableView()
     private var colorBackup = UIColor.whiteColor()
+    private var fontBackup = UIFont()
     private var addTextButtonConstraint = NSLayoutConstraint()
     private var deleteButtonConstraint = NSLayoutConstraint()
     private var acceptColorButtonConstraint = NSLayoutConstraint()
@@ -596,6 +597,9 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func setTextFont(sender: ImageCaptionButton) {
+        if textLabel.layer.borderWidth > 0 {
+            fontBackup = textLabel.font!
+        }
         navigationItem.rightBarButtonItem?.enabled = false
         fontQuickSelectorView.selectedFontName = textField.font!.fontName
         fontSelectorView.selectedFontName = textField.font!.fontName
@@ -650,7 +654,8 @@ private let kMinimumFontSize = CGFloat(12.0)
 
     @objc private func rejectFont(sender: ImageCaptionButton) {
         if textLabel.layer.borderWidth > 0 {
-            //textLabel.font = UIFont(name: fontQuickSelectorView.initialFontName, size: textLabel.font!.pointSize)
+            textLabel.font = fontBackup
+            textLabel.sizeToFit()
         }
         navigationItem.rightBarButtonItem?.enabled = true
         hideFontSelctionViews()
@@ -825,6 +830,11 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func selectTextLabel(label: UILabel) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
+
         label.layer.borderColor = UIColor.whiteColor().CGColor
         label.layer.borderWidth = 1.0
         if selectBackgroundColor {
@@ -841,6 +851,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     private func unSelectTextLabel(label: UILabel) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
         label.layer.borderWidth = 0
     }
 
