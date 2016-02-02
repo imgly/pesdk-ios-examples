@@ -29,7 +29,7 @@ import CoreText
     }
 
     private func importFontsWithExtension(ext: String) {
-        let paths = NSBundle(forClass: self.dynamicType).pathsForResourcesOfType(ext, inDirectory: nil)
+        let paths = NSBundle(forClass: FontImporter.self).pathsForResourcesOfType(ext, inDirectory: nil)
         for fontPath in paths {
             let data: NSData? = NSFileManager.defaultManager().contentsAtPath(fontPath)
             var error: Unmanaged<CFError>?

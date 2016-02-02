@@ -43,7 +43,7 @@ public let kMinimumCropSize = CGFloat(50)
     // MARK: - Properties
 
     public private(set) lazy var freeRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: CropEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Free")
         button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -54,7 +54,7 @@ public let kMinimumCropSize = CGFloat(50)
         }()
 
     public private(set) lazy var oneToOneRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: CropEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("1:1")
         button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -65,7 +65,7 @@ public let kMinimumCropSize = CGFloat(50)
         }()
 
     public private(set) lazy var fourToThreeRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: CropEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("4:3")
         button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
@@ -76,7 +76,7 @@ public let kMinimumCropSize = CGFloat(50)
         }()
 
     public private(set) lazy var sixteenToNineRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: self.dynamicType)
+        let bundle = NSBundle(forClass: CropEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("16:9")
         button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)

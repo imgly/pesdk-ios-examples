@@ -69,7 +69,7 @@ import UIKit
     }
 
     private func setupAnchors() {
-        let anchorImage = UIImage(named: "crop_anchor", inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection:nil)
+        let anchorImage = UIImage(named: "crop_anchor", inBundle: NSBundle(forClass: CropRectComponent.self), compatibleWithTraitCollection:nil)
         topLeftAnchor = createAnchorWithImage(anchorImage)
         topRightAnchor = createAnchorWithImage(anchorImage)
         bottomLeftAnchor = createAnchorWithImage(anchorImage)
