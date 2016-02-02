@@ -34,9 +34,9 @@ import UIKit
 
     public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
         didSet {
-            for subview in self.subviews where subview is UIButton {
+            for subview in self.subviews where subview is TextButton {
                 // swiftlint:disable force_cast
-                let button = subview as! UIButton
+                let button = subview as! TextButton
                 // swiftlint:enable force_cast
                 button.setTitleColor(fontPreviewTextColor, forState: .Normal)
             }
@@ -61,12 +61,13 @@ import UIKit
 
     private func configureFontButtons() {
         for fontName in fontNames {
-            let button = UIButton(type: UIButtonType.Custom)
+            let button = TextButton(type: UIButtonType.Custom)
             button.setTitle(fontName, forState:UIControlState.Normal)
             button.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center
 
             if let font = UIFont(name: fontName, size: kFontSize) {
                 button.titleLabel?.font = font
+                button.fontName = fontName
                 button.setTitleColor(textColor, forState: .Normal)
                 addSubview(button)
                 button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -75,9 +76,9 @@ import UIKit
     }
 
     private func updateFontButtonText() {
-        for button in subviews where button is UIButton {
+        for button in subviews where button is TextButton {
             // swiftlint:disable force_cast
-            (button as! UIButton).setTitle(text, forState:UIControlState.Normal)
+            (button as! TextButton).setTitle(text, forState:UIControlState.Normal)
             // swiftlint:enable force_cast
         }
     }
@@ -85,14 +86,14 @@ import UIKit
     public override func layoutSubviews() {
         super.layoutSubviews()
         for index in 0 ..< subviews.count {
-            if let button = subviews[index] as? UIButton {
+            if let button = subviews[index] as? TextButton {
                 button.frame = CGRect(x: 0,
                     y: CGFloat(index) * kDistanceBetweenButtons,
                     width: frame.size.width,
                     height: kDistanceBetweenButtons)
             }
         }
-        contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2))
+        contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2) + 100)
     }
 
     @objc private func buttonTouchedUpInside(button: UIButton) {
@@ -103,8 +104,8 @@ import UIKit
     }
 
     private func updateTextColor() {
-        for view in subviews where view is UIButton {
-            if let button = view as? UIButton {
+        for view in subviews where view is TextButton {
+            if let button = view as? TextButton {
                 let color = button.titleLabel!.font.fontName == selectedFontName ? selectedTextColor : textColor
                 button.setTitleColor(color, forState: .Normal)
             }
