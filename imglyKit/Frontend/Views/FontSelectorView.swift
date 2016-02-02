@@ -96,8 +96,8 @@ import UIKit
         contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2) + 100)
     }
 
-    @objc private func buttonTouchedUpInside(button: UIButton) {
-        let fontName = button.titleLabel!.font.fontName
+    @objc private func buttonTouchedUpInside(button: TextButton) {
+        let fontName = button.fontName
         selectedFontName = fontName
         updateTextColor()
         selectorDelegate?.fontSelectorView(self, didSelectFontWithName: fontName)
@@ -106,7 +106,7 @@ import UIKit
     private func updateTextColor() {
         for view in subviews where view is TextButton {
             if let button = view as? TextButton {
-                let color = button.titleLabel!.font.fontName == selectedFontName ? selectedTextColor : textColor
+                let color = button.fontName == selectedFontName ? selectedTextColor : textColor
                 button.setTitleColor(color, forState: .Normal)
             }
         }
