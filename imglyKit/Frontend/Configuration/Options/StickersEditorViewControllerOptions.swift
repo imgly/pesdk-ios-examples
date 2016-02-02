@@ -100,16 +100,16 @@ import UIKit
     public var enabledOverlayButtonAlpha = CGFloat(0.6)
 
     /// The background color of the delete button. Defaults to petrol.
-    public var deleteButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var deleteButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     /// The background color of the bring to front button. Defaults to petrol.
-    public var bringToFrontButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var bringToFrontButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     /// The background color of the flip horizontal button. Defaults to petrol.
-    public var flipHorizontalButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var flipHorizontalButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     /// The background color of the flip vertical button. Defaults to petrol.
-    public var flipVerticalButtonBackgroundColor = UIColor(red: 0, green: 0.48, blue: 0.56, alpha: 1.0)
+    public var flipVerticalButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     public override init() {
         super.init()

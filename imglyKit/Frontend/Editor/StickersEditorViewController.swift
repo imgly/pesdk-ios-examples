@@ -33,7 +33,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     public private(set) lazy var deleteButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "deleteSticker:", forControlEvents: .TouchUpInside)
         return button
@@ -42,7 +42,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     public private(set) lazy var flipHorizontalButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontal:", forControlEvents: .TouchUpInside)
         return button
@@ -51,7 +51,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     public private(set) lazy var flipVerticalButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertical:", forControlEvents: .TouchUpInside)
         return button
@@ -60,7 +60,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     public private(set) lazy var bringToFrontButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         return button
@@ -189,6 +189,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "deleteButton" : deleteButton
         ]
         view.addSubview(deleteButton)
+        deleteButton.layer.cornerRadius = 2
         deleteButton.clipsToBounds = false
         deleteButton.backgroundColor = options.deleteButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
@@ -201,6 +202,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "flipHorizontalButton" : flipHorizontalButton
         ]
         view.addSubview(flipHorizontalButton)
+        flipHorizontalButton.layer.cornerRadius = 2
         flipHorizontalButton.clipsToBounds = false
         flipHorizontalButton.backgroundColor = options.flipHorizontalButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipHorizontalButton(40)]", options: [], metrics: nil, views: views))
@@ -212,6 +214,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "flipVerticalButton" : flipVerticalButton
         ]
         view.addSubview(flipVerticalButton)
+        flipVerticalButton.layer.cornerRadius = 2
         flipVerticalButton.clipsToBounds = false
         flipVerticalButton.backgroundColor = options.flipVerticalButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipVerticalButton(40)]", options: [], metrics: nil, views: views))
@@ -223,6 +226,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "bringToFrontButton" : bringToFrontButton
         ]
         view.addSubview(bringToFrontButton)
+        bringToFrontButton.layer.cornerRadius = 2
         bringToFrontButton.clipsToBounds = false
         bringToFrontButton.backgroundColor = options.bringToFrontButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[bringToFrontButton]-80-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
