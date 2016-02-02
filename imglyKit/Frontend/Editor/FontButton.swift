@@ -80,7 +80,7 @@ import UIKit
             fontNameLabel.text = fontName
         }
         fontNameLabel.textColor = textColor
-        fontNameLabel.frame = CGRect(x: 0, y: self.bounds.height - 10, width: self.bounds.width, height: 10)
+        fontNameLabel.frame = CGRect(x: 0, y: self.bounds.height - 15, width: self.bounds.width, height: 10)
         fontNameLabel.textAlignment = NSTextAlignment.Center
         centerTitleLabel()
     }

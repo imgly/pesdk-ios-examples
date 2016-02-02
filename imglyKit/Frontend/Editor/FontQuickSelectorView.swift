@@ -25,6 +25,12 @@ import UIKit
     private let kButtonWidth = CGFloat(60)
     private let kButtonHeight = CGFloat(60)
 
+    public var initialFontName = "" {
+        didSet {
+            updateSelectedButton(initialFontName)
+        }
+    }
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -69,11 +75,27 @@ import UIKit
                 height: kButtonHeight)
             xPosition += (kButtonDistance + kButtonWidth)
         }
-
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
 
     @objc private func buttonTouchedUpInside(button: UIButton) {
-        selectorDelegate?.fontSelectorView(self, didSelectFont: "")
+        if let fontButton = button as? FontButton {
+            updateSelectedButton(fontButton.fontName)
+            fontButton.hasFocus = true
+            selectorDelegate?.fontSelectorView(self, didSelectFont: fontButton.fontName)
+        }
+    }
+
+    private func updateSelectedButton(selectedFontName: String) {
+        for button in buttonArray {
+            let buttonFontMatches = button.fontName == selectedFontName
+            if button.hasFocus && !buttonFontMatches {
+                button.hasFocus = false
+            } else {
+                if !button.hasFocus && buttonFontMatches {
+                    button.hasFocus = true
+                }
+            }
+        }
     }
 }

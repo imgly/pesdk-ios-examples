@@ -909,6 +909,7 @@
 				2BF4D3B81AF1150400C801B2 /* FilterEditorViewController.swift */,
 				2BF4D3B91AF1150400C801B2 /* FilterSelectionController.swift */,
 				2BF4D3BA1AF1150400C801B2 /* FocusEditorViewController.swift */,
+				093D11021C5FC70800B72B7A /* FontButton.swift */,
 				0939352D1C5FBE1D00DDA571 /* FontQuickSelectorView.swift */,
 				2BF4D3BB1AF1150400C801B2 /* FontSelectorView.swift */,
 				2BF4D3BC1AF1150400C801B2 /* GradientViewDelegate.swift */,
@@ -933,7 +934,6 @@
 				2BF4D3CA1AF1150400C801B2 /* TextColorSelectorView.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
-				093D11021C5FC70800B72B7A /* FontButton.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
