@@ -31,7 +31,10 @@ class LUTConverterTests: XCTestCase {
     func testInterpolatedColorCubeGenerationPerformance() {
         self.measureBlock {
             for _ in 0..<10 {
-                let _ = LUTToNSDataConverter.colorCubeDataFromLUTNamed("K1", interpolatedWithIdentityLUTNamed: "Identity", withIntensity: 0.5, cacheIdentityLUT: false)
+                let lutConverter = LUTToNSDataConverter(identityName: "Identity")
+                lutConverter.lutName = "K1"
+                lutConverter.intensity = 0.5
+                let _ = lutConverter.colorCubeData
             }
         }
     }

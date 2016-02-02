@@ -7,10 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CoreGraphics.h>
 
 @interface LUTToNSDataConverter : NSObject
 
-+ (nullable NSData *)colorCubeDataFromLUTNamed:(nonnull NSString *)name interpolatedWithIdentityLUTNamed:(nonnull NSString *)identityName withIntensity:(float)intensity cacheIdentityLUT:(BOOL)shouldCache;
+- (nonnull instancetype)initWithIdentityName:(nonnull NSString *)identityName NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init NS_UNAVAILABLE;
+
+@property(nonatomic, nullable, copy) NSString *lutName;
+@property(nonatomic) float intensity;
+@property(nonatomic, nullable, readonly) NSData *colorCubeData;
 
 /*
  This method reads an LUT image and converts it to a cube color space representation.

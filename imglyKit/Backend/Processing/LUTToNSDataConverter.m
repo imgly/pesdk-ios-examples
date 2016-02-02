@@ -18,60 +18,71 @@
 static const int kDimension = 64;
 static NSData *identityLUT;
 
+@interface LUTToNSDataConverter ()
+
+@property(nonatomic, nonnull, copy) NSString *identityName;
+@property(nonatomic, nonnull, copy) NSData *identityLUT;
+@property(nonatomic, nullable, copy) NSData *lut;
+
+@end
+
 @implementation LUTToNSDataConverter
 
-+ (nullable NSData *)colorCubeDataFromLUTNamed:(nonnull NSString *)name interpolatedWithIdentityLUTNamed:(nonnull NSString *)identityName withIntensity:(float)intensity cacheIdentityLUT:(BOOL)shouldCache {
-    if (intensity < 0 || intensity > 1) {
+@synthesize identityLUT = _identityLUT;
+
+#pragma mark - Accessors
+
+- (NSData *)identityLUT {
+    if (!_identityLUT) {
+        _identityLUT = [[LUTToNSDataConverter colorCubeDataFromLUT:self.identityName] copy];
+        NSAssert(_identityLUT != nil, @"Unable to create identity LUT from given name.");
+    }
+
+    return _identityLUT;
+}
+
+- (void)setLutName:(NSString *)lutName {
+    if (![_lutName isEqual:lutName]) {
+        _lutName = [lutName copy];
+        _lut = [[LUTToNSDataConverter colorCubeDataFromLUT:lutName] copy];
+        NSAssert(_lut != nil, @"Unable to create lut from given name.");
+    }
+}
+
+- (NSData *)colorCubeData {
+    if (self.intensity < 0 || self.intensity > 1 || self.lut == nil || self.lut.length != self.identityLUT.length) {
         return nil;
     }
-    
-    NSData *interpolatedLUT;
-    
-    @autoreleasepool {
-        NSData *lut = [self colorCubeDataFromLUT:name];
-        if (!lut) {
-            return nil;
-        }
-        
-        NSData *identity;
-        if (!shouldCache) {
-            identity = [self colorCubeDataFromLUT:identityName];
-        } else {
-            if (identityLUT != nil) {
-                identity = identityLUT;
-            } else {
-                identityLUT = [self colorCubeDataFromLUT:identityName];
-                identity = identityLUT;
-            }
-        }
-        
-        if (!identity) {
-            return nil;
-        }
-        
-        if (lut.length != identity.length) {
-            return nil;
-        }
-        
-        NSUInteger size = lut.length;
-        
-        const float *lutData = (const float *)lut.bytes;
-        const float *identityData = (const float *)identity.bytes;
-        
-        float *data = malloc(size);
-        vDSP_vsbsm(lutData, 1, identityData, 1, &intensity, data, 1, size / sizeof(float));
-        vDSP_vadd(data, 1, identityData, 1, data, 1, size / sizeof(float));
-        
-        // This is basically Accelerate Framework's way of doing this:
-        //        for (int i = 0; i < size / sizeof(float); i++) {
-        //            data[i] = (lutData[i] - identityData[i]) * intensity + identityData[i];
-        //        }
-        
-        interpolatedLUT = [NSData dataWithBytesNoCopy:data length:size freeWhenDone:YES];
-    }
-    
-    return interpolatedLUT;
+
+    NSUInteger size = self.lut.length;
+
+    const float *lutData = (const float *)self.lut.bytes;
+    const float *identityData = (const float *)self.identityLUT.bytes;
+
+    float *data = malloc(size);
+    vDSP_vsbsm(lutData, 1, identityData, 1, &_intensity, data, 1, size / sizeof(float));
+    vDSP_vadd(data, 1, identityData, 1, data, 1, size / sizeof(float));
+
+    // This is basically Accelerate Framework's way of doing this:
+    //        for (int i = 0; i < size / sizeof(float); i++) {
+    //            data[i] = (lutData[i] - identityData[i]) * intensity + identityData[i];
+    //        }
+
+    return [NSData dataWithBytesNoCopy:data length:size freeWhenDone:YES];
 }
+
+#pragma mark - Initializers
+
+- (instancetype)initWithIdentityName:(nonnull NSString *)identityName {
+    if ((self = [super init])) {
+        _identityName = identityName;
+        _intensity = 1;
+    }
+
+    return self;
+}
+
+#pragma mark - LUT Generation
 
 /*
  This method reads an LUT image and converts it to a cube color space representation.

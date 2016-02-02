@@ -24,6 +24,8 @@ import QuartzCore
   can be used as input for a 'CIColorCube' filter, provided by core-image.
 */
 @objc(IMGLYResponseFilter) public class ResponseFilter: CIFilter, Filter {
+    private static let lutConverter = LUTToNSDataConverter(identityName: "Identity")
+
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
     public var inputIntensity = NSNumber(float: 1) {
@@ -40,7 +42,9 @@ import QuartzCore
     private var colorCubeData: NSData? {
         get {
             if _colorCubeData == nil {
-                _colorCubeData = LUTToNSDataConverter.colorCubeDataFromLUTNamed(self.responseName, interpolatedWithIdentityLUTNamed: "Identity", withIntensity: self.inputIntensity.floatValue, cacheIdentityLUT: true)
+                ResponseFilter.lutConverter.lutName = self.responseName
+                ResponseFilter.lutConverter.intensity = self.inputIntensity.floatValue
+                _colorCubeData = ResponseFilter.lutConverter.colorCubeData
             }
 
             return _colorCubeData
