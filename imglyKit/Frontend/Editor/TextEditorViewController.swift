@@ -1093,7 +1093,6 @@ extension TextEditorViewController: UITextFieldDelegate {
 extension TextEditorViewController: FontSelectorViewDelegate {
     public func fontSelectorView(fontSelectorView: FontSelectorView, didSelectFontWithName fontName: String) {
         self.fontName = fontName
-        print(fontName)
         fontQuickSelectorView.selectedFontName = fontName
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
@@ -1104,7 +1103,6 @@ extension TextEditorViewController: FontSelectorViewDelegate {
 
 extension TextEditorViewController: FontQuickSelectorViewDelegate {
     public func fontSelectorView(selectorView: FontQuickSelectorView, didSelectFont fontName: String) {
-        print(fontName)
         self.fontName = fontName
         fontSelectorView.selectedFontName = fontName
         if textLabel.layer.borderWidth > 0 {

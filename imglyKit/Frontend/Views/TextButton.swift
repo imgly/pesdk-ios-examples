@@ -27,6 +27,11 @@ import UIKit
 
     private let fontNameLabel = UILabel()
 
+    public override func setTitleColor(color: UIColor?, forState state: UIControlState) {
+        super.setTitleColor(color, forState: state)
+        fontNameLabel.textColor = color
+    }
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
