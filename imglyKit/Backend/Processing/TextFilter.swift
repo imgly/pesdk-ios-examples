@@ -7,27 +7,16 @@
 //
 
 #if os(iOS)
-import CoreImage
-import UIKit
+    import CoreImage
+    import UIKit
 #elseif os(OSX)
-import QuartzCore
-import AppKit
+    import QuartzCore
+    import AppKit
 #endif
 
 @objc(IMGLYTextFilter) public class TextFilter: CIFilter, Filter {
     /// A CIImage object that serves as input for the filter.
     public var inputImage: CIImage?
-
-    /// The sticker that should be rendered.
-    #if os(iOS)
-    public var sticker: UIImage? {
-        return createTextImage()
-    }
-    #elseif os(OSX)
-    public var sticker: NSImage? {
-        return createTextImage()
-    }
-    #endif
 
     /// The text that should be rendered.
     public var text = ""
@@ -69,18 +58,62 @@ import AppKit
             return inputImage
         }
 
-        let stickerImage = createStickerImage()
-
-        guard let cgImage = stickerImage.CGImage, filter = CIFilter(name: "CISourceOverCompositing") else {
+        guard let filter = CIFilter(name: "CISourceOverCompositing"), textImage = createCoreImage() else {
             return inputImage
         }
 
-        let stickerCIImage = CIImage(CGImage: cgImage)
         filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-        filter.setValue(stickerCIImage, forKey: kCIInputImageKey)
+        filter.setValue(textImage, forKey: kCIInputImageKey)
         return filter.outputImage
     }
 
+    private func createCoreImage() -> CIImage? {
+        let textImage = createTextImage()
+        var image: CIImage
+
+        #if os(iOS)
+            if let textImage = textImage.CGImage {
+                image = CIImage(CGImage: textImage)
+            } else {
+                return nil
+            }
+        #elseif os(OSX)
+            if let tiffRepresentation = textImage.TIFFRepresentation, textImage = CIImage(data: tiffRepresentation) {
+                image = textImage
+            } else {
+                return nil
+            }
+        #endif
+
+        let inputImageRect = inputImage!.extent
+        let inputImageSize = inputImageRect.size
+
+        let originalInputImageSize = CGSize(width: round(inputImageSize.width / cropRect.width), height: round(inputImageSize.height / cropRect.height))
+
+        var textCenter = CGPoint(x: center.x * originalInputImageSize.width, y: center.y * originalInputImageSize.height)
+        textCenter.x -= (cropRect.origin.x * originalInputImageSize.width)
+        textCenter.y -= (cropRect.origin.y * originalInputImageSize.height)
+        let textImageSize = image.extent.size
+
+        let rotation = self.transform.rotation
+
+        var transform = CGAffineTransformIdentity
+
+        // Translate
+        // Calculate the origin of the text image. Note that in CoreImage (0,0) is at the bottom
+        let textImageOrigin = CGPoint(x: textCenter.x - textImageSize.width / 2, y: textCenter.y + textImageSize.height / 2)
+        transform = CGAffineTransformTranslate(transform, textImageOrigin.x, inputImageSize.height - textImageOrigin.y)
+
+        // Rotate
+        transform = CGAffineTransformTranslate(transform, 0.5 * textImageSize.width, 0.5 * textImageSize.height)
+        transform = CGAffineTransformRotate(transform, -1 * rotation)
+        transform = CGAffineTransformTranslate(transform, -0.5 * textImageSize.width, -0.5 * textImageSize.height)
+
+        image = image.imageByApplyingTransform(transform)
+        image = image.imageByCroppingToRect(inputImageRect)
+
+        return image
+    }
 
     #if os(iOS)
 
@@ -96,9 +129,9 @@ import AppKit
         customParagraphStyle.lineBreakMode = .ByClipping
 
         let textSize = textImageSize()
+        UIGraphicsBeginImageContext(textSize)
         let context = UIGraphicsGetCurrentContext()
         CGContextSaveGState(context)
-        UIGraphicsBeginImageContext(textSize)
         backgroundColor.setFill()
         UIRectFill(CGRect(origin: CGPoint(), size: textSize))
 
@@ -145,7 +178,6 @@ import AppKit
 
     #endif
 
-
     private func textImageSize() -> CGSize {
         let rect = inputImage!.extent
         let imageSize = rect.size
@@ -175,49 +207,7 @@ import AppKit
         return text.sizeWithAttributes([NSFontAttributeName: font, NSForegroundColorAttributeName: color, NSParagraphStyleAttributeName: paragraphStyle])
     }
 
-
-    #if os(iOS)
-
-    private func createStickerImage() -> UIImage {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-        UIGraphicsBeginImageContext(imageSize)
-        UIColor(white: 1.0, alpha: 0.0).setFill()
-        UIRectFill(CGRect(origin: CGPoint(), size: imageSize))
-
-        if let context = UIGraphicsGetCurrentContext() {
-            drawStickerInContext(context, withImageOfSize: imageSize)
-        }
-
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return image
-    }
-
-    #elseif os(OSX)
-
-    private func createStickerImage() -> NSImage {
-        let rect = inputImage!.extent
-        let imageSize = rect.size
-        let image = NSImage(size: imageSize)
-        image.lockFocus()
-
-        NSColor(white: 1, alpha: 0).setFill()
-        NSRectFill(CGRect(origin: CGPoint(), size: imageSize))
-
-        if let context = NSGraphicsContext.currentContext()?.CGContext {
-            drawStickerInContext(context, withImageOfSize: imageSize)
-        }
-
-        image.unlockFocus()
-
-        return image
-    }
-
-    #endif
-
-    // MARK:- rotation
+    // MARK: - Rotation
 
     public func rotateTextRight () {
         if self.inputImage != nil {
@@ -246,7 +236,7 @@ import AppKit
         self.center.y += 0.5
     }
 
-    // MARK:- flipping
+    // MARK: - Flipping
 
     public func flipTextHorizontal () {
         flipText(true)
@@ -260,6 +250,7 @@ import AppKit
         self.center.x -= 0.5
         self.center.y -= 0.5
         let center = self.center
+
         if horizontal {
             flipRotationHorizontal()
             self.center.x = -center.x
@@ -267,6 +258,7 @@ import AppKit
             flipRotationVertical()
             self.center.y = -center.y
         }
+
         self.center.x += 0.5
         self.center.y += 0.5
     }
@@ -294,32 +286,7 @@ import AppKit
         let delta = axisAngle - angle
         self.transform = CGAffineTransformRotate(self.transform, delta * 2.0)
     }
-
-    // MARK:- drawing
-
-    private func drawStickerInContext(context: CGContextRef, withImageOfSize imageSize: CGSize) {
-        CGContextSaveGState(context)
-
-        let originalSize = CGSize(width: round(imageSize.width / cropRect.width), height: round(imageSize.height / cropRect.height))
-        var center = CGPoint(x: self.center.x * originalSize.width, y: self.center.y * originalSize.height)
-        center.x -= (cropRect.origin.x * originalSize.width)
-        center.y -= (cropRect.origin.y * originalSize.height)
-
-        let size = self.sticker!.size
-        let imageRect = CGRect(origin: center, size: size)
-
-        // Move center to origin
-        CGContextTranslateCTM(context, imageRect.origin.x, imageRect.origin.y)
-        // Apply the transform
-        CGContextConcatCTM(context, self.transform)
-        // Move the origin back by half
-        CGContextTranslateCTM(context, imageRect.size.width * -0.5, imageRect.size.height * -0.5)
-
-        sticker?.drawInRect(CGRect(origin: CGPoint(), size: size))
-        CGContextRestoreGState(context)
-    }
-
-  }
+}
 
 extension TextFilter {
     public override func copyWithZone(zone: NSZone) -> AnyObject {
