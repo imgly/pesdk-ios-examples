@@ -766,7 +766,6 @@
 		2B1ADA0B1B19C33600C98522 /* Frontend */ = {
 			isa = PBXGroup;
 			children = (
-				093D11051C60F7D600B72B7A /* Views */,
 				2BF4D3A71AF114F000C801B2 /* Assets.xcassets */,
 				2BF4D3A01AF113E600C801B2 /* Camera */,
 				E9D550EC1C05E24700CE72C3 /* Configuration */,
@@ -777,6 +776,7 @@
 				2BF4D5471AF115A200C801B2 /* Localizable.strings */,
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
+				093D11051C60F7D600B72B7A /* Views */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -1720,9 +1720,7 @@
 				2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
-				2BF4D3D11AF1150500C801B2 /* ColorButton.swift in Sources */,
 				2B948C351C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */,
-				098331121C3FB511000135B8 /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D5361AF1155E00C801B2 /* TenderFilter.swift in Sources */,
 				2BC537971C513A2900A7DE17 /* CropEditorViewControllerOptions.swift in Sources */,
 				098331211C400A72000135B8 /* UIColorExtension.swift in Sources */,
