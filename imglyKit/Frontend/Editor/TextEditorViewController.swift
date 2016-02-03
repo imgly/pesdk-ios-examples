@@ -1067,7 +1067,7 @@ extension TextEditorViewController: TextColorSelectorViewDelegate {
         if selectBackgroundColor {
             colorPickerView.color = color
             textLabel.backgroundColor = color
-            selectBackgroundColorButton.tintColor = color
+            selectBackgroundColorButton.imageView.tintColor = color
         } else {
             colorPickerView.color = color
             textLabel.textColor = color
@@ -1152,11 +1152,11 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
-            selectTextColorButton.imageView.tintColor = color
+            selectBackgroundColorButton.imageView.tintColor = color
         } else {
             textLabel.textColor = color
             textColor = color
-            selectBackgroundColorButton.tintColor = color
+            selectTextColorButton.imageView.tintColor = color
         }
     }
 
