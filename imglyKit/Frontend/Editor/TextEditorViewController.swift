@@ -774,6 +774,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
         let location = recognizer.locationInView(textClipView)
         draggedView = hitLabel(location)
         if recognizer.state == .Began {
@@ -1007,7 +1011,10 @@ private let kMinimumFontSize = CGFloat(12.0)
                     self.deleteTextButton.hidden = true
                 }
         })
+        updateFontSelectorData()
+    }
 
+    private func updateFontSelectorData() {
         if textLabel.layer.borderWidth > 0 {
             fontSelectorView.text = textLabel.text!
             fontSelectorView.selectedFontName = textLabel.font!.fontName
