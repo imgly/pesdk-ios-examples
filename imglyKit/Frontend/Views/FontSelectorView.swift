@@ -29,6 +29,7 @@ import UIKit
     public var selectedFontName = "" {
         didSet {
             updateTextColor()
+            scrollToButton()
         }
     }
 
@@ -119,6 +120,26 @@ import UIKit
                 let color = button.fontName == selectedFontName ? selectedTextColor : textColor
                 button.setTitleColor(color, forState: .Normal)
             }
+        }
+    }
+
+    private func scrollToButton() {
+        var selectedButton: UIButton?
+        for view in subviews where view is TextButton {
+            if let button = view as? TextButton {
+                if button.fontName == selectedFontName {
+                    selectedButton = button
+                }
+            }
+        }
+        if  let button = selectedButton {
+            let centerOffset = frame.height / 2.0
+            var target = button.center
+            target.x = 0
+            target.y -= centerOffset
+            target.y = max(target.y, 0.0)
+            target.y = min(target.y, contentSize.height - frame.height)
+            self.setContentOffset(target, animated: true)
         }
     }
 }

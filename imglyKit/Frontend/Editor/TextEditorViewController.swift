@@ -774,6 +774,10 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
     @objc private func handleLongPress(recognizer: UITapGestureRecognizer) {
+        // don't change selection while we are in color or font picking mode
+        if !pullableColorPickerView.hidden || !pullableFontSelectorView.hidden {
+            return
+        }
         let location = recognizer.locationInView(textClipView)
         draggedView = hitLabel(location)
         if recognizer.state == .Began {
@@ -1007,7 +1011,10 @@ private let kMinimumFontSize = CGFloat(12.0)
                     self.deleteTextButton.hidden = true
                 }
         })
+        updateFontSelectorData()
+    }
 
+    private func updateFontSelectorData() {
         if textLabel.layer.borderWidth > 0 {
             fontSelectorView.text = textLabel.text!
             fontSelectorView.selectedFontName = textLabel.font!.fontName
@@ -1060,7 +1067,7 @@ extension TextEditorViewController: TextColorSelectorViewDelegate {
         if selectBackgroundColor {
             colorPickerView.color = color
             textLabel.backgroundColor = color
-            selectBackgroundColorButton.tintColor = color
+            selectBackgroundColorButton.imageView.tintColor = color
         } else {
             colorPickerView.color = color
             textLabel.textColor = color
@@ -1145,11 +1152,11 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
-            selectTextColorButton.imageView.tintColor = color
+            selectBackgroundColorButton.imageView.tintColor = color
         } else {
             textLabel.textColor = color
             textColor = color
-            selectBackgroundColorButton.tintColor = color
+            selectTextColorButton.imageView.tintColor = color
         }
     }
 
