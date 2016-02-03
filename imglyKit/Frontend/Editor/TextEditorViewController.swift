@@ -471,6 +471,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         fontQuickSelectorView.alpha = 0.0
         fontQuickSelectorView.hidden = true
         fontQuickSelectorView.selectorDelegate = self
+        fontQuickSelectorView.selectedTextColor = options.fontSelectorHighlightColor
+        fontQuickSelectorView.textColor = options.fontSelectorFontColor
     }
 
     private func configureColorPickerView() {
@@ -520,6 +522,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableFontSelectorView.marginConstraint = topConstraint
         pullableFontSelectorView.hidden = true
         pullableFontSelectorView.alpha = 0.0
+        fontSelectorView.selectedTextColor = options.fontSelectorHighlightColor
+        fontSelectorView.textColor = options.fontSelectorFontColor
     }
 
     private func configureBlurredContainerView() {
@@ -639,8 +643,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         if textLabel.layer.borderWidth > 0 {
             if selectBackgroundColor {
                 textLabel.backgroundColor = colorBackup
+                selectBackgroundColorButton.imageView.tintColor = colorBackup
             } else {
                 textLabel.textColor = colorBackup
+                selectTextColorButton.imageView.tintColor = colorBackup
             }
         }
         navigationItem.rightBarButtonItem?.enabled = true

@@ -16,6 +16,18 @@ import UIKit
 @objc(IMGLYFontQuickSelectorView) public class FontQuickSelectorView: UIScrollView {
     public weak var selectorDelegate: FontQuickSelectorViewDelegate?
 
+    public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
+        didSet {
+            updateButtonColors()
+        }
+    }
+
+    public var textColor = UIColor.whiteColor() {
+        didSet {
+            updateButtonColors()
+        }
+    }
+
     private var fontNames = [String]()
     private var buttonArray = [FontButton]()
 
@@ -28,6 +40,7 @@ import UIKit
     public var selectedFontName = "" {
         didSet {
             updateSelectedButton()
+            scrollToButton()
         }
     }
 
@@ -66,7 +79,6 @@ import UIKit
 
     private func layoutButtons() {
         var xPosition = kButtonXPositionOffset
-
         for i in 0 ..< fontNames.count {
             let button = buttonArray[i]
             button.frame = CGRect(x: xPosition,
@@ -90,6 +102,25 @@ import UIKit
         for button in buttonArray {
             let buttonFontMatches = button.fontName == selectedFontName
             button.hasFocus = buttonFontMatches
+        }
+    }
+
+    private func updateButtonColors() {
+        for button in buttonArray {
+            button.textColor = textColor
+            button.selectionColor = selectedTextColor
+        }
+    }
+
+    private func scrollToButton() {
+        if  let selectedButtonIndex = buttonArray.indexOf({ $0.hasFocus }) {
+            let centerOffset = frame.width / 2.0
+            var target = buttonArray[selectedButtonIndex].center
+            target.x -= centerOffset
+            target.x = max(target.x, 0.0)
+            target.x = min(target.x, contentSize.width - frame.width)
+            target.y = 0
+            self.setContentOffset(target, animated: true)
         }
     }
 }
