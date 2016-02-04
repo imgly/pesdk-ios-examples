@@ -88,7 +88,7 @@ internal func checkSDKVersionIfNeeded() {
     }
 
     let appIdentifier = NSBundle.mainBundle().infoDictionary?["CFBundleIdentifier"] as? String
-    if let appIdentifier = appIdentifier, url = NSURL(string: "https://www.photoeditorsdk.com/version.json?type=ios&app=\(appIdentifier)") {
+    if let appIdentifier = appIdentifier, url = NSURL(string: "https://www.photoeditorsdk.com/version.json?sdk=ios&app=\(appIdentifier)") {
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { data, response, error in
             if let data = data {
                 do {
