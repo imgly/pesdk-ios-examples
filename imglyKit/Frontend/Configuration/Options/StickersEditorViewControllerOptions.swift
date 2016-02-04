@@ -94,10 +94,10 @@ import UIKit
     public var canBringToFront = true
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
-    public var disabledOverlayButtonAlpha = CGFloat(0.2)
+    public var disabledOverlayButtonAlpha = CGFloat(0.0)
 
     /// This value determins the opacity of any enabled button that is positions above the preview.
-    public var enabledOverlayButtonAlpha = CGFloat(0.6)
+    public var enabledOverlayButtonAlpha = CGFloat(1.0)
 
     /// The background color of the delete button. Defaults to petrol.
     public var deleteButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
