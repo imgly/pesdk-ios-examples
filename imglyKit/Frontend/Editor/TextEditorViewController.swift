@@ -881,12 +881,21 @@ private let kMinimumFontSize = CGFloat(12.0)
     private func updateButtonStatus() {
         let enabled = textLabel.layer.borderWidth > 0
         let alpha = CGFloat( enabled ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha )
-        deleteTextButton.alpha = alpha
-        deleteTextButton.enabled = enabled
-        bringToFrontButton.enabled = enabled
-        selectBackgroundColorButton.enabled = enabled
-        selectTextColorButton.enabled = enabled
-        selectTextFontButton.enabled = enabled
+        UIView.animateWithDuration(0.15,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.deleteTextButton.alpha = alpha
+            },
+            completion: { finished in
+                if finished {
+                    self.selectBackgroundColorButton.enabled = enabled
+                    self.selectTextColorButton.enabled = enabled
+                    self.selectTextFontButton.enabled = enabled
+                    self.deleteTextButton.enabled = enabled
+                    self.bringToFrontButton.enabled = enabled
+                }
+           })
      }
 
     // MARK: - text object restore

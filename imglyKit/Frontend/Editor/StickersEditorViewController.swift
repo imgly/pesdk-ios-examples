@@ -448,16 +448,24 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     private func updateButtonStatus() {
         let enabled = selectedView.layer.borderWidth > 0
         let alpha = CGFloat( enabled ? options.enabledOverlayButtonAlpha : options.disabledOverlayButtonAlpha )
-        deleteButton.alpha = alpha
-        deleteButton.enabled = enabled
-        flipVerticalButton.alpha = alpha
-        flipVerticalButton.enabled = enabled
-        flipHorizontalButton.alpha = alpha
-        flipHorizontalButton.enabled = enabled
-        bringToFrontButton.alpha = alpha
-        bringToFrontButton.enabled = enabled
+        UIView.animateWithDuration(0.15,
+            delay: 0.0,
+            options: UIViewAnimationOptions.CurveEaseOut,
+            animations: {
+                self.deleteButton.alpha = alpha
+                self.flipVerticalButton.alpha = alpha
+                self.flipHorizontalButton.alpha = alpha
+                self.bringToFrontButton.alpha = alpha
+            },
+            completion: { finished in
+                if finished {
+                    self.deleteButton.enabled = enabled
+                    self.flipVerticalButton.enabled = enabled
+                    self.flipHorizontalButton.enabled = enabled
+                    self.bringToFrontButton.enabled = enabled
+                }
+        })
     }
-
 }
 
 extension StickersEditorViewController: UICollectionViewDataSource {
