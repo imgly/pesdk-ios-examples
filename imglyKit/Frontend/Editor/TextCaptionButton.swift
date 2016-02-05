@@ -109,7 +109,7 @@ private let kImageCaptionMargin = 2
         ]
 
         titleViewContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "|-(>=0)-[titleView(==imageWidth)]-(>=0)-|",
+            "|-[titleView]-|",
             options: [],
             metrics: metrics,
             views: views))
@@ -121,7 +121,7 @@ private let kImageCaptionMargin = 2
             views: views))
 
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "|-(>=0)-[titleViewContainerView(==imageWidth)]-(>=0)-|",
+            "|-[titleViewContainerView]-|",
             options: [],
             metrics: metrics,
             views: views))
