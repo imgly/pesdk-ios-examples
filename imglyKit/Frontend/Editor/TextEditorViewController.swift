@@ -607,8 +607,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             fontBackup = textLabel.font!
         }
         navigationItem.rightBarButtonItem?.enabled = false
-        fontQuickSelectorView.selectedFontName = textField.font!.fontName
-        fontSelectorView.selectedFontName = textField.font!.fontName
         showFontSelctionViews()
     }
 
@@ -771,6 +769,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             textLabel = draggedView
             currentTextSize = textLabel.font.pointSize
             selectTextLabel(textLabel)
+            updateFontSelectorData()
         }
         updateButtonStatus()
     }
@@ -1030,6 +1029,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             fontSelectorView.text = textLabel.text!
             fontSelectorView.selectedFontName = textLabel.font!.fontName
             fontQuickSelectorView.selectedFontName = textLabel.font!.fontName
+            selectTextFontButton.fontName = textLabel.font!.fontName
         }
     }
 
@@ -1112,6 +1112,7 @@ extension TextEditorViewController: UITextFieldDelegate {
                 }
                 selectTextLabel(textLabel)
                 updateButtonStatus()
+                updateFontSelectorData()
             } else {
                 if !createNewText {
                     textLabel.removeFromSuperview()

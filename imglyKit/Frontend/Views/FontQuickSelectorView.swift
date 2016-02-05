@@ -66,6 +66,9 @@ import UIKit
         for fontName in fontNames {
             let button = FontButton()
             button.fontName = fontName
+            if let displayName = InstanceFactory.fontDisplayNames[button.fontName] {
+                button.displayName = displayName
+            }
             self.addSubview(button)
             button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: .TouchUpInside)
             buttonArray.append(button)

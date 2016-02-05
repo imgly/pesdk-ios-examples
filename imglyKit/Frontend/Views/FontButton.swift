@@ -37,6 +37,12 @@ import UIKit
         }
     }
 
+    public var displayName = "" {
+        didSet {
+            styleButton()
+        }
+    }
+
     public var fontSize = CGFloat(20) {
         didSet {
             styleButton()
@@ -77,7 +83,7 @@ import UIKit
         titleLabel!.sizeToFit()
         if fontName.characters.count > 0 {
             titleLabel?.font = UIFont(name: fontName, size: fontSize)
-            fontNameLabel.text = fontName
+            fontNameLabel.text = displayName.characters.count > 0 ? displayName : fontName
         }
         fontNameLabel.textColor = textColor
         fontNameLabel.frame = CGRect(x: 0, y: self.bounds.height - 15, width: self.bounds.width, height: 10)

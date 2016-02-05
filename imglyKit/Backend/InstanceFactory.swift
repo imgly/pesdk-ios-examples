@@ -186,26 +186,56 @@ import Foundation
             "Avenir-Heavy",
             "ChalkboardSE-Regular",
             "ArialMT",
-            "BanglaSangamMN",
+            "KohinoorBangla-Regular",
             "Liberator",
             "Muncie",
-            "Abraham Lincoln",
-            "Airship 27",
-            "Arvil",
-            "Bender",
-            "Blanch",
-            "Cubano",
-            "Franchise",
-            "Geared Slab",
+            "AbrahamLincoln",
+            "Airship27",
+            "ArvilSans",
+            "Bender-Inline",
+            "Blanch-Condensed",
+            "Cubano-Regular",
+            "Franchise-Bold",
+            "GearedSlab-Regular",
             "Governor",
             "Haymaker",
-            "Homestead",
-            "Maven Pro Light",
-            "Mensch",
-            "Sullivan",
+            "Homestead-Regular",
+            "MavenProLight200-Regular",
+            "MenschRegular",
+            "Sullivan-Regular",
             "Tommaso",
-            "Valencia",
+            "ValenciaRegular",
             "Vevey"
+        ]
+    }
+
+    /**
+     Some font names are long and ugly therefor.
+     In that case its possible to add an entry into this dictionary.
+     The SDK will perform a lookup first and will use that name in the UI.
+
+     - returns: A map to beautfy the names.
+     */
+    public class var fontDisplayNames: [String:String] {
+        return [
+            "AmericanTypewriter" : "Typewriter",
+             "Avenir-Heavy" :"Avenir",
+            "ChalkboardSE-Regular" : "Chalkboard",
+            "ArialMT" : "Arial",
+            "KohinoorBangla-Regular" : "Kohinoor",
+            "AbrahamLincoln" : "Lincoln",
+            "Airship27" : "Airship",
+            "ArvilSans" : "Arvil",
+            "Bender-Inline" : "Bender",
+            "Blanch-Condensed" : "Blanch",
+            "Cubano-Regular" : "Cubano",
+            "Franchise-Bold" : "Franchise",
+            "GearedSlab-Regular" : "Geared",
+            "Homestead-Regular" : "Homestead",
+            "MavenProLight200-Regular" : "Maven Pro",
+            "MenschRegular" : "Mensch",
+            "Sullivan-Regular" : "Sullivan",
+            "ValenciaRegular" : "Valencia"
         ]
     }
 

@@ -273,8 +273,8 @@
 
     /**
      In this method we perform the mirroring around an Axis.
-     The Axis is defined by its angle. 
-     To calculate the final angle, we mirror the angle around the axis 
+     The Axis is defined by its angle.
+     To calculate the final angle, we mirror the angle around the axis
      and add that delta to the current rotation.
 
      - parameter axisAngle: The angle that defins the axis that is used for mirroring the angle.
@@ -310,7 +310,6 @@ extension TextFilter {
         copy.color = color.copyWithZone(zone) as! Color
         copy.backgroundColor = backgroundColor.copyWithZone(zone) as! Color
         // swiftlint:enable force_cast
-
         return copy
     }
 }

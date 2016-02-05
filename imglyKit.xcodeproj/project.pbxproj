@@ -946,8 +946,8 @@
 				2BF4D3C61AF1150400C801B2 /* StickerCollectionViewCell.swift */,
 				2BF4D3C81AF1150400C801B2 /* StickersEditorViewController.swift */,
 				2BF4D3C91AF1150400C801B2 /* SubEditorViewController.swift */,
-				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 				09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */,
+				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";

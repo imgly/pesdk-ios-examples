@@ -63,6 +63,8 @@ private let kImageCaptionMargin = 2
         }
     }
 
+    private var titleViewTopConstraint = NSLayoutConstraint()
+
     // MARK: - Initializers
 
     override init(frame: CGRect) {
@@ -83,17 +85,21 @@ private let kImageCaptionMargin = 2
     // MARK: - Configuration
 
     private func configureViews() {
+        let titleViewContainerView = UIView()
         let containerView = UIView()
         containerView.userInteractionEnabled = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.addSubview(titleView)
+        containerView.addSubview(titleViewContainerView)
         containerView.addSubview(textLabel)
         addSubview(containerView)
+        titleViewContainerView.addSubview(titleView)
+        titleViewContainerView.translatesAutoresizingMaskIntoConstraints = false
 
         let views = [
             "containerView" : containerView,
             "titleView" : titleView,
-            "textLabel" : textLabel
+            "textLabel" : textLabel,
+            "titleViewContainerView" : titleViewContainerView
         ]
 
         let metrics: [ String: AnyObject ] = [
@@ -102,8 +108,20 @@ private let kImageCaptionMargin = 2
             "imageCaptionMargin" : kImageCaptionMargin
         ]
 
-        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        titleViewContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
             "|-(>=0)-[titleView(==imageWidth)]-(>=0)-|",
+            options: [],
+            metrics: metrics,
+            views: views))
+
+        titleViewContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "V:[titleView]",
+            options: [],
+            metrics: metrics,
+            views: views))
+
+        containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+            "|-(>=0)-[titleViewContainerView(==imageWidth)]-(>=0)-|",
             options: [],
             metrics: metrics,
             views: views))
@@ -115,10 +133,13 @@ private let kImageCaptionMargin = 2
             views: views))
 
         containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-            "V:|[titleView(==imageHeight)]-(imageCaptionMargin)-[textLabel]|",
+            "V:|[titleViewContainerView(==imageHeight)]-(imageCaptionMargin)-[textLabel]|",
             options: .AlignAllCenterX,
             metrics: metrics,
             views: views))
+
+        titleViewTopConstraint = NSLayoutConstraint(item: titleView, attribute: .Top, relatedBy: .Equal, toItem: titleViewContainerView, attribute: .Top, multiplier: 1, constant: 0)
+        titleViewContainerView.addConstraint(titleViewTopConstraint)
 
         addConstraint(NSLayoutConstraint(item: containerView, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
         addConstraint(NSLayoutConstraint(item: containerView, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0))
@@ -143,7 +164,7 @@ private let kImageCaptionMargin = 2
             contentVerticalAlignment = .Top
             let topPadding = titleView.font.ascender - titleView.font.capHeight
             let offset =  -textSize.height / 2.0 + kImageSize.height * 0.5 - topPadding * 0.5
-            
+            titleViewTopConstraint.constant = offset
         }
     }
 }
