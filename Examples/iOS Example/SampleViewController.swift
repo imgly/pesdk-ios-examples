@@ -21,12 +21,13 @@ class SampleViewController: UIViewController {
     }
 
     @IBAction func showDefaultCamera(sender: UIButton) {
+        let defaultBlue = view.tintColor
         // Set a global tint color, that gets inherited by all views
         if let window = UIApplication.sharedApplication().delegate?.window! {
             window.tintColor = UIColor.whiteColor()
         }
 
-        UINavigationBar.appearance().tintColor = UIColor.blueColor()
+        UINavigationBar.appearance().tintColor = defaultBlue
 
         let cameraViewController = CameraViewController()
         presentViewController(cameraViewController, animated: true, completion: nil)
