@@ -79,7 +79,10 @@ import UIKit
             if let font = UIFont(name: fontName, size: kFontSize) {
                 button.titleLabel?.font = font
                 button.fontName = fontName
-                button.setTitleColor(textColor, forState: .Normal)
+                if let displayName = InstanceFactory.fontDisplayNames[button.fontName] {
+                    button.displayName = displayName
+                }
+               button.setTitleColor(textColor, forState: .Normal)
                 addSubview(button)
                 button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
             }

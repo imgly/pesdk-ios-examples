@@ -97,12 +97,13 @@ private let kMinimumFontSize = CGFloat(12.0)
         return button
     }()
 
-    public private(set) lazy var selectTextFontButton: ImageCaptionButton = {
+    public private(set) lazy var selectTextFontButton: TextCaptionButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
-        let button = ImageCaptionButton()
+        let button = TextCaptionButton()
         button.textLabel.text = Localize("Font")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleView.text = "Ag"
+        button.titleView.textColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextFont:", forControlEvents: .TouchUpInside)
         return button
     }()
@@ -278,6 +279,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         bottomContainerView.addSubview(buttonContainerView)
         bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
         bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        selectTextFontButton.fontName = options.defaultFontName
 
         var views = [String: UIView]()
         var visualFormatString = ""
@@ -394,7 +396,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 
 
-    private func viewsByAddingButton(button: ImageCaptionButton, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
+    private func viewsByAddingButton(button: UIControl, containerView: UIView, var views: [String: UIView]) -> ([String: UIView]) {
         let viewName = "_\(String(abs(button.hash)))"
         containerView.addSubview(button)
         views[viewName] = button
@@ -402,7 +404,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         return views
     }
 
-    private func visualFormatStringByAddingButton(button: ImageCaptionButton, var visualFormatString: String) -> (String) {
+    private func visualFormatStringByAddingButton(button: UIControl, var visualFormatString: String) -> (String) {
         let viewName = "_\(String(abs(button.hash)))"
         visualFormatString.appendContentsOf("[\(viewName)(==buttonWidth)]")
         return visualFormatString
@@ -605,8 +607,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             fontBackup = textLabel.font!
         }
         navigationItem.rightBarButtonItem?.enabled = false
-        fontQuickSelectorView.selectedFontName = textField.font!.fontName
-        fontSelectorView.selectedFontName = textField.font!.fontName
         showFontSelctionViews()
     }
 
@@ -769,6 +769,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             textLabel = draggedView
             currentTextSize = textLabel.font.pointSize
             selectTextLabel(textLabel)
+            updateFontSelectorData()
         }
         updateButtonStatus()
     }
@@ -1028,6 +1029,7 @@ private let kMinimumFontSize = CGFloat(12.0)
             fontSelectorView.text = textLabel.text!
             fontSelectorView.selectedFontName = textLabel.font!.fontName
             fontQuickSelectorView.selectedFontName = textLabel.font!.fontName
+            selectTextFontButton.fontName = textLabel.font!.fontName
         }
     }
 
@@ -1110,6 +1112,7 @@ extension TextEditorViewController: UITextFieldDelegate {
                 }
                 selectTextLabel(textLabel)
                 updateButtonStatus()
+                updateFontSelectorData()
             } else {
                 if !createNewText {
                     textLabel.removeFromSuperview()
@@ -1133,6 +1136,7 @@ extension TextEditorViewController: FontSelectorViewDelegate {
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
             textLabel.sizeToFit()
+            selectTextFontButton.fontName = fontName
         }
     }
 }
@@ -1144,6 +1148,7 @@ extension TextEditorViewController: FontQuickSelectorViewDelegate {
         if textLabel.layer.borderWidth > 0 {
             textLabel.font = UIFont(name: fontName, size: currentTextSize)
             textLabel.sizeToFit()
+            selectTextFontButton.fontName = fontName
         }
     }
 }

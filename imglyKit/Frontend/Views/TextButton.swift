@@ -25,6 +25,12 @@ import UIKit
         }
     }
 
+    public var displayName = "" {
+        didSet {
+            updateFontLabel()
+        }
+    }
+
     private let fontNameLabel = UILabel()
 
     public override func setTitleColor(color: UIColor?, forState state: UIControlState) {
@@ -56,7 +62,7 @@ import UIKit
         fontNameLabel.font = fontNameLabel.font.fontWithSize(10)
         fontNameLabel.textColor = textColor
         if fontName.characters.count > 0 {
-            fontNameLabel.text = fontName
+            fontNameLabel.text = displayName.characters.count > 0 ? displayName : fontName
         }
     }
 
