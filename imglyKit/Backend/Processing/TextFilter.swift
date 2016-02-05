@@ -271,6 +271,14 @@
         flipRotation(CGFloat(M_PI_2))
     }
 
+    /**
+     In this method we perform the mirroring around an Axis.
+     The Axis is defined by its angle. 
+     To calculate the final angle, we mirror the angle around the axis 
+     and add that delta to the current rotation.
+
+     - parameter axisAngle: The angle that defins the axis that is used for mirroring the angle.
+     */
     private func flipRotation(axisAngle: CGFloat) {
         var angle = atan2(self.transform.b, self.transform.a)
         let twoPI = CGFloat(M_PI * 2.0)
