@@ -577,13 +577,17 @@ private let kMinimumFontSize = CGFloat(12.0)
         tapGestureRecognizer.delegate = self
         textClipView.addGestureRecognizer(tapGestureRecognizer)
 
-        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
-        rotationGestureRecognizer.delegate = self
-        textClipView.addGestureRecognizer(rotationGestureRecognizer)
+        if options.canModifyTextRotation {
+            let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
+            rotationGestureRecognizer.delegate = self
+            textClipView.addGestureRecognizer(rotationGestureRecognizer)
+        }
 
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        longPressRecognizer.minimumPressDuration = 2
-        textClipView.addGestureRecognizer(longPressRecognizer)
+        if options.canModifyText {
+            let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+            longPressRecognizer.minimumPressDuration = 2
+            textClipView.addGestureRecognizer(longPressRecognizer)
+        }
     }
 
     private func configurePullableColorPickerView() {

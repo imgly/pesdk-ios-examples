@@ -37,6 +37,12 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public let canModifyTextSize: Bool
 
+    /// Enables/Disables the pinch gesture, that allows rotation of the current text. Defaults to true.
+    public let canModifyTextRotation: Bool
+
+    /// Enables/Disables the long press gesture, that allows editing the text. Defaults to true.
+    public let canModifyText: Bool
+
     /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
     public let openNewTextDialogAutomatically: Bool
 
@@ -91,6 +97,8 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
         allowedTextActions = builder.allowedTextActions
         pullableViewConfigurationClosure = builder.pullableViewConfigurationClosure
         openNewTextDialogAutomatically = builder.openNewTextDialogAutomatically
+        canModifyTextRotation = builder.canModifyTextRotation
+        canModifyText = builder.canModifyText
         super.init(editorBuilder: builder)
     }
 }
@@ -112,6 +120,12 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
 
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public var canModifyTextSize = true
+
+    /// Enables/Disables the pinch gesture, that allows rotation of the current text. Defaults to true.
+    public var canModifyTextRotation = true
+
+    /// Enables/Disables the long press gesture, that allows editing the text. Defaults to true.
+    public var canModifyText = true
 
     /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
     public var openNewTextDialogAutomatically = true
