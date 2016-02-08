@@ -13,6 +13,19 @@ private let kTextFieldHeight = CGFloat(40)
 private let kTextLabelInitialMargin = CGFloat(40)
 private let kMinimumFontSize = CGFloat(12.0)
 
+@objc public enum TextAction: Int {
+    case SelectFont
+    case SelectTextColor
+    case SelectBackgroundColor
+    case AddText
+    case DeleteText
+    case AcceptColor
+    case RejectColor
+    case AcceptFont
+    case RejectFont
+    case BringToFront
+}
+
 @objc(IMGLYTextEditorViewController) public class TextEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
@@ -46,54 +59,78 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_add", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .AddText)
         return button
     }()
 
     public private(set) lazy var deleteTextButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "deleteText:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .DeleteText)
         return button
     }()
 
     public private(set) lazy var acceptColorButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "acceptColor:", forControlEvents: .TouchUpInside)
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+        self.options.actionButtonConfigurationClosure?(button, .AcceptColor)
         return button
     }()
 
     public private(set) lazy var rejectColorButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "rejectColor:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .RejectColor)
         return button
     }()
 
     public private(set) lazy var acceptFontButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_confirm", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "acceptFont:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .AcceptFont)
         return button
     }()
 
     public private(set) lazy var rejectFontButton: UIButton = {
         let bundle = NSBundle(forClass: self.dynamicType)
         let button = UIButton(type: UIButtonType.Custom)
-        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
+        button.setImage(UIImage(named: "icon_cancel", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "rejectFont:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .RejectFont)
         return button
     }()
 
@@ -103,8 +140,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.textLabel.text = Localize("Font")
         button.translatesAutoresizingMaskIntoConstraints = false
         button.titleView.text = "Ag"
-        button.titleView.textColor = UIColor.whiteColor()
+        button.titleView.textColor = self.options.fontSelectorFontColor
         button.addTarget(self, action: "setTextFont:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .SelectFont)
         return button
     }()
 
@@ -117,6 +155,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         button.imageView.tintColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .SelectTextColor)
         return button
     }()
 
@@ -129,6 +168,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         button.imageView.tintColor = UIColor.clearColor()
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .SelectBackgroundColor)
         return button
     }()
 
@@ -136,9 +176,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         let bundle = NSBundle(forClass: TextEditorViewController.self)
         let button = ImageCaptionButton()
         button.textLabel.text = Localize("Bring to front")
-        button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)
+        button.imageView.image = UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .BringToFront)
         return button
     }()
 
@@ -166,7 +207,8 @@ private let kMinimumFontSize = CGFloat(12.0)
         let selector = FontSelectorView()
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
-        selector.fontPreviewTextColor = self.options.fontPreviewTextColor
+        selector.textColor = self.options.fontSelectorFontColor
+        selector.fontSelectorButtonConfigurationClosure = self.options.fontSelectorButtonConfigurationClosure
         return selector
     }()
 
@@ -186,7 +228,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var fontQuickSelectorView: FontQuickSelectorView = {
         let view = FontQuickSelectorView()
         view.translatesAutoresizingMaskIntoConstraints = false
-       // view.menuDelegate = self
+        view.fontQuickSelectorButtonConfigurationClosure = self.options.fontQuickSelectorButtonConfigurationClosure
         return view
     }()
 
@@ -307,9 +349,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             "addTextButton" : addTextButton
         ]
         view.addSubview(addTextButton)
-        addTextButton.layer.cornerRadius = 2
-        addTextButton.clipsToBounds = false
-        addTextButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[addTextButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[addTextButton(40)]", options: [], metrics: nil, views: views))
         addTextButtonConstraint = NSLayoutConstraint(item: addTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -322,9 +361,6 @@ private let kMinimumFontSize = CGFloat(12.0)
             "deleteTextButton" : deleteTextButton
         ]
         view.addSubview(deleteTextButton)
-        deleteTextButton.layer.cornerRadius = 2
-        deleteTextButton.clipsToBounds = false
-        deleteTextButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteTextButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteTextButton(40)]", options: [], metrics: nil, views: views))
         deleteButtonConstraint = NSLayoutConstraint(item: deleteTextButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -338,9 +374,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(acceptColorButton)
         acceptColorButton.hidden = true
         acceptColorButton.alpha = 0.0
-        acceptColorButton.layer.cornerRadius = 2
-        acceptColorButton.clipsToBounds = false
-        acceptColorButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptColorButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptColorButton(40)]", options: [], metrics: nil, views: views))
         acceptColorButtonConstraint = NSLayoutConstraint(item: acceptColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -354,9 +387,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(rejectColorButton)
         rejectColorButton.hidden = true
         rejectColorButton.alpha = 0.0
-        rejectColorButton.layer.cornerRadius = 2
-        rejectColorButton.clipsToBounds = false
-        rejectColorButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectColorButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectColorButton(40)]", options: [], metrics: nil, views: views))
         rejectColorButtonConstraint = NSLayoutConstraint(item: rejectColorButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -370,9 +400,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(acceptFontButton)
         acceptFontButton.hidden = true
         acceptFontButton.alpha = 0.0
-        acceptFontButton.layer.cornerRadius = 2
-        acceptFontButton.clipsToBounds = false
-        acceptFontButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[acceptFontButton]-20-|", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[acceptFontButton(40)]", options: [], metrics: nil, views: views))
         acceptFontButtonConstraint = NSLayoutConstraint(item: acceptFontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -386,9 +413,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         view.addSubview(rejectFontButton)
         rejectFontButton.hidden = true
         rejectFontButton.alpha = 0.0
-        rejectFontButton.layer.cornerRadius = 2
-        rejectFontButton.clipsToBounds = false
-        rejectFontButton.backgroundColor = options.addButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[rejectFontButton]", options: [], metrics: [ "buttonWidth": 40 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[rejectFontButton(40)]", options: [], metrics: nil, views: views))
         rejectFontButtonConstraint = NSLayoutConstraint(item: rejectFontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20)
@@ -577,7 +601,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableFontSelectorView.handleBackgroundColor = options.handleBackgroundColor
         pullableFontSelectorView.handleColor = options.handleColor
         self.view.addSubview(pullableFontSelectorView)
-        //colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
     // MARK: - Button Handling

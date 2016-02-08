@@ -26,6 +26,12 @@ import UIKit
         }
     }
 
+    public var labelColor = UIColor.whiteColor() {
+        didSet {
+            updateTextColor()
+        }
+    }
+
     public var selectedFontName = "" {
         didSet {
             updateTextColor()
@@ -39,11 +45,18 @@ import UIKit
         }
     }
 
+    /// This closure allows further configuration of the bottom bar font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    // swiftlint:disable variable_name
+    public var fontSelectorButtonConfigurationClosure: FontSelectorButtonConfigurationClosure? = nil
+    // swiftlint:enable variable_name
+
+
     private let kDistanceBetweenButtons = CGFloat(60)
     private let kFontSize = CGFloat(28)
     private var fontNames = [String]()
 
-    public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
+  /*  public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
         didSet {
             for subview in self.subviews where subview is TextButton {
                 // swiftlint:disable force_cast
@@ -53,7 +66,7 @@ import UIKit
             }
         }
     }
-
+*/
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -82,7 +95,7 @@ import UIKit
                 if let displayName = InstanceFactory.fontDisplayNames[button.fontName] {
                     button.displayName = displayName
                 }
-               button.setTitleColor(textColor, forState: .Normal)
+                button.setTitleColor(textColor, forState: .Normal)
                 addSubview(button)
                 button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
             }
@@ -90,10 +103,12 @@ import UIKit
     }
 
     private func updateFontButtonText() {
-        for button in subviews where button is TextButton {
+        for subview in subviews where subview is TextButton {
             // swiftlint:disable force_cast
-            (button as! TextButton).setTitle(text, forState:UIControlState.Normal)
+            let button = subview as! TextButton
             // swiftlint:enable force_cast
+            button.setTitleColor(textColor, forState: .Normal)
+            button.labelColor = labelColor
         }
     }
 
@@ -105,6 +120,7 @@ import UIKit
                     y: CGFloat(index) * kDistanceBetweenButtons,
                     width: frame.size.width,
                     height: kDistanceBetweenButtons)
+                fontSelectorButtonConfigurationClosure?(button)
             }
         }
         contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2) + 100)

@@ -10,7 +10,11 @@ import UIKit
 
 @objc(IMGLYTextButton) public class TextButton: UIButton {
 
-    public var textColor = UIColor.whiteColor()
+    public var labelColor = UIColor.whiteColor() {
+        didSet {
+            updateFontLabel()
+        }
+    }
 
     public var fontName = "" {
         didSet {
@@ -32,11 +36,6 @@ import UIKit
     }
 
     private let fontNameLabel = UILabel()
-
-    public override func setTitleColor(color: UIColor?, forState state: UIControlState) {
-        super.setTitleColor(color, forState: state)
-        fontNameLabel.textColor = color
-    }
 
     public override init(frame: CGRect) {
         super.init(frame: frame)
@@ -60,7 +59,7 @@ import UIKit
 
     private func updateFontLabel() {
         fontNameLabel.font = fontNameLabel.font.fontWithSize(10)
-        fontNameLabel.textColor = textColor
+        fontNameLabel.textColor = labelColor
         if fontName.characters.count > 0 {
             fontNameLabel.text = displayName.characters.count > 0 ? displayName : fontName
         }

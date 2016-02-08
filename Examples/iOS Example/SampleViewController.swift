@@ -11,6 +11,11 @@ import UIKit
 import imglyKit
 
 class SampleViewController: UIViewController {
+
+    private let whiteColor = UIColor(red:0.941, green:0.980, blue:0.988, alpha:1)
+    private let redColor = UIColor(red:0.988, green:0.173, blue:0.357, alpha:1)
+    private let blueColor = UIColor(red:0.243, green:0.769, blue:0.831, alpha:1)
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -51,13 +56,10 @@ class SampleViewController: UIViewController {
     }
 
     @IBAction func showCustomized(sender: UIButton) {
-        let whiteColor = UIColor(red:0.941, green:0.980, blue:0.988, alpha:1)
-        let redColor = UIColor(red:0.988, green:0.173, blue:0.357, alpha:1)
-        let blueColor = UIColor(red:0.243, green:0.769, blue:0.831, alpha:1)
 
         let configuration = Configuration() { builder in
             // Setup global colors
-            builder.backgroundColor = whiteColor
+            builder.backgroundColor = self.whiteColor
 
             // This replaces the SDKs FilterEditorViewController, with our own sample subclass
             do {
@@ -67,66 +69,14 @@ class SampleViewController: UIViewController {
             }
 
             // Customize the navigation bar using UIAppearance
-            UINavigationBar.appearance().titleTextAttributes = [ NSForegroundColorAttributeName: blueColor,
+            UINavigationBar.appearance().titleTextAttributes = [ NSForegroundColorAttributeName: self.blueColor,
                 NSFontAttributeName: UIFont(name: "DINCondensed-Bold", size: 20)! ]
 
-            builder.configureCameraViewController { options in
-                // Setup a customized datasource, that offers a subset of all available filters
-                options.filtersDataSource = FiltersDataSource(availableFilters: [ .None, .Orchid, .Pale, .Summer ])
-
-                // Enable/Disable some features
-                options.cropToSquare = true
-                options.maximumVideoLength = 15
-                options.showFilterIntensitySlider = false
-                options.tapToFocusEnabled = false
-
-                // Use closures to customize the different view elements
-                options.cameraRollButtonConfigurationClosure = { button in
-                    button.layer.borderWidth = 2.0
-                    button.layer.borderColor = redColor.CGColor
-                }
-
-                options.timeLabelConfigurationClosure = { label in
-                    label.textColor = redColor
-                }
-
-                options.recordingModeButtonConfigurationClosure = { button, _ in
-                    button.setTitleColor(UIColor.grayColor(), forState: .Normal)
-                    button.setTitleColor(redColor, forState: .Selected)
-                }
-
-                // Force a selfie camera
-                options.allowedCameraPositions = [ .Front ]
-
-                // Disable flash
-                options.allowedFlashModes = [ .Off ]
-            }
-
-            // Customize the main editor
-            builder.configureMainEditorViewController { options in
-                options.title = "Selfie-Editor"
-                options.allowsPreviewImageZoom = false
-                options.editorActionsDataSource = MainEditorActionsDataSource(availableActionTypes: [ .Filter, .Stickers, .Orientation, .Contrast, .Text])
-            }
-
-            // Customize the orientation editors action buttons
-            builder.configureOrientationEditorViewController { options in
-                options.actionButtonConfigurationClosure = { actionButton, _ in
-                    actionButton.textLabel.textColor = UIColor.grayColor()
-                }
-            }
-
-            // Customize the contrast editors slider
-            builder.configureContrastEditorViewController { options in
-                options.sliderConfigurationClosure = { slider in
-                    slider.thumbTintColor = blueColor
-                }
-            }
-
-            // Customize the colors available in the text editor
-            builder.configureTextEditorViewController { options in
-                options.availableFontColors = [ redColor, blueColor, UIColor.blackColor() ]
-            }
+            self.customizeCameraController(builder)
+            self.customizeMainEditorViewController(builder)
+            self.customizeOrientationViewController(builder)
+            self.customizeContrastSliders(builder)
+            self.customizeTextEditorView(builder)
         }
 
         let cameraViewController = CameraViewController(configuration: configuration)
@@ -138,4 +88,105 @@ class SampleViewController: UIViewController {
         presentViewController(cameraViewController, animated: true, completion: nil)
     }
 
+    // MARK:- customization
+
+    private func customizeCameraController(builder: ConfigurationBuilder) {
+        builder.configureCameraViewController { options in
+            // Setup a customized datasource, that offers a subset of all available filters
+            options.filtersDataSource = FiltersDataSource(availableFilters: [ .None, .Orchid, .Pale, .Summer ])
+
+            // Enable/Disable some features
+            options.cropToSquare = true
+            options.maximumVideoLength = 15
+            options.showFilterIntensitySlider = false
+            options.tapToFocusEnabled = false
+
+            // Use closures to customize the different view elements
+            options.cameraRollButtonConfigurationClosure = { button in
+                button.layer.borderWidth = 2.0
+                button.layer.borderColor = self.redColor.CGColor
+            }
+
+            options.timeLabelConfigurationClosure = { label in
+                label.textColor = self.redColor
+            }
+
+            options.recordingModeButtonConfigurationClosure = { button, _ in
+                button.setTitleColor(UIColor.grayColor(), forState: .Normal)
+                button.setTitleColor(self.redColor, forState: .Selected)
+            }
+
+            // Force a selfie camera
+            options.allowedCameraPositions = [ .Front ]
+
+            // Disable flash
+            options.allowedFlashModes = [ .Off ]
+        }
+    }
+
+    private func customizeMainEditorViewController(builder: ConfigurationBuilder) {
+        // Customize the main editor
+        builder.configureMainEditorViewController { options in
+            options.title = "Selfie-Editor"
+            options.allowsPreviewImageZoom = false
+            options.editorActionsDataSource = MainEditorActionsDataSource(availableActionTypes: [ .Filter, .Stickers, .Orientation, .Contrast, .Text])
+        }
+    }
+
+    private func customizeOrientationViewController(builder: ConfigurationBuilder) {
+        builder.configureOrientationEditorViewController { options in
+            options.actionButtonConfigurationClosure = { actionButton, _ in
+                actionButton.textLabel.textColor = UIColor.grayColor()
+            }
+        }
+    }
+
+    private func customizeContrastSliders(builder: ConfigurationBuilder) {
+        builder.configureContrastEditorViewController { options in
+            options.sliderConfigurationClosure = { slider in
+                slider.thumbTintColor = self.blueColor
+            }
+        }
+    }
+
+    // swiftlint:disable cyclomatic_complexity
+    private func customizeTextEditorView(builder: ConfigurationBuilder) {
+        builder.configureTextEditorViewController { options in
+            options.availableFontColors = [ self.redColor, self.blueColor, UIColor.blackColor() ]
+            options.fontSelectorFontColor = self.redColor
+            options.fontQuickSelectorButtonConfigurationClosure = { button in
+                button.labelColor = UIColor.grayColor()
+            }
+            options.fontSelectorButtonConfigurationClosure = { button in
+                button.labelColor = UIColor.grayColor()
+            }
+            options.actionButtonConfigurationClosure = { button, action in
+                // swiftlint:disable force_cast
+                switch action {
+                case .SelectFont:
+                    (button as! TextCaptionButton).textLabel.textColor = UIColor.grayColor()
+                case .SelectTextColor:
+                    fallthrough
+                case .SelectBackgroundColor:
+                    fallthrough
+                case .BringToFront:
+                    (button as! ImageCaptionButton).textLabel.textColor = UIColor.grayColor()
+                case .RejectFont:
+                    fallthrough
+                case .RejectColor:
+                    fallthrough
+                case .AcceptColor:
+                    fallthrough
+                case .AcceptFont:
+                    fallthrough
+                case .DeleteText:
+                    fallthrough
+                case .AddText:
+                    (button as! UIButton).backgroundColor = UIColor.grayColor()
+                }
+                // swiftlint:enable force_cast
+            }
+        }
+    }
+    // swiftlint:enable cyclomatic_complexity
 }
