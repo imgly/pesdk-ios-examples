@@ -77,9 +77,10 @@ import QuartzCore
         var outputImage: CIImage?
 
         autoreleasepool {
-            if let colorCubeData = colorCubeData, filter = CIFilter(name: "CIColorCube") {
+            if let colorCubeData = colorCubeData, filter = CIFilter(name: "CIColorCubeWithColorSpace") {
                 filter.setValue(colorCubeData, forKey: "inputCubeData")
                 filter.setValue(64, forKey: "inputCubeDimension")
+                filter.setValue(CGColorSpaceCreateDeviceRGB(), forKey: "inputColorSpace")
                 filter.setValue(inputImage, forKey: kCIInputImageKey)
                 outputImage = filter.outputImage
             } else {

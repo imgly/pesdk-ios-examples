@@ -117,9 +117,9 @@ All types of response-filters.
 
         var options = [String: AnyObject]()
 
-        if let colorspace = CGColorSpaceCreateDeviceRGB() {
-            options[kCIContextWorkingColorSpace] = colorspace
-        }
+        //if let colorspace = CGColorSpaceCreateDeviceRGB() {
+        //    options[kCIContextWorkingColorSpace] = colorspace
+        //}
 
         let filteredCIImage = processWithCIImage(coreImage, filters: filters)
         let filteredCGImage = CIContext(options: options).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent)
