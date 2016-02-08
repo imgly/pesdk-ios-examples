@@ -8,6 +8,8 @@
 
 import UIKit
 
+/// The definition of the configuration closure.
+public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAction) -> ()
 
 @objc(IMGLYStickersEditorViewControllerOptions) public class StickersEditorViewControllerOptions: EditorViewControllerOptions {
     /// An object conforming to the `StickersDataSourceProtocol`
@@ -15,20 +17,12 @@ import UIKit
     /// is set.
     public let stickersDataSource: StickersDataSourceProtocol
 
+    /// Defines all allowed actions. Only buttons for allowed action are visible.
+    /// Defaults to show all available actions.
+    public let allowedStickerActions: [StickerAction]
+
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
-
-    /// Enables/Disables the delete sticker button. Defaults to true.
-    public var canDeleteSticker: Bool
-
-    /// Enables/Disables the flip-horizontal button. Defaults to true.
-    public var canFlipHorizontaly: Bool
-
-    /// Enables/Disables the flip-vertical button. Defaults to true.
-    public var canFlipVerticaly: Bool
-
-    /// Enables/Disables the bring to front button. Defaults to true.
-    public var canBringToFront: Bool
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
     public var disabledOverlayButtonAlpha: CGFloat
@@ -36,17 +30,9 @@ import UIKit
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public var enabledOverlayButtonAlpha: CGFloat
 
-    /// The background color of the delete button. Defaults to petrol.
-    public var deleteButtonBackgroundColor: UIColor
-
-    /// The background color of the bring to front button. Defaults to petrol.
-    public var bringToFrontButtonBackgroundColor: UIColor
-
-    /// The background color of the flip horizontal button. Defaults to petrol.
-    public var flipHorizontalButtonBackgroundColor: UIColor
-
-    /// The background color of the flip vertical button. Defaults to petrol.
-    public var flipVerticalButtonBackgroundColor: UIColor
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: StickerActionButtonConfigurationClosure?
 
     public convenience init() {
         self.init(builder: StickersEditorViewControllerOptionsBuilder())
@@ -55,16 +41,10 @@ import UIKit
     public init(builder: StickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
-        canDeleteSticker = builder.canDeleteSticker
-        canFlipHorizontaly = builder.canFlipHorizontaly
-        canFlipVerticaly = builder.canFlipVerticaly
-        canBringToFront = builder.canBringToFront
         disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
         enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
-        deleteButtonBackgroundColor = builder.deleteButtonBackgroundColor
-        bringToFrontButtonBackgroundColor = builder.bringToFrontButtonBackgroundColor
-        flipHorizontalButtonBackgroundColor = builder.flipHorizontalButtonBackgroundColor
-        flipVerticalButtonBackgroundColor = builder.flipVerticalButtonBackgroundColor
+        allowedStickerActions = builder.allowedStickerActions
+        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -72,6 +52,15 @@ import UIKit
 // swiftlint:disable type_name
 @objc(IMGLYStickersEditorViewControllerOptionsBuilder) public class StickersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
+
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public var actionButtonConfigurationClosure: StickerActionButtonConfigurationClosure? = nil
+
+    /// Defines all allowed actions. Only buttons for allowed action are visible.
+    /// Defaults to show all available actions. To set this
+    /// property from Obj-C, see the `allowedOrientationActionsAsNSNumbers` property.
+    public var allowedStickerActions: [StickerAction] = [ .Delete, .BringToFront, .FlipHorizontally, .FlipVertically]
 
     /// An object conforming to the `StickersDataSourceProtocol`
     /// Per default an `StickersDataSource` offering all filters
@@ -81,35 +70,26 @@ import UIKit
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true
 
-    /// Enables/Disables the delete sticker button. Defaults to true.
-    public var canDeleteSticker = true
-
-    /// Enables/Disables the flip-horizontal button. Defaults to true.
-    public var canFlipHorizontaly = true
-
-    /// Enables/Disables the flip-vertical button. Defaults to true.
-    public var canFlipVerticaly = true
-
-    /// Enables/Disables the bring to front button. Defaults to true.
-    public var canBringToFront = true
-
     /// This value determins the opacity of any disabled button that is positions above the preview.
     public var disabledOverlayButtonAlpha = CGFloat(0.0)
 
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public var enabledOverlayButtonAlpha = CGFloat(1.0)
 
-    /// The background color of the delete button. Defaults to petrol.
-    public var deleteButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
-    /// The background color of the bring to front button. Defaults to petrol.
-    public var bringToFrontButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+    /// An array of `StickerAction` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
+    public var allowedOrientationActionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedStickerActions.map { NSNumber(integer: $0.rawValue) }
+        }
 
-    /// The background color of the flip horizontal button. Defaults to petrol.
-    public var flipHorizontalButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+        set {
+            allowedStickerActions = newValue.flatMap { StickerAction(rawValue: $0.integerValue) }
+        }
+    }
 
-    /// The background color of the flip vertical button. Defaults to petrol.
-    public var flipVerticalButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
     public override init() {
         super.init()

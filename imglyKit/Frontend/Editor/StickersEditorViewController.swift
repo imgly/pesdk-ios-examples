@@ -8,6 +8,13 @@
 
 import UIKit
 
+@objc public enum StickerAction: Int {
+    case Delete
+    case BringToFront
+    case FlipHorizontally
+    case FlipVertically
+}
+
 let kStickersCollectionViewCellSize = CGSize(width: 90, height: 90)
 
 // swiftlint:disable variable_name
@@ -33,36 +40,52 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     public private(set) lazy var deleteButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "deleteSticker:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .Delete)
         return button
     }()
 
     public private(set) lazy var flipHorizontalButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipHorizontal:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .FlipHorizontally)
         return button
     }()
 
     public private(set) lazy var flipVerticalButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "flipVertical:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .FlipVertically)
         return button
     }()
 
     public private(set) lazy var bringToFrontButton: UIButton = {
         let bundle = NSBundle(forClass: StickersEditorViewController.self)
         let button = UIButton(type: UIButtonType.Custom)
+        button.layer.cornerRadius = 2
+        button.clipsToBounds = false
+        button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
+        self.options.actionButtonConfigurationClosure?(button, .BringToFront)
         return button
     }()
 
@@ -169,16 +192,16 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
 
     private func configureOverlayButtons() {
-        if options.canDeleteSticker {
+        if options.allowedStickerActions.contains(.Delete) {
             configureDeleteButton()
         }
-        if options.canFlipHorizontaly {
+        if options.allowedStickerActions.contains(.FlipHorizontally) {
             configureFlipHorizontalButton()
         }
-        if options.canFlipVerticaly {
+        if options.allowedStickerActions.contains(.FlipVertically) {
             configureFlipVerticalButton()
         }
-        if options.canBringToFront {
+        if options.allowedStickerActions.contains(.BringToFront) {
             configureBringToFrontButton()
         }
         configureOverlayButtonHorizontalConstraints()
@@ -189,9 +212,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "deleteButton" : deleteButton
         ]
         view.addSubview(deleteButton)
-        deleteButton.layer.cornerRadius = 2
-        deleteButton.clipsToBounds = false
-        deleteButton.backgroundColor = options.deleteButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[deleteButton]-20-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[deleteButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: deleteButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
@@ -202,9 +222,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "flipHorizontalButton" : flipHorizontalButton
         ]
         view.addSubview(flipHorizontalButton)
-        flipHorizontalButton.layer.cornerRadius = 2
-        flipHorizontalButton.clipsToBounds = false
-        flipHorizontalButton.backgroundColor = options.flipHorizontalButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipHorizontalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipHorizontalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -214,9 +231,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "flipVerticalButton" : flipVerticalButton
         ]
         view.addSubview(flipVerticalButton)
-        flipVerticalButton.layer.cornerRadius = 2
-        flipVerticalButton.clipsToBounds = false
-        flipVerticalButton.backgroundColor = options.flipVerticalButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[flipVerticalButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: flipVerticalButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
     }
@@ -226,9 +240,6 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             "bringToFrontButton" : bringToFrontButton
         ]
         view.addSubview(bringToFrontButton)
-        bringToFrontButton.layer.cornerRadius = 2
-        bringToFrontButton.clipsToBounds = false
-        bringToFrontButton.backgroundColor = options.bringToFrontButtonBackgroundColor
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("[bringToFrontButton]-80-|", options: [], metrics: [ "buttonWidth": 30 ], views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bringToFrontButton(40)]", options: [], metrics: nil, views: views))
         view.addConstraint(NSLayoutConstraint(item: bringToFrontButton, attribute: .Bottom, relatedBy: .Equal, toItem: bottomContainerView, attribute: .Top, multiplier: 1, constant: -20))
@@ -241,10 +252,10 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private func configureLeftOverlayButtonHorizontalConstraints() {
         var leftButtons: [UIButton] = []
-        if options.canFlipHorizontaly {
+        if options.allowedStickerActions.contains(.FlipHorizontally) {
             leftButtons.append(flipHorizontalButton)
         }
-        if options.canFlipVerticaly {
+        if options.allowedStickerActions.contains(.FlipVertically) {
             leftButtons.append(flipVerticalButton)
         }
         setOverlayButtonConstraints(leftButtons, prefix: "|-20-", suffix: "")
@@ -252,10 +263,10 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private func configureRightOverlayButtonHorizontalConstraints() {
         var rightButtons: [UIButton] = []
-        if options.canBringToFront {
+        if options.allowedStickerActions.contains(.BringToFront) {
             rightButtons.append(bringToFrontButton)
         }
-        if options.canDeleteSticker {
+        if options.allowedStickerActions.contains(.Delete) {
             rightButtons.append(deleteButton)
         }
         setOverlayButtonConstraints(rightButtons, prefix: "", suffix: "-20-|")
@@ -383,6 +394,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     @objc private func deleteSticker(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
+            unSelectView(selectedView)
             selectedView.removeFromSuperview()
         }
         updateButtonStatus()
