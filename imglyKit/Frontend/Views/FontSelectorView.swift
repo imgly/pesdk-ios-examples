@@ -98,7 +98,6 @@ import UIKit
                 button.setTitleColor(textColor, forState: .Normal)
                 addSubview(button)
                 button.addTarget(self, action: "buttonTouchedUpInside:", forControlEvents: UIControlEvents.TouchUpInside)
-                fontSelectorButtonConfigurationClosure?(button)
             }
         }
     }
@@ -121,6 +120,7 @@ import UIKit
                     y: CGFloat(index) * kDistanceBetweenButtons,
                     width: frame.size.width,
                     height: kDistanceBetweenButtons)
+                fontSelectorButtonConfigurationClosure?(button)
             }
         }
         contentSize = CGSize(width: frame.size.width - 1.0, height: kDistanceBetweenButtons * CGFloat(subviews.count - 2) + 100)

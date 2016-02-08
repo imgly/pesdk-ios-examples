@@ -189,7 +189,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         let selector = FontSelectorView()
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
-        selector.fontPreviewTextColor = self.options.fontSelectorFontColor
+        selector.textColor = self.options.fontSelectorFontColor
         selector.fontSelectorButtonConfigurationClosure = self.options.fontSelectorButtonConfigurationClosure
         return selector
     }()
