@@ -133,6 +133,22 @@ class SampleViewController: UIViewController {
                 options.fontSelectorButtonConfigurationClosure = { button in
                     button.labelColor = UIColor.grayColor()
                 }
+                options.actionButtonConfigurationClosure = { button, action in
+                    // swiftlint:disable force_cast
+                    switch action {
+                    case .SelectFont:
+                        (button as! TextCaptionButton).textLabel.textColor = UIColor.grayColor()
+                    case .SelectTextColor:
+                        fallthrough
+                    case .SelectBackgroundColor:
+                        fallthrough
+                    case .BringToFront:
+                        (button as! ImageCaptionButton).textLabel.textColor = UIColor.grayColor()
+                    default:
+                        ()
+                    }
+                    // swiftlint:enable force_cast
+                }
             }
         }
 

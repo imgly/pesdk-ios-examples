@@ -150,7 +150,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         button.imageView.tintColor = UIColor.clearColor()
         button.addTarget(self, action: "setBackgroundColor:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .AddText)
+        self.options.actionButtonConfigurationClosure?(button, .SelectBackgroundColor)
         return button
     }()
 

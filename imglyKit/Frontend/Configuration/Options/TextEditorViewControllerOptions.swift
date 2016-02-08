@@ -10,7 +10,7 @@ import UIKit
 
 /// The definition of the configuration closure. Please note the we use
 /// 'Any' as type since the button can be a UIButton, ImageCaptionButton, or TextCaptionButton
-public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
+public typealias TextActionButtonConfigurationClosure = (AnyObject, TextAction) -> ()
 
 /// The definition of the configuration closure, to configure the bottom bar font selector
 public typealias FontQuickSelectorButtonConfigurationClosure = (FontButton) -> ()
