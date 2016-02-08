@@ -126,6 +126,7 @@ class SampleViewController: UIViewController {
             // Customize the colors available in the text editor
             builder.configureTextEditorViewController { options in
                 options.availableFontColors = [ redColor, blueColor, UIColor.blackColor() ]
+                options.fontSelectorFontColor = redColor
             }
         }
 

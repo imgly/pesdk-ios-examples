@@ -8,13 +8,14 @@
 
 import UIKit
 
+/// The definition of the configuration closure. Please note the we use
+/// 'Any' as type since the button can be a UIButton, ImageCaptionButton, or TextCaptionButton
+public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
+
 @objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
     public let textFieldConfigurationClosure: TextFieldConfigurationClosure?
-
-    /// Defaults to white.
-    public let fontPreviewTextColor: UIColor
 
     /// An optional array of custom color values. The user can select a text color
     /// from the given values. If no colors are passed, a default color set is loaded.
@@ -44,12 +45,6 @@ import UIKit
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public let defaultFontName: String
 
-    /// The background color of the add text button. Defaults to petrol.
-    public let addButtonBackgroundColor: UIColor
-
-    /// The background color of the delete text button. Defaults to petrol.
-    public let deleteButtonBackgroundColor: UIColor
-
     /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
     public let handleBackgroundColor: UIColor
 
@@ -68,13 +63,16 @@ import UIKit
     /// The color that is used to highlight, that a font is selected
     public var fontSelectorHighlightColor: UIColor
 
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: TextActionButtonConfigurationClosure?
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
 
     public init(builder: TextEditorViewControllerOptionsBuilder) {
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
-        fontPreviewTextColor = builder.fontPreviewTextColor
         availableFontColors = builder.availableFontColors
         canAddText = builder.canAddText
         canDeleteText = builder.canDeleteText
@@ -84,14 +82,13 @@ import UIKit
         canBringToFront = builder.canBringToFront
         canModifyTextFont = builder.canModifyTextFont
         defaultFontName = builder.defaultFontName
-        addButtonBackgroundColor = builder.addButtonBackgroundColor
-        deleteButtonBackgroundColor = builder.deleteButtonBackgroundColor
         handleBackgroundColor = builder.handleBackgroundColor
         handleColor = builder.handleColor
         disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
         enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
         fontSelectorFontColor = builder.fontSelectorFontColor
         fontSelectorHighlightColor = builder.fontSelectorHighlightColor
+        actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -102,9 +99,6 @@ import UIKit
 
     /// Use this closure to configure the text input field.
     public var textFieldConfigurationClosure: TextFieldConfigurationClosure? = nil
-
-    /// Defaults to white.
-    public var fontPreviewTextColor: UIColor = UIColor.whiteColor()
 
     /// An optional array of custom color values. The user can select a text color
     /// from the given values. If no colors are passed, a default color set is loaded.
@@ -134,12 +128,6 @@ import UIKit
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public var defaultFontName = "Helvetica Neue"
 
-    /// The background color of the add text button. Defaults to petrol.
-    public var addButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
-
-    /// The background color of the delete text button. Defaults to petrol.
-    public var deleteButtonBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
-
     /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
     public let handleBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
 
@@ -157,6 +145,10 @@ import UIKit
 
     /// The color that is used to highlight, that a font is selected
     public var fontSelectorHighlightColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+
+    /// This closure allows further configuration of the action buttons. The closure is called for
+    /// each action button and has the button and its corresponding action as parameters.
+    public let actionButtonConfigurationClosure: TextActionButtonConfigurationClosure? = nil
 
     public override init() {
         super.init()

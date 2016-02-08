@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The definition of the configuration closure.
 public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButton, OrientationAction) -> ()
 
 // swiftlint:disable type_name
