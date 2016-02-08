@@ -165,7 +165,7 @@ class SampleViewController: UIViewController {
                 switch action {
                 case .SelectFont:
                     (button as! TextCaptionButton).textLabel.textColor = UIColor.grayColor()
-                case .SelectTextColor:
+                case .SelectColor:
                     fallthrough
                 case .SelectBackgroundColor:
                     fallthrough
@@ -179,12 +179,15 @@ class SampleViewController: UIViewController {
                     fallthrough
                 case .AcceptFont:
                     fallthrough
-                case .DeleteText:
+                case .Delete:
                     fallthrough
-                case .AddText:
+                case .Add:
                     (button as! UIButton).backgroundColor = UIColor.grayColor()
                 }
                 // swiftlint:enable force_cast
+            }
+            options.pullableViewConfigurationClosure = { pullableView in
+                pullableView.handleBackgroundColor = self.redColor
             }
         }
     }

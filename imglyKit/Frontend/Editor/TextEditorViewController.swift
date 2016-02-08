@@ -15,10 +15,10 @@ private let kMinimumFontSize = CGFloat(12.0)
 
 @objc public enum TextAction: Int {
     case SelectFont
-    case SelectTextColor
+    case SelectColor
     case SelectBackgroundColor
-    case AddText
-    case DeleteText
+    case Add
+    case Delete
     case AcceptColor
     case RejectColor
     case AcceptFont
@@ -65,7 +65,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.clipsToBounds = false
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "addText:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .AddText)
+        self.options.actionButtonConfigurationClosure?(button, .Add)
         return button
     }()
 
@@ -78,7 +78,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.clipsToBounds = false
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.addTarget(self, action: "deleteText:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .DeleteText)
+        self.options.actionButtonConfigurationClosure?(button, .Delete)
         return button
     }()
 
@@ -155,7 +155,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         button.imageView.image = button.imageView.image!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
         button.imageView.tintColor = UIColor.whiteColor()
         button.addTarget(self, action: "setTextColor:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .SelectTextColor)
+        self.options.actionButtonConfigurationClosure?(button, .SelectColor)
         return button
     }()
 
@@ -275,7 +275,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.viewDidAppear(animated)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
-        showNewTextDialog()
+        if options.allowedTextActions.contains(.Add) && options.openNewTextDialogAutomatically {
+            showNewTextDialog()
+        }
         setPullableViewMarings()
     }
 
@@ -325,19 +327,19 @@ private let kMinimumFontSize = CGFloat(12.0)
 
         var views = [String: UIView]()
         var visualFormatString = ""
-        if options.canModifyTextFont {
+        if options.allowedTextActions.contains(.SelectFont) {
             views = viewsByAddingButton(selectTextFontButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectTextFontButton, visualFormatString: visualFormatString)
         }
-        if options.canModifyTextColor {
+        if options.allowedTextActions.contains(.SelectColor) {
             views = viewsByAddingButton(selectTextColorButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectTextColorButton, visualFormatString: visualFormatString)
         }
-        if options.canModifyBackgroundColor {
+        if options.allowedTextActions.contains(.SelectBackgroundColor) {
             views = viewsByAddingButton(selectBackgroundColorButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(selectBackgroundColorButton, visualFormatString: visualFormatString)
         }
-        if options.canBringToFront {
+        if options.allowedTextActions.contains(.BringToFront) {
             views = viewsByAddingButton(bringToFrontButton, containerView: buttonContainerView, views: views)
             visualFormatString = visualFormatStringByAddingButton(bringToFrontButton, visualFormatString: visualFormatString)
         }
@@ -575,22 +577,27 @@ private let kMinimumFontSize = CGFloat(12.0)
         tapGestureRecognizer.delegate = self
         textClipView.addGestureRecognizer(tapGestureRecognizer)
 
-        let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
-        rotationGestureRecognizer.delegate = self
-        textClipView.addGestureRecognizer(rotationGestureRecognizer)
+        if options.canModifyTextRotation {
+            let rotationGestureRecognizer = UIRotationGestureRecognizer(target: self, action: "handleRotate:")
+            rotationGestureRecognizer.delegate = self
+            textClipView.addGestureRecognizer(rotationGestureRecognizer)
+        }
 
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        longPressRecognizer.minimumPressDuration = 2
-        textClipView.addGestureRecognizer(longPressRecognizer)
+        if options.canModifyText {
+            let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+            longPressRecognizer.minimumPressDuration = 2
+            textClipView.addGestureRecognizer(longPressRecognizer)
+        }
     }
 
     private func configurePullableColorPickerView() {
         pullableColorPickerView = PullableView()
         pullableColorPickerView.translatesAutoresizingMaskIntoConstraints = false
         pullableColorPickerView.backgroundColor = self.currentBackgroundColor
-        pullableColorPickerView.handleBackgroundColor = options.handleBackgroundColor
-        pullableColorPickerView.handleColor = options.handleColor
+        pullableColorPickerView.handleBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+        pullableColorPickerView.handleColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         self.view.addSubview(pullableColorPickerView)
+        self.options.pullableViewConfigurationClosure?(pullableColorPickerView)
         colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
@@ -598,9 +605,10 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableFontSelectorView = PullableView()
         pullableFontSelectorView.translatesAutoresizingMaskIntoConstraints = false
         pullableFontSelectorView.backgroundColor = self.currentBackgroundColor
-        pullableFontSelectorView.handleBackgroundColor = options.handleBackgroundColor
-        pullableFontSelectorView.handleColor = options.handleColor
+        pullableFontSelectorView.handleBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
+        pullableFontSelectorView.handleColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
         self.view.addSubview(pullableFontSelectorView)
+        self.options.pullableViewConfigurationClosure?(pullableFontSelectorView)
     }
 
     // MARK: - Button Handling

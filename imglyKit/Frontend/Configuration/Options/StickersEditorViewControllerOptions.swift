@@ -76,11 +76,10 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public var enabledOverlayButtonAlpha = CGFloat(1.0)
 
-
     /// An array of `StickerAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in
-    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
-    public var allowedOrientationActionsAsNSNumbers: [NSNumber] {
+    /// `allowedStickerActions` with the corresponding `FocusAction` values.
+    public var allowedStoclerActionsAsNSNumbers: [NSNumber] {
         get {
             return allowedStickerActions.map { NSNumber(integer: $0.rawValue) }
         }
@@ -89,7 +88,6 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
             allowedStickerActions = newValue.flatMap { StickerAction(rawValue: $0.integerValue) }
         }
     }
-
 
     public override init() {
         super.init()

@@ -9,16 +9,23 @@
 import UIKit
 
 /// The definition of the configuration closure. Please note the we use
-/// 'Any' as type since the button can be a UIButton, ImageCaptionButton, or TextCaptionButton
+/// 'Any' as type since the button can be a UIButton, ImageCaptionButton, or TextCaptionButton.
 public typealias TextActionButtonConfigurationClosure = (AnyObject, TextAction) -> ()
 
-/// The definition of the configuration closure, to configure the bottom bar font selector
+/// The definition of the configuration closure, to configure the bottom bar font selector.
 public typealias FontQuickSelectorButtonConfigurationClosure = (FontButton) -> ()
 
-/// The definition of the configuration closure, to configure the pullable font selector
+/// The definition of the configuration closure, to configure the pullable font selector.
 public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
 
+/// The definition of the configuration closure, to configure the pullable font selector.
+public typealias PullableViewConfigurationClosure = (PullableView) -> ()
+
 @objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
+    /// Defines all allowed actions. Only buttons for allowed action are visible.
+    /// Defaults to show all available actions.
+    public let allowedTextActions: [TextAction]
+
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
     public let textFieldConfigurationClosure: TextFieldConfigurationClosure?
@@ -27,35 +34,20 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     /// from the given values. If no colors are passed, a default color set is loaded.
     public let availableFontColors: [UIColor]?
 
-    /// Enables/Disables the add text button. Defaults to true.
-    public let canAddText: Bool
-
-    /// Enables/Disables the delete text button. Defaults to true.
-    public let canDeleteText: Bool
-
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public let canModifyTextSize: Bool
 
-    /// Enables/Disables text color changes through the bottom drawer. Defaults to true.
-    public let canModifyTextColor: Bool
+    /// Enables/Disables the pinch gesture, that allows rotation of the current text. Defaults to true.
+    public let canModifyTextRotation: Bool
 
-    /// Enables/Disables background color changes through the bottom drawer. Defaults to true.
-    public let canModifyBackgroundColor: Bool
+    /// Enables/Disables the long press gesture, that allows editing the text. Defaults to true.
+    public let canModifyText: Bool
 
-    /// Enables/Disables the bring to front option. Defaults to true.
-    public let canBringToFront: Bool
-
-    /// Enables/Disables font changes through the bottom drawer. Defaults to true.
-    public let canModifyTextFont: Bool
+    /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
+    public let openNewTextDialogAutomatically: Bool
 
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public let defaultFontName: String
-
-    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
-    public let handleBackgroundColor: UIColor
-
-    /// The color of the handle, that is used to pull up detail views. Defaults to white.
-    public let handleColor: UIColor
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
     public let disabledOverlayButtonAlpha: CGFloat
@@ -63,10 +55,10 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     /// This value determins the opacity of any enabled button that is positions above the preview.
     public let enabledOverlayButtonAlpha: CGFloat
 
-    /// The color of the font examples on the text selectors
+    /// The color of the font examples on the text selectors.
     public let fontSelectorFontColor: UIColor
 
-    /// The color that is used to highlight, that a font is selected
+    /// The color that is used to highlight, that a font is selected.
     public let fontSelectorHighlightColor: UIColor
 
     /// This closure allows further configuration of the action buttons. The closure is called for
@@ -83,6 +75,9 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     /// each button and has the button and its corresponding action as parameters.
     public let fontSelectorButtonConfigurationClosure: FontSelectorButtonConfigurationClosure?
 
+    /// This closure allows further configuration of the pullable view. Such as the handle color.
+    public let pullableViewConfigurationClosure: PullableViewConfigurationClosure?
+
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
@@ -90,16 +85,8 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     public init(builder: TextEditorViewControllerOptionsBuilder) {
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
         availableFontColors = builder.availableFontColors
-        canAddText = builder.canAddText
-        canDeleteText = builder.canDeleteText
         canModifyTextSize = builder.canModifyTextSize
-        canModifyTextColor = builder.canModifyTextColor
-        canModifyBackgroundColor = builder.canModifyBackgroundColor
-        canBringToFront = builder.canBringToFront
-        canModifyTextFont = builder.canModifyTextFont
         defaultFontName = builder.defaultFontName
-        handleBackgroundColor = builder.handleBackgroundColor
-        handleColor = builder.handleColor
         disabledOverlayButtonAlpha = builder.disabledOverlayButtonAlpha
         enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
         fontSelectorFontColor = builder.fontSelectorFontColor
@@ -107,6 +94,11 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
         fontQuickSelectorButtonConfigurationClosure = builder.fontQuickSelectorButtonConfigurationClosure
         fontSelectorButtonConfigurationClosure = builder.fontSelectorButtonConfigurationClosure
+        allowedTextActions = builder.allowedTextActions
+        pullableViewConfigurationClosure = builder.pullableViewConfigurationClosure
+        openNewTextDialogAutomatically = builder.openNewTextDialogAutomatically
+        canModifyTextRotation = builder.canModifyTextRotation
+        canModifyText = builder.canModifyText
         super.init(editorBuilder: builder)
     }
 }
@@ -115,6 +107,10 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
 @objc(IMGLYTextEditorViewControllerOptionsBuilder) public class TextEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
+    /// Defines all allowed actions. Only buttons for allowed action are visible.
+    /// Defaults to show all available actions.
+    public var allowedTextActions: [TextAction] = [.SelectFont, .SelectColor, .SelectBackgroundColor, .Add, .Delete,
+        .AcceptColor, .RejectColor, .AcceptFont, .RejectFont, .BringToFront]
     /// Use this closure to configure the text input field.
     public var textFieldConfigurationClosure: TextFieldConfigurationClosure? = nil
 
@@ -122,35 +118,20 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     /// from the given values. If no colors are passed, a default color set is loaded.
     public var availableFontColors: [UIColor]?
 
-    /// Enables/Disables the add text button. Defaults to true.
-    public var canAddText = true
-
-    /// Enables/Disables the delete text button. Defaults to true.
-    public var canDeleteText = true
-
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public var canModifyTextSize = true
 
-    /// Enables/Disables color changes through the bottom drawer. Defaults to true.
-    public var canModifyTextColor = true
+    /// Enables/Disables the pinch gesture, that allows rotation of the current text. Defaults to true.
+    public var canModifyTextRotation = true
 
-    /// Enables/Disables background color changes through the bottom drawer. Defaults to true.
-    public var canModifyBackgroundColor = true
+    /// Enables/Disables the long press gesture, that allows editing the text. Defaults to true.
+    public var canModifyText = true
 
-    /// Enables/Disables the bring to front option. Defaults to true.
-    public var canBringToFront = true
-
-    /// Enables/Disables font changes through the bottom drawer. Defaults to true.
-    public var canModifyTextFont = true
+    /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
+    public var openNewTextDialogAutomatically = true
 
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public var defaultFontName = "Helvetica Neue"
-
-    /// The background color of the handle, that is used to pull up detail views. Defaults to petrol.
-    public let handleBackgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
-
-    /// The color of the handle, that is used to pull up detail views. Defaults to light gray.
-    public let handleColor = UIColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
     public var disabledOverlayButtonAlpha = CGFloat(0.0)
@@ -177,6 +158,22 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
     /// This closure allows further configuration of the font buttons. The closure is called for
     /// each button and has the button and its corresponding action as parameters.
     public var fontSelectorButtonConfigurationClosure: FontSelectorButtonConfigurationClosure? = nil
+
+    /// This closure allows further configuration of the pullable view. Such as the handle color.
+    public var pullableViewConfigurationClosure: PullableViewConfigurationClosure? = nil
+
+    /// An array of `TextAction` raw values wrapped in NSNumbers.
+    /// Setting this property overrides any previously set values in
+    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
+    public var allowedTextActionsAsNSNumbers: [NSNumber] {
+        get {
+            return allowedTextActions.map { NSNumber(integer: $0.rawValue) }
+        }
+
+        set {
+            allowedTextActions = newValue.flatMap { TextAction(rawValue: $0.integerValue) }
+        }
+    }
 
     public override init() {
         super.init()
