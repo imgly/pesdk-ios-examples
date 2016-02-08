@@ -186,6 +186,9 @@ class SampleViewController: UIViewController {
                 }
                 // swiftlint:enable force_cast
             }
+            options.pullableViewConfigurationClosure = { pullableView in
+                pullableView.handleBackgroundColor = self.redColor
+            }
         }
     }
     // swiftlint:enable cyclomatic_complexity
