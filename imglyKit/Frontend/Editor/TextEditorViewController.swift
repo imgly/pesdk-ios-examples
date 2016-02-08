@@ -275,7 +275,9 @@ private let kMinimumFontSize = CGFloat(12.0)
         super.viewDidAppear(animated)
         self.overlayConverter = OverlayConverter(fixedFilterStack: self.fixedFilterStack)
         rerenderPreviewWithoutText()
-        showNewTextDialog()
+        if options.allowedTextActions.contains(.Add) && options.openNewTextDialogAutomatically {
+            showNewTextDialog()
+        }
         setPullableViewMarings()
     }
 

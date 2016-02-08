@@ -37,6 +37,9 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public let canModifyTextSize: Bool
 
+    /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
+    public let openNewTextDialogAutomatically: Bool
+
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public let defaultFontName: String
 
@@ -87,6 +90,7 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
         fontSelectorButtonConfigurationClosure = builder.fontSelectorButtonConfigurationClosure
         allowedTextActions = builder.allowedTextActions
         pullableViewConfigurationClosure = builder.pullableViewConfigurationClosure
+        openNewTextDialogAutomatically = builder.openNewTextDialogAutomatically
         super.init(editorBuilder: builder)
     }
 }
@@ -108,6 +112,9 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
 
     /// Enables/Disables the pinch gesture, that allows resizing of the current text. Defaults to true.
     public var canModifyTextSize = true
+
+    /// Enables/Diables the apearance of the new text dialog, as soon as the user opens the text tool.
+    public var openNewTextDialogAutomatically = true
 
     /// The name of the default Font. Defaults to 'Helvetica Neue'.
     public var defaultFontName = "Helvetica Neue"
