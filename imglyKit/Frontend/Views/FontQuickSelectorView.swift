@@ -28,6 +28,12 @@ import UIKit
         }
     }
 
+    /// This closure allows further configuration of the font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    // swiftlint:disable variable_name
+    public var fontQuickSelectorButtonConfigurationClosure: FontQuickSelectorButtonConfigurationClosure? = nil
+    // swiftlint:enable variable_name
+
     private var fontNames = [String]()
     private var buttonArray = [FontButton]()
 
@@ -89,6 +95,7 @@ import UIKit
                 width: kButtonWidth,
                 height: kButtonHeight)
             xPosition += (kButtonDistance + kButtonWidth)
+            fontQuickSelectorButtonConfigurationClosure?(button)
         }
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }

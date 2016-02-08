@@ -190,6 +190,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         selector.translatesAutoresizingMaskIntoConstraints = false
         selector.selectorDelegate = self
         selector.fontPreviewTextColor = self.options.fontSelectorFontColor
+        selector.fontSelectorButtonConfigurationClosure = self.options.fontSelectorButtonConfigurationClosure
         return selector
     }()
 
@@ -209,7 +210,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     public private(set) lazy var fontQuickSelectorView: FontQuickSelectorView = {
         let view = FontQuickSelectorView()
         view.translatesAutoresizingMaskIntoConstraints = false
-       // view.menuDelegate = self
+        view.fontQuickSelectorButtonConfigurationClosure = self.options.fontQuickSelectorButtonConfigurationClosure
         return view
     }()
 
@@ -600,7 +601,6 @@ private let kMinimumFontSize = CGFloat(12.0)
         pullableFontSelectorView.handleBackgroundColor = options.handleBackgroundColor
         pullableFontSelectorView.handleColor = options.handleColor
         self.view.addSubview(pullableFontSelectorView)
-        //colorPickerView.initialColor = selectBackgroundColor ? textLabel.backgroundColor : textLabel.textColor
     }
 
     // MARK: - Button Handling

@@ -127,6 +127,12 @@ class SampleViewController: UIViewController {
             builder.configureTextEditorViewController { options in
                 options.availableFontColors = [ redColor, blueColor, UIColor.blackColor() ]
                 options.fontSelectorFontColor = redColor
+                options.fontQuickSelectorButtonConfigurationClosure = { button in
+                    button.labelColor = UIColor.grayColor()
+                }
+                options.fontSelectorButtonConfigurationClosure = { button in
+                    button.labelColor = UIColor.grayColor()
+                }
             }
         }
 

@@ -12,6 +12,12 @@ import UIKit
 /// 'Any' as type since the button can be a UIButton, ImageCaptionButton, or TextCaptionButton
 public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
 
+/// The definition of the configuration closure, to configure the bottom bar font selector
+public typealias FontQuickSelectorButtonConfigurationClosure = (FontButton) -> ()
+
+/// The definition of the configuration closure, to configure the pullable font selector
+public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
+
 @objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Use this closure to configure the text input field.
     /// Defaults to an empty implementation.
@@ -52,20 +58,30 @@ public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
     public let handleColor: UIColor
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
-    public var disabledOverlayButtonAlpha: CGFloat
+    public let disabledOverlayButtonAlpha: CGFloat
 
     /// This value determins the opacity of any enabled button that is positions above the preview.
-    public var enabledOverlayButtonAlpha: CGFloat
+    public let enabledOverlayButtonAlpha: CGFloat
 
     /// The color of the font examples on the text selectors
-    public var fontSelectorFontColor: UIColor
+    public let fontSelectorFontColor: UIColor
 
     /// The color that is used to highlight, that a font is selected
-    public var fontSelectorHighlightColor: UIColor
+    public let fontSelectorHighlightColor: UIColor
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: TextActionButtonConfigurationClosure?
+
+    /// This closure allows further configuration of the bottom bar font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    // swiftlint:disable variable_name
+    public let fontQuickSelectorButtonConfigurationClosure: FontQuickSelectorButtonConfigurationClosure?
+    // swiftlint:enable variable_name
+
+    /// This closure allows further configuration of the font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    public let fontSelectorButtonConfigurationClosure: FontSelectorButtonConfigurationClosure?
 
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
@@ -89,6 +105,8 @@ public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
         fontSelectorFontColor = builder.fontSelectorFontColor
         fontSelectorHighlightColor = builder.fontSelectorHighlightColor
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        fontQuickSelectorButtonConfigurationClosure = builder.fontQuickSelectorButtonConfigurationClosure
+        fontSelectorButtonConfigurationClosure = builder.fontSelectorButtonConfigurationClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -148,7 +166,17 @@ public typealias TextActionButtonConfigurationClosure = (Any, TextAction) -> ()
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
-    public let actionButtonConfigurationClosure: TextActionButtonConfigurationClosure? = nil
+    public var actionButtonConfigurationClosure: TextActionButtonConfigurationClosure? = nil
+
+    /// This closure allows further configuration of the bottom bar font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    // swiftlint:disable variable_name
+    public var fontQuickSelectorButtonConfigurationClosure: FontQuickSelectorButtonConfigurationClosure? = nil
+    // swiftlint:enable variable_name
+
+    /// This closure allows further configuration of the font buttons. The closure is called for
+    /// each button and has the button and its corresponding action as parameters.
+    public var fontSelectorButtonConfigurationClosure: FontSelectorButtonConfigurationClosure? = nil
 
     public override init() {
         super.init()

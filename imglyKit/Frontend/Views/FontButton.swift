@@ -31,6 +31,12 @@ import UIKit
         }
     }
 
+    public var labelColor = UIColor.whiteColor() {
+        didSet {
+            styleButton()
+        }
+    }
+
     public var fontName = "" {
         didSet {
             styleButton()
@@ -85,7 +91,7 @@ import UIKit
             titleLabel?.font = UIFont(name: fontName, size: fontSize)
             fontNameLabel.text = displayName.characters.count > 0 ? displayName : fontName
         }
-        fontNameLabel.textColor = textColor
+        fontNameLabel.textColor = labelColor
         fontNameLabel.frame = CGRect(x: 0, y: self.bounds.height - 15, width: self.bounds.width, height: 10)
         fontNameLabel.textAlignment = NSTextAlignment.Center
         centerTitleLabel()
