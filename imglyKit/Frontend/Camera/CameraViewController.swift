@@ -269,7 +269,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
     private var filterSelectionViewConstraint: NSLayoutConstraint?
 
-    /// The instance of a `FilterSelectionController` that is used to select the current preview filter. 
+    /// The instance of a `FilterSelectionController` that is used to select the current preview filter.
     public let filterSelectionController = FilterSelectionController()
 
     /// The camera controller that is used by the controller.

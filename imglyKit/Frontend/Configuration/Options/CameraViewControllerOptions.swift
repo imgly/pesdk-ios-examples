@@ -13,6 +13,9 @@ import AVFoundation
 /// The second parameter contains the state, the button represents.
 public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingMode) -> ()
 
+/**
+ *  Description
+ */
 @objc(IMGLYCameraViewControllerOptions) public class CameraViewControllerOptions: NSObject {
 
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.

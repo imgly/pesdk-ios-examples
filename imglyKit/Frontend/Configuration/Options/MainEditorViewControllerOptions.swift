@@ -8,7 +8,9 @@
 
 import UIKit
 
-// Options for configuring the MainEditorViewController
+/**
+ *  Options for configuring the `MainEditorViewController`.
+ */
 @objc(IMGLYMainEditorViewControllerOptions) public class MainEditorViewControllerOptions: EditorViewControllerOptions {
 
     /// Specifies the actions available in the bottom drawer. Defaults to the
@@ -20,18 +22,32 @@ import UIKit
     /// This property only works if you do **not** specify `.Free` as one of the allowed crop actions.
     public let forceCrop: Bool
 
+    /**
+     Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `MainEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: MainEditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `MainEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `MainEditorViewControllerOptions`.
+     */
     public init(builder: MainEditorViewControllerOptionsBuilder) {
         editorActionsDataSource = builder.editorActionsDataSource
         forceCrop = builder.forceCrop
         super.init(editorBuilder: builder)
     }
 }
-
 // swiftlint:disable type_name
+/**
+*  The default `MainEditorViewControllerOptionsBuilder` for `MainEditorViewControllerOptions`.
+*/
 @objc(IMGLYMainEditorViewControllerOptionsBuilder) public class MainEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -44,10 +60,13 @@ import UIKit
     /// This property only works if you do **not** specify `.Free` as one of the allowed crop actions.
     public var forceCrop = false
 
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 
-        /// Override inherited properties with default values
+        /// Override inherited properties with default values.
         self.title = Localize("Editor")
     }
 }
