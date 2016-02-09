@@ -72,38 +72,38 @@ public struct Line {
         accessibilityCustomActions = [rotateLeftAction, rotateRightAction]
     }
 
-    public func configureControlPoints() {
+    private func configureControlPoints() {
         controlPoint1 = CGPoint(x: 100, y: 100)
         controlPoint2 = CGPoint(x: 150, y: 200)
         calculateCenterPointFromOtherControlPoints()
     }
 
-    public func configureCrossImageView() {
+    private func configureCrossImageView() {
         crossImageView.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: BoxGradientView.self), compatibleWithTraitCollection:nil)
         crossImageView.userInteractionEnabled = true
         crossImageView.frame = CGRect(x: 0, y: 0, width: crossImageView.image!.size.width, height: crossImageView.image!.size.height)
         addSubview(crossImageView)
     }
 
-    public func configurePanGestureRecognizer() {
+    private func configurePanGestureRecognizer() {
         let panGestureRecognizer = UIPanGestureRecognizer(target:self, action:"handlePanGesture:")
         addGestureRecognizer(panGestureRecognizer)
         crossImageView.addGestureRecognizer(panGestureRecognizer)
     }
 
-    public func configurePinchGestureRecognizer() {
+    private func configurePinchGestureRecognizer() {
         let pinchGestureRecognizer = UIPinchGestureRecognizer(target:self, action:"handlePinchGesture:")
         addGestureRecognizer(pinchGestureRecognizer)
     }
 
     // MARK:- Drawing
 
-    public func diagonalLengthOfFrame() -> CGFloat {
+    private func diagonalLengthOfFrame() -> CGFloat {
         return sqrt(frame.size.width * frame.size.width +
             frame.size.height * frame.size.height)
     }
 
-    public func normalizedOrtogonalVector() -> CGPoint {
+    private func normalizedOrtogonalVector() -> CGPoint {
         let diffX = controlPoint2.x - controlPoint1.x
         let diffY = controlPoint2.y - controlPoint1.y
 
@@ -112,7 +112,7 @@ public struct Line {
         return CGPoint(x: -diffY / diffLength, y: diffX / diffLength)
     }
 
-    public func distanceBetweenControlPoints() -> CGFloat {
+    private func distanceBetweenControlPoints() -> CGFloat {
         let diffX = controlPoint2.x - controlPoint1.x
         let diffY = controlPoint2.y - controlPoint1.y
 
@@ -127,7 +127,7 @@ public struct Line {
     That diagonal is the longest line that can be drawn in the Frame, therefore its a good orientation.
     */
 
-    public func lineForControlPoint(controlPoint: CGPoint) -> Line {
+    private func lineForControlPoint(controlPoint: CGPoint) -> Line {
         let ortogonalVector = normalizedOrtogonalVector()
         let halfDiagonalLengthOfFrame = diagonalLengthOfFrame()
         let scaledOrthogonalVector = CGPoint(x: halfDiagonalLengthOfFrame * ortogonalVector.x,
@@ -139,13 +139,13 @@ public struct Line {
         return Line(start: lineStart, end: lineEnd)
     }
 
-    public func addLineForControlPoint1ToPath(path: UIBezierPath) {
+    private func addLineForControlPoint1ToPath(path: UIBezierPath) {
         let line = lineForControlPoint(controlPoint1)
         path.moveToPoint(line.start)
         path.addLineToPoint(line.end)
     }
 
-    public func addLineForControlPoint2ToPath(path: UIBezierPath) {
+    private func addLineForControlPoint2ToPath(path: UIBezierPath) {
         let line = lineForControlPoint(controlPoint2)
         path.moveToPoint(line.start)
         path.addLineToPoint(line.end)
@@ -163,12 +163,12 @@ public struct Line {
     }
 
     // MARK:- gesture handling
-    public func calculateCenterPointFromOtherControlPoints() {
+    private func calculateCenterPointFromOtherControlPoints() {
         centerPoint = CGPoint(x: (controlPoint1.x + controlPoint2.x) / 2.0,
             y: (controlPoint1.y + controlPoint2.y) / 2.0)
     }
 
-    public func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
+    private func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Began {
             if gradientViewDelegate != nil {
                 gradientViewDelegate!.userInteractionStarted()
@@ -182,7 +182,7 @@ public struct Line {
         }
     }
 
-    public func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+    @objc private func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(self)
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         let diffX = location.x - centerPoint.x
@@ -191,7 +191,7 @@ public struct Line {
         controlPoint2 = CGPoint(x: controlPoint2.x + diffX, y: controlPoint2.y + diffY)
     }
 
-    public func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
+    @objc private func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
         informDeletageAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
             controlPoint1 = recognizer.locationOfTouch(0, inView:self)
@@ -199,7 +199,7 @@ public struct Line {
         }
     }
 
-    public func isPoint(point: CGPoint, inRect rect: CGRect) -> Bool {
+    private func isPoint(point: CGPoint, inRect rect: CGRect) -> Bool {
         let top = rect.origin.y
         let bottom = top + rect.size.height
         let left = rect.origin.x
@@ -215,7 +215,7 @@ public struct Line {
         setNeedsDisplay()
     }
 
-    public func layoutCrosshair() {
+    private func layoutCrosshair() {
         crossImageView.center = centerPoint
 
         let line1 = lineForControlPoint(controlPoint1)
