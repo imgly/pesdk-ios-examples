@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension K6Filter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "K6"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .K6
     }

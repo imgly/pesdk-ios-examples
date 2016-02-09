@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension X400Filter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "X400"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .X400
     }

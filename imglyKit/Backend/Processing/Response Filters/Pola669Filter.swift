@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension Pola669Filter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "669"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .Pola669
     }

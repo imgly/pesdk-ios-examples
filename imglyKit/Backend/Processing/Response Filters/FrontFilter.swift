@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension FrontFilter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "Front"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .Front
     }

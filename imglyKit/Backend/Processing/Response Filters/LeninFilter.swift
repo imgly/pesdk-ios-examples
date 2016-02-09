@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension LeninFilter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "Lenin"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .Lenin
     }

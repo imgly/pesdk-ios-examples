@@ -26,11 +26,12 @@ import Foundation
 }
 
 extension BWFilter: EffectFilter {
-    /// The name that is used within the UI
+    /// The name that is used within the UI.
     public var displayName: String {
         return "BW"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .BW
     }
