@@ -17,6 +17,11 @@ private let kFilterSelectionViewHeight = 100
 private let kBottomControlSize = CGSize(width: 47, height: 47)
 public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
+
+/**
+ The `CameraViewController` class provides a dialog to perform serveral tasks regarding the camera.
+ These include taking photos, switching on the flash, and such.
+ */
 @objc(IMGLYCameraViewController) public class CameraViewController: UIViewController {
 
     private let configuration: Configuration
@@ -65,6 +70,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
     // MARK: - Properties
 
+    /// The view that contains the background views.
     public private(set) lazy var backgroundContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = self.currentBackgroundColor
@@ -72,6 +78,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return view
     }()
 
+    /// The view that contains all view positioned at the top of the screen.
     public private(set) lazy var topControlsView: UIView = {
         let view = UIView()
         view.backgroundColor = self.currentBackgroundColor
@@ -79,6 +86,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return view
     }()
 
+    /// The view that serves as container for the actual preview.
     public private(set) lazy var cameraPreviewContainer: UIView = {
         let view = UIView()
         view.backgroundColor = self.currentBackgroundColor
@@ -87,6 +95,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return view
     }()
 
+    /// The view that contains all view positioned at the bottom of the screen.
     public private(set) lazy var bottomControlsView: UIView = {
         let view = UIView()
         view.backgroundColor = self.currentBackgroundColor
@@ -138,12 +147,14 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return button
     }()
 
+    /// The view that contains actions button that is used to initiate the photo capturing process.
     public private(set) lazy var actionButtonContainer: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
 
+    /// The label that is used to display the current recording time.
     public private(set) lazy var recordingTimeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -155,8 +166,10 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return label
     }()
 
+    /// The button that is used to initiate the photo capturing process.
     public private(set) var actionButton: UIControl?
 
+    /// The view that is used to select the current filter that is applied to the preview.
     public private(set) lazy var filterSelectionButton: UIButton = {
         let bundle = NSBundle(forClass: CameraViewController.self)
         let button = UIButton()
@@ -172,6 +185,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return button
     }()
 
+    /// The slider that is used to control the inensity of the previewed filter.
     public private(set) lazy var filterIntensitySlider: UISlider = {
         let bundle = NSBundle(forClass: CameraViewController.self)
         let slider = UISlider()
@@ -196,11 +210,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         return slider
     }()
 
+    /// The recognizer that detects a swipe gesture to the right.
     public private(set) lazy var swipeRightGestureRecognizer: UISwipeGestureRecognizer = {
         let recognizer = UISwipeGestureRecognizer(target: self, action: "toggleMode:")
         return recognizer
     }()
 
+    /// The recognizer that detects a swipe gesture to the left.
     public private(set) lazy var swipeLeftGestureRecognizer: UISwipeGestureRecognizer = {
         let recognizer = UISwipeGestureRecognizer(target: self, action: "toggleMode:")
         recognizer.direction = .Left
@@ -252,8 +268,11 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     private var hideSliderTimer: NSTimer?
 
     private var filterSelectionViewConstraint: NSLayoutConstraint?
+
+    /// The instance of a `FilterSelectionController` that is used to select the current preview filter. 
     public let filterSelectionController = FilterSelectionController()
 
+    /// The camera controller that is used by the controller.
     public private(set) var cameraController: CameraController?
 
     private var buttonsEnabled = true {
@@ -274,6 +293,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    /// The block that is called once the capture process has finished.
     public var completionBlock: CameraCompletionBlock?
 
     private var centerModeButtonConstraint: NSLayoutConstraint?
@@ -285,6 +305,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
     // MARK: - UIViewController
 
+    /**
+    :nodoc:
+    */
     override public func viewDidLoad() {
         super.viewDidLoad()
 
@@ -298,6 +321,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         checkSDKVersionIfNeeded()
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -306,6 +332,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -317,6 +346,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         cameraController?.startCamera()
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         cameraController?.stopCamera()
@@ -326,6 +358,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
 
@@ -334,22 +369,37 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override func shouldAutomaticallyForwardAppearanceMethods() -> Bool {
         return false
     }
 
+    /**
+     :nodoc:
+     */
     public override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
 
+    /**
+     :nodoc:
+     */
     public override func prefersStatusBarHidden() -> Bool {
         return true
     }
 
+    /**
+     :nodoc:
+     */
     public override func shouldAutorotate() -> Bool {
         return false
     }
 
+    /**
+     :nodoc:
+     */
     public override func preferredInterfaceOrientationForPresentation() -> UIInterfaceOrientation {
         return .Portrait
     }
@@ -925,6 +975,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    /**
+     This function gets the most recent image form the camera roll, and sets it as preview image for the according button.
+     */
     public func setLastImageFromRollAsPreview() {
         let fetchOptions = PHFetchOptions()
         fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: true)]
@@ -1131,10 +1184,12 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    // CHECK can this be private and @objc ?
     public func changeFlash(sender: UIButton?) {
         cameraController?.selectNextLightMode()
     }
 
+    // CHECK can this be private and @objc ?
     public func switchCamera(sender: UIButton?) {
         buttonsEnabled = false
         cameraController?.toggleCameraPosition()
@@ -1171,6 +1226,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    // CHECK can this be private and @objc ?
     public func showCameraRoll(sender: UIButton?) {
         let imagePicker = UIImagePickerController()
 
@@ -1182,6 +1238,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
 
+    // CHECK can this be private and @objc ?
     public func takePhoto(sender: UIButton?) {
         cameraController?.takePhoto { image, error in
             if error == nil {
@@ -1219,6 +1276,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+    // CHECK is this used at all ?
     public func recordVideo(sender: VideoRecordButton?) {
         if let recordVideoButton = sender {
             if recordVideoButton.recording {
@@ -1233,6 +1291,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
+
+    // CHECK can this be private and @objc ?
     public func toggleFilters(sender: UIButton?) {
         if let filterSelectionViewConstraint = self.filterSelectionViewConstraint {
             let animationDuration = NSTimeInterval(0.6)
@@ -1333,12 +1393,14 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         CATransaction.commit()
     }
 
+    // CHECK can this be private ?
     func showSquareMask() {
         maskIndicatorLayer.hidden = false
         upperMaskDarkenLayer.hidden = false
         lowerMaskDarkenLayer.hidden = false
     }
 
+    // CHECK can this be private ?
     func hideSquareMask() {
         maskIndicatorLayer.hidden = true
         upperMaskDarkenLayer.hidden = true
@@ -1426,6 +1488,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 }
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    /**
+     :nodoc:
+     */
     public func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let image = info[UIImagePickerControllerOriginalImage] as? UIImage
 
@@ -1440,6 +1505,9 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
         })
     }
 
+    /**
+     :nodoc:
+     */
     public func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
