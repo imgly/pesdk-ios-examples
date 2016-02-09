@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYHuePickerView) public class HuePickerView: UIView {
+
+    /// The receiver’s delegate.
+    /// seealso: `HuePickerViewDelegate`.
     public weak var pickerDelegate: HuePickerViewDelegate?
 
     public var hue = CGFloat(0) {

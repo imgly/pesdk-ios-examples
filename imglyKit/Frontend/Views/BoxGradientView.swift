@@ -17,10 +17,12 @@ public struct Line {
  *  position and size of the box.
  */
 @objc(IMGLYBoxGradientView) public class BoxGradientView: UIView {
-    /// This delegate is used to propergate changes of the view.
+
+    /// The receiver’s delegate.
+    /// seealso: `GradientViewDelegate`.
     public weak var gradientViewDelegate: GradientViewDelegate?
 
-    /// The center point of the box.
+    /// :nodoc:
     public var centerPoint = CGPoint.zero
 
     ///  The first control point.

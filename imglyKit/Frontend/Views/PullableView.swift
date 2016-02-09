@@ -51,6 +51,9 @@ import AVFoundation
     }
     var animate = true
     var animationDuration: Double = 0.0
+
+    /// The receiver’s delegate.
+    /// seealso: `PullableViewDelegate`.
     weak var delegate: PullableViewDelegate?
 
     /**

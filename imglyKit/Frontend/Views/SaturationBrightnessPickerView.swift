@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYSaturationBrightnessPickerView) public class SaturationBrightnessPickerView: UIView {
+
+    /// The receiver’s delegate.
+    /// seealso: `SaturationBrightnessPickerViewDelegate`.
     public weak var pickerDelegate: SaturationBrightnessPickerViewDelegate?
     public var hue = CGFloat(0) {
         didSet {
@@ -70,7 +73,6 @@ import UIKit
             drawMarkerToContext(context, rect: rect)
         }
     }
-
 
     private func drawColorMatrixToContext(context: CGContextRef, rect: CGRect) {
         CGContextSaveGState(context)

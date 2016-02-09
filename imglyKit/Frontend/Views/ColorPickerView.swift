@@ -15,6 +15,9 @@ import UIKit
 }
 
 @objc(IMGLYColorPickerView) public class ColorPickerView: UIView {
+
+    /// The receiver’s delegate.
+    /// seealso: `ColorPickerViewDelegate`.
     public weak var pickerDelegate: ColorPickerViewDelegate?
     public var color = UIColor.blackColor() {
         didSet {

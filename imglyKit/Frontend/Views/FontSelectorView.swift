@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYFontSelectorView) public class FontSelectorView: UIScrollView {
+
+    /// The receiver’s delegate.
+    /// seealso: `FontSelectorViewDelegate`.
     public weak var selectorDelegate: FontSelectorViewDelegate?
     public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
         didSet {

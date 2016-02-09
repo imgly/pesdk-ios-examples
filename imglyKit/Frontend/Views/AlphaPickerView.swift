@@ -15,7 +15,7 @@ import UIKit
     /**
      Is called when the alpha value changes.
 
-     - parameter alphaPickerView: An instance of an `AlphaPickerView`.
+     - parameter alphaPickerView: An instance of `AlphaPickerView`.
      - parameter alpha:           A value between 0.0 and 1.0.
      */
     func alphaPicked(alphaPickerView: AlphaPickerView, alpha: CGFloat)
@@ -29,8 +29,8 @@ import UIKit
  */
 @objc(IMGLYAlphaPickerView) public class AlphaPickerView: UIView {
 
-    /// The delegate that is used to broadcast changes.
-    /// seealso: `AlphaPickerViewDelegate`
+    /// The receiver’s delegate.
+    /// seealso: `AlphaPickerViewDelegate`.
     public weak var pickerDelegate: AlphaPickerViewDelegate?
 
     private private(set) lazy var checkboardColor: UIColor = {

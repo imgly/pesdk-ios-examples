@@ -44,6 +44,8 @@ import UIKit
         return visibleImageFrame
     }
 
+    /// The receiver’s delegate.
+    /// seealso: `ZoomingImageViewDelegate`.
     public weak var zoomDelegate: ZoomingImageViewDelegate?
 
     // MARK: - Initializers

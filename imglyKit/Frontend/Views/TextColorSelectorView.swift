@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYTextColorSelectorView) public class TextColorSelectorView: UIScrollView {
+
+    /// The receiver’s delegate.
+    /// seealso: `TextColorSelectorViewDelegate`.
     public weak var menuDelegate: TextColorSelectorViewDelegate?
 
     private var colorArray: [UIColor] = []

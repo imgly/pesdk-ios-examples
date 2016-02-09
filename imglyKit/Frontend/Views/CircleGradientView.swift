@@ -6,7 +6,12 @@
 import UIKit
 
 @objc(IMGLYCircleGradientView) public class CircleGradientView: UIView {
+
+    /// :nodoc:
     public var centerPoint = CGPoint.zero
+
+    /// The receiver’s delegate.
+    /// seealso: `GradientViewDelegate`.
     public weak var gradientViewDelegate: GradientViewDelegate?
     public var controlPoint1 = CGPoint.zero
     public var controlPoint2 = CGPoint.zero {
