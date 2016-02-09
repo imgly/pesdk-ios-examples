@@ -21,11 +21,18 @@ import QuartzCore
         super.init(responseName: "None")
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
+    /// Returns a `CIImage` object that encapsulates the operations configured in the filter. (read-only)
     public override var outputImage: CIImage? {
         guard let inputImage = inputImage else {
             return nil

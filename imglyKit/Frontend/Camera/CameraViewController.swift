@@ -51,6 +51,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         super.init(nibName: nil, bundle: nil)
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         self.configuration = Configuration()
         super.init(coder: aDecoder)

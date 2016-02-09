@@ -38,12 +38,16 @@
     /// The color of the text.
     public var color = Color.whiteColor()
 
+    /// The background-color of the text.
     public var backgroundColor = Color(white: 1.0, alpha: 0.0)
 
-    override init() {
-        super.init()
-    }
+    /**
+     Returns an object initialized from data in a given unarchiver.
 
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
