@@ -8,11 +8,29 @@
 
 import UIKit
 
+/**
+ *  This protocol is used within the `AlphaPickerView`.
+ */
 @objc(IMGLYAlphaPickerViewDelegate) public protocol AlphaPickerViewDelegate {
+    /**
+     Is called when the alpha value changes.
+
+     - parameter alphaPickerView: An instance of an `AlphaPickerView`.
+     - parameter alpha:           A value between 0.0 and 1.0.
+     */
     func alphaPicked(alphaPickerView: AlphaPickerView, alpha: CGFloat)
 }
 
+/**
+ *  The `AlphaPickerView` class defines a view that can be used to pick an alpha value.
+    It displays a gradient from zero alpha to full alpha. The color of the gradient can be
+    set via `color` or `hue` properties. The background is painted with a checkerboard pattern,
+    that is provided by an image called "checkerboard".
+ */
 @objc(IMGLYAlphaPickerView) public class AlphaPickerView: UIView {
+
+    /// The delegate that is used to broadcast changes.
+    /// seealso: `AlphaPickerViewDelegate`
     public weak var pickerDelegate: AlphaPickerViewDelegate?
 
     private private(set) lazy var checkboardColor: UIColor = {
@@ -24,14 +42,25 @@ import UIKit
         return color
     }()
 
+    /// The currently choosen alpha value of the picker.
     public var alphaValue = CGFloat(0) {
         didSet {
             self.setNeedsDisplay()
         }
     }
 
+    /// The currently choosen hue value of the color gradient.
     public var hue = CGFloat(0) {
         didSet {
+            self.setNeedsDisplay()
+        }
+    }
+
+    /// The currently choosen color value of the color gradient.
+    public var color = UIColor.redColor() {
+        didSet {
+            alphaValue = CGColorGetAlpha(color.CGColor)
+            hue = color.hsb.hue
             self.setNeedsDisplay()
         }
     }
@@ -63,14 +92,6 @@ import UIKit
     private func commonInit() {
         opaque = false
         backgroundColor = UIColor.clearColor()
-    }
-
-    public var color = UIColor.redColor() {
-        didSet {
-            alphaValue = CGColorGetAlpha(color.CGColor)
-            hue = color.hsb.hue
-            self.setNeedsDisplay()
-        }
     }
 
     public override func drawRect(rect: CGRect) {
@@ -120,14 +141,33 @@ import UIKit
         CGContextDrawPath(context, .FillStroke)
     }
 
+    /**
+     Tells the responder when one or more fingers touch down in a view or window.
+
+     - parameter touches: A set of `UITouch` instances that represent the touches for the starting phase of the event represented by event.
+     - parameter event:   An object representing the event to which the touches belong.
+     */
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         handleTouches(touches, withEvent: event)
     }
 
+    /**
+     Tells the responder when one or more fingers move in a view or window.
+
+     - parameter touches: A set of `UITouch` instances that represent the touches for the starting phase of the event represented by event.
+     - parameter event:   An object representing the event to which the touches belong.
+     */
     public override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         handleTouches(touches, withEvent: event)
     }
 
+
+    /**
+     Tells the responder when one or more fingers end touch in a view or window.
+
+     - parameter touches: A set of `UITouch` instances that represent the touches for the starting phase of the event represented by event.
+     - parameter event:   An object representing the event to which the touches belong.
+     */
     public override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
         handleTouches(touches, withEvent: event)
     }
