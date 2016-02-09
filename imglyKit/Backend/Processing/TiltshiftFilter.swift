@@ -87,7 +87,7 @@ import QuartzCore
         }
     }
 
-    // MARK:- Radial Mask-creation
+    // MARK: - Radial Mask-creation
     private func calculateCenterAndRadius() {
         center = CGPoint(x: (controlPoint1.x + controlPoint2.x) * 0.5,
             y: (controlPoint1.y + controlPoint2.y) * 0.5)
@@ -166,7 +166,7 @@ import QuartzCore
         return addFilter.outputImage
     }
 
-    // MARK:- Blur
+    // MARK: - Blur
     private func bluredImage() -> CIImage? {
         guard let blurFilter = CIFilter(name: "CIGaussianBlur"), cropFilter = CIFilter(name: "CICrop") else {
             return nil

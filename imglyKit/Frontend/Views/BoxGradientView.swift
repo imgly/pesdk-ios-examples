@@ -10,10 +10,23 @@ public struct Line {
     public let end: CGPoint
 }
 
+/**
+ *  This class represents the box gradient view. It is used within the focus editor view controller
+ *  to visualize the choosen focus parameters. Basicaly a box shaped area is left unblured.
+ *  Two controlpoints define the upper and lower midpoint of that box. Therefore they determin the rotation,
+ *  position and size of the box.
+ */
 @objc(IMGLYBoxGradientView) public class BoxGradientView: UIView {
-    public var centerPoint = CGPoint.zero
+    /// This delegate is used to propergate changes of the view.
     public weak var gradientViewDelegate: GradientViewDelegate?
+
+    /// The center point of the box.
+    public var centerPoint = CGPoint.zero
+
+    ///  The first control point.
     public var controlPoint1 = CGPoint.zero
+
+    /// The second control point.
     public var controlPoint2 = CGPoint.zero {
         didSet {
             calculateCenterPointFromOtherControlPoints()
@@ -23,12 +36,14 @@ public struct Line {
         }
     }
 
+    /// The normalized first control point.
     public var normalizedControlPoint1: CGPoint {
         get {
             return CGPoint(x: controlPoint1.x / frame.size.width, y: controlPoint1.y / frame.size.height)
         }
     }
 
+    /// The normalized second control point.
     public var normalizedControlPoint2: CGPoint {
         get {
             return CGPoint(x: controlPoint2.x / frame.size.width, y: controlPoint2.y / frame.size.height)
@@ -38,19 +53,33 @@ public struct Line {
     private var crossImageView = UIImageView()
     private var setup = false
 
-    // MARK:- setup
+    // MARK: - setup
 
+    /**
+      Initializes and returns a newly allocated view with the specified frame rectangle.
+
+    - parameter frame: The frame rectangle for the view, measured in points.
+
+    - returns: An initialized view object or `nil` if the object couldn't be created.
+    */
     public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
     }
 
-    public func commonInit() {
+    private func commonInit() {
         if setup {
             return
         }
@@ -96,7 +125,7 @@ public struct Line {
         addGestureRecognizer(pinchGestureRecognizer)
     }
 
-    // MARK:- Drawing
+    // MARK: - drawing
 
     private func diagonalLengthOfFrame() -> CGFloat {
         return sqrt(frame.size.width * frame.size.width +
@@ -151,6 +180,11 @@ public struct Line {
         path.addLineToPoint(line.end)
     }
 
+    /**
+     Draws the receiver’s image within the passed-in rectangle.
+
+     - parameter rect: The portion of the view’s bounds that needs to be updated.
+     */
     public override func drawRect(rect: CGRect) {
         let aPath = UIBezierPath()
         UIColor(white: 0.8, alpha: 1.0).setStroke()
@@ -162,7 +196,7 @@ public struct Line {
         aPath.stroke()
     }
 
-    // MARK:- gesture handling
+    // MARK: - gesture handling
     private func calculateCenterPointFromOtherControlPoints() {
         centerPoint = CGPoint(x: (controlPoint1.x + controlPoint2.x) / 2.0,
             y: (controlPoint1.y + controlPoint2.y) / 2.0)
@@ -209,6 +243,9 @@ public struct Line {
         return (inRectXAxis && inRectYAxis)
     }
 
+    /**
+     Lays out subviews.
+     */
     public override func layoutSubviews() {
         super.layoutSubviews()
         layoutCrosshair()

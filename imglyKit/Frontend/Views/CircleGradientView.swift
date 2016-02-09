@@ -29,6 +29,13 @@ import UIKit
     private var crossImageView = UIImageView()
     private var setup = false
 
+    /**
+     Initializes and returns a newly allocated view with the specified frame rectangle.
+
+     - parameter frame: The frame rectangle for the view, measured in points.
+
+     - returns: An initialized view object or `nil` if the object couldn't be created.
+     */
     public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()

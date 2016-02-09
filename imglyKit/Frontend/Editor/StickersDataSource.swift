@@ -68,7 +68,7 @@ import UIKit
         super.init()
     }
 
-    // MARK:- StickersDataSource
+    // MARK: - StickersDataSource
 
     public var stickerCount: Int {
         get {

@@ -111,7 +111,7 @@ Represents the angle an image should be rotated by.
         }
     }
 
-    // MARK:- orientation modifier {
+    // MARK: - orientation modifier {
     /**
         Sets internal flags so that the filtered image will be rotated counter-clock-wise around 90 degrees.
     */
