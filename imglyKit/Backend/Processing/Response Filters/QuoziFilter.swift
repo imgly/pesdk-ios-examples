@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension QuoziFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Quozi"
     }

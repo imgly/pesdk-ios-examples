@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension Lomo100Filter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Lomo 100"
     }

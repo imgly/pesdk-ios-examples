@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension BluesFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Blues"
     }

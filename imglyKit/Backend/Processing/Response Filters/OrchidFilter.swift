@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension OrchidFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Orchid"
     }

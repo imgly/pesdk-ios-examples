@@ -43,6 +43,7 @@ import QuartzCore
 }
 
 extension NoneFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "None"
     }

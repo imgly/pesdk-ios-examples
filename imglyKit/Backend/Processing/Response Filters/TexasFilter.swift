@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension TexasFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Texas"
     }

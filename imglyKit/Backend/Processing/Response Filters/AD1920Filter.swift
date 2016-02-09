@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension AD1920Filter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "AD1920"
     }

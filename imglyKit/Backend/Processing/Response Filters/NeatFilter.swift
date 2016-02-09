@@ -26,6 +26,7 @@ import Foundation
 }
 
 extension NeatFilter: EffectFilter {
+    /// The name that is used within the UI
     public var displayName: String {
         return "Neat"
     }
