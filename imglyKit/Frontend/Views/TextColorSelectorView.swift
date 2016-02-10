@@ -95,7 +95,6 @@ import UIKit
             button.addTarget(self, action: "colorButtonTouchedUpInside:", forControlEvents: .TouchUpInside)
             buttonArray.append(button)
             button.backgroundColor = color
-            button.hasFrame = false
         }
     }
 
@@ -116,7 +115,6 @@ import UIKit
             xPosition += (kButtonDistance + kButtonWidth)
         }
 
-        buttonArray[1].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
 

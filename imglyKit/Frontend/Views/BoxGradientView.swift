@@ -266,6 +266,9 @@ public struct Line {
         }
     }
 
+    /**
+     Centers the ui-elements within the views frame.
+     */
     public func centerGUIElements() {
         let x1 = frame.size.width * 0.5
         let x2 = frame.size.width * 0.5

@@ -5,6 +5,12 @@
 
 import UIKit
 
+/**
+ This class represents the circle gradient view. It is used within the focus editor view controller
+ to visualize the choosen focus parameters. Basicaly a circle shaped area is left unblured.
+ Two controlpoints define two opposing points on the border of the induced circle. Therefore they determin the rotation,
+ position and size of the circle.
+ */
 @objc(IMGLYCircleGradientView) public class CircleGradientView: UIView {
 
     /// :nodoc:
@@ -13,7 +19,11 @@ import UIKit
     /// The receiver’s delegate.
     /// seealso: `GradientViewDelegate`.
     public weak var gradientViewDelegate: GradientViewDelegate?
+
+    ///  The first control point.
     public var controlPoint1 = CGPoint.zero
+
+    /// The second control point.
     public var controlPoint2 = CGPoint.zero {
         didSet {
             calculateCenterPointFromOtherControlPoints()
@@ -23,10 +33,12 @@ import UIKit
         }
     }
 
+    /// The normalized first control point.
     public var normalizedControlPoint1: CGPoint {
         return CGPoint(x: controlPoint1.x / frame.size.width, y: controlPoint1.y / frame.size.height)
     }
 
+    /// The normalized second control point.
     public var normalizedControlPoint2: CGPoint {
         return CGPoint(x: controlPoint2.x / frame.size.width, y: controlPoint2.y / frame.size.height)
     }
@@ -58,7 +70,7 @@ import UIKit
         commonInit()
     }
 
-    public func commonInit() {
+    private func commonInit() {
         if setup {
             return
         }
@@ -82,7 +94,7 @@ import UIKit
         calculateCenterPointFromOtherControlPoints()
     }
 
-    public func configureCrossImageView() {
+    private func configureCrossImageView() {
         crossImageView.image = UIImage(named: "crosshair", inBundle: NSBundle(forClass: CircleGradientView.self), compatibleWithTraitCollection:nil)
         crossImageView.userInteractionEnabled = true
         crossImageView.frame = CGRect(x: 0, y: 0, width: crossImageView.image!.size.width, height: crossImageView.image!.size.height)
@@ -100,11 +112,16 @@ import UIKit
         addGestureRecognizer(pinchGestureRecognizer)
     }
 
-    public func diagonalLengthOfFrame() -> CGFloat {
+    private func diagonalLengthOfFrame() -> CGFloat {
         return sqrt(frame.size.width * frame.size.width +
             frame.size.height * frame.size.height)
     }
 
+    /**
+     Draws the receiver’s image within the passed-in rectangle.
+
+     - parameter rect: The portion of the view’s bounds that needs to be updated.
+     */
     public override func drawRect(rect: CGRect) {
         let aPath = UIBezierPath(arcCenter: centerPoint, radius: distanceBetweenControlPoints() * 0.5, startAngle: 0,
             endAngle:CGFloat(M_PI * 2.0), clockwise: true)
@@ -118,19 +135,19 @@ import UIKit
         CGContextRestoreGState(aRef)
     }
 
-    public func distanceBetweenControlPoints() -> CGFloat {
+    private func distanceBetweenControlPoints() -> CGFloat {
         let diffX = controlPoint2.x - controlPoint1.x
         let diffY = controlPoint2.y - controlPoint1.y
 
         return sqrt(diffX * diffX + diffY  * diffY)
     }
 
-    public func calculateCenterPointFromOtherControlPoints() {
+    private func calculateCenterPointFromOtherControlPoints() {
         centerPoint = CGPoint(x: (controlPoint1.x + controlPoint2.x) / 2.0,
             y: (controlPoint1.y + controlPoint2.y) / 2.0)
     }
 
-    public func informDelegateAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
+    private func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Began {
             if gradientViewDelegate != nil {
                 gradientViewDelegate!.userInteractionStarted()
@@ -143,7 +160,7 @@ import UIKit
         }
     }
 
-    public func handlePanGesture(recognizer: UIPanGestureRecognizer) {
+    @objc private func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(self)
         informDelegateAboutRecognizerStates(recognizer: recognizer)
         let diffX = location.x - centerPoint.x
@@ -152,21 +169,24 @@ import UIKit
         controlPoint2 = CGPoint(x: controlPoint2.x + diffX, y: controlPoint2.y + diffY)
     }
 
-    public func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
-        informDelegateAboutRecognizerStates(recognizer: recognizer)
+    @objc private func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
+        informDeletageAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
             controlPoint1 = recognizer.locationOfTouch(0, inView:self)
             controlPoint2 = recognizer.locationOfTouch(1, inView:self)
         }
     }
 
+    /**
+     Lays out subviews.
+     */
     public override func layoutSubviews() {
         super.layoutSubviews()
         layoutCrosshair()
         setNeedsDisplay()
     }
 
-    public func layoutCrosshair() {
+    private func layoutCrosshair() {
         crossImageView.center = centerPoint
 
         let distance = distanceBetweenControlPoints()
@@ -174,6 +194,9 @@ import UIKit
         UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
+    /**
+     Centers the ui-elements within the views frame.
+     */
     public func centerGUIElements() {
         let x1 = frame.size.width * 0.25
         let x2 = frame.size.width * 0.75

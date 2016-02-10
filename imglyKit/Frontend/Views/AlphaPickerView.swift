@@ -9,7 +9,7 @@
 import UIKit
 
 /**
-   This protocol is used within the `AlphaPickerView`.
+   The `AlphaPickerViewDelegate` protocol defines a set of optional methods you can use to receive value-change messages for AlphaPickerView objects.
  */
 @objc(IMGLYAlphaPickerViewDelegate) public protocol AlphaPickerViewDelegate {
     /**

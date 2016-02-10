@@ -9,16 +9,36 @@
 
 import UIKit
 
+/**
+ The `IMGLYColorPickerViewDelegate` protocol defines a set of optional methods you can use to receive value-change messages for ColorPickerViewDelegate objects.
+ */
 @objc(IMGLYColorPickerViewDelegate) public protocol ColorPickerViewDelegate {
+    /**
+     Is called when a color has been picked.
+
+     - parameter colorPickerView: The sender of the event.
+     - parameter color:           The picked color value.
+     */
     func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor)
+    /**
+     Is called when the picking process has been cancled.
+
+     - parameter colorPickerView: The sender of the event.
+     */
     func canceledColorPicking(colorPickerView: ColorPickerView)
 }
 
+/**
+ The `ColorPickerView` class provides a class that is used to pick colors. 
+ It contains three elements. A hue-picker, a brightness-saturation-picker and a preview of the picked color.
+ */
 @objc(IMGLYColorPickerView) public class ColorPickerView: UIView {
 
     /// The receiver’s delegate.
     /// seealso: `ColorPickerViewDelegate`.
     public weak var pickerDelegate: ColorPickerViewDelegate?
+
+    /// The currently selected color.
     public var color = UIColor.blackColor() {
         didSet {
             huePickerView.color = color
@@ -28,6 +48,7 @@ import UIKit
         }
     }
 
+    /// The initial set color.
     public var initialColor = UIColor.blackColor() {
         didSet {
             color = initialColor
@@ -119,6 +140,9 @@ import UIKit
 }
 
 extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
+    /**
+     :nodoc:
+     */
     public func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor) {
         colorView.backgroundColor = color.colorWithAlphaComponent(alphaPickerView.alphaValue)
         pickerDelegate?.colorPicked(self, didPickColor: colorView.backgroundColor!)
@@ -126,6 +150,9 @@ extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
 }
 
 extension ColorPickerView: HuePickerViewDelegate {
+    /**
+     :nodoc:
+     */
     public func huePicked(huePickerView: HuePickerView, hue: CGFloat) {
         saturationBrightnessPickerView.hue = hue
         alphaPickerView.hue = hue
@@ -135,6 +162,9 @@ extension ColorPickerView: HuePickerViewDelegate {
 }
 
 extension ColorPickerView: AlphaPickerViewDelegate {
+    /**
+     :nodoc:
+     */
     public func alphaPicked(alphaPickerView: AlphaPickerView, alpha: CGFloat) {
         let color = saturationBrightnessPickerView.color
         colorView.backgroundColor = color.colorWithAlphaComponent(alpha)

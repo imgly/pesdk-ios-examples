@@ -9,13 +9,10 @@
 import Foundation
 import UIKit
 
+/**
+ *  The `ColorButton` provides a button that is used within the `TextColorSelectorView`. Each button represents one color.
+ */
 @objc(IMGLYColorButton) public class ColorButton: UIButton {
-    public var hasFrame = false {
-        didSet {
-            styleButton()
-        }
-    }
-
     /**
      Initializes and returns a newly allocated view with the specified frame rectangle.
 
@@ -49,7 +46,7 @@ import UIKit
         layer.cornerRadius = 3
         layer.masksToBounds = true
         layer.borderWidth = 1.0 / contentScaleFactor
-        let alpha = hasFrame ? 0.3 : 0.0
+        let alpha = 0.3
         layer.borderColor = UIColor(white: 1.0, alpha: CGFloat(alpha)).CGColor
     }
 }
