@@ -45,6 +45,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Delete")
         button.addTarget(self, action: "deleteSticker:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .Delete)
         return button
@@ -58,6 +59,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Flip horizontally")
         button.addTarget(self, action: "flipHorizontal:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .FlipHorizontally)
         return button
@@ -71,6 +73,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Flip vertically")
         button.addTarget(self, action: "flipVertical:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .FlipVertically)
         return button
@@ -84,6 +87,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Bring to front")
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .BringToFront)
         return button
@@ -387,6 +391,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             selectedView = draggedView
             selectView(selectedView)
         }
+
         updateButtonStatus()
     }
 
@@ -397,7 +402,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             unSelectView(selectedView)
             selectedView.removeFromSuperview()
         }
+
         updateButtonStatus()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     @objc private func bringToFront(sender: UIButton) {

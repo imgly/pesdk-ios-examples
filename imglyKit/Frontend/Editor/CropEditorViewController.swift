@@ -122,6 +122,7 @@ public let kMinimumCropSize = CGFloat(50)
         for cropRatio in options.allowedCropRatios {
             let button = ImageCaptionButton()
             button.textLabel.text = cropRatio.title
+            button.accessibilityLabel = cropRatio.accessibilityLabel
             button.imageView.image = cropRatio.icon
             button.translatesAutoresizingMaskIntoConstraints = false
             button.addTarget(self, action: "activateRatio:", forControlEvents: .TouchUpInside)
