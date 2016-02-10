@@ -67,21 +67,22 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
     //  MARK: Initialization
 
     /**
-    Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the default builder.
+    Returns a newly allocated instance of a `Configuration` using the default builder.
 
-    - returns: An instance of a `MainEditorViewControllerOptions`.
+    - returns: An instance of a `Configuration`.
     */
     override convenience init() {
         self.init(builder: { _ in })
     }
 
     /**
-     Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the given builder.
+     Returns a newly allocated instance of a `Configuration` using the given builder.
 
-     - parameter builder: A `MainEditorViewControllerOptionsBuilder` instance.
+     - parameter builder: A `ConfigurationBuilder` instance.
 
-     - returns: An instance of a `MainEditorViewControllerOptions`.
-     */    public init(builder: (ConfigurationBuilder -> Void)) {
+     - returns: An instance of a `Configuration`.
+     */
+    public init(builder: (ConfigurationBuilder -> Void)) {
         let builderForClosure = ConfigurationBuilder()
         builder(builderForClosure)
         self.backgroundColor = builderForClosure.backgroundColor

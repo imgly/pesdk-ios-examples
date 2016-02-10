@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ Options for configuring a `EditorViewController`.
+ */
 @objc(IMGLYEditorViewControllerOptions) public class EditorViewControllerOptions: NSObject {
 
     ///  Defaults to 'Editor'
@@ -33,10 +36,22 @@ import UIKit
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public let allowsPreviewImageZoom: Bool
 
+    /**
+     Returns a newly allocated instance of a `EditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `EditorViewControllerOptions`.
+     */
     public convenience override init() {
         self.init(editorBuilder: EditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `EditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `EditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `EditorViewControllerOptions`.
+     */
     public init(editorBuilder: EditorViewControllerOptionsBuilder) {
         title = editorBuilder.title
         backgroundColor = editorBuilder.backgroundColor
@@ -47,6 +62,9 @@ import UIKit
     }
 }
 
+/**
+ The default `EditorViewControllerOptionsBuilder` for `EditorViewControllerOptions`.
+ */
 @objc(IMGLYEditorViewControllerOptionsBuilder) public class EditorViewControllerOptionsBuilder: NSObject {
     ///  Defaults to 'Editor'
     public lazy var title: String? = "Editor"

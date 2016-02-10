@@ -46,7 +46,7 @@ import UIKit
 }
 // swiftlint:disable type_name
 /**
-*  The default `MainEditorViewControllerOptionsBuilder` for `MainEditorViewControllerOptions`.
+    The default `MainEditorViewControllerOptionsBuilder` for `MainEditorViewControllerOptions`.
 */
 @objc(IMGLYMainEditorViewControllerOptionsBuilder) public class MainEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
