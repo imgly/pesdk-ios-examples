@@ -26,10 +26,12 @@ import UIKit
 
      - returns: An initialized crop ratio object.
      */
-    public init(ratio: CGFloat?, title: String, icon: UIImage) {
+    public init(ratio: CGFloat?, title: String, accessibilityLabel: String?, icon: UIImage) {
         self.ratio = ratio
         self.title = title
         self.icon = icon
         super.init()
+
+        self.accessibilityLabel = accessibilityLabel
     }
 }

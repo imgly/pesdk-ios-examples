@@ -34,8 +34,10 @@ private let kImageCaptionMargin = 2
         didSet {
             if highlighted {
                 backgroundColor = UIColor(white: 1, alpha: 0.2)
+                accessibilityTraits |= UIAccessibilityTraitSelected
             } else if !selected {
                 backgroundColor = UIColor.clearColor()
+                accessibilityTraits &= ~UIAccessibilityTraitSelected
             }
         }
     }
@@ -44,8 +46,10 @@ private let kImageCaptionMargin = 2
         didSet {
             if selected {
                 backgroundColor = UIColor(white: 1, alpha: 0.2)
+                accessibilityTraits |= UIAccessibilityTraitSelected
             } else if !highlighted {
                 backgroundColor = UIColor.clearColor()
+                accessibilityTraits &= ~UIAccessibilityTraitSelected
             }
         }
     }
@@ -70,6 +74,9 @@ private let kImageCaptionMargin = 2
     // MARK: - Configuration
 
     private func configureViews() {
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
+
         let containerView = UIView()
         containerView.userInteractionEnabled = false
         containerView.translatesAutoresizingMaskIntoConstraints = false

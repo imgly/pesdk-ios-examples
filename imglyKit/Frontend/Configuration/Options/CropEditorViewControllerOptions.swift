@@ -39,10 +39,10 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// Defaults to `Free`, `1:1`, `4:3` and `16:9`. Setting this to an empty array is ignored.
     public var allowedCropRatios: [CropRatio] = {
         let bundle = NSBundle(forClass: CropEditorViewControllerOptionsBuilder.self)
-        let freeCropRatio = CropRatio(ratio: nil, title: Localize("Free"), icon: UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)!)
-        let oneToOneCropRatio = CropRatio(ratio: 1, title: Localize("1:1"), icon: UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)!)
-        let fourToThreeCropRatio = CropRatio(ratio: 4 / 3, title: Localize("4:3"), icon: UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)!)
-        let sixteenToNineCropRatio = CropRatio(ratio: 16 / 9, title: Localize("16:9"), icon: UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)!)
+        let freeCropRatio = CropRatio(ratio: nil, title: Localize("Free"), accessibilityLabel: Localize("Free"), icon: UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)!)
+        let oneToOneCropRatio = CropRatio(ratio: 1, title: Localize("1:1"), accessibilityLabel: Localize("1 to 1"), icon: UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)!)
+        let fourToThreeCropRatio = CropRatio(ratio: 4 / 3, title: Localize("4:3"), accessibilityLabel: Localize("4 to 3"), icon: UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)!)
+        let sixteenToNineCropRatio = CropRatio(ratio: 16 / 9, title: Localize("16:9"), accessibilityLabel: Localize("16 to 9"), icon: UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)!)
 
         return [freeCropRatio, oneToOneCropRatio, fourToThreeCropRatio, sixteenToNineCropRatio]
         }() {

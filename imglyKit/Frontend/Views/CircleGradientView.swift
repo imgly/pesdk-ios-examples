@@ -50,10 +50,15 @@ import UIKit
         configureCrossImageView()
         configurePanGestureRecognizer()
         configurePinchGestureRecognizer()
+
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitAdjustable
+        accessibilityLabel = Localize("Radial focus area")
+        accessibilityHint = Localize("Double-tap and hold to move focus area")
     }
 
     public func configureControlPoints() {
-        controlPoint1 = CGPoint(x: 100, y: 100)
+        controlPoint1 = CGPoint(x: 150, y: 100)
         controlPoint2 = CGPoint(x: 150, y: 200)
         calculateCenterPointFromOtherControlPoints()
     }
@@ -66,13 +71,13 @@ import UIKit
     }
 
     public func configurePanGestureRecognizer() {
-        let panGestureRecognizer = UIPanGestureRecognizer(target:self, action:"handlePanGesture:")
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "handlePanGesture:")
         addGestureRecognizer(panGestureRecognizer)
         crossImageView.addGestureRecognizer(panGestureRecognizer)
     }
 
     public func configurePinchGestureRecognizer() {
-        let pinchGestureRecognizer = UIPinchGestureRecognizer(target:self, action:"handlePinchGesture:")
+        let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: "handlePinchGesture:")
         addGestureRecognizer(pinchGestureRecognizer)
     }
 
@@ -106,7 +111,7 @@ import UIKit
             y: (controlPoint1.y + controlPoint2.y) / 2.0)
     }
 
-    public func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
+    public func informDelegateAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Began {
             if gradientViewDelegate != nil {
                 gradientViewDelegate!.userInteractionStarted()
@@ -121,7 +126,7 @@ import UIKit
 
     public func handlePanGesture(recognizer: UIPanGestureRecognizer) {
         let location = recognizer.locationInView(self)
-        informDeletageAboutRecognizerStates(recognizer: recognizer)
+        informDelegateAboutRecognizerStates(recognizer: recognizer)
         let diffX = location.x - centerPoint.x
         let diffY = location.y - centerPoint.y
         controlPoint1 = CGPoint(x: controlPoint1.x + diffX, y: controlPoint1.y + diffY)
@@ -129,7 +134,7 @@ import UIKit
     }
 
     public func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
-        informDeletageAboutRecognizerStates(recognizer: recognizer)
+        informDelegateAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
             controlPoint1 = recognizer.locationOfTouch(0, inView:self)
             controlPoint2 = recognizer.locationOfTouch(1, inView:self)
@@ -144,6 +149,10 @@ import UIKit
 
     public func layoutCrosshair() {
         crossImageView.center = centerPoint
+
+        let distance = distanceBetweenControlPoints()
+        accessibilityFrame = convertRect(CGRect(x: centerPoint.x - distance / 2, y: centerPoint.y - distance / 2, width: distance, height: distance), toView: nil)
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     public func centerGUIElements() {
@@ -153,5 +162,25 @@ import UIKit
         let y2 = frame.size.height * 0.75
         controlPoint1 = CGPoint(x: x1, y: y1)
         controlPoint2 = CGPoint(x: x2, y: y2)
+    }
+
+    // MARK: - Accessibility
+
+    public override func accessibilityIncrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
+        // Widen gap by 20 points
+        controlPoint1 = controlPoint1 + 10 * vector1
+        controlPoint2 = controlPoint2 + 10 * vector2
+    }
+
+    public override func accessibilityDecrement() {
+        let vector1 = CGVector(startPoint: centerPoint, endPoint: controlPoint1).normalizedVector()
+        let vector2 = CGVector(startPoint: centerPoint, endPoint: controlPoint2).normalizedVector()
+
+        // Reduce gap by 20 points
+        controlPoint1 = controlPoint1 - 10 * vector1
+        controlPoint2 = controlPoint2 - 10 * vector2
     }
 }

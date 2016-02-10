@@ -45,6 +45,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_delete", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Delete")
         button.addTarget(self, action: "deleteSticker:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .Delete)
         return button
@@ -58,6 +59,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-h", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Flip horizontally")
         button.addTarget(self, action: "flipHorizontal:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .FlipHorizontally)
         return button
@@ -71,6 +73,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_orientation_flip-v", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Flip vertically")
         button.addTarget(self, action: "flipVertical:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .FlipVertically)
         return button
@@ -84,6 +87,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         button.backgroundColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1)
         button.setImage(UIImage(named: "icon_bringtofront", inBundle: bundle, compatibleWithTraitCollection: nil), forState: .Normal)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = Localize("Bring to front")
         button.addTarget(self, action: "bringToFront:", forControlEvents: .TouchUpInside)
         self.options.actionButtonConfigurationClosure?(button, .BringToFront)
         return button
@@ -387,6 +391,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             selectedView = draggedView
             selectView(selectedView)
         }
+
         updateButtonStatus()
     }
 
@@ -397,7 +402,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
             unSelectView(selectedView)
             selectedView.removeFromSuperview()
         }
+
         updateButtonStatus()
+        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
     }
 
     @objc private func bringToFront(sender: UIButton) {
@@ -428,7 +435,49 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in
-            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView:self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+            self.overlayConverter?.addUIElementsFromSpriteFilters(self.tempStickerCopy, containerView: self.stickersClipView, previewSize: self.previewImageView.visibleImageFrame.size)
+
+            // Recreate accessibility functions
+            for view in self.stickersClipView.subviews {
+                if let imageView = view as? StickerImageView {
+                    // Check datasource for sticker to get label
+                    var sticker: Sticker?
+                    for i in 0 ..< self.options.stickersDataSource.stickerCount {
+                        if self.options.stickersDataSource.stickerAtIndex(i).image == imageView.image {
+                            sticker = self.options.stickersDataSource.stickerAtIndex(i)
+                            break
+                        }
+                    }
+
+                    if let label = sticker?.label {
+                        imageView.accessibilityLabel = Localize(label)
+                    }
+
+                    imageView.decrementHandler = { [unowned imageView] in
+                        // Decrease by 10 %
+                        imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+
+                    imageView.incrementHandler = { [unowned imageView] in
+                        // Increase by 10 %
+                        imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+
+                    imageView.rotateLeftHandler = { [unowned imageView] in
+                        // Rotate by 10 degrees to the left
+                        imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+
+                    imageView.rotateRightHandler = { [unowned imageView] in
+                        // Rotate by 10 degrees to the right
+                        imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                    }
+                }
+            }
         }
     }
 
@@ -436,7 +485,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         tempStickerCopy = fixedFilterStack.spriteFilters
     }
 
-    // MARK:- helper
+    // MARK: - Helpers
 
     private func hitImageView(point: CGPoint) -> UIImageView? {
         var result: UIImageView? = nil
@@ -445,6 +494,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
                 result = imageView as? UIImageView
             }
         }
+
         return result
     }
 
@@ -497,6 +547,10 @@ extension StickersEditorViewController: UICollectionViewDataSource {
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
         cell.imageView.image = sticker.thumbnail ?? sticker.image
 
+        if let label = sticker.label {
+            cell.accessibilityLabel = Localize(label)
+        }
+
         return cell
     }
 }
@@ -505,13 +559,42 @@ extension StickersEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         unSelectView(selectedView)
+
         let sticker = options.stickersDataSource.stickerAtIndex(indexPath.item)
-        let imageView = UIImageView(image: sticker.image)
-        imageView.userInteractionEnabled = true
+        let imageView = StickerImageView(image: sticker.image)
         if let size = overlayConverter?.initialSizeForStickerImage(sticker.image, containerView: stickersClipView) {
             imageView.frame.size = size
         }
+
         imageView.center = CGPoint(x: stickersClipView.bounds.midX, y: stickersClipView.bounds.midY)
+
+        if let label = sticker.label {
+            imageView.accessibilityLabel = Localize(label)
+        }
+
+        imageView.decrementHandler = { [unowned imageView] in
+            // Decrease by 10 %
+            imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.incrementHandler = { [unowned imageView] in
+            // Increase by 10 %
+            imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.rotateLeftHandler = { [unowned imageView] in
+            // Rotate by 10 degrees to the left
+            imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
+
+        imageView.rotateRightHandler = { [unowned imageView] in
+            // Rotate by 10 degrees to the right
+            imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+        }
 
         let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
         let scaleX = 1.0 / cropRect.width
@@ -525,11 +608,13 @@ extension StickersEditorViewController: UICollectionViewDelegate {
 
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
             imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
-            }, completion: { (Bool) -> Void in
-                self.selectedView = imageView
-                self.selectView(imageView)
-                self.updateButtonStatus()
-        })
+        }) { _ in
+            self.selectedView = imageView
+            self.selectView(imageView)
+            self.updateButtonStatus()
+
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, imageView)
+        }
     }
 }
 

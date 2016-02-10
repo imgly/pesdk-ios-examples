@@ -40,6 +40,8 @@ class ImageCaptionCollectionViewCell: UICollectionViewCell {
     }
 
     private func commonInit() {
+        isAccessibilityElement = true
+        accessibilityTraits |= UIAccessibilityTraitButton
         configureViews()
     }
 

@@ -96,6 +96,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.contentHorizontalAlignment = .Left
         button.addTarget(self, action: "changeFlash:", forControlEvents: .TouchUpInside)
         button.hidden = true
+        button.accessibilityLabel = Localize("Flash, automatic")
+        button.accessibilityHint = Localize("Switch between flash modes")
         self.options.flashButtonConfigurationClosure?(button)
         return button
     }()
@@ -109,6 +111,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.contentHorizontalAlignment = .Right
         button.addTarget(self, action: "switchCamera:", forControlEvents: .TouchUpInside)
         button.hidden = true
+        button.accessibilityLabel = Localize("Camera chooser")
+        button.accessibilityHint = Localize("Switch between the front and backfacing camera")
         self.options.switchCameraButtonConfigurationClosure?(button)
         return button
     }()
@@ -122,6 +126,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
         button.addTarget(self, action: "showCameraRoll:", forControlEvents: .TouchUpInside)
+        button.accessibilityLabel = Localize("Photo Viewer")
         self.options.cameraRollButtonConfigurationClosure?(button)
         return button
     }()
@@ -138,6 +143,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         label.alpha = 0
         label.textColor = UIColor.whiteColor()
         label.text = "00:00"
+        label.accessibilityTraits |= UIAccessibilityTraitUpdatesFrequently
         self.options.timeLabelConfigurationClosure?(label)
         return label
     }()
@@ -152,6 +158,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         button.layer.cornerRadius = 3
         button.clipsToBounds = true
         button.addTarget(self, action: "toggleFilters:", forControlEvents: .TouchUpInside)
+        button.accessibilityLabel = Localize("Filters")
+        button.accessibilityHint = Localize("Show or hide the list of filters")
         button.transform = CGAffineTransformMakeRotation(CGFloat(M_PI))
         self.options.filterSelectorButtonConfigurationClosure?(button)
         return button
@@ -165,6 +173,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         slider.maximumValue = 1
         slider.value = 0.75
         slider.alpha = 0
+        slider.accessibilityLabel = Localize("Filter Intensity")
         slider.addTarget(self, action: "changeIntensity:", forControlEvents: .ValueChanged)
 
         slider.minimumTrackTintColor = UIColor.whiteColor()
@@ -544,6 +553,8 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
             if newRecordingMode == .Photo {
                 self?.recordingTimeLabel.removeFromSuperview()
             }
+
+            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
         }
 
         cameraController.capturingStillImageHandler = { [weak self] capturing in
@@ -562,10 +573,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
             switch flashMode {
             case .Auto:
+                self?.flashButton.accessibilityLabel = Localize("Flash, automatic")
                 self?.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             case .On:
+                self?.flashButton.accessibilityLabel = Localize("Flash, on")
                 self?.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             case .Off:
+                self?.flashButton.accessibilityLabel = Localize("Flash, off")
                 self?.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             }
         }
@@ -578,10 +592,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
             switch torchMode {
             case .Auto:
+                self?.flashButton.accessibilityLabel = Localize("Flash, automatic")
                 self?.flashButton.setImage(UIImage(named: "flash_auto", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             case .On:
+                self?.flashButton.accessibilityLabel = Localize("Flash, on")
                 self?.flashButton.setImage(UIImage(named: "flash_on", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             case .Off:
+                self?.flashButton.accessibilityLabel = Localize("Flash, off")
                 self?.flashButton.setImage(UIImage(named: "flash_off", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate), forState: UIControlState.Normal)
             }
         }
@@ -638,7 +655,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                 return
             }
 
-            let alertController = UIAlertController(title: Localize("No permission"), message: Localize("Permission to use Camera are required, please change privacy settings."), preferredStyle: .Alert)
+            let alertController = UIAlertController(title: Localize("No permissions"), message: Localize("Permissions to use Camera are required, please change privacy settings."), preferredStyle: .Alert)
 
             let settingsAction = UIAlertAction(title: Localize("Settings"), style: .Default) { _ in
                 if let url = NSURL(string: UIApplicationOpenSettingsURLString) {
@@ -754,22 +771,11 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
 
         cameraPreviewContainer.addSubview(cameraController.videoPreviewView)
+        cameraController.videoPreviewView.isAccessibilityElement = true
+        cameraController.videoPreviewView.accessibilityTraits |= UIAccessibilityTraitImage
+        cameraController.videoPreviewView.accessibilityLabel = Localize("Viewfinder")
         cameraController.videoPreviewView.frame = cameraPreviewContainer.bounds
         self.cameraController = cameraController
-
-//        cameraController = CameraController(previewView: cameraPreviewContainer)
-//        cameraController!.tapToFocusEnabled = options.tapToFocusEnabled
-//        cameraController!.allowedCameraPositions = options.allowedCameraPositions
-//        cameraController!.allowedFlashModes = options.allowedFlashModes
-//        cameraController!.allowedTorchModes = options.allowedTorchModes
-//        cameraController!.squareMode = options.cropToSquare
-//
-//        if options.maximumVideoLength > 0 {
-//            cameraController!.maximumVideoLength = options.maximumVideoLength
-//        }
-//
-//        cameraController!.delegate = self
-//        cameraController!.setupWithInitialRecordingMode(currentRecordingMode)
     }
 
     private func configureFilterSelectionController() {
@@ -812,6 +818,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
     private func updateRecordingTimeLabel(seconds: Int) {
         self.recordingTimeLabel.text = NSString(format: "%02d:%02d", seconds / 60, seconds % 60) as String
+        self.recordingTimeLabel.accessibilityLabel = NSString.localizedStringWithFormat(Localize("%d seconds"), seconds) as String
     }
 
     private func addRecordingTimeLabel() {
@@ -1386,7 +1393,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                         let fadeAnimation = CABasicAnimation(keyPath: "opacity")
                         fadeAnimation.duration = 0.25
                         fadeAnimation.fromValue = 1
-                        fadeAnimation.delegate = AnimationDelegate(block: { finished in
+                        fadeAnimation.delegate = AnimationDelegate() { finished in
                             if finished {
                                 CATransaction.begin()
                                 CATransaction.setDisableActions(true)
@@ -1396,7 +1403,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
                                 CATransaction.commit()
                                 self.focusIndicatorAnimating = false
                             }
-                        })
+                        }
 
                         self.focusIndicatorLayer.addAnimation(fadeAnimation, forKey: nil)
                     }

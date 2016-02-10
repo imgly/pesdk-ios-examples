@@ -48,11 +48,13 @@ class FilterCollectionViewCell: ImageCaptionCollectionViewCell {
     func showTick() {
         tickImageView.alpha = 1
         imageView.alpha = 0.4
+        accessibilityTraits |= UIAccessibilityTraitSelected
     }
 
     func hideTick() {
         tickImageView.alpha = 0
         imageView.alpha = 1
+        accessibilityTraits &= ~UIAccessibilityTraitSelected
     }
 
     // MARK: - Helpers

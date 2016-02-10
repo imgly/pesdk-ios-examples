@@ -192,6 +192,9 @@
 		2B1ADAE01B19CBB900C98522 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2B1ADAE21B19CD5500C98522 /* NSImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */; };
 		2B1ADAE41B19D0C800C98522 /* NSAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */; };
+		2B1B9AF61C52625100C6D276 /* CGVectorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */; };
+		2B1B9AF81C52848700C6D276 /* TextLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B1B9AF71C52848700C6D276 /* TextLabel.swift */; };
+		2B25F1BC1B03AC8E0081032D /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */; };
 		2B319B651C45070200515C9D /* FlashController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B319B641C45070200515C9D /* FlashController.swift */; };
 		2B50239E1C286B0400CE9AD3 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
 		2B54A0A01C2AEA6100E82DC6 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B50239D1C286B0400CE9AD3 /* Filter.swift */; };
@@ -211,6 +214,7 @@
 		2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BBE166B1C4E44FA00921DE7 /* FocusController.swift */; };
 		2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */; };
 		2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */; };
+		2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537871C51001500A7DE17 /* StickerImageView.swift */; };
 		2BC5378D1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */; };
 		2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */; };
 		2BC537911C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */; };
@@ -227,6 +231,7 @@
 		2BEBFEAB1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */; };
 		2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */; };
 		2BEBFEB51C400A5D00FAA95C /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBFEB41C400A5D00FAA95C /* CameraController.swift */; };
+		2BF1A0C51C56832300C67EAC /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
 		2BF4D3AC1AF114FA00C801B2 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AA1AF114FA00C801B2 /* CameraViewController.swift */; };
@@ -468,6 +473,9 @@
 		2B1ADA1D1B19C86300C98522 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B1ADAE11B19CD5500C98522 /* NSImageExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSImageExtension.swift; sourceTree = "<group>"; };
 		2B1ADAE31B19D0C800C98522 /* NSAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSAffineTransformExtension.swift; sourceTree = "<group>"; };
+		2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGVectorExtension.swift; sourceTree = "<group>"; };
+		2B1B9AF71C52848700C6D276 /* TextLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextLabel.swift; sourceTree = "<group>"; };
+		2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
 		2B319B641C45070200515C9D /* FlashController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlashController.swift; sourceTree = "<group>"; };
 		2B50239D1C286B0400CE9AD3 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		2B5728051C28594E0003EF8F /* EffectFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EffectFilter.swift; sourceTree = "<group>"; };
@@ -483,6 +491,7 @@
 		2BBE166B1C4E44FA00921DE7 /* FocusController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FocusController.swift; sourceTree = "<group>"; };
 		2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureDeviceExtension.swift; sourceTree = "<group>"; };
 		2BC101BC1C43D12100C04A47 /* SampleBufferController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleBufferController.swift; sourceTree = "<group>"; };
+		2BC537871C51001500A7DE17 /* StickerImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickerImageView.swift; sourceTree = "<group>"; };
 		2BC5378C1C5139D100A7DE17 /* MainEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainEditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2BC5378E1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterEditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2BC537901C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StickersEditorViewControllerOptions.swift; sourceTree = "<group>"; };
@@ -501,6 +510,7 @@
 		2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AVCaptureVideoOrientationExtension.swift; sourceTree = "<group>"; };
 		2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRectExtension.swift; sourceTree = "<group>"; };
 		2BEBFEB41C400A5D00FAA95C /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		2BF1A0C61C56832300C67EAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		2BF4D3841AF1139600C801B2 /* imglyKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = imglyKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2BF4D3881AF1139600C801B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BF4D3891AF1139600C801B2 /* imglyKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = imglyKit.h; sourceTree = "<group>"; };
@@ -780,6 +790,7 @@
 				2BF4D3A11AF113ED00C801B2 /* Editor */,
 				2B1ADA0D1B19C36C00C98522 /* Extensions */,
 				2BF4D4A21AF1154B00C801B2 /* FixedFilterStack.swift */,
+				2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */,
 				2BF4D5471AF115A200C801B2 /* Localizable.strings */,
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
@@ -809,6 +820,7 @@
 				2BC101BA1C43C72000C04A47 /* AVCaptureDeviceExtension.swift */,
 				2BEBFEAA1C3FEF6400FAA95C /* AVCaptureVideoOrientationExtension.swift */,
 				2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */,
+				2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */,
 				2B1ADA0F1B19C3F300C98522 /* InstanceFactoryExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				098331201C400A72000135B8 /* UIColorExtension.swift */,
@@ -950,10 +962,13 @@
 				2BF4D3C41AF1150400C801B2 /* SliderEditorViewController.swift */,
 				2BF4D3C51AF1150400C801B2 /* Sticker.swift */,
 				2BF4D3C61AF1150400C801B2 /* StickerCollectionViewCell.swift */,
+				2BC537871C51001500A7DE17 /* StickerImageView.swift */,
 				2BF4D3C81AF1150400C801B2 /* StickersEditorViewController.swift */,
 				2BF4D3C91AF1150400C801B2 /* SubEditorViewController.swift */,
 				09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */,
 				2BF4D3CB1AF1150400C801B2 /* TextEditorViewController.swift */,
+				2B1B9AF71C52848700C6D276 /* TextLabel.swift */,
+				2B25F1BB1B03AC8E0081032D /* ZoomingImageView.swift */,
 			);
 			path = Editor;
 			sourceTree = "<group>";
@@ -1413,6 +1428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2BF4D4521AF1152500C801B2 /* Identity.png in Resources */,
+				2BF1A0C51C56832300C67EAC /* Localizable.stringsdict in Resources */,
 				2BF4D44E1AF1152500C801B2 /* Glam.png in Resources */,
 				2BF4D46B1AF1152500C801B2 /* SepiaHigh.png in Resources */,
 				2BF4D4511AF1152500C801B2 /* HighContrast.png in Resources */,
@@ -1646,6 +1662,7 @@
 				2BF4D3E31AF1150500C801B2 /* SliderEditorViewController.swift in Sources */,
 				2B5CA32E1C490CD80065DE48 /* CameraViewControllerOptions.swift in Sources */,
 				2BF4D3DF1AF1150500C801B2 /* NavigationAnimationController.swift in Sources */,
+				2B1B9AF81C52848700C6D276 /* TextLabel.swift in Sources */,
 				2BF4D53E1AF1156F00C801B2 /* LUTToNSDataConverter.m in Sources */,
 				2B0DC4C31B037016002FE44F /* NSTimerExtension.swift in Sources */,
 				2BF4D4FF1AF1155E00C801B2 /* BreezeFilter.swift in Sources */,
@@ -1737,6 +1754,7 @@
 				2BF4D51D1AF1155E00C801B2 /* LucidFilter.swift in Sources */,
 				2BF4D5371AF1155E00C801B2 /* TexasFilter.swift in Sources */,
 				2BF4D5101AF1155E00C801B2 /* FrontFilter.swift in Sources */,
+				2B1B9AF61C52625100C6D276 /* CGVectorExtension.swift in Sources */,
 				2B1ADA101B19C3F300C98522 /* InstanceFactoryExtension.swift in Sources */,
 				2BF4D5241AF1155E00C801B2 /* PaleFilter.swift in Sources */,
 				2BF4D3EF1AF1151500C801B2 /* UIImageExtension.swift in Sources */,
@@ -1779,6 +1797,7 @@
 				093D111F1C60F90800B72B7A /* SaturationBrightnessPickerView.swift in Sources */,
 				2BF4D3E81AF1150500C801B2 /* SubEditorViewController.swift in Sources */,
 				2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */,
+				2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */,
 				2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */,
 				2BF4D5251AF1155E00C801B2 /* PitchedFilter.swift in Sources */,
 				2BF4D53A1AF1155E00C801B2 /* X400Filter.swift in Sources */,
@@ -1820,6 +1839,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2BF1A0C61C56832300C67EAC /* en */,
+			);
+			name = Localizable.stringsdict;
+			sourceTree = "<group>";
+		};
 		2BF4D5471AF115A200C801B2 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (

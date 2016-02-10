@@ -59,6 +59,7 @@ extension FilterSelectionController {
             let filterType = dataSource.filterTypeAtIndex(indexPath.item)
             let filter = InstanceFactory.effectFilterWithType(filterType)
 
+            filterCell.accessibilityLabel = dataSource.titleForFilterAtIndex(indexPath.item)
             filterCell.textLabel.text = dataSource.titleForFilterAtIndex(indexPath.item)
             filterCell.imageView.layer.cornerRadius = 3
             filterCell.imageView.clipsToBounds = true

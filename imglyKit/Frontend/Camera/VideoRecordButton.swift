@@ -38,16 +38,20 @@ public final class VideoRecordButton: UIControl {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-
-        layer.addSublayer(outerLayer)
-        layer.addSublayer(innerLayer)
+        commonInit()
     }
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        commonInit()
+    }
 
+    private func commonInit() {
         layer.addSublayer(outerLayer)
         layer.addSublayer(innerLayer)
+
+        isAccessibilityElement = true
+        accessibilityLabel = Localize("Record video")
     }
 
     // MARK: - Helpers
@@ -92,6 +96,12 @@ public final class VideoRecordButton: UIControl {
     }
 
     public override func endTrackingWithTouch(touch: UITouch?, withEvent event: UIEvent?) {
+        if recording {
+            accessibilityLabel = Localize("Stop recording video")
+        } else {
+            accessibilityLabel = Localize("Record video")
+        }
+
         recording = !recording
         innerLayer.fillColor = VideoRecordButton.recordingColor.CGColor
     }

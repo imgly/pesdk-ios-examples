@@ -34,6 +34,7 @@ private let kButtonCollectionViewCellSize = CGSize(width: 66, height: 90)
 @objc(IMGLYMainEditorViewController) public class MainEditorViewController: EditorViewController {
 
     // MARK: - Properties
+
     public var completionBlock: EditorCompletionBlock?
     public var initialFilterType = FilterType.None
     public var initialFilterIntensity = NSNumber(double: 0.75)
@@ -231,6 +232,7 @@ extension MainEditorViewController: UICollectionViewDataSource {
             let action = dataSource.actionAtIndex(indexPath.item)
             buttonCell.textLabel.text = action.title
             buttonCell.imageView.image = action.image
+            buttonCell.accessibilityLabel = action.title
         }
 
         return cell
@@ -249,9 +251,11 @@ extension MainEditorViewController: UICollectionViewDelegate {
         if action.editorType == .Magic {
             if let buttonCell = cell as? ButtonCollectionViewCell, let selectedImage = action.selectedImage {
                 if fixedFilterStack.enhancementFilter.enabled {
+                    buttonCell.accessibilityTraits |= UIAccessibilityTraitSelected
                     buttonCell.imageView.image = selectedImage
                     buttonCell.imageView.tintAdjustmentMode = .Dimmed
                 } else {
+                    buttonCell.accessibilityTraits &= ~UIAccessibilityTraitSelected
                     buttonCell.imageView.image = action.image
                     buttonCell.imageView.tintAdjustmentMode = .Normal
                 }

@@ -14,6 +14,21 @@
 "PHOTO" = "PHOTO";
 "VIDEO" = "VIDEO";
 "Error while saving video" = "Error while saving video";
+"Flash, automatic" = "Flash, automatic";
+"Flash, on" = "Flash, on";
+"Flash, off" = "Flash, off";
+"Camera chooser" = "Camera chooser";
+"Switch between the front and backfacing camera" = "Switch between the front and backfacing camera";
+"Filters" = "Filters";
+"Show or hide the list of filters" = "Show or hide the list of filters";
+"Viewfinder" = "Viewfinder";
+"Photo Viewer" = "Photo Viewer";
+"Take picture" = "Take picture";
+"Record video" = "Record video";
+"Stop recording video" = "Stop recording video";
+
+// Editor
+"Photol" = "Photo";
 
 // Main Editor
 "Editor" = "Editor";
@@ -30,9 +45,13 @@
 
 // Filter Editor
 "Filter" = "Filter";
+"Filter Intensity" = "Filter Intensity";
 
 // Stickers Editor
 "Stickers" = "Stickers";
+"Rotate left" = "Rotate left";
+"Rotate right" = "Rotate right";
+"Delete" = "Delete";
 
 // Orientation Editor
 "Orientation" = "Orientation";
@@ -40,12 +59,17 @@
 "Rotate R" = "Rotate R";
 "Flip H" = "Flip H";
 "Flip V" = "Flip V";
+"Flip vertically" = "Flip vertically";
+"Flip horizontally" = "Flip horizontally";
 
 // Focus Editor
 "Focus" = "Focus";
 "Off" = "Off";
 "Linear" = "Linear";
 "Radial" = "Radial";
+"Radial focus area" = "Radial focus area";
+"Linear focus area" = "Linear focus area";
+"Double-tap and hold to move focus area" = "Double-tap and hold to move focus area";
 
 // Crop Editor
 "Crop" = "Crop";
@@ -53,11 +77,26 @@
 "1:1" = "1:1";
 "4:3" = "4:3";
 "16:9" = "16:9";
+"1 to 1" = "1 to 1";
+"4 to 3" = "4 to 3";
+"16 to 9" = "16 to 9";
+"Top left cropping area" = "Top left cropping area";
+"Top right cropping area" = "Top right cropping area";
+"Bottom left cropping area" = "Bottom left cropping area";
+"Bottom right cropping area" = "Bottom right cropping area";
+"Double-tap and hold to adjust cropping area" = "Double-tap and hold to adjust cropping area";
+"Double-tap and hold to move cropping area" = "Double-tap and hold to move cropping area";
+"Cropping area" = "Cropping area";
 
-// Crop Editor
+// Text Editor
 "Font" = "Font";
 "Back" = "Back";
 "Bring to front" = "Bring to front";
+"Text color" = "Text color";
+"Background color" = "Background color";
+"Add text" = "Add text";
+"Delete text" = "Delete text";
+"Change text" = "Change text";
 
 // Brightness Editor
 "Brightness" = "Brightness";
@@ -70,3 +109,22 @@
 
 // Color Picker View
 "Ok" = "Ok";
+
+// Stickers
+"Brown glasses" = "Brown glasses";
+"Black glasses" = "Black glasses";
+"Green glasses" = "Green glasses";
+"Yellow glasses" = "Yellow glasses";
+"Sunglasses" = "Sunglasses";
+"Blue and white cap" = "Blue and white cap";
+"White and red party hat" = "White and red party hat";
+"Sherrif hat" = "Sherrif hat";
+"Black high hat" = "Black high hat";
+"Red heart" = "Red heart";
+"Long black mustache" = "Long black mustache";
+"Brown mustache" = "Brown mustache";
+"Black mustache" = "Black mustache";
+"Pipe" = "Pipe";
+"Snowflake" = "Snowflake";
+"Star" = "Star";
+"Double-tap and hold to move" = "Double-tap and hold to move";

@@ -15,6 +15,8 @@ import UIKit
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        slider.accessibilityLabel = Localize("Contrast")
+
         let defaultTitle = Localize("Contrast")
         if let title = options.title {
             if title != defaultTitle {

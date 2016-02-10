@@ -45,6 +45,9 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.userInteractionEnabled = self.enableZoomingInPreviewImage
         imageView.zoomDelegate = self
+        imageView.isAccessibilityElement = true
+        imageView.accessibilityLabel = Localize("Photo")
+        imageView.accessibilityTraits |= UIAccessibilityTraitImage
         return imageView
         }()
 
