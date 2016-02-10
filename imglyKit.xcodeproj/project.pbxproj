@@ -203,9 +203,8 @@
 		2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B67D1C71C47DBED00BEE726 /* LightController.swift */; };
 		2B6D88F41C4509F500200557 /* TorchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F31C4509F500200557 /* TorchController.swift */; };
 		2B6D88F61C452B9900200557 /* DeviceOrientationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */; };
-		2B9082771C564E8800944010 /* CenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B9082761C564E8800944010 /* CenteredScrollView.swift */; };
-		2BA5DB9E1C562FDC0038570A /* CropRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5DB9D1C562FDC0038570A /* CropRatio.swift */; };
 		2B948C361C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
+		2BA5DB9E1C562FDC0038570A /* CropRatio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA5DB9D1C562FDC0038570A /* CropRatio.swift */; };
 		2BA980601C493FE7001C85B6 /* VideoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BA9805F1C493FE7001C85B6 /* VideoController.swift */; };
 		2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
 		2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */; };
@@ -416,6 +415,8 @@
 		2BF4D5441AF1159D00C801B2 /* InstanceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D5421AF1159D00C801B2 /* InstanceFactory.swift */; };
 		2BF4D5451AF115A200C801B2 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
 		2BF51F701B41A7E700FFB4C2 /* RecordingMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */; };
+		2BF5C5CC1C6B68F0007BEE3F /* CGAffineTransformExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */; };
+		2BF5C5CE1C6B6949007BEE3F /* CenteredScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF5C5CD1C6B6949007BEE3F /* CenteredScrollView.swift */; };
 		2BF717D91B414FC600D4A50C /* ShapeLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF717D71B414FC600D4A50C /* ShapeLayer.swift */; };
 		E990B2341C20506600806B30 /* FiltersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E990B2331C20506600806B30 /* FiltersDataSource.swift */; };
 		E9AF1E621C0F2E0D00893621 /* MainEditorActionsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */; };
@@ -476,7 +477,6 @@
 		2B6D88F31C4509F500200557 /* TorchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TorchController.swift; sourceTree = "<group>"; };
 		2B6D88F51C452B9900200557 /* DeviceOrientationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceOrientationController.swift; sourceTree = "<group>"; };
 		2B948C341C5B6A0900094CAE /* CGAffineTransformExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGAffineTransformExtension.swift; sourceTree = "<group>"; };
-		2B9082761C564E8800944010 /* CenteredScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CenteredScrollView.swift; sourceTree = "<group>"; };
 		2BA5DB9D1C562FDC0038570A /* CropRatio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropRatio.swift; sourceTree = "<group>"; };
 		2BA9805F1C493FE7001C85B6 /* VideoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoController.swift; sourceTree = "<group>"; };
 		2BB88C3D1B69127400D23A2F /* ScaleFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScaleFilter.swift; sourceTree = "<group>"; };
@@ -691,6 +691,7 @@
 		2BF4D5421AF1159D00C801B2 /* InstanceFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstanceFactory.swift; sourceTree = "<group>"; };
 		2BF4D5461AF115A200C801B2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2BF51F6F1B41A7E700FFB4C2 /* RecordingMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = RecordingMode.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2BF5C5CD1C6B6949007BEE3F /* CenteredScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CenteredScrollView.swift; path = imglyKit/Frontend/Views/CenteredScrollView.swift; sourceTree = SOURCE_ROOT; };
 		2BF717D71B414FC600D4A50C /* ShapeLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShapeLayer.swift; sourceTree = "<group>"; };
 		E990B2331C20506600806B30 /* FiltersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersDataSource.swift; sourceTree = "<group>"; };
 		E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = MainEditorActionsDataSource.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -737,6 +738,7 @@
 				093D11061C60F90800B72B7A /* AlphaPickerView.swift */,
 				093D11071C60F90800B72B7A /* BoxGradientView.swift */,
 				093D11081C60F90800B72B7A /* BrightnessEditorViewController.swift */,
+				2BF5C5CD1C6B6949007BEE3F /* CenteredScrollView.swift */,
 				093D11091C60F90800B72B7A /* CircleGradientView.swift */,
 				093D110A1C60F90800B72B7A /* ColorButton.swift */,
 				093D110B1C60F90800B72B7A /* ColorPickerView.swift */,
@@ -746,9 +748,9 @@
 				093D110F1C60F90800B72B7A /* HuePickerView.swift */,
 				093D11101C60F90800B72B7A /* PullableView.swift */,
 				093D11111C60F90800B72B7A /* SaturationBrightnessPickerView.swift */,
+				093D11221C60F99900B72B7A /* TextButton.swift */,
 				093D11121C60F90800B72B7A /* TextColorSelectorView.swift */,
 				093D11131C60F90800B72B7A /* ZoomingImageView.swift */,
-				093D11221C60F99900B72B7A /* TextButton.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1655,6 +1657,7 @@
 				2BF4D4AB1AF1154B00C801B2 /* EnhancementFilter.swift in Sources */,
 				2BC537911C513A0D00A7DE17 /* StickersEditorViewControllerOptions.swift in Sources */,
 				0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */,
+				2BF5C5CC1C6B68F0007BEE3F /* CGAffineTransformExtension.swift in Sources */,
 				2B5728061C28594E0003EF8F /* EffectFilter.swift in Sources */,
 				2BEBFEB51C400A5D00FAA95C /* CameraController.swift in Sources */,
 				2BF4D3E51AF1150500C801B2 /* StickerCollectionViewCell.swift in Sources */,
@@ -1728,7 +1731,6 @@
 				2BEBFEAD1C3FF0CD00FAA95C /* CGRectExtension.swift in Sources */,
 				2BF4D5181AF1155E00C801B2 /* KeenFilter.swift in Sources */,
 				2BF4D3E21AF1150500C801B2 /* SaturationEditorViewController.swift in Sources */,
-				2B948C351C5B6A0900094CAE /* CGAffineTransformExtension.swift in Sources */,
 				2BF4D5361AF1155E00C801B2 /* TenderFilter.swift in Sources */,
 				2BC537971C513A2900A7DE17 /* CropEditorViewControllerOptions.swift in Sources */,
 				098331211C400A72000135B8 /* UIColorExtension.swift in Sources */,
@@ -1742,6 +1744,7 @@
 				2BF4D3D31AF1150500C801B2 /* CropEditorViewController.swift in Sources */,
 				2BF4D3DB1AF1150500C801B2 /* GradientViewDelegate.swift in Sources */,
 				2BC5379B1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift in Sources */,
+				2BF5C5CE1C6B6949007BEE3F /* CenteredScrollView.swift in Sources */,
 				2BC537991C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift in Sources */,
 				2BF4D5201AF1155E00C801B2 /* NeatFilter.swift in Sources */,
 				2BF4D5111AF1155E00C801B2 /* GlamFilter.swift in Sources */,
