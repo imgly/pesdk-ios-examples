@@ -49,7 +49,9 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
 
      - returns: And initialized `CameraViewController`.
 
-     - discussion: If you use the standard `init` method or `initWithCoder` to initialize a `CameraViewController` object, a camera view controller with all supported recording modes and the default configuration is created.
+     **Discussion**
+
+      If you use the standard `init` method or `initWithCoder` to initialize a `CameraViewController` object, a camera view controller with all supported recording modes and the default configuration is created.
      */
     public init(configuration: Configuration = Configuration()) {
         self.configuration = configuration
