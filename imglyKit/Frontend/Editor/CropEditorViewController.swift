@@ -10,81 +10,9 @@ import UIKit
 
 public let kMinimumCropSize = CGFloat(50)
 
-/**
- The different crop actions, available in the SDK.
-
- - Free:          The image can be cropped in any way.
- - OneToOne:      The aspect ratio is locked to 1:1.
- - FourToThree:   The aspect ratio is locked to 4:3.
- - SixteenToNine: The aspect ratio is locked to 16:9.
- */
-@objc public enum CropAction: Int {
-    case Free
-    case OneToOne
-    case FourToThree
-    case SixteenToNine
-
-    var ratio: Float? {
-        switch self {
-        case .Free:
-            return nil
-        case .OneToOne:
-            return 1
-        case .FourToThree:
-            return 4.0 / 3.0
-        case .SixteenToNine:
-            return 16.0 / 9.0
-        }
-    }
-}
-
 @objc(IMGLYCropEditorViewController) public class CropEditorViewController: SubEditorViewController {
 
     // MARK: - Properties
-
-    public private(set) lazy var freeRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: CropEditorViewController.self)
-        let button = ImageCaptionButton()
-        button.textLabel.text = Localize("Free")
-        button.imageView.image = UIImage(named: "icon_crop_custom", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateFreeRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .Free)
-        return button
-        }()
-
-    public private(set) lazy var oneToOneRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: CropEditorViewController.self)
-        let button = ImageCaptionButton()
-        button.textLabel.text = Localize("1:1")
-        button.imageView.image = UIImage(named: "icon_crop_square", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateOneToOneRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .OneToOne)
-        return button
-        }()
-
-    public private(set) lazy var fourToThreeRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: CropEditorViewController.self)
-        let button = ImageCaptionButton()
-        button.textLabel.text = Localize("4:3")
-        button.imageView.image = UIImage(named: "icon_crop_4-3", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateFourToThreeRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .FourToThree)
-        return button
-        }()
-
-    public private(set) lazy var sixteenToNineRatioButton: ImageCaptionButton = {
-        let bundle = NSBundle(forClass: CropEditorViewController.self)
-        let button = ImageCaptionButton()
-        button.textLabel.text = Localize("16:9")
-        button.imageView.image = UIImage(named: "icon_crop_16-9", inBundle: bundle, compatibleWithTraitCollection: nil)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: "activateSixteenToNineRatio:", forControlEvents: .TouchUpInside)
-        self.options.actionButtonConfigurationClosure?(button, .SixteenToNine)
-        return button
-        }()
 
     private var selectedButton: ImageCaptionButton? {
         willSet(newSelectedButton) {
@@ -102,8 +30,15 @@ public let kMinimumCropSize = CGFloat(50)
         return view
         }()
 
+    private lazy var scrollView: CenteredScrollView = {
+        let scrollView = CenteredScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
+    private var cropRatioToButton = [CropRatio: ImageCaptionButton]()
     private let cropRectComponent = InstanceFactory.cropRectComponent()
-    public var selectionMode = CropAction.Free
+    public var selectionMode: CropRatio?
     private var cropRectLeftBound = CGFloat(0)
     private var cropRectRightBound = CGFloat(0)
     private var cropRectTopBound = CGFloat(0)
@@ -117,12 +52,13 @@ public let kMinimumCropSize = CGFloat(50)
 
         navigationItem.title = options.title
 
-        if let firstCropAction = options.allowedCropActions.first {
+        if let firstCropAction = options.allowedCropRatios.first {
             selectionMode = firstCropAction
         }
 
         configureButtons()
         configureCropRect()
+        configureScrollView()
     }
 
     public override func viewDidAppear(animated: Bool) {
@@ -141,6 +77,8 @@ public let kMinimumCropSize = CGFloat(50)
             setCropRectForSelectionRatio()
             cropRectComponent.present()
         }
+
+        scrollView.flashScrollIndicators()
     }
 
     // MARK: - EditorViewController
@@ -172,31 +110,34 @@ public let kMinimumCropSize = CGFloat(50)
 
     // MARK: - Configuration
 
-    private func configureButtons() {
-        // Map actions and buttons
-        let actionToButtonMap: [CropAction: ImageCaptionButton] = [
-            .Free: freeRatioButton,
-            .OneToOne: oneToOneRatioButton,
-            .FourToThree: fourToThreeRatioButton,
-            .SixteenToNine: sixteenToNineRatioButton
-        ]
+    private func configureScrollView() {
+        bottomContainerView.addSubview(scrollView)
 
-        // Setup button container view
-        let buttonContainerView = UIView()
-        buttonContainerView.translatesAutoresizingMaskIntoConstraints = false
-        bottomContainerView.addSubview(buttonContainerView)
-        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[buttonContainerView]|", options: [], metrics: nil, views: ["buttonContainerView": buttonContainerView]))
-        bottomContainerView.addConstraint(NSLayoutConstraint(item: buttonContainerView, attribute: .CenterX, relatedBy: .Equal, toItem: bottomContainerView, attribute: .CenterX, multiplier: 1, constant: 0))
+        let views = [ "scrollView" : scrollView ]
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|[scrollView]|", options: [], metrics: nil, views: views))
+        bottomContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: [], metrics: nil, views: views))
+    }
+
+    private func configureButtons() {
+        for cropRatio in options.allowedCropRatios {
+            let button = ImageCaptionButton()
+            button.textLabel.text = cropRatio.title
+            button.imageView.image = cropRatio.icon
+            button.translatesAutoresizingMaskIntoConstraints = false
+            button.addTarget(self, action: "activateRatio:", forControlEvents: .TouchUpInside)
+            options.actionButtonConfigurationClosure?(button, cropRatio)
+            cropRatioToButton[cropRatio] = button
+        }
 
         var views = [String: UIView]()
         var viewNames = [String]()
-        for action in options.allowedCropActions {
-            let button = actionToButtonMap[action]!
+        for cropRatio in options.allowedCropRatios {
+            let button = cropRatioToButton[cropRatio]!
             let viewName = "_\(String(abs(button.hash)))" // View names must start with a letter or underscore
             viewNames.append(viewName)
-            buttonContainerView.addSubview(button)
+            scrollView.addSubview(button)
             views[viewName] = button
-            buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)]|", options: [], metrics: nil, views: views))
+            scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[\(viewName)(==100)]|", options: [], metrics: nil, views: views))
         }
 
         // Button Constraints
@@ -204,11 +145,11 @@ public let kMinimumCropSize = CGFloat(50)
             return acc + "[\(name)(==buttonWidth)]"
         }
 
-        buttonContainerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
+        scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|\(visualFormatString)|", options: [], metrics: [ "buttonWidth": 70 ], views: views))
 
         // Select first button
-        if let firstCropAction = options.allowedCropActions.first {
-            selectedButton = actionToButtonMap[firstCropAction]
+        if let firstCropAction = options.allowedCropRatios.first {
+            selectedButton = cropRatioToButton[firstCropAction]
         }
     }
 
@@ -286,7 +227,7 @@ public let kMinimumCropSize = CGFloat(50)
 
     private func reCalulateSizeForTopLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if let selectionRatio = selectionMode.ratio {
+        if let selectionRatio = selectionMode?.ratio {
             newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -339,7 +280,7 @@ public let kMinimumCropSize = CGFloat(50)
 
     private func reCalulateSizeForTopRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if let selectionRatio = selectionMode.ratio {
+        if let selectionRatio = selectionMode?.ratio {
             newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -391,7 +332,7 @@ public let kMinimumCropSize = CGFloat(50)
 
     private func reCalulateSizeForBottomLeftAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if let selectionRatio = selectionMode.ratio {
+        if let selectionRatio = selectionMode?.ratio {
             newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -437,7 +378,7 @@ public let kMinimumCropSize = CGFloat(50)
 
     private func reCalulateSizeForBottomRightAnchor(size: CGSize) -> CGSize {
         var newSize = size
-        if let selectionRatio = selectionMode.ratio {
+        if let selectionRatio = selectionMode?.ratio {
             newSize.height = newSize.height * CGFloat(selectionRatio)
             if newSize.height > newSize.width {
                 newSize.width = newSize.height
@@ -541,13 +482,19 @@ public let kMinimumCropSize = CGFloat(50)
             height: cropRectBottomBound - cropRectTopBound)
         var rectWidth = size.width
         var rectHeight = rectWidth
+
         if size.width > size.height {
             rectHeight = size.height
             rectWidth = rectHeight
         }
 
-        let selectionRatio = selectionMode.ratio ?? 1
-        rectHeight /= CGFloat(selectionRatio)
+        let selectionRatio = selectionMode?.ratio ?? 1
+
+        if selectionRatio >= 1 {
+            rectHeight /= CGFloat(selectionRatio)
+        } else {
+            rectWidth *= CGFloat(selectionRatio)
+        }
 
         let sizeDeltaX = (size.width - rectWidth) / 2.0
         let sizeDeltaY = (size.height - rectHeight) / 2.0
@@ -560,7 +507,7 @@ public let kMinimumCropSize = CGFloat(50)
     }
 
     private func updateCropRectForSelectionMode() {
-        if selectionMode != .Free {
+        if let _ = selectionMode?.ratio {
             setCropRectForSelectionRatio()
             cropRectComponent.layoutViewsForCropRect()
         }
@@ -568,47 +515,15 @@ public let kMinimumCropSize = CGFloat(50)
 
     // MARK: - Actions
 
-    @objc private func activateFreeRatio(sender: ImageCaptionButton) {
+    @objc private func activateRatio(sender: ImageCaptionButton) {
         if selectedButton == sender {
             return
         }
 
-        selectionMode = .Free
-        updateCropRectForSelectionMode()
-
-        selectedButton = sender
-    }
-
-    @objc private func activateOneToOneRatio(sender: ImageCaptionButton) {
-        if selectedButton == sender {
-            return
+        if let cropRatio = ((cropRatioToButton as NSDictionary).allKeysForObject(sender) as? [CropRatio])?.first {
+            selectionMode = cropRatio
+            updateCropRectForSelectionMode()
+            selectedButton = sender
         }
-
-        selectionMode = .OneToOne
-        updateCropRectForSelectionMode()
-
-        selectedButton = sender
-    }
-
-    @objc private func activateFourToThreeRatio(sender: ImageCaptionButton) {
-        if selectedButton == sender {
-            return
-        }
-
-        selectionMode = .FourToThree
-        updateCropRectForSelectionMode()
-
-        selectedButton = sender
-    }
-
-    @objc private func activateSixteenToNineRatio(sender: ImageCaptionButton) {
-        if selectedButton == sender {
-            return
-        }
-
-        selectionMode = .SixteenToNine
-        updateCropRectForSelectionMode()
-
-        selectedButton = sender
     }
 }
