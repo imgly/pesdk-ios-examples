@@ -237,7 +237,7 @@ private let kMinimumFontSize = CGFloat(12.0)
         return view
     }()
 
-    private var textLabel = UILabel()
+    private var textLabel = TextLabel()
 
     private var blurredContainerView = UIVisualEffectView()
 
@@ -1142,7 +1142,7 @@ extension TextEditorViewController: UITextFieldDelegate {
             if newText.characters.count > 0 {
                 if createNewText {
                     unSelectTextLabel(textLabel)
-                    textLabel = UILabel()
+                    textLabel = TextLabel()
                     configureTextLabel()
                     textLabel.text = newText
                     setInitialTextLabelSize()
