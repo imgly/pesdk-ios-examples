@@ -39,31 +39,49 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
 
     // MARK: Properties
 
-    /// Defaults to black.
+    /// The background color. Defaults to black.
     public let backgroundColor: UIColor
-
-    /// Camera View Controller
+    /// Options for the `CameraViewController`.
     public let cameraViewControllerOptions: CameraViewControllerOptions
-
-    // Editor View Controller options
+    /// Options for the `MainEditorViewController`.
     public let mainEditorViewControllerOptions: MainEditorViewControllerOptions
+    /// Options for the `FilterEditorViewController`.
     public let filterEditorViewControllerOptions: FilterEditorViewControllerOptions
+    /// Options for the `StickersEditorViewController`.
     public let stickersEditorViewControllerOptions: StickersEditorViewControllerOptions
+    /// Options for the `OrientationEditorViewController`.
     public let orientationEditorViewControllerOptions: OrientationEditorViewControllerOptions
+    /// Options for the `FocusEditorViewController`.
     public let focusEditorViewControllerOptions: FocusEditorViewControllerOptions
+    /// Options for the `CropEditorViewController`.
     public let cropEditorViewControllerOptions: CropEditorViewControllerOptions
+    /// Options for the `BrightnessEditorViewController`.
     public let brightnessEditorViewControllerOptions: SliderEditorViewControllerOptions
+    /// Options for the `ContrastEditorViewController`.
     public let contrastEditorViewControllerOptions: SliderEditorViewControllerOptions
+    /// Options for the `SaturationEditorViewController`.
     public let saturationEditorViewControllerOptions: SliderEditorViewControllerOptions
+    /// Options for the `TextEditorViewController`.
     public let textEditorViewControllerOptions: TextEditorViewControllerOptions
 
     //  MARK: Initialization
 
+    /**
+    Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the default builder.
+
+    - returns: An instance of a `MainEditorViewControllerOptions`.
+    */
     override convenience init() {
         self.init(builder: { _ in })
     }
 
-    public init(builder: (ConfigurationBuilder -> Void)) {
+    /**
+     Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `MainEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `MainEditorViewControllerOptions`.
+     */    public init(builder: (ConfigurationBuilder -> Void)) {
         let builderForClosure = ConfigurationBuilder()
         builder(builderForClosure)
         self.backgroundColor = builderForClosure.backgroundColor
@@ -103,6 +121,7 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
  methods to edit the given options.
 */
 @objc(IMGLYConfigurationBuilder) public class ConfigurationBuilder: NSObject {
+    /// The background color. Defaults to black.
     public var backgroundColor: UIColor = UIColor.blackColor()
     private var cameraViewControllerOptions: CameraViewControllerOptions = CameraViewControllerOptions()
     private var mainEditorViewControllerOptions: MainEditorViewControllerOptions = MainEditorViewControllerOptions()
@@ -116,66 +135,77 @@ public typealias TextFieldConfigurationClosure = (UITextField) -> ()
     private var saturationEditorViewControllerOptions: SliderEditorViewControllerOptions = SliderEditorViewControllerOptions()
     private var textEditorViewControllerOptions: TextEditorViewControllerOptions = TextEditorViewControllerOptions()
 
+    /// Options for the `CameraViewController`.
     public func configureCameraViewController(builder: (CameraViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = CameraViewControllerOptionsBuilder()
         builder(builderForClosure)
         cameraViewControllerOptions = CameraViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `MainEditorViewController`.
     public func configureMainEditorViewController(builder: (MainEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = MainEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         mainEditorViewControllerOptions = MainEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `FilterEditorViewController`.
     public func configureFilterEditorViewController(builder: (FilterEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = FilterEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         filterEditorViewControllerOptions = FilterEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `StickersEditorViewController`.
     public func configureStickersEditorViewController(builder: (StickersEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = StickersEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         stickersEditorViewControllerOptions = StickersEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `OrientationEditorViewController`.
     public func configureOrientationEditorViewController(builder: (OrientationEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = OrientationEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         orientationEditorViewControllerOptions = OrientationEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `FocusEditorViewController`.
     public func configureFocusEditorViewController(builder: (FocusEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = FocusEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         focusEditorViewControllerOptions = FocusEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `CropEditorViewController`.
     public func configureCropEditorViewController(builder: (CropEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = CropEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         cropEditorViewControllerOptions = CropEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `BrightnessEditorViewController`.
     public func configureBrightnessEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         brightnessEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `SaturationEditorViewController`.
     public func configureSaturationEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         saturationEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `ContrastEditorViewController`.
     public func configureContrastEditorViewController(builder: (SliderEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = SliderEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
         contrastEditorViewControllerOptions = SliderEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    /// Options for the `TextEditorViewController`.
     public func configureTextEditorViewController(builder: (TextEditorViewControllerOptionsBuilder -> Void)) {
         let builderForClosure = TextEditorViewControllerOptionsBuilder()
         builder(builderForClosure)
