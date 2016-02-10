@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYLithoFilter) public class LithoFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Litho")

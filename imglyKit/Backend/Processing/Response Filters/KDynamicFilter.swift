@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYKDynamicFilter) public class KDynamicFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "KDynamic")

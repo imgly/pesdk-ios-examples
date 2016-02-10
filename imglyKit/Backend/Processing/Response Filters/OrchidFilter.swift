@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYOrchidFilter) public class OrchidFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Orchid")

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYSettledFilter) public class SettledFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Settled")

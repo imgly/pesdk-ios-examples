@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYX400Filter) public class X400Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "X400")

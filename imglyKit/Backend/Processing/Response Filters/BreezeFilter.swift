@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYBreezeFilter) public class BreezeFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Breeze")

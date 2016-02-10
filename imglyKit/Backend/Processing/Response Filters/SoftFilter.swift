@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYSoftFilter) public class SoftFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Soft")

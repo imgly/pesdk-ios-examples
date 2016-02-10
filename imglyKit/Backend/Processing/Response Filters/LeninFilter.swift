@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYLeninFilter) public class LeninFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Lenin")

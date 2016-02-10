@@ -29,7 +29,7 @@ import UIKit
 }
 
 /**
- The `ColorPickerView` class provides a class that is used to pick colors. 
+ The `ColorPickerView` class provides a class that is used to pick colors.
  It contains three elements. A hue-picker, a brightness-saturation-picker and a preview of the picked color.
  */
 @objc(IMGLYColorPickerView) public class ColorPickerView: UIView {

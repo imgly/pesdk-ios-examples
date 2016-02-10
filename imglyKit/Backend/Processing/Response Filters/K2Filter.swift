@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYK2Filter) public class K2Filter: ResponseFilter {
     required public init() {
         super.init(responseName: "K2")

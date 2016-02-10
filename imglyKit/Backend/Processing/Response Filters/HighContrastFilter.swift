@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYHighContrastFilter) public class HighContrastFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "HighContrast")

@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYPaleFilter) public class PaleFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Pale")
