@@ -1184,13 +1184,11 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
-    // CHECK can this be private and @objc ?
-    public func changeFlash(sender: UIButton?) {
+    @objc private  func changeFlash(sender: UIButton?) {
         cameraController?.selectNextLightMode()
     }
 
-    // CHECK can this be private and @objc ?
-    public func switchCamera(sender: UIButton?) {
+    @objc private  func switchCamera(sender: UIButton?) {
         buttonsEnabled = false
         cameraController?.toggleCameraPosition()
 
@@ -1226,8 +1224,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
-    // CHECK can this be private and @objc ?
-    public func showCameraRoll(sender: UIButton?) {
+    @objc private  func showCameraRoll(sender: UIButton?) {
         let imagePicker = UIImagePickerController()
 
         imagePicker.delegate = self
@@ -1238,8 +1235,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         self.presentViewController(imagePicker, animated: true, completion: nil)
     }
 
-    // CHECK can this be private and @objc ?
-    public func takePhoto(sender: UIButton?) {
+    @objc private func takePhoto(sender: UIButton?) {
         cameraController?.takePhoto { image, error in
             if error == nil {
                 let updatedImage: UIImage?
@@ -1276,7 +1272,11 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         }
     }
 
-    // CHECK is this used at all ?
+    /**
+     Toggles video recording.
+
+     - parameter sender: Sender of the event.
+     */
     public func recordVideo(sender: VideoRecordButton?) {
         if let recordVideoButton = sender {
             if recordVideoButton.recording {
@@ -1292,8 +1292,7 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
     }
 
 
-    // CHECK can this be private and @objc ?
-    public func toggleFilters(sender: UIButton?) {
+    @objc private func toggleFilters(sender: UIButton?) {
         if let filterSelectionViewConstraint = self.filterSelectionViewConstraint {
             let animationDuration = NSTimeInterval(0.6)
             let dampingFactor = CGFloat(0.6)
@@ -1393,15 +1392,13 @@ public typealias CameraCompletionBlock = (UIImage?, NSURL?) -> (Void)
         CATransaction.commit()
     }
 
-    // CHECK can this be private ?
-    func showSquareMask() {
+    private func showSquareMask() {
         maskIndicatorLayer.hidden = false
         upperMaskDarkenLayer.hidden = false
         lowerMaskDarkenLayer.hidden = false
     }
 
-    // CHECK can this be private ?
-    func hideSquareMask() {
+    private func hideSquareMask() {
         maskIndicatorLayer.hidden = true
         upperMaskDarkenLayer.hidden = true
         lowerMaskDarkenLayer.hidden = true

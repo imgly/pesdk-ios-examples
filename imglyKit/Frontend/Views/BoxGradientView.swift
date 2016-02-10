@@ -11,10 +11,10 @@ public struct Line {
 }
 
 /**
- *  This class represents the box gradient view. It is used within the focus editor view controller
- *  to visualize the choosen focus parameters. Basicaly a box shaped area is left unblured.
- *  Two controlpoints define the upper and lower midpoint of that box. Therefore they determin the rotation,
- *  position and size of the box.
+   This class represents the box gradient view. It is used within the focus editor view controller
+   to visualize the choosen focus parameters. Basicaly a box shaped area is left unblured.
+   Two controlpoints define the upper and lower midpoint of that box. Therefore they determin the rotation,
+   position and size of the box.
  */
 @objc(IMGLYBoxGradientView) public class BoxGradientView: UIView {
 

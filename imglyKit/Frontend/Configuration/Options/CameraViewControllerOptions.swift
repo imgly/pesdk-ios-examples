@@ -14,7 +14,7 @@ import AVFoundation
 public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingMode) -> ()
 
 /**
- *  Options for configuring a `CameraViewController`.
+  Options for configuring a `CameraViewController`.
  */
 @objc(IMGLYCameraViewControllerOptions) public class CameraViewControllerOptions: NSObject {
 
@@ -133,7 +133,7 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
 }
 
 /**
- *  The default `IMGLYCameraViewControllerOptionsBuilder` for `IMGLYCameraViewControllerOptions`.
+   The default `IMGLYCameraViewControllerOptionsBuilder` for `IMGLYCameraViewControllerOptions`.
  */
 @objc(IMGLYCameraViewControllerOptionsBuilder) public class CameraViewControllerOptionsBuilder: NSObject {
 

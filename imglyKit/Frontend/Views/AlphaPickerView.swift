@@ -9,7 +9,7 @@
 import UIKit
 
 /**
- *  This protocol is used within the `AlphaPickerView`.
+   This protocol is used within the `AlphaPickerView`.
  */
 @objc(IMGLYAlphaPickerViewDelegate) public protocol AlphaPickerViewDelegate {
     /**
@@ -22,7 +22,7 @@ import UIKit
 }
 
 /**
- *  The `AlphaPickerView` class defines a view that can be used to pick an alpha value.
+   The `AlphaPickerView` class defines a view that can be used to pick an alpha value.
     It displays a gradient from zero alpha to full alpha. The color of the gradient can be
     set via `color` or `hue` properties. The background is painted with a checkerboard pattern,
     that is provided by an image called "checkerboard".

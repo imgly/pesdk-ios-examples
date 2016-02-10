@@ -9,7 +9,7 @@
 import UIKit
 
 /**
- *  Options for configuring a `MainEditorViewController`.
+ Options for configuring a `MainEditorViewController`.
  */
 @objc(IMGLYMainEditorViewControllerOptions) public class MainEditorViewControllerOptions: EditorViewControllerOptions {
 
