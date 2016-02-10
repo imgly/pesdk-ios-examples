@@ -75,19 +75,6 @@ The default `IMGLYCropEditorViewControllerOptionsBuilder` for `IMGLYCropEditorVi
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
 
-    /// An array of `OrientationAction` raw values wrapped in NSNumbers.
-    /// Setting this property overrides any previously set values in
-    /// `allowedOrientationActions` with the corresponding `FocusAction` values.
-    public var allowedCropActionsAsNSNumbers: [NSNumber] {
-        get {
-            return allowedCropActions.map { NSNumber(integer: $0.rawValue) }
-        }
-
-        set {
-            allowedCropActions = newValue.flatMap { CropAction(rawValue: $0.integerValue) }
-        }
-    }
-
     /**
      :nodoc:
      */

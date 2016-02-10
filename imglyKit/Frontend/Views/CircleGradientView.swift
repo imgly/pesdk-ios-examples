@@ -147,7 +147,7 @@ import UIKit
             y: (controlPoint1.y + controlPoint2.y) / 2.0)
     }
 
-    private func informDeletageAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
+    private func informDelegateAboutRecognizerStates(recognizer recognizer: UIGestureRecognizer) {
         if recognizer.state == UIGestureRecognizerState.Began {
             if gradientViewDelegate != nil {
                 gradientViewDelegate!.userInteractionStarted()
@@ -170,7 +170,7 @@ import UIKit
     }
 
     @objc private func handlePinchGesture(recognizer: UIPinchGestureRecognizer) {
-        informDeletageAboutRecognizerStates(recognizer: recognizer)
+        informDelegateAboutRecognizerStates(recognizer: recognizer)
         if recognizer.numberOfTouches() > 1 {
             controlPoint1 = recognizer.locationOfTouch(0, inView:self)
             controlPoint2 = recognizer.locationOfTouch(1, inView:self)
