@@ -395,7 +395,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         updateButtonStatus()
     }
 
-    // MARK:- Button-handling
+    // MARK: - Button-handling
 
     @objc private func deleteSticker(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
@@ -431,7 +431,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         imageView.image = UIImage(CGImage: imageView.image!.CGImage!, scale: imageView.image!.scale, orientation: flippedOrientation!)
     }
 
-    // MARK:- sticker object restore
+    // MARK: - sticker object restore
 
     private func rerenderPreviewWithoutStickers() {
         updatePreviewImageWithCompletion { () -> (Void) in

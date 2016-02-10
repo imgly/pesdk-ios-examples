@@ -87,6 +87,13 @@ internal let kPhotoProcessorQueue = dispatch_queue_create("ly.img.SDK.PhotoProce
         self.configuration = configuration
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

@@ -12,6 +12,9 @@ import UIKit
 public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButton, OrientationAction) -> ()
 
 // swiftlint:disable type_name
+/**
+Options for configuring a `OrientationEditorViewController`.
+*/
 @objc(IMGLYOrientationEditorViewControllerOptions) public class OrientationEditorViewControllerOptions: EditorViewControllerOptions {
     // swiftlint:enable type_name
 
@@ -23,10 +26,22 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure?
 
+    /**
+     Returns a newly allocated instance of a `OrientationEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `OrientationEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: OrientationEditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `OrientationEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `OrientationEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `OrientationEditorViewControllerOptions`.
+     */
     public init(builder: OrientationEditorViewControllerOptionsBuilder) {
         allowedOrientationActions = builder.allowedOrientationActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -35,6 +50,9 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
 }
 
 // swiftlint:disable type_name
+/**
+The default `OrientationEditorViewControllerOptionsBuilder` for `OrientationEditorViewControllerOptions`.
+*/
 @objc(IMGLYOrientationEditorViewControllerOptionsBuilder) public class OrientationEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -61,7 +79,9 @@ public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButt
         }
     }
 
-
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 

@@ -51,13 +51,30 @@ import AVFoundation
     }
     var animate = true
     var animationDuration: Double = 0.0
+
+    /// The receiver’s delegate.
+    /// seealso: `PullableViewDelegate`.
     weak var delegate: PullableViewDelegate?
 
+    /**
+     Initializes and returns a newly allocated view with the specified frame rectangle.
+
+     - parameter frame: The frame rectangle for the view, measured in points.
+
+     - returns: An initialized view object or `nil` if the object couldn't be created.
+     */
     public  override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

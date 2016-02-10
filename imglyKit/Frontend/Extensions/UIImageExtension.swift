@@ -30,7 +30,9 @@ public extension UIImage {
 
     - returns: The rescaled image.
 
-    :discussion: The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
+    **Discussion**
+
+     The image will be scaled disproportionately if necessary to fit the bounds specified by the parameter.
     */
     public func imgly_normalizedImageOfSize(size: CGSize) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)

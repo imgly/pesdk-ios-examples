@@ -12,6 +12,9 @@ import UIKit
 /// depending on the linked focus action.
 public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, FocusAction) -> ()
 
+/**
+ Options for configuring a `FocusEditorViewController`.
+ */
 @objc(IMGLYFocusEditorViewControllerOptions) public class FocusEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed focus actions. The focus buttons are shown in the given order.
     /// Defaults to show all available modes. The .Off action is always added. To set this
@@ -22,10 +25,22 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure?
 
+    /**
+     Returns a newly allocated instance of a `FocusEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `FocusEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: FocusEditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `FocusEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `FocusEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `FocusEditorViewControllerOptions`.
+     */
     public init(builder: FocusEditorViewControllerOptionsBuilder) {
         allowedFocusActions = builder.allowedFocusActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -34,6 +49,9 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
 }
 
 // swiftlint:disable type_name
+/**
+The default `FocusEditorViewControllerOptionsBuilder` for `FocusEditorViewControllerOptions`.
+*/
 @objc(IMGLYFocusEditorViewControllerOptionsBuilder) public class FocusEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -66,7 +84,9 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
         }
     }
 
-
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 

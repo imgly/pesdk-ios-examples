@@ -13,6 +13,9 @@ import AVFoundation
 /// The second parameter contains the state, the button represents.
 public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingMode) -> ()
 
+/**
+  Options for configuring a `CameraViewController`.
+ */
 @objc(IMGLYCameraViewControllerOptions) public class CameraViewControllerOptions: NSObject {
 
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.
@@ -88,10 +91,22 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     /// selected on launch. To set this option from Obj-C see `allowedRecordingModesAsNSNumbers`.
     public let allowedRecordingModes: [RecordingMode]
 
+    /**
+     Returns a newly allocated instance of a `CameraViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `CameraViewControllerOptions`.
+     */
     convenience override init() {
         self.init(builder: CameraViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `CameraViewControllerOptions` using the given builder.
+
+     - parameter builder: A `CameraViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `CameraViewControllerOptions`.
+     */
     init(builder: CameraViewControllerOptionsBuilder) {
         backgroundColor = builder.backgroundColor
         flashButtonConfigurationClosure = builder.flashButtonConfigurationClosure
@@ -117,6 +132,9 @@ public typealias RecordingModeButtonConfigurationClosure = (UIButton, RecordingM
     }
 }
 
+/**
+   The default `IMGLYCameraViewControllerOptionsBuilder` for `IMGLYCameraViewControllerOptions`.
+ */
 @objc(IMGLYCameraViewControllerOptionsBuilder) public class CameraViewControllerOptionsBuilder: NSObject {
 
     /// The views background color. In video mode the colors alpha value is reduced to 0.3.

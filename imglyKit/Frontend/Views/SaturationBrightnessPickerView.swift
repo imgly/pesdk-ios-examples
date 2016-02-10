@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYSaturationBrightnessPickerView) public class SaturationBrightnessPickerView: UIView {
+
+    /// The receiver’s delegate.
+    /// seealso: `SaturationBrightnessPickerViewDelegate`.
     public weak var pickerDelegate: SaturationBrightnessPickerViewDelegate?
     public var hue = CGFloat(0) {
         didSet {
@@ -35,11 +38,25 @@ import UIKit
     public var saturation = CGFloat(1)
     public var brightness = CGFloat(1)
 
+    /**
+     Initializes and returns a newly allocated view with the specified frame rectangle.
+
+     - parameter frame: The frame rectangle for the view, measured in points.
+
+     - returns: An initialized view object or `nil` if the object couldn't be created.
+     */
     public override init(frame: CGRect) {
         super.init(frame:frame)
         commonInit()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()
@@ -56,7 +73,6 @@ import UIKit
             drawMarkerToContext(context, rect: rect)
         }
     }
-
 
     private func drawColorMatrixToContext(context: CGContextRef, rect: CGRect) {
         CGContextSaveGState(context)

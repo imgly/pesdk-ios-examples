@@ -10,13 +10,25 @@ import Foundation
 import AVFoundation
 import GLKit
 
+/**
+ This enum holds types of errors that occur while using the `CameraController`.
+
+ - MultipleCallsToSetup:            Indicates that setup is called multiple times.
+ - UnableToInitializeCaptureDevice: Indicates that the capture device can't be initialized.
+ */
 @objc public enum CameraControllerError: Int, ErrorType {
+    /// :nodoc:
     case MultipleCallsToSetup
+    /// :nodoc:
     case UnableToInitializeCaptureDevice
 }
 
 private var cameraControllerContext = 0
 
+/**
+ The `CameraController` class provides functions for serveral camera related tasks,
+ including setup, flash control, and such.
+ */
 @objc(IMGLYCameraController) public class CameraController: NSObject {
 
     // MARK: - Properties
@@ -32,6 +44,8 @@ private var cameraControllerContext = 0
     private let stillImageOutput = AVCaptureStillImageOutput()
 
     private let glContext: EAGLContext
+
+    /// An instance of a `GLKView` that is used to present the preview.
     public let videoPreviewView: GLKView
 
     private var setupComplete = false
@@ -283,6 +297,9 @@ private var cameraControllerContext = 0
 
     // MARK: - Initializer
 
+    /**
+    :nodoc:
+    */
     public override init() {
         guard let glContext = EAGLContext(API: .OpenGLES2) else {
             fatalError("Unable to create EAGLContext")

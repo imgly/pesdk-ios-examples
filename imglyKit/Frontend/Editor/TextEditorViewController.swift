@@ -1111,7 +1111,7 @@ private let kMinimumFontSize = CGFloat(12.0)
     }
 }
 
-// MARK:- extensions
+// MARK: - extensions
 
 extension TextEditorViewController: TextColorSelectorViewDelegate {
     public func textColorSelectorView(selectorView: TextColorSelectorView, didSelectColor color: UIColor) {

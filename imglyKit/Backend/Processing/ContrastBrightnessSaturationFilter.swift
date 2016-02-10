@@ -14,12 +14,23 @@ import CoreImage
 import QuartzCore
 #endif
 
+/**
+ *  The `ContrastBrightnessSaturationFilter` can be used to change the brightness, contrast or saturation of an image.
+ */
 @objc(IMGLYContrastBrightnessSaturationFilter) public class ContrastBrightnessSaturationFilter: CIFilter, Filter {
-    /// A CIImage object that serves as input for the filter.
+    /// A `CIImage` object that serves as input for the filter.
     public var inputImage: CIImage?
 
+    /// The contrast value of the resulting image.
+    /// 1.0 means no change.
     public var contrast: Float = 1.0
+
+    /// The brightness value of the resulting image.
+    /// 0.0 means no change.
     public var brightness: Float = 0.0
+
+    /// The contrast value of the resulting image.
+    /// 1.0 means no change, 0.0 will result in a grayscale image.
     public var saturation: Float = 1.0
 
     /// Returns a CIImage object that encapsulates the operations configured in the filter. (read-only)
@@ -41,6 +52,9 @@ import QuartzCore
 }
 
 extension ContrastBrightnessSaturationFilter {
+    /**
+     :nodoc:
+     */
     public override func copyWithZone(zone: NSZone) -> AnyObject {
         // swiftlint:disable force_cast
         let copy = super.copyWithZone(zone) as! ContrastBrightnessSaturationFilter

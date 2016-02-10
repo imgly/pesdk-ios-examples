@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYFontSelectorView) public class FontSelectorView: UIScrollView {
+
+    /// The receiver’s delegate.
+    /// seealso: `FontSelectorViewDelegate`.
     public weak var selectorDelegate: FontSelectorViewDelegate?
     public var selectedTextColor = UIColor(red:0.22, green:0.62, blue:0.85, alpha:1) {
         didSet {
@@ -56,22 +59,25 @@ import UIKit
     private let kFontSize = CGFloat(28)
     private var fontNames = [String]()
 
-  /*  public var fontPreviewTextColor: UIColor = UIColor.whiteColor() {
-        didSet {
-            for subview in self.subviews where subview is TextButton {
-                // swiftlint:disable force_cast
-                let button = subview as! TextButton
-                // swiftlint:enable force_cast
-                button.setTitleColor(fontPreviewTextColor, forState: .Normal)
-            }
-        }
-    }
-*/
+    /**
+    Initializes and returns a newly allocated view with the specified frame rectangle.
+
+    - parameter frame: The frame rectangle for the view, measured in points.
+
+    - returns: An initialized view object or `nil` if the object couldn't be created.
+    */
     public override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         commonInit()

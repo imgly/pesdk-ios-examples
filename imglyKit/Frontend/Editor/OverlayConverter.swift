@@ -19,7 +19,7 @@ import UIKit
         self.fixedFilterStack = fixedFilterStack
     }
 
-    // MARK:- stickers -> UI elements
+    // MARK: - stickers -> UI elements
     public func addUIElementsFromSpriteFilters(spriteFilters: [Filter], containerView: UIView, previewSize: CGSize) {
         for element in spriteFilters {
             if let stickerFilter = element as? StickerFilter {
@@ -82,7 +82,7 @@ import UIKit
         containerView.addSubview(label)
     }
 
-    // MARK:- UI elements -> sprites
+    // MARK: - UI elements -> sprites
     public func addSpriteFiltersFromUIElements(containerView: UIView, previewSize: CGSize, previewImage: UIImage) -> Bool {
         var addedStickers = false
         for view in containerView.subviews {

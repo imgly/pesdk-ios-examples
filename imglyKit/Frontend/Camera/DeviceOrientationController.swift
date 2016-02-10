@@ -11,7 +11,7 @@ import CoreMotion
 import AVFoundation
 
  /**
- *  Used to determine device orientation even if orientation lock is active.
+  Used to determine device orientation even if orientation lock is active.
  */
 @objc(IMGLYDeviceOrientationController) public class DeviceOrientationController: NSObject {
 

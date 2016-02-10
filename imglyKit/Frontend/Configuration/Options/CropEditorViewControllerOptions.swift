@@ -11,6 +11,9 @@ import UIKit
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
 public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropRatio) -> ()
 
+/**
+ Options for configuring a `CropEditorViewController`.
+ */
 @objc(IMGLYCropEditorViewControllerOptions) public class CropEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed crop ratios. The crop ratio buttons are shown in the given order.
     /// Defaults to `Free`, `1:1`, `4:3` and `16:9`. Setting this to an empty array is ignored.
@@ -20,10 +23,22 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure?
 
+    /**
+     Returns a newly allocated instance of a `CropEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `CropEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: CropEditorViewControllerOptionsBuilder())
     }
+    /**
 
+     Returns a newly allocated instance of a `CropEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `CropEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `CropEditorViewControllerOptions`.
+     */
     public init(builder: CropEditorViewControllerOptionsBuilder) {
         allowedCropRatios = builder.allowedCropRatios
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
@@ -32,6 +47,9 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
 }
 
 // swiftlint:disable type_name
+/**
+The default `IMGLYCropEditorViewControllerOptionsBuilder` for `IMGLYCropEditorViewControllerOptions`.
+*/
 @objc(IMGLYCropEditorViewControllerOptionsBuilder) public class CropEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -57,6 +75,9 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
 
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 

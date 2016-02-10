@@ -117,7 +117,7 @@ import UIKit
         return anchor
     }
 
-    // MARK:- layout
+    // MARK: - layout
     public func layoutViewsForCropRect() {
         layoutLines()
         layoutAnchors()

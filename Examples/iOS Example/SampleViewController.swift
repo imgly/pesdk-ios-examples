@@ -88,7 +88,7 @@ class SampleViewController: UIViewController {
         presentViewController(cameraViewController, animated: true, completion: nil)
     }
 
-    // MARK:- customization
+    // MARK: - customization
 
     private func customizeCameraController(builder: ConfigurationBuilder) {
         builder.configureCameraViewController { options in

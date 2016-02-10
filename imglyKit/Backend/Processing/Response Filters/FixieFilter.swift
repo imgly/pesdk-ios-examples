@@ -8,21 +8,33 @@
 
 import Foundation
 
+/**
+
+ */
 @objc(IMGLYFixieFilter) public class FixieFilter: ResponseFilter {
     required public init() {
         super.init(responseName: "Fixie")
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 }
 
 extension FixieFilter: EffectFilter {
+    /// The name that is used within the UI.
     public var displayName: String {
         return "Fixie"
     }
 
+    /// The filter type.
     public var filterType: FilterType {
         return .Fixie
     }

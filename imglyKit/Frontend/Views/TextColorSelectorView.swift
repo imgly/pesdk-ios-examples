@@ -13,6 +13,9 @@ import UIKit
 }
 
 @objc(IMGLYTextColorSelectorView) public class TextColorSelectorView: UIScrollView {
+
+    /// The receiver’s delegate.
+    /// seealso: `TextColorSelectorViewDelegate`.
     public weak var menuDelegate: TextColorSelectorViewDelegate?
 
     private var colorArray: [UIColor] = []
@@ -24,12 +27,26 @@ import UIKit
     private let kButtonWidth = CGFloat(44)
     private let kButtonHeight = CGFloat(60)
 
+    /**
+     Initializes and returns a newly allocated view with the specified frame rectangle.
+
+     - parameter frame: The frame rectangle for the view, measured in points.
+
+     - returns: An initialized view object or `nil` if the object couldn't be created.
+     */
     public override init(frame: CGRect) {
         super.init(frame: frame)
         self.colorArray = defaultColorArray()
         commonInit()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.colorArray = defaultColorArray()
@@ -78,7 +95,6 @@ import UIKit
             button.addTarget(self, action: "colorButtonTouchedUpInside:", forControlEvents: .TouchUpInside)
             buttonArray.append(button)
             button.backgroundColor = color
-            button.hasFrame = false
         }
     }
 
@@ -99,7 +115,6 @@ import UIKit
             xPosition += (kButtonDistance + kButtonWidth)
         }
 
-        buttonArray[1].hasFrame = true
         contentSize = CGSize(width: xPosition - kButtonDistance + kButtonXPositionOffset, height: 0)
     }
 

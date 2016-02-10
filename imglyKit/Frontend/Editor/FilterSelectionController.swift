@@ -42,6 +42,13 @@ public typealias FilterTypeActiveBlock = () -> (FilterType?)
         collectionView?.backgroundColor = UIColor.clearColor()
     }
 
+    /**
+     Returns an object initialized from data in a given unarchiver.
+
+     - parameter aDecoder: An unarchiver object.
+
+     - returns: `self`, initialized using the data in decoder.
+     */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

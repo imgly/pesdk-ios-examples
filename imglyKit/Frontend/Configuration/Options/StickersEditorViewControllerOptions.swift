@@ -11,6 +11,9 @@ import UIKit
 /// The definition of the configuration closure.
 public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAction) -> ()
 
+/**
+ Options for configuring a `StickersEditorViewController`.
+ */
 @objc(IMGLYStickersEditorViewControllerOptions) public class StickersEditorViewControllerOptions: EditorViewControllerOptions {
     /// An object conforming to the `StickersDataSourceProtocol`
     /// Per default an `StickersDataSource` offering all filters
@@ -34,10 +37,22 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: StickerActionButtonConfigurationClosure?
 
+    /**
+     Returns a newly allocated instance of a `StickersEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `MainEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: StickersEditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `StickersEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `StickersEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `StickersEditorViewControllerOptions`.
+     */
     public init(builder: StickersEditorViewControllerOptionsBuilder) {
         stickersDataSource = builder.stickersDataSource
         canModifyStickerSize = builder.canModifyStickerSize
@@ -50,6 +65,9 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
 }
 
 // swiftlint:disable type_name
+/**
+    The default `StickersEditorViewControllerOptionsBuilder` for `StickersEditorViewControllerOptions`.
+*/
 @objc(IMGLYStickersEditorViewControllerOptionsBuilder) public class StickersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -89,6 +107,9 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 
