@@ -21,6 +21,9 @@ public typealias FontSelectorButtonConfigurationClosure = (TextButton) -> ()
 /// The definition of the configuration closure, to configure the pullable font selector.
 public typealias PullableViewConfigurationClosure = (PullableView) -> ()
 
+/**
+ Options for configuring a `TextEditorViewController`.
+ */
 @objc(IMGLYTextEditorViewControllerOptions) public class TextEditorViewControllerOptions: EditorViewControllerOptions {
     /// Defines all allowed actions. Only buttons for allowed action are visible.
     /// Defaults to show all available actions.
@@ -78,10 +81,22 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
     /// This closure allows further configuration of the pullable view. Such as the handle color.
     public let pullableViewConfigurationClosure: PullableViewConfigurationClosure?
 
+    /**
+     Returns a newly allocated instance of a `MainEditorViewControllerOptions` using the default builder.
+
+     - returns: An instance of a `MainEditorViewControllerOptions`.
+     */
     public convenience init() {
         self.init(builder: TextEditorViewControllerOptionsBuilder())
     }
 
+    /**
+     Returns a newly allocated instance of a `TextEditorViewControllerOptions` using the given builder.
+
+     - parameter builder: A `TextEditorViewControllerOptionsBuilder` instance.
+
+     - returns: An instance of a `TextEditorViewControllerOptions`.
+     */
     public init(builder: TextEditorViewControllerOptionsBuilder) {
         textFieldConfigurationClosure = builder.textFieldConfigurationClosure
         availableFontColors = builder.availableFontColors
@@ -104,6 +119,9 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
 }
 
 // swiftlint:disable type_name
+/**
+The default `TextEditorViewControllerOptionsBuilder` for `TextEditorViewControllerOptions`.
+*/
 @objc(IMGLYTextEditorViewControllerOptionsBuilder) public class TextEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
@@ -175,6 +193,9 @@ public typealias PullableViewConfigurationClosure = (PullableView) -> ()
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override init() {
         super.init()
 
