@@ -9,7 +9,7 @@
 import UIKit
 
 /// This closure will be called when the user changes the value of a slider.
-public typealias SliderChangedValueClosure = () -> ()
+public typealias SliderChangedValueClosure = (Float) -> ()
 
 /**
  Options for configuring a `SliderEditorViewController`.

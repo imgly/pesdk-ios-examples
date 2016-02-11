@@ -50,6 +50,15 @@ import UIKit
         }
     }
 
+    public override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        options.didEnterToolClosure?()
+    }
+
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        options.willLeaveToolClosure?()
+    }
     // MARK: - EditorViewController
 
     public override var options: FilterEditorViewControllerOptions {
@@ -80,6 +89,7 @@ import UIKit
 
             if let fixedFilterStack = self?.fixedFilterStack where filterType != fixedFilterStack.effectFilter.filterType {
                 fixedFilterStack.effectFilter = InstanceFactory.effectFilterWithType(filterType)
+                self?.options.filterSelectedClosure?(fixedFilterStack.effectFilter.displayName)
                 fixedFilterStack.effectFilter.inputIntensity = initialFilterIntensity
                 self?.filterIntensitySlider.value = initialFilterIntensity
             }
@@ -132,6 +142,9 @@ import UIKit
     @objc private func changeIntensity(sender: UISlider?) {
         if changeTimer == nil {
             changeTimer = NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "update:", userInfo: nil, repeats: false)
+        }
+        if let slider = sender {
+            options.filterIntensityChangedClosure?(slider.value)
         }
     }
 
