@@ -8,13 +8,20 @@
 
 import UIKit
 
+public typealias SliderChangedValueClosure = () -> ()
+
 /**
  Options for configuring a `SliderEditorViewController`.
  */
 @objc(IMGLYSliderEditorViewControllerOptions) public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
+
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public let sliderConfigurationClosure: SliderConfigurationClosure?
+
+    /// This closure will be called when the user changes the value of a slider.
+    /// Defaults to an empty implementation.
+    public let sliderChangedValueClosure: SliderChangedValueClosure?
 
     /**
      Returns a newly allocated instance of a `SliderEditorViewControllerOptions` using the default builder.
@@ -34,6 +41,7 @@ import UIKit
      */
     public init(builder: SliderEditorViewControllerOptionsBuilder) {
         sliderConfigurationClosure = builder.sliderConfigurationClosure
+        sliderChangedValueClosure = builder.sliderChangedValueClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -44,6 +52,10 @@ The default `SliderEditorViewControllerOptionsBuilder` for `SliderEditorViewCont
 */
 @objc(IMGLYSliderEditorViewControllerOptionsBuilder) public class SliderEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
+
+    /// This closure will be called when the user changes the value of a slider.
+    /// Defaults to an empty implementation.
+    public var sliderChangedValueClosure: SliderChangedValueClosure? = nil
 
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.

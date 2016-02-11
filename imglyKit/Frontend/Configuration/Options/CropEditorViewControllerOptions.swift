@@ -11,6 +11,10 @@ import UIKit
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
 public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropRatio) -> ()
 
+/// This closure can be used to collected data for analytic purposes.
+/// It is called every time the user taps an action button.
+public typealias CropAnalyticsClosure = (CropRatio) -> ()
+
 /**
  Options for configuring a `CropEditorViewController`.
  */
@@ -31,8 +35,8 @@ public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, Cro
     public convenience init() {
         self.init(builder: CropEditorViewControllerOptionsBuilder())
     }
-    /**
 
+    /**
      Returns a newly allocated instance of a `CropEditorViewControllerOptions` using the given builder.
 
      - parameter builder: A `CropEditorViewControllerOptionsBuilder` instance.
