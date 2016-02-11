@@ -93,7 +93,7 @@ public let kMinimumCropSize = CGFloat(50)
      :nodoc:
      */
     public override func viewWillDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
+        super.viewWillDisappear(animated)
         options.willLeaveToolClosure?()
     }
 

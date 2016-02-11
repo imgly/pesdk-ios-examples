@@ -11,7 +11,7 @@ import UIKit
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
 public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropRatio) -> ()
 
-/// This closure is called every time the user selects a crop-ratio.
+/// This closure is called every time the user selects a crop ratio.
 public typealias CropRatioSelectedClosure = (CropRatio) -> ()
 
 /**
@@ -26,7 +26,7 @@ public typealias CropRatioSelectedClosure = (CropRatio) -> ()
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure?
 
-    /// This closure is called every time the user selects a crop-ratio.
+    /// This closure is called every time the user selects a crop ratio.
     public let cropRatioSelectedClosure: CropRatioSelectedClosure?
 
     /**
@@ -82,7 +82,7 @@ The default `IMGLYCropEditorViewControllerOptionsBuilder` for `IMGLYCropEditorVi
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
 
-    /// This closure is called every time the user selects a crop-ratio.
+    /// This closure is called every time the user selects a crop ratio.
     public let cropRatioSelectedClosure: CropRatioSelectedClosure? = nil
 
     /**

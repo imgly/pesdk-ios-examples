@@ -11,6 +11,9 @@ import UIKit
 /// The definition of the configuration closure.
 public typealias OrientationActionButtonConfigurationClosure = (ImageCaptionButton, OrientationAction) -> ()
 
+/// This closure is called every time the user selects an action
+public typealias OrientationActionSelectedClosure = (OrientationAction) -> ()
+
 // swiftlint:disable type_name
 /**
 Options for configuring a `OrientationEditorViewController`.
@@ -25,6 +28,9 @@ Options for configuring a `OrientationEditorViewController`.
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: OrientationActionButtonConfigurationClosure?
+
+    /// This closure is called every time the user selects an action
+    public let orientationActionSelectedClosure: OrientationActionSelectedClosure?
 
     /**
      Returns a newly allocated instance of a `OrientationEditorViewControllerOptions` using the default builder.
@@ -45,6 +51,7 @@ Options for configuring a `OrientationEditorViewController`.
     public init(builder: OrientationEditorViewControllerOptionsBuilder) {
         allowedOrientationActions = builder.allowedOrientationActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        orientationActionSelectedClosure = builder.orientationActionSelectedClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -78,6 +85,9 @@ The default `OrientationEditorViewControllerOptionsBuilder` for `OrientationEdit
             allowedOrientationActions = newValue.flatMap { OrientationAction(rawValue: $0.integerValue) }
         }
     }
+
+    /// This closure is called every time the user selects an action
+    public var orientationActionSelectedClosure: OrientationActionSelectedClosure? = nil
 
     /**
      :nodoc:
