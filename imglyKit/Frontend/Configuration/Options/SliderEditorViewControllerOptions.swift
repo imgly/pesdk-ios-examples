@@ -12,6 +12,7 @@ import UIKit
  Options for configuring a `SliderEditorViewController`.
  */
 @objc(IMGLYSliderEditorViewControllerOptions) public class SliderEditorViewControllerOptions: EditorViewControllerOptions {
+
     /// Use this closure to configure the filter intensity slider.
     /// Defaults to an empty implementation.
     public let sliderConfigurationClosure: SliderConfigurationClosure?

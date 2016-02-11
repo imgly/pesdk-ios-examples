@@ -8,6 +8,9 @@
 
 import UIKit
 
+/// This closure is called every time the user selects a filter.
+public typealias FilterSelectedClosure = (String) -> ()
+
 /**
  Options for configuring a `FilterEditorViewController`.
  */
@@ -26,6 +29,9 @@ import UIKit
 
     /// Enable/Disable the filter intensity slider. Defaults to true.
     public let showFilterIntensitySlider: Bool
+
+    /// This closure is called every time the user selects a filter.
+    public let filterSelectedClosure: FilterSelectedClosure?
 
     /**
      Returns a newly allocated instance of a `FilterEditorViewControllerOptions` using the default builder.
@@ -47,6 +53,7 @@ import UIKit
         filterIntensitySliderConfigurationClosure = builder.filterIntensitySliderConfigurationClosure
         filterDataSource = builder.filterDataSource
         showFilterIntensitySlider = builder.showFilterIntensitySlider
+        filterSelectedClosure = builder.filterSelectedClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -63,6 +70,9 @@ import UIKit
     /// Defaults to an empty implementation.
     public var filterIntensitySliderConfigurationClosure: SliderConfigurationClosure? = nil
     // swiftlint:enable variable_name
+
+    /// This closure is called every time the user selects a filter.
+    public var filterSelectedClosure: FilterSelectedClosure? = nil
 
     /// An object conforming to the `FiltersDataSourceProtocol`
     /// Per default an `FilterSelectionControllerDataSource` offering all filters

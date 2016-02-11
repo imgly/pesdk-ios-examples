@@ -138,6 +138,24 @@ class SampleViewController: UIViewController {
             options.actionButtonConfigurationClosure = { actionButton, _ in
                 actionButton.textLabel.textColor = UIColor.grayColor()
             }
+            options.didEnterToolClosure = {
+                print("did enter orientation tool")
+            }
+            options.willLeaveToolClosure = {
+                print("will leave orientation tool")
+            }
+            options.orientationActionSelectedClosure = { action in
+                switch action {
+                case .RotateLeft:
+                    print("rotate left")
+                case .RotateRight:
+                    print("rotate right")
+                case .FlipVertically:
+                    print("flip vertical")
+                case .FlipHorizontally:
+                    print("flip horizontal")
+                }
+            }
         }
     }
 

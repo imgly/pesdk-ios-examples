@@ -28,6 +28,12 @@ public typealias SliderConfigurationClosure = (UISlider) -> ()
 /// This closure allows the configuration of the given text field.
 public typealias TextFieldConfigurationClosure = (UITextField) -> ()
 
+/// This closure will be called when a tool has been entered.
+public typealias DidEnterToolClosure = () -> ()
+
+/// The closure will be called when a tool is about to be left.
+public typealias WillLeaveToolClosure = () -> ()
+
 /**
  An Configuration defines behaviour and look of all view controllers
  provided by the imglyKit. It uses the builder pattern to create an

@@ -76,6 +76,9 @@ import UIKit
         configureButtons()
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
 
@@ -86,6 +89,15 @@ import UIKit
                     self.view.layoutIfNeeded()
                 }
         }
+        options.didEnterToolClosure?()
+    }
+
+    /**
+     :nodoc:
+     */
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        options.willLeaveToolClosure?()
     }
 
     public override func viewDidLayoutSubviews() {
@@ -160,6 +172,7 @@ import UIKit
         updatePreviewImageWithoutCropWithCompletion {
             self.view.layoutIfNeeded()
         }
+        options.orientationActionSelectedClosure?(.RotateLeft)
     }
 
     @objc private func rotateRight(sender: ImageCaptionButton) {
@@ -169,6 +182,7 @@ import UIKit
         updatePreviewImageWithoutCropWithCompletion {
             self.view.layoutIfNeeded()
         }
+        options.orientationActionSelectedClosure?(.RotateRight)
     }
 
     @objc private func flipHorizontally(sender: ImageCaptionButton) {
@@ -177,6 +191,7 @@ import UIKit
         fixedFilterStack.flipTextHorizontal()
         updatePreviewImageWithoutCropWithCompletion {
         }
+        options.orientationActionSelectedClosure?(.FlipHorizontally)
     }
 
     @objc private func flipVertically(sender: ImageCaptionButton) {
@@ -185,5 +200,6 @@ import UIKit
         fixedFilterStack.flipTextVertical()
         updatePreviewImageWithoutCropWithCompletion {
         }
+        options.orientationActionSelectedClosure?(.FlipVertically)
     }
 }
