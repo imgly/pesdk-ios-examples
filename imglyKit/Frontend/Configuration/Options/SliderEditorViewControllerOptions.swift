@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// This closure will be called when the user changes the value of a slider.
 public typealias SliderChangedValueClosure = () -> ()
 
 /**

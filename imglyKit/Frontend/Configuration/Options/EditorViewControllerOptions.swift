@@ -36,6 +36,12 @@ import UIKit
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public let allowsPreviewImageZoom: Bool
 
+    /// This closure will be called when a tool has been entered.
+    public let didEnterToolClosure: DidEnterToolClosure?
+
+    /// The closure will be called when a tool is about to be left.
+    public let willLeaveToolClosure: WillLeaveToolClosure?
+
     /**
      Returns a newly allocated instance of a `EditorViewControllerOptions` using the default builder.
 
@@ -58,6 +64,8 @@ import UIKit
         leftBarButtonConfigurationClosure = editorBuilder.leftBarButtonConfigurationClosure
         rightBarButtonConfigurationClosure = editorBuilder.rightBarButtonConfigurationClosure
         allowsPreviewImageZoom = editorBuilder.allowsPreviewImageZoom
+        didEnterToolClosure = editorBuilder.didEnterToolClosure
+        willLeaveToolClosure = editorBuilder.willLeaveToolClosure
         super.init()
     }
 }
@@ -88,4 +96,10 @@ import UIKit
 
     /// Controls if the user can zoom the preview image. Defaults to **true**.
     public var allowsPreviewImageZoom = true
+
+    /// This closure will be called when a tool has been entered.
+    public var didEnterToolClosure: DidEnterToolClosure? = nil
+
+    /// The closure will be called when a tool is about to be left.
+    public var willLeaveToolClosure: WillLeaveToolClosure? = nil
 }

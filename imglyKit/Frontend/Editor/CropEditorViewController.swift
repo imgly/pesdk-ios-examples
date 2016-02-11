@@ -21,6 +21,9 @@ public let kMinimumCropSize = CGFloat(50)
 
         didSet {
             self.selectedButton?.selected = true
+            if let selectionMode = self.selectionMode {
+                options.cropRatioSelectedClosure?(selectionMode)
+            }
         }
     }
 
@@ -61,7 +64,11 @@ public let kMinimumCropSize = CGFloat(50)
         configureScrollView()
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewDidAppear(animated: Bool) {
+        super.viewDidDisappear(animated)
         let cropRect = fixedFilterStack.orientationCropFilter.cropRect
         if cropRect.origin.x != 0 || cropRect.origin.y != 0 ||
             cropRect.size.width != 1.0 || cropRect.size.height != 1.0 {
@@ -79,6 +86,15 @@ public let kMinimumCropSize = CGFloat(50)
         }
 
         scrollView.flashScrollIndicators()
+        options.didEnterToolClosure?()
+    }
+
+    /**
+     :nodoc:
+     */
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        options.willLeaveToolClosure?()
     }
 
     // MARK: - EditorViewController

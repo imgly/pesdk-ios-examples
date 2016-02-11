@@ -24,7 +24,13 @@ import UIKit
     private var parentView: UIView?
     private var showAnchors = true
 
-    // call this in viewDidLoad
+    /**
+    Call this in `viewDidLoad`.
+
+    - parameter transparentView: A view that is userd as transperent overlay.
+    - parameter parentView:      The parent view.
+    - parameter showAnchors:     A bool that determines whether the anchors are visible or not.
+    */
     public func setup(transparentView: UIView, parentView: UIView, showAnchors: Bool) {
         self.transparentView = transparentView
         self.parentView = parentView
@@ -33,7 +39,9 @@ import UIKit
         setupAnchors()
     }
 
-    // call this in viewDidAppear
+    /**
+    Call this in `viewDidAppear`.
+    */
     public func present() {
         layoutViewsForCropRect()
         showViews()

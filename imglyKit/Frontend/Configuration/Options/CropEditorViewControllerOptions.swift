@@ -11,9 +11,8 @@ import UIKit
 /// Used to configure the crop action buttons. A button and its action are given as parameters.
 public typealias CropActionButtonConfigurationClosure = (ImageCaptionButton, CropRatio) -> ()
 
-/// This closure can be used to collected data for analytic purposes.
-/// It is called every time the user taps an action button.
-public typealias CropAnalyticsClosure = (CropRatio) -> ()
+/// This closure is called every time the user selects a crop-ratio.
+public typealias CropRatioSelectedClosure = (CropRatio) -> ()
 
 /**
  Options for configuring a `CropEditorViewController`.
@@ -26,6 +25,9 @@ public typealias CropAnalyticsClosure = (CropRatio) -> ()
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: CropActionButtonConfigurationClosure?
+
+    /// This closure is called every time the user selects a crop-ratio.
+    public let cropRatioSelectedClosure: CropRatioSelectedClosure?
 
     /**
      Returns a newly allocated instance of a `CropEditorViewControllerOptions` using the default builder.
@@ -46,6 +48,7 @@ public typealias CropAnalyticsClosure = (CropRatio) -> ()
     public init(builder: CropEditorViewControllerOptionsBuilder) {
         allowedCropRatios = builder.allowedCropRatios
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        cropRatioSelectedClosure = builder.cropRatioSelectedClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -78,6 +81,9 @@ The default `IMGLYCropEditorViewControllerOptionsBuilder` for `IMGLYCropEditorVi
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
+
+    /// This closure is called every time the user selects a crop-ratio.
+    public let cropRatioSelectedClosure: CropRatioSelectedClosure? = nil
 
     /**
      :nodoc:
