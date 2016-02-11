@@ -12,6 +12,12 @@ import UIKit
 /// depending on the linked focus action.
 public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, FocusAction) -> ()
 
+/// This closure is called when the user selects a focus action.
+public typealias FocusActionSelectedClosure = (FocusAction) -> ()
+
+/// This closure is called when the user selects a focus action.
+public typealias FocusPositionChanged = () -> ()
+
 /**
  Options for configuring a `FocusEditorViewController`.
  */
@@ -24,6 +30,9 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.
     public let actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure?
+
+    /// This closure is called when the user selects a focus action.
+    public let focusActionSelectedClosure: FocusActionSelectedClosure?
 
     /**
      Returns a newly allocated instance of a `FocusEditorViewControllerOptions` using the default builder.
@@ -44,6 +53,7 @@ public typealias FocusActionButtonConfigurationClosure = (ImageCaptionButton, Fo
     public init(builder: FocusEditorViewControllerOptionsBuilder) {
         allowedFocusActions = builder.allowedFocusActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        focusActionSelectedClosure = builder.focusActionSelectedClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -70,6 +80,8 @@ The default `FocusEditorViewControllerOptionsBuilder` for `FocusEditorViewContro
     /// each action button and has the button and its corresponding action as parameters.
     public var actionButtonConfigurationClosure: FocusActionButtonConfigurationClosure? = nil
 
+    /// This closure is called when the user selects a focus action.
+    public var focusActionSelectedClosure: FocusActionSelectedClosure? = nil
 
     /// An array of `FocusAction` raw values wrapped in NSNumbers.
     /// Setting this property overrides any previously set values in

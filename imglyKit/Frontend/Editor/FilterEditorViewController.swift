@@ -143,9 +143,6 @@ import UIKit
         if changeTimer == nil {
             changeTimer = NSTimer.scheduledTimerWithTimeInterval(updateInterval, target: self, selector: "update:", userInfo: nil, repeats: false)
         }
-        if let slider = sender {
-            options.filterIntensityChangedClosure?(slider.value)
-        }
     }
 
     @objc private func sliderTouchedUpInside(sender: UISlider?) {

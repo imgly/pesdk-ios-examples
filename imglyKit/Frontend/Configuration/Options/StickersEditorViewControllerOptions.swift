@@ -11,6 +11,12 @@ import UIKit
 /// The definition of the configuration closure.
 public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAction) -> ()
 
+/// This closure is called when the user selects an action.
+public typealias StickerActionSelectedClosure = (StickerAction) -> ()
+
+/// This closure is called when the user adds a sticker.
+public typealias AddedStickerClosure = (String) -> ()
+
 /**
  Options for configuring a `StickersEditorViewController`.
  */
@@ -23,6 +29,12 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
     /// Defines all allowed actions. Only buttons for allowed action are visible.
     /// Defaults to show all available actions.
     public let allowedStickerActions: [StickerAction]
+
+    /// This closure is called when the user selects an action.
+    public let stickerActionSelectedClosure: StickerActionSelectedClosure?
+
+    /// This closure is called when the user adds a sticker.
+    public let addedStickerClosure: AddedStickerClosure?
 
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public let canModifyStickerSize: Bool
@@ -60,6 +72,8 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
         enabledOverlayButtonAlpha = builder.enabledOverlayButtonAlpha
         allowedStickerActions = builder.allowedStickerActions
         actionButtonConfigurationClosure = builder.actionButtonConfigurationClosure
+        stickerActionSelectedClosure = builder.stickerActionSelectedClosure
+        addedStickerClosure = builder.addedStickerClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -84,6 +98,12 @@ public typealias StickerActionButtonConfigurationClosure = (UIButton, StickerAct
     /// Per default an `StickersDataSource` offering all filters
     /// is set.
     public var stickersDataSource: StickersDataSourceProtocol = StickersDataSource()
+
+    /// This closure is called when the user selects an action.
+    public var stickerActionSelectedClosure: StickerActionSelectedClosure? = nil
+
+    /// This closure is called when the user adds a sticker.
+    public var addedStickerClosure: AddedStickerClosure? = nil
 
     /// Disables/Enables the pinch gesture on stickers to change their size.
     public var canModifyStickerSize = true

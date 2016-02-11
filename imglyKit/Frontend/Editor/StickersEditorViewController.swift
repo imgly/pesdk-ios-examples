@@ -119,6 +119,9 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
 
     // MARK: - UIViewController
 
+    /**
+    :nodoc:
+    */
     override public func viewDidLoad() {
         super.viewDidLoad()
 
@@ -132,11 +135,26 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         updateButtonStatus()
     }
 
+    /**
+     :nodoc:
+     */
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         rerenderPreviewWithoutStickers()
+        options.didEnterToolClosure?()
     }
 
+    /**
+     :nodoc:
+     */
+    public override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        options.willLeaveToolClosure?()
+    }
+
+    /**
+     :nodoc:
+     */
     override public func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         stickersClipView.frame = view.convertRect(previewImageView.visibleImageFrame, fromView: previewImageView)
@@ -401,6 +419,7 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
         if selectedView.layer.borderWidth > 0 {
             unSelectView(selectedView)
             selectedView.removeFromSuperview()
+            options.stickerActionSelectedClosure?(.Delete)
         }
 
         updateButtonStatus()
@@ -410,19 +429,22 @@ let kStickersCollectionViewCellReuseIdentifier = "StickersCollectionViewCell"
     @objc private func bringToFront(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
             stickersClipView.bringSubviewToFront(selectedView)
+            options.stickerActionSelectedClosure?(.BringToFront)
         }
     }
 
     @objc private func flipHorizontal(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
             flipStickerHorizontaly(selectedView)
+            options.stickerActionSelectedClosure?(.FlipHorizontally)
         }
     }
 
     @objc private func flipVertical(sender: UIButton) {
         if selectedView.layer.borderWidth > 0 {
             flipStickerHorizontaly(selectedView)
-             selectedView.transform = CGAffineTransformRotate(selectedView.transform, CGFloat(M_PI))
+            selectedView.transform = CGAffineTransformRotate(selectedView.transform, CGFloat(M_PI))
+            options.stickerActionSelectedClosure?(.FlipVertically)
         }
     }
 
@@ -570,6 +592,7 @@ extension StickersEditorViewController: UICollectionViewDelegate {
 
         if let label = sticker.label {
             imageView.accessibilityLabel = Localize(label)
+            options.addedStickerClosure?(label)
         }
 
         imageView.decrementHandler = { [unowned imageView] in

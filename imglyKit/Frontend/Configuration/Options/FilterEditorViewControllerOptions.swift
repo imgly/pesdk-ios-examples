@@ -33,9 +33,6 @@ public typealias FilterSelectedClosure = (String) -> ()
     /// This closure is called every time the user selects a filter.
     public let filterSelectedClosure: FilterSelectedClosure?
 
-    /// This closure is called every time the user changes the filter intensity.
-    public let filterIntensityChangedClosure: SliderChangedValueClosure?
-
     /**
      Returns a newly allocated instance of a `FilterEditorViewControllerOptions` using the default builder.
 
@@ -57,7 +54,6 @@ public typealias FilterSelectedClosure = (String) -> ()
         filterDataSource = builder.filterDataSource
         showFilterIntensitySlider = builder.showFilterIntensitySlider
         filterSelectedClosure = builder.filterSelectedClosure
-        filterIntensityChangedClosure = builder.filterIntensityChangedClosure
         super.init(editorBuilder: builder)
     }
 }
@@ -77,9 +73,6 @@ public typealias FilterSelectedClosure = (String) -> ()
 
     /// This closure is called every time the user selects a filter.
     public var filterSelectedClosure: FilterSelectedClosure? = nil
-
-    /// This closure is called every time the user changes the filter intensity.
-    public var filterIntensityChangedClosure: SliderChangedValueClosure? = nil
 
     /// An object conforming to the `FiltersDataSourceProtocol`
     /// Per default an `FilterSelectionControllerDataSource` offering all filters
