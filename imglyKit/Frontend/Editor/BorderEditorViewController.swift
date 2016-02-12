@@ -143,10 +143,13 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                     // Check datasource for sticker to get label
                     var border: Border?
                     for i in 0 ..< self.options.bordersDataSource.borderCount {
-                        if self.options.bordersDataSource.borderAtIndex(i).image == imageView.image {
-                            border = self.options.bordersDataSource.borderAtIndex(i)
-                            break
-                        }
+                        self.options.bordersDataSource.borderAtIndex(i, completionBlock: { candidate in
+                            if let candidate = candidate {
+                                if candidate.image == imageView.image {
+                                    border = candidate
+                                }
+                            }
+                        })
                     }
 
                     if let label = border?.label {
@@ -213,13 +216,14 @@ extension BorderEditorViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! StickerCollectionViewCell
         // swiftlint:enable force_cast
 
-        let sticker = options.bordersDataSource.borderAtIndex(indexPath.item)
-        cell.imageView.image = sticker.thumbnail ?? sticker.image
-
-        if let label = sticker.label {
-            cell.accessibilityLabel = Localize(label)
-        }
-
+        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border in
+            if let border = border {
+                cell.imageView.image = border.thumbnail ?? border.image
+                if let label = border.label {
+                    cell.accessibilityLabel = Localize(label)
+                }
+            }
+        })
         return cell
     }
 }
@@ -227,58 +231,61 @@ extension BorderEditorViewController: UICollectionViewDataSource {
 extension BorderEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let border = options.bordersDataSource.borderAtIndex(indexPath.item)
-        let imageView = StickerImageView(image: border.image)
-        if let size = overlayConverter?.initialSizeForStickerImage(border.image, containerView: bordersClipView) {
-            imageView.frame.size = size
-        }
+        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border in
+            if let border = border {
+                let imageView = StickerImageView(image: border.image)
+                if let size = self.overlayConverter?.initialSizeForStickerImage(border.image, containerView: self.bordersClipView) {
+                    imageView.frame.size = size
+                }
 
-        imageView.center = CGPoint(x: bordersClipView.bounds.midX, y: bordersClipView.bounds.midY)
+                imageView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
 
-        if let label = border.label {
-            imageView.accessibilityLabel = Localize(label)
-            options.addedBorderClosure?(label)
-        }
+                if let label = border.label {
+                    imageView.accessibilityLabel = Localize(label)
+                    self.options.addedBorderClosure?(label)
+                }
 
-        imageView.decrementHandler = { [unowned imageView] in
-            // Decrease by 10 %
-            imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
-            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-        }
+                imageView.decrementHandler = { [unowned imageView] in
+                    // Decrease by 10 %
+                    imageView.transform = CGAffineTransformScale(imageView.transform, 0.9, 0.9)
+                    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                }
 
-        imageView.incrementHandler = { [unowned imageView] in
-            // Increase by 10 %
-            imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
-            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-        }
+                imageView.incrementHandler = { [unowned imageView] in
+                    // Increase by 10 %
+                    imageView.transform = CGAffineTransformScale(imageView.transform, 1.1, 1.1)
+                    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                }
 
-        imageView.rotateLeftHandler = { [unowned imageView] in
-            // Rotate by 10 degrees to the left
-            imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
-            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-        }
+                imageView.rotateLeftHandler = { [unowned imageView] in
+                    // Rotate by 10 degrees to the left
+                    imageView.transform = CGAffineTransformRotate(imageView.transform, -10 * CGFloat(M_PI) / 180)
+                    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                }
 
-        imageView.rotateRightHandler = { [unowned imageView] in
-            // Rotate by 10 degrees to the right
-            imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
-            UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
-        }
+                imageView.rotateRightHandler = { [unowned imageView] in
+                    // Rotate by 10 degrees to the right
+                    imageView.transform = CGAffineTransformRotate(imageView.transform, 10 * CGFloat(M_PI) / 180)
+                    UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, nil)
+                }
 
-        let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
-        let scaleX = 1.0 / cropRect.width
-        let scaleY = 1.0 / cropRect.height
-        let scale = min(scaleX, scaleY)
-        imageView.frame.size.width *= scale
-        imageView.frame.size.height *= scale
+                let cropRect = self.fixedFilterStack.orientationCropFilter.cropRect
+                let scaleX = 1.0 / cropRect.width
+                let scaleY = 1.0 / cropRect.height
+                let scale = min(scaleX, scaleY)
+                imageView.frame.size.width *= scale
+                imageView.frame.size.height *= scale
 
-        bordersClipView.addSubview(imageView)
-        imageView.transform = CGAffineTransformMakeScale(0, 0)
+                self.bordersClipView.addSubview(imageView)
+                imageView.transform = CGAffineTransformMakeScale(0, 0)
 
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
-            imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
-            }) { _ in
-                UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, imageView)
-        }
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 0, options: [], animations: { () -> Void in
+                    imageView.transform = CGAffineTransformMakeScale(1.0 / scale, 1.0 / scale)
+                    }) { _ in
+                        UIAccessibilityPostNotification(UIAccessibilityLayoutChangedNotification, imageView)
+                }
+            }
+        })
     }
 }
 

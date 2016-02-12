@@ -25,6 +25,7 @@
 		093D11201C60F90800B72B7A /* TextColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11121C60F90800B72B7A /* TextColorSelectorView.swift */; };
 		093D11211C60F90800B72B7A /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11131C60F90800B72B7A /* ZoomingImageView.swift */; };
 		093D11231C60F99900B72B7A /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11221C60F99900B72B7A /* TextButton.swift */; };
+		096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */; };
 		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
@@ -467,6 +468,7 @@
 		093D11121C60F90800B72B7A /* TextColorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextColorSelectorView.swift; sourceTree = "<group>"; };
 		093D11131C60F90800B72B7A /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
 		093D11221C60F99900B72B7A /* TextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
+		096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBorderDataSource.swift; sourceTree = "<group>"; };
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -1172,6 +1174,7 @@
 				E990B2331C20506600806B30 /* FiltersDataSource.swift */,
 				E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */,
 				2BF4D3C71AF1150400C801B2 /* StickersDataSource.swift */,
+				096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1702,6 +1705,7 @@
 				2BF4D52C1AF1155E00C801B2 /* ResponseFilter.swift in Sources */,
 				2BF4D5271AF1155E00C801B2 /* Pola669Filter.swift in Sources */,
 				2BF4D5261AF1155E00C801B2 /* PlateFilter.swift in Sources */,
+				096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */,
 				2BF4D4F81AF1155E00C801B2 /* AD1920Filter.swift in Sources */,
 				093D11181C60F90800B72B7A /* ColorButton.swift in Sources */,
 				2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */,

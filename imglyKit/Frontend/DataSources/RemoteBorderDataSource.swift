@@ -8,16 +8,9 @@
 
 import UIKit
 
-@objc(IMGLYBordersDataSourceProtocol) public protocol BordersDataSourceProtocol {
-    /// The total count of all available stickers.
-    var borderCount: Int { get }
+public typealias BorderCompletionBlock = (Border?) -> (Void)
 
-    /// The sticker at the given index.
-    func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock)
-}
-
-
-@objc(IMGLYBordersDataSource) public class BordersDataSource: NSObject, BordersDataSourceProtocol {
+@objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol {
 
     private let borders: [Border]
 
