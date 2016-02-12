@@ -19,7 +19,6 @@
 "Flash, off" = "Flash, off";
 "Camera chooser" = "Camera chooser";
 "Switch between the front and backfacing camera" = "Switch between the front and backfacing camera";
-"Filters" = "Filters";
 "Show or hide the list of filters" = "Show or hide the list of filters";
 "Viewfinder" = "Viewfinder";
 "Photo Viewer" = "Photo Viewer";
@@ -35,6 +34,7 @@
 "Magic" = "Magic";
 "Filter" = "Filter";
 "Stickers" = "Stickers";
+"Border" = "Border";
 "Orientation" = "Orientation";
 "Focus" = "Focus";
 "Crop" = "Crop";
@@ -44,17 +44,14 @@
 "Text" = "Text";
 
 // Filter Editor
-"Filter" = "Filter";
 "Filter Intensity" = "Filter Intensity";
 
 // Stickers Editor
-"Stickers" = "Stickers";
 "Rotate left" = "Rotate left";
 "Rotate right" = "Rotate right";
 "Delete" = "Delete";
 
 // Orientation Editor
-"Orientation" = "Orientation";
 "Rotate L" = "Rotate L";
 "Rotate R" = "Rotate R";
 "Flip H" = "Flip H";
@@ -63,7 +60,6 @@
 "Flip horizontally" = "Flip horizontally";
 
 // Focus Editor
-"Focus" = "Focus";
 "Off" = "Off";
 "Linear" = "Linear";
 "Radial" = "Radial";
@@ -72,7 +68,6 @@
 "Double-tap and hold to move focus area" = "Double-tap and hold to move focus area";
 
 // Crop Editor
-"Crop" = "Crop";
 "Free" = "Free";
 "1:1" = "1:1";
 "4:3" = "4:3";
@@ -97,15 +92,6 @@
 "Add text" = "Add text";
 "Delete text" = "Delete text";
 "Change text" = "Change text";
-
-// Brightness Editor
-"Brightness" = "Brightness";
-
-// Contrast Editor
-"Contrast" = "Contrast";
-
-// Saturation Editor
-"Saturation" = "Saturation";
 
 // Color Picker View
 "Ok" = "Ok";
