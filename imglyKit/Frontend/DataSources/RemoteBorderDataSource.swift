@@ -18,7 +18,7 @@ public typealias BorderCompletionBlock = (Border?) -> (Void)
     // MARK: Init
 
     func startConnection() {
-        JSONStore.doIt()
+        JSONStore.get("http://localhost:8000/borders.json")
     }
 
 
