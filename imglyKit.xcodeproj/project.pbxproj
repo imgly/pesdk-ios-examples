@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
+		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
+		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
 		093D11141C60F90800B72B7A /* AlphaPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11061C60F90800B72B7A /* AlphaPickerView.swift */; };
 		093D11151C60F90800B72B7A /* BoxGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11071C60F90800B72B7A /* BoxGradientView.swift */; };
 		093D11161C60F90800B72B7A /* BrightnessEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11081C60F90800B72B7A /* BrightnessEditorViewController.swift */; };
@@ -28,6 +31,7 @@
 		098331211C400A72000135B8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331201C400A72000135B8 /* UIColorExtension.swift */; };
 		09C2BB821C63A5C0009D0F23 /* TextCaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */; };
 		09D214CE1C4C043C008D20F6 /* OverlayConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */; };
+		09D5AB151C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D5AB141C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift */; };
 		2B044DDC1C3E5E4500A73AE6 /* imglyKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B1ADA1D1B19C86300C98522 /* imglyKit.framework */; };
 		2B044DE31C3E5F6B00A73AE6 /* LUTConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BE0C4561C3ABBA900F1F5E4 /* LUTConverterTests.swift */; };
 		2B044DF11C3EAE3100A73AE6 /* SDKVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */; };
@@ -445,6 +449,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		09381E251C6CED790057463E /* BorderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewController.swift; sourceTree = "<group>"; };
+		09381E271C6CEE530057463E /* BordersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BordersDataSource.swift; sourceTree = "<group>"; };
+		09381E291C6CEEBA0057463E /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
 		093D11061C60F90800B72B7A /* AlphaPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPickerView.swift; sourceTree = "<group>"; };
 		093D11071C60F90800B72B7A /* BoxGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoxGradientView.swift; sourceTree = "<group>"; };
 		093D11081C60F90800B72B7A /* BrightnessEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrightnessEditorViewController.swift; sourceTree = "<group>"; };
@@ -465,6 +472,7 @@
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
 		09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCaptionButton.swift; sourceTree = "<group>"; };
 		09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayConverter.swift; sourceTree = "<group>"; };
+		09D5AB141C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewControllerOptions.swift; sourceTree = "<group>"; };
 		2B044DD71C3E5E4500A73AE6 /* imglyKit OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "imglyKit OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDKVersion.swift; sourceTree = "<group>"; };
 		2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSTimerExtension.swift; sourceTree = "<group>"; };
@@ -849,6 +857,7 @@
 		2BC537891C51397500A7DE17 /* Options */ = {
 			isa = PBXGroup;
 			children = (
+				09D5AB141C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift */,
 				2B5CA32D1C490CD80065DE48 /* CameraViewControllerOptions.swift */,
 				2BC537961C513A2900A7DE17 /* CropEditorViewControllerOptions.swift */,
 				2BC5379C1C513AA500A7DE17 /* EditorViewControllerOptions.swift */,
@@ -936,6 +945,8 @@
 		2BF4D3A11AF113ED00C801B2 /* Editor */ = {
 			isa = PBXGroup;
 			children = (
+				09381E291C6CEEBA0057463E /* Border.swift */,
+				09381E251C6CED790057463E /* BorderEditorViewController.swift */,
 				2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */,
 				2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */,
 				2BF4D3B41AF1150400C801B2 /* CropEditorViewController.swift */,
@@ -1157,6 +1168,7 @@
 		E9AF1E601C0F2DF900893621 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
+				09381E271C6CEE530057463E /* BordersDataSource.swift */,
 				E990B2331C20506600806B30 /* FiltersDataSource.swift */,
 				E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */,
 				2BF4D3C71AF1150400C801B2 /* StickersDataSource.swift */,
@@ -1709,6 +1721,7 @@
 				2BF4D5311AF1155E00C801B2 /* SoftFilter.swift in Sources */,
 				093D11171C60F90800B72B7A /* CircleGradientView.swift in Sources */,
 				2BF4D4B11AF1154B00C801B2 /* TextFilter.swift in Sources */,
+				09D5AB151C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift in Sources */,
 				2BF4D52D1AF1155E00C801B2 /* SepiaHighFilter.swift in Sources */,
 				2B044DF11C3EAE3100A73AE6 /* SDKVersion.swift in Sources */,
 				E990B2341C20506600806B30 /* FiltersDataSource.swift in Sources */,
@@ -1755,12 +1768,14 @@
 				2B1ADA101B19C3F300C98522 /* InstanceFactoryExtension.swift in Sources */,
 				2BF4D5241AF1155E00C801B2 /* PaleFilter.swift in Sources */,
 				2BF4D3EF1AF1151500C801B2 /* UIImageExtension.swift in Sources */,
+				09381E2A1C6CEEBA0057463E /* Border.swift in Sources */,
 				2BF4D3DD1AF1150500C801B2 /* ImageCaptionCollectionViewCell.swift in Sources */,
 				2BF4D3D31AF1150500C801B2 /* CropEditorViewController.swift in Sources */,
 				2BF4D3DB1AF1150500C801B2 /* GradientViewDelegate.swift in Sources */,
 				2BC5379B1C513A3900A7DE17 /* TextEditorViewControllerOptions.swift in Sources */,
 				2BF5C5CE1C6B6949007BEE3F /* CenteredScrollView.swift in Sources */,
 				2BC537991C513A3200A7DE17 /* SliderEditorViewControllerOptions.swift in Sources */,
+				09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */,
 				2BF4D5201AF1155E00C801B2 /* NeatFilter.swift in Sources */,
 				2BF4D5111AF1155E00C801B2 /* GlamFilter.swift in Sources */,
 				2BF4D5061AF1155E00C801B2 /* CottonCandyFilter.swift in Sources */,
@@ -1796,6 +1811,7 @@
 				2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */,
 				2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */,
 				2BC101BB1C43C72000C04A47 /* AVCaptureDeviceExtension.swift in Sources */,
+				09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */,
 				2BF4D5251AF1155E00C801B2 /* PitchedFilter.swift in Sources */,
 				2BF4D53A1AF1155E00C801B2 /* X400Filter.swift in Sources */,
 				2BF4D3E61AF1150500C801B2 /* StickersDataSource.swift in Sources */,

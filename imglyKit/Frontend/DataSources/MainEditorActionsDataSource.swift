@@ -42,7 +42,7 @@ import UIKit
     */
     public override init() {
         super.init()
-        items = self.itemsForAvailableActions([ .Magic, .Crop, .Orientation, .Filter, .Brightness, .Contrast, .Saturation, .Text, .Stickers, .Focus ])
+        items = self.itemsForAvailableActions([ .Magic, .Crop, .Orientation, .Filter, .Brightness, .Contrast, .Saturation, .Text, .Stickers, .Focus, .Border ])
     }
 
     /**
@@ -97,6 +97,10 @@ import UIKit
                 actions.append(MainEditorAction(title: Localize("Stickers"),
                     image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
                     editorType: .Stickers))
+            case .Border:
+                actions.append(MainEditorAction(title: Localize("Border"),
+                    image: UIImage(named: "icon_option_sticker", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),
+                    editorType: .Border))
             case .Orientation:
                 actions.append(MainEditorAction(title: Localize("Orientation"),
                     image: UIImage(named: "icon_option_orientation", inBundle: bundle, compatibleWithTraitCollection: nil)!.imageWithRenderingMode(.AlwaysTemplate),

@@ -40,6 +40,8 @@ extension InstanceFactory {
             return saturationEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
         case .Text:
             return textEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
+        case .Border:
+            return borderEditorViewControllerWithFixedFilterStack(fixedFilterStack, configuration: configuration)
         default:
             return nil
         }
@@ -120,6 +122,15 @@ extension InstanceFactory {
     public class func textEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack, configuration: Configuration) -> TextEditorViewController {
         // swiftlint:disable force_cast
         let vc = configuration.getClassForReplacedClass(TextEditorViewController.self).init() as! TextEditorViewController
+        // swiftlint:enable force_cast
+        vc.configuration = configuration
+        vc.fixedFilterStack = fixedFilterStack
+        return vc
+    }
+
+    public class func borderEditorViewControllerWithFixedFilterStack(fixedFilterStack: FixedFilterStack, configuration: Configuration) -> BorderEditorViewController {
+        // swiftlint:disable force_cast
+        let vc = configuration.getClassForReplacedClass(BorderEditorViewController.self).init() as! BorderEditorViewController
         // swiftlint:enable force_cast
         vc.configuration = configuration
         vc.fixedFilterStack = fixedFilterStack
