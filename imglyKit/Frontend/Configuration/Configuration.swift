@@ -55,6 +55,8 @@ public typealias WillLeaveToolClosure = () -> ()
     public let filterEditorViewControllerOptions: FilterEditorViewControllerOptions
     /// Options for the `StickersEditorViewController`.
     public let stickersEditorViewControllerOptions: StickersEditorViewControllerOptions
+    /// Options for the `BorderEditorViewController`.
+    public let borderEditorViewControllerOptions: BorderEditorViewControllerOptions
     /// Options for the `OrientationEditorViewController`.
     public let orientationEditorViewControllerOptions: OrientationEditorViewControllerOptions
     /// Options for the `FocusEditorViewController`.
@@ -103,6 +105,7 @@ public typealias WillLeaveToolClosure = () -> ()
         self.contrastEditorViewControllerOptions = builderForClosure.contrastEditorViewControllerOptions
         self.saturationEditorViewControllerOptions = builderForClosure.saturationEditorViewControllerOptions
         self.textEditorViewControllerOptions = builderForClosure.textEditorViewControllerOptions
+        self.borderEditorViewControllerOptions = builderForClosure.borderEditorViewControllerOptions
         self.classReplacingMap = builderForClosure.classReplacingMap
         super.init()
     }
@@ -134,6 +137,7 @@ public typealias WillLeaveToolClosure = () -> ()
     private var mainEditorViewControllerOptions: MainEditorViewControllerOptions = MainEditorViewControllerOptions()
     private var filterEditorViewControllerOptions: FilterEditorViewControllerOptions = FilterEditorViewControllerOptions()
     private var stickersEditorViewControllerOptions: StickersEditorViewControllerOptions = StickersEditorViewControllerOptions()
+    private var borderEditorViewControllerOptions: BorderEditorViewControllerOptions = BorderEditorViewControllerOptions()
     private var orientationEditorViewControllerOptions: OrientationEditorViewControllerOptions = OrientationEditorViewControllerOptions()
     private var focusEditorViewControllerOptions: FocusEditorViewControllerOptions = FocusEditorViewControllerOptions()
     private var cropEditorViewControllerOptions: CropEditorViewControllerOptions = CropEditorViewControllerOptions()
