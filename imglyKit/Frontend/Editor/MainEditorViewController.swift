@@ -17,6 +17,7 @@ import UIKit
     case Magic
     case Filter
     case Stickers
+    case Border
     case Orientation
     case Focus
     case Crop
