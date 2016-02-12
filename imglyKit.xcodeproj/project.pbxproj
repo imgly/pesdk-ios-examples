@@ -26,6 +26,7 @@
 		093D11211C60F90800B72B7A /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11131C60F90800B72B7A /* ZoomingImageView.swift */; };
 		093D11231C60F99900B72B7A /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11221C60F99900B72B7A /* TextButton.swift */; };
 		096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */; };
+		0975F16A1C6E85E600C7A1D6 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0975F1691C6E85E600C7A1D6 /* JSONStore.swift */; };
 		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
@@ -469,6 +470,7 @@
 		093D11131C60F90800B72B7A /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
 		093D11221C60F99900B72B7A /* TextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBorderDataSource.swift; sourceTree = "<group>"; };
+		0975F1691C6E85E600C7A1D6 /* JSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONStore.swift; sourceTree = "<group>"; };
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -803,6 +805,7 @@
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
 				093D11051C60F7D600B72B7A /* Views */,
+				0975F1691C6E85E600C7A1D6 /* JSONStore.swift */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -1822,6 +1825,7 @@
 				2BF4D4AD1AF1154B00C801B2 /* NoneFilter.swift in Sources */,
 				2BF4D4AC1AF1154B00C801B2 /* FixedFilterStack.swift in Sources */,
 				2BF4D5131AF1155E00C801B2 /* HighcarbFilter.swift in Sources */,
+				0975F16A1C6E85E600C7A1D6 /* JSONStore.swift in Sources */,
 				2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */,
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,
 				093D111B1C60F90800B72B7A /* FontQuickSelectorView.swift in Sources */,

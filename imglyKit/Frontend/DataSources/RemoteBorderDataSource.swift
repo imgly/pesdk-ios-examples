@@ -10,11 +10,17 @@ import UIKit
 
 public typealias BorderCompletionBlock = (Border?) -> (Void)
 
-@objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol {
+@objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol, NSURLConnectionDelegate {
 
     private let borders: [Border]
 
+    lazy var data = NSMutableData()
     // MARK: Init
+
+    func startConnection() {
+        JSONStore.doIt()
+    }
+
 
     /**
     Creates a default datasource offering all available stickers.
@@ -70,6 +76,7 @@ public typealias BorderCompletionBlock = (Border?) -> (Void)
     }
 
     public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
+        startConnection()
         completionBlock(borders[index])
     }
 }
