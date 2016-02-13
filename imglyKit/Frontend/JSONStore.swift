@@ -9,10 +9,13 @@
 import UIKit
 
 class JSONStore: NSObject {
-    static private var store: [String : NSData?] = [ : ]
+    static private var store: [String : NSDictionary?] = [ : ]
 
     static private func httpGet(request: NSURLRequest!, callback: (NSData?, NSError?) -> Void) {
-        let session = NSURLSession.sharedSession()
+    //    let session = NSURLSession.sharedSession()
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
+        let session  = NSURLSession(configuration: configuration)
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
             callback(data, error)
@@ -21,22 +24,41 @@ class JSONStore: NSObject {
     }
 
     static func get(url: String) {
-//        let request = NSMutableURLRequest(URL: NSURL(string: "http://localhost:8000/borders.json")!)
         if let data = store[url] {
             print("got it", data)
         } else {
-            let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-            httpGet(request) {
-                (data, error) -> Void in
-                if error != nil {
-                    print(error)
-                } else {
-                    if let data = data {
-                        store[url] = data
-                        print(data)
+            startJSONRequest(url)
+        }
+    }
+
+    static func startJSONRequest(url: String) {
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        httpGet(request) {
+            (data, error) -> Void in
+            if error != nil {
+                print(error)
+            } else {
+                if let data = data {
+                    if let dict = dictionaryFromData(data) {
+                        store[url] = dict
+                        print(dict)
                     }
                 }
             }
         }
+
+    }
+
+    static func dictionaryFromData(data: NSData) -> NSDictionary? {
+        do {
+            print(String(data: data, encoding: NSASCIIStringEncoding))
+            let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            if let dict = jsonObject as? NSDictionary {
+                return dict
+            }
+        } catch _ {
+            return nil
+        }
+        return nil
     }
 }
