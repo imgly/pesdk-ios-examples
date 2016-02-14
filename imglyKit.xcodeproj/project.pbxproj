@@ -10,6 +10,11 @@
 		090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
 		090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A031C707D4F008C5704 /* ImageStore.swift */; };
 		090D7A061C710195008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
+		090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A071C710CC8008C5704 /* JSONStoreTest.swift */; };
+		090D7A0B1C710DC3008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
+		090D7A0C1C71138E008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
+		090D7A0D1C71139A008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
+		090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -456,6 +461,8 @@
 		090D7A011C6FDCD9008C5704 /* JSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONStore.swift; sourceTree = "<group>"; };
 		090D7A031C707D4F008C5704 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		090D7A051C710195008C5704 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
+		090D7A071C710CC8008C5704 /* JSONStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONStoreTest.swift; path = imglyKit/Frontend/JSONStoreTest.swift; sourceTree = SOURCE_ROOT; };
+		090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceJSONMock.swift; sourceTree = "<group>"; };
 		09381E251C6CED790057463E /* BorderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewController.swift; sourceTree = "<group>"; };
 		09381E271C6CEE530057463E /* BordersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BordersDataSource.swift; sourceTree = "<group>"; };
 		09381E291C6CEEBA0057463E /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
@@ -765,6 +772,14 @@
 			path = Stores;
 			sourceTree = "<group>";
 		};
+		090D7A091C710CCF008C5704 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		093D11051C60F7D600B72B7A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -799,6 +814,7 @@
 		2B044DE51C3E613300A73AE6 /* Frontend Tests */ = {
 			isa = PBXGroup;
 			children = (
+				090D7A071C710CC8008C5704 /* JSONStoreTest.swift */,
 			);
 			path = "Frontend Tests";
 			sourceTree = "<group>";
@@ -894,6 +910,7 @@
 		2BE0C4551C3ABB4600F1F5E4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				090D7A091C710CCF008C5704 /* Mocks */,
 				2B044DE41C3E613000A73AE6 /* Backend Tests */,
 				2B044DE51C3E613300A73AE6 /* Frontend Tests */,
 				2BE0C4581C3ABCEB00F1F5E4 /* imglyKit-Tests-Bridging-Header.h */,
@@ -1678,7 +1695,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */,
 				2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */,
+				090D7A0D1C71139A008C5704 /* RequestService.swift in Sources */,
+				090D7A0C1C71138E008C5704 /* JSONStore.swift in Sources */,
+				090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1823,6 +1844,7 @@
 				093D11211C60F90800B72B7A /* ZoomingImageView.swift in Sources */,
 				2BF4D50D1AF1155E00C801B2 /* FixieFilter.swift in Sources */,
 				E9AF1E621C0F2E0D00893621 /* MainEditorActionsDataSource.swift in Sources */,
+				090D7A0B1C710DC3008C5704 /* RequestServiceJSONMock.swift in Sources */,
 				2BF4D5171AF1155E00C801B2 /* KDynamicFilter.swift in Sources */,
 				2BC537951C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift in Sources */,
 				093D11141C60F90800B72B7A /* AlphaPickerView.swift in Sources */,

@@ -55,11 +55,8 @@ import UIKit
             if error != nil {
                 completionBlock(nil, error)
             } else {
-                print("1", data)
                 if let data = data {
-                    print("3")
                     if let dict = self.dictionaryFromData(data) {
-                        print("2", dict)
                         self.store[url] = dict
                         completionBlock(dict, nil)
                     }
