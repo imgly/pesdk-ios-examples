@@ -33,8 +33,23 @@ class JSONStoreTest: XCTestCase {
             if let dict = dict {
                 XCTAssert(dict["version"] as! String == "1.0", "Version tag not found or valid")
             } else {
-                XCTAssert(false, "JSONStore must return a NSDictionary")
+                XCTAssert(false, "JSONStore must return a NSDictionary with a 'version' entry")
             }
+        }
+        // swiftlint:enable force_cast
+    }
+
+    /**
+     We perform two get calls, and make sure the request service is called once only.
+     The second call should be handled directly via caching.
+     */
+    func testCaching() {
+        // swiftlint:disable force_cast
+        jsonStore?.get("") { (dict, error) -> Void in
+            self.jsonStore?.get("") { (dict, error) -> Void in
+                        let requestServiceMock = self.jsonStore!.requestService as! RequestServiceJSONMock
+                        XCTAssert(requestServiceMock.callCounter == 1, "Request Service should be called once only")
+                    }
         }
         // swiftlint:enable force_cast
     }
