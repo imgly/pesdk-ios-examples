@@ -77,20 +77,20 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
     // MARK: - StickersDataSource
 
-    /// The count of borders.
+    /**
+    The count of borders.
+
+    - parameter completionBlock: A completion block.
+    */
     public func borderCount(completionBlock: (Int, NSError?) -> Void) {
-        if let metaData = metaData {
-            completionBlock(metaData.count, nil)
-        } else {
-            getMetaData({ meta, error in
-                if let meta = meta {
-                    self.metaData = meta
-                    completionBlock(meta.count, nil)
-                } else {
-                    completionBlock(0, error)
-                }
-            })
-        }
+        getMetaData({ meta, error in
+            if let meta = meta {
+                self.metaData = meta
+                completionBlock(meta.count, nil)
+            } else {
+                completionBlock(0, error)
+            }
+        })
     }
 
     /**
