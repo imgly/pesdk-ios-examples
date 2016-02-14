@@ -27,21 +27,13 @@ import UIKit
  */
 @objc(IMGLYJSONStore) public class JSONStore: NSObject, JSONStoreProtocol {
 
-    /// A shared instance fore convenience.
+    /// A shared instance for convenience.
     public static let sharedStore = JSONStore()
 
-    private var store: [String : NSDictionary?] = [ : ]
+    /// A service that is used to perform http get requests.
+    public var requestService: RequestServiceProtocol = RequestService()
 
-    private func httpGet(request: NSURLRequest!, callback: (NSData?, NSError?) -> Void) {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-        let session  = NSURLSession(configuration: configuration)
-        let task = session.dataTaskWithRequest(request) {
-            (data, response, error) -> Void in
-            callback(data, error)
-        }
-        task.resume()
-    }
+    private var store: [String : NSDictionary?] = [ : ]
 
     /**
      Retrieves JSON data from the specified URL.
@@ -58,8 +50,7 @@ import UIKit
     }
 
     private func startJSONRequest(url: String, completionBlock: (NSDictionary?, NSError?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        httpGet(request) {
+        requestService.get(url) {
             (data, error) -> Void in
             if error != nil {
                 completionBlock(nil, error)

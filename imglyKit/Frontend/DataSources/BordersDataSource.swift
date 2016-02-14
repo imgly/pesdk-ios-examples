@@ -56,7 +56,6 @@ import UIKit
 
             return nil
         }
-
         super.init()
     }
 

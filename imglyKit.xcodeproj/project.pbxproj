@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
 		090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A031C707D4F008C5704 /* ImageStore.swift */; };
+		090D7A061C710195008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -454,6 +455,7 @@
 /* Begin PBXFileReference section */
 		090D7A011C6FDCD9008C5704 /* JSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONStore.swift; sourceTree = "<group>"; };
 		090D7A031C707D4F008C5704 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		090D7A051C710195008C5704 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
 		09381E251C6CED790057463E /* BorderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewController.swift; sourceTree = "<group>"; };
 		09381E271C6CEE530057463E /* BordersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BordersDataSource.swift; sourceTree = "<group>"; };
 		09381E291C6CEEBA0057463E /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
 				093D11051C60F7D600B72B7A /* Views */,
+				090D7A051C710195008C5704 /* RequestService.swift */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -1837,6 +1840,7 @@
 				2BF4D4AD1AF1154B00C801B2 /* NoneFilter.swift in Sources */,
 				2BF4D4AC1AF1154B00C801B2 /* FixedFilterStack.swift in Sources */,
 				2BF4D5131AF1155E00C801B2 /* HighcarbFilter.swift in Sources */,
+				090D7A061C710195008C5704 /* RequestService.swift in Sources */,
 				090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */,
 				2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */,
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,

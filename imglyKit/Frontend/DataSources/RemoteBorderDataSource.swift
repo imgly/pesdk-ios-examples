@@ -39,7 +39,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
         }
     }
 
-
     /**
     Creates a default datasource offering all available stickers.
     */

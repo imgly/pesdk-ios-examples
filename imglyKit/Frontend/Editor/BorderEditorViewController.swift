@@ -201,7 +201,6 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                 result = imageView as? UIImageView
             }
         }
-
         return result
     }
 }
@@ -220,7 +219,6 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                 })
             }
         })
-        print(borderCount)
         return borderCount
     }
 
