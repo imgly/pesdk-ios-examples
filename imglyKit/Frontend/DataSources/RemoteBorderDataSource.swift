@@ -13,14 +13,20 @@ public typealias BorderCompletionBlock = (Border?) -> (Void)
 @objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol, NSURLConnectionDelegate {
 
     private let borders: [Border]
+    public var jsonStore: JSONStoreProtocol = JSONStore.sharedStore
 
     lazy var data = NSMutableData()
     // MARK: Init
 
     func startConnection() {
-        JSONStore.get("http://localhost:8000/borders.json")
+        jsonStore.get("http://localhost:8000/borders.json", completionBlock: { dict, error in
+            if let dict = dict {
+                print(dict)
+            } else {
+                print(error)
+            }
+        })
     }
-
 
     /**
     Creates a default datasource offering all available stickers.
