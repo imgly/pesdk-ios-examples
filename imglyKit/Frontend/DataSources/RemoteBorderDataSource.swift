@@ -8,31 +8,43 @@
 
 import UIKit
 
-public typealias BorderCompletionBlock = (Border?) -> (Void)
+public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
 @objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol, NSURLConnectionDelegate {
 
-    private let borders: [Border]
+    private var borderMap: [String : Border]? = nil
+
+    /// A `JSONStore` that is used by this class. It defaults to the `sharedStore`.
     public var jsonStore: JSONStoreProtocol = JSONStore.sharedStore
 
-    lazy var data = NSMutableData()
+    private var metaData: NSArray? = nil
+
     // MARK: Init
 
-    func startConnection() {
-        jsonStore.get("http://localhost:8000/borders.json", completionBlock: { dict, error in
-            if let dict = dict {
+    private func getMetaData(completionBlock: (NSArray?, NSError?) -> Void) {
+        if let metaData = metaData {
+            completionBlock(metaData, nil)
+        } else {
+            jsonStore.get("http://localhost:8000/borders.json", completionBlock: { dict, error in
                 print(dict)
-            } else {
-                print(error)
-            }
-        })
+                if let dict = dict {
+                    if let meta = dict["borders"] as? NSArray {
+                        self.metaData = meta
+                        completionBlock(meta, nil)
+                    } else {
+                        completionBlock(nil, error)
+                    }
+                }
+            })
+        }
     }
+
 
     /**
     Creates a default datasource offering all available stickers.
     */
     override init() {
-        let borderFilesAndLabels = [
+/*        let borderFilesAndLabels = [
             ("glasses_nerd", "Brown glasses"),
             ("glasses_normal", "Black glasses"),
             ("glasses_shutter_green", "Green glasses"),
@@ -58,31 +70,57 @@ public typealias BorderCompletionBlock = (Border?) -> (Void)
                 let label = fileAndLabel.1
                 return Border(image: image, thumbnail: thumbnail, label: label, ratio: 1.0, url: "")
             }
-
             return nil
-        }
-
-        super.init()
-    }
-
-    /**
-     Creates a custom datasource offering the given stickers.
-     */
-    public init(borders: [Border]) {
-        self.borders = borders
+        }*/
         super.init()
     }
 
     // MARK: - StickersDataSource
 
-    public var borderCount: Int {
-        get {
-            return borders.count
+    /// The count of borders.
+    public func borderCount(completionBlock: (Int, NSError?) -> Void) {
+        if let metaData = metaData {
+            completionBlock(metaData.count, nil)
+        } else {
+            getMetaData({ meta, error in
+                if let meta = meta {
+                    self.metaData = meta
+                    completionBlock(meta.count, nil)
+                } else {
+                    completionBlock(0, error)
+                }
+            })
         }
     }
 
+    /**
+    Retrieves a the border at the given index.
+
+     - parameter index:           A index.
+     - parameter completionBlock: A completion block.
+     */
     public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
-        startConnection()
-        completionBlock(borders[index])
+        getMetaData({ meta, error in
+            if let meta = meta {
+                if let entry = meta[index] as? [String : String] {
+                    self.borderForMetaEntry(entry, completionBlock: { border, error in
+                        completionBlock(border, error)
+                    })
+                } else {
+                    completionBlock(nil, nil)
+                }
+            } else {
+                completionBlock(nil, error)
+            }
+        })
+    }
+
+    private func borderForMetaEntry(entry: [String : String], completionBlock: (Border?, NSError?) -> Void) {
+        if let image = UIImage(named: "glasses_nerd", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil) {
+            let border = Border(image: image, thumbnail: image, label: "label", ratio: 1.0, url: "")
+            completionBlock(border, nil)
+        } else {
+            completionBlock(nil, nil)
+        }
     }
 }

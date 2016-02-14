@@ -10,7 +10,7 @@ import UIKit
 
 @objc(IMGLYBordersDataSourceProtocol) public protocol BordersDataSourceProtocol {
     /// The total count of all available stickers.
-    var borderCount: Int { get }
+    func borderCount(completionBlock: (Int, NSError?) -> Void)
 
     /// The sticker at the given index.
     func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock)
@@ -61,7 +61,7 @@ import UIKit
     }
 
     /**
-     Creates a custom datasource offering the given stickers.
+     Creates a custom datasource offering the given borders.
      */
     public init(borders: [Border]) {
         self.borders = borders
@@ -70,13 +70,11 @@ import UIKit
 
     // MARK: - StickersDataSource
 
-    public var borderCount: Int {
-        get {
-            return borders.count
-        }
+    public func borderCount(completionBlock: (Int, NSError?) -> Void) {
+        completionBlock(borders.count, nil)
     }
 
     public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
-        completionBlock(borders[index])
+        completionBlock(borders[index], nil)
     }
 }

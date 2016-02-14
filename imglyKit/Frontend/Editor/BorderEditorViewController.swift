@@ -32,9 +32,13 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         return view
     }()
 
+    var token: dispatch_once_t = 0
+
     private var draggedView: UIImageView?
     private var tempBorderCopy = [Filter]()
     private var overlayConverter: OverlayConverter?
+    private var borderCount = 0
+    private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     // MARK: - EditorViewController
 
@@ -114,7 +118,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         flowLayout.minimumInteritemSpacing = 0
         flowLayout.minimumLineSpacing = 10
 
-        let collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
+        collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = currentBackgroundColor
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.dataSource = self
@@ -142,7 +146,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                 if let imageView = view as? StickerImageView {
                     // Check datasource for sticker to get label
                     var border: Border?
-                    for i in 0 ..< self.options.bordersDataSource.borderCount {
+                    /*for i in 0 ..< self.options.bordersDataSource.borderCount {
                         self.options.bordersDataSource.borderAtIndex(i, completionBlock: { candidate in
                             if let candidate = candidate {
                                 if candidate.image == imageView.image {
@@ -150,7 +154,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                                 }
                             }
                         })
-                    }
+                    }*/
 
                     if let label = border?.label {
                         imageView.accessibilityLabel = Localize(label)
@@ -208,7 +212,16 @@ extension BorderEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return options.bordersDataSource.borderCount
+        options.bordersDataSource.borderCount({ count, error in
+            self.borderCount = count
+            dispatch_once(&self.token) {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.collectionView.reloadData()
+                })
+            }
+        })
+        print(borderCount)
+        return borderCount
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -216,7 +229,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! StickerCollectionViewCell
         // swiftlint:enable force_cast
 
-        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border in
+        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
                 cell.imageView.image = border.thumbnail ?? border.image
                 if let label = border.label {
@@ -231,7 +244,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
 extension BorderEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border in
+        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
                 let imageView = StickerImageView(image: border.image)
                 if let size = self.overlayConverter?.initialSizeForStickerImage(border.image, containerView: self.bordersClipView) {
