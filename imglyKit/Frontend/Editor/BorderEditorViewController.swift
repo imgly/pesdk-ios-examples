@@ -229,10 +229,15 @@ extension BorderEditorViewController: UICollectionViewDataSource {
 
         options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
-                cell.imageView.image = border.thumbnail ?? border.image
-                if let label = border.label {
-                    cell.accessibilityLabel = Localize(label)
-                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
+                    if let updateCell = updateCell as? StickerCollectionViewCell {
+                        updateCell.imageView.image = border.thumbnail ?? border.image
+                        if let label = border.label {
+                            updateCell.accessibilityLabel = Localize(label)
+                        }
+                    }
+                })
             }
         })
         return cell
