@@ -32,8 +32,6 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         return view
     }()
 
-    var token: dispatch_once_t = 0
-
     private var draggedView: UIImageView?
     private var tempBorderCopy = [Filter]()
     private var overlayConverter: OverlayConverter?
@@ -77,6 +75,16 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         configureOverlayConverter()
         backupBorders()
         fixedFilterStack.spriteFilters.removeAll()
+        invokeCollectionViewDataFetch()
+    }
+
+    private func invokeCollectionViewDataFetch() {
+        options.bordersDataSource.borderCount({ count, error in
+            self.borderCount = count
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.collectionView.reloadData()
+                })
+        })
     }
 
     /**
@@ -211,14 +219,6 @@ extension BorderEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        options.bordersDataSource.borderCount({ count, error in
-            self.borderCount = count
-            dispatch_once(&self.token) {
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.collectionView.reloadData()
-                })
-            }
-        })
         return borderCount
     }
 
