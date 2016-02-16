@@ -63,7 +63,6 @@ import UIKit
                 }
             }
         }
-
     }
 
     private func dictionaryFromData(data: NSData) -> NSDictionary? {

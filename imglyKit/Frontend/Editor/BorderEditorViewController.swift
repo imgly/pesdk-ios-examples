@@ -37,6 +37,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     private var overlayConverter: OverlayConverter?
     private var borderCount = 0
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var imageRatio: Float = 1.0
 
     // MARK: - EditorViewController
 
@@ -153,7 +154,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
             for view in self.bordersClipView.subviews {
                 if let imageView = view as? StickerImageView {
                     // Check datasource for sticker to get label
-                    var border: Border?
+                    //var border: Border?
                     /*for i in 0 ..< self.options.bordersDataSource.borderCount {
                         self.options.bordersDataSource.borderAtIndex(i, completionBlock: { candidate in
                             if let candidate = candidate {
@@ -164,9 +165,9 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                         })
                     }*/
 
-                    if let label = border?.label {
-                        imageView.accessibilityLabel = Localize(label)
-                    }
+                    //if let label = border?.label {
+                    //    imageView.accessibilityLabel = Localize(label)
+                    //}
 
                     imageView.decrementHandler = { [unowned imageView] in
                         // Decrease by 10 %
@@ -232,7 +233,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
                     if let updateCell = updateCell as? StickerCollectionViewCell {
-                        updateCell.imageView.image = border.thumbnail ?? border.image
+                        updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio)
                         if let label = border.label {
                             updateCell.accessibilityLabel = Localize(label)
                         }
@@ -249,8 +250,8 @@ extension BorderEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
-                let imageView = StickerImageView(image: border.image)
-                if let size = self.overlayConverter?.initialSizeForStickerImage(border.image, containerView: self.bordersClipView) {
+                let imageView = StickerImageView(image: border.imageForRatio(self.imageRatio))
+                if let size = self.overlayConverter?.initialSizeForStickerImage(border.imageForRatio(self.imageRatio)!, containerView: self.bordersClipView) {
                     imageView.frame.size = size
                 }
 

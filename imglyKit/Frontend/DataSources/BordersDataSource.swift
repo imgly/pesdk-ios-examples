@@ -27,7 +27,7 @@ import UIKit
     Creates a default datasource offering all available stickers.
     */
     override init() {
-        let borderFilesAndLabels = [
+     /*   let borderFilesAndLabels = [
             ("glasses_nerd", "Brown glasses"),
             ("glasses_normal", "Black glasses"),
             ("glasses_shutter_green", "Green glasses"),
@@ -51,11 +51,12 @@ import UIKit
             if let image = UIImage(named: fileAndLabel.0, inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil) {
                 let thumbnail = UIImage(named: fileAndLabel.0 + "_thumbnail", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
                 let label = fileAndLabel.1
-                return Border(image: image, thumbnail: thumbnail, label: label, ratio: 1.0, url: "")
+                return Border(thumbnail: thumbnail, label: label)
             }
 
             return nil
-        }
+        }*/
+        borders = [Border]()
         super.init()
     }
 

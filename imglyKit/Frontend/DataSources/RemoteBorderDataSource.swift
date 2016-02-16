@@ -26,7 +26,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
             completionBlock(metaData, nil)
         } else {
             jsonStore.get("http://localhost:8000/borders.json", completionBlock: { dict, error in
-                print(dict)
                 if let dict = dict {
                     if let meta = dict["borders"] as? NSArray {
                         self.metaData = meta
@@ -115,11 +114,42 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
     }
 
     private func borderForMetaEntry(entry: [String : String], completionBlock: (Border?, NSError?) -> Void) {
-        if let image = UIImage(named: "glasses_nerd", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil) {
-            let border = Border(image: image, thumbnail: image, label: "label", ratio: 1.0, url: "")
-            completionBlock(border, nil)
-        } else {
-            completionBlock(nil, nil)
+        /*
+        let thumbnailUrl = entry["thumbnail_url"]
+        let images = entry["images"] as? NSArray
+
+        let firstGroup = dispatch_group_create()
+
+        if let images = images {
+        for image in images {
+            dispatch_group_enter(firstGroup)
+
+            ImageStore.sharedStore.get()
+            doStuffToObject(object, completion:{ (success) in
+                if(success){
+                    // doing stuff success
+                }
+                else {
+                    // doing stuff fail
+                }
+                // regardless, we leave the group letting GCD know we finished this bit of work
+                dispatch_group_leave(firstGroup)
+            })
         }
+
+            // called once all code blocks entered into group have left
+            dispatch_group_notify(firstGroup, dispatch_get_main_queue()) {
+
+            }
+        }
+
+        ImageStore.sharedStore.get() { (thumbnail, error) -> Void in
+            if let thumbnail = thumbnail {
+                let border = Border(image: thumbnail, thumbnail: thumbnail, label: "label", ratio: 1.0)
+                completionBlock(border, nil)
+            } else {
+                completionBlock(nil, error)
+            }
+        }*/
     }
 }
