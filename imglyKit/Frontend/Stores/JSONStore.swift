@@ -67,7 +67,6 @@ import UIKit
 
     private func dictionaryFromData(data: NSData) -> NSDictionary? {
         do {
-            print(String(data: data, encoding: NSASCIIStringEncoding))
             let jsonObject: AnyObject = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             if let dict = jsonObject as? NSDictionary {
                 return dict
