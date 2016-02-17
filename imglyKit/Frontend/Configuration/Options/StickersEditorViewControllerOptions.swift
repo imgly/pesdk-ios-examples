@@ -40,10 +40,10 @@ public typealias AddedStickerClosure = (String) -> ()
     public let canModifyStickerSize: Bool
 
     /// This value determins the opacity of any disabled button that is positions above the preview.
-    public var disabledOverlayButtonAlpha: CGFloat
+    public let disabledOverlayButtonAlpha: CGFloat
 
     /// This value determins the opacity of any enabled button that is positions above the preview.
-    public var enabledOverlayButtonAlpha: CGFloat
+    public let enabledOverlayButtonAlpha: CGFloat
 
     /// This closure allows further configuration of the action buttons. The closure is called for
     /// each action button and has the button and its corresponding action as parameters.

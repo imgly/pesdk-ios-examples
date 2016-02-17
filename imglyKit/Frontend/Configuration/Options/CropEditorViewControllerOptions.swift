@@ -83,7 +83,7 @@ The default `IMGLYCropEditorViewControllerOptionsBuilder` for `IMGLYCropEditorVi
     public var actionButtonConfigurationClosure: CropActionButtonConfigurationClosure? = nil
 
     /// This closure is called every time the user selects a crop ratio.
-    public let cropRatioSelectedClosure: CropRatioSelectedClosure? = nil
+    public var cropRatioSelectedClosure: CropRatioSelectedClosure? = nil
 
     /**
      :nodoc:
