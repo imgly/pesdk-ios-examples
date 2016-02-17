@@ -28,16 +28,28 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
         } else {
             borderStore.get("http://localhost:8000/borders.json", completionBlock: { records, error in
                 if let records = records {
+                    let borderGroup = dispatch_group_create()
+                    self.borders = [Border]()
+                    var lastError: NSError? = nil
                     for record in records {
+                        dispatch_group_enter(borderGroup)
                         self.borderForRecord(record, completionBlock: { border, error in
                             if let border = border {
                                 self.borders?.append(border)
                             } else {
-                                completionBlock(nil, error)
+                                lastError = error
                             }
+                            dispatch_group_leave(borderGroup)
                         })
                     }
-                    completionBlock(self.borders, nil)
+                    dispatch_group_notify(borderGroup, dispatch_get_main_queue(), { () -> Void in
+                        print("left border group", lastError)
+                        if let lastError = lastError {
+                            completionBlock(nil, lastError)
+                        } else {
+                            completionBlock(self.borders, nil)
+                        }
+                    })
                 } else {
                     completionBlock(nil, error)
                 }
@@ -46,8 +58,8 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
     }
 
     /**
-    Creates a default datasource offering all available stickers.
-    */
+     Creates a default datasource offering all available stickers.
+     */
     override init() {
         super.init()
     }
@@ -63,6 +75,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
         getBorders({ borders, error in
             if let borders = borders {
                 self.borders = borders
+
                 completionBlock(borders.count, nil)
             } else {
                 completionBlock(0, error)
@@ -71,7 +84,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
     }
 
     /**
-    Retrieves a the border at the given index.
+     Retrieves a the border at the given index.
 
      - parameter index:           A index.
      - parameter completionBlock: A completion block.
@@ -98,7 +111,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
             var lastError: NSError? = nil
             for info in record.imageInfos {
                 dispatch_group_enter(imageGroup)
-                self.imageStore.get(record.thumbnailURL) { (image, error) -> Void in
+                self.imageStore.get(info.url) { (image, error) -> Void in
                     if let image = image {
                         border.addImage(image, ratio: info.ratio)
                     } else {
@@ -108,6 +121,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
                 }
             }
             dispatch_group_notify(imageGroup, dispatch_get_main_queue(), { () -> Void in
+                print("left image group", lastError)
                 if let lastError = lastError {
                     completionBlock(nil, lastError)
                 } else {
