@@ -12,27 +12,34 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
 @objc(IMGLYRemoteBordersDataSource) public class RemoteBordersDataSource: NSObject, BordersDataSourceProtocol, NSURLConnectionDelegate {
 
-    private var borderMap: [String : Border]? = nil
+    /// A `BorderStore` that is used by this class. It defaults to the `sharedStore`.
+    public var borderStore: BorderStoreProtocol = BorderStore.sharedStore
 
-    /// A `JSONStore` that is used by this class. It defaults to the `sharedStore`.
-    public var jsonStore: JSONStoreProtocol = JSONStore.sharedStore
+    /// A `ImageStore` that is used by this class. It defaults to the `sharedStore`.
+    public var imageStore: ImageStore = ImageStore.sharedStore
 
-    private var metaData: NSArray? = nil
+    private var borders: [Border]? = nil
 
     // MARK: Init
 
-    private func getMetaData(completionBlock: (NSArray?, NSError?) -> Void) {
-        if let metaData = metaData {
-            completionBlock(metaData, nil)
+    private func getBorders(completionBlock: ([Border]?, NSError?) -> Void) {
+        if let borders = self.borders {
+            completionBlock(borders, nil)
         } else {
-            jsonStore.get("http://localhost:8000/borders.json", completionBlock: { dict, error in
-                if let dict = dict {
-                    if let meta = dict["borders"] as? NSArray {
-                        self.metaData = meta
-                        completionBlock(meta, nil)
-                    } else {
-                        completionBlock(nil, error)
+            borderStore.get("http://localhost:8000/borders.json", completionBlock: { records, error in
+                if let records = records {
+                    for record in records {
+                        self.borderForRecord(record, completionBlock: { border, error in
+                            if let border = border {
+                                self.borders?.append(border)
+                            } else {
+                                completionBlock(nil, error)
+                            }
+                        })
                     }
+                    completionBlock(self.borders, nil)
+                } else {
+                    completionBlock(nil, error)
                 }
             })
         }
@@ -42,34 +49,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
     Creates a default datasource offering all available stickers.
     */
     override init() {
-/*        let borderFilesAndLabels = [
-            ("glasses_nerd", "Brown glasses"),
-            ("glasses_normal", "Black glasses"),
-            ("glasses_shutter_green", "Green glasses"),
-            ("glasses_shutter_yellow", "Yellow glasses"),
-            ("glasses_sun", "Sunglasses"),
-            ("hat_cap", "Blue and white cap"),
-            ("hat_party", "White and red party hat"),
-            ("hat_sherrif", "Sherrif hat"),
-            ("hat_zylinder", "Black high hat"),
-            ("heart", "Red heart"),
-            ("mustache_long", "Long black mustache"),
-            ("mustache1", "Brown mustache"),
-            ("mustache2", "Black mustache"),
-            ("mustache3", "Brown mustache"),
-            ("pipe", "Pipe"),
-            ("snowflake", "Snowflake"),
-            ("star", "Star")
-        ]
-
-        borders = borderFilesAndLabels.flatMap { fileAndLabel -> Border? in
-            if let image = UIImage(named: fileAndLabel.0, inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil) {
-                let thumbnail = UIImage(named: fileAndLabel.0 + "_thumbnail", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
-                let label = fileAndLabel.1
-                return Border(image: image, thumbnail: thumbnail, label: label, ratio: 1.0, url: "")
-            }
-            return nil
-        }*/
         super.init()
     }
 
@@ -81,10 +60,10 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
     - parameter completionBlock: A completion block.
     */
     public func borderCount(completionBlock: (Int, NSError?) -> Void) {
-        getMetaData({ meta, error in
-            if let meta = meta {
-                self.metaData = meta
-                completionBlock(meta.count, nil)
+        getBorders({ borders, error in
+            if let borders = borders {
+                self.borders = borders
+                completionBlock(borders.count, nil)
             } else {
                 completionBlock(0, error)
             }
@@ -98,58 +77,43 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
      - parameter completionBlock: A completion block.
      */
     public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
-        getMetaData({ meta, error in
-            if let meta = meta {
-                if let entry = meta[index] as? [String : String] {
-                    self.borderForMetaEntry(entry, completionBlock: { border, error in
-                        completionBlock(border, error)
-                    })
-                } else {
-                    completionBlock(nil, nil)
-                }
+        getBorders({ borders, error in
+            if let borders = self.borders {
+                completionBlock(borders[index], nil)
             } else {
                 completionBlock(nil, error)
             }
         })
     }
 
-    private func borderForMetaEntry(entry: [String : String], completionBlock: (Border?, NSError?) -> Void) {
-        /*
-        let thumbnailUrl = entry["thumbnail_url"]
-        let images = entry["images"] as? NSArray
+    private func borderForRecord(record: BorderInfoRecord, completionBlock: (Border?, NSError?) -> Void) {
+        let imageGroup = dispatch_group_create()
 
-        let firstGroup = dispatch_group_create()
-
-        if let images = images {
-        for image in images {
-            dispatch_group_enter(firstGroup)
-
-            ImageStore.sharedStore.get()
-            doStuffToObject(object, completion:{ (success) in
-                if(success){
-                    // doing stuff success
+        imageStore.get(record.thumbnailURL) { (image, error) -> Void in
+            guard let thumbnail = image else {
+                completionBlock(nil, error)
+                return
+            }
+            let border = Border(thumbnail: thumbnail, label: record.label)
+            var lastError: NSError? = nil
+            for info in record.imageInfos {
+                dispatch_group_enter(imageGroup)
+                self.imageStore.get(record.thumbnailURL) { (image, error) -> Void in
+                    if let image = image {
+                        border.addImage(image, ratio: info.ratio)
+                    } else {
+                        lastError = error
+                    }
+                    dispatch_group_leave(imageGroup)
                 }
-                else {
-                    // doing stuff fail
+            }
+            dispatch_group_notify(imageGroup, dispatch_get_main_queue(), { () -> Void in
+                if let lastError = lastError {
+                    completionBlock(nil, lastError)
+                } else {
+                    completionBlock(border, nil)
                 }
-                // regardless, we leave the group letting GCD know we finished this bit of work
-                dispatch_group_leave(firstGroup)
             })
         }
-
-            // called once all code blocks entered into group have left
-            dispatch_group_notify(firstGroup, dispatch_get_main_queue()) {
-
-            }
-        }
-
-        ImageStore.sharedStore.get() { (thumbnail, error) -> Void in
-            if let thumbnail = thumbnail {
-                let border = Border(image: thumbnail, thumbnail: thumbnail, label: "label", ratio: 1.0)
-                completionBlock(border, nil)
-            } else {
-                completionBlock(nil, error)
-            }
-        }*/
     }
 }

@@ -85,6 +85,9 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
                 dispatch_async(dispatch_get_main_queue(), {
                     self.collectionView.reloadData()
                 })
+            if let error = error {
+                print(error.description)
+            }
         })
     }
 
@@ -239,6 +242,8 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                         }
                     }
                 })
+            } else {
+                print(error)
             }
         })
         return cell
