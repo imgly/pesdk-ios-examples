@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09058AA11C75091A002D7CC9 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E62B31C4FDE3C00C54B40 /* Localization.swift */; };
+		09058AA21C7509B2002D7CC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
+		09058AA31C7509B7002D7CC9 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */; };
 		090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
 		090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A031C707D4F008C5704 /* ImageStore.swift */; };
 		090D7A061C710195008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
@@ -1481,6 +1484,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09058AA21C7509B2002D7CC9 /* Localizable.strings in Resources */,
+				09058AA31C7509B7002D7CC9 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1716,6 +1721,7 @@
 				09764D5D1C723B5800577B1E /* BorderStoreTest.swift in Sources */,
 				090D7A0D1C71139A008C5704 /* RequestService.swift in Sources */,
 				09764D5E1C723D7A00577B1E /* NSErrorExtension.swift in Sources */,
+				09058AA11C75091A002D7CC9 /* Localization.swift in Sources */,
 				090D7A151C7207E4008C5704 /* BorderStore.swift in Sources */,
 				090D7A0C1C71138E008C5704 /* JSONStore.swift in Sources */,
 				090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */,
