@@ -223,7 +223,6 @@ extension BorderEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(borderCount)
         return borderCount
     }
 

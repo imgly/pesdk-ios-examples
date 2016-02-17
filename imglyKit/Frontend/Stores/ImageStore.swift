@@ -33,9 +33,7 @@ import UIKit
     private var store = [String : UIImage?]()
 
     private func httpGet(request: NSURLRequest!, callback: (NSData?, NSError?) -> Void) {
-        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
-        configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData
-        let session  = NSURLSession(configuration: configuration)
+        let session  = NSURLSession.sharedSession()
         let task = session.dataTaskWithRequest(request) {
             (data, response, error) -> Void in
             callback(data, error)
@@ -51,7 +49,6 @@ import UIKit
      */
     public func get(url: String, completionBlock: (UIImage?, NSError?) -> Void) {
         if let dict = store[url] {
-            print("using ", url)
             completionBlock(dict, nil)
         } else {
             startRequest(url, completionBlock: completionBlock)
@@ -68,7 +65,6 @@ import UIKit
                 if let data = data {
                     if let image = UIImage(data: data) {
                         self.store[url] = image
-                        print("added ", url)
                         completionBlock(image, nil)
                     } else {
                         completionBlock(nil, NSError(info: "No image found at \(url)."))

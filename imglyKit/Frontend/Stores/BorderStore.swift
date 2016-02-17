@@ -67,7 +67,7 @@ import UIKit
                         let label = border["label"] as? String,
                         let thumbnailURL = border["thumbnail_url"] as? String,
                         let images = border["images"] as? NSDictionary else {
-                            return NSError(info:"Illegal border hash.")
+                            return NSError(info:Localize("error_illegal_bord_hash"))
                     }
                     let record = BorderInfoRecord()
                     record.name = name
@@ -77,24 +77,24 @@ import UIKit
                         let imageInfo = ImageInfoRecord()
                         guard let ratioString = key as? String,
                             let url = value as? String else {
-                                return NSError(info:"Illegal image record.")
+                                return NSError(info:Localize("error_illegal_image_record"))
                         }
                         let expn = NSExpression(format:ratioString)
                         if let ratio = expn.expressionValueWithObject(nil, context: nil) as? Float {
                             imageInfo.ratio = ratio
                         } else {
-                            return NSError(info:"Illegal image ratio.")
+                            return NSError(info:Localize("error_illegal_image_ratio"))
                         }
                         imageInfo.url = url
                         record.imageInfos.append(imageInfo)
                     }
                     records.append(record)
                 } else {
-                    return NSError(info:"Border node not holding a dictionary.")
+                    return NSError(info:Localize("error_border_no_dictionary"))
                 }
             }
         } else {
-            return NSError(info:"Borders node not found or not holding an array.")
+            return NSError(info:Localize("error_border_array"))
         }
         store[url] = records
         return nil

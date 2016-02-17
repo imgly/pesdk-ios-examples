@@ -101,6 +101,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
     private func borderForRecord(record: BorderInfoRecord, completionBlock: (Border?, NSError?) -> Void) {
         let imageGroup = dispatch_group_create()
+        
 
         imageStore.get(record.thumbnailURL) { (image, error) -> Void in
             guard let thumbnail = image else {
