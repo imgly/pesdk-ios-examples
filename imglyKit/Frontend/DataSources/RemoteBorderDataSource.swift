@@ -43,7 +43,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
                         })
                     }
                     dispatch_group_notify(borderGroup, dispatch_get_main_queue(), { () -> Void in
-                        print("left border group", lastError)
                         if let lastError = lastError {
                             completionBlock(nil, lastError)
                         } else {
@@ -101,7 +100,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
     private func borderForRecord(record: BorderInfoRecord, completionBlock: (Border?, NSError?) -> Void) {
         let imageGroup = dispatch_group_create()
-        
 
         imageStore.get(record.thumbnailURL) { (image, error) -> Void in
             guard let thumbnail = image else {
@@ -122,7 +120,6 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
                 }
             }
             dispatch_group_notify(imageGroup, dispatch_get_main_queue(), { () -> Void in
-                print("left image group", lastError)
                 if let lastError = lastError {
                     completionBlock(nil, lastError)
                 } else {

@@ -30,16 +30,10 @@ import UIKit
     /// A shared instance for convenience.
     public static let sharedStore = ImageStore()
 
-    private var store = [String : UIImage?]()
+    /// A service that is used to perform http get requests.
+    public var requestService: RequestServiceProtocol = RequestService()
 
-    private func httpGet(request: NSURLRequest!, callback: (NSData?, NSError?) -> Void) {
-        let session  = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) {
-            (data, response, error) -> Void in
-            callback(data, error)
-        }
-        task.resume()
-    }
+    private var store = [String : UIImage?]()
 
     /**
      Retrieves JSON data from the specified URL.
@@ -56,9 +50,7 @@ import UIKit
     }
 
     private func startRequest(url: String, completionBlock: (UIImage?, NSError?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
-        httpGet(request) {
-            (data, error) -> Void in
+        requestService.get(url, cached: true) { (data, error) -> Void in
             if error != nil {
                 completionBlock(nil, error)
             } else {
@@ -72,6 +64,5 @@ import UIKit
                 }
             }
         }
-
     }
 }

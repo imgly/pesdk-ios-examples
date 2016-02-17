@@ -12,7 +12,7 @@ import Foundation
  *  A request service is out to perform a get request and hand the data over via block.
  */
 @objc(IMGLYRequestServiceProtocol) public protocol RequestServiceProtocol {
-    func get(url: String, callback: (NSData?, NSError?) -> Void)
+    func get(url: String, cached: Bool, callback: (NSData?, NSError?) -> Void)
 }
 
 /**
@@ -26,7 +26,25 @@ import Foundation
      - parameter url:  A url as `String`.
      - parameter callback: A callback that gets the retieved data or the occured error.
      */
-    public func get(url: String, callback: (NSData?, NSError?) -> Void) {
+    public func get(url: String, cached: Bool, callback: (NSData?, NSError?) -> Void) {
+        if cached {
+            getCached(url, callback: callback)
+        } else {
+            getUncached(url, callback: callback)
+        }
+    }
+
+    private func getUncached(url: String, callback: (NSData?, NSError?) -> Void) {
+        let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+        let session  = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) {
+            (data, response, error) -> Void in
+            callback(data, error)
+        }
+        task.resume()
+    }
+
+    private func getCached(url: String, callback: (NSData?, NSError?) -> Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: url)!)
         let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
         configuration.requestCachePolicy = NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData

@@ -50,7 +50,7 @@ import UIKit
     }
 
     private func startJSONRequest(url: String, completionBlock: (NSDictionary?, NSError?) -> Void) {
-        requestService.get(url) {
+        requestService.get(url, cached: false, callback: {
             (data, error) -> Void in
             if error != nil {
                 completionBlock(nil, error)
@@ -62,7 +62,7 @@ import UIKit
                     }
                 }
             }
-        }
+        })
     }
 
     private func dictionaryFromData(data: NSData) -> NSDictionary? {
