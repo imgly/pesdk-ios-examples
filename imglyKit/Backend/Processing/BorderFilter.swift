@@ -36,6 +36,9 @@ import CoreGraphics
     /// The crop-create applied to the input image, so we can adjust the sticker position
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
+    /// The tolerance that is used to pick the correct border image based on the aspect ratio.
+    public var tolerance = CGFloat(0.0)
+
     override init() {
         super.init()
     }
@@ -81,7 +84,7 @@ import CoreGraphics
     }
 
     private func createBorderImage() -> CIImage? {
-        guard let cgImage = border?.imageForRatio(1.0)?.CGImage else {
+        guard let cgImage = border?.imageForRatio(1.0, tolerance: Float(tolerance))?.CGImage else {
             return nil
         }
 

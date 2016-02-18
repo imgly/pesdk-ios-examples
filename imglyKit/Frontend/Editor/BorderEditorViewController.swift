@@ -71,6 +71,8 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     override public func viewDidLoad() {
         super.viewDidLoad()
 
+        imageRatio = Float(self.previewImageView.image!.size.width / self.previewImageView.image!.size.height)
+
         configureStickersCollectionView()
         configureStickersClipView()
         configureOverlayConverter()
@@ -184,7 +186,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
                     if let updateCell = updateCell as? StickerCollectionViewCell {
-                        updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio)
+                        updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio, tolerance: 0.1)
                         print(updateCell.imageView.image)
                         if let label = border.label {
                             updateCell.accessibilityLabel = Localize(label)
@@ -204,7 +206,8 @@ extension BorderEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
-                let imageView = StickerImageView(image: border.imageForRatio(self.imageRatio))
+                print(self.imageRatio)
+                let imageView = StickerImageView(image: border.imageForRatio(self.imageRatio, tolerance: 0.1))
                 imageView.frame.size = self.bordersClipView.frame.size
                 imageView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
 
