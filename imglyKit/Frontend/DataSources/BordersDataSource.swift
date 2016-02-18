@@ -19,7 +19,7 @@ import UIKit
 
 @objc(IMGLYBordersDataSource) public class BordersDataSource: NSObject, BordersDataSourceProtocol {
 
-    private let borders: [Border]
+    private var borders = [Border]()
 
     // MARK: Init
 
@@ -27,36 +27,23 @@ import UIKit
     Creates a default datasource offering all available stickers.
     */
     override init() {
-     /*   let borderFilesAndLabels = [
-            ("glasses_nerd", "Brown glasses"),
-            ("glasses_normal", "Black glasses"),
-            ("glasses_shutter_green", "Green glasses"),
-            ("glasses_shutter_yellow", "Yellow glasses"),
-            ("glasses_sun", "Sunglasses"),
-            ("hat_cap", "Blue and white cap"),
-            ("hat_party", "White and red party hat"),
-            ("hat_sherrif", "Sherrif hat"),
-            ("hat_zylinder", "Black high hat"),
-            ("heart", "Red heart"),
-            ("mustache_long", "Long black mustache"),
-            ("mustache1", "Brown mustache"),
-            ("mustache2", "Black mustache"),
-            ("mustache3", "Brown mustache"),
-            ("pipe", "Pipe"),
-            ("snowflake", "Snowflake"),
-            ("star", "Star")
-        ]
 
-        borders = borderFilesAndLabels.flatMap { fileAndLabel -> Border? in
-            if let image = UIImage(named: fileAndLabel.0, inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil) {
-                let thumbnail = UIImage(named: fileAndLabel.0 + "_thumbnail", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
-                let label = fileAndLabel.1
-                return Border(thumbnail: thumbnail, label: label)
-            }
+        let thumbnail1 = UIImage(named: "blackwood_thumbnail", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
+        let border1_1_1 =  UIImage(named: "blackwood1_1", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
+        let border1_4_6 =  UIImage(named: "blackwood4_6", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
+        let border1_6_4 =  UIImage(named: "blackwood6_4", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
+        let border1 = Border(thumbnail: thumbnail1, label: "black wood border")
 
-            return nil
-        }*/
-        borders = [Border]()
+        guard let border1_1 = border1_1_1,
+            let border4_6 = border1_4_6,
+            let border6_4 = border1_6_4 else {
+                super.init()
+            return
+        }
+        border1.addImage(border1_1, ratio: 1.0)
+        border1.addImage(border4_6, ratio: 4.0 / 6.0)
+        border1.addImage(border6_4, ratio: 6.0 / 4.0)
+        borders.append(border1)
         super.init()
     }
 

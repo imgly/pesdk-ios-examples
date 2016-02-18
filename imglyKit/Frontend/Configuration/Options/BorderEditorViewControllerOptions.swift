@@ -97,7 +97,7 @@ The default `BordersEditorViewControllerOptionsBuilder` for `BordersEditorViewCo
     /// An object conforming to the `BordersDataSourceProtocol`
     /// Per default an `BordersDataSource` offering all filters
     /// is set.
-    public var bordersDataSource: BordersDataSourceProtocol = RemoteBordersDataSource()
+    public var bordersDataSource: BordersDataSourceProtocol = BordersDataSource()
 
     /// This closure is called when the user selects an action.
     public var borderActionSelectedClosure: BorderActionSelectedClosure? = nil
