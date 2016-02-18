@@ -464,7 +464,7 @@
 		090D7A011C6FDCD9008C5704 /* JSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONStore.swift; sourceTree = "<group>"; };
 		090D7A031C707D4F008C5704 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
 		090D7A051C710195008C5704 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
-		090D7A071C710CC8008C5704 /* JSONStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONStoreTest.swift; path = imglyKit/Frontend/JSONStoreTest.swift; sourceTree = SOURCE_ROOT; };
+		090D7A071C710CC8008C5704 /* JSONStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONStoreTest.swift; path = "Tests/Frontend Tests/JSONStoreTest.swift"; sourceTree = SOURCE_ROOT; };
 		090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceJSONMock.swift; sourceTree = "<group>"; };
 		090D7A131C7207E4008C5704 /* BorderStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderStore.swift; sourceTree = "<group>"; };
 		090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderInfoRecord.swift; sourceTree = "<group>"; };
@@ -488,7 +488,7 @@
 		093D11221C60F99900B72B7A /* TextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
 		096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBorderDataSource.swift; sourceTree = "<group>"; };
 		09764D581C722E7600577B1E /* NSErrorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrorExtension.swift; sourceTree = "<group>"; };
-		09764D5C1C723B5800577B1E /* BorderStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BorderStoreTest.swift; path = imglyKit/Frontend/BorderStoreTest.swift; sourceTree = SOURCE_ROOT; };
+		09764D5C1C723B5800577B1E /* BorderStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BorderStoreTest.swift; path = "Tests/Frontend Tests/BorderStoreTest.swift"; sourceTree = SOURCE_ROOT; };
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
