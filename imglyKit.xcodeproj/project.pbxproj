@@ -7,21 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		09058AA11C75091A002D7CC9 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B5E62B31C4FDE3C00C54B40 /* Localization.swift */; };
 		09058AA21C7509B2002D7CC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
 		09058AA31C7509B7002D7CC9 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */; };
 		090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
 		090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A031C707D4F008C5704 /* ImageStore.swift */; };
 		090D7A061C710195008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
 		090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A071C710CC8008C5704 /* JSONStoreTest.swift */; };
-		090D7A0B1C710DC3008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
-		090D7A0C1C71138E008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
-		090D7A0D1C71139A008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
 		090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
 		090D7A141C7207E4008C5704 /* BorderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A131C7207E4008C5704 /* BorderStore.swift */; };
-		090D7A151C7207E4008C5704 /* BorderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A131C7207E4008C5704 /* BorderStore.swift */; };
 		090D7A171C7209AE008C5704 /* BorderInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */; };
-		090D7A181C7209AE008C5704 /* BorderInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -43,7 +37,6 @@
 		096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */; };
 		09764D591C722E7600577B1E /* NSErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09764D581C722E7600577B1E /* NSErrorExtension.swift */; };
 		09764D5D1C723B5800577B1E /* BorderStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09764D5C1C723B5800577B1E /* BorderStoreTest.swift */; };
-		09764D5E1C723D7A00577B1E /* NSErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09764D581C722E7600577B1E /* NSErrorExtension.swift */; };
 		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
@@ -1717,13 +1710,7 @@
 			files = (
 				090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */,
 				2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */,
-				090D7A181C7209AE008C5704 /* BorderInfoRecord.swift in Sources */,
 				09764D5D1C723B5800577B1E /* BorderStoreTest.swift in Sources */,
-				090D7A0D1C71139A008C5704 /* RequestService.swift in Sources */,
-				09764D5E1C723D7A00577B1E /* NSErrorExtension.swift in Sources */,
-				09058AA11C75091A002D7CC9 /* Localization.swift in Sources */,
-				090D7A151C7207E4008C5704 /* BorderStore.swift in Sources */,
-				090D7A0C1C71138E008C5704 /* JSONStore.swift in Sources */,
 				090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1870,7 +1857,6 @@
 				093D11211C60F90800B72B7A /* ZoomingImageView.swift in Sources */,
 				2BF4D50D1AF1155E00C801B2 /* FixieFilter.swift in Sources */,
 				E9AF1E621C0F2E0D00893621 /* MainEditorActionsDataSource.swift in Sources */,
-				090D7A0B1C710DC3008C5704 /* RequestServiceJSONMock.swift in Sources */,
 				2BF4D5171AF1155E00C801B2 /* KDynamicFilter.swift in Sources */,
 				2BC537951C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift in Sources */,
 				090D7A141C7207E4008C5704 /* BorderStore.swift in Sources */,
