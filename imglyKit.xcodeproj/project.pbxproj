@@ -1130,8 +1130,8 @@
 			children = (
 				09FAE9681C75F7ED003F6068 /* BorderFilter.swift */,
 				2BF4D49F1AF1154B00C801B2 /* ContrastBrightnessSaturationFilter.swift */,
-				2BF4D4A01AF1154B00C801B2 /* CropFilter.swift */,
 				2BF4D4A11AF1154B00C801B2 /* EnhancementFilter.swift */,
+				2BF4D4A01AF1154B00C801B2 /* CropFilter.swift */,
 				2BF4D53B1AF1156F00C801B2 /* LUTToNSDataConverter.h */,
 				2BF4D53C1AF1156F00C801B2 /* LUTToNSDataConverter.m */,
 				2BF4D4A31AF1154B00C801B2 /* NoneFilter.swift */,

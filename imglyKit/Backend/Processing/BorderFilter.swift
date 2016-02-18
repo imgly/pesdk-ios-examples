@@ -61,7 +61,7 @@ import CoreGraphics
             return inputImage
         }
 
-        guard let filter = CIFilter(name: "CISourceOverCompositing"), sticker = createStickerImage() else {
+        guard let filter = CIFilter(name: "CISourceOverCompositing"), sticker = createBorderImage() else {
             return inputImage
         }
 
@@ -80,7 +80,7 @@ import CoreGraphics
         return CGSize(width: self.scale * imageSize.width, height: self.scale * stickerRatio * imageSize.width)
     }
 
-    private func createStickerImage() -> CIImage? {
+    private func createBorderImage() -> CIImage? {
         guard let cgImage = border?.imageForRatio(1.0)?.CGImage else {
             return nil
         }
@@ -127,30 +127,6 @@ import CoreGraphics
         image = image.imageByCroppingToRect(inputImageRect)
 
         return image
-    }
-
-    // MARK: - Rotation
-
-    public func rotateRight () {
-        rotate(CGFloat(M_PI_2), negateX: true, negateY: false)
-    }
-
-    public func rotateLeft () {
-        rotate(CGFloat(-M_PI_2), negateX: false, negateY: true)
-    }
-
-    private func rotate(angle: CGFloat, negateX: Bool, negateY: Bool) {
-        let xFactor: CGFloat = negateX ? -1.0 : 1.0
-        let yFactor: CGFloat = negateY ? -1.0 : 1.0
-
-        self.transform = CGAffineTransformRotate(self.transform, angle)
-        self.center.x -= 0.5
-        self.center.y -= 0.5
-        let center = self.center
-        self.center.x = xFactor * center.y
-        self.center.y = yFactor * center.x
-        self.center.x += 0.5
-        self.center.y += 0.5
     }
 }
 

@@ -129,6 +129,15 @@ import Foundation
     }
 
     /**
+     Creates a border filter.
+
+     - returns: A border filter.
+     */
+    public class func borderFilter() -> BorderFilter {
+        return BorderFilter()
+    }
+
+    /**
     Creates a color-adjustment filter.
 
     - returns: A color-adjustment filter.
