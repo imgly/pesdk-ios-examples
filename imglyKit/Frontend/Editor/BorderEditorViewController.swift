@@ -33,11 +33,11 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     }()
 
     private var draggedView: UIImageView?
-    private var tempBorderCopy = [Filter]()
     private var overlayConverter: OverlayConverter?
     private var borderCount = 0
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var imageRatio: Float = 6.0 / 4.0
+    private var choosenBorder: Border?
 
     // MARK: - EditorViewController
 
@@ -52,13 +52,10 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     // MARK: - SubEditorViewController
 
     public override func tappedDone(sender: UIBarButtonItem?) {
-        let addedStickers = self.overlayConverter?.addSpriteFiltersFromUIElements(bordersClipView, previewSize: previewImageView.visibleImageFrame.size, previewImage: previewImageView.image!)
-        if addedStickers != nil {
-            updatePreviewImageWithCompletion {
-                self.bordersClipView.removeFromSuperview()
-                super.tappedDone(sender)
-            }
-        } else {
+        fixedFilterStack.borderFilter.border = choosenBorder
+        fixedFilterStack.borderFilter.tolerance = 0.1
+
+        updatePreviewImageWithCompletion {
             super.tappedDone(sender)
         }
     }
@@ -76,8 +73,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         configureStickersCollectionView()
         configureStickersClipView()
         configureOverlayConverter()
-        backupBorders()
-        fixedFilterStack.spriteFilters.removeAll()
+       // fixedFilterStack.spriteFilters.removeAll()
         invokeCollectionViewDataFetch()
     }
 
@@ -148,12 +144,6 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         view.addSubview(bordersClipView)
     }
 
-    // MARK: - border object restore
-
-    private func backupBorders() {
-        tempBorderCopy = fixedFilterStack.spriteFilters
-    }
-
     // MARK: - Helpers
 
     private func hitImageView(point: CGPoint) -> UIImageView? {
@@ -187,7 +177,6 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                     let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
                     if let updateCell = updateCell as? StickerCollectionViewCell {
                         updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio, tolerance: 0.1)
-                        print(updateCell.imageView.image)
                         if let label = border.label {
                             updateCell.accessibilityLabel = Localize(label)
                         }
@@ -206,12 +195,12 @@ extension BorderEditorViewController: UICollectionViewDelegate {
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
             if let border = border {
-                print(self.imageRatio)
                 let imageView = StickerImageView(image: border.imageForRatio(self.imageRatio, tolerance: 0.1))
                 imageView.frame.size = self.bordersClipView.frame.size
                 imageView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
 
                 if let label = border.label {
+                    self.choosenBorder = border
                     imageView.accessibilityLabel = Localize(label)
                     self.options.addedBorderClosure?(label)
                 }

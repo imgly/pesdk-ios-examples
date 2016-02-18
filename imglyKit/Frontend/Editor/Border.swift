@@ -41,6 +41,7 @@ import UIKit
         for keyRatio in ratioToImageMap.keys {
             if (keyRatio - tolerance) <= ratio && ratio <= (keyRatio + tolerance) {
                 matchingRatio = keyRatio
+                print(matchingRatio)
             }
         }
         return ratioToImageMap[matchingRatio]
