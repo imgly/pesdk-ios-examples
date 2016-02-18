@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		09058AA21C7509B2002D7CC9 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D5471AF115A200C801B2 /* Localizable.strings */; };
+		09058AA31C7509B7002D7CC9 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = 2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */; };
+		090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A011C6FDCD9008C5704 /* JSONStore.swift */; };
+		090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A031C707D4F008C5704 /* ImageStore.swift */; };
+		090D7A061C710195008C5704 /* RequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A051C710195008C5704 /* RequestService.swift */; };
+		090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A071C710CC8008C5704 /* JSONStoreTest.swift */; };
+		090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
+		090D7A141C7207E4008C5704 /* BorderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A131C7207E4008C5704 /* BorderStore.swift */; };
+		090D7A171C7209AE008C5704 /* BorderInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -25,6 +34,9 @@
 		093D11201C60F90800B72B7A /* TextColorSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11121C60F90800B72B7A /* TextColorSelectorView.swift */; };
 		093D11211C60F90800B72B7A /* ZoomingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11131C60F90800B72B7A /* ZoomingImageView.swift */; };
 		093D11231C60F99900B72B7A /* TextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 093D11221C60F99900B72B7A /* TextButton.swift */; };
+		096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */; };
+		09764D591C722E7600577B1E /* NSErrorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09764D581C722E7600577B1E /* NSErrorExtension.swift */; };
+		09764D5D1C723B5800577B1E /* BorderStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09764D5C1C723B5800577B1E /* BorderStoreTest.swift */; };
 		097A45D61C5A595100B2D45F /* PathHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097A45D51C5A595100B2D45F /* PathHelper.swift */; };
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
@@ -449,6 +461,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		090D7A011C6FDCD9008C5704 /* JSONStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONStore.swift; sourceTree = "<group>"; };
+		090D7A031C707D4F008C5704 /* ImageStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageStore.swift; sourceTree = "<group>"; };
+		090D7A051C710195008C5704 /* RequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestService.swift; sourceTree = "<group>"; };
+		090D7A071C710CC8008C5704 /* JSONStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONStoreTest.swift; path = imglyKit/Frontend/JSONStoreTest.swift; sourceTree = SOURCE_ROOT; };
+		090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceJSONMock.swift; sourceTree = "<group>"; };
+		090D7A131C7207E4008C5704 /* BorderStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderStore.swift; sourceTree = "<group>"; };
+		090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderInfoRecord.swift; sourceTree = "<group>"; };
 		09381E251C6CED790057463E /* BorderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewController.swift; sourceTree = "<group>"; };
 		09381E271C6CEE530057463E /* BordersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BordersDataSource.swift; sourceTree = "<group>"; };
 		09381E291C6CEEBA0057463E /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
@@ -467,6 +486,9 @@
 		093D11121C60F90800B72B7A /* TextColorSelectorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextColorSelectorView.swift; sourceTree = "<group>"; };
 		093D11131C60F90800B72B7A /* ZoomingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingImageView.swift; sourceTree = "<group>"; };
 		093D11221C60F99900B72B7A /* TextButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButton.swift; sourceTree = "<group>"; };
+		096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteBorderDataSource.swift; sourceTree = "<group>"; };
+		09764D581C722E7600577B1E /* NSErrorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSErrorExtension.swift; sourceTree = "<group>"; };
+		09764D5C1C723B5800577B1E /* BorderStoreTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BorderStoreTest.swift; path = imglyKit/Frontend/BorderStoreTest.swift; sourceTree = SOURCE_ROOT; };
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
@@ -748,6 +770,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		090D7A001C6FDC6C008C5704 /* Stores */ = {
+			isa = PBXGroup;
+			children = (
+				090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */,
+				090D7A131C7207E4008C5704 /* BorderStore.swift */,
+				090D7A031C707D4F008C5704 /* ImageStore.swift */,
+				090D7A011C6FDCD9008C5704 /* JSONStore.swift */,
+			);
+			path = Stores;
+			sourceTree = "<group>";
+		};
+		090D7A091C710CCF008C5704 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		093D11051C60F7D600B72B7A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -782,6 +823,8 @@
 		2B044DE51C3E613300A73AE6 /* Frontend Tests */ = {
 			isa = PBXGroup;
 			children = (
+				090D7A071C710CC8008C5704 /* JSONStoreTest.swift */,
+				09764D5C1C723B5800577B1E /* BorderStoreTest.swift */,
 			);
 			path = "Frontend Tests";
 			sourceTree = "<group>";
@@ -796,10 +839,12 @@
 				2BF4D3A11AF113ED00C801B2 /* Editor */,
 				2B1ADA0D1B19C36C00C98522 /* Extensions */,
 				2BF4D4A21AF1154B00C801B2 /* FixedFilterStack.swift */,
-				2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */,
 				2BF4D5471AF115A200C801B2 /* Localizable.strings */,
+				2BF1A0C71C56832300C67EAC /* Localizable.stringsdict */,
 				2B5E62B31C4FDE3C00C54B40 /* Localization.swift */,
+				090D7A051C710195008C5704 /* RequestService.swift */,
 				2B044DF01C3EAE3100A73AE6 /* SDKVersion.swift */,
+				090D7A001C6FDC6C008C5704 /* Stores */,
 				093D11051C60F7D600B72B7A /* Views */,
 			);
 			path = Frontend;
@@ -828,6 +873,7 @@
 				2BEBFEAC1C3FF0CD00FAA95C /* CGRectExtension.swift */,
 				2B1B9AF51C52625100C6D276 /* CGVectorExtension.swift */,
 				2B1ADA0F1B19C3F300C98522 /* InstanceFactoryExtension.swift */,
+				09764D581C722E7600577B1E /* NSErrorExtension.swift */,
 				2B0DC4C21B037016002FE44F /* NSTimerExtension.swift */,
 				098331201C400A72000135B8 /* UIColorExtension.swift */,
 				2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */,
@@ -875,6 +921,7 @@
 		2BE0C4551C3ABB4600F1F5E4 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				090D7A091C710CCF008C5704 /* Mocks */,
 				2B044DE41C3E613000A73AE6 /* Backend Tests */,
 				2B044DE51C3E613300A73AE6 /* Frontend Tests */,
 				2BE0C4581C3ABCEB00F1F5E4 /* imglyKit-Tests-Bridging-Header.h */,
@@ -1172,6 +1219,7 @@
 				E990B2331C20506600806B30 /* FiltersDataSource.swift */,
 				E9AF1E611C0F2E0D00893621 /* MainEditorActionsDataSource.swift */,
 				2BF4D3C71AF1150400C801B2 /* StickersDataSource.swift */,
+				096FF64B1C6E0FED0091E37C /* RemoteBorderDataSource.swift */,
 			);
 			path = DataSources;
 			sourceTree = "<group>";
@@ -1429,6 +1477,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				09058AA21C7509B2002D7CC9 /* Localizable.strings in Resources */,
+				09058AA31C7509B7002D7CC9 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1658,7 +1708,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */,
 				2BE0C4571C3ABBA900F1F5E4 /* LUTConverterTests.swift in Sources */,
+				09764D5D1C723B5800577B1E /* BorderStoreTest.swift in Sources */,
+				090D7A081C710CC8008C5704 /* JSONStoreTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1698,10 +1751,12 @@
 				093D111C1C60F90800B72B7A /* FontSelectorView.swift in Sources */,
 				2BF4D5081AF1155E00C801B2 /* EightiesFilter.swift in Sources */,
 				2BF4D5091AF1155E00C801B2 /* ElderFilter.swift in Sources */,
+				09764D591C722E7600577B1E /* NSErrorExtension.swift in Sources */,
 				2BF4D4FE1AF1155E00C801B2 /* BlueShadowsFilter.swift in Sources */,
 				2BF4D52C1AF1155E00C801B2 /* ResponseFilter.swift in Sources */,
 				2BF4D5271AF1155E00C801B2 /* Pola669Filter.swift in Sources */,
 				2BF4D5261AF1155E00C801B2 /* PlateFilter.swift in Sources */,
+				096FF64C1C6E0FED0091E37C /* RemoteBorderDataSource.swift in Sources */,
 				2BF4D4F81AF1155E00C801B2 /* AD1920Filter.swift in Sources */,
 				093D11181C60F90800B72B7A /* ColorButton.swift in Sources */,
 				2BB88C3E1B69127400D23A2F /* ScaleFilter.swift in Sources */,
@@ -1718,6 +1773,7 @@
 				093D111D1C60F90800B72B7A /* HuePickerView.swift in Sources */,
 				2BF4D51E1AF1155E00C801B2 /* MellowFilter.swift in Sources */,
 				2BC101BD1C43D12100C04A47 /* SampleBufferController.swift in Sources */,
+				090D7A041C707D4F008C5704 /* ImageStore.swift in Sources */,
 				2BF4D5311AF1155E00C801B2 /* SoftFilter.swift in Sources */,
 				093D11171C60F90800B72B7A /* CircleGradientView.swift in Sources */,
 				2BF4D4B11AF1154B00C801B2 /* TextFilter.swift in Sources */,
@@ -1803,6 +1859,7 @@
 				E9AF1E621C0F2E0D00893621 /* MainEditorActionsDataSource.swift in Sources */,
 				2BF4D5171AF1155E00C801B2 /* KDynamicFilter.swift in Sources */,
 				2BC537951C513A2200A7DE17 /* FocusEditorViewControllerOptions.swift in Sources */,
+				090D7A141C7207E4008C5704 /* BorderStore.swift in Sources */,
 				093D11141C60F90800B72B7A /* AlphaPickerView.swift in Sources */,
 				2BF4D5041AF1155E00C801B2 /* ColorfulFilter.swift in Sources */,
 				2BF4D5281AF1155E00C801B2 /* PolaSXFIlter.swift in Sources */,
@@ -1818,6 +1875,8 @@
 				2BF4D4AD1AF1154B00C801B2 /* NoneFilter.swift in Sources */,
 				2BF4D4AC1AF1154B00C801B2 /* FixedFilterStack.swift in Sources */,
 				2BF4D5131AF1155E00C801B2 /* HighcarbFilter.swift in Sources */,
+				090D7A061C710195008C5704 /* RequestService.swift in Sources */,
+				090D7A021C6FDCD9008C5704 /* JSONStore.swift in Sources */,
 				2BC5379D1C513AA500A7DE17 /* EditorViewControllerOptions.swift in Sources */,
 				2B67D1C81C47DBED00BEE726 /* LightController.swift in Sources */,
 				093D111B1C60F90800B72B7A /* FontQuickSelectorView.swift in Sources */,
@@ -1825,6 +1884,7 @@
 				2BC5378F1C513A0500A7DE17 /* FilterEditorViewControllerOptions.swift in Sources */,
 				2BF4D4FA1AF1155E00C801B2 /* BleachedBlueFilter.swift in Sources */,
 				2BF4D3DE1AF1150500C801B2 /* MainEditorViewController.swift in Sources */,
+				090D7A171C7209AE008C5704 /* BorderInfoRecord.swift in Sources */,
 				2BBE166C1C4E44FA00921DE7 /* FocusController.swift in Sources */,
 				2BF4D5011AF1155E00C801B2 /* CelsiusFilter.swift in Sources */,
 				2BF4D3D61AF1150500C801B2 /* FilterCollectionViewCell.swift in Sources */,

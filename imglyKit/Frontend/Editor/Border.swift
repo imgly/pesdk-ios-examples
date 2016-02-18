@@ -9,18 +9,22 @@
 import UIKit
 
 @objc(IMGLYBorder) public class Border: NSObject {
-    public let image: UIImage
     public let thumbnail: UIImage?
     public let label: String?
-    public let ratio: Float
-    public let url: String?
 
-    public init(image: UIImage, thumbnail: UIImage?, label: String?, ratio: Float, url: String?) {
-        self.image = image
+    private var ratioToImageMap = [Float : UIImage]()
+
+    public init(thumbnail: UIImage?, label: String?) {
         self.thumbnail = thumbnail
         self.label = label
-        self.ratio = ratio
-        self.url = url
         super.init()
+    }
+
+    public func imageForRatio(ratio: Float) -> UIImage? {
+        return ratioToImageMap[ratio]
+    }
+
+    public func addImage(image: UIImage, ratio: Float) {
+        ratioToImageMap[ratio] = image
     }
 }
