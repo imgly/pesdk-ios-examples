@@ -10,10 +10,10 @@ import UIKit
 
 @objc(IMGLYBordersDataSourceProtocol) public protocol BordersDataSourceProtocol {
     /// The total count of all available stickers.
-    func borderCount(completionBlock: (Int, NSError?) -> Void)
+    func borderCount(ratio: Float, completionBlock: (Int, NSError?) -> Void)
 
     /// The sticker at the given index.
-    func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock)
+    func borderAtIndex(index: Int, ratio: Float, completionBlock: BorderCompletionBlock)
 }
 
 
@@ -57,11 +57,17 @@ import UIKit
 
     // MARK: - StickersDataSource
 
-    public func borderCount(completionBlock: (Int, NSError?) -> Void) {
-        completionBlock(borders.count, nil)
+    public func borderCount(ratio: Float, completionBlock: (Int, NSError?) -> Void) {
+        let matchingBorderCount = bordersMatching(ratio).count
+        completionBlock(matchingBorderCount, nil)
     }
 
-    public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
+    public func borderAtIndex(index: Int, ratio: Float, completionBlock: BorderCompletionBlock) {
         completionBlock(borders[index], nil)
+    }
+
+    private func bordersMatching(ratio: Float) -> [Border] {
+        let matchingBorders = [Border]()
+        return matchingBorders
     }
 }

@@ -72,7 +72,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     }
 
     private func invokeCollectionViewDataFetch() {
-        options.bordersDataSource.borderCount({ count, error in
+        options.bordersDataSource.borderCount(imageRatio, completionBlock: { count, error in
             self.borderCount = count
                 dispatch_async(dispatch_get_main_queue(), {
                     self.collectionView.reloadData()
@@ -175,7 +175,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
         if index == 0 {
             cell.imageView.image = UIImage(named: "icon_frames_no", inBundle: NSBundle(forClass: BorderEditorViewController.self), compatibleWithTraitCollection: nil)
         } else {
-            options.bordersDataSource.borderAtIndex(index - 1, completionBlock: { border, error in
+            options.bordersDataSource.borderAtIndex(index - 1, ratio: imageRatio, completionBlock: { border, error in
                 if let border = border {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
@@ -208,7 +208,7 @@ extension BorderEditorViewController: UICollectionViewDelegate {
             self.borderView.accessibilityLabel = label
             self.options.addedBorderClosure?(label)
         } else {
-            options.bordersDataSource.borderAtIndex(index - 1, completionBlock: { border, error in
+            options.bordersDataSource.borderAtIndex(index - 1, ratio: imageRatio, completionBlock: { border, error in
                 if let border = border {
                     self.borderView.image = border.imageForRatio(self.imageRatio, tolerance: 0.1)
                     self.borderView.frame.size = self.bordersClipView.frame.size
