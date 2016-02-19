@@ -44,9 +44,8 @@
     public func imageForRatio(ratio: Float, tolerance: Float) -> Image? {
         var matchingRatio: Float = 0.0
         for keyRatio in ratioToImageMap.keys {
-            if (keyRatio - tolerance) <= ratio && ratio <= (keyRatio + tolerance) {
+            if (keyRatio - tolerance) <= ratio && ratio <= (keyRatio + tolerance) || keyRatio == 0.0 {
                 matchingRatio = keyRatio
-                print(matchingRatio)
             }
         }
         return ratioToImageMap[matchingRatio]

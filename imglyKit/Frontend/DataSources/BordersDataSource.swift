@@ -10,10 +10,10 @@ import UIKit
 
 @objc(IMGLYBordersDataSourceProtocol) public protocol BordersDataSourceProtocol {
     /// The total count of all available stickers.
-    func borderCount(ratio: Float, completionBlock: (Int, NSError?) -> Void)
+    func borderCount(ratio: Float, tolerance: Float, completionBlock: (Int, NSError?) -> Void)
 
     /// The sticker at the given index.
-    func borderAtIndex(index: Int, ratio: Float, completionBlock: BorderCompletionBlock)
+    func borderAtIndex(index: Int, ratio: Float, tolerance: Float, completionBlock: BorderCompletionBlock)
 }
 
 
@@ -27,7 +27,6 @@ import UIKit
     Creates a default datasource offering all available stickers.
     */
     override init() {
-
         let thumbnail1 = UIImage(named: "blackwood_thumbnail", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
         let border1_1_1 =  UIImage(named: "blackwood1_1", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
         let border1_4_6 =  UIImage(named: "blackwood4_6", inBundle: NSBundle(forClass: BordersDataSource.self), compatibleWithTraitCollection: nil)
@@ -57,17 +56,23 @@ import UIKit
 
     // MARK: - StickersDataSource
 
-    public func borderCount(ratio: Float, completionBlock: (Int, NSError?) -> Void) {
-        let matchingBorderCount = bordersMatching(ratio).count
+    public func borderCount(ratio: Float, tolerance: Float, completionBlock: (Int, NSError?) -> Void) {
+        let matchingBorderCount = bordersMatching(ratio, tolerance: tolerance).count
         completionBlock(matchingBorderCount, nil)
     }
 
-    public func borderAtIndex(index: Int, ratio: Float, completionBlock: BorderCompletionBlock) {
-        completionBlock(borders[index], nil)
+    public func borderAtIndex(index: Int, ratio: Float, tolerance: Float, completionBlock: BorderCompletionBlock) {
+        let matchingBorders = bordersMatching(ratio, tolerance: tolerance)
+        completionBlock(matchingBorders[index], nil)
     }
 
-    private func bordersMatching(ratio: Float) -> [Border] {
-        let matchingBorders = [Border]()
+    private func bordersMatching(ratio: Float, tolerance: Float) -> [Border] {
+        var matchingBorders = [Border]()
+        for border in borders {
+            if let _ = border.imageForRatio(ratio, tolerance: tolerance) {
+                matchingBorders.append(border)
+            }
+        }
         return matchingBorders
     }
 }
