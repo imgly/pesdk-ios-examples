@@ -8,13 +8,6 @@
 
 import UIKit
 
-@objc public enum BorderAction: Int {
-    case Delete
-    case BringToFront
-    case FlipHorizontally
-    case FlipVertically
-}
-
 let kBorderCollectionViewCellSize = CGSize(width: 90, height: 90)
 
 // swiftlint:disable variable_name
@@ -211,7 +204,9 @@ extension BorderEditorViewController: UICollectionViewDelegate {
         if index == 0 {
             self.choosenBorder = nil
             self.borderView.image = nil
-            self.borderView.accessibilityLabel = "No border"
+            let label = "No border"
+            self.borderView.accessibilityLabel = label
+            self.options.addedBorderClosure?(label)
         } else {
             options.bordersDataSource.borderAtIndex(index - 1, completionBlock: { border, error in
                 if let border = border {
