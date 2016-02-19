@@ -24,13 +24,13 @@ import CoreGraphics
     /// The border that should be rendered.
     public var border: Border?
 
-    /// The transform to apply to the sticker
-    public var transform = CGAffineTransformIdentity
+    /// The transform to apply to the border.
+    private var transform = CGAffineTransformIdentity
 
-    /// The relative center of the sticker within the image.
-    public var center = CGPoint()
+    /// The relative center of the border within the image.
+    private var center = CGPoint()
 
-    /// The crop-create applied to the input image, so we can adjust the sticker position
+    /// The crop-create applied to the input image, so we can adjust the border position
     public var cropRect = CGRect(x: 0, y: 0, width: 1, height: 1)
 
     /// The tolerance that is used to pick the correct border image based on the aspect ratio.
@@ -61,12 +61,12 @@ import CoreGraphics
             return inputImage
         }
 
-        guard let filter = CIFilter(name: "CISourceOverCompositing"), sticker = createBorderImage() else {
+        guard let filter = CIFilter(name: "CISourceOverCompositing"), border = createBorderImage() else {
             return inputImage
         }
 
         filter.setValue(inputImage, forKey: kCIInputBackgroundImageKey)
-        filter.setValue(sticker, forKey: kCIInputImageKey)
+        filter.setValue(border, forKey: kCIInputImageKey)
         return filter.outputImage
     }
 
@@ -80,20 +80,20 @@ import CoreGraphics
 
         var image = CIImage(CGImage: cgImage)
         let originalInputImageSize = CGSize(width: round(inputImageSize.width / cropRect.width), height: round(inputImageSize.height / cropRect.height))
-        let absoluteStickerSize = originalInputImageSize
+        let absoluteBorderSize = originalInputImageSize
 
-        let stickerImageSize = image.extent.size
-        let stickerScaleX = absoluteStickerSize.width / stickerImageSize.width
-        let stickerScaleY = absoluteStickerSize.height / stickerImageSize.height
+        let borderImageSize = image.extent.size
+        let scaleX = absoluteBorderSize.width / borderImageSize.width
+        let scaleY = absoluteBorderSize.height / borderImageSize.height
 
-        var stickerCenter = CGPoint(x: center.x * originalInputImageSize.width, y: center.y * originalInputImageSize.height)
-        stickerCenter.x -= (cropRect.origin.x * originalInputImageSize.width)
-        stickerCenter.y -= (cropRect.origin.y * originalInputImageSize.height)
+        var borderCenter = CGPoint(x: center.x * originalInputImageSize.width, y: center.y * originalInputImageSize.height)
+        borderCenter.x -= (cropRect.origin.x * originalInputImageSize.width)
+        borderCenter.y -= (cropRect.origin.y * originalInputImageSize.height)
 
         var transform = CGAffineTransformIdentity
 
         // Scale to match size of preview
-        transform = CGAffineTransformScale(transform, stickerScaleX, stickerScaleY)
+        transform = CGAffineTransformScale(transform, scaleX, scaleY)
         image = image.imageByApplyingTransform(transform)
         image = image.imageByCroppingToRect(inputImageRect)
 

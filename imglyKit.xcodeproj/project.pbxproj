@@ -16,6 +16,8 @@
 		090D7A0F1C711650008C5704 /* RequestServiceJSONMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */; };
 		090D7A141C7207E4008C5704 /* BorderStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A131C7207E4008C5704 /* BorderStore.swift */; };
 		090D7A171C7209AE008C5704 /* BorderInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */; };
+		09204C2C1C77295B0095F9F1 /* BorderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FAE9681C75F7ED003F6068 /* BorderFilter.swift */; };
+		09204C2D1C7729980095F9F1 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -1623,6 +1625,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B1ADADC1B19C8EE00C98522 /* TexasFilter.swift in Sources */,
+				09204C2D1C7729980095F9F1 /* Border.swift in Sources */,
 				2B1ADAA21B19C8EE00C98522 /* BluesFilter.swift in Sources */,
 				2B1ADAAC1B19C8EE00C98522 /* CreamyFilter.swift in Sources */,
 				2B1ADAB81B19C8EE00C98522 /* HighcarbFilter.swift in Sources */,
@@ -1658,6 +1661,7 @@
 				2B1ADADE1B19C8EE00C98522 /* WinterFilter.swift in Sources */,
 				2B1ADAB51B19C8EE00C98522 /* FrontFilter.swift in Sources */,
 				2BB88C3F1B69127400D23A2F /* ScaleFilter.swift in Sources */,
+				09204C2C1C77295B0095F9F1 /* BorderFilter.swift in Sources */,
 				2B1ADAA91B19C8EE00C98522 /* ColorfulFilter.swift in Sources */,
 				2B1ADACF1B19C8EE00C98522 /* Pro400Filter.swift in Sources */,
 				2B1ADAA31B19C8EE00C98522 /* BlueShadowsFilter.swift in Sources */,
