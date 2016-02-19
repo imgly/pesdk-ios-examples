@@ -38,6 +38,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     private var collectionView = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
     private var imageRatio: Float = 6.0 / 4.0
     private var choosenBorder: Border?
+    private var borderView = StickerImageView(image: nil)
 
     // MARK: - EditorViewController
 
@@ -73,7 +74,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         configureStickersCollectionView()
         configureStickersClipView()
         configureOverlayConverter()
-       // fixedFilterStack.spriteFilters.removeAll()
+
         invokeCollectionViewDataFetch()
     }
 
@@ -141,6 +142,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     }
 
     private func configureStickersClipView() {
+        bordersClipView.addSubview(borderView)
         view.addSubview(bordersClipView)
     }
 
@@ -155,6 +157,12 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
         }
         return result
     }
+
+    private func showError(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 }
 
 extension BorderEditorViewController: UICollectionViewDataSource {
@@ -163,29 +171,35 @@ extension BorderEditorViewController: UICollectionViewDataSource {
     }
 
     public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return borderCount
+        return borderCount + 1
     }
 
     public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(kStickersCollectionViewCellReuseIdentifier, forIndexPath: indexPath) as! StickerCollectionViewCell
         // swiftlint:enable force_cast
-
-        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
-            if let border = border {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
-                    if let updateCell = updateCell as? StickerCollectionViewCell {
-                        updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio, tolerance: 0.1)
-                        if let label = border.label {
-                            updateCell.accessibilityLabel = Localize(label)
+        let index = indexPath.item
+        if index == 0 {
+            cell.imageView.image = UIImage(named: "icon_frames_no", inBundle: NSBundle(forClass: BorderEditorViewController.self), compatibleWithTraitCollection: nil)
+        } else {
+            options.bordersDataSource.borderAtIndex(index - 1, completionBlock: { border, error in
+                if let border = border {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
+                        if let updateCell = updateCell as? StickerCollectionViewCell {
+                            updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio, tolerance: 0.1)
+                            if let label = border.label {
+                                updateCell.accessibilityLabel = Localize(label)
+                            }
                         }
+                    })
+                } else {
+                    if let error = error {
+                        self.showError(error.description)
                     }
-                })
-            } else {
-                print(error)
-            }
-        })
+                }
+            })
+        }
         return cell
     }
 }
@@ -193,20 +207,30 @@ extension BorderEditorViewController: UICollectionViewDataSource {
 extension BorderEditorViewController: UICollectionViewDelegate {
     // add selected sticker
     public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        options.bordersDataSource.borderAtIndex(indexPath.item, completionBlock: { border, error in
-            if let border = border {
-                let imageView = StickerImageView(image: border.imageForRatio(self.imageRatio, tolerance: 0.1))
-                imageView.frame.size = self.bordersClipView.frame.size
-                imageView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
+        let index = indexPath.item
+        if index == 0 {
+            self.choosenBorder = nil
+            self.borderView.image = nil
+            self.borderView.accessibilityLabel = "No border"
+        } else {
+            options.bordersDataSource.borderAtIndex(index - 1, completionBlock: { border, error in
+                if let border = border {
+                    self.borderView.image = border.imageForRatio(self.imageRatio, tolerance: 0.1)
+                    self.borderView.frame.size = self.bordersClipView.frame.size
+                    self.borderView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
 
-                if let label = border.label {
-                    self.choosenBorder = border
-                    imageView.accessibilityLabel = Localize(label)
-                    self.options.addedBorderClosure?(label)
+                    if let label = border.label {
+                        self.choosenBorder = border
+                        self.borderView.accessibilityLabel = Localize(label)
+                        self.options.addedBorderClosure?(label)
+                    }
+                } else {
+                    if let error = error {
+                        self.showError(error.description)
+                    }
                 }
-                self.bordersClipView.addSubview(imageView)
-            }
-        })
+            })
+        }
     }
 }
 
