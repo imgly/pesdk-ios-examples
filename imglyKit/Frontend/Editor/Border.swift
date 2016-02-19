@@ -6,25 +6,59 @@
 //  Copyright © 2016 9elements GmbH. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+    import UIKit
+    import CoreImage
+#elseif os(OSX)
+    import AppKit
+    import QuartzCore
+#endif
 
 @objc(IMGLYBorder) public class Border: NSObject {
-    public let thumbnail: UIImage?
+
+    /// The image is used as thumbnail.
+    public let thumbnail: Image?
+
+    /// The label that is used for accessibility.
     public let label: String?
 
-    private var ratioToImageMap = [Float : UIImage]()
+    private var ratioToImageMap = [Float : Image]()
 
-    public init(thumbnail: UIImage?, label: String?) {
+    /**
+     :nodoc:
+     */
+    public init(thumbnail: Image?, label: String?) {
         self.thumbnail = thumbnail
         self.label = label
         super.init()
     }
 
-    public func imageForRatio(ratio: Float) -> UIImage? {
-        return ratioToImageMap[ratio]
+    /**
+     Get a border image matching the aspect ratio.
+
+     - parameter ratio:     The desired ratio.
+     - parameter tolerance: The tolerance that is used to pick the correct border image based on the aspect ratio.
+
+     - returns: A border image.
+     */
+    public func imageForRatio(ratio: Float, tolerance: Float) -> Image? {
+        var matchingRatio: Float = 0.0
+        for keyRatio in ratioToImageMap.keys {
+            if (keyRatio - tolerance) <= ratio && ratio <= (keyRatio + tolerance) {
+                matchingRatio = keyRatio
+                print(matchingRatio)
+            }
+        }
+        return ratioToImageMap[matchingRatio]
     }
 
-    public func addImage(image: UIImage, ratio: Float) {
+    /**
+     Add an image that is used as a border for a ratio.
+
+     - parameter image: A image.
+     - parameter ratio: A aspect ratio.
+     */
+    public func addImage(image: Image, ratio: Float) {
         ratioToImageMap[ratio] = image
     }
 }
