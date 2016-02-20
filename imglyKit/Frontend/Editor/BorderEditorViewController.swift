@@ -206,7 +206,7 @@ extension BorderEditorViewController: UICollectionViewDelegate {
         if index == 0 {
             self.choosenBorder = nil
             self.borderView.image = nil
-            let label = "No border"
+            let label = Localize("No border")
             self.borderView.accessibilityLabel = label
             self.options.addedBorderClosure?(label)
         } else {

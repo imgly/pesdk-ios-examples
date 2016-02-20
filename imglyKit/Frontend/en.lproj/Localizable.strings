@@ -115,6 +115,9 @@
 "Star" = "Star";
 "Double-tap and hold to move" = "Double-tap and hold to move";
 
+// Border
+"No border" = "No border";
+
 // Error
 "Illegal border hash" = "Illegal border hash";
 "Illegal image record" = "Illegal image record";
