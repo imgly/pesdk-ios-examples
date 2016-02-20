@@ -115,9 +115,12 @@
 "Star" = "Star";
 "Double-tap and hold to move" = "Double-tap and hold to move";
 
+// Border
+"No border" = "No border";
+
 // Error
-"error_illegal_bord_hash" = "Illegal border hash.";
-"error_illegal_image_record" = "Illegal image record.";
-"error_illegal_image_ratio" = "Illegal image ratio.";
-"error_border_no_dictionary" = "Border node not holding a dictionaty.";
-"error_border_array" = "Border node not found, or not holding an array.";
+"Illegal border hash" = "Illegal border hash";
+"Illegal image record" = "Illegal image record";
+"Illegal image ratio" = "Illegal image ratio";
+"Border node not holding a dictionaty" = "Border node not holding a dictionaty";
+"Border node not found, or not holding an array" = "Border node not found, or not holding an array";

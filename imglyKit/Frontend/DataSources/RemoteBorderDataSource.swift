@@ -70,7 +70,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
 
     - parameter completionBlock: A completion block.
     */
-    public func borderCount(completionBlock: (Int, NSError?) -> Void) {
+    public func borderCount(ratio: Float, tolerance: Float, completionBlock: (Int, NSError?) -> Void) {
         getBorders({ borders, error in
             if let borders = borders {
                 self.borders = borders
@@ -88,7 +88,7 @@ public typealias BorderCompletionBlock = (Border?, NSError?) -> (Void)
      - parameter index:           A index.
      - parameter completionBlock: A completion block.
      */
-    public func borderAtIndex(index: Int, completionBlock: BorderCompletionBlock) {
+    public func borderAtIndex(index: Int, ratio: Float, tolerance: Float, completionBlock: BorderCompletionBlock) {
         getBorders({ borders, error in
             if let borders = self.borders {
                 completionBlock(borders[index], nil)
