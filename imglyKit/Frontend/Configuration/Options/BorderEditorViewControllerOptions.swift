@@ -16,6 +16,7 @@ public typealias AddedBorderClosure = (String) -> ()
  Options for configuring a `BordersEditorViewController`.
  */
 @objc(IMGLYBorderEditorViewControllerOptions) public class BorderEditorViewControllerOptions: EditorViewControllerOptions {
+
     /// An object conforming to the `BordersDataSourceProtocol`
     /// Per default an `BordersDataSource` offering all filters
     /// is set.
@@ -23,6 +24,9 @@ public typealias AddedBorderClosure = (String) -> ()
 
     /// This closure is called when the user adds a border.
     public let addedBorderClosure: AddedBorderClosure?
+
+    /// The tolerance that is used to pick the correct border image based on the aspect ratio.
+    public var tolerance: Float
 
     /**
      Returns a newly allocated instance of a `BordersEditorViewControllerOptions` using the default builder.
@@ -43,6 +47,7 @@ public typealias AddedBorderClosure = (String) -> ()
     public init(builder: BordersEditorViewControllerOptionsBuilder) {
         bordersDataSource = builder.bordersDataSource
         addedBorderClosure = builder.addedBorderClosure
+        tolerance = builder.tolerance
         super.init(editorBuilder: builder)
     }
 }
@@ -61,6 +66,9 @@ The default `BordersEditorViewControllerOptionsBuilder` for `BordersEditorViewCo
 
     /// This closure is called when the user adds a border.
     public var addedBorderClosure: AddedBorderClosure? = nil
+
+    /// The tolerance that is used to pick the correct border image based on the aspect ratio.
+    public var tolerance: Float = 0.1
 
     /**
      :nodoc:
