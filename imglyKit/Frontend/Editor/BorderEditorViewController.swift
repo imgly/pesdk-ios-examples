@@ -88,6 +88,7 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
      */
     public override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        rerenderPreviewWithoutStickers()
         options.didEnterToolClosure?()
     }
 
@@ -137,6 +138,17 @@ let kBorderCollectionViewCellReuseIdentifier = "BorderCollectionViewCell"
     private func configureStickersClipView() {
         bordersClipView.addSubview(borderView)
         view.addSubview(bordersClipView)
+    }
+
+    private func rerenderPreviewWithoutStickers() {
+        let backupBorder = self.fixedFilterStack.borderFilter.border
+        choosenBorder = backupBorder
+        if let backupBorder = backupBorder {
+            self.fixedFilterStack.borderFilter.border = nil
+            updatePreviewImageWithCompletion { () -> (Void) in
+                self.setBorderToView(backupBorder)
+            }
+        }
     }
 
     // MARK: - Helpers
@@ -197,6 +209,14 @@ extension BorderEditorViewController: UICollectionViewDataSource {
         }
         return cell
     }
+
+    private func setBorderToView(border: Border?) {
+        if let border = border {
+            self.borderView.image = border.imageForRatio(self.imageRatio, tolerance: 0.1)
+            self.borderView.frame.size = self.bordersClipView.frame.size
+            self.borderView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
+        }
+    }
 }
 
 extension BorderEditorViewController: UICollectionViewDelegate {
@@ -212,9 +232,7 @@ extension BorderEditorViewController: UICollectionViewDelegate {
         } else {
             options.bordersDataSource.borderAtIndex(index - 1, ratio: imageRatio, tolerance: 0.1, completionBlock: { border, error in
                 if let border = border {
-                    self.borderView.image = border.imageForRatio(self.imageRatio, tolerance: 0.1)
-                    self.borderView.frame.size = self.bordersClipView.frame.size
-                    self.borderView.center = CGPoint(x: self.bordersClipView.bounds.midX, y: self.bordersClipView.bounds.midY)
+                    self.setBorderToView(border)
 
                     if let label = border.label {
                         self.choosenBorder = border
