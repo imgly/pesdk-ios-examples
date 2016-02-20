@@ -174,6 +174,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
         let index = indexPath.item
         if index == 0 {
             cell.imageView.image = UIImage(named: "icon_frames_no", inBundle: NSBundle(forClass: BorderEditorViewController.self), compatibleWithTraitCollection: nil)
+            cell.imageView.contentMode = .Center
         } else {
             options.bordersDataSource.borderAtIndex(index - 1, ratio: imageRatio, tolerance: 0.1, completionBlock: { border, error in
                 if let border = border {
@@ -181,6 +182,7 @@ extension BorderEditorViewController: UICollectionViewDataSource {
                         let updateCell = self.collectionView.cellForItemAtIndexPath(indexPath)
                         if let updateCell = updateCell as? StickerCollectionViewCell {
                             updateCell.imageView.image = border.thumbnail ?? border.imageForRatio(self.imageRatio, tolerance: 0.1)
+                            updateCell.imageView.contentMode = .Center
                             if let label = border.label {
                                 updateCell.accessibilityLabel = Localize(label)
                             }
