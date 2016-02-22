@@ -32,6 +32,8 @@ import UIKit
     /// A shared instance for convenience.
     public static let sharedStore = BorderStore()
 
+    public var jsonParser: JSONParserProtocol = JSONParser()
+
     /// This store is used to retrieve the JSON data.
     public var jsonStore: JSONStoreProtocol = JSONStore()
 
@@ -49,54 +51,26 @@ import UIKit
         } else {
             jsonStore.get(url, completionBlock: { (dict, error) -> Void in
                 if let dict = dict {
-                    let err = self.parseJSON(url, dict: dict)
-                    completionBlock(self.store[url], err)
+                    do {
+                        try self.store[url] = self.jsonParser.parseJSON(dict)
+                    } catch JSONParserError.IllegalBorderHash {
+                        completionBlock(nil, NSError(info: Localize("Illegal border hash")))
+                    } catch JSONParserError.IllegalImageRecord(let recordName) {
+                        completionBlock(nil, NSError(info: Localize("Illegal image record") + " .Tag: \(recordName)"))
+                    } catch JSONParserError.IllegalImageRatio(let recordName) {
+                        completionBlock(nil, NSError(info: Localize("Illegal image ratio" ) + " .Tag: \(recordName)"))
+                    } catch JSONParserError.BorderNodeNoDictionary {
+                        completionBlock(nil, NSError(info: Localize("Border node not holding a dictionaty")))
+                    } catch JSONParserError.BorderArrayNotFound {
+                        completionBlock(nil, NSError(info: Localize("Border node not found, or not holding an array")))
+                    } catch {
+                         completionBlock(nil, NSError(info: Localize("Unknown error")))
+                    }
+                    completionBlock(self.store[url], nil)
                 } else {
                     completionBlock(nil, error)
                 }
             })
         }
-    }
-
-    private func parseJSON(url: String, dict: NSDictionary) -> NSError? {
-        var records = [BorderInfoRecord]()
-        if let borders = dict["borders"] as? NSArray {
-            for border in borders {
-                if let border = border as? NSDictionary {
-                    guard let name = border["name"] as? String,
-                        let label = border["label"] as? String,
-                        let thumbnailURL = border["thumbnail_url"] as? String,
-                        let images = border["images"] as? NSDictionary else {
-                            return NSError(info:Localize("Illegal border hash"))
-                    }
-                    let record = BorderInfoRecord()
-                    record.name = name
-                    record.label = label
-                    record.thumbnailURL = thumbnailURL
-                    for (key, value) in images {
-                        let imageInfo = ImageInfoRecord()
-                        guard let ratioString = key as? String,
-                            let url = value as? String else {
-                                return NSError(info:Localize("Illegal image record"))
-                        }
-                        let expn = NSExpression(format:ratioString)
-                        if let ratio = expn.expressionValueWithObject(nil, context: nil) as? Float {
-                            imageInfo.ratio = ratio
-                        } else {
-                            return NSError(info:Localize("Illegal image ratio"))
-                        }
-                        imageInfo.url = url
-                        record.imageInfos.append(imageInfo)
-                    }
-                    records.append(record)
-                } else {
-                    return NSError(info:Localize("Border node not holding a dictionaty"))
-                }
-            }
-        } else {
-            return NSError(info:Localize("Border node not found, or not holding an array"))
-        }
-        store[url] = records
-        return nil
     }
 }
