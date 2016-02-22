@@ -9,13 +9,13 @@
 import Foundation
 
 /**
- <#Description#>
+ The errors that can occour during the parse process.
 
- - IllegalBorderHash:      <#IllegalBorderHash description#>
- - IllegalImageRecord:     <#IllegalImageRecord description#>
- - IllegalImageRatio:      <#IllegalImageRatio description#>
- - BorderNodeNoDictionary: <#BorderNodeNoDictionary description#>
- - BorderArrayNotFound:    <#BorderArrayNotFound description#>
+ - IllegalBorderHash:      Occurs when the data within a border structure is invalid.
+ - IllegalImageRecord:     Occurs when the image record is invalid.
+ - IllegalImageRatio:      Occurs when the image aspect ratio can not be parsed.
+ - BorderNodeNoDictionary: Occurs when a border node does not hold a dicionary.
+ - BorderArrayNotFound:    Occurs when no borders tag has been found, or it holds no array.
  */
 enum JSONParserError: ErrorType {
     case IllegalBorderHash
