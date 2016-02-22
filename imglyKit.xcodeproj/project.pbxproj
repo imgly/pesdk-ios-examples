@@ -18,6 +18,7 @@
 		090D7A171C7209AE008C5704 /* BorderInfoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */; };
 		09204C2C1C77295B0095F9F1 /* BorderFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09FAE9681C75F7ED003F6068 /* BorderFilter.swift */; };
 		09204C2D1C7729980095F9F1 /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
+		092F190D1C7B1679000F3394 /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092F190C1C7B1679000F3394 /* JSONParser.swift */; };
 		09381E261C6CED790057463E /* BorderEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E251C6CED790057463E /* BorderEditorViewController.swift */; };
 		09381E281C6CEE530057463E /* BordersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E271C6CEE530057463E /* BordersDataSource.swift */; };
 		09381E2A1C6CEEBA0057463E /* Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09381E291C6CEEBA0057463E /* Border.swift */; };
@@ -471,6 +472,7 @@
 		090D7A0A1C710DC3008C5704 /* RequestServiceJSONMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestServiceJSONMock.swift; sourceTree = "<group>"; };
 		090D7A131C7207E4008C5704 /* BorderStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderStore.swift; sourceTree = "<group>"; };
 		090D7A161C7209AE008C5704 /* BorderInfoRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderInfoRecord.swift; sourceTree = "<group>"; };
+		092F190C1C7B1679000F3394 /* JSONParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		09381E251C6CED790057463E /* BorderEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewController.swift; sourceTree = "<group>"; };
 		09381E271C6CEE530057463E /* BordersDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BordersDataSource.swift; sourceTree = "<group>"; };
 		09381E291C6CEEBA0057463E /* Border.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Border.swift; sourceTree = "<group>"; };
@@ -781,6 +783,7 @@
 				090D7A131C7207E4008C5704 /* BorderStore.swift */,
 				090D7A031C707D4F008C5704 /* ImageStore.swift */,
 				090D7A011C6FDCD9008C5704 /* JSONStore.swift */,
+				092F190C1C7B1679000F3394 /* JSONParser.swift */,
 			);
 			path = Stores;
 			sourceTree = "<group>";
@@ -1872,6 +1875,7 @@
 				2BF4D5041AF1155E00C801B2 /* ColorfulFilter.swift in Sources */,
 				2BF4D5281AF1155E00C801B2 /* PolaSXFIlter.swift in Sources */,
 				093D111F1C60F90800B72B7A /* SaturationBrightnessPickerView.swift in Sources */,
+				092F190D1C7B1679000F3394 /* JSONParser.swift in Sources */,
 				2BF4D3E81AF1150500C801B2 /* SubEditorViewController.swift in Sources */,
 				2BF4D5121AF1155E00C801B2 /* GoblinFilter.swift in Sources */,
 				2BC537881C51001500A7DE17 /* StickerImageView.swift in Sources */,

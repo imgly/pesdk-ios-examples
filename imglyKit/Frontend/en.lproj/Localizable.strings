@@ -124,3 +124,4 @@
 "Illegal image ratio" = "Illegal image ratio";
 "Border node not holding a dictionaty" = "Border node not holding a dictionaty";
 "Border node not found, or not holding an array" = "Border node not found, or not holding an array";
+"Unknown error" = "Unknown error";
