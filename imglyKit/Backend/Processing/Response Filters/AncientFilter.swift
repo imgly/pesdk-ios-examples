@@ -9,10 +9,13 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYAncientFilter) public class AncientFilter: ResponseFilter {
-    required public init() {
+    /**
+     :nodoc:
+     */
+   required public init() {
         super.init(responseName: "Ancient")
     }
 

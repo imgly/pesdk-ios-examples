@@ -26,10 +26,15 @@ import AVFoundation
     private let motionManagerQueue = NSOperationQueue()
     private var started = false
 
+    /// Use this to get the current capture orientation.
     public private(set) var captureVideoOrientation: AVCaptureVideoOrientation?
 
     // MARK: - Public API
 
+    /**
+    Starts to observe the accelerometer to update the capture video orientation.
+    This needs to be done, to capture with the correct device orientation.
+    */
     public func start() {
         if started {
             return
@@ -58,6 +63,9 @@ import AVFoundation
         started = true
     }
 
+    /**
+     Stops observing the acceleronmenter.
+     */
     public func stop() {
         if !started {
             return

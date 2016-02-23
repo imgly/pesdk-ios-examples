@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYBWFilter) public class BWFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "BW")
     }

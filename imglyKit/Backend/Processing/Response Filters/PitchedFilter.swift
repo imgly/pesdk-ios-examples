@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYPitchedFilter) public class PitchedFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Pitched")
     }

@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYHighContrastFilter) public class HighContrastFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "HighContrast")
     }

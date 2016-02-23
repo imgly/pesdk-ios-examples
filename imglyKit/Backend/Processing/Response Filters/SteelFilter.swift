@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ 
  */
 @objc(IMGLYSteelFilter) public class SteelFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Steel")
     }

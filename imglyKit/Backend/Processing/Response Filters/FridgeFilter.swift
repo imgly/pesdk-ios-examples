@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYFridgeFilter) public class FridgeFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Fridge")
     }

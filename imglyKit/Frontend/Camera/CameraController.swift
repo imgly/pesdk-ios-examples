@@ -774,6 +774,9 @@ private var cameraControllerContext = 0
         return ["session.sessionPreset"]
     }
 
+    /**
+     :nodoc:
+     */
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let keyPath = keyPath where context == &cameraControllerContext {
             switch keyPath {

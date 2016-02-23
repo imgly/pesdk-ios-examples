@@ -9,10 +9,13 @@
 import Foundation
 
 /**
-
+ :nodoc:
  */
 @objc(IMGLYCreamyFilter) public class CreamyFilter: ResponseFilter {
-    required public init() {
+    /**
+     :nodoc:
+     */
+   required public init() {
         super.init(responseName: "Creamy")
     }
 

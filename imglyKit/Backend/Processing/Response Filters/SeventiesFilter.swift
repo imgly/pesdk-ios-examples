@@ -12,6 +12,9 @@ import Foundation
 
  */
 @objc(IMGLYSeventiesFilter) public class SeventiesFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Seventies")
     }

@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ 
  */
 @objc(IMGLYSinFilter) public class SinFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Sin")
     }

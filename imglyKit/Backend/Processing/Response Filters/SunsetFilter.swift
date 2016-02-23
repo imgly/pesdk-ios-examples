@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ 
  */
 @objc(IMGLYSunsetFilter) public class SunsetFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Sunset")
     }

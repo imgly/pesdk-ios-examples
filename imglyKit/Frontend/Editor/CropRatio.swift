@@ -13,8 +13,14 @@ import UIKit
  *  crop ratios that should be supported.
  */
 @objc(IMGLYCropRatio) public class CropRatio: NSObject {
+
+    /// The ratio of the crop as `CGFloat`.
     public let ratio: CGFloat?
+
+    /// A name to be shown in the UI.
     public let title: String
+
+    // An icon to be shown in the UI.
     public let icon: UIImage
 
     /**

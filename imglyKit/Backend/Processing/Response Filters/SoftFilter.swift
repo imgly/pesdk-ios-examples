@@ -9,9 +9,12 @@
 import Foundation
 
 /**
-
+ 
  */
 @objc(IMGLYSoftFilter) public class SoftFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Soft")
     }
