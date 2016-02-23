@@ -9,8 +9,7 @@
 import Foundation
 
 /**
- 
- */
+*/
 @objc(IMGLYSunsetFilter) public class SunsetFilter: ResponseFilter {
     /**
      :nodoc:

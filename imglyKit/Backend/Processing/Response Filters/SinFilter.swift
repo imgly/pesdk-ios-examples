@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- 
+
  */
 @objc(IMGLYSinFilter) public class SinFilter: ResponseFilter {
     /**

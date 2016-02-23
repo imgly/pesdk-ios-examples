@@ -9,8 +9,7 @@
 import Foundation
 
 /**
- 
- */
+*/
 @objc(IMGLYTexasFilter) public class TexasFilter: ResponseFilter {
     /**
      :nodoc:

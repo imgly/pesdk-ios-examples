@@ -9,8 +9,7 @@
 import Foundation
 
 /**
- 
- */
+*/
 @objc(IMGLYSummerFilter) public class SummerFilter: ResponseFilter {
     /**
      :nodoc:
