@@ -121,21 +121,23 @@ import UIKit
     }
 
     private func configureConstraints() {
-        let views = [
+ /*       let views = [
             "colorView" : colorView,
             "saturationBrightnessPickerView" : saturationBrightnessPickerView,
             "huePickerView" : huePickerView,
             "alphaPickerView" : alphaPickerView
-        ]
+        ]*/
 
-        NSLayoutConstraint(item: saturationBrightnessPickerView, attribute: .Height, relatedBy: .Equal, toItem: saturationBrightnessPickerView, attribute: .Width, multiplier: 1, constant: 0).active = true
+//        NSLayoutConstraint(item: saturationBrightnessPickerView, attribute: .Height, relatedBy: .Equal, toItem: saturationBrightnessPickerView, attribute: .Width, multiplier: 1, constant: 0).active = true
 
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[alphaPickerView(==20)]-15-[saturationBrightnessPickerView]-15-[huePickerView(==20)]-15-[colorView(>=20)]-(110@750)-|", options: [], metrics: nil, views: views))
+/*        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[alphaPickerView(==20)]-15-[saturationBrightnessPickerView]-15-[huePickerView(==20)]-15-[colorView(>=20)]-(110@750)-|", options: [], metrics: nil, views: views))
 
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[saturationBrightnessPickerView]-20-|", options: [], metrics: nil, views: views))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[colorView]-20-|", options: [], metrics: nil, views: views))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[huePickerView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[alphaPickerView]-20-|", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[alphaPickerView]-20-|", options: [], metrics: nil, views: views))*/
+       // saturationBrightnessPickerView.frame = CGRect(x: 0, y: 0, width: 256, height: 256)
+        huePickerView.frame = CGRect(x: 10, y: 10, width: 20, height: 256)
     }
 }
 
