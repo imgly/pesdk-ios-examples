@@ -20,7 +20,7 @@ import UIKit
     /// A name to be shown in the UI.
     public let title: String
 
-    // An icon to be shown in the UI.
+    /// An icon to be shown in the UI.
     public let icon: UIImage
 
     /**
