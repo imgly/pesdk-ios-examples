@@ -44,8 +44,17 @@ public extension UIImage {
 
     // swiftlint:enable variable_name
 
+    /**
+    Returns a copy of the image, that has `UIEdgeInsets` set, based on the informations give within a 9 patch image.
+
+    - parameter image: An image must be a standard 9 patch image.
+
+    - returns: An image that is rescaleable based on the information given by the input image.
+    */
     public func resizableImageFrom9Patch(image: UIImage) -> UIImage {
-        let ninePatchBounds = determinBounds()
+        let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(self.CGImage))
+        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        let ninePatchBounds = determinBounds(data)
         UIGraphicsBeginImageContextWithOptions(CGSize(width: self.size.width - 1, height: self.size.height - 1), false, 0)
         image.drawInRect(CGRect(x: -1, y: -1, width: self.size.width, height: self.size.height))
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
@@ -54,14 +63,14 @@ public extension UIImage {
         return resizeableImage
     }
 
-    private func determinBounds() -> (CGFloat, CGFloat, CGFloat, CGFloat) {
-        let topBottom = determinTopAndBottom()
-        let leftRight = determinLeftAndRight()
+    private func determinBounds(data: UnsafePointer<UInt8>) -> (CGFloat, CGFloat, CGFloat, CGFloat) {
+        let topBottom = determinTopAndBottom(data)
+        let leftRight = determinLeftAndRight(data)
         return (topBottom.0, leftRight.0, topBottom.1, leftRight.1)
     }
 
-    private func determinTopAndBottom() -> (CGFloat, CGFloat) {
-        let pixels = leftRow()
+    private func determinTopAndBottom(data: UnsafePointer<UInt8>) -> (CGFloat, CGFloat) {
+        let pixels = leftRow(data)
         var top = CGFloat(-1.0)
         var bottom = CGFloat(-1.0)
         var foundTop = false
@@ -81,8 +90,8 @@ public extension UIImage {
         return (top, bottom)
     }
 
-    private func determinLeftAndRight() -> (CGFloat, CGFloat) {
-        let pixels = topRow()
+    private func determinLeftAndRight(data: UnsafePointer<UInt8>) -> (CGFloat, CGFloat) {
+        let pixels = topRow(data)
         var foundLeft = false
         var left = CGFloat(-1)
         var right = CGFloat(-1)
@@ -102,32 +111,29 @@ public extension UIImage {
         return (left, right)
     }
 
-    private func topRow() -> [UIColor] {
+    private func topRow(data: UnsafePointer<UInt8>) -> [UIColor] {
         var colors = [UIColor]()
         var position = CGPoint.zero
         for x in 0...Int(self.size.width - 1) {
             position.x = CGFloat(x)
-            let color = self.getPixelColor(position)
+            let color = self.getPixelColor(data, pos: position)
             colors.append(color)
         }
         return colors
     }
 
-    private func leftRow() -> [UIColor] {
+    private func leftRow(data: UnsafePointer<UInt8>) -> [UIColor] {
         var colors = [UIColor]()
         var position = CGPoint.zero
         for y in 0...Int(self.size.height - 1) {
             position.y = CGFloat(y)
-            let color = self.getPixelColor(position)
+            let color = self.getPixelColor(data, pos: position)
             colors.append(color)
         }
         return colors
     }
 
-    func getPixelColor(pos: CGPoint) -> UIColor {
-        let pixelData = CGDataProviderCopyData(CGImageGetDataProvider(self.CGImage))
-        let data: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-
+    func getPixelColor(data: UnsafePointer<UInt8>, pos: CGPoint) -> UIColor {
         let pixelInfo: Int = ((Int(self.size.width) * Int(pos.y)) + Int(pos.x)) * 4
 
         let r = CGFloat(data[pixelInfo]) / CGFloat(255.0)
