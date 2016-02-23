@@ -137,7 +137,7 @@ import UIKit
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[huePickerView]-20-|", options: [], metrics: nil, views: views))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[alphaPickerView]-20-|", options: [], metrics: nil, views: views))*/
        // saturationBrightnessPickerView.frame = CGRect(x: 0, y: 0, width: 256, height: 256)
-        huePickerView.frame = CGRect(x: 10, y: 10, width: 20, height: 256)
+        alphaPickerView.frame = CGRect(x: 10, y: 10, width: 20, height: 256)
     }
 }
 

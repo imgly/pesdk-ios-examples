@@ -77,6 +77,9 @@ import UIKit
         }
     }
 
+    /**
+     :nodoc:
+     */
     public override func drawRect(rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
             drawColorSpectrum(context, rect:rect)
