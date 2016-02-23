@@ -11,8 +11,11 @@ import AVFoundation
 import Photos
 import MobileCoreServices
 
+/// The `RecordingMode` determins if a photo or a video should be recorded.
 @objc public enum RecordingMode: Int {
+    /// Record a Photo.
     case Photo
+    /// Record a Video.
     case Video
 
     var bundle: NSBundle {

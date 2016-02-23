@@ -14,6 +14,9 @@
     import QuartzCore
 #endif
 
+/**
+ *  The `Border` class holds all informations needed to be managed and rendered.
+ */
 @objc(IMGLYBorder) public class Border: NSObject {
 
     /// The image is used as thumbnail.

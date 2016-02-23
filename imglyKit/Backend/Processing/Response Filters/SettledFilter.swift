@@ -12,6 +12,9 @@ import Foundation
 
  */
 @objc(IMGLYSettledFilter) public class SettledFilter: ResponseFilter {
+    /**
+     :nodoc:
+     */
     required public init() {
         super.init(responseName: "Settled")
     }
