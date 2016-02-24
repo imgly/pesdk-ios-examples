@@ -44,6 +44,7 @@
 		0983311C1C3FEB36000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		0983311D1C3FEBE1000135B8 /* TypeAliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0983311B1C3FEB36000135B8 /* TypeAliases.swift */; };
 		098331211C400A72000135B8 /* UIColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 098331201C400A72000135B8 /* UIColorExtension.swift */; };
+		0986D0A81C7E1FB300A4803A /* ColorButtonImageGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0986D0A71C7E1FB300A4803A /* ColorButtonImageGenerator.swift */; };
 		09C2BB821C63A5C0009D0F23 /* TextCaptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */; };
 		09D214CE1C4C043C008D20F6 /* OverlayConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */; };
 		09D5AB151C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09D5AB141C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift */; };
@@ -497,6 +498,7 @@
 		097A45D51C5A595100B2D45F /* PathHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathHelper.swift; sourceTree = "<group>"; };
 		0983311B1C3FEB36000135B8 /* TypeAliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeAliases.swift; sourceTree = "<group>"; };
 		098331201C400A72000135B8 /* UIColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIColorExtension.swift; sourceTree = "<group>"; };
+		0986D0A71C7E1FB300A4803A /* ColorButtonImageGenerator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorButtonImageGenerator.swift; sourceTree = "<group>"; };
 		09C2BB811C63A5C0009D0F23 /* TextCaptionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextCaptionButton.swift; sourceTree = "<group>"; };
 		09D214CD1C4C043C008D20F6 /* OverlayConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayConverter.swift; sourceTree = "<group>"; };
 		09D5AB141C6DDD50007E2E57 /* BorderEditorViewControllerOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderEditorViewControllerOptions.swift; sourceTree = "<group>"; };
@@ -1002,6 +1004,7 @@
 				09381E291C6CEEBA0057463E /* Border.swift */,
 				09381E251C6CED790057463E /* BorderEditorViewController.swift */,
 				2BF4D3B01AF1150400C801B2 /* ButtonCollectionViewCell.swift */,
+				0986D0A71C7E1FB300A4803A /* ColorButtonImageGenerator.swift */,
 				2BF4D3B31AF1150400C801B2 /* ContrastEditorViewController.swift */,
 				2BF4D3B41AF1150400C801B2 /* CropEditorViewController.swift */,
 				2BA5DB9D1C562FDC0038570A /* CropRatio.swift */,
@@ -1800,6 +1803,7 @@
 				2BA980601C493FE7001C85B6 /* VideoController.swift in Sources */,
 				093D11191C60F90800B72B7A /* ColorPickerView.swift in Sources */,
 				093D11151C60F90800B72B7A /* BoxGradientView.swift in Sources */,
+				0986D0A81C7E1FB300A4803A /* ColorButtonImageGenerator.swift in Sources */,
 				2BE37B781B3D9978009FAD40 /* VideoRecordButton.swift in Sources */,
 				2BF4D3E11AF1150500C801B2 /* OrientationEditorViewController.swift in Sources */,
 				2BF4D3CC1AF1150400C801B2 /* MainEditorAction.swift in Sources */,
