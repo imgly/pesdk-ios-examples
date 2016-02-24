@@ -223,6 +223,12 @@ public typealias WillLeaveToolClosure = () -> ()
         textEditorViewControllerOptions = TextEditorViewControllerOptions(builder: builderForClosure)
     }
 
+    public func configureBorderEditorViewController(builder: (BorderEditorViewControllerOptionsBuilder -> Void)) {
+        let builderForClosure = BorderEditorViewControllerOptionsBuilder()
+        builder(builderForClosure)
+        borderEditorViewControllerOptions = BorderEditorViewControllerOptions(builder: builderForClosure)
+    }
+
     // MARK: Class replacement
 
     /**

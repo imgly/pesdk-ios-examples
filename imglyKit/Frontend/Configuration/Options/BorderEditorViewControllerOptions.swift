@@ -29,22 +29,22 @@ public typealias AddedBorderClosure = (String) -> ()
     public var tolerance: Float
 
     /**
-     Returns a newly allocated instance of a `BordersEditorViewControllerOptions` using the default builder.
+     Returns a newly allocated instance of a `BorderEditorViewControllerOptions` using the default builder.
 
      - returns: An instance of a `MainEditorViewControllerOptions`.
      */
     public convenience init() {
-        self.init(builder: BordersEditorViewControllerOptionsBuilder())
+        self.init(builder: BorderEditorViewControllerOptionsBuilder())
     }
 
     /**
-     Returns a newly allocated instance of a `BordersEditorViewControllerOptions` using the given builder.
+     Returns a newly allocated instance of a `BorderEditorViewControllerOptions` using the given builder.
 
-     - parameter builder: A `BordersEditorViewControllerOptionsBuilder` instance.
+     - parameter builder: A `BorderEditorViewControllerOptionsBuilder` instance.
 
-     - returns: An instance of a `BordersEditorViewControllerOptions`.
+     - returns: An instance of a `BorderEditorViewControllerOptions`.
      */
-    public init(builder: BordersEditorViewControllerOptionsBuilder) {
+    public init(builder: BorderEditorViewControllerOptionsBuilder) {
         bordersDataSource = builder.bordersDataSource
         addedBorderClosure = builder.addedBorderClosure
         tolerance = builder.tolerance
@@ -54,9 +54,9 @@ public typealias AddedBorderClosure = (String) -> ()
 
 // swiftlint:disable type_name
 /**
-The default `BordersEditorViewControllerOptionsBuilder` for `BordersEditorViewControllerOptions`.
+The default `BorderEditorViewControllerOptionsBuilder` for `BorderEditorViewControllerOptions`.
 */
-@objc(IMGLYBordersEditorViewControllerOptionsBuilder) public class BordersEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
+@objc(IMGLYBorderEditorViewControllerOptionsBuilder) public class BorderEditorViewControllerOptionsBuilder: EditorViewControllerOptionsBuilder {
     // swiftlint:enable type_name
 
     /// An object conforming to the `BordersDataSourceProtocol`
