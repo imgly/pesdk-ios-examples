@@ -43,7 +43,6 @@ import UIKit
         didSet {
             huePickerView.color = color
             alphaPickerView.color = color
-            colorView.backgroundColor = color.colorWithAlphaComponent(alphaPickerView.alphaValue)
             saturationBrightnessPickerView.color = color
         }
     }
@@ -55,10 +54,13 @@ import UIKit
         }
     }
 
-    private var colorView = UIView()
     private var saturationBrightnessPickerView = SaturationBrightnessPickerView()
     private var huePickerView = HuePickerView()
     private var alphaPickerView = AlphaPickerView()
+    private var leftMostSpacer = UIView()
+    private var leftSpacer = UIView()
+    private var rightSpacer = UIView()
+    private var rightMostSpacer = UIView()
 
     // MARK: - init
 
@@ -88,9 +90,9 @@ import UIKit
 
     private func commonInit() {
         configureSaturationBrightnessPicker()
-        configureColorView()
         configureHuePickView()
         configureAlphaPickerView()
+        configureSpacers()
         configureConstraints()
     }
 
@@ -100,12 +102,6 @@ import UIKit
         self.addSubview(saturationBrightnessPickerView)
         saturationBrightnessPickerView.translatesAutoresizingMaskIntoConstraints = false
         saturationBrightnessPickerView.pickerDelegate = self
-    }
-
-    private func configureColorView() {
-        self.addSubview(colorView)
-        colorView.translatesAutoresizingMaskIntoConstraints = false
-        colorView.layer.cornerRadius = 3
     }
 
     private func configureHuePickView() {
@@ -120,32 +116,53 @@ import UIKit
         alphaPickerView.pickerDelegate = self
     }
 
+    private func configureSpacers() {
+        leftMostSpacer.translatesAutoresizingMaskIntoConstraints = false
+        leftSpacer.translatesAutoresizingMaskIntoConstraints = false
+        rightSpacer.translatesAutoresizingMaskIntoConstraints = false
+        rightMostSpacer.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(leftMostSpacer)
+        self.addSubview(leftSpacer)
+        self.addSubview(rightSpacer)
+        self.addSubview(rightMostSpacer)
+    }
+
     private func configureConstraints() {
         let views = [
-            "colorView" : colorView,
             "saturationBrightnessPickerView" : saturationBrightnessPickerView,
             "huePickerView" : huePickerView,
-            "alphaPickerView" : alphaPickerView
+            "alphaPickerView" : alphaPickerView,
+            "leftMostSpacer" : leftMostSpacer,
+            "leftSpacer" : leftSpacer,
+            "rightSpacer" : rightSpacer,
+            "rightMostSpacer" : rightMostSpacer
         ]
 
-        NSLayoutConstraint(item: saturationBrightnessPickerView, attribute: .Height, relatedBy: .Equal, toItem: saturationBrightnessPickerView, attribute: .Width, multiplier: 1, constant: 0).active = true
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[saturationBrightnessPickerView(256)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[huePickerView(256)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[alphaPickerView(256)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[leftMostSpacer(1)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[leftSpacer(1)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[rightSpacer(1)]", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-20-[rightMostSpacer(1)]", options: [], metrics: nil, views: views))
 
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-15-[alphaPickerView(==20)]-15-[saturationBrightnessPickerView]-15-[huePickerView(==20)]-15-[colorView(>=20)]-(110@750)-|", options: [], metrics: nil, views: views))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-[leftMostSpacer]-[huePickerView(20)]-[leftSpacer]-[saturationBrightnessPickerView(256)]-[rightSpacer]-[alphaPickerView(20)]-[rightMostSpacer]-|", options: [], metrics: nil, views: views))
 
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[saturationBrightnessPickerView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[colorView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[huePickerView]-20-|", options: [], metrics: nil, views: views))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("|-20-[alphaPickerView]-20-|", options: [], metrics: nil, views: views))
+        self.addConstraint(NSLayoutConstraint(item: leftMostSpacer, attribute: .Width, relatedBy: .Equal, toItem: leftSpacer, attribute: .Width, multiplier: 1.0, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: leftSpacer, attribute: .Width, relatedBy: .Equal, toItem: rightSpacer, attribute: .Width, multiplier: 1.0, constant: 0))
+        self.addConstraint(NSLayoutConstraint(item: rightSpacer, attribute: .Width, relatedBy: .Equal, toItem: rightMostSpacer, attribute: .Width, multiplier: 1.0, constant: 0))
     }
 }
 
 extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
     /**
-     :nodoc:
+     This gets called
      */
     public func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor) {
-        colorView.backgroundColor = color.colorWithAlphaComponent(alphaPickerView.alphaValue)
-        pickerDelegate?.colorPicked(self, didPickColor: colorView.backgroundColor!)
+        let alpha = alphaPickerView.alphaValue
+        let colorWithAlpha = color.colorWithAlphaComponent(alpha)
+        alphaPickerView.color = colorWithAlpha
+        pickerDelegate?.colorPicked(self, didPickColor: colorWithAlpha)
     }
 }
 
@@ -155,9 +172,11 @@ extension ColorPickerView: HuePickerViewDelegate {
      */
     public func huePicked(huePickerView: HuePickerView, hue: CGFloat) {
         saturationBrightnessPickerView.hue = hue
-        alphaPickerView.hue = hue
-        colorView.backgroundColor = saturationBrightnessPickerView.color.colorWithAlphaComponent(alphaPickerView.alphaValue)
-        pickerDelegate?.colorPicked(self, didPickColor: colorView.backgroundColor!)
+        let color = saturationBrightnessPickerView.color
+        let alpha = alphaPickerView.alphaValue
+        let colorWithAlpha = color.colorWithAlphaComponent(alpha)
+        alphaPickerView.color = colorWithAlpha
+        pickerDelegate?.colorPicked(self, didPickColor: colorWithAlpha)
     }
 }
 
@@ -167,7 +186,6 @@ extension ColorPickerView: AlphaPickerViewDelegate {
      */
     public func alphaPicked(alphaPickerView: AlphaPickerView, alpha: CGFloat) {
         let color = saturationBrightnessPickerView.color
-        colorView.backgroundColor = color.colorWithAlphaComponent(alpha)
-        pickerDelegate?.colorPicked(self, didPickColor: colorView.backgroundColor!)
+        pickerDelegate?.colorPicked(self, didPickColor: color.colorWithAlphaComponent(alpha))
     }
 }

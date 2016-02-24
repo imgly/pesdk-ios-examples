@@ -19,31 +19,36 @@ import UIKit
     public weak var pickerDelegate: SaturationBrightnessPickerViewDelegate?
     public var hue = CGFloat(0) {
         didSet {
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
 
+    /// The currently picked color.
     public var color: UIColor {
         set {
             let hsb = newValue.hsb
             hue = hsb.hue
             brightness = hsb.brightness
             saturation = hsb.saturation
+            updateMarkerPosition()
             setNeedsDisplay()
         }
         get {
             return UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0)
         }
     }
+
+    /// The currently picked saturation.
     public var saturation = CGFloat(1)
+
+    /// The currently picked brightness.
     public var brightness = CGFloat(1)
 
+    private let markerView = UIView()
+
     /**
-     Initializes and returns a newly allocated view with the specified frame rectangle.
-
-     - parameter frame: The frame rectangle for the view, measured in points.
-
-     - returns: An initialized view object or `nil` if the object couldn't be created.
+     :nodoc:
      */
     public override init(frame: CGRect) {
         super.init(frame:frame)
@@ -51,11 +56,7 @@ import UIKit
     }
 
     /**
-     Returns an object initialized from data in a given unarchiver.
-
-     - parameter aDecoder: An unarchiver object.
-
-     - returns: `self`, initialized using the data in decoder.
+     :nodoc:
      */
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -64,13 +65,28 @@ import UIKit
 
     private func commonInit() {
         opaque = false
+        self.clipsToBounds = false
         backgroundColor = UIColor.clearColor()
+        configureMarkerView()
+    }
+
+    private func configureMarkerView() {
+        markerView.frame = CGRect(x: 0, y: 0, width: 36, height: 36)
+        markerView.layer.borderColor = UIColor.whiteColor().CGColor
+        markerView.layer.borderWidth = 2.0
+        markerView.layer.cornerRadius = 18
+        markerView.backgroundColor = UIColor.clearColor()
+        markerView.layer.shadowColor = UIColor.blackColor().CGColor
+        markerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        markerView.layer.shadowOpacity = 0.25
+        markerView.layer.shadowRadius = 2
+        markerView.center = CGPoint.zero
+        self.addSubview(markerView)
     }
 
     override public func drawRect(rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
             drawColorMatrixToContext(context, rect: rect)
-            drawMarkerToContext(context, rect: rect)
         }
     }
 
@@ -90,20 +106,6 @@ import UIKit
         grad = CGGradientCreateWithColors(colorSpace, colors, locs)
         CGContextDrawLinearGradient(context, grad, CGPoint(x: 0, y: 0), CGPoint(x: 0, y: rect.size.height), CGGradientDrawingOptions(rawValue: 0))
         CGContextRestoreGState(context)
-    }
-
-    private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
-        let realPos = CGPoint(x: saturation * rect.size.width, y:rect.size.height - (brightness * rect.size.height))
-        let reticuleRect = CGRect(x: realPos.x - 10, y: realPos.y - 10, width: 20, height: 20)
-
-        CGContextAddEllipseInRect(context, reticuleRect)
-        CGContextAddEllipseInRect(context, CGRectInset(reticuleRect, 4, 4))
-        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
-        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextSetLineWidth(context, 0.5)
-        CGContextClosePath(context)
-        CGContextSetShadow(context, CGSize(width: 1.0, height: 1.0), 4)
-        CGContextDrawPath(context, CGPathDrawingMode.EOFillStroke)
     }
 
     public override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -132,9 +134,15 @@ import UIKit
 
         saturation = pos.x / w
         brightness = 1 - (pos.y / h)
+        updateMarkerPosition()
 
         pickerDelegate?.colorPicked(self,  didPickColor: UIColor(hue: hue, saturation: saturation, brightness: brightness, alpha: 1.0))
 
         self.setNeedsDisplay()
+    }
+
+    private func updateMarkerPosition() {
+        let realPos = CGPoint(x: saturation * self.frame.size.width, y: self.frame.size.height - (brightness * self.frame.size.height))
+        markerView.center = realPos
     }
 }

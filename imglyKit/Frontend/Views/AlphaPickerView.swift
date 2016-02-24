@@ -33,6 +33,8 @@ import UIKit
     /// seealso: `AlphaPickerViewDelegate`.
     public weak var pickerDelegate: AlphaPickerViewDelegate?
 
+    private let markerView = UIView()
+
     private private(set) lazy var checkboardColor: UIColor = {
         var color = UIColor.whiteColor()
         let bundle = NSBundle(forClass: AlphaPickerView.self)
@@ -45,13 +47,7 @@ import UIKit
     /// The currently choosen alpha value of the picker.
     public var alphaValue = CGFloat(0) {
         didSet {
-            self.setNeedsDisplay()
-        }
-    }
-
-    /// The currently choosen hue value of the color gradient.
-    public var hue = CGFloat(0) {
-        didSet {
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
@@ -60,7 +56,7 @@ import UIKit
     public var color = UIColor.redColor() {
         didSet {
             alphaValue = CGColorGetAlpha(color.CGColor)
-            hue = color.hsb.hue
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
@@ -92,12 +88,23 @@ import UIKit
     private func commonInit() {
         opaque = false
         backgroundColor = UIColor.clearColor()
+        configureMarkerView()
     }
 
+    private func configureMarkerView() {
+        markerView.backgroundColor = UIColor.whiteColor()
+        markerView.layer.shadowColor = UIColor.blackColor().CGColor
+        markerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        markerView.layer.shadowOpacity = 0.25
+        markerView.layer.shadowRadius = 2
+        self.addSubview(markerView)
+    }
+    /**
+     :nodoc:
+     */
     public override func drawRect(rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext() {
             drawColorSpectrum(context, rect:rect)
-            drawMarkerToContext(context, rect:rect)
         }
     }
 
@@ -110,35 +117,12 @@ import UIKit
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let locs: [CGFloat] = [0.00, 1.0]
-        let colors = [UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0).CGColor,
-            UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.0).CGColor]
+        let colors = [UIColor(hue: color.hsb.hue, saturation: color.hsb.saturation, brightness: color.hsb.brightness, alpha: 1.0).CGColor,
+            UIColor(hue: color.hsb.hue, saturation: color.hsb.saturation, brightness: color.hsb.brightness, alpha: 0.0).CGColor]
         let grad = CGGradientCreateWithColors(colorSpace, colors, locs)
 
-        CGContextDrawLinearGradient(context, grad, CGPoint(x:rect.size.width, y: 0), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
+        CGContextDrawLinearGradient(context, grad, CGPoint(x:0, y: rect.size.height), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
         CGContextRestoreGState(context)
-    }
-
-    private func drawMarkerToContext(context: CGContextRef, rect: CGRect) {
-        let pos = rect.size.width * alphaValue
-        let indLength = rect.size.height / 3
-
-        CGContextSetFillColorWithColor(context, UIColor.whiteColor().CGColor)
-        CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
-        CGContextSetLineWidth(context, 0.5)
-        CGContextSetShadow(context, CGSize(width: 0, height: 0), 4)
-
-        CGContextMoveToPoint(context, pos - (indLength / 2), -1)
-        CGContextAddLineToPoint(context, pos + (indLength / 2), -1)
-        CGContextAddLineToPoint(context, pos, indLength)
-        CGContextAddLineToPoint(context, pos - (indLength / 2), -1)
-
-        CGContextMoveToPoint(context, pos-(indLength / 2), rect.size.height + 1)
-        CGContextAddLineToPoint(context, pos + (indLength / 2), rect.size.height + 1)
-        CGContextAddLineToPoint(context, pos, rect.size.height-indLength)
-        CGContextAddLineToPoint(context, pos - (indLength / 2), rect.size.height + 1)
-
-        CGContextClosePath(context)
-        CGContextDrawPath(context, .FillStroke)
     }
 
     /**
@@ -177,10 +161,23 @@ import UIKit
             return
         }
         let pos = touch.locationInView(self)
-        let p = min(max(pos.x, 0), self.frame.size.width)
-
-        alphaValue = p / self.frame.size.width
+        let p = min(max(pos.y, 0), self.frame.size.height)
+        alphaValue = p / self.frame.size.height
+        updateMarkerPosition()
         pickerDelegate?.alphaPicked(self, alpha: alphaValue)
         self.setNeedsDisplay()
+    }
+
+    /**
+     :nodoc:
+     */
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        markerView.frame = CGRect(x: -frame.width / 2, y: 0, width: frame.width * 2, height: 4)
+    }
+
+    private func updateMarkerPosition() {
+        let markerY =  alphaValue * self.frame.size.height
+        markerView.center = CGPoint(x: self.frame.size.width / 2.0, y: markerY)
     }
 }
