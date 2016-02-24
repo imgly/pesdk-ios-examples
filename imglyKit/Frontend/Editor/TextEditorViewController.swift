@@ -55,6 +55,8 @@ private let kMinimumFontSize = CGFloat(12.0)
     private var rejectFontButtonConstraint = NSLayoutConstraint()
     private let upperOverlayButtonConstant = CGFloat(50)
     private let lowerOverlayButtonConstant = CGFloat(20)
+    private let colorButtonImageGenerator = ColorButtonImageGenerator(imageName: "imgly_icon_option_selected_color",
+        backgroundImageName: "imgly_icon_option_selected_color_bg")
 
     public private(set) lazy var addTextButton: UIButton = {
         let bundle = NSBundle(forClass: TextEditorViewController.self)
@@ -1209,11 +1211,13 @@ extension TextEditorViewController: ColorPickerViewDelegate {
     public func colorPicked(colorPickerView: ColorPickerView, didPickColor color: UIColor) {
         if selectBackgroundColor {
             textLabel.backgroundColor = color
-            selectBackgroundColorButton.imageView.tintColor = color
+//            selectBackgroundColorButton.imageView.tintColor = color
+            selectBackgroundColorButton.imageView.image = colorButtonImageGenerator.imageWithColor(color)
         } else {
             textLabel.textColor = color
             textColor = color
-            selectTextColorButton.imageView.tintColor = color
+            selectTextColorButton.imageView.image = colorButtonImageGenerator.imageWithColor(color)
+            //selectTextColorButton.imageView.tintColor = color
         }
     }
 
