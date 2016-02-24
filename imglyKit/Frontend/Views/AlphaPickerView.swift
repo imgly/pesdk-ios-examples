@@ -33,7 +33,7 @@ import UIKit
     /// seealso: `AlphaPickerViewDelegate`.
     public weak var pickerDelegate: AlphaPickerViewDelegate?
 
-    private let markerView = UIView(frame: CGRect(x: -10, y: 0, width: 40, height: 4))
+    private let markerView = UIView()
 
     private private(set) lazy var checkboardColor: UIColor = {
         var color = UIColor.whiteColor()
@@ -47,6 +47,7 @@ import UIKit
     /// The currently choosen alpha value of the picker.
     public var alphaValue = CGFloat(0) {
         didSet {
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
@@ -54,6 +55,7 @@ import UIKit
     /// The currently choosen hue value of the color gradient.
     public var hue = CGFloat(0) {
         didSet {
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
@@ -63,6 +65,7 @@ import UIKit
         didSet {
             alphaValue = CGColorGetAlpha(color.CGColor)
             hue = color.hsb.hue
+            updateMarkerPosition()
             self.setNeedsDisplay()
         }
     }
@@ -76,12 +79,6 @@ import UIKit
      */
     public override init(frame: CGRect) {
         super.init(frame:frame)
-        markerView.backgroundColor = UIColor.whiteColor()
-        markerView.layer.shadowColor = UIColor.blackColor().CGColor
-        markerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        markerView.layer.shadowOpacity = 0.25
-        markerView.layer.shadowRadius = 2
-        self.addSubview(markerView)
         commonInit()
     }
 
@@ -100,8 +97,17 @@ import UIKit
     private func commonInit() {
         opaque = false
         backgroundColor = UIColor.clearColor()
+        configureMarkerView()
     }
 
+    private func configureMarkerView() {
+        markerView.backgroundColor = UIColor.whiteColor()
+        markerView.layer.shadowColor = UIColor.blackColor().CGColor
+        markerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        markerView.layer.shadowOpacity = 0.25
+        markerView.layer.shadowRadius = 2
+        self.addSubview(markerView)
+    }
     /**
      :nodoc:
      */
@@ -164,17 +170,23 @@ import UIKit
             return
         }
         let pos = touch.locationInView(self)
-        let markerY = min(max(pos.y, 0), self.frame.size.height - markerView.frame.height)
-        markerView.frame.origin = CGPoint(x: -10, y: markerY)
-
         let p = min(max(pos.y, 0), self.frame.size.height)
         alphaValue = p / self.frame.size.height
+        updateMarkerPosition()
         pickerDelegate?.alphaPicked(self, alpha: alphaValue)
         self.setNeedsDisplay()
     }
 
+    /**
+     :nodoc:
+     */
     public override func layoutSubviews() {
         super.layoutSubviews()
         markerView.frame = CGRect(x: -frame.width / 2, y: 0, width: frame.width * 2, height: 4)
+    }
+
+    private func updateMarkerPosition() {
+        let markerY =  alphaValue * self.frame.size.height
+        markerView.frame.origin = CGPoint(x: -10, y: markerY)
     }
 }
