@@ -40,9 +40,9 @@ import UIKit
             return nil
         }
 
-        let size = backgroundImage.size
-        UIGraphicsBeginImageContext(size)
-
+        let size = backgroundImage.size`
+        let scale = UIScreen.mainScreen().scale
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
         let pointImg1 = CGPoint.zero
 
         backgroundImage.drawAtPoint(pointImg1)
