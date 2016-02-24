@@ -9,12 +9,17 @@
 import UIKit
 
 @objc(IMGLYColorButtonImageGenerator) public class ColorButtonImageGenerator: NSObject {
-//    private var imageName = "imgly_icon_option_selected_color"
-//    public var backgroundImageName = "imgly_icon_option_selected_color_bg"
-
     private var image: UIImage? = nil
     private var backgroundImage: UIImage? = nil
 
+    /**
+     Returns a new instance of a `ColorButtonImageGenerator`.
+
+     - parameter imageName:           An image defining the shape of the selected color indicator.
+     - parameter backgroundImageName: An image definint the background.
+
+     - returns: A new instance.
+     */
     public init(imageName: String, backgroundImageName: String) {
         super.init()
         let bundle = NSBundle(forClass: ColorButtonImageGenerator.self)
@@ -23,6 +28,13 @@ import UIKit
         backgroundImage = UIImage(named: backgroundImageName, inBundle: bundle, compatibleWithTraitCollection: nil)
     }
 
+    /**
+     Returns a new image made of the combined back- and color image.
+
+     - parameter color: The color that the color indicator image is set to.
+
+     - returns: A new `UIImage`.
+     */
     public func imageWithColor(color: UIColor) -> UIImage? {
         guard let backgroundImage = backgroundImage, let image = image else {
             return nil
