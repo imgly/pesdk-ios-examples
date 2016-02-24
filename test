@@ -1,0 +1,1 @@
+curl ­X GET ­H "source­appl­id: 9" ­H "Accept­Resolution: thumb,medium,high" ­H "Cache­Control: no­cache" "http://nge­media­dpi­mrds­stg.nge.go.com/dpi­media­service/v2/media/guest/WDW/{3FD5A300­A027­4ABC­95A3­00A0270ABC44}/{123}/borders­and­stickers"
