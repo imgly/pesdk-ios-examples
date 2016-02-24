@@ -160,7 +160,9 @@ extension ColorPickerView: SaturationBrightnessPickerViewDelegate {
      */
     public func colorPicked(saturationBrightnessPickerView: SaturationBrightnessPickerView, didPickColor color: UIColor) {
         let alpha = alphaPickerView.alphaValue
-        pickerDelegate?.colorPicked(self, didPickColor: color.colorWithAlphaComponent(alpha))
+        let colorWithAlpha = color.colorWithAlphaComponent(alpha)
+        alphaPickerView.color = colorWithAlpha
+        pickerDelegate?.colorPicked(self, didPickColor: colorWithAlpha)
     }
 }
 
@@ -170,10 +172,11 @@ extension ColorPickerView: HuePickerViewDelegate {
      */
     public func huePicked(huePickerView: HuePickerView, hue: CGFloat) {
         saturationBrightnessPickerView.hue = hue
-        alphaPickerView.hue = hue
         let color = saturationBrightnessPickerView.color
         let alpha = alphaPickerView.alphaValue
-        pickerDelegate?.colorPicked(self, didPickColor: color.colorWithAlphaComponent(alpha))
+        let colorWithAlpha = color.colorWithAlphaComponent(alpha)
+        alphaPickerView.color = colorWithAlpha
+        pickerDelegate?.colorPicked(self, didPickColor: colorWithAlpha)
     }
 }
 

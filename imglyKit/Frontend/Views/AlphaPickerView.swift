@@ -52,19 +52,10 @@ import UIKit
         }
     }
 
-    /// The currently choosen hue value of the color gradient.
-    public var hue = CGFloat(0) {
-        didSet {
-            updateMarkerPosition()
-            self.setNeedsDisplay()
-        }
-    }
-
     /// The currently choosen color value of the color gradient.
     public var color = UIColor.redColor() {
         didSet {
             alphaValue = CGColorGetAlpha(color.CGColor)
-            hue = color.hsb.hue
             updateMarkerPosition()
             self.setNeedsDisplay()
         }
@@ -126,8 +117,8 @@ import UIKit
 
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let locs: [CGFloat] = [0.00, 1.0]
-        let colors = [UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 1.0).CGColor,
-            UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.0).CGColor]
+        let colors = [UIColor(hue: color.hsb.hue, saturation: color.hsb.saturation, brightness: color.hsb.brightness, alpha: 1.0).CGColor,
+            UIColor(hue: color.hsb.hue, saturation: color.hsb.saturation, brightness: color.hsb.brightness, alpha: 0.0).CGColor]
         let grad = CGGradientCreateWithColors(colorSpace, colors, locs)
 
         CGContextDrawLinearGradient(context, grad, CGPoint(x:0, y: rect.size.height), CGPoint(x: 0, y: 0), CGGradientDrawingOptions(rawValue: 0))
@@ -187,6 +178,6 @@ import UIKit
 
     private func updateMarkerPosition() {
         let markerY =  alphaValue * self.frame.size.height
-        markerView.frame.origin = CGPoint(x: -10, y: markerY)
+        markerView.center = CGPoint(x: self.frame.size.width / 2.0, y: markerY)
     }
 }
