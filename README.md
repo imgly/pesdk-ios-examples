@@ -1,4 +1,4 @@
-> :warning: **Warning:** There's a [new version](https://itunes.apple.com/de/app/img.ly-camera-pro-photo-sharing/id589839231?mt=8) available which is not developed publicly. Visit [https://www.photoeditorsdk.com](https://www.photoeditorsdk.com) for more information on the new SDK. :warning:
+> :warning: **Warning:** There's a [new version](https://itunes.apple.com/us/app/img.ly-camera-pro-photo-sharing/id589839231?mt=8) available which is not developed publicly. Visit [https://www.photoeditorsdk.com](https://www.photoeditorsdk.com) for more information on the new SDK. :warning:
 
 ---
 
