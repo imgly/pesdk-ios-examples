@@ -887,11 +887,9 @@ extension IMGLYCameraViewController: IMGLYCameraControllerDelegate {
         // add recordingTimeLabel
         if recordingMode == .Video {
             self.addRecordingTimeLabel()
-            self.cameraController?.hideSquareMask()
-        } else {
-            if self.squareMode {
-                self.cameraController?.showSquareMask()
-            }
+        }
+        if self.squareMode {
+            self.cameraController?.showSquareMask()
         }
         
     }
