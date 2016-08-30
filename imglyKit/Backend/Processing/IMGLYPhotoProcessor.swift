@@ -111,10 +111,15 @@ public class IMGLYPhotoProcessor {
         guard let coreImage = CIImage(image: image) else {
             return nil
         }
+
+        var result: UIImage?
         
-        let filteredCIImage = processWithCIImage(coreImage, filters: filters)
-        let filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage!, fromRect: filteredCIImage!.extent)
-        return UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
+        if let filteredCIImage = processWithCIImage(coreImage, filters: filters) {
+            let filteredCGImage = CIContext(options: nil).createCGImage(filteredCIImage, fromRect: filteredCIImage.extent)
+            result = UIImage(CGImage: filteredCGImage, scale: 1.0, orientation: imageOrientation)
+        }
+        
+        return result
     }
     
     #elseif os(OSX)

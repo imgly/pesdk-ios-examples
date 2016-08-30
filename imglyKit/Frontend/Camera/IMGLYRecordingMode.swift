@@ -48,8 +48,9 @@ import MobileCoreServices
             button.adjustsImageWhenHighlighted = false
             
             for var index = 0; index < 10; index++ {
-                let image = String(format: "LensAperture_ShapeLayer_%05d", index)
-                button.imageView?.animationImages?.append(UIImage(named: image, inBundle: bundle, compatibleWithTraitCollection:nil)!)
+                if let image = UIImage(named:String(format: "LensAperture_ShapeLayer_%05d", index), inBundle: bundle, compatibleWithTraitCollection:nil) {
+                    button.imageView?.animationImages?.append(image)
+                }
             }
             
             return button
