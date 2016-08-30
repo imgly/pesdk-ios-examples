@@ -176,7 +176,6 @@
 		2BEBCE971B00D7D1000FE22B /* IMGLYAnimationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEBCE961B00D7D1000FE22B /* IMGLYAnimationDelegate.swift */; };
 		2BEE5B321B063E7800FDF0F7 /* IMGLYCameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BEE5B311B063E7800FDF0F7 /* IMGLYCameraController.swift */; };
 		2BF4D38A1AF1139600C801B2 /* imglyKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 2BF4D3891AF1139600C801B2 /* imglyKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3A71AF114F000C801B2 /* Assets.xcassets */; };
 		2BF4D3AC1AF114FA00C801B2 /* IMGLYCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AA1AF114FA00C801B2 /* IMGLYCameraViewController.swift */; };
 		2BF4D3CC1AF1150400C801B2 /* IMGLYActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AD1AF1150400C801B2 /* IMGLYActionButton.swift */; };
 		2BF4D3CD1AF1150500C801B2 /* IMGLYBoxGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3AE1AF1150400C801B2 /* IMGLYBoxGradientView.swift */; };
@@ -211,87 +210,6 @@
 		2BF4D3EA1AF1150500C801B2 /* IMGLYTextEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3CB1AF1150400C801B2 /* IMGLYTextEditorViewController.swift */; };
 		2BF4D3EE1AF1151500C801B2 /* CIFilterExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3EB1AF1151500C801B2 /* CIFilterExtension.swift */; };
 		2BF4D3EF1AF1151500C801B2 /* UIImageExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D3EC1AF1151500C801B2 /* UIImageExtension.swift */; };
-		2BF4D4361AF1152500C801B2 /* AD1920.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F21AF1152400C801B2 /* AD1920.png */; };
-		2BF4D4371AF1152500C801B2 /* Ancient.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F31AF1152400C801B2 /* Ancient.png */; };
-		2BF4D4381AF1152500C801B2 /* Bleached.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F41AF1152400C801B2 /* Bleached.png */; };
-		2BF4D4391AF1152500C801B2 /* BleachedBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F51AF1152500C801B2 /* BleachedBlue.png */; };
-		2BF4D43B1AF1152500C801B2 /* Blues.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F71AF1152500C801B2 /* Blues.png */; };
-		2BF4D43C1AF1152500C801B2 /* BlueShadows.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F81AF1152500C801B2 /* BlueShadows.png */; };
-		2BF4D43D1AF1152500C801B2 /* Breeze.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3F91AF1152500C801B2 /* Breeze.png */; };
-		2BF4D43E1AF1152500C801B2 /* BW.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FA1AF1152500C801B2 /* BW.png */; };
-		2BF4D43F1AF1152500C801B2 /* Celsius.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FB1AF1152500C801B2 /* Celsius.png */; };
-		2BF4D4401AF1152500C801B2 /* Chest.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FC1AF1152500C801B2 /* Chest.png */; };
-		2BF4D4411AF1152500C801B2 /* Classic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FD1AF1152500C801B2 /* Classic.png */; };
-		2BF4D4421AF1152500C801B2 /* Colorful.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FE1AF1152500C801B2 /* Colorful.png */; };
-		2BF4D4431AF1152500C801B2 /* Cool.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D3FF1AF1152500C801B2 /* Cool.png */; };
-		2BF4D4441AF1152500C801B2 /* CottonCandy.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4001AF1152500C801B2 /* CottonCandy.png */; };
-		2BF4D4451AF1152500C801B2 /* Creamy.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4011AF1152500C801B2 /* Creamy.png */; };
-		2BF4D4461AF1152500C801B2 /* Eighties.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4021AF1152500C801B2 /* Eighties.png */; };
-		2BF4D4471AF1152500C801B2 /* Elder.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4031AF1152500C801B2 /* Elder.png */; };
-		2BF4D4481AF1152500C801B2 /* Evening.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4041AF1152500C801B2 /* Evening.png */; };
-		2BF4D4491AF1152500C801B2 /* Fall.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4051AF1152500C801B2 /* Fall.png */; };
-		2BF4D44A1AF1152500C801B2 /* Fixie.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4061AF1152500C801B2 /* Fixie.png */; };
-		2BF4D44B1AF1152500C801B2 /* Food.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4071AF1152500C801B2 /* Food.png */; };
-		2BF4D44C1AF1152500C801B2 /* Fridge.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4081AF1152500C801B2 /* Fridge.png */; };
-		2BF4D44D1AF1152500C801B2 /* Front.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4091AF1152500C801B2 /* Front.png */; };
-		2BF4D44E1AF1152500C801B2 /* Glam.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40A1AF1152500C801B2 /* Glam.png */; };
-		2BF4D44F1AF1152500C801B2 /* Gobblin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40B1AF1152500C801B2 /* Gobblin.png */; };
-		2BF4D4501AF1152500C801B2 /* Highcarb.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40C1AF1152500C801B2 /* Highcarb.png */; };
-		2BF4D4511AF1152500C801B2 /* HighContrast.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40D1AF1152500C801B2 /* HighContrast.png */; };
-		2BF4D4521AF1152500C801B2 /* Identity.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40E1AF1152500C801B2 /* Identity.png */; };
-		2BF4D4531AF1152500C801B2 /* K1.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D40F1AF1152500C801B2 /* K1.png */; };
-		2BF4D4541AF1152500C801B2 /* K2.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4101AF1152500C801B2 /* K2.png */; };
-		2BF4D4551AF1152500C801B2 /* K6.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4111AF1152500C801B2 /* K6.png */; };
-		2BF4D4561AF1152500C801B2 /* KDynamic.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4121AF1152500C801B2 /* KDynamic.png */; };
-		2BF4D4571AF1152500C801B2 /* Keen.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4131AF1152500C801B2 /* Keen.png */; };
-		2BF4D4581AF1152500C801B2 /* Lenin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4141AF1152500C801B2 /* Lenin.png */; };
-		2BF4D4591AF1152500C801B2 /* Litho.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4151AF1152500C801B2 /* Litho.png */; };
-		2BF4D45A1AF1152500C801B2 /* Lomo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4161AF1152500C801B2 /* Lomo.png */; };
-		2BF4D45B1AF1152500C801B2 /* Lomo100.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4171AF1152500C801B2 /* Lomo100.png */; };
-		2BF4D45C1AF1152500C801B2 /* Lucid.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4181AF1152500C801B2 /* Lucid.png */; };
-		2BF4D45D1AF1152500C801B2 /* Mellow.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4191AF1152500C801B2 /* Mellow.png */; };
-		2BF4D45F1AF1152500C801B2 /* Neat.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D41B1AF1152500C801B2 /* Neat.png */; };
-		2BF4D4611AF1152500C801B2 /* NoGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D41D1AF1152500C801B2 /* NoGreen.png */; };
-		2BF4D4621AF1152500C801B2 /* Orchid.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D41E1AF1152500C801B2 /* Orchid.png */; };
-		2BF4D4631AF1152500C801B2 /* Pale.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D41F1AF1152500C801B2 /* Pale.png */; };
-		2BF4D4641AF1152500C801B2 /* Pitched.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4201AF1152500C801B2 /* Pitched.png */; };
-		2BF4D4651AF1152500C801B2 /* Plate.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4211AF1152500C801B2 /* Plate.png */; };
-		2BF4D4661AF1152500C801B2 /* Pola669.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4221AF1152500C801B2 /* Pola669.png */; };
-		2BF4D4671AF1152500C801B2 /* PolaSX.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4231AF1152500C801B2 /* PolaSX.png */; };
-		2BF4D4691AF1152500C801B2 /* Pro400.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4251AF1152500C801B2 /* Pro400.png */; };
-		2BF4D46A1AF1152500C801B2 /* Quozi.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4261AF1152500C801B2 /* Quozi.png */; };
-		2BF4D46B1AF1152500C801B2 /* SepiaHigh.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4271AF1152500C801B2 /* SepiaHigh.png */; };
-		2BF4D46C1AF1152500C801B2 /* Settled.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4281AF1152500C801B2 /* Settled.png */; };
-		2BF4D46D1AF1152500C801B2 /* Seventies.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4291AF1152500C801B2 /* Seventies.png */; };
-		2BF4D46E1AF1152500C801B2 /* Sin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D42A1AF1152500C801B2 /* Sin.png */; };
-		2BF4D46F1AF1152500C801B2 /* Soft.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D42B1AF1152500C801B2 /* Soft.png */; };
-		2BF4D4701AF1152500C801B2 /* Steel.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D42C1AF1152500C801B2 /* Steel.png */; };
-		2BF4D4711AF1152500C801B2 /* Summer.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D42D1AF1152500C801B2 /* Summer.png */; };
-		2BF4D4731AF1152500C801B2 /* Sunset.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D42F1AF1152500C801B2 /* Sunset.png */; };
-		2BF4D4741AF1152500C801B2 /* Tender.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4301AF1152500C801B2 /* Tender.png */; };
-		2BF4D4751AF1152500C801B2 /* Texas.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4311AF1152500C801B2 /* Texas.png */; };
-		2BF4D4761AF1152500C801B2 /* Twilight.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4321AF1152500C801B2 /* Twilight.png */; };
-		2BF4D4771AF1152500C801B2 /* Winter.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4331AF1152500C801B2 /* Winter.png */; };
-		2BF4D4781AF1152500C801B2 /* X400.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4341AF1152500C801B2 /* X400.png */; };
-		2BF4D48C1AF1153B00C801B2 /* AbrahamLincoln.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4791AF1153B00C801B2 /* AbrahamLincoln.ttf */; };
-		2BF4D48D1AF1153B00C801B2 /* Airship 27-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47A1AF1153B00C801B2 /* Airship 27-Regular.ttf */; };
-		2BF4D48E1AF1153B00C801B2 /* Arvil_Sans.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47B1AF1153B00C801B2 /* Arvil_Sans.ttf */; };
-		2BF4D48F1AF1153B00C801B2 /* Bender-Inline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47C1AF1153B00C801B2 /* Bender-Inline.otf */; };
-		2BF4D4901AF1153B00C801B2 /* BLANCH_CONDENSED.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47D1AF1153B00C801B2 /* BLANCH_CONDENSED.otf */; };
-		2BF4D4911AF1153B00C801B2 /* cubano-regular-webfont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47E1AF1153B00C801B2 /* cubano-regular-webfont.ttf */; };
-		2BF4D4921AF1153B00C801B2 /* Franchise-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D47F1AF1153B00C801B2 /* Franchise-Bold.ttf */; };
-		2BF4D4931AF1153B00C801B2 /* GearedSlab.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4801AF1153B00C801B2 /* GearedSlab.ttf */; };
-		2BF4D4941AF1153B00C801B2 /* governor.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4811AF1153B00C801B2 /* governor.ttf */; };
-		2BF4D4951AF1153B00C801B2 /* Haymaker.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4821AF1153B00C801B2 /* Haymaker.ttf */; };
-		2BF4D4961AF1153B00C801B2 /* Homestead-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4831AF1153B00C801B2 /* Homestead-Regular.ttf */; };
-		2BF4D4971AF1153B00C801B2 /* Liberator.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4841AF1153B00C801B2 /* Liberator.ttf */; };
-		2BF4D4981AF1153B00C801B2 /* MavenProLight-200.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4851AF1153B00C801B2 /* MavenProLight-200.otf */; };
-		2BF4D4991AF1153B00C801B2 /* mensch.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4861AF1153B00C801B2 /* mensch.ttf */; };
-		2BF4D49A1AF1153B00C801B2 /* Muncie.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4871AF1153B00C801B2 /* Muncie.ttf */; };
-		2BF4D49B1AF1153B00C801B2 /* Sullivan-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4881AF1153B00C801B2 /* Sullivan-Regular.otf */; };
-		2BF4D49C1AF1153B00C801B2 /* Tommaso.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D4891AF1153B00C801B2 /* Tommaso.ttf */; };
-		2BF4D49D1AF1153B00C801B2 /* ValenciaRegular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D48A1AF1153B00C801B2 /* ValenciaRegular.otf */; };
-		2BF4D49E1AF1153B00C801B2 /* vevey.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2BF4D48B1AF1153B00C801B2 /* vevey.ttf */; };
 		2BF4D4A91AF1154B00C801B2 /* IMGLYContrastBrightnessSaturationFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D49F1AF1154B00C801B2 /* IMGLYContrastBrightnessSaturationFilter.swift */; };
 		2BF4D4AA1AF1154B00C801B2 /* IMGLYCropFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4A01AF1154B00C801B2 /* IMGLYCropFilter.swift */; };
 		2BF4D4AB1AF1154B00C801B2 /* IMGLYEnhancementFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BF4D4A11AF1154B00C801B2 /* IMGLYEnhancementFilter.swift */; };
@@ -1111,89 +1029,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2BF4D4521AF1152500C801B2 /* Identity.png in Resources */,
-				2BF4D44E1AF1152500C801B2 /* Glam.png in Resources */,
-				2BF4D46B1AF1152500C801B2 /* SepiaHigh.png in Resources */,
-				2BF4D4511AF1152500C801B2 /* HighContrast.png in Resources */,
-				2BF4D43D1AF1152500C801B2 /* Breeze.png in Resources */,
-				2BF4D4561AF1152500C801B2 /* KDynamic.png in Resources */,
-				2BF4D4911AF1153B00C801B2 /* cubano-regular-webfont.ttf in Resources */,
-				2BF4D4461AF1152500C801B2 /* Eighties.png in Resources */,
-				2BF4D4741AF1152500C801B2 /* Tender.png in Resources */,
-				2BF4D45B1AF1152500C801B2 /* Lomo100.png in Resources */,
-				2BF4D4961AF1153B00C801B2 /* Homestead-Regular.ttf in Resources */,
-				2BF4D44F1AF1152500C801B2 /* Gobblin.png in Resources */,
-				2BF4D4671AF1152500C801B2 /* PolaSX.png in Resources */,
-				2BF4D4901AF1153B00C801B2 /* BLANCH_CONDENSED.otf in Resources */,
-				2BF4D4761AF1152500C801B2 /* Twilight.png in Resources */,
-				2BF4D4991AF1153B00C801B2 /* mensch.ttf in Resources */,
-				2BF4D43E1AF1152500C801B2 /* BW.png in Resources */,
-				2BF4D44B1AF1152500C801B2 /* Food.png in Resources */,
-				2BF4D49A1AF1153B00C801B2 /* Muncie.ttf in Resources */,
-				2BF4D4931AF1153B00C801B2 /* GearedSlab.ttf in Resources */,
-				2BF4D4551AF1152500C801B2 /* K6.png in Resources */,
-				2BF4D4711AF1152500C801B2 /* Summer.png in Resources */,
-				2BF4D4411AF1152500C801B2 /* Classic.png in Resources */,
-				2BF4D4381AF1152500C801B2 /* Bleached.png in Resources */,
-				2BF4D4651AF1152500C801B2 /* Plate.png in Resources */,
-				2BF4D49B1AF1153B00C801B2 /* Sullivan-Regular.otf in Resources */,
-				2BF4D4661AF1152500C801B2 /* Pola669.png in Resources */,
-				2BF4D4591AF1152500C801B2 /* Litho.png in Resources */,
-				2BF4D4371AF1152500C801B2 /* Ancient.png in Resources */,
-				2BF4D48C1AF1153B00C801B2 /* AbrahamLincoln.ttf in Resources */,
-				2BF4D48F1AF1153B00C801B2 /* Bender-Inline.otf in Resources */,
-				2BF4D4421AF1152500C801B2 /* Colorful.png in Resources */,
-				2BF4D4451AF1152500C801B2 /* Creamy.png in Resources */,
-				2BF4D4471AF1152500C801B2 /* Elder.png in Resources */,
-				2BF4D4981AF1153B00C801B2 /* MavenProLight-200.otf in Resources */,
-				2BF4D46E1AF1152500C801B2 /* Sin.png in Resources */,
-				2BF4D4781AF1152500C801B2 /* X400.png in Resources */,
-				2BF4D4611AF1152500C801B2 /* NoGreen.png in Resources */,
-				2BF4D46F1AF1152500C801B2 /* Soft.png in Resources */,
-				2BF4D3A81AF114F000C801B2 /* Assets.xcassets in Resources */,
-				2BF4D48D1AF1153B00C801B2 /* Airship 27-Regular.ttf in Resources */,
-				2BF4D48E1AF1153B00C801B2 /* Arvil_Sans.ttf in Resources */,
-				2BF4D43C1AF1152500C801B2 /* BlueShadows.png in Resources */,
-				2BF4D4771AF1152500C801B2 /* Winter.png in Resources */,
-				2BF4D4751AF1152500C801B2 /* Texas.png in Resources */,
-				2BF4D4621AF1152500C801B2 /* Orchid.png in Resources */,
-				2BF4D4571AF1152500C801B2 /* Keen.png in Resources */,
-				2BF4D4581AF1152500C801B2 /* Lenin.png in Resources */,
-				2BF4D49E1AF1153B00C801B2 /* vevey.ttf in Resources */,
-				2BF4D45A1AF1152500C801B2 /* Lomo.png in Resources */,
-				2BF4D45D1AF1152500C801B2 /* Mellow.png in Resources */,
-				2BF4D46A1AF1152500C801B2 /* Quozi.png in Resources */,
-				2BF4D4641AF1152500C801B2 /* Pitched.png in Resources */,
-				2BF4D4481AF1152500C801B2 /* Evening.png in Resources */,
-				2BF4D4921AF1153B00C801B2 /* Franchise-Bold.ttf in Resources */,
 				2BF4D5451AF115A200C801B2 /* Localizable.strings in Resources */,
-				2BF4D44D1AF1152500C801B2 /* Front.png in Resources */,
-				2BF4D49C1AF1153B00C801B2 /* Tommaso.ttf in Resources */,
-				2BF4D46C1AF1152500C801B2 /* Settled.png in Resources */,
-				2BF4D4431AF1152500C801B2 /* Cool.png in Resources */,
-				2BF4D43F1AF1152500C801B2 /* Celsius.png in Resources */,
-				2BF4D49D1AF1153B00C801B2 /* ValenciaRegular.otf in Resources */,
-				2BF4D4491AF1152500C801B2 /* Fall.png in Resources */,
-				2BF4D4531AF1152500C801B2 /* K1.png in Resources */,
-				2BF4D4361AF1152500C801B2 /* AD1920.png in Resources */,
-				2BF4D4501AF1152500C801B2 /* Highcarb.png in Resources */,
-				2BF4D4441AF1152500C801B2 /* CottonCandy.png in Resources */,
-				2BF4D4541AF1152500C801B2 /* K2.png in Resources */,
-				2BF4D45C1AF1152500C801B2 /* Lucid.png in Resources */,
-				2BF4D4701AF1152500C801B2 /* Steel.png in Resources */,
-				2BF4D4401AF1152500C801B2 /* Chest.png in Resources */,
-				2BF4D4951AF1153B00C801B2 /* Haymaker.ttf in Resources */,
-				2BF4D4391AF1152500C801B2 /* BleachedBlue.png in Resources */,
-				2BF4D4691AF1152500C801B2 /* Pro400.png in Resources */,
-				2BF4D46D1AF1152500C801B2 /* Seventies.png in Resources */,
-				2BF4D44A1AF1152500C801B2 /* Fixie.png in Resources */,
-				2BF4D44C1AF1152500C801B2 /* Fridge.png in Resources */,
-				2BF4D4631AF1152500C801B2 /* Pale.png in Resources */,
-				2BF4D43B1AF1152500C801B2 /* Blues.png in Resources */,
-				2BF4D45F1AF1152500C801B2 /* Neat.png in Resources */,
-				2BF4D4941AF1153B00C801B2 /* governor.ttf in Resources */,
-				2BF4D4971AF1153B00C801B2 /* Liberator.ttf in Resources */,
-				2BF4D4731AF1152500C801B2 /* Sunset.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

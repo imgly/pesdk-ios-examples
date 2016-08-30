@@ -73,13 +73,15 @@ extension IMGLYFilterSelectionController {
                 
                 // Create filterPreviewImage
                 dispatch_async(PhotoProcessorQueue) {
-                    let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil)!, filters: [filter])
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        FilterPreviews[filterType] = filterPreviewImage
-                        if let filterCell = collectionView.cellForItemAtIndexPath(indexPath) as? IMGLYFilterCollectionViewCell {
-                            self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
-                            filterCell.activityIndicator.stopAnimating()
+                    if let nonePreview = UIImage(named: "nonePreview", inBundle: bundle, compatibleWithTraitCollection:nil) {
+                        let filterPreviewImage = IMGLYPhotoProcessor.processWithUIImage(nonePreview, filters: [filter])
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            FilterPreviews[filterType] = filterPreviewImage
+                            if let filterCell = collectionView.cellForItemAtIndexPath(indexPath) as? IMGLYFilterCollectionViewCell {
+                                self.updateCell(filterCell, atIndexPath: indexPath, withFilterType: filter.filterType, forImage: filterPreviewImage)
+                                filterCell.activityIndicator.stopAnimating()
+                            }
                         }
                     }
                 }
