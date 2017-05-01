@@ -8,9 +8,9 @@
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
 #import "ViewController.h"
-@import imglyKit;
+@import PhotoEditorSDK;
 
-@interface ViewController () <IMGLYPhotoEditViewControllerDelegate>
+@interface ViewController () <PESDKPhotoEditViewControllerDelegate>
 
 @end
 
@@ -30,21 +30,19 @@
 
 #pragma mark - Configuration
 
-- (IMGLYConfiguration *)buildConfiguration {
-    IMGLYConfiguration *configuration = [[IMGLYConfiguration alloc] initWithBuilder:^(IMGLYConfigurationBuilder * _Nonnull builder) {
+- (void)configureStickers {
+    // Duplicate the first sticker category for demonstration purposes
+
+    PESDKStickerCategory *stickerCategory = PESDKStickerCategory.all.firstObject;
+    PESDKStickerCategory.all = [PESDKStickerCategory.all arrayByAddingObject:stickerCategory];
+}
+
+- (PESDKConfiguration *)buildConfiguration {
+    PESDKConfiguration *configuration = [[PESDKConfiguration alloc] initWithBuilder:^(PESDKConfigurationBuilder * _Nonnull builder) {
         // Configure camera
-        [builder configureCameraViewController:^(IMGLYCameraViewControllerOptionsBuilder * _Nonnull options) {
+        [builder configureCameraViewController:^(PESDKCameraViewControllerOptionsBuilder * _Nonnull options) {
             // Just enable Photos
             options.allowedRecordingModesAsNSNumbers = @[@(RecordingModePhoto)];
-        }];
-
-        // Get a reference to the sticker data source
-        [builder configureStickerToolController:^(IMGLYStickerToolControllerOptionsBuilder * _Nonnull options) {
-            options.stickerCategoryDataSourceConfigurationClosure = ^(IMGLYStickerCategoryDataSource * _Nonnull dataSource) {
-                // Duplicate the first sticker category for demonstration purposes
-                IMGLYStickerCategory *stickerCategory = dataSource.stickerCategories.firstObject;
-                dataSource.stickerCategories = @[stickerCategory, stickerCategory];
-            };
         }];
     }];
 
@@ -54,9 +52,10 @@
 #pragma mark - Presentation
 
 - (void)presentCameraViewController {
-    IMGLYConfiguration *configuration = [self buildConfiguration];
-    IMGLYCameraViewController *cameraViewController = [[IMGLYCameraViewController alloc] initWithConfiguration:configuration];
-    __weak IMGLYCameraViewController *weakCameraViewController = cameraViewController;
+    [self configureStickers];
+    PESDKConfiguration *configuration = [self buildConfiguration];
+    PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
+    __weak PESDKCameraViewController *weakCameraViewController = cameraViewController;
     cameraViewController.completionBlock = ^(UIImage * _Nullable image, NSURL * _Nullable videoURL) {
         [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:image] animated:YES completion:nil];
     };
@@ -64,18 +63,18 @@
     [self presentViewController:cameraViewController animated:YES completion:nil];
 }
 
-- (IMGLYToolbarController *)createPhotoEditViewControllerWithPhoto:(UIImage *)photo {
-    IMGLYConfiguration *configuration = [self buildConfiguration];
-    NSMutableArray<IMGLYBoxedMenuItem *> *menuItems = [[IMGLYBoxedMenuItem boxedDefaultItemsWithConfiguration:configuration] mutableCopy];
+- (PESDKToolbarController *)createPhotoEditViewControllerWithPhoto:(UIImage *)photo {
+    PESDKConfiguration *configuration = [self buildConfiguration];
+    NSMutableArray<PESDKMenuItem *> *menuItems = [[PESDKMenuItem defaultItemsWithConfiguration:configuration] mutableCopy];
     [menuItems removeLastObject]; // Remove last meu item ('Magic')
 
     // Create a photo edit view controller
-    IMGLYPhotoEditViewController *photoEditViewController = [[IMGLYPhotoEditViewController alloc] initWithPhoto:photo menuItems:menuItems configuration:configuration];
+    PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhoto:photo menuItems:menuItems configuration:configuration];
     photoEditViewController.delegate = self;
 
     // A PhotoEditViewController works in conjunction with a `ToolbarController`, so in almost
     // all cases it should be embedded in one and presented together.
-    IMGLYToolbarController *toolbarController = [[IMGLYToolbarController alloc] init];
+    PESDKToolbarController *toolbarController = [[PESDKToolbarController alloc] init];
     [toolbarController pushViewController:photoEditViewController animated:NO completion:nil];
 
     return toolbarController;
@@ -93,15 +92,15 @@
 
 #pragma mark - PhotoEditViewControllerDelegate
 
-- (void)photoEditViewController:(IMGLYPhotoEditViewController *)photoEditViewController didSaveImage:(UIImage *)image imageAsData:(NSData *)data {
+- (void)photoEditViewController:(PESDKPhotoEditViewController *)photoEditViewController didSaveImage:(UIImage *)image imageAsData:(NSData *)data {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)photoEditViewControllerDidFailToGeneratePhoto:(IMGLYPhotoEditViewController *)photoEditViewController {
+- (void)photoEditViewControllerDidFailToGeneratePhoto:(PESDKPhotoEditViewController *)photoEditViewController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)photoEditViewControllerDidCancel:(IMGLYPhotoEditViewController *)photoEditviewController {
+- (void)photoEditViewControllerDidCancel:(PESDKPhotoEditViewController *)photoEditviewController {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

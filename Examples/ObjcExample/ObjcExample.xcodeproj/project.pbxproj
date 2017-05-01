@@ -48,7 +48,6 @@
 			children = (
 				2B4792A81E02E67F00BBB8D9 /* ObjcExample */,
 				2B4792A71E02E67F00BBB8D9 /* Products */,
-				9B387068C91493E4C6A0FCF4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,13 +83,6 @@
 				2B4792AA1E02E67F00BBB8D9 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		9B387068C91493E4C6A0FCF4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

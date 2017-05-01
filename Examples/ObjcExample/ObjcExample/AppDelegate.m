@@ -8,7 +8,7 @@
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
 #import "AppDelegate.h"
-@import imglyKit;
+@import PhotoEditorSDK;
 
 @interface AppDelegate ()
 
