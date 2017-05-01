@@ -57,7 +57,6 @@
 			children = (
 				2B6EC4691E02D46B007525F4 /* SwiftExample */,
 				2B6EC4681E02D46B007525F4 /* Products */,
-				B9A4C2448A4FB29985FFA595 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,13 +81,6 @@
 				2B6EC46C1E02D46B007525F4 /* ViewController.swift */,
 			);
 			path = SwiftExample;
-			sourceTree = "<group>";
-		};
-		B9A4C2448A4FB29985FFA595 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

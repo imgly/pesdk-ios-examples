@@ -8,7 +8,7 @@
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
 import UIKit
-import imglyKit
+import PhotoEditorSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

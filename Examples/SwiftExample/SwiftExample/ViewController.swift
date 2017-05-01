@@ -8,7 +8,7 @@
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
 import UIKit
-import imglyKit
+import PhotoEditorSDK
 
 private enum Selection: Int {
     case camera = 0
@@ -38,22 +38,20 @@ class ViewController: UITableViewController {
 
     // MARK: - Configuration
 
+    private func configureStickers() {
+        // Duplicate the first sticker category for demonstration purposes
+
+        if let stickerCategory = StickerCategory.all.first {
+            StickerCategory.all.append(stickerCategory)
+        }
+    }
+
     private func buildConfiguration() -> Configuration {
         let configuration = Configuration() { builder in
             // Configure camera
             builder.configureCameraViewController() { options in
                 // Just enable Photos
                 options.allowedRecordingModes = [.photo]
-            }
-
-            // Get a reference to the sticker data source
-            builder.configureStickerToolController() { options in
-                options.stickerCategoryDataSourceConfigurationClosure = { dataSource in
-                    // Duplicate the first sticker category for demonstration purposes
-                    if let stickerCategory = dataSource.stickerCategories?.first {
-                        dataSource.stickerCategories = [stickerCategory, stickerCategory]
-                    }
-                }
             }
         }
 
@@ -63,6 +61,7 @@ class ViewController: UITableViewController {
     // MARK: - Presentation
 
     private func presentCameraViewController() {
+        configureStickers()
         let configuration = buildConfiguration()
         let cameraViewController = CameraViewController(configuration: configuration)
         cameraViewController.completionBlock = { [unowned cameraViewController] image, videoURL in
@@ -150,15 +149,15 @@ class ViewController: UITableViewController {
 
     fileprivate func customizeTextTool() {
         let fonts = [
-            Font(displayName: "Arial", fontName: "ArialMT"),
-            Font(displayName: "Helvetica", fontName: "Helvetica"),
-            Font(displayName: "Avenir", fontName: "Avenir-Heavy"),
-            Font(displayName: "Chalk", fontName: "Chalkduster"),
-            Font(displayName: "Copperplate", fontName: "Copperplate"),
-            Font(displayName: "Noteworthy", fontName: "Noteworthy-Bold")
+            Font(displayName: "Arial", fontName: "ArialMT", identifier: "Arial"),
+            Font(displayName: "Helvetica", fontName: "Helvetica", identifier: "Helvetica"),
+            Font(displayName: "Avenir", fontName: "Avenir-Heavy", identifier: "Avenir-Heavy"),
+            Font(displayName: "Chalk", fontName: "Chalkduster", identifier: "Chalkduster"),
+            Font(displayName: "Copperplate", fontName: "Copperplate", identifier: "Copperplate"),
+            Font(displayName: "Noteworthy", fontName: "Noteworthy-Bold", identifier: "Notewortyh")
         ]
         
-        FontImporter.fonts = fonts
+        FontImporter.all = fonts
     }
     
     fileprivate func customizeCameraController(_ builder: ConfigurationBuilder) {
@@ -208,7 +207,7 @@ class ViewController: UITableViewController {
     
     func menuItems(with configuration: Configuration) -> [MenuItem] {
         return [
-            .tool("Transform", UIImage(named: "ic_crop_48pt", in:  Bundle.imglyKitBundle, compatibleWith: nil)!, TransformToolController(configuration: configuration))
+            .tool("Transform", UIImage(named: "imgly_icon_tool_transform_48pt", in:  Bundle.pesdkBundle, compatibleWith: nil)!, TransformToolController(configuration: configuration))
         ]
     }
 }
