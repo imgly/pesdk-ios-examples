@@ -17,7 +17,7 @@
 
 ## Overview
 
-Our SDK provides tools for adding photo editing capabilities to your iOS application with a big variety of filters that can be previewed in realtime. Unlike other apps that allow a live preview of filters, the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) even provides a live preview when using high-resolution images. We do not have any resolution limits, the framework is written in Swift and allows for easy customization.
+Our SDK provides tools for adding photo editing capabilities to your iOS application with a big variety of filters that can be previewed in realtime. Unlike other apps that allow a live preview of filters, the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) even provides a live preview when using high-resolution images. The framework is written in Swift and allows for easy customization.
 Additionally we support adding stickers and text in a non-destructive manner, which means that you can change the position, size, scale and order at any given time, even after applying other effects or cropping the photo.
 
 This repository contains two examples. Both examples are identical except for the fact that [one is written in Objective-C](https://github.com/imgly/pesdk-ios-examples/tree/master/Examples/ObjcExample) and [the other is written in Swift](https://github.com/imgly/pesdk-ios-examples/tree/master/Examples/SwiftExample). Both examples use CocoaPods for the integration and do some very basic customization of the SDK. Before compiling any of the examples you will have to install the CocoaPod using `pod install`.
