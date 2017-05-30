@@ -1,3 +1,100 @@
+# 7.1.0
+
+## Added
+
+* The camera tags photos with their location now. This only works when using `Data` instances instead of `UIImage` instances to pass the photo around because those strip EXIF data. See `CameraViewController.dataCompletionBlock` for more details.
+* We added a default confirmation dialog when dismissing the editor with changes pending. This can be changed or disabled by setting `PhotoEditViewControllerOptions.discardConfirmationClosure`.
+
+## Changed
+
+* The preview image is now automatically resized when a slider overlays the preview at the bottom, so that is always completely visible.
+* We replaced the gaussian blur used in the focus tool with a lens blur like effect for much better looking photos. This does not work on the following older devices where we continue to use a gaussian blur due to performance issues:
+	* iPad mini 1st, 2nd and 3rd gen
+	* iPad 2nd and 3rd gen
+	* iPhone 4S
+	* iPod touch
+
+## Fixed
+
+* Fixed various issues with the serialization and deserialization features.
+* Fixed an issue with different color spaces used for the preview and the thumbnails in the filter tool.
+* Stickers now use anti-aliasing.
+* The icon of the 'No Frame' cell in the frame tool is now tinted with the cell's `tintColor` to better match other cells.
+* The label of the 'Magic' cell in the main menu is now tinted with the cell's `tintColor` when highlighted to better match other cells.
+* The `Slider` now sends a `.touchUpInside` event after a `.touchDown` event has been sent without dragging in between.
+* When adding a frame to a photo it would sometimes not completely cover the preview image (by about 1 px).
+* When selecting a sticker with its `tintMode` set to `.none` and then dismissing the `StickerOptionsToolController`, the color option would be visible for a split second during the dismissal animation.
+* The `BoxGradientView` and `CircleGradientView` now only draw themselves while visible, resulting in a minor performance improvement.
+* Sprites didn't have the correct position for a split second when opening the frame tool.
+* Sprites would be rotated in the wrong direction when the photo has been flipped.
+* Text bounding box resizing would be inverted if the image has been flipped and rotated.
+
+# 7.0.1
+
+## Added
+
+* Added the ability to zoom using a pinch gesture within the `CameraViewController`.
+
+## Fixed
+
+* The icon of the 'No Overlay' option in the overlay tool was not using its @2x and @3x variants.
+* Fixed a bug with the new filters and adjustments.
+* Fixed interface rotation support.
+
+# 7.0
+
+## Changed
+
+* **The SDK has been renamed from `imglyKit` to `PhotoEditorSDK` and all class prefixes have been renamed from `IMGLY` to `PESDK`. Likewise the CocoaPod has been renamed to `PhotoEditorSDK`.**
+* We now ship the framework as a DMG file and include the dSYM file and bcsymbolmaps for better debugging. To integrate the dSYM into your final app, please follow the updated manual integration guide.
+* The `PESDK.shared` singleton has been removed. All of its properties are now static properties on the `PESDK` class.
+* The default progress view must be set using the static `PESDK.progressView` property instead of the `Configuration` closure.
+* The integrated fonts have been changed.
+* The `AdjustToolController` has been improved for much better looking and faster adjustments.
+* We were able to significantly decrease the size of our filter's lookup images while also improving the filter's performance.
+* All asset names have been changed to a consistent naming scheme.
+* The overall look and feel of the `FrameToolController` has been improved.
+* Custom stickers are now added by setting `Sticker.all`, custom fonts are added by setting `FontImporter.all`, custom frames are added by setting `Frame.all` and custom overlays are added by setting `Overlay.all` instead of using the `Configuration` class.
+
+## Added
+
+* Serialization and deserialization has been added. Because of this many classes (e.g. `Sticker`, `Frame`) now require an `identifier`. For more information please see the documentation.
+* The `OverlayToolController` tool has been added, which can be used to add overlays to a photo. Please see the documentation for more information.
+* A custom logger with varying log levels was added. See documentation for more information.
+* The `Sticker` class now supports `.colorized` as its `tintMode`. See the API documentation for more information.
+* A 3:2 crop aspect has been added to `TransformToolController`'s defaults.
+* An Emoticon and a Shapes sticker set has been added.
+* `TextFontToolControllerOptions` now has a `fontSelectorViewConfigurationClosure` property and a `handleButtonConfigurationClosure` property for better customization.
+* `StickerToolControllerOptions` now has a `stickerPreviewSize` property to adjust the size of the stickers in the preview.
+
+## Removed
+
+* The Toy sticker set has been removed.
+
+## Fixed
+
+* The button to show/hide the font selector view within the `TextFontToolController` now respects the view's `tintColor`.
+* Full accessibility support has been restored.
+
+# 6.5.4
+
+## Changed
+
+* With the color picker expanded you can now tap anywhere above it to dismiss the color picker.
+* We restored iOS 8 compatibility in this release. Please note that this only means that the framework can be integrated into a target with iOS 8 as its deployment target. However most classes and especially all view controllers are *not* available on iOS 8. We strongly advise that you disable any editing functions for users running iOS 8.
+
+# 6.5.3
+
+## Changed
+
+* We replaced the set of included fonts with much better looking fonts.
+
+# 6.5.2
+
+## Fixed
+
+* Fixed a crash when adding text. This was introduced by the Swift 3.1 compiler, see [SR-4393](https://bugs.swift.org/browse/SR-4393) for more details.
+
 # 6.5.1
 
 ## Fixed
