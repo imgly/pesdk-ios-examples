@@ -2,7 +2,7 @@
 ## Master Software License Agreement
 
 
-### 1. Subject Matter__
+### 1. Subject Matter
 
 1.1 This Master Software License Agreement (together with any applicable Order Form the “__Agreement__”) governs all rights granted by Licensor to use and commercially exploit the Photo Editor Software Development Kit (the “__Software__”).
 
