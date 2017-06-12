@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="http://static.photoeditorsdk.com/logo.png" />
+    <a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=Android-Demo"><img src="http://static.photoeditorsdk.com/logo.png" alt="PhotoEditor SDK Logo"/></a>
 </p>
 <p align="center">
 	<a href="https://cocoapods.org/pods/PhotoEditorSDK">
@@ -59,7 +59,7 @@ A commercial license is required for any app or service that has any form of mon
 * Updated Focus Tool: You can finally adjust the gradient and we've moved from a gaussian blur to a box blur for an even better result.
 * Transform Tool: We've completely redesigned and rewritten our crop tool. You can now not only crop your image, but also straighten it.
 
-<p><img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg"></p>
+<p><a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=IOS-Build"><img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=IOS-Build"></a></p>
 
 ## License
 
@@ -67,7 +67,7 @@ Please see [LICENSE](https://github.com/imgly/pesdk-ios-examples/blob/master/LIC
 
 # Documentation
 
-For a detailed documentation, please take a look [here](http://docs.photoeditorsdk.com/guides/ios/).
+For a detailed documentation, please take a look [here](http://docs.photoeditorsdk.com/guides/ios/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=IOS-Build).
 
 ## Author
 
