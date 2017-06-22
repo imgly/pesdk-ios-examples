@@ -1,5 +1,5 @@
 <p align="center">
-    <a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=Android-Demo"><img src="http://static.photoeditorsdk.com/logo.png" alt="PhotoEditor SDK Logo"/></a>
+    <a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS"><img src="http://static.photoeditorsdk.com/logo.png" alt="PhotoEditor SDK Logo"/></a>
 </p>
 <p align="center">
 	<a href="https://cocoapods.org/pods/PhotoEditorSDK">
@@ -17,22 +17,22 @@
 
 ## Overview
 
-The [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) is a powerful and multifaceted tool which enables you to equip your iOS application with high-performant photo editing capabilities. The [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) is written in Swift and can easily be customized to entirely blend with your CI and provide your users with the exact feature set your use-case requires. 
+The [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS) is a powerful and multifaceted tool which enables you to equip your iOS application with high-performant photo editing capabilities. The [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS) is written in Swift and can easily be customized to entirely blend with your CI and provide your users with the exact feature set your use-case requires. 
 
-The SDK ships with a large variety of filters, covering all state of the art style- and mood settings that can be previewed in real-time. Unlike other apps that allow a live preview of filters, the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) even provides a live preview when using high-resolution images. 
+The SDK ships with a large variety of filters, covering all state of the art style- and mood settings that can be previewed in real-time. Unlike other apps that allow a live preview of filters, the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS) even provides a live preview when using high-resolution images. 
 
-All operations are non-destructive which allows for fast and uncomplicated revision of the creatives at any given time and creates an intuitive and creative workflow for your users. Please see [Features](https://github.com/imgly/pesdk-ios-examples/blob/master/README.md#features) for a detailed list of the photo editing tools included in the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS).
+All operations are non-destructive which allows for fast and uncomplicated revision of the creatives at any given time and creates an intuitive and creative workflow for your users. Please see [Features](https://github.com/imgly/pesdk-ios-examples/blob/master/README.md#features) for a detailed list of the photo editing tools included in the [PhotoEditor SDK](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS).
 
 This repository contains two examples. Both examples are identical except for the fact that one is written in [Objective-C](https://github.com/imgly/pesdk-ios-examples/tree/master/Examples/ObjcExample) and the other is written in [Swift](https://github.com/imgly/pesdk-ios-examples/tree/master/Examples/SwiftExample). Both examples use CocoaPods for the integration and do some very basic customization of the SDK. Before compiling any of the examples you will have to install the CocoaPod using `pod install`.
 
 
 ## License
 
-The PhotoEditorSDK is a product of 9elements GmbH. Please make sure that you have a commercial [license](https://www.photoeditorsdk.com/pricing/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) before releasing your app. A commercial license is required if you would like to integrate the SDK into any app, regardless of whether you monetize directly (paid app, subscription, service fee), indirectly (advertising, etc.) or are developing a free app. Every license for the PhotoEditor SDK is valid for one product only unless the products are closely related.
+The PhotoEditorSDK is a product of 9elements GmbH. Please make sure that you have a commercial [license](https://www.photoeditorsdk.com/pricing/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS) before releasing your app. A commercial license is required if you would like to integrate the SDK into any app, regardless of whether you monetize directly (paid app, subscription, service fee), indirectly (advertising, etc.) or are developing a free app. Every license for the PhotoEditor SDK is valid for one product only unless the products are closely related.
 
 If you’d like to use the PhotoEditor SDK for a charitable project, you can do so free of charge. However, please contact us anyway, so we can evaluate whether you qualify for a non-commercial license or not and handle your request accordingly. 
 
-Please [get in touch](https://www.photoeditorsdk.com/pricing/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS) if you’d like to purchase a commercial license or require further information on our pricing and services. Please see the included [LICENSE](https://github.com/imgly/pesdk-ios-examples/blob/master/LICENSE.md) for licensing details.
+Please [get in touch](https://www.photoeditorsdk.com/pricing/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS) if you’d like to purchase a commercial license or require further information on our pricing and services. Please see the included [LICENSE](https://github.com/imgly/pesdk-ios-examples/blob/master/LICENSE.md) for licensing details.
 
 
 ## Features
@@ -75,7 +75,8 @@ Please [get in touch](https://www.photoeditorsdk.com/pricing/?utm_campaign=Proje
 * Updated Focus Tool: You can finally adjust the gradient and we've moved from a gaussian blur to a box blur for an even better result.
 * Transform Tool: We've completely redesigned and rewritten our crop tool. You can now not only crop your image, but also straighten it.
 
-<p><a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS"><img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS"></a></p>
+<p><a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS
+"><img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS"></a></p>
 
 ## License
 
@@ -83,8 +84,8 @@ Please see [LICENSE](https://github.com/imgly/pesdk-ios-examples/blob/master/LIC
 
 # Documentation
 
-For a detailed documentation, please take a look [here](http://docs.photoeditorsdk.com/guides/ios/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS).
+For a detailed documentation, please take a look [here](http://docs.photoeditorsdk.com/guides/ios/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS).
 
 ## Author
 
-9elements GmbH, [@PhotoEditorSDK](https://twitter.com/PhotoEditorSDK), [https://www.photoeditorsdk.com](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_term=iOS)
+9elements GmbH, [@PhotoEditorSDK](https://twitter.com/PhotoEditorSDK), [https://www.photoeditorsdk.com](https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS)
