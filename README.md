@@ -76,10 +76,6 @@ Please [get in touch](https://www.photoeditorsdk.com/pricing/?utm_campaign=Proje
 <p><a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS
 "><img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS"></a></p>
 
-## License
-
-Please see [LICENSE](https://github.com/imgly/pesdk-ios-examples/blob/master/LICENSE.md) for licensing details.
-
 ## Documentation
 
 For a detailed documentation, please take a look [here](http://docs.photoeditorsdk.com/guides/ios/?utm_campaign=Projects&utm_source=Github&utm_medium=PESDK&utm_content=iOS-Examples&utm_term=iOS).
