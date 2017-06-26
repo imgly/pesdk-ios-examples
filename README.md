@@ -48,9 +48,7 @@ Please [get in touch](https://www.photoeditorsdk.com/pricing/?utm_campaign=Proje
 * A high performant **Brush Engine** optimized for touch screen that supports different brush strokes.  
 * A **Photo Roll** equipped with a wide range of stock photography and templates with presorted categories. The API allows for easy expansion, reduction and rearrangement of the assets. 
 * A clean and intuitive **UI** that ensures an unhindered flow of creativity and a seamless experience while composing creatives. The UI is designed to be customized to completely match your CI and blend with your app. 
-* You can strip out every feature you deem unnecessary to provide your users with the exact feature set your use case requires. 
-
-* **Native code:** Our rendering engine is based on Apple's Core Image therefore we dodge all the nasty OpenGL problems other frameworks are facing.
+* You can strip out every feature you deem unnecessary to provide your users with the exact feature set your use case requires.
 * **iPad support:** The PhotoEditor SDK uses auto layout for its views and adapts to each screen size - iPhone or iPad.
 * **Swift:** Keeping up with time, we chose Swift as the main development language of the PhotoEditor SDK, leading to leaner, easier code.
 * **Live preview:** Filters can be previewed directly in the camera mode even when using high-resolution images.
