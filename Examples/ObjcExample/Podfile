@@ -2,5 +2,5 @@ platform :ios, '9.0'
 
 target 'ObjcExample' do
   use_frameworks!
-  pod 'PhotoEditorSDK', '~> 7.2'
+  pod 'PhotoEditorSDK', '~> 7.3'
 end
