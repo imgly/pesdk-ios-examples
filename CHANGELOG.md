@@ -1,3 +1,33 @@
+## 8.0.0
+
+### Added
+
+* Full support for iOS 11 and Swift 4.
+* Added rotation gesture support to `FrameToolController` (disabled by default).
+* Added serialization format v3.0.0, which can be used to serialize and deserialize edits across all platforms.
+* Added support for the iPhone X to `PhotoEditViewController`.
+
+### Changed
+
+* Completely refactored the sprite handling code. Sprites (stickers, text, brush and frames) are now directly rendered on top of the image instead of rendering a view snapshot. This results in better looking images, better performance and more robust code.
+* Completely refactored `PhotoEditViewController` and all `PhotoEditToolController` subclasses. We make heavy use of composition and container view controllers now, leading to better support for customizations and custom user interfaces.
+* All view controllers and views can be replaced by a custom subclass using `PESDK.replaceClass(_:with:)` for even better customization options.
+* Undo and redo is now supported by all tools. The sticker, text and brush tools continue to have a local undo/redo stack in addition to the global undo/redo stack.
+
+### Fixed
+
+* Fixed an issue where the selected crop rectangle would change after tapping the apply button in the transform tool.
+* Fixed an issue where focus would change its appearance and position after transform.
+* Fixed an issue where the color saturation and brightness picker would sometimes not update while dragging the hue picker.
+* The `PhotoEditViewController` can now be pushed onto a navigation controller that uses a translucent navigation bar.
+* Fixed various layout issues with the transform and frame tools.
+* Fixed a crash when quickly switching between a sticker and text.
+
+### Removed
+
+* Removed the transparent color from the default color palette for text color and brush color.
+* The `ToolbarController` class has been removed. An instance of `PhotoEditViewController` can now be used directly.
+
 ## 7.3.0
 
 ### Fixed
