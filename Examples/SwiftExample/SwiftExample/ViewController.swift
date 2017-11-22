@@ -37,15 +37,7 @@ class ViewController: UITableViewController {
   }
 
   // MARK: - Configuration
-
-  private func configureStickers() {
-    // Duplicate the first sticker category for demonstration purposes
-
-    if let stickerCategory = StickerCategory.all.first {
-      StickerCategory.all.append(stickerCategory)
-    }
-  }
-
+  
   private func buildConfiguration() -> Configuration {
     let configuration = Configuration() { builder in
       // Configure camera
@@ -61,43 +53,45 @@ class ViewController: UITableViewController {
   // MARK: - Presentation
 
   private func presentCameraViewController() {
-    configureStickers()
     let configuration = buildConfiguration()
     let cameraViewController = CameraViewController(configuration: configuration)
-    cameraViewController.completionBlock = { [unowned cameraViewController] image, videoURL in
-      if let image = image {
-        cameraViewController.present(self.createPhotoEditViewController(with: image), animated: true, completion: nil)
+    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
+      if let data = data {
+        let photo = Photo(data: data)
+        cameraViewController.present(self.createPhotoEditViewController(with: photo), animated: true, completion: nil)
       }
     }
 
     present(cameraViewController, animated: true, completion: nil)
   }
 
-  private func createPhotoEditViewController(with photo: UIImage) -> PhotoEditViewController {
+  private func createPhotoEditViewController(with photo: Photo) -> PhotoEditViewController {
     let configuration = buildConfiguration()
     var menuItems = PhotoEditMenuItem.defaultItems
     menuItems.removeLast() // Remove last menu item ('Magic')
 
     // Create a photo edit view controller
-    let photoEditViewController = PhotoEditViewController(photo: photo, configuration: configuration, menuItems: menuItems)
+    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, menuItems: menuItems)
     photoEditViewController.delegate = self
 
     return photoEditViewController
   }
 
   private func presentPhotoEditViewController() {
-    guard let photo = UIImage(named: "LA.jpg") else {
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
       return
     }
 
+    let photo = Photo(url: url)
     present(createPhotoEditViewController(with: photo), animated: true, completion: nil)
   }
 
   private func pushPhotoEditViewController() {
-    guard let photo = UIImage(named: "LA.jpg") else {
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
       return
     }
 
+    let photo = Photo(url: url)
     navigationController?.pushViewController(createPhotoEditViewController(with: photo), animated: true)
   }
 
@@ -119,8 +113,9 @@ class ViewController: UITableViewController {
       window.tintColor = redColor
     }
 
-    cameraViewController.completionBlock = { image, url in
-      let photoEditViewController = PhotoEditViewController(photo: image!, configuration: configuration)
+    cameraViewController.dataCompletionBlock = { data in
+      let photo = Photo(data: data!)
+      let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration)
       photoEditViewController.view.tintColor = UIColor(red: 0.11, green: 0.44, blue: 1.00, alpha: 1.00)
       photoEditViewController.toolbar.backgroundColor = UIColor.gray
       photoEditViewController.delegate = self
