@@ -30,13 +30,6 @@
 
 #pragma mark - Configuration
 
-- (void)configureStickers {
-  // Duplicate the first sticker category for demonstration purposes
-  
-  PESDKStickerCategory *stickerCategory = PESDKStickerCategory.all.firstObject;
-  PESDKStickerCategory.all = [PESDKStickerCategory.all arrayByAddingObject:stickerCategory];
-}
-
 - (PESDKConfiguration *)buildConfiguration {
   PESDKConfiguration *configuration = [[PESDKConfiguration alloc] initWithBuilder:^(PESDKConfigurationBuilder * _Nonnull builder) {
     // Configure camera
@@ -52,36 +45,38 @@
 #pragma mark - Presentation
 
 - (void)presentCameraViewController {
-  [self configureStickers];
   PESDKConfiguration *configuration = [self buildConfiguration];
   PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
   __weak PESDKCameraViewController *weakCameraViewController = cameraViewController;
-  cameraViewController.completionBlock = ^(UIImage * _Nullable image, NSURL * _Nullable videoURL) {
-    [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:image] animated:YES completion:nil];
+  cameraViewController.dataCompletionBlock = ^(NSData * _Nullable data) {
+    PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
+    [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
   };
   
   [self presentViewController:cameraViewController animated:YES completion:nil];
 }
 
-- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(UIImage *)photo {
+- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo {
   PESDKConfiguration *configuration = [self buildConfiguration];
   NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
   [menuItems removeLastObject]; // Remove last menu item ('Magic')
   
   // Create a photo edit view controller
-  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhoto:photo configuration:configuration menuItems:menuItems photoEditModel:[[PESDKPhotoEditModel alloc] init]];
+  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration menuItems:menuItems photoEditModel:[[PESDKPhotoEditModel alloc] init]];
   photoEditViewController.delegate = self;
   
   return photoEditViewController;
 }
 
 - (void)presentPhotoEditViewController {
-  UIImage *photo = [UIImage imageNamed:@"LA.jpg"];
+  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithUrl:url];
   [self presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
 }
 
 - (void)pushPhotoEditViewController {
-  UIImage *photo = [UIImage imageNamed:@"LA.jpg"];
+  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithUrl:url];
   [self.navigationController pushViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES];
 }
 
