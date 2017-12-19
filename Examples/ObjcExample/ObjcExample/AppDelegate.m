@@ -18,7 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   // Activate Photo Editor SDK license
-  [PESDK unlockWithLicenseAt:[[NSBundle mainBundle] URLForResource:@"license" withExtension:@""]];
+  [PESDK unlockWithLicenseAt:[[NSBundle mainBundle] URLForResource:@"ios_license" withExtension:@"dms"]];
   
   return YES;
 }

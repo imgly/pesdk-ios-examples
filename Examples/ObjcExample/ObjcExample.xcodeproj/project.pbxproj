@@ -13,8 +13,8 @@
 		2B4792B41E02E67F00BBB8D9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792B21E02E67F00BBB8D9 /* Main.storyboard */; };
 		2B4792B61E02E67F00BBB8D9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */; };
 		2B4792B91E02E67F00BBB8D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792B71E02E67F00BBB8D9 /* LaunchScreen.storyboard */; };
-		2B4792C11E02E6A600BBB8D9 /* license in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792C01E02E6A600BBB8D9 /* license */; };
 		2B4792C31E02E6BE00BBB8D9 /* LA.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792C21E02E6BE00BBB8D9 /* LA.jpg */; };
+		2BB142A41FE9640A000EC46D /* ios_license.dms in Resources */ = {isa = PBXBuildFile; fileRef = 2BB142A31FE9640A000EC46D /* ios_license.dms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,8 +28,8 @@
 		2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B4792B81E02E67F00BBB8D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B4792BA1E02E67F00BBB8D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B4792C01E02E6A600BBB8D9 /* license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license; sourceTree = "<group>"; };
 		2B4792C21E02E6BE00BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Samples/LA.jpg; sourceTree = "<group>"; };
+		2BB142A31FE9640A000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,9 +66,9 @@
 				2B4792AD1E02E67F00BBB8D9 /* AppDelegate.m */,
 				2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */,
 				2B4792BA1E02E67F00BBB8D9 /* Info.plist */,
+				2BB142A31FE9640A000EC46D /* ios_license.dms */,
 				2B4792C21E02E6BE00BBB8D9 /* LA.jpg */,
 				2B4792B71E02E67F00BBB8D9 /* LaunchScreen.storyboard */,
-				2B4792C01E02E6A600BBB8D9 /* license */,
 				2B4792B21E02E67F00BBB8D9 /* Main.storyboard */,
 				2B4792A91E02E67F00BBB8D9 /* Supporting Files */,
 				2B4792AF1E02E67F00BBB8D9 /* ViewController.h */,
@@ -111,7 +111,7 @@
 		2B47929E1E02E67E00BBB8D9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = "9elements GmbH";
 				TargetAttributes = {
 					2B4792A51E02E67F00BBB8D9 = {
@@ -143,10 +143,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2BB142A41FE9640A000EC46D /* ios_license.dms in Resources */,
 				2B4792C31E02E6BE00BBB8D9 /* LA.jpg in Resources */,
 				2B4792B91E02E67F00BBB8D9 /* LaunchScreen.storyboard in Resources */,
 				2B4792B61E02E67F00BBB8D9 /* Assets.xcassets in Resources */,
-				2B4792C11E02E6A600BBB8D9 /* license in Resources */,
 				2B4792B41E02E67F00BBB8D9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -195,7 +195,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -203,7 +205,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -243,7 +249,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -251,7 +259,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
