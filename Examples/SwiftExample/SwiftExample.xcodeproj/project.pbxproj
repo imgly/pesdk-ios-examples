@@ -13,7 +13,7 @@
 		2B6EC4701E02D46B007525F4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC46E1E02D46B007525F4 /* Main.storyboard */; };
 		2B6EC4721E02D46B007525F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC4711E02D46B007525F4 /* Assets.xcassets */; };
 		2B6EC4751E02D46B007525F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC4731E02D46B007525F4 /* LaunchScreen.storyboard */; };
-		2B6EC4801E02D66F007525F4 /* license in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC47F1E02D66F007525F4 /* license */; };
+		2BB142A61FE964FF000EC46D /* ios_license.dms in Resources */ = {isa = PBXBuildFile; fileRef = 2BB142A51FE964FF000EC46D /* ios_license.dms */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +38,7 @@
 		2B6EC4711E02D46B007525F4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B6EC4741E02D46B007525F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B6EC4761E02D46B007525F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B6EC47F1E02D66F007525F4 /* license */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = license; sourceTree = "<group>"; };
+		2BB142A51FE964FF000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,9 +74,9 @@
 				2B6EC46A1E02D46B007525F4 /* AppDelegate.swift */,
 				2B6EC4711E02D46B007525F4 /* Assets.xcassets */,
 				2B6EC4761E02D46B007525F4 /* Info.plist */,
+				2BB142A51FE964FF000EC46D /* ios_license.dms */,
 				2B47929A1E02DF6100BBB8D9 /* LA.jpg */,
 				2B6EC4731E02D46B007525F4 /* LaunchScreen.storyboard */,
-				2B6EC47F1E02D66F007525F4 /* license */,
 				2B6EC46E1E02D46B007525F4 /* Main.storyboard */,
 				2B6EC46C1E02D46B007525F4 /* ViewController.swift */,
 			);
@@ -146,7 +146,7 @@
 				2B47929B1E02DF6100BBB8D9 /* LA.jpg in Resources */,
 				2B6EC4751E02D46B007525F4 /* LaunchScreen.storyboard in Resources */,
 				2B6EC4721E02D46B007525F4 /* Assets.xcassets in Resources */,
-				2B6EC4801E02D66F007525F4 /* license in Resources */,
+				2BB142A61FE964FF000EC46D /* ios_license.dms in Resources */,
 				2B6EC4701E02D46B007525F4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     // Activate Photo Editor SDK license
-    if let licenseURL = Bundle.main.url(forResource: "license", withExtension: "") {
+    if let licenseURL = Bundle.main.url(forResource: "ios_license", withExtension: "dms") {
       PESDK.unlockWithLicense(at: licenseURL)
     }
 
