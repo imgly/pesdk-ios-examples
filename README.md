@@ -73,7 +73,6 @@ For a step-by-step guide to integrate PhotoEditor SDK, please visit [docs.photoe
 Make sure you have a commercial license before releasing your app.
 A commercial license is required for any app or service that has any form of monetization: This includes free apps with in-app purchases or ad supported applications. Please contact us if you want to purchase the commercial license.
 
+## Support and License
 
-## Support
-
-Please use our [Service Desk](http://support.photoeditorsdk.com/) if you have any questions or would like to submit bug reports.
+Use our [service desk](http://support.photoeditorsdk.com) for bug reports or support requests. To request a commercial license, please use the [license request form](https://www.photoeditorsdk.com/pricing) on our website.
