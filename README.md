@@ -9,10 +9,6 @@
 	</a>
 	<a href="http://twitter.com/PhotoEditorSDK">
 		<img src="https://img.shields.io/badge/twitter-@PhotoEditorSDK-blue.svg?style=flat" alt="Twitter">
-	</a>
-	<a target="_blank" href="https://pesdk-slack.herokuapp.com/">
-		<img src="https://pesdk-slack.herokuapp.com/badge.svg" alt="Slack Status" />
-	</a>
 </p>
 
 # About PhotoEditor SDK for iOS
