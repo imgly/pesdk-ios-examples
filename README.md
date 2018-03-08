@@ -9,6 +9,7 @@
 	</a>
 	<a href="http://twitter.com/PhotoEditorSDK">
 		<img src="https://img.shields.io/badge/twitter-@PhotoEditorSDK-blue.svg?style=flat" alt="Twitter">
+	</a>
 </p>
 
 # About PhotoEditor SDK for iOS
