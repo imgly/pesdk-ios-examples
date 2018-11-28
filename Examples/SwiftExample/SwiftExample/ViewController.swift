@@ -185,7 +185,7 @@ class ViewController: UITableViewController {
       }
 
       options.actionButtonConfigurationClosure = { cell, action in
-        cell.captionTintColor = UIColor.red
+        cell.contentTintColor = UIColor.red
       }
     }
   }

@@ -35,7 +35,7 @@
     // Configure camera
     [builder configureCameraViewController:^(PESDKCameraViewControllerOptionsBuilder * _Nonnull options) {
       // Just enable Photos
-      options.allowedRecordingModesAsNSNumbers = @[@(RecordingModePhoto)];
+      options.allowedRecordingModes = @[@(RecordingModePhoto)];
     }];
   }];
   
