@@ -1,5 +1,5 @@
 //  This file is part of the PhotoEditor Software Development Kit.
-//  Copyright (C) 2016 9elements GmbH <contact@9elements.com>
+//  Copyright (C) 2016-2019 img.ly GmbH <contact@img.ly>
 //  All rights reserved.
 //  Redistribution and use in source and binary forms, without
 //  modification, are permitted provided that the following license agreement
@@ -7,8 +7,8 @@
 //  The license agreement can be found under the following link:
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
-import UIKit
 import PhotoEditorSDK
+import UIKit
 
 private enum Selection: Int {
   case camera = 0
@@ -168,10 +168,10 @@ class ViewController: UITableViewController {
       }
 
       // Force a selfie camera
-      options.allowedCameraPositions = [ .front ]
+      options.allowedCameraPositions = [.front]
 
       // Disable flash
-      options.allowedFlashModes = [ .off ]
+      options.allowedFlashModes = [.off]
     }
   }
 
@@ -184,7 +184,7 @@ class ViewController: UITableViewController {
         }
       }
 
-      options.actionButtonConfigurationClosure = { cell, action in
+      options.actionButtonConfigurationClosure = { cell, _ in
         cell.contentTintColor = UIColor.red
       }
     }

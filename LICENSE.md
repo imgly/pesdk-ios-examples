@@ -6,7 +6,7 @@
 
 1.1 This Master Software License Agreement (together with any applicable Order Form the “__Agreement__”) governs all rights granted by Licensor to use and commercially exploit the Photo Editor Software Development Kit (the “__Software__”).
 
-1.2 The Agreement is entered into by and between 9elements GmbH, Kortumstraße 19-21, 44787 Bochum, Germany (the “__Licensor__”) and the entity identified in the Order Form (the “__Licensee__”, together with Licensor the “__Parties__”) as of the effective date the Order Form is last signed on.
+1.2 The Agreement is entered into by and between img.ly GmbH, Kortumstraße 68, 44787 Bochum, Germany (the “__Licensor__”) and the entity identified in the Order Form (the “__Licensee__”, together with Licensor the “__Parties__”) as of the effective date the Order Form is last signed on.
 
 1.3 This Agreement shall govern the use of the Software for commercial purposes. To the extent the Software is intended to be used for non-commercial purposes only, an alternative licensing scheme may be available upon Licensor’s discretion.
 
@@ -152,4 +152,3 @@
 | Sticker: Filled Outlined Icon Pack  |
 | Fonts: Aleo Bold, Amatic SC, Lobster, Open Sans Bold, Ostrich Sans Black, Ostrich Sans Bold, Trash Hand: _SIL Open Font License_ |
 | Fonts by FontFabric: Bernier Regular, Cheque Regular, Gagalin Regular, Hagin Caps Thin, Intro Inline, Nexa Script, Panton Black Italic Caps, Panton Light Italic Caps, Perfograma: [_EULA Free Fonts_](https://www.photoeditorsdk.com/downloads/licenses/EULA%20Free%20Font%20License%20Ver.%202.0.pdf) |
-
