@@ -38,7 +38,7 @@
       options.allowedRecordingModes = @[@(RecordingModePhoto)];
     }];
   }];
-  
+
   return configuration;
 }
 
@@ -52,7 +52,7 @@
     PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
     [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
   };
-  
+
   [self presentViewController:cameraViewController animated:YES completion:nil];
 }
 
@@ -60,11 +60,11 @@
   PESDKConfiguration *configuration = [self buildConfiguration];
   NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
   [menuItems removeLastObject]; // Remove last menu item ('Magic')
-  
+
   // Create a photo edit view controller
   PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration menuItems:menuItems photoEditModel:[[PESDKPhotoEditModel alloc] init]];
   photoEditViewController.delegate = self;
-  
+
   return photoEditViewController;
 }
 

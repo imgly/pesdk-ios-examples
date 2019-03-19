@@ -37,11 +37,11 @@ class ViewController: UITableViewController {
   }
 
   // MARK: - Configuration
-  
+
   private func buildConfiguration() -> Configuration {
-    let configuration = Configuration() { builder in
+    let configuration = Configuration { builder in
       // Configure camera
-      builder.configureCameraViewController() { options in
+      builder.configureCameraViewController { options in
         // Just enable Photos
         options.allowedRecordingModes = [.photo]
       }
@@ -204,4 +204,3 @@ extension ViewController: PhotoEditViewControllerDelegate {
     dismiss(animated: true, completion: nil)
   }
 }
-
