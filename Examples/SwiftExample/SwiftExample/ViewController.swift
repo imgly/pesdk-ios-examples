@@ -42,8 +42,10 @@ class ViewController: UITableViewController {
     let configuration = Configuration { builder in
       // Configure camera
       builder.configureCameraViewController { options in
-        // Just enable Photos
+        // Just enable photos
         options.allowedRecordingModes = [.photo]
+        // Show cancel button
+        options.showCancelButton = true
       }
     }
 
@@ -55,23 +57,27 @@ class ViewController: UITableViewController {
   private func presentCameraViewController() {
     let configuration = buildConfiguration()
     let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.cancelBlock = {
+      self.dismiss(animated: true, completion: nil)
+    }
     cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
       if let data = data {
         let photo = Photo(data: data)
-        cameraViewController.present(self.createPhotoEditViewController(with: photo), animated: true, completion: nil)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
       }
     }
 
     present(cameraViewController, animated: true, completion: nil)
   }
 
-  private func createPhotoEditViewController(with photo: Photo) -> PhotoEditViewController {
+  private func createPhotoEditViewController(with photo: Photo, and photoEditModel: PhotoEditModel = PhotoEditModel()) -> PhotoEditViewController {
     let configuration = buildConfiguration()
     var menuItems = PhotoEditMenuItem.defaultItems
     menuItems.removeLast() // Remove last menu item ('Magic')
 
     // Create a photo edit view controller
-    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, menuItems: menuItems)
+    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, menuItems: menuItems, photoEditModel: photoEditModel)
     photoEditViewController.delegate = self
 
     return photoEditViewController
@@ -113,9 +119,10 @@ class ViewController: UITableViewController {
       window.tintColor = redColor
     }
 
-    cameraViewController.dataCompletionBlock = { data in
+    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
       let photo = Photo(data: data!)
-      let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration)
+      let photoEditModel = cameraViewController.photoEditModel
+      let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
       photoEditViewController.view.tintColor = UIColor(red: 0.11, green: 0.44, blue: 1.00, alpha: 1.00)
       photoEditViewController.toolbar.backgroundColor = UIColor.gray
       photoEditViewController.delegate = self

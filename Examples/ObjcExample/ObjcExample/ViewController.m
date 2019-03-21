@@ -34,8 +34,10 @@
   PESDKConfiguration *configuration = [[PESDKConfiguration alloc] initWithBuilder:^(PESDKConfigurationBuilder * _Nonnull builder) {
     // Configure camera
     [builder configureCameraViewController:^(PESDKCameraViewControllerOptionsBuilder * _Nonnull options) {
-      // Just enable Photos
+      // Just enable photos
       options.allowedRecordingModes = @[@(RecordingModePhoto)];
+      // Show cancel button
+      options.showCancelButton = true;
     }];
   }];
 
@@ -48,21 +50,29 @@
   PESDKConfiguration *configuration = [self buildConfiguration];
   PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
   __weak PESDKCameraViewController *weakCameraViewController = cameraViewController;
+  cameraViewController.cancelBlock = ^{
+    [self dismissViewControllerAnimated:YES completion:nil];
+  };
   cameraViewController.dataCompletionBlock = ^(NSData * _Nullable data) {
     PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
-    [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
+    PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
+    [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
   };
 
   [self presentViewController:cameraViewController animated:YES completion:nil];
 }
 
 - (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo {
+  return [self createPhotoEditViewControllerWithPhoto:photo and:[[PESDKPhotoEditModel alloc] init]];
+}
+
+- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo and:(PESDKPhotoEditModel *)photoEditModel {
   PESDKConfiguration *configuration = [self buildConfiguration];
   NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
   [menuItems removeLastObject]; // Remove last menu item ('Magic')
 
   // Create a photo edit view controller
-  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration menuItems:menuItems photoEditModel:[[PESDKPhotoEditModel alloc] init]];
+  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration menuItems:menuItems photoEditModel:photoEditModel];
   photoEditViewController.delegate = self;
 
   return photoEditViewController;
