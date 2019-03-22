@@ -140,7 +140,7 @@
 | EXIF.js by Jacob Seidelin | MIT |
 | Kingfisher | MIT |
 | SwiftyRSA | MIT |
-| SwiftKeychainWrapper | MIT |
+| IGListKit | MIT |
 
 
 ### Annex 2
