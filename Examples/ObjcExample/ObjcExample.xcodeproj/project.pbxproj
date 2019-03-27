@@ -30,6 +30,9 @@
 		2B4792BA1E02E67F00BBB8D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B4792C21E02E6BE00BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Samples/LA.jpg; sourceTree = "<group>"; };
 		2BB142A31FE9640A000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
+		3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Debug.xcconfig"; path = "Configuration/ObjcExample-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
+		3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Release.xcconfig"; path = "Configuration/ObjcExample-Release.xcconfig"; sourceTree = SOURCE_ROOT; };
+		3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../../../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +67,8 @@
 		2B4792A81E02E67F00BBB8D9 /* ObjcExample */ = {
 			isa = PBXGroup;
 			children = (
+				3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */,
+				3D03399C224BAADE00F52FD8 /* Configuration */,
 				2B4792AC1E02E67F00BBB8D9 /* AppDelegate.h */,
 				2B4792AD1E02E67F00BBB8D9 /* AppDelegate.m */,
 				2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */,
@@ -85,6 +90,15 @@
 				2B4792AA1E02E67F00BBB8D9 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3D03399C224BAADE00F52FD8 /* Configuration */ = {
+			isa = PBXGroup;
+			children = (
+				3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */,
+				3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */,
+			);
+			name = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -190,6 +204,7 @@
 /* Begin XCBuildConfiguration section */
 		2B4792BB1E02E67F00BBB8D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -247,6 +262,7 @@
 		};
 		2B4792BC1E02E67F00BBB8D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -298,24 +314,26 @@
 		};
 		2B4792BE1E02E67F00BBB8D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjcExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ly.img.PhotoEditorSDK.ObjC.ObjcExample;
+				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.ObjC.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
 		2B4792BF1E02E67F00BBB8D9 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjcExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = ly.img.PhotoEditorSDK.ObjC.ObjcExample;
+				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.ObjC.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
