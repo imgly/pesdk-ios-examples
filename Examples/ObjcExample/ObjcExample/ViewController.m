@@ -8,6 +8,7 @@
 //  https://www.photoeditorsdk.com/LICENSE.txt
 
 #import "ViewController.h"
+@import CoreLocation;
 @import PhotoEditorSDK;
 
 @interface ViewController () <PESDKPhotoEditViewControllerDelegate>
@@ -49,6 +50,10 @@
 - (void)presentCameraViewController {
   PESDKConfiguration *configuration = [self buildConfiguration];
   PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
+  cameraViewController.locationAccessRequestClosure = ^(CLLocationManager * _Nonnull locationManager) {
+    [locationManager requestWhenInUseAuthorization];
+  };
+
   __weak PESDKCameraViewController *weakCameraViewController = cameraViewController;
   cameraViewController.cancelBlock = ^{
     [self dismissViewControllerAnimated:YES completion:nil];

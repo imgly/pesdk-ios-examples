@@ -23,7 +23,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera so you can take a picture. No data will leave your device. You have our word.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone so you can record a video. We're not recording anything and no data will leave your device. For real dawg.</string>
+	<string>We need access to your microphone so you can record a video. We&apos;re not recording anything and no data will leave your device. For real dawg.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We use your photos solely so you can edit and save them. Your photos will never leave your device. We promise.</string>
 	<key>UILaunchStoryboardName</key>
@@ -45,5 +45,7 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Photos will be tagged with the location where they are taken.</string>
 </dict>
 </plist>

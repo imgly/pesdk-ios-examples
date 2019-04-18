@@ -57,6 +57,9 @@ class ViewController: UITableViewController {
   private func presentCameraViewController() {
     let configuration = buildConfiguration()
     let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.locationAccessRequestClosure = { locationManager in
+      locationManager.requestWhenInUseAuthorization()
+    }
     cameraViewController.cancelBlock = {
       self.dismiss(animated: true, completion: nil)
     }
@@ -113,6 +116,9 @@ class ViewController: UITableViewController {
     }
 
     let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.locationAccessRequestClosure = { locationManager in
+      locationManager.requestWhenInUseAuthorization()
+    }
 
     // Set a global tint color, that gets inherited by all views
     if let window = UIApplication.shared.delegate?.window! {
