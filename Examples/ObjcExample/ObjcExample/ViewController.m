@@ -13,6 +13,8 @@
 
 @interface ViewController () <PESDKPhotoEditViewControllerDelegate>
 
+@property (nonatomic, retain) PESDKTheme *theme;
+
 @end
 
 @implementation ViewController
@@ -25,11 +27,17 @@
   } else if (indexPath.row == 1) {
     [self presentPhotoEditViewController];
   } else if (indexPath.row == 2) {
+    theme = PESDKTheme.light;
+    [self presentPhotoEditViewController];
+    theme = PESDKTheme.dark;
+  } else if (indexPath.row == 3) {
     [self pushPhotoEditViewController];
   }
 }
 
 #pragma mark - Configuration
+
+@synthesize theme;
 
 - (PESDKConfiguration *)buildConfiguration {
   PESDKConfiguration *configuration = [[PESDKConfiguration alloc] initWithBuilder:^(PESDKConfigurationBuilder * _Nonnull builder) {
@@ -40,6 +48,8 @@
       // Show cancel button
       options.showCancelButton = true;
     }];
+    // Configure theme
+    builder.theme = self.theme;
   }];
 
   return configuration;

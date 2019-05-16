@@ -13,8 +13,9 @@ import UIKit
 private enum Selection: Int {
   case camera = 0
   case editor = 1
-  case embeddedEditor = 2
-  case customized = 3
+  case editorWithLightTheme = 2
+  case embeddedEditor = 3
+  case customized = 4
 }
 
 class ViewController: UITableViewController {
@@ -27,6 +28,10 @@ class ViewController: UITableViewController {
       presentCameraViewController()
     case Selection.editor.rawValue:
       presentPhotoEditViewController()
+    case Selection.editorWithLightTheme.rawValue:
+      theme = .light
+      presentPhotoEditViewController()
+      theme = .dark
     case Selection.embeddedEditor.rawValue:
       pushPhotoEditViewController()
     case Selection.customized.rawValue:
@@ -38,6 +43,8 @@ class ViewController: UITableViewController {
 
   // MARK: - Configuration
 
+  private var theme = Theme.dark
+
   private func buildConfiguration() -> Configuration {
     let configuration = Configuration { builder in
       // Configure camera
@@ -47,6 +54,8 @@ class ViewController: UITableViewController {
         // Show cancel button
         options.showCancelButton = true
       }
+      // Configure theme
+      builder.theme = self.theme
     }
 
     return configuration
@@ -107,8 +116,8 @@ class ViewController: UITableViewController {
   private func presentCustomizedCameraViewController() {
     let configuration = Configuration { builder in
       // Setup global colors
-      builder.backgroundColor = self.whiteColor
-      builder.menuBackgroundColor = UIColor.lightGray
+      builder.theme.backgroundColor = self.whiteColor
+      builder.theme.menuBackgroundColor = UIColor.lightGray
 
       self.customizeCameraController(builder)
       self.customizePhotoEditorViewController(builder)
