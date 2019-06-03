@@ -19,6 +19,14 @@
 
 @implementation ViewController
 
+@synthesize theme;
+
+#pragma mark - UIViewController
+
+- (void)viewDidLoad {
+  theme = PESDKTheme.dark;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -36,8 +44,6 @@
 }
 
 #pragma mark - Configuration
-
-@synthesize theme;
 
 - (PESDKConfiguration *)buildConfiguration {
   PESDKConfiguration *configuration = [[PESDKConfiguration alloc] initWithBuilder:^(PESDKConfigurationBuilder * _Nonnull builder) {
