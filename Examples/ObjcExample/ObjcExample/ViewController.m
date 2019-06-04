@@ -74,10 +74,19 @@
   cameraViewController.cancelBlock = ^{
     [self dismissViewControllerAnimated:YES completion:nil];
   };
+  cameraViewController.completionBlock = ^(UIImage * _Nullable image, NSURL * _Nullable url) {
+    if (image != nil) {
+      PESDKPhoto *photo = [[PESDKPhoto alloc] initWithImage:image];
+      PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
+      [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
+    }
+  };
   cameraViewController.dataCompletionBlock = ^(NSData * _Nullable data) {
-    PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
-    PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
-    [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
+    if (data != nil) {
+      PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
+      PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
+      [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
+    }
   };
 
   [self presentViewController:cameraViewController animated:YES completion:nil];

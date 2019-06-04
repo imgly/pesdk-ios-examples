@@ -72,6 +72,13 @@ class ViewController: UITableViewController {
     cameraViewController.cancelBlock = {
       self.dismiss(animated: true, completion: nil)
     }
+    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
+      if let image = image {
+        let photo = Photo(image: image)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
+      }
+    }
     cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
       if let data = data {
         let photo = Photo(data: data)
