@@ -141,18 +141,32 @@ class ViewController: UITableViewController {
       window.tintColor = redColor
     }
 
-    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
-      let photo = Photo(data: data!)
-      let photoEditModel = cameraViewController.photoEditModel
-      let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
-      photoEditViewController.view.tintColor = UIColor(red: 0.11, green: 0.44, blue: 1.00, alpha: 1.00)
-      photoEditViewController.toolbar.backgroundColor = UIColor.gray
-      photoEditViewController.delegate = self
+    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
+      if let image = image {
+        let photo = Photo(image: image)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createCustomizedPhotoEditViewController(with: photo, configuration: configuration, and: photoEditModel), animated: true, completion: nil)
+      }
+    }
 
-      cameraViewController.present(photoEditViewController, animated: true, completion: nil)
+    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
+      if let data = data {
+        let photo = Photo(data: data)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createCustomizedPhotoEditViewController(with: photo, configuration: configuration, and: photoEditModel), animated: true, completion: nil)
+      }
     }
 
     present(cameraViewController, animated: true, completion: nil)
+  }
+
+  private func createCustomizedPhotoEditViewController(with photo: Photo, configuration: Configuration, and photoEditModel: PhotoEditModel) -> PhotoEditViewController {
+    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
+    photoEditViewController.view.tintColor = UIColor(red: 0.11, green: 0.44, blue: 1.00, alpha: 1.00)
+    photoEditViewController.toolbar.backgroundColor = UIColor.gray
+    photoEditViewController.delegate = self
+
+    return photoEditViewController
   }
 
   // MARK: - Customization
