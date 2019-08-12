@@ -54,6 +54,14 @@
       // Show cancel button
       options.showCancelButton = true;
     }];
+
+    // Configure editor
+    [builder configurePhotoEditViewController:^(PESDKPhotoEditViewControllerOptionsBuilder * _Nonnull options) {
+      NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
+      [menuItems removeLastObject]; // Remove last menu item ('Magic')
+      options.menuItems = menuItems;
+    }];
+
     // Configure theme
     builder.theme = self.theme;
   }];
@@ -98,11 +106,9 @@
 
 - (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo and:(PESDKPhotoEditModel *)photoEditModel {
   PESDKConfiguration *configuration = [self buildConfiguration];
-  NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
-  [menuItems removeLastObject]; // Remove last menu item ('Magic')
 
   // Create a photo edit view controller
-  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration menuItems:menuItems photoEditModel:photoEditModel];
+  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration photoEditModel:photoEditModel];
   photoEditViewController.delegate = self;
 
   return photoEditViewController;
@@ -110,13 +116,13 @@
 
 - (void)presentPhotoEditViewController {
   NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
-  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithUrl:url];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
   [self presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
 }
 
 - (void)pushPhotoEditViewController {
   NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
-  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithUrl:url];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
   [self.navigationController pushViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES];
 }
 

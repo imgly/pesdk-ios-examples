@@ -54,6 +54,15 @@ class ViewController: UITableViewController {
         // Show cancel button
         options.showCancelButton = true
       }
+
+      // Configure editor
+      builder.configurePhotoEditViewController { options in
+        var menuItems = PhotoEditMenuItem.defaultItems
+        menuItems.removeLast() // Remove last menu item ('Magic')
+
+        options.menuItems = menuItems
+      }
+
       // Configure theme
       builder.theme = self.theme
     }
@@ -92,11 +101,9 @@ class ViewController: UITableViewController {
 
   private func createPhotoEditViewController(with photo: Photo, and photoEditModel: PhotoEditModel = PhotoEditModel()) -> PhotoEditViewController {
     let configuration = buildConfiguration()
-    var menuItems = PhotoEditMenuItem.defaultItems
-    menuItems.removeLast() // Remove last menu item ('Magic')
 
     // Create a photo edit view controller
-    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, menuItems: menuItems, photoEditModel: photoEditModel)
+    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
     photoEditViewController.delegate = self
 
     return photoEditViewController
@@ -220,7 +227,7 @@ class ViewController: UITableViewController {
 
   fileprivate func customizePhotoEditorViewController(_ builder: ConfigurationBuilder) {
     // Customize the main editor
-    builder.configurePhotoEditorViewController { options in
+    builder.configurePhotoEditViewController { options in
       options.titleViewConfigurationClosure = { titleView in
         if let titleLabel = titleView as? UILabel {
           titleLabel.text = "Selfie-Editor"

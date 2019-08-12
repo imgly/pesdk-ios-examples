@@ -38,23 +38,6 @@ Additionally we support adding stickers and text in a non-destructive manner, wh
 * **Objective-C support:** All our public API is Objective-C compatible.
 * **Fast:** Our renderer uses hardware acceleration and the GPU, which makes it lightning fast.
 
-### New in Version 8.0
-
-* Written in Swift 4.0.
-* Cross-platform serialization and deserialization support.
-* More stable and uses less memory while generating better looking images.
-* More customization options.
-* Undo and redo support across all tools.
-
-### New in Version 7.0
-
-* New stickers, frames and fonts.
-* The SDK has been rebranded to `PhotoEditorSDK`.
-* We now include the dSYM and bcsymbolmap files in the SDK for better debugging.
-* Faster and better looking adjustments.
-* Faster and better looking filters.
-* The frame tool has been updated to look better than ever before.
-
 <p>
 	<a target="_blank" href="https://www.photoeditorsdk.com/?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=IOS-Build">
 		<img style="display:block" src="http://docs.photoeditorsdk.com/assets/images/guides/ios/v7/product.jpg?utm_campaign=Projects&utm_source=Github&utm_medium=Side_Projects&utm_content=IOS-Build">

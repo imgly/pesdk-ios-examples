@@ -152,9 +152,5 @@
 | Sticker: Flat Icons Vol.2 |
 | Sticker: Filled Outlined Icon Pack  |
 | Fonts: Aleo Bold, Amatic SC, Lobster, Open Sans Bold, Ostrich Sans Black, Ostrich Sans Bold, Trash Hand: _SIL Open Font License_ |
-<<<<<<< Updated upstream
-| Fonts by FontFabric: Bernier Regular, Cheque Regular, Gagalin Regular, Hagin Caps Thin, Intro Inline, Nexa Script, Panton Black Italic Caps, Panton Light Italic Caps, Perfograma: [_EULA Free Fonts_](https://www.photoeditorsdk.com/downloads/licenses/EULA%20Free%20Font%20License%20Ver.%202.0.pdf) |
-=======
 | Fonts by FontFabric: Bernier Regular, Cheque Regular, Gagalin Regular, Hagin Caps Thin, Intro Inline, Nexa Script, Panton Black Italic Caps, Panton Light Italic Caps, Perfograma: _EULA Free Fonts_ |
 
->>>>>>> Stashed changes
