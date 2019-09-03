@@ -24,7 +24,11 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
-  theme = PESDKTheme.dark;
+  if (@available(iOS 13.0, *)) {
+    theme = PESDKTheme.dynamic;
+  } else {
+    theme = PESDKTheme.dark;
+  }
 }
 
 #pragma mark - UITableViewDelegate
@@ -37,8 +41,20 @@
   } else if (indexPath.row == 2) {
     theme = PESDKTheme.light;
     [self presentPhotoEditViewController];
-    theme = PESDKTheme.dark;
+    if (@available(iOS 13.0, *)) {
+      theme = PESDKTheme.dynamic;
+    } else {
+      theme = PESDKTheme.dark;
+    }
   } else if (indexPath.row == 3) {
+    theme = PESDKTheme.dark;
+    [self presentPhotoEditViewController];
+    if (@available(iOS 13.0, *)) {
+      theme = PESDKTheme.dynamic;
+    } else {
+      theme = PESDKTheme.dark;
+    }
+  } else if (indexPath.row == 4) {
     [self pushPhotoEditViewController];
   }
 }
@@ -74,6 +90,7 @@
 - (void)presentCameraViewController {
   PESDKConfiguration *configuration = [self buildConfiguration];
   PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
+  cameraViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   cameraViewController.locationAccessRequestClosure = ^(CLLocationManager * _Nonnull locationManager) {
     [locationManager requestWhenInUseAuthorization];
   };
@@ -109,6 +126,7 @@
 
   // Create a photo edit view controller
   PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration photoEditModel:photoEditModel];
+  photoEditViewController.modalPresentationStyle = UIModalPresentationFullScreen;
   photoEditViewController.delegate = self;
 
   return photoEditViewController;

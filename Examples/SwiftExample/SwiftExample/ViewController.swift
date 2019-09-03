@@ -14,8 +14,9 @@ private enum Selection: Int {
   case camera = 0
   case editor = 1
   case editorWithLightTheme = 2
-  case embeddedEditor = 3
-  case customized = 4
+  case editorWithDarkTheme = 3
+  case embeddedEditor = 4
+  case customized = 5
 }
 
 class ViewController: UITableViewController {
@@ -31,7 +32,11 @@ class ViewController: UITableViewController {
     case Selection.editorWithLightTheme.rawValue:
       theme = .light
       presentPhotoEditViewController()
+      theme = ViewController.defaultTheme
+    case Selection.editorWithDarkTheme.rawValue:
       theme = .dark
+      presentPhotoEditViewController()
+      theme = ViewController.defaultTheme
     case Selection.embeddedEditor.rawValue:
       pushPhotoEditViewController()
     case Selection.customized.rawValue:
@@ -43,7 +48,15 @@ class ViewController: UITableViewController {
 
   // MARK: - Configuration
 
-  private var theme = Theme.dark
+  private static let defaultTheme: Theme = {
+    if #available(iOS 13.0, *) {
+      return .dynamic
+    } else {
+      return .dark
+    }
+  }()
+
+  private var theme = defaultTheme
 
   private func buildConfiguration() -> Configuration {
     let configuration = Configuration { builder in
@@ -75,6 +88,7 @@ class ViewController: UITableViewController {
   private func presentCameraViewController() {
     let configuration = buildConfiguration()
     let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.modalPresentationStyle = .fullScreen
     cameraViewController.locationAccessRequestClosure = { locationManager in
       locationManager.requestWhenInUseAuthorization()
     }
@@ -104,6 +118,7 @@ class ViewController: UITableViewController {
 
     // Create a photo edit view controller
     let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
+    photoEditViewController.modalPresentationStyle = .fullScreen
     photoEditViewController.delegate = self
 
     return photoEditViewController
@@ -139,6 +154,7 @@ class ViewController: UITableViewController {
     }
 
     let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.modalPresentationStyle = .fullScreen
     cameraViewController.locationAccessRequestClosure = { locationManager in
       locationManager.requestWhenInUseAuthorization()
     }
@@ -169,6 +185,7 @@ class ViewController: UITableViewController {
 
   private func createCustomizedPhotoEditViewController(with photo: Photo, configuration: Configuration, and photoEditModel: PhotoEditModel) -> PhotoEditViewController {
     let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration, photoEditModel: photoEditModel)
+    photoEditViewController.modalPresentationStyle = .fullScreen
     photoEditViewController.view.tintColor = UIColor(red: 0.11, green: 0.44, blue: 1.00, alpha: 1.00)
     photoEditViewController.toolbar.backgroundColor = UIColor.gray
     photoEditViewController.delegate = self
