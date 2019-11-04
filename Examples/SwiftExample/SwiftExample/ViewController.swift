@@ -76,6 +76,12 @@ class ViewController: UITableViewController {
         options.menuItems = menuItems
       }
 
+      // Configure sticker tool
+      builder.configureStickerToolController { options in
+        // Enable personal stickers
+        options.personalStickersEnabled = true
+      }
+
       // Configure theme
       builder.theme = self.theme
     }

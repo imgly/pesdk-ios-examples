@@ -78,6 +78,12 @@
       options.menuItems = menuItems;
     }];
 
+    // Configure sticker tool
+    [builder configureStickerToolController:^(PESDKStickerToolControllerOptionsBuilder * _Nonnull options) {
+      // Enable personal stickers
+      options.personalStickersEnabled = true;
+    }];
+
     // Configure theme
     builder.theme = self.theme;
   }];
