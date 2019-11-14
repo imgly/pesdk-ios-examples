@@ -266,14 +266,26 @@ class ViewController: UITableViewController {
 
 extension ViewController: PhotoEditViewControllerDelegate {
   func photoEditViewController(_ photoEditViewController: PhotoEditViewController, didSave image: UIImage, and data: Data) {
-    dismiss(animated: true, completion: nil)
+    if let navigationController = photoEditViewController.navigationController {
+      navigationController.popViewController(animated: true)
+    } else {
+      dismiss(animated: true, completion: nil)
+    }
   }
 
   func photoEditViewControllerDidFailToGeneratePhoto(_ photoEditViewController: PhotoEditViewController) {
-    dismiss(animated: true, completion: nil)
+    if let navigationController = photoEditViewController.navigationController {
+      navigationController.popViewController(animated: true)
+    } else {
+      dismiss(animated: true, completion: nil)
+    }
   }
 
   func photoEditViewControllerDidCancel(_ photoEditViewController: PhotoEditViewController) {
-    dismiss(animated: true, completion: nil)
+    if let navigationController = photoEditViewController.navigationController {
+      navigationController.popViewController(animated: true)
+    } else {
+      dismiss(animated: true, completion: nil)
+    }
   }
 }

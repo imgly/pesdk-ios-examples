@@ -153,15 +153,27 @@
 #pragma mark - PhotoEditViewControllerDelegate
 
 - (void)photoEditViewController:(PESDKPhotoEditViewController *)photoEditViewController didSaveImage:(UIImage *)image imageAsData:(NSData *)data {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  if (photoEditViewController.navigationController != nil) {
+    [photoEditViewController.navigationController popViewControllerAnimated:YES];
+  } else {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
 - (void)photoEditViewControllerDidFailToGeneratePhoto:(PESDKPhotoEditViewController *)photoEditViewController {
-  [self dismissViewControllerAnimated:YES completion:nil];
+  if (photoEditViewController.navigationController != nil) {
+    [photoEditViewController.navigationController popViewControllerAnimated:YES];
+  } else {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
-- (void)photoEditViewControllerDidCancel:(PESDKPhotoEditViewController *)photoEditviewController {
-  [self dismissViewControllerAnimated:YES completion:nil];
+- (void)photoEditViewControllerDidCancel:(PESDKPhotoEditViewController *)photoEditViewController {
+  if (photoEditViewController.navigationController != nil) {
+    [photoEditViewController.navigationController popViewControllerAnimated:YES];
+  } else {
+    [self dismissViewControllerAnimated:YES completion:nil];
+  }
 }
 
 @end
