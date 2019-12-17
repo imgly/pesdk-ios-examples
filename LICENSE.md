@@ -1,10 +1,10 @@
-# PhotoEditor SDK
+# PhotoEditor SDK / VideoEditor SDK
 ## Terms of Service
 
 
 ### 1. Subject Matter
 
-1.1 These Terms of Service (together with any applicable Order Form the “__Agreement__”) governs all rights granted by Licensor to use and commercially exploit the PhotoEditor SDK (the “__Software__”).
+1.1 These Terms of Service (together with any applicable Order Form the “__Agreement__”) governs all rights granted by Licensor to use and commercially exploit any of the img.ly SDKs (the “__Software__”), namely the PhotoEditor SDK and/or VideoEditor SDK and/or imglyKit SDK.
 
 1.2 The Agreement is entered into by and between img.ly GmbH, Kortumstraße 68, 44787 Bochum, Germany (the “__Licensor__”) and the entity identified in the Order Form (the “__Licensee__”, together with Licensor the “__Parties__”) as of the effective date the Order Form is last signed on.
 
@@ -12,7 +12,7 @@
 
 ### 2. Order Form
 
-2.1 An “__Order Form__” may either be executed (i) by the Parties upon individual negotiation or (ii) via an online order issued by Licensee via Licensor`s website at www.photoeditorsdk.com (the “__Website__”) that has been confirmed by Licensor. Online orders not confirmed within 14 days after issuance shall be considered denied.
+2.1 An “__Order Form__” may either be executed (i) by the Parties upon individual negotiation or (ii) via an online order issued by Licensee via Licensor`s website at www.photoeditorsdk.com and/or www.videoeditorsdk.com (the “__Website__”) that has been confirmed by Licensor. Online orders not confirmed within 14 days after issuance shall be considered denied.
 
 2.2 No rights shall be granted to Licensee by virtue of these Terms of Service alone as such grant requires the execution of an Order Form making reference to these Terms of Service.
 
@@ -36,7 +36,7 @@
 
 4.1 Licensee shall not reproduce, disassemble, or reverse assemble any portion of the Software or otherwise derive its source code, except to the extent that such activity is specifically permitted by this Agreement or by statutory law.
 
-4.2 Licensee shall not redistribute the Software or its modifications other than by integrating the Software into Licensee's Product. Use in context of more than one of Licensee’s Products shall require multiple Licenses accordingly via respective Order Forms. Licensee’s Product shall have a substantially different functionality than the Software (i.e. must not be described as a photo editor, respective development kit, library, or product commercially competing with the Software).
+4.2 Licensee shall not redistribute the Software or its modifications other than by integrating the Software into Licensee's Product. Use in context of more than one of Licensee’s Products shall require multiple Licenses accordingly via respective Order Forms. Licensee’s Product shall have a substantially different functionality than the Software (i.e. must not be described as a photo editor and/or video editor, respective development kit, library, or product commercially competing with the Software).
 
 4.3 Licensee shall not use the Software in connection with or to promote any products, services, or materials that constitute or promote spyware, adware, or other malicious programs or code, unsolicited mass distribution of email (spam), defamatory, pornographic, abusive or otherwise offensive content.
 
