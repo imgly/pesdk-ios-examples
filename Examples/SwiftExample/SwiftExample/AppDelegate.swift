@@ -16,9 +16,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+    // swiftlint:disable:next orphaned_doc_comment
     /// - Tag: PhotoEditorSDKlicensing
-    /// Uncomment the following lines in order to activate Photo Editor SDK with your license and
-    /// make sure that you setup the corresponding bundle identifier without sample code disambiguation.
+    // Uncomment the following lines in order to activate Photo Editor SDK with your license and
+    // make sure that you setup the corresponding bundle identifier without sample code disambiguation.
 //    if let licenseURL = Bundle.main.url(forResource: "ios_license", withExtension: "dms") {
 //       PESDK.unlockWithLicense(at: licenseURL)
 //    }
