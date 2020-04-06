@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-    // swiftlint:disable:next orphaned_doc_comment
+    // swiftlint:disable:next all
     /// - Tag: PhotoEditorSDKlicensing
     // Uncomment the following lines in order to activate Photo Editor SDK with your license and
     // make sure that you setup the corresponding bundle identifier without sample code disambiguation.
