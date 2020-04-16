@@ -59,6 +59,35 @@
   }
 }
 
+- (BOOL)prefersStatusBarHidden {
+  // Before changing `prefersStatusBarHidden` please read the comment below
+  // in `viewDidAppear`.
+  return true;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+
+  // This is a workaround for a bug in iOS 13 on devices without a notch
+  // where pushing a `UIViewController` (with status bar hidden) from a
+  // `UINavigationController` (status bar not hidden or vice versa) would
+  // result in a gap above the navigation bar (on the `UIViewController`)
+  // and a smaller navigation bar on the `UINavigationController`.
+  //
+  // This is the case when a `MediaEditViewController` is embedded into a
+  // `UINavigationController` and uses a different `prefersStatusBarHidden`
+  // setting as the parent view.
+  //
+  // Setting `prefersStatusBarHidden` to `false` would cause the navigation
+  // bar to "jump" after the view appeared but this seems to be the only chance
+  // to fix the layout.
+  //
+  // For reference see: https://forums.developer.apple.com/thread/121861#378841
+  if (@available(iOS 13.0, *)) {
+    [self.navigationController.view setNeedsLayout];
+  }
+}
+
 #pragma mark - Configuration
 
 - (PESDKConfiguration *)buildConfiguration {
