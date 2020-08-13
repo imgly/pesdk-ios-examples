@@ -14,12 +14,14 @@
 @interface ViewController () <PESDKPhotoEditViewControllerDelegate>
 
 @property (nonatomic, retain) PESDKTheme *theme;
+@property (nonatomic, retain) PESDKOpenWeatherProvider *weatherProvider;
 
 @end
 
 @implementation ViewController
 
 @synthesize theme;
+@synthesize weatherProvider;
 
 #pragma mark - UIViewController
 
@@ -29,6 +31,15 @@
   } else {
     theme = PESDKTheme.dark;
   }
+
+  PESDKTemperatureFormat unit = PESDKTemperatureFormatCelsius;
+  if (@available(iOS 10.0, *)) {
+    unit = PESDKTemperatureFormatLocale;
+  }
+  weatherProvider = [[PESDKOpenWeatherProvider alloc] initWithApiKey:nil unit:unit];
+  weatherProvider.locationAccessRequestClosure = ^(CLLocationManager * _Nonnull locationManager) {
+    [locationManager requestWhenInUseAuthorization];
+  };
 }
 
 #pragma mark - UITableViewDelegate
@@ -111,6 +122,8 @@
     [builder configureStickerToolController:^(PESDKStickerToolControllerOptionsBuilder * _Nonnull options) {
       // Enable personal stickers
       options.personalStickersEnabled = true;
+      // Enable smart weather stickers
+      options.weatherProvider = self.weatherProvider;
     }];
 
     // Configure theme

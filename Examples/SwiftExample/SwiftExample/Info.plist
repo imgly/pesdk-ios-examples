@@ -46,6 +46,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Photos will be tagged with the location where they are taken.</string>
+	<string>Photos will be tagged with the location where they are taken and location-based weather data will be downloaded for stickers.</string>
 </dict>
 </plist>

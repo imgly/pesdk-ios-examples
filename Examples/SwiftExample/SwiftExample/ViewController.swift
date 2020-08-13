@@ -86,6 +86,17 @@ class ViewController: UITableViewController {
   }()
 
   private var theme = defaultTheme
+  private var weatherProvider: OpenWeatherProvider = {
+    var unit = TemperatureFormat.celsius
+    if #available(iOS 10.0, *) {
+      unit = .locale
+    }
+    let weatherProvider = OpenWeatherProvider(apiKey: nil, unit: unit)
+    weatherProvider.locationAccessRequestClosure = { locationManager in
+      locationManager.requestWhenInUseAuthorization()
+    }
+    return weatherProvider
+  }()
 
   private func buildConfiguration() -> Configuration {
     let configuration = Configuration { builder in
@@ -109,6 +120,8 @@ class ViewController: UITableViewController {
       builder.configureStickerToolController { options in
         // Enable personal stickers
         options.personalStickersEnabled = true
+        // Enable smart weather stickers
+        options.weatherProvider = self.weatherProvider
       }
 
       // Configure theme
