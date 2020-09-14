@@ -30,7 +30,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2B47929A1E02DF6100BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Samples/LA.jpg; sourceTree = "<group>"; };
+		2B47929A1E02DF6100BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Assets/LA.jpg; sourceTree = "<group>"; };
 		2B6EC4671E02D46B007525F4 /* SwiftExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B6EC46A1E02D46B007525F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2B6EC46C1E02D46B007525F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };

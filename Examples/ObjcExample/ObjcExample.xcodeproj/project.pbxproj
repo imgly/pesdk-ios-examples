@@ -28,7 +28,7 @@
 		2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2B4792B81E02E67F00BBB8D9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B4792BA1E02E67F00BBB8D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2B4792C21E02E6BE00BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Samples/LA.jpg; sourceTree = "<group>"; };
+		2B4792C21E02E6BE00BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Assets/LA.jpg; sourceTree = "<group>"; };
 		2BB142A31FE9640A000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
 		3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Debug.xcconfig"; path = "Configuration/ObjcExample-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Release.xcconfig"; path = "Configuration/ObjcExample-Release.xcconfig"; sourceTree = SOURCE_ROOT; };

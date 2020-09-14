@@ -17,6 +17,20 @@
 Our SDK provides tools for adding photo editing capabilities to your iOS application with a big variety of filters that can be previewed in realtime. Unlike other apps that allow a live preview of filters, the PhotoEditor SDK even provides a live preview when using high-resolution images. The framework is written in Swift and allows for easy customization.
 Additionally we support adding stickers and text in a non-destructive manner, which means that you can change the position, size, scale and order at any given time, even after applying other effects or cropping the photo.
 
+## How to run the examples
+
+The example projects are preconfigured to use [CocoaPods](https://docs.photoeditorsdk.com/guides/ios/v10/introduction/getting_started#cocoapods) to install PhotoEditor SDK. If your download contains a folder named `Pods` you can skip steps 1 and 2.
+
+1. Make sure to have CocoaPods installed, e.g., via [Homebrew](https://brew.sh):
+   ```sh
+   brew install cocoapods 
+   ```
+2. Install PhotoEditor SDK for the provided Xcode workspace with:
+   ```sh
+   pod install
+   ```
+3. Open `PESDKExamples.xcworkspace` with Xcode and run the example projects
+
 ## Features
 
 * Over 60 handcrafted **Filters** covering all state of the art style- and mood settings to choose from. 
@@ -53,6 +67,7 @@ For a step-by-step guide to integrate PhotoEditor SDK, please visit [docs.photoe
 Make sure you have a commercial license before releasing your app.
 A commercial license is required for any app or service that has any form of monetization: This includes free apps with in-app purchases or ad supported applications. Please contact us if you want to purchase the commercial license.
 
-## Support and License
 
-Use our [service desk](http://support.photoeditorsdk.com) for bug reports or support requests. To request a commercial license, please use the [license request form](https://www.photoeditorsdk.com/pricing) on our website.
+## Support
+
+Please use our [Service Desk](http://support.photoeditorsdk.com/) if you have any questions or would like to submit bug reports.

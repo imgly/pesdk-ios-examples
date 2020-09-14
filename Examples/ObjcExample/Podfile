@@ -1,6 +1,0 @@
-platform :ios, '9.0'
-
-target 'ObjcExample' do
-  use_frameworks!
-  pod 'PhotoEditorSDK'
-end

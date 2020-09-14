@@ -46,10 +46,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
   if (indexPath.row == 0) {
-    [self presentCameraViewController];
-  } else if (indexPath.row == 1) {
     [self presentPhotoEditViewController];
-  } else if (indexPath.row == 2) {
+  } else if (indexPath.row == 1) {
     theme = PESDKTheme.light;
     [self presentPhotoEditViewController];
     if (@available(iOS 13.0, *)) {
@@ -57,7 +55,7 @@
     } else {
       theme = PESDKTheme.dark;
     }
-  } else if (indexPath.row == 3) {
+  } else if (indexPath.row == 2) {
     theme = PESDKTheme.dark;
     [self presentPhotoEditViewController];
     if (@available(iOS 13.0, *)) {
@@ -65,8 +63,10 @@
     } else {
       theme = PESDKTheme.dark;
     }
-  } else if (indexPath.row == 4) {
+  } else if (indexPath.row == 3) {
     [self pushPhotoEditViewController];
+  } else if (indexPath.row == 4) {
+    [self presentCameraViewController];
   }
 }
 
@@ -135,6 +135,33 @@
 
 #pragma mark - Presentation
 
+- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo {
+  return [self createPhotoEditViewControllerWithPhoto:photo and:[[PESDKPhotoEditModel alloc] init]];
+}
+
+- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo and:(PESDKPhotoEditModel *)photoEditModel {
+  PESDKConfiguration *configuration = [self buildConfiguration];
+
+  // Create a photo edit view controller
+  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration photoEditModel:photoEditModel];
+  photoEditViewController.modalPresentationStyle = UIModalPresentationFullScreen;
+  photoEditViewController.delegate = self;
+
+  return photoEditViewController;
+}
+
+- (void)presentPhotoEditViewController {
+  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
+  [self presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
+}
+
+- (void)pushPhotoEditViewController {
+  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
+  [self.navigationController pushViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES];
+}
+
 - (void)presentCameraViewController {
   PESDKConfiguration *configuration = [self buildConfiguration];
   PESDKCameraViewController *cameraViewController = [[PESDKCameraViewController alloc] initWithConfiguration:configuration];
@@ -163,33 +190,6 @@
   };
 
   [self presentViewController:cameraViewController animated:YES completion:nil];
-}
-
-- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo {
-  return [self createPhotoEditViewControllerWithPhoto:photo and:[[PESDKPhotoEditModel alloc] init]];
-}
-
-- (PESDKPhotoEditViewController *)createPhotoEditViewControllerWithPhoto:(PESDKPhoto *)photo and:(PESDKPhotoEditModel *)photoEditModel {
-  PESDKConfiguration *configuration = [self buildConfiguration];
-
-  // Create a photo edit view controller
-  PESDKPhotoEditViewController *photoEditViewController = [[PESDKPhotoEditViewController alloc] initWithPhotoAsset:photo configuration:configuration photoEditModel:photoEditModel];
-  photoEditViewController.modalPresentationStyle = UIModalPresentationFullScreen;
-  photoEditViewController.delegate = self;
-
-  return photoEditViewController;
-}
-
-- (void)presentPhotoEditViewController {
-  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
-  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
-  [self presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
-}
-
-- (void)pushPhotoEditViewController {
-  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
-  PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
-  [self.navigationController pushViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES];
 }
 
 #pragma mark - PhotoEditViewControllerDelegate

@@ -11,11 +11,11 @@ import PhotoEditorSDK
 import UIKit
 
 private enum Selection: Int {
-  case camera = 0
-  case editor = 1
-  case editorWithLightTheme = 2
-  case editorWithDarkTheme = 3
-  case embeddedEditor = 4
+  case editor = 0
+  case editorWithLightTheme = 1
+  case editorWithDarkTheme = 2
+  case embeddedEditor = 3
+  case camera = 4
   case customized = 5
 }
 
@@ -25,8 +25,6 @@ class ViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     switch indexPath.row {
-    case Selection.camera.rawValue:
-      presentCameraViewController()
     case Selection.editor.rawValue:
       presentPhotoEditViewController()
     case Selection.editorWithLightTheme.rawValue:
@@ -39,6 +37,8 @@ class ViewController: UITableViewController {
       theme = ViewController.defaultTheme
     case Selection.embeddedEditor.rawValue:
       pushPhotoEditViewController()
+    case Selection.camera.rawValue:
+      presentCameraViewController()
     case Selection.customized.rawValue:
       presentCustomizedCameraViewController()
     default:
@@ -133,34 +133,6 @@ class ViewController: UITableViewController {
 
   // MARK: - Presentation
 
-  private func presentCameraViewController() {
-    let configuration = buildConfiguration()
-    let cameraViewController = CameraViewController(configuration: configuration)
-    cameraViewController.modalPresentationStyle = .fullScreen
-    cameraViewController.locationAccessRequestClosure = { locationManager in
-      locationManager.requestWhenInUseAuthorization()
-    }
-    cameraViewController.cancelBlock = {
-      self.dismiss(animated: true, completion: nil)
-    }
-    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
-      if let image = image {
-        let photo = Photo(image: image)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
-      }
-    }
-    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
-      if let data = data {
-        let photo = Photo(data: data)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
-      }
-    }
-
-    present(cameraViewController, animated: true, completion: nil)
-  }
-
   private func createPhotoEditViewController(with photo: Photo, and photoEditModel: PhotoEditModel = PhotoEditModel()) -> PhotoEditViewController {
     let configuration = buildConfiguration()
 
@@ -188,6 +160,34 @@ class ViewController: UITableViewController {
 
     let photo = Photo(url: url)
     navigationController?.pushViewController(createPhotoEditViewController(with: photo), animated: true)
+  }
+
+  private func presentCameraViewController() {
+    let configuration = buildConfiguration()
+    let cameraViewController = CameraViewController(configuration: configuration)
+    cameraViewController.modalPresentationStyle = .fullScreen
+    cameraViewController.locationAccessRequestClosure = { locationManager in
+      locationManager.requestWhenInUseAuthorization()
+    }
+    cameraViewController.cancelBlock = {
+      self.dismiss(animated: true, completion: nil)
+    }
+    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
+      if let image = image {
+        let photo = Photo(image: image)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
+      }
+    }
+    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
+      if let data = data {
+        let photo = Photo(data: data)
+        let photoEditModel = cameraViewController.photoEditModel
+        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
+      }
+    }
+
+    present(cameraViewController, animated: true, completion: nil)
   }
 
   private func presentCustomizedCameraViewController() {
