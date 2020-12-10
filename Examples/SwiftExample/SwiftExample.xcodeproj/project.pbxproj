@@ -14,6 +14,7 @@
 		2B6EC4721E02D46B007525F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC4711E02D46B007525F4 /* Assets.xcassets */; };
 		2B6EC4751E02D46B007525F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC4731E02D46B007525F4 /* LaunchScreen.storyboard */; };
 		2BB142A61FE964FF000EC46D /* ios_license.dms in Resources */ = {isa = PBXBuildFile; fileRef = 2BB142A51FE964FF000EC46D /* ios_license.dms */; };
+		2BDC673225825E8C006F5669 /* CustomToolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC673125825E8C006F5669 /* CustomToolController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		2B6EC4741E02D46B007525F4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2B6EC4761E02D46B007525F4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2BB142A51FE964FF000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
+		2BDC673125825E8C006F5669 /* CustomToolController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolController.swift; sourceTree = "<group>"; };
 		3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../../../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		3D2BF376224BA0E700BC9956 /* SwiftExample-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SwiftExample-Debug.xcconfig"; path = "Configuration/SwiftExample-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3D2BF377224BA0E700BC9956 /* SwiftExample-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SwiftExample-Release.xcconfig"; path = "Configuration/SwiftExample-Release.xcconfig"; sourceTree = SOURCE_ROOT; };
@@ -86,6 +88,7 @@
 				2B6EC4731E02D46B007525F4 /* LaunchScreen.storyboard */,
 				2B6EC46E1E02D46B007525F4 /* Main.storyboard */,
 				2B6EC46C1E02D46B007525F4 /* ViewController.swift */,
+				2BDC673125825E8C006F5669 /* CustomToolController.swift */,
 			);
 			path = SwiftExample;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2B6EC46D1E02D46B007525F4 /* ViewController.swift in Sources */,
+				2BDC673225825E8C006F5669 /* CustomToolController.swift in Sources */,
 				2B6EC46B1E02D46B007525F4 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
