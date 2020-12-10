@@ -17,6 +17,7 @@ private enum Selection: Int {
   case embeddedEditor = 3
   case camera = 4
   case customized = 5
+  case customTool = 6
 }
 
 class ViewController: UITableViewController {
@@ -41,6 +42,8 @@ class ViewController: UITableViewController {
       presentCameraViewController()
     case Selection.customized.rawValue:
       presentCustomizedCameraViewController()
+    case Selection.customTool.rawValue:
+      presentPhotoEditViewControllerWithCustomTool()
     default:
       break
     }
@@ -239,6 +242,28 @@ class ViewController: UITableViewController {
     photoEditViewController.delegate = self
 
     return photoEditViewController
+  }
+
+  private func createCustomToolMenuItem() -> PhotoEditMenuItem {
+    return .tool(ToolMenuItem(title: "Annotation", icon: UIImage(named: "imgly_icon_tool_brush_48pt")!, toolControllerClass: CustomToolController.self, supportsPhoto: true, supportsVideo: false)!)
+  }
+
+  private func presentPhotoEditViewControllerWithCustomTool() {
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
+      return
+    }
+
+    let customToolMenuItem = createCustomToolMenuItem()
+
+    let photo = Photo(url: url)
+    let configuration = Configuration { builder in
+      builder.configurePhotoEditViewController { options in
+        options.menuItems = [customToolMenuItem] + PhotoEditMenuItem.defaultItems
+      }
+    }
+
+    let photoEditViewController = PhotoEditViewController(photoAsset: photo, configuration: configuration)
+    present(photoEditViewController, animated: true, completion: nil)
   }
 
   // MARK: - Customization
