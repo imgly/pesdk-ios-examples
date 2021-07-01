@@ -91,3 +91,4 @@ fastlane/screenshots
 fastlane/test_output
 *Example.xcworkspace
 Podfile.lock
+*swiftpm

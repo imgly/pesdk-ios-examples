@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		2B4792B91E02E67F00BBB8D9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792B71E02E67F00BBB8D9 /* LaunchScreen.storyboard */; };
 		2B4792C31E02E6BE00BBB8D9 /* LA.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2B4792C21E02E6BE00BBB8D9 /* LA.jpg */; };
 		2BB142A41FE9640A000EC46D /* ios_license.dms in Resources */ = {isa = PBXBuildFile; fileRef = 2BB142A31FE9640A000EC46D /* ios_license.dms */; };
+		4A80F749268DAC1400ECBD34 /* PhotoEditorSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4A80F748268DAC1400ECBD34 /* PhotoEditorSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,8 +31,6 @@
 		2B4792BA1E02E67F00BBB8D9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2B4792C21E02E6BE00BBB8D9 /* LA.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = LA.jpg; path = ../../../Assets/LA.jpg; sourceTree = "<group>"; };
 		2BB142A31FE9640A000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
-		3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Debug.xcconfig"; path = "Configuration/ObjcExample-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
-		3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "ObjcExample-Release.xcconfig"; path = "Configuration/ObjcExample-Release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../../../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -40,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A80F749268DAC1400ECBD34 /* PhotoEditorSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,7 +68,6 @@
 			isa = PBXGroup;
 			children = (
 				3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */,
-				3D03399C224BAADE00F52FD8 /* Configuration */,
 				2B4792AC1E02E67F00BBB8D9 /* AppDelegate.h */,
 				2B4792AD1E02E67F00BBB8D9 /* AppDelegate.m */,
 				2B4792B51E02E67F00BBB8D9 /* Assets.xcassets */,
@@ -92,15 +91,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		3D03399C224BAADE00F52FD8 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */,
-				3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */,
-			);
-			name = Configuration;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -117,6 +107,9 @@
 			dependencies = (
 			);
 			name = ObjcExample;
+			packageProductDependencies = (
+				4A80F748268DAC1400ECBD34 /* PhotoEditorSDK */,
+			);
 			productName = ObjcExample;
 			productReference = 2B4792A61E02E67F00BBB8D9 /* ObjcExample.app */;
 			productType = "com.apple.product-type.application";
@@ -127,7 +120,7 @@
 		2B47929E1E02E67E00BBB8D9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "9elements GmbH";
 				TargetAttributes = {
 					2B4792A51E02E67F00BBB8D9 = {
@@ -145,6 +138,9 @@
 				Base,
 			);
 			mainGroup = 2B47929D1E02E67E00BBB8D9;
+			packageReferences = (
+				4A80F747268DAC1400ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */,
+			);
 			productRefGroup = 2B4792A71E02E67F00BBB8D9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -204,7 +200,7 @@
 /* Begin XCBuildConfiguration section */
 		2B4792BB1E02E67F00BBB8D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */;
+			baseConfigurationReference = 3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -228,6 +224,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -262,7 +259,7 @@
 		};
 		2B4792BC1E02E67F00BBB8D9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */;
+			baseConfigurationReference = 3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -286,6 +283,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -314,12 +312,15 @@
 		};
 		2B4792BE1E02E67F00BBB8D9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D03399D224BAB0200F52FD8 /* ObjcExample-Debug.xcconfig */;
+			baseConfigurationReference = 3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjcExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.ObjC.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -327,12 +328,15 @@
 		};
 		2B4792BF1E02E67F00BBB8D9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D03399E224BAB0200F52FD8 /* ObjcExample-Release.xcconfig */;
+			baseConfigurationReference = 3DDFA79F224A21F600330C82 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = ObjcExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.ObjC.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -360,6 +364,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4A80F747268DAC1400ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/imgly/pesdk-ios-build";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4A80F748268DAC1400ECBD34 /* PhotoEditorSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A80F747268DAC1400ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */;
+			productName = PhotoEditorSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2B47929E1E02E67E00BBB8D9 /* Project object */;
 }

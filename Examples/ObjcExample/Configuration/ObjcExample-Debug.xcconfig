@@ -1,2 +1,0 @@
-#include "../../../Configuration/SampleCode.xcconfig"
-#include "../../../Pods/Target Support Files/Pods-ObjcExample/Pods-ObjcExample.debug.xcconfig"

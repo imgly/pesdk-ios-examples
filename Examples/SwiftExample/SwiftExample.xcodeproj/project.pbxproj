@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,7 @@
 		2B6EC4751E02D46B007525F4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2B6EC4731E02D46B007525F4 /* LaunchScreen.storyboard */; };
 		2BB142A61FE964FF000EC46D /* ios_license.dms in Resources */ = {isa = PBXBuildFile; fileRef = 2BB142A51FE964FF000EC46D /* ios_license.dms */; };
 		2BDC673225825E8C006F5669 /* CustomToolController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BDC673125825E8C006F5669 /* CustomToolController.swift */; };
+		4A80F759268DAEEB00ECBD34 /* PhotoEditorSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 4A80F758268DAEEB00ECBD34 /* PhotoEditorSDK */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,8 +43,6 @@
 		2BB142A51FE964FF000EC46D /* ios_license.dms */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ios_license.dms; sourceTree = "<group>"; };
 		2BDC673125825E8C006F5669 /* CustomToolController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolController.swift; sourceTree = "<group>"; };
 		3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../../../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
-		3D2BF376224BA0E700BC9956 /* SwiftExample-Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SwiftExample-Debug.xcconfig"; path = "Configuration/SwiftExample-Debug.xcconfig"; sourceTree = SOURCE_ROOT; };
-		3D2BF377224BA0E700BC9956 /* SwiftExample-Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "SwiftExample-Release.xcconfig"; path = "Configuration/SwiftExample-Release.xcconfig"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A80F759268DAEEB00ECBD34 /* PhotoEditorSDK in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,6 @@
 			isa = PBXGroup;
 			children = (
 				3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */,
-				3D2BF375224BA0C900BC9956 /* Configuration */,
 				2B6EC46A1E02D46B007525F4 /* AppDelegate.swift */,
 				2B6EC4711E02D46B007525F4 /* Assets.xcassets */,
 				2B6EC4761E02D46B007525F4 /* Info.plist */,
@@ -91,15 +90,6 @@
 				2BDC673125825E8C006F5669 /* CustomToolController.swift */,
 			);
 			path = SwiftExample;
-			sourceTree = "<group>";
-		};
-		3D2BF375224BA0C900BC9956 /* Configuration */ = {
-			isa = PBXGroup;
-			children = (
-				3D2BF376224BA0E700BC9956 /* SwiftExample-Debug.xcconfig */,
-				3D2BF377224BA0E700BC9956 /* SwiftExample-Release.xcconfig */,
-			);
-			path = Configuration;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -119,6 +109,9 @@
 			dependencies = (
 			);
 			name = SwiftExample;
+			packageProductDependencies = (
+				4A80F758268DAEEB00ECBD34 /* PhotoEditorSDK */,
+			);
 			productName = SwiftExample;
 			productReference = 2B6EC4671E02D46B007525F4 /* SwiftExample.app */;
 			productType = "com.apple.product-type.application";
@@ -130,7 +123,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0820;
-				LastUpgradeCheck = 1020;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = "9elements GmbH";
 				TargetAttributes = {
 					2B6EC4661E02D46B007525F4 = {
@@ -149,6 +142,9 @@
 				Base,
 			);
 			mainGroup = 2B6EC45E1E02D46A007525F4;
+			packageReferences = (
+				4A80F757268DAEEB00ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */,
+			);
 			productRefGroup = 2B6EC4681E02D46B007525F4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -208,7 +204,7 @@
 /* Begin XCBuildConfiguration section */
 		2B6EC4771E02D46B007525F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D2BF376224BA0E700BC9956 /* SwiftExample-Debug.xcconfig */;
+			baseConfigurationReference = 3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -232,6 +228,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -268,7 +265,7 @@
 		};
 		2B6EC4781E02D46B007525F4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D2BF377224BA0E700BC9956 /* SwiftExample-Release.xcconfig */;
+			baseConfigurationReference = 3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -292,6 +289,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -313,7 +311,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -321,7 +320,7 @@
 		};
 		2B6EC47A1E02D46B007525F4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D2BF376224BA0E700BC9956 /* SwiftExample-Debug.xcconfig */;
+			baseConfigurationReference = 3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -329,7 +328,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SwiftExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.Swift.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.1;
@@ -338,7 +340,7 @@
 		};
 		2B6EC47B1E02D46B007525F4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3D2BF377224BA0E700BC9956 /* SwiftExample-Release.xcconfig */;
+			baseConfigurationReference = 3D03399A224BA40F00F52FD8 /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -346,7 +348,10 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = SwiftExample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.Swift.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.1;
@@ -375,6 +380,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4A80F757268DAEEB00ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/imgly/pesdk-ios-build";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.21.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4A80F758268DAEEB00ECBD34 /* PhotoEditorSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4A80F757268DAEEB00ECBD34 /* XCRemoteSwiftPackageReference "pesdk-ios-build" */;
+			productName = PhotoEditorSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2B6EC45F1E02D46A007525F4 /* Project object */;
 }
