@@ -69,7 +69,7 @@ class CustomToolController: BrushToolController {
       AnnotationMenuItem(title: "Black Pen", color: UIColor.black, hardness: 0.7, size: 10),
       AnnotationMenuItem(title: "Blue Pen", color: UIColor.blue, hardness: 0.8, size: 50),
       AnnotationMenuItem(title: "Red Pen", color: UIColor.red, hardness: 0.9, size: 1),
-      AnnotationMenuItem(title: "Custom", color: UIColor.white, hardness: 1, size: 1),
+      AnnotationMenuItem(title: "Custom", color: UIColor.white, hardness: 1, size: 1)
     ]
     menuViewController.reloadData(completion: nil)
     brushEditController.sliderEditController.slider.neutralValue = 1
@@ -103,7 +103,7 @@ class CustomToolController: BrushToolController {
 
     if menuItem.title == "Custom" {
       let brushToolController = BrushToolController(configuration: configuration, productType: .pesdk)!
-      notifySubscribers { $0.photoEditToolController(self, wantsToPresent: brushToolController)}
+      notifySubscribers { $0.photoEditToolController(self, wantsToPresent: brushToolController) }
     } else {
       brushEditController.hardness = menuItem.hardness
       brushEditController.color = menuItem.color
