@@ -4,7 +4,7 @@ In order to run any samples or use any wrapper without a watermark,
 you'll have to purchase a commercial PhotoEditor SDK or VideoEditor SDK 
 license. Visit https://img.ly for more details.
 
-Copyright (c) 2014-2020, img.ly GmbH
+Copyright (c) 2014-2022, img.ly GmbH
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
