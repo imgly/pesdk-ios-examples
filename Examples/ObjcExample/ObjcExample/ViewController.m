@@ -142,13 +142,13 @@
 }
 
 - (void)presentPhotoEditViewController {
-  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  NSURL *url = [NSBundle.mainBundle URLForResource:@"LA" withExtension:@"jpg"];
   PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
   [self presentViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES completion:nil];
 }
 
 - (void)pushPhotoEditViewController {
-  NSURL *url = [[NSBundle mainBundle] URLForResource:@"LA" withExtension:@"jpg"];
+  NSURL *url = [NSBundle.mainBundle URLForResource:@"LA" withExtension:@"jpg"];
   PESDKPhoto *photo = [[PESDKPhoto alloc] initWithURL:url];
   [self.navigationController pushViewController:[self createPhotoEditViewControllerWithPhoto:photo] animated:YES];
 }

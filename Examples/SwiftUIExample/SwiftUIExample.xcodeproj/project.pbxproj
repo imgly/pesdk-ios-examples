@@ -281,8 +281,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
-				DEVELOPMENT_TEAM = BM43T62KZ2;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GLES_SILENCE_DEPRECATION=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -303,8 +306,11 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"SwiftUIExample/Preview Content\"";
-				DEVELOPMENT_TEAM = BM43T62KZ2;
 				ENABLE_PREVIEWS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"GLES_SILENCE_DEPRECATION=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -347,7 +353,7 @@
 			repositoryURL = "https://github.com/imgly/pesdk-ios-build";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 10.26.0;
+				minimumVersion = 10.29.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

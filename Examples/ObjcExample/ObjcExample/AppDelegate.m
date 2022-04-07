@@ -10,7 +10,7 @@
 - (BOOL)application:(UIApplication *)application willFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   /// Uncomment the following line in order to activate Photo Editor SDK with your license and
   /// make sure that you setup the corresponding bundle identifier without sample code disambiguation.
-//  [PESDK unlockWithLicenseAt:[[NSBundle mainBundle] URLForResource:@"ios_license" withExtension:@"dms"]];
+//  [PESDK unlockWithLicenseAt:[NSBundle.mainBundle URLForResource:@"ios_license" withExtension:@"dms"]];
 
   return YES;
 }
