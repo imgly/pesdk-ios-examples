@@ -15,12 +15,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //       PESDK.unlockWithLicense(at: licenseURL)
 //    }
 
-    return true
+    true
   }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
-    return true
+    true
   }
 
   func applicationWillResignActive(_ application: UIApplication) {

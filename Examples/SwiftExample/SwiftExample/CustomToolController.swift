@@ -42,7 +42,7 @@ class AnnotationMenuItem: NSObject, MenuItem {
   }
 
   var diffIdentifier: NSObjectProtocol {
-    return self
+    self
   }
 
   func isEqual(toDiffableObject object: Diffable?) -> Bool {
@@ -56,7 +56,7 @@ class AnnotationMenuItem: NSObject, MenuItem {
   }
 
   static var sectionControllerType: MenuListSectionController.Type {
-    return AnnotationListSectionController.self
+    AnnotationListSectionController.self
   }
 }
 

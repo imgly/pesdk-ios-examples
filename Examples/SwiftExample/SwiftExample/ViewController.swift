@@ -43,7 +43,7 @@ class ViewController: UITableViewController {
   override var prefersStatusBarHidden: Bool {
     // Before changing `prefersStatusBarHidden` please read the comment below
     // in `viewDidAppear`.
-    return true
+    true
   }
 
   override func viewDidAppear(_ animated: Bool) {
@@ -64,27 +64,16 @@ class ViewController: UITableViewController {
     // to fix the layout.
     //
     // For reference see: https://forums.developer.apple.com/thread/121861#378841
-    if #available(iOS 13.0, *) {
-      navigationController?.view.setNeedsLayout()
-    }
+    navigationController?.view.setNeedsLayout()
   }
 
   // MARK: - Configuration
 
-  private static let defaultTheme: Theme = {
-    if #available(iOS 13.0, *) {
-      return .dynamic
-    } else {
-      return .dark
-    }
-  }()
+  private static let defaultTheme: Theme = .dynamic
 
   private var theme = defaultTheme
   private var weatherProvider: OpenWeatherProvider = {
-    var unit = TemperatureFormat.celsius
-    if #available(iOS 10.0, *) {
-      unit = .locale
-    }
+    let unit = TemperatureFormat.locale
     let weatherProvider = OpenWeatherProvider(apiKey: nil, unit: unit)
     weatherProvider.locationAccessRequestClosure = { locationManager in
       locationManager.requestWhenInUseAuthorization()
@@ -139,18 +128,14 @@ class ViewController: UITableViewController {
   }
 
   private func presentPhotoEditViewController() {
-    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
-      return
-    }
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else { return }
 
     let photo = Photo(url: url)
     present(createPhotoEditViewController(with: photo), animated: true, completion: nil)
   }
 
   private func pushPhotoEditViewController() {
-    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
-      return
-    }
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else { return }
 
     let photo = Photo(url: url)
     navigationController?.pushViewController(createPhotoEditViewController(with: photo), animated: true)
@@ -166,18 +151,10 @@ class ViewController: UITableViewController {
     cameraViewController.cancelBlock = {
       self.dismiss(animated: true, completion: nil)
     }
-    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
-      if let image = image {
-        let photo = Photo(image: image)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
-      }
-    }
-    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
-      if let data = data {
+    cameraViewController.completionBlock = { [unowned cameraViewController] result in
+      if let data = result.data {
         let photo = Photo(data: data)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: photoEditModel), animated: true, completion: nil)
+        cameraViewController.present(self.createPhotoEditViewController(with: photo, and: result.model), animated: true, completion: nil)
       }
     }
 
@@ -192,7 +169,7 @@ class ViewController: UITableViewController {
 
       self.customizeCameraController(builder)
       self.customizePhotoEditorViewController(builder)
-      self.customizeTextTool()
+      self.customizeTextTool(builder)
     }
 
     let cameraViewController = CameraViewController(configuration: configuration)
@@ -206,19 +183,10 @@ class ViewController: UITableViewController {
       window.tintColor = redColor
     }
 
-    cameraViewController.completionBlock = { [unowned cameraViewController] image, _ in
-      if let image = image {
-        let photo = Photo(image: image)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createCustomizedPhotoEditViewController(with: photo, configuration: configuration, and: photoEditModel), animated: true, completion: nil)
-      }
-    }
-
-    cameraViewController.dataCompletionBlock = { [unowned cameraViewController] data in
-      if let data = data {
+    cameraViewController.completionBlock = { [unowned cameraViewController] result in
+      if let data = result.data {
         let photo = Photo(data: data)
-        let photoEditModel = cameraViewController.photoEditModel
-        cameraViewController.present(self.createCustomizedPhotoEditViewController(with: photo, configuration: configuration, and: photoEditModel), animated: true, completion: nil)
+        cameraViewController.present(self.createCustomizedPhotoEditViewController(with: photo, configuration: configuration, and: result.model), animated: true, completion: nil)
       }
     }
 
@@ -236,17 +204,16 @@ class ViewController: UITableViewController {
   }
 
   private func createCustomToolMenuItem() -> PhotoEditMenuItem {
-    return .tool(ToolMenuItem(title: "Annotation", icon: UIImage(named: "imgly_icon_tool_brush_48pt")!, toolControllerClass: CustomToolController.self, supportsPhoto: true, supportsVideo: false)!)
+    .tool(ToolMenuItem(title: "Annotation", icon: UIImage(named: "imgly_icon_tool_brush_48pt")!, toolControllerClass: CustomToolController.self, supportsPhoto: true, supportsVideo: false)!)
   }
 
   private func presentPhotoEditViewControllerWithCustomTool() {
-    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else {
-      return
-    }
+    guard let url = Bundle.main.url(forResource: "LA", withExtension: "jpg") else { return }
+
+    let photo = Photo(url: url)
 
     let customToolMenuItem = createCustomToolMenuItem()
 
-    let photo = Photo(url: url)
     let configuration = Configuration { builder in
       builder.configurePhotoEditViewController { options in
         options.menuItems = [customToolMenuItem] + PhotoEditMenuItem.defaultItems
@@ -263,7 +230,7 @@ class ViewController: UITableViewController {
   fileprivate let redColor = UIColor(red: 0.988, green: 0.173, blue: 0.357, alpha: 1)
   fileprivate let blueColor = UIColor(red: 0.243, green: 0.769, blue: 0.831, alpha: 1)
 
-  fileprivate func customizeTextTool() {
+  fileprivate func customizeTextTool(_ builder: ConfigurationBuilder) {
     let fonts = [
       Font(displayName: "Arial", fontName: "ArialMT", identifier: "Arial"),
       Font(displayName: "Helvetica", fontName: "Helvetica", identifier: "Helvetica"),
@@ -273,7 +240,7 @@ class ViewController: UITableViewController {
       Font(displayName: "Noteworthy", fontName: "Noteworthy-Bold", identifier: "Notewortyh")
     ]
 
-    FontImporter.all = fonts
+    builder.assetCatalog.fonts = fonts
   }
 
   fileprivate func customizeCameraController(_ builder: ConfigurationBuilder) {
@@ -323,7 +290,12 @@ class ViewController: UITableViewController {
 }
 
 extension ViewController: PhotoEditViewControllerDelegate {
-  func photoEditViewController(_ photoEditViewController: PhotoEditViewController, didSave image: UIImage, and data: Data) {
+  func photoEditViewControllerShouldStart(_ photoEditViewController: PhotoEditViewController, task: PhotoEditorTask) -> Bool {
+    // Implementing this method is optional. You can perform additional validation and interrupt the process by returning `false`.
+    true
+  }
+
+  func photoEditViewControllerDidFinish(_ photoEditViewController: PhotoEditViewController, result: PhotoEditorResult) {
     if let navigationController = photoEditViewController.navigationController {
       navigationController.popViewController(animated: true)
     } else {
@@ -331,7 +303,7 @@ extension ViewController: PhotoEditViewControllerDelegate {
     }
   }
 
-  func photoEditViewControllerDidFailToGeneratePhoto(_ photoEditViewController: PhotoEditViewController) {
+  func photoEditViewControllerDidFail(_ photoEditViewController: PhotoEditViewController, error: PhotoEditorError) {
     if let navigationController = photoEditViewController.navigationController {
       navigationController.popViewController(animated: true)
     } else {

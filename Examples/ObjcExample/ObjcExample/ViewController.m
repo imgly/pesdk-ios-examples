@@ -17,16 +17,8 @@
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
-  if (@available(iOS 13.0, *)) {
-    theme = PESDKTheme.dynamic;
-  } else {
-    theme = PESDKTheme.dark;
-  }
-
-  PESDKTemperatureFormat unit = PESDKTemperatureFormatCelsius;
-  if (@available(iOS 10.0, *)) {
-    unit = PESDKTemperatureFormatLocale;
-  }
+  theme = PESDKTheme.dynamic;
+  PESDKTemperatureFormat unit = PESDKTemperatureFormatLocale;
   weatherProvider = [[PESDKOpenWeatherProvider alloc] initWithApiKey:nil unit:unit];
   weatherProvider.locationAccessRequestClosure = ^(CLLocationManager * _Nonnull locationManager) {
     [locationManager requestWhenInUseAuthorization];
@@ -41,19 +33,11 @@
   } else if (indexPath.row == 1) {
     theme = PESDKTheme.light;
     [self presentPhotoEditViewController];
-    if (@available(iOS 13.0, *)) {
-      theme = PESDKTheme.dynamic;
-    } else {
-      theme = PESDKTheme.dark;
-    }
+    theme = PESDKTheme.dynamic;
   } else if (indexPath.row == 2) {
     theme = PESDKTheme.dark;
     [self presentPhotoEditViewController];
-    if (@available(iOS 13.0, *)) {
-      theme = PESDKTheme.dynamic;
-    } else {
-      theme = PESDKTheme.dark;
-    }
+    theme = PESDKTheme.dynamic;
   } else if (indexPath.row == 3) {
     [self pushPhotoEditViewController];
   } else if (indexPath.row == 4) {
@@ -85,9 +69,7 @@
   // to fix the layout.
   //
   // For reference see: https://forums.developer.apple.com/thread/121861#378841
-  if (@available(iOS 13.0, *)) {
-    [self.navigationController.view setNeedsLayout];
-  }
+  [self.navigationController.view setNeedsLayout];
 }
 
 #pragma mark - Configuration
@@ -104,7 +86,7 @@
 
     // Configure editor
     [builder configurePhotoEditViewController:^(PESDKPhotoEditViewControllerOptionsBuilder * _Nonnull options) {
-      NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [[PESDKPhotoEditMenuItem defaultItems] mutableCopy];
+      NSMutableArray<PESDKPhotoEditMenuItem *> *menuItems = [PESDKPhotoEditMenuItem.defaultItems mutableCopy];
       [menuItems removeLastObject]; // Remove last menu item ('Magic')
       options.menuItems = menuItems;
     }];
@@ -165,16 +147,9 @@
   cameraViewController.cancelBlock = ^{
     [self dismissViewControllerAnimated:YES completion:nil];
   };
-  cameraViewController.completionBlock = ^(UIImage * _Nullable image, NSURL * _Nullable url) {
-    if (image != nil) {
-      PESDKPhoto *photo = [[PESDKPhoto alloc] initWithImage:image];
-      PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
-      [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
-    }
-  };
-  cameraViewController.dataCompletionBlock = ^(NSData * _Nullable data) {
-    if (data != nil) {
-      PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:data];
+  cameraViewController.completionBlock = ^(PESDKCameraResult * _Nonnull result) {
+    if (result.data != nil) {
+      PESDKPhoto *photo = [[PESDKPhoto alloc] initWithData:result.data];
       PESDKPhotoEditModel *photoEditModel = [weakCameraViewController photoEditModel];
       [weakCameraViewController presentViewController:[self createPhotoEditViewControllerWithPhoto:photo and:photoEditModel] animated:YES completion:nil];
     }
@@ -185,7 +160,12 @@
 
 #pragma mark - PhotoEditViewControllerDelegate
 
-- (void)photoEditViewController:(PESDKPhotoEditViewController *)photoEditViewController didSaveImage:(UIImage *)image imageAsData:(NSData *)data {
+- (BOOL)photoEditViewControllerShouldStart:(PESDKPhotoEditViewController * _Nonnull)photoEditViewController task:(PESDKPhotoEditorTask * _Nonnull)task {
+  // Implementing this method is optional. You can perform additional validation and interrupt the process by returning `NO`.
+  return YES;
+}
+
+- (void)photoEditViewControllerDidFinish:(PESDKPhotoEditViewController * _Nonnull)photoEditViewController result:(PESDKPhotoEditorResult * _Nonnull)result {
   if (photoEditViewController.navigationController != nil) {
     [photoEditViewController.navigationController popViewControllerAnimated:YES];
   } else {
@@ -193,7 +173,7 @@
   }
 }
 
-- (void)photoEditViewControllerDidFailToGeneratePhoto:(PESDKPhotoEditViewController *)photoEditViewController {
+- (void)photoEditViewControllerDidFail:(PESDKPhotoEditViewController * _Nonnull)photoEditViewController error:(PESDKPhotoEditorError * _Nonnull)error {
   if (photoEditViewController.navigationController != nil) {
     [photoEditViewController.navigationController popViewControllerAnimated:YES];
   } else {
@@ -201,7 +181,7 @@
   }
 }
 
-- (void)photoEditViewControllerDidCancel:(PESDKPhotoEditViewController *)photoEditViewController {
+- (void)photoEditViewControllerDidCancel:(PESDKPhotoEditViewController * _Nonnull)photoEditViewController {
   if (photoEditViewController.navigationController != nil) {
     [photoEditViewController.navigationController popViewControllerAnimated:YES];
   } else {

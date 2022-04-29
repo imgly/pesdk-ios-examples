@@ -38,7 +38,8 @@ struct ContentView: View {
             photoEditModel = nil
             selectedPhoto = nil
           }
-          .onDidFail {
+          .onDidFail { error in
+            print("Editor finished with error: \(error.localizedDescription)")
             pesdkPresented = false
             photoEditModel = nil
             selectedPhoto = nil
@@ -59,10 +60,8 @@ struct ContentView: View {
           .onDidSave { result in
             if let data = result.data {
               selectedPhoto = Photo(data: data)
-            } else if let image = result.image {
-              selectedPhoto = Photo(image: image)
             }
-            self.photoEditModel = result.photoEditModel
+            self.photoEditModel = result.model
             cameraPresented = false
           }
           .ignoresSafeArea()
