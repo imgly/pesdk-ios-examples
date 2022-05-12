@@ -27,7 +27,7 @@ Additionally, we support adding stickers and text in a non-destructive manner, w
 
 The example projects are preconfigured to use the [Swift Package Manager](https://img.ly/docs/pesdk/ios/introduction/getting_started/#swift-package-manager) to install PhotoEditor SDK.
 
-To get started open `PESDKExamples.xcworkspace` with Xcode 12+ and run the example projects.
+To get started open `PESDKExamples.xcworkspace` with Xcode 13.3+ and run the example projects.
 
 ## Features
 
