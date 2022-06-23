@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D944388282CF69000C0110A /* SampleCode.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 3D944387282CF69000C0110A /* SampleCode.xcconfig */; };
 		FC1EFAB926EF70EA00A4A3D2 /* SwiftUIExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EFAB826EF70EA00A4A3D2 /* SwiftUIExampleApp.swift */; };
 		FC1EFABB26EF70EA00A4A3D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC1EFABA26EF70EA00A4A3D2 /* ContentView.swift */; };
 		FC1EFABD26EF70EC00A4A3D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FC1EFABC26EF70EC00A4A3D2 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3D944387282CF69000C0110A /* SampleCode.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = ../../../Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		FC1EFAB526EF70EA00A4A3D2 /* SwiftUIExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftUIExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FC1EFAB826EF70EA00A4A3D2 /* SwiftUIExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExampleApp.swift; sourceTree = "<group>"; };
 		FC1EFABA26EF70EA00A4A3D2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 		FC1EFAB726EF70EA00A4A3D2 /* SwiftUIExample */ = {
 			isa = PBXGroup;
 			children = (
+				3D944387282CF69000C0110A /* SampleCode.xcconfig */,
 				FC1EFAB826EF70EA00A4A3D2 /* SwiftUIExampleApp.swift */,
 				FC1EFABA26EF70EA00A4A3D2 /* ContentView.swift */,
 				FC1EFABC26EF70EC00A4A3D2 /* Assets.xcassets */,
@@ -140,6 +143,7 @@
 				FC1EFAC026EF70EC00A4A3D2 /* Preview Assets.xcassets in Resources */,
 				FC1EFABD26EF70EC00A4A3D2 /* Assets.xcassets in Resources */,
 				FC1EFACC26EF7BB100A4A3D2 /* LA.jpg in Resources */,
+				3D944388282CF69000C0110A /* SampleCode.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -160,6 +164,7 @@
 /* Begin XCBuildConfiguration section */
 		FC1EFAC226EF70EC00A4A3D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D944387282CF69000C0110A /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -209,6 +214,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -220,6 +226,7 @@
 		};
 		FC1EFAC326EF70EC00A4A3D2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D944387282CF69000C0110A /* SampleCode.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -263,6 +270,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -274,6 +282,7 @@
 		};
 		FC1EFAC526EF70EC00A4A3D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D944387282CF69000C0110A /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -285,12 +294,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ly.img.PhotoEditorSDK.Swift.SwiftExample;
+				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.Swift.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.6;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -299,6 +307,7 @@
 		};
 		FC1EFAC626EF70EC00A4A3D2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D944387282CF69000C0110A /* SampleCode.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -310,12 +319,11 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = SwiftUIExample/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = ly.img.PhotoEditorSDK.Swift.SwiftExample;
+				PRODUCT_BUNDLE_IDENTIFIER = "ly.img.PhotoEditorSDK.Swift.${PRODUCT_NAME}${SAMPLE_CODE_DISAMBIGUATOR}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.6;
 				TARGETED_DEVICE_FAMILY = "1,2";
