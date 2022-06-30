@@ -18,6 +18,8 @@
 	</a>
 </p>
 
+**You can find our latest examples at https://github.com/imgly/catalog-ios.**
+
 # About PhotoEditor SDK for iOS
 
 Our SDK provides tools for adding photo editing capabilities to your iOS application with a big variety of filters that can be previewed in realtime. Unlike other apps that allow a live preview of filters, the PhotoEditor SDK even provides a live preview when using high-resolution images. The framework is written in Swift and allows for easy customization.
